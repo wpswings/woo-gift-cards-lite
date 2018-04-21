@@ -29,5 +29,7 @@ This plugin will help you to allow shop owners to sell gift cards on their store
 - **Scheduling of gift card:** You can also schedule WooCommerce Gift Card for your clients according to the events or occasion. 
 - **Share gift cards via post auto share:** Now,  the admin can share gift cards via  post auto share which would have a large social platform to get showcased. 
 
+Get Premium [WooCommerce Gift Card Now](https://codecanyon.net/item/woocommerce-ultimate-gift-card/19191057)
+
 
 
