@@ -31,5 +31,50 @@ This plugin will help you to allow shop owners to sell gift cards on their store
 
 Get Premium [WooCommerce Gift Card Now](https://codecanyon.net/item/woocommerce-ultimate-gift-card/19191057)
 
+## Premium Plugin Live Demo
+
+Explore complete feature of premium plugin, by looking at the live demo.
+
+For **Frontend demo**  [visit here](http://demo.makewebbetter.com/woocommerce-ultimate-gift-cards/product/valentines-gift/)
+For **Backend demo**   [visit here](http://demo.makewebbetter.com/woocommerce-ultimate-gift-cards/request-for-personal-demo/)
+
+
+## Want Help!
+
+For **Plugin Documentation** you can [visit here](http://docs.makewebbetter.com/woocommerce-gift-cards-lite/)
+
+For **More Plugins By makewebbetter** [visit here](https://makewebbetter.com/store/ ) 
+
+For **More Plugins By makewebbetter over codecanyon** you can [visit here](https://codecanyon.net/user/makewebbetter/portfolio)
+
+
+## Support
+
+If you need support or have any question then kindly use our online chat window [here](https://makewebbetter.com/) or send us email at support@makewebbetter.com
+
+## Follow Us
+
+* **Our Official Website** - [https://makewebbetter.com/](https://makewebbetter.com/) 
+* **Our Codecanyon Portfolio** -[https://codecanyon.net/user/makewebbetter/portfolio](https://codecanyon.net/user/makewebbetter/portfolio)	
+* **Our Facebook Page** - [https://www.facebook.com/makewebbetter](https://www.facebook.com/makewebbetter)
+* **Our Google+ Account** - [https://plus.google.com/111610242430101820802](https://plus.google.com/111610242430101820802)
+* **Our Twitter Account** - [https://twitter.com/makewebbetter](https://twitter.com/makewebbetter)
+* **Our LinkedIn Account** - [https://www.linkedin.com/company/makewebbetter](https://www.linkedin.com/company/makewebbetter)
+
+
+## Frequently Asked Questions
+
+### Can I let my customers to schedule their Gift Card for a particular event date?
+
+This feature can be easily acheived by our [premium](https://codecanyon.net/item/woocommerce-ultimate-gift-card/19191057) version of Gift Card plugin, i.e Woocommerce Ultimate Gift Card.
+
+### Can my customers get a pdf attachment with their Gift Card.
+
+For this feature please visit our [premium](https://codecanyon.net/item/woocommerce-ultimate-gift-card/19191057) version of Gift Card plugin, there you may found multiple delivery methods for Gift Card along with the PDF attachments.
+
+### Is there any way to create our own custom templates for Gift Cards?
+
+Yes, for this please visit our [premium](https://codecanyon.net/item/woocommerce-ultimate-gift-card/19191057) version where we had provided 20 email templates and all can be easily customized as well as you may create your own custom email templates.
+
 
 
