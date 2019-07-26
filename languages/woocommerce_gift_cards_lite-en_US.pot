@@ -1,0 +1,760 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Giftware - WooCommerce Gift Card Lite 1.2.0\n"
+"POT-Creation-Date: 2019-07-10 19:49+0530\n"
+"PO-Revision-Date: 2019-07-10 19:49+0530\n"
+"Last-Translator: \n"
+"Language-Team: makewebbetter\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:119
+#, php-format
+msgid "Please enter in decimal (%s) format without thousand separators."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:121
+#, php-format
+msgid ""
+"Please enter in monetary decimal (%s) format without thousand separators and "
+"currency symbols."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:122
+msgid "Please enter in country code with two capital letters."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:123
+msgid "Please enter in a value less than the regular price."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:127
+msgid "Import"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:128
+msgid "Export"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:153
+msgid "Giftware Lite Manager"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:177
+#: admin/class-woocommerce_gift_cards_lite-admin.php:277
+#: woocommerce_gift_cards_lite.php:141 woocommerce_gift_cards_lite.php:153
+#: woocommerce_gift_cards_lite.php:154
+msgid "Gift Card"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:191
+#: admin/class-woocommerce_gift_cards_lite-admin.php:242
+msgid "Default Price"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:192
+msgid "Price Range"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:193
+msgid "Selected Price"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:194
+msgid "User Price"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:242
+msgid "Gift card default price."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:243
+msgid "Pricing type"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:247
+msgid "From Price"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:247
+msgid "Gift card price range start from."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:249
+msgid "To Price"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:249
+msgid "Gift card price range end to."
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:252
+msgid "Price"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:252
+msgid "Enter an price using seperator |. Ex : (10 | 20)"
+msgstr ""
+
+#: admin/class-woocommerce_gift_cards_lite-admin.php:373
+msgid "Gift Coupon"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:22
+#: admin/partials/templates/mwb_wgc_general_setting.php:65
+#: admin/partials/templates/mwb_wgc_product_setting.php:66
+msgid "Settings saved"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:24
+#: admin/partials/templates/mwb_wgc_general_setting.php:67
+#: admin/partials/templates/mwb_wgc_product_setting.php:68
+msgid "Dismiss this notice"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:34
+msgid "Create Custom Email Template"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:38
+msgid "Instruction for using Shortcode"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:42
+msgid "SHORTCODE"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:43
+msgid "DESCRIPTION."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:47
+msgid "Replace with logo of company on email template."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:51
+msgid "Replace with email of user to which giftcard send."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:55
+msgid "Replace with email/name of the user who send the giftcard."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:59
+msgid "Replace with Message of user who send the giftcard."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:63
+msgid "Replace with Giftcard Amount."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:67
+msgid "Replace with Giftcard Coupon Code."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:71
+msgid "Replace with Default event image set on Setting."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:75
+msgid "Replace with Giftcard Expiry Date."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:87
+msgid "Upload Default Logo"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:91
+msgid "Upload the image which is used as logo on your Email Template."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:95
+msgid "Upload Logo"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:107
+msgid "Giftcard Email Subject"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:112
+msgid "Email Subject for Giftcard Mail."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:118
+msgid ""
+"Use [BUYEREMAILADDRESS] shortcode as buyer email address to be placed "
+"dynamically."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:123
+msgid "Custom HTML"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:127
+msgid "Write html for giftcard Template."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_email_template_setting.php:232
+#: admin/partials/templates/mwb_wgc_general_setting.php:306
+#: admin/partials/templates/mwb_wgc_product_setting.php:186
+msgid "Save changes"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:94
+msgid "General Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:100
+msgid "Enable"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:104
+msgid "Check this box to enable giftcard"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:108
+msgid "Enable GiftWare Lite"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:114
+msgid "Enable Tax"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:118
+msgid "Check this box to enable tax for giftcard product."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:122
+msgid "Enable Tax Calculation for Gift Card"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:128
+msgid "Enable Listing Shop Page"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:132
+msgid "Check this box to enable giftcard product listing on shop page."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:136
+msgid "Enable Giftcard Product listing on shop page"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:142
+msgid "Individual Use"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:146
+msgid ""
+"Check this box if the Giftcard Coupon cannot be used in conjunction with "
+"other Giftcards/Coupons."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:150
+msgid "Allow Giftcard to use Individually"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:157
+msgid "Free Shipping"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:161
+msgid ""
+"Check this box if the coupon grants free shipping. A free shipping method "
+"must be enabled in your shipping zone and be set to require \"a valid free "
+"shipping coupon\" (see the \"Free Shipping Requires\" setting)."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:165
+msgid "Allow Giftcard on Free Shipping"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:171
+msgid "Disable Apply Coupon Fields "
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:175
+msgid ""
+"Check this if you want to disable Apply Coupon Fields if there only GifCard "
+"Products are in Cart Page"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:179
+msgid "Disable Apply Coupon Fields"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:185
+msgid "Select Delivery Method"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:189
+msgid "Select one of the delivery method to for giftcard"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:193
+msgid "Mail To Recipient"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:194
+msgid "Downloadable By Buyer"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:200
+msgid "Giftcard Coupon Length"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:204
+msgid ""
+"Enter giftcard coupon length excluding the prefix.(Minimum length is set to "
+"5)"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:212
+msgid "Giftcard Prefix"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:216
+msgid "Enter Gift Card Prefix. Ex: PREFIX_CODE"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:224
+msgid "Giftcard Expiry After Days"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:228
+msgid ""
+"Enter number of days after purchased Giftcard is expired. Keep value \"1\" "
+"for one day expiry when order is completed. Keep value \"0\" for no expiry."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:236
+msgid "Minimum Spend"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:240
+msgid ""
+"This field allows you to set the minimum spend (subtotal, including taxes) "
+"allowed to use the Giftcard coupon."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:248
+msgid "Maximum Spend"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:252
+msgid ""
+"This field allows you to set the maximum spend (subtotal, including taxes) "
+"allowed when using the Giftcard coupon."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:260
+msgid "Giftcard No of time usage"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:264
+msgid "How many times this coupon can be used before Giftcard is void."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:272
+msgid "Enable Custom Email Template"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:276
+msgid "Check this if you want to enable custom email template for giftcard"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:280
+msgid "Use your own custom email template"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:286
+msgid "Select Email Template"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_general_setting.php:290
+msgid ""
+"This field allow you to select the email template format for your Gift Cards"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_overview_setting.php:5
+msgid "Connect With Us and Explore More About Giftware"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_overview_setting.php:6
+msgid ""
+"Giftware - WooCommerce Gift Card Lite is the plugin that allows merchants "
+"(admin) to manage store with digital gifting solutions like this. Here the "
+"merchant can create gifts cards according to his desires and wishes after "
+"selection of the price selection. This digital certificate e-solution comes "
+"with ample number benefits like capable to increase sales, encourage an easy "
+"and desire gifting solution for your customers, initiate e-gifting via "
+"emails. "
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:47
+msgid ""
+"What about to provide Gift Cards Manually to someone who do not want to "
+"purchase the product online, Check the screenshot below:"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:51
+msgid ""
+"Want to export Purchased Gift Cards in CSV format? As well you may Import "
+"your Gift Cards in BULK, Check the screenshot below:"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:55
+msgid ""
+"Here all the required settings can be turned on/off along with PDF version "
+"you may enable from here, Check the screenshot below:"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:59
+msgid ""
+"Want to give some discount on your Gift Card Products? Check the screenshot "
+"below:"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:63
+msgid ""
+"What about to provide some kind of \"Thank You Order Gift Cards\" to your "
+"Loyal Customers who had made some required purchase on your site, Check the "
+"screenshot below:"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:67
+msgid ""
+"Coupon code can be set in QRCode Or in BarCode Form, Have the look of below "
+"Screen-shot: "
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_pro_version.php:71
+msgid ""
+"Want to provide multiple ways to your customer for delivering the Gift "
+"Cards? Check the screenshot below: "
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:76
+msgid "Product Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:83
+msgid "Exclude Sale Items"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:87
+msgid ""
+"Check this box if the Giftcard Coupon should not apply to items on sale. Per-"
+"item coupons will only work if the item is not on sale. Per-cart coupons "
+"will only work if there are no sale items in the cart."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:91
+msgid "Enable to exclude Sale Items"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:97
+msgid "Exclude Products"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:101
+msgid ""
+"Products which must not be in the cart to use Giftcard coupon or, for "
+"\"Product Discounts\", which products are not discounted."
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:144
+msgid "Exclude Product Category"
+msgstr ""
+
+#: admin/partials/templates/mwb_wgc_product_setting.php:148
+msgid ""
+"Product must not be in this category for the Giftcard coupon to remain valid "
+"or, for \"Product Discounts\", products in these categories will not be "
+"discounted."
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:92
+msgid "Gift Card  Redeem / Recharge "
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:139
+msgid "Giftcard Redeem Link"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:143
+msgid "please open the link to redeem the giftcard"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:161
+msgid "Embedded Link"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:165
+msgid "Enter this code to add the redeem page in your site"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:240
+msgid "Email"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:244
+msgid "Enter the email for account creation"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:254
+msgid "Name"
+msgstr ""
+
+#: admin/partials/templates/redeem-giftware-settings.php:258
+msgid "Enter the name for account creation"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:108
+msgid "GiftWare Lite Settings"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:134
+msgid "OverView"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:137
+msgid "General"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:140
+msgid "Products"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:143
+msgid "Email Template"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:146
+msgid "Offline Giftcard"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:149
+msgid "Import/Export"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:152
+msgid "Other Setting"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:155
+msgid "Discount"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:158
+msgid "Thank You Order"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:161
+msgid "QRCode/BarCode"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:164
+msgid "Delivery Method"
+msgstr ""
+
+#: admin/partials/woocommerce_gift_cards_lite-admin-display.php:167
+msgid "Gift Card Redeem"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:7
+msgid "Stored Recipient Details for sending Gift Card"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:8
+msgid ""
+"We store your recipient's email address, recipient's name, gift message, "
+"your name so that we can send them again your Gift Card with all proper "
+"details has been filled by you at the time of purchasing Gift Card Product "
+"if they are arrived"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:16
+msgid "Woocommerce Gift Cards Lite"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:34 mwb_wgc_lite_gdpr.php:147
+msgid "Recipient Details"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:59
+msgid "Gift Card Details"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:98
+msgid "Recipient Name/Email"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:104
+msgid "Buyer Name/Email"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:110
+#: public/class-woocommerce_gift_cards_lite-public.php:451
+msgid "Gift Message"
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:200
+msgid "Removed key \"TO\""
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:209
+msgid "Removed key \"From\""
+msgstr ""
+
+#: mwb_wgc_lite_gdpr.php:218
+msgid "Removed key \"Message\""
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:100
+#, php-format
+msgid "Price: %sField is empty"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:101
+#, php-format
+msgid "Recipient Email: %sField is empty."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:102
+#, php-format
+msgid "Recipient Name: %sField is empty."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:103
+#, php-format
+msgid "Recipient Email: %sInvalid email format."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:104
+#, php-format
+msgid "From: %sField is empty."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:105
+#, php-format
+msgid "Message: %sField is empty."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:106
+#, php-format
+msgid "Message: %sMessage length cannot exceed %s characters."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:108
+#, php-format
+msgid "Price Range: %sPlease enter price within Range."
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:195
+#: public/class-woocommerce_gift_cards_lite-public.php:203
+msgid "Enter Price Within Above Range:"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:222
+msgid "Choose Gift Card Selected Price:"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:288
+#: public/class-woocommerce_gift_cards_lite-public.php:297
+msgid "Enter Gift Card Price"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:307
+#: public/class-woocommerce_gift_cards_lite-public.php:445
+msgid "From"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:308
+msgid "Enter the sender name"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:311
+msgid "Gift Message:"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:319
+msgid "Characters:"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:331
+#: public/class-woocommerce_gift_cards_lite-public.php:341
+msgid "To:"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:332
+msgid "Enter the Recipient Email (Required)"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:339
+msgid "You print & Give to recipient"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:342
+msgid "Enter the Recipient Name"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:349
+msgid "Preview"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:439
+msgid "To"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:562
+msgid "Enter Giftcard Value:"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:857
+msgid " Hurry!!! Giftcard is Received"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:895
+msgid " Gift Card is Sent Successfully"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:897
+msgid " Gift Card is Sent Successfully to the Email Id: [TO]"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:1141
+msgid "No Expiration"
+msgstr ""
+
+#: public/class-woocommerce_gift_cards_lite-public.php:1167
+msgid "VIEW CARD"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:102
+msgid "Settings"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:103
+msgid "Get Premium Version"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:264
+msgid ""
+"Woocommerce is not activated, Please activate Woocommerce first to install "
+"WooCommerce Gift Cards Lite."
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:282
+msgid ""
+"Woocommerce Gift Cards Lite deactivated successfully, As you have activated "
+"its Pro Version(Woocommerce Ultimate Gift Card)"
+msgstr ""

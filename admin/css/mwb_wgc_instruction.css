@@ -1,0 +1,122 @@
+/*=====  Instruction Popup  ======*/
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+#mwb-modal-main-wrapper{
+  font-family: 'Roboto', sans-serif;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper {
+  background: #ffffff none repeat scroll 0 0;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 4px #cccccc;
+  left: 0;
+  margin: 0 auto;
+  max-width: 600px;
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  z-index: 9999;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-title {
+  background: rgba(0, 0, 0, 0) -moz-linear-gradient(34deg, #0889c3, #4fc8ff) repeat scroll 0 0;
+  background: rgba(0, 0, 0, 0) -webkit-linear-gradient(34deg, #0889c3, #4fc8ff) repeat scroll 0 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: #ffffff;
+  padding: 24px 14px;
+  text-align: center;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-title .mwb-header-title-h1 {
+    color: #ffffff;
+    margin: 10px 0;
+    display: inline-block;
+    padding-bottom: 3px;
+    font-family: 'Lobster Two', cursive;
+    letter-spacing: 2px;
+    line-height: 55px;
+    font-size: 44px;
+}
+p.mwb-header-sub-title .mwb_popup_plugin_name {
+    /* border-bottom: 1px dotted #fff; */
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+p.mwb-header-sub-title {
+    margin: 0 0 10px;
+    font-size: 19px;
+    letter-spacing: .5px;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-title .mwb-header-title { 
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin: 0;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body {
+    padding: 3px 10px 34px;
+    text-align: center;
+}
+.mwb_popup_text_wrapper {
+    color: #7d7d7d;
+    padding: 10px 14px;
+    font-size: 17px;
+    text-align: center;
+    line-height: 26px;
+    letter-spacing: .5px;
+}
+.mwb_popup_text_wrapper p{
+  font-size: 17px;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body .mwb-popup-button {
+    background: rgba(0, 0, 0, 0) -moz-linear-gradient(34deg, #0889c3, #4fc8ff) repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0) -webkit-linear-gradient(34deg, #0889c3, #4fc8ff) repeat scroll 0 0;
+    border: 1px solid #99c0dd;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 16px 20px;
+    transition: all 0.3s linear 0s;
+    display: inline-block;
+}
+.mwb-popup-modal-body > form {
+  margin: 0;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body .mwb-popup-button-no-thnaks {
+    color: #7d7d7d;
+    text-decoration: none;
+    line-height: 22px;
+    font-size: 12px;
+    border-bottom: 1px solid #7d7d7d;
+    letter-spacing: .5px;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body .mwb-popup-button.mwb-popup-button-no-thnaks:focus {
+  outline: 0 none;
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body .mwb-popup-button:hover {
+    background: rgba(0, 0, 0, 0) -moz-linear-gradient(34deg, #4fc8ff, #0889c3) repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0) -webkit-linear-gradient(34deg, #4fc8ff, #0889c3) repeat scroll 0 0;
+    color: #ffffff;
+    transition: all 0.3s linear 0s;   
+}
+#mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body .mwb-popup-button.mwb-popup-button-first {
+    /* margin-right: 20px; */
+    display: block;
+    margin: 0 auto 13px;
+    min-width: 250px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+@media screen and (max-width: 550px){
+  #mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body .mwb-popup-button.mwb-popup-button-no-thnaks{
+    margin-top: 20px;
+  }
+  #mwb-modal-main-wrapper .mwb-popup-wrapper .mwb-popup-modal-body {
+    padding: 50px 10px;
+    text-align: center;
+  }
+}
+/*=====  End of Instruction Popup  ======*/
