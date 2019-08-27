@@ -36,7 +36,7 @@ if($flag){
 ?>
 <?php $other_settings = get_option('mwb_wgm_other_settings',true); ?>
 <?php if(!is_array($other_settings)): $other_settings = array(); endif;?>
-<h3 class="mwb_wgm_overview_heading"><?php _e('Other Settings', 'woocommerce_gift_cards_lite')?></h3>
+<h3 class="mwb_wgm_overview_heading"><?php _e('Other Settings', MWB_WGM_DOMAIN )?></h3>
 <div class="mwb_wgm_table_wrapper">	
 	<div class="mwb_table">
 		<table class="form-table mwb_wgm_general_setting">

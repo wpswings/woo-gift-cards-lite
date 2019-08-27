@@ -116,9 +116,9 @@ $current_user = wp_get_current_user();
 $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 
 ?>
-<h3 class="mwb_wgm_overview_heading text-center"><?php _e('Gift Card  Redeem / Recharge ', 'woocommerce_gift_cards_lite')?></h3>
+<h3 class="mwb_wgm_overview_heading text-center"><?php _e('Gift Card  Redeem / Recharge ', MWB_WGM_DOMAIN )?></h3>
 <div class="mwb_table">
-	<div style="display: none;" class="loading-style-bg" id="mwb_gw_loader">
+	<div style="display: none;" class="loading-style-bg" id="mwb_wgm_loader">
 		<img src="<?php echo MWB_WGC_URL;?>assets/images/loading.gif">
 	</div>
 
@@ -128,25 +128,25 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 				<div class="mwb-giftware-reddem-image text-center">
 					<img src="<?php echo MWB_WGC_URL.'assets/images/giftware-redeem-image.png'?>" alt="GiftWare">
 					<div class="mwb_giftware_reddem_link_wrapper">
-						<a href="#" class="generate_link"><i class="fas fa-link"></i> Get me My FREE redeem Link</a>
-						<span>(you can delete your redeem link anytime)</span>
+						<a href="#" class="generate_link"><i class="fas fa-link"></i><?php _e(' Get me My FREE redeem Link ', MWB_WGM_DOMAIN )?></a>
+						<span><?php _e('(you can delete your redeem link anytime)', MWB_WGM_DOMAIN )?></span>
 					</div>
 				</div>
 
 				<div class="mwb_redeem_main_content">
-					<h2 class="text-left">Hello Dear</h2>	
-					<p> We are thrilled to announce that we have launched a <span class="mwb-reddem-free-text">FREE</span>  service to simplify the problem of redeeming   giftcards at retail store </p>
+					<h2 class="text-left"><?php _e('Hello Dear', MWB_WGM_DOMAIN )?></h2>	
+					<p><?php _e(' We are thrilled to announce that we have launched a', MWB_WGM_DOMAIN )?><span class="mwb-reddem-free-text"><?php _e('FREE', MWB_WGM_DOMAIN )?></span><?php _e('service to simplify the problem of redeeming giftcards at retail store', MWB_WGM_DOMAIN )?></p>
 
-					<p> We have made this just on your demand so we would love your suggestion to improve it. </p>
+					<p><?php _e('We have made this just on your demand so we would love your suggestion to improve it.', MWB_WGM_DOMAIN )?></p>
 				</div>
 
 				
-				<h3 class="text-center">What it Contains </h3>	
+				<h3 class="text-center"><?php _e('What it Contains', MWB_WGM_DOMAIN )?></h3>	
 				<ul class="mwb_redeem_listing">	
-					<li class="mwb_redeem_item scan"> <div class="mwb_redeem_content">Scan</div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>	
-					<li class="mwb_redeem_item redeem"> <div class="mwb_redeem_content">Redeem</div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
-					<li class="mwb_redeem_item recharge"> <div class="mwb_redeem_content">Recharge</div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
-					<li class="mwb_redeem_item reports"> <div class="mwb_redeem_content">Reports</div></li>
+					<li class="mwb_redeem_item scan"> <div class="mwb_redeem_content"><?php _e('Scan', MWB_WGM_DOMAIN )?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>	
+					<li class="mwb_redeem_item redeem"> <div class="mwb_redeem_content"><?php _e('Redeem', MWB_WGM_DOMAIN )?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
+					<li class="mwb_redeem_item recharge"> <div class="mwb_redeem_content"><?php _e('Recharge', MWB_WGM_DOMAIN )?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
+					<li class="mwb_redeem_item reports"> <div class="mwb_redeem_content"><?php _e('Reports', MWB_WGM_DOMAIN )?></div></li>
 				</ul>
 			</div>	
 		<?php  }else { ?>
@@ -157,17 +157,17 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 			
 					<thead>
 						<tr>
-							<th colspan="2"> Your Gift Card Redeem Details </th>
+							<th colspan="2"><?php _e('Your Gift Card Redeem Details ', MWB_WGM_DOMAIN )?></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="wcgw_plugin_enable"><?php _e('Giftcard Redeem Link', 'woocommerce_gift_cards_lite')?></label>
+								<label for="wcgw_plugin_enable"><?php _e('Giftcard Redeem Link', MWB_WGM_DOMAIN )?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$attribut_description = __('please open the link to redeem the giftcard','woocommerce_gift_cards_lite');
+								$attribut_description = __('please open the link to redeem the giftcard',MWB_WGM_DOMAIN );
 								echo wc_help_tip( $attribut_description );
 								?>
 								<label for="wcgw_plugin_enable">
@@ -185,11 +185,11 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="wcgw_plugin_enable"><?php _e('Embedded Link', 'woocommerce_gift_cards_lite')?></label>
+								<label for="wcgw_plugin_enable"><?php _e('Embedded Link', MWB_WGM_DOMAIN )?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$attribut_description = __('Enter this code to add the redeem page in your site','woocommerce_gift_cards_lite');
+								$attribut_description = __('Enter this code to add the redeem page in your site',MWB_WGM_DOMAIN );
 								echo wc_help_tip( $attribut_description );
 								?>
 								<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text"><?php if(isset($offine_giftcard_redeem_link ['embed_url']) &&  $offine_giftcard_redeem_link['embed_url'] !== ''){ echo trim($offine_giftcard_redeem_link['embed_url']);  } ?>
@@ -206,45 +206,45 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 								<input type="submit" name="remove_giftcard_redeem_details" class="remove_giftcard_redeem_details"  class="input-text" value = 'Remove Details' >
 							</td>
 							<td>
-								<a target="_blank" href="<?php if(isset($offine_giftcard_redeem_link ['shop_url']) &&  $offine_giftcard_redeem_link['shop_url'] !== ''){ echo $offine_giftcard_redeem_link['shop_url'];  } ?>" class= "mwb_gw_open_redeem_link"> Open Shop</a>
+								<a target="_blank" href="<?php if(isset($offine_giftcard_redeem_link ['shop_url']) &&  $offine_giftcard_redeem_link['shop_url'] !== ''){ echo $offine_giftcard_redeem_link['shop_url'];  } ?>" class= "mwb_gw_open_redeem_link"><?php _e('Open Shop', MWB_WGM_DOMAIN )?></a>
 							</td>
 							
 						</tr>
 						<?php if($offine_giftcard_redeem_link['license'] =='') { ?>
 							<tr>
 								<td colspan="2">
-									This is your limited  account so please purchase the pro and update the details .
+									<?php _e('This is your limited  account so please purchase the pro and update the details .', MWB_WGM_DOMAIN )?>
 								</td>
 							</tr>
 						<?php } ?>
 					</tbody>
 				</table>
-				<p><b>To use redeem link as it is, follow the steps below</b></p>
+				<p><b><?php _e('To use redeem link as it is, follow the steps below', MWB_WGM_DOMAIN )?></b></p>
 				<ol>
-					<li>Click on Open Shop button and login using the credentials provided in the received email</li>
-					<li>Start Scan/Fetch and Redeem/Recharge</li>
+					<li><?php _e('Click on Open Shop button and login using the credentials provided in the received email', MWB_WGM_DOMAIN )?></li>
+					<li><?php _e('Start Scan/Fetch and Redeem/Recharge', MWB_WGM_DOMAIN )?></li>
 				</ol>
 
-				<p><b>To use the redeem link on the web store follow the steps below</b></p>
+				<p><b><?php _e('To use the redeem link on the web store follow the steps below', MWB_WGM_DOMAIN )?></b></p>
 				<ol>
-					<li>Create a page</li>
-					<li>Copy the embed link and paste it in the created page</li>
-					<li>Login using the credentials given in the received email</li>
-					<li>Start Scan/Fetch and Redeem/Recharge</li>
+					<li><?php _e('Create a page', MWB_WGM_DOMAIN )?></li>
+					<li><?php _e('Copy the embed link and paste it in the created page', MWB_WGM_DOMAIN )?></li>
+					<li><?php _e('Login using the credentials given in the received email', MWB_WGM_DOMAIN )?></li>
+					<li><?php _e('Start Scan/Fetch and Redeem/Recharge', MWB_WGM_DOMAIN )?></li>
 				</ol>
 
-				<p><b>To use the redeem link on this POS system, follow the steps below</b></p>
+				<p><b><?php _e('To use the redeem link on this POS system, follow the steps below', MWB_WGM_DOMAIN )?></b></p>
 				<ol>
-					<li>Copy the embed link and paste it on any page at POS</li>
-					<li>Login using the credentials given in the received email</li>
-					<li>Start Scan/Fetch and Redeem/Recharge</li>
+					<li><?php _e('Copy the embed link and paste it on any page at POS', MWB_WGM_DOMAIN )?></li>
+					<li><?php _e('Login using the credentials given in the received email', MWB_WGM_DOMAIN )?></li>
+					<li><?php _e('Start Scan/Fetch and Redeem/Recharge', MWB_WGM_DOMAIN )?></li>
 				</ol>
 
 			</div>
 			<?php	} ?>
 		
 		<div class="mwb_wgm_video_wrapper">
-            <h3> See it in Action </h3>
+            <h3><?php _e('See it in Action', MWB_WGM_DOMAIN )?></h3>
             <iframe height="411" src="https://www.youtube.com/embed/H1cYF4F5JA8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>		
 		<!-- <div class="text-center">
@@ -268,11 +268,11 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 				<tbody>			
 					<tr valign="top">
 						<th scope="row" class="titledesc">
-							<label for="wcgw_plugin_enable"><?php _e('Email', 'woocommerce_gift_cards_lite')?></label>
+							<label for="wcgw_plugin_enable"><?php _e('Email', MWB_WGM_DOMAIN )?></label>
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribut_description = __('Enter the email for account creation','woocommerce_gift_cards_lite');
+							$attribut_description = __('Enter the email for account creation',MWB_WGM_DOMAIN );
 							echo wc_help_tip( $attribut_description );
 							?>
 							<label for="wcgw_plugin_enable">
@@ -282,11 +282,11 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 					</tr>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
-							<label for="wcgw_plugin_enable"><?php _e('Name', 'woocommerce_gift_cards_lite')?></label>
+							<label for="wcgw_plugin_enable"><?php _e('Name', MWB_WGM_DOMAIN )?></label>
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribut_description = __('Enter the name for account creation','woocommerce_gift_cards_lite');
+							$attribut_description = __('Enter the name for account creation',MWB_WGM_DOMAIN );
 							echo wc_help_tip( $attribut_description );
 							?>
 							<label for="wcgw_plugin_enable">

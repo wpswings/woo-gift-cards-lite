@@ -338,7 +338,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 					{
 						
 						$subject = "$bloginfo:";
-						$subject.=__(" Hurry!!! Giftcard is Received",'woocommerce_gift_cards_lite');
+						$subject.=__(" Hurry!!! Giftcard is Received", MWB_WGM_DOMAIN);
 					}
 					
 					$subject = str_replace('[BUYEREMAILADDRESS]', $from, $subject);
