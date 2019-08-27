@@ -9,15 +9,11 @@ if(isset($_POST['wcgm_generate_offine_redeem_url'])){
 	global $woocommerce;
 	$client_name = isset($_POST['wcgm_offine_redeem_name'])? sanitize_text_field( $_POST['wcgm_offine_redeem_name'] ):'';
 	$client_email = isset($_POST['wcgm_offine_redeem_email'])? sanitize_text_field( $_POST['wcgm_offine_redeem_email'] ):'';
-
 	$enable = isset($_POST['wcgm_offine_redeem_enable'])? sanitize_text_field( $_POST['wcgm_offine_redeem_enable'] ):'';
-
 	$client_license_code = get_option( 'mwb_gw_lcns_key');
 	$client_domain = home_url();
-
 	$currency = get_option('woocommerce_currency');
-	$client_currency = get_woocommerce_currency_symbol();
-	
+	$client_currency = get_woocommerce_currency_symbol();	
 	$curl_data = array(
 		'user_name' => $client_name,
 		'email' => $client_email,

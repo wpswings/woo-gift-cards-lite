@@ -5,66 +5,49 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-require_once(MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_settings/mwb_wgm_general_settings_array.php' );
-if( isset( $_POST['mwb_wgm_general_setting_save'] ) )
+/*
+ * General Settings Template
+ */
+require_once MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_settings/mwb_wgm_general_settings_array.php' ;
+$current_tab = "mwb_wgm_general_setting";
+$flag = false;
+if( isset( $_POST ['mwb_wgm_save_general'] ) )
 {
-	if( wp_verify_nonce( $_REQUEST['mwb-wgc-nonce'], 'mwb-wgc-nonce' ) ){
-		unset($_POST['mwb_wgm_general_setting_save']);
-		foreach( $mwb_wgm_general_setting as $key => $data ){
-			if (array_key_exists('default', $data)) {
-				if( !isset( $_POST [ $data['id'] ] ) ){
-					$_POST[$data['id']] = $data['default'] ;
+	if( wp_verify_nonce( $_REQUEST['mwb-wgc-nonce'], 'mwb-wgc-nonce' ) ){		
+		unset( $_POST['mwb_wgm_save_general'] );		
+		$postdata = $settings_obj->mwb_wgm_sanitize_settings_data( $_POST, $mwb_wgm_general_setting );	
+		$general_settings_array = array();
+		if($current_tab == "mwb_wgm_general_setting" ) {
+			if(isset($postdata) && is_array( $postdata ) && !empty( $postdata ) ){
+				foreach($postdata as $key => $value){	
+					$general_settings_array[$key] = $value;
 				}
 			}
-		}
-		do_action('mwb_wgm_general_setting_save');
-		$postdata = $_POST;
-		foreach($postdata as $key => $data)
-		{
-			if(isset( $data ) && $data != null)
-			{
-				$data = sanitize_text_field($data);
-				update_option($key, $data);		
+			if (is_array($general_settings_array) && !empty($general_settings_array)) {
+				$delivery_setting = get_option('mwb_wgm_delivery_settings', array());
+				if( empty( $delivery_setting ) ) {
+					$delivery_setting['mwb_wgm_send_giftcard'] = 'Mail_To_Recipient';
+					update_option('mwb_wgm_delivery_settings', $delivery_setting);
+				}
+				update_option('mwb_wgm_general_settings',$general_settings_array);
 			}
-			elseif ($data == null) {
-				delete_option($key, $data);
-			}		
 		}
-		$this->mwb_wgm_success_notice_html();	
+		$flag = true;
 	}
 }
+if($flag){	
+	$settings_obj->mwb_wgm_settings_saved();
+}
 ?>
+<?php $general_settings = get_option('mwb_wgm_general_settings',true); ?>
+<?php if(!is_array($general_settings)): $general_settings = array(); endif;?>
 <h3 class="mwb_wgm_overview_heading"><?php _e('General Settings', 'woocommerce_gift_cards_lite')?></h3>
 <div class="mwb_wgm_table_wrapper">	
 	<div class="mwb_table">
 		<table class="form-table mwb_wgm_general_setting">
 			<tbody>
-				<?
-				foreach( $mwb_wgm_general_setting  as $key=> $value){
-					?>
-					<tr valign="top">			
-						<th scope="row" class="titledesc">
-							<label for=<?php echo $value['id']?> ><?php echo $value['label']?></label>
-						</th>
-						<td class="forminp forminp-text">
-							<?php
-							echo wc_help_tip( $value['attribute_description'] );
-							?>
-							<label for = <?php echo $value['id']?>>
-								<?php if($value['type'] == 'checkbox'){
-									$this->mwb_wgm_generate_checkbox_html( $value);
-								}
-								elseif($value['type'] == 'number'){
-									$this->mwb_wgm_generate_input_number_html( $value);
-								}
-								elseif($value['type'] == 'text'){
-									$this->mwb_wgm_generate_input_text_html( $value);
-								}?>								
-							</label>						
-						</td>
-					</tr>
 				<?php
-				}
+				$settings_obj->mwb_wgm_generate_common_settings( $mwb_wgm_general_setting, $general_settings );
 				?>
 			</tbody>
 		</table>
@@ -73,7 +56,7 @@ if( isset( $_POST['mwb_wgm_general_setting_save'] ) )
 	do_action('mwb_gw_general_setting');
 	?>	
 </div>
-<div class="clear"></div>
 <?php
-$this->mwb_wgm_save_button_html("mwb_wgm_general_setting_save");
+$settings_obj->mwb_wgm_save_button_html("mwb_wgm_save_general");
 ?>
+<div class="clear"></div>

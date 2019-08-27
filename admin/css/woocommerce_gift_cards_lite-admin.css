@@ -110,7 +110,7 @@
 #mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_product_setting tr:nth-child(2n+1) {
     background-color: #efefef;
 }
-.mwb_wgm_other_setting_remove_logo_span {
+.mwb_wgm_mail_setting_remove_logo_span {
     background-color: #ef5350;
     border-radius: 100%;
     color: #ffffff;
@@ -123,11 +123,11 @@
     vertical-align: middle;
     cursor: pointer;
 }
-.mwb_wgm_other_setting_remove_logo {
+.mwb_wgm_mail_setting_remove_logo {
     display: inline-block;
     position: relative;
 }
-#mwb_wgm_other_setting_remove_logo{
+#mwb_wgm_mail_setting_remove_logo{
     display:none;
     padding: 14px 24px;
 }
@@ -149,14 +149,14 @@
 .form-table th {
     vertical-align: top;
     text-align: left;
-    padding: 20px 10px 20px 0;
+    padding: 20px 10px 20px 13px;
     width: 200px;
     line-height: 1.3;
     font-weight: 600;
 }
 .form-table td {
     margin-bottom: 9px;
-    padding: 5px 0px;
+    padding: 5px 13px;
     line-height: 1.3;
     vertical-align: middle;
 }
@@ -831,4 +831,69 @@ transform: rotate(90deg);
   text-align: center;
   top: 50%;
   transform: translateY(-50%);
+}
+
+/*css for wp editor text area*/
+.mwb_wgm_new_woo_ver_style_textarea{
+      width: 100% !important;
+    }
+/*css for email upload default event*/
+.mwb_wgm_mail_setting_remove_background {
+  display: inline-block;
+  position: relative;
+}
+#mwb_wgm_mail_setting_remove_background {
+  display:none;
+}
+.mwb_wgm_mail_setting_remove_background_span {
+    background-color: #ef5350;
+    border-radius: 100%;
+    color: #ffffff;
+    font-size: 18px;
+    height: 25px;
+    line-height: 24px;
+    text-align: center;
+    width: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.mwb_wgm_mail_setting_tab{
+  background-color: #ef5350;
+  color: #ffffff;
+  margin: 9px 0 0;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#mwb_wgm_mail_setting_wrapper{
+  display:none;
+}
+/*custom css for preview template of giftcard post*/
+#TB_window iframe#TB_iframeContent {
+  margin: 0 auto;
+  
+  width: 100% !important;
+  height: 480px!important;
+}
+#mwb_wgm_email_template + span{
+  width: 50% !important;
+}
+.select2-container.select2-container-multi.mwb_wgm_email_template {
+ width: 50% !important;
+}
+.submit.mwb_wgm_email_template {
+  width: 100%;
+}
+
+/*css for general setting tab additional info display */
+.mwb_uwgc_additional_info {
+    font-size: 19px;
+    padding-left: 24px;
+}
+#mwb_uwgc_customize_remove_email_template_image_para{
+  display:none;
+}
+#mwb_uwgc_customize_remove_giftcard_para{
+   display:none;
 }

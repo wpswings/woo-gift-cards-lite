@@ -5,85 +5,53 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-require_once(MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_settings/mwb_wgm_product_settings_array.php' );
-
-if(isset($_POST['mwb_wgm_product_setting_save']))
+/*
+ * Product Settings Template
+ */
+$flag = false;
+$current_tab = "mwb_wgm_product_setting"; 
+if(isset($_POST['mwb_wgm_save_product']))
 {
-	unset($_POST['mwb_wgm_product_setting_save']);
-	if(isset($_POST['mwb_wgm_product_setting_exclude_product']))
+	unset( $_POST['mwb_wgm_save_product'] );
+	if( wp_verify_nonce( $_REQUEST['mwb-wgc-nonce'], 'mwb-wgc-nonce' ) )
 	{
-		$giftcard_exclude_products = $_POST['mwb_wgm_product_setting_exclude_product'];		
-		if(isset($giftcard_exclude_products) && !empty($giftcard_exclude_products)){
-			$giftcard_exclude_product_string = "";
-			foreach($giftcard_exclude_products as $giftcard_exclude_product)
-			{
-				$giftcard_exclude_product_string .= $giftcard_exclude_product.',';
+		if($current_tab == "mwb_wgm_product_setting" ) 
+		{	
+			$product_settings_array = array();			
+			$postdata = $_POST;
+			if(isset($postdata) && is_array( $postdata ) && !empty( $postdata ) ){
+				foreach($postdata as $key => $value){	
+					$product_settings_array[$key] = $value;
+				}
 			}
-			$giftcard_exclude_product_string = rtrim($giftcard_exclude_product_string, ",");
-			update_option("mwb_wgm_product_setting_exclude_product_format", $giftcard_exclude_product_string);
-		}		
+			if (is_array($product_settings_array) && !empty($product_settings_array)) {
+				update_option('mwb_wgm_product_settings',$product_settings_array);
+			}
+		}
+		$flag = true;
+		
 	}
-	else
-	{
-		$_POST['mwb_wgm_product_setting_exclude_product'] = "";
-		update_option("mwb_wgm_product_setting_exclude_product_format", $_POST['mwb_wgm_product_setting_exclude_product']);			
-	}
-	if(isset($_POST['mwb_wgm_product_setting_exclude_category']))
-	{		
-	}
-	else
-	{
-		$_POST['mwb_wgm_product_setting_exclude_category'] = "";
-	}	
-	if(!isset($_POST['mwb_wgm_product_setting_giftcard_ex_sale']))
-	{
-		$_POST['mwb_wgm_product_setting_giftcard_ex_sale'] = 'no';
-	}
-	
-	do_action('mwb_wgm_product_setting_save');
-	
-	$postdata = $_POST;
-	foreach($postdata as $key=>$data)
-	{
-		update_option($key, $data);
-	}
-	$this->mwb_wgm_success_notice_html();
-}	
+}
+require_once MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_settings/mwb_wgm_product_settings_array.php' ;
+if($flag){	
+	$settings_obj->mwb_wgm_settings_saved();
+}
 ?>
-<h2 class="mwb_wgm_overview_heading"><?php _e('Product Settings', 'woocommerce_gift_cards_lite')?></h2>
+<?php $product_settings = get_option('mwb_wgm_product_settings',true); ?>
+<?php if(!is_array($product_settings)): $product_settings = array(); endif;?>
+<h2 class="mwb_wgm_overview_heading"><?php _e('Product Settings', MWB_WGM_DOMAIN )?></h2>
 <div class="mwb_wgm_table_wrapper">
 	<table class="form-table mwb_wgm_product_setting">
 		<tbody>
-		<?php foreach($mwb_wgm_product_settings as $key => $value ){?>
-			<tr valign="top">
-				<th scope="row" class="titledesc">
-					<label for="<?php echo $value['id']?>" ><?php echo $value['label']?></label>
-				</th>
-				<td class="forminp forminp-text">
-					<?php 
-					echo wc_help_tip( $value['attribute_description'] );
-					?>
-					<label for= "<?php echo $value['id'];?>" >
-						<?php if( $value['type'] == 'checkbox'){
-							$this->mwb_wgm_generate_checkbox_html( $value);
-						}
-						elseif($value['type'] == 'search&select'){
-							$this->mwb_wgm_generate_searchSelect_html( $value);
-						}?>
-					</label>
-				</td>
-			</tr>
-		<?php
-		}
-		?>
-		<?php 
-		do_action('mwb_wgm_product_setting');
-		?>
+			<?php
+				$settings_obj->mwb_wgm_generate_common_settings( $mwb_wgm_product_settings, $product_settings );
+				?>
+			<?php 
+			?>
 		</tbody>
 	</table>
 </div>
 <?php
-$this->mwb_wgm_save_button_html("mwb_wgm_product_setting_save");
+$settings_obj->mwb_wgm_save_button_html("mwb_wgm_save_product");
 ?>
 <div class="clear"></div>
-	
