@@ -125,16 +125,16 @@ class Woocommerce_gift_cards_lite_Admin {
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
 				$params = array(
 					/* translators: %s: decimal */
-					'i18n_decimal_error'                => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.',  MWB_WGM_DOMAIN  ), $decimal ),
+					'i18n_decimal_error'                => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.', 'woocommerce_gift_cards_lite' ), $decimal ),
 					/* translators: %s: price decimal separator */
-					'i18n_mon_decimal_error'            => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.',  MWB_WGM_DOMAIN  ), wc_get_price_decimal_separator() ),
-					'i18n_country_iso_error'            => __( 'Please enter in country code with two capital letters.',  MWB_WGM_DOMAIN  ),
-					'i18_sale_less_than_regular_error'  => __( 'Please enter in a value less than the regular price.',  MWB_WGM_DOMAIN  ),
+					'i18n_mon_decimal_error'            => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'woocommerce_gift_cards_lite' ), wc_get_price_decimal_separator() ),
+					'i18n_country_iso_error'            => __( 'Please enter in country code with two capital letters.', 'woocommerce_gift_cards_lite' ),
+					'i18_sale_less_than_regular_error'  => __( 'Please enter in a value less than the regular price.', 'woocommerce_gift_cards_lite' ),
 					'decimal_point'                     => $decimal,
 					'mon_decimal_point'                 => wc_get_price_decimal_separator(),
 					'strings' => array(
-						'import_products' => __( 'Import',  MWB_WGM_DOMAIN  ),
-						'export_products' => __( 'Export',  MWB_WGM_DOMAIN  ),
+						'import_products' => __( 'Import', 'woocommerce_gift_cards_lite' ),
+						'export_products' => __( 'Export', 'woocommerce_gift_cards_lite' ),
 					),
 					'urls' => array(
 						'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
@@ -150,7 +150,7 @@ class Woocommerce_gift_cards_lite_Admin {
 
 				$mwb_wgm = array(
 					'ajaxurl' => admin_url('admin-ajax.php'),
-					'append_option_val'=>__('Select the template from above field', MWB_WGM_DOMAIN ),
+					'append_option_val'=>__('Select the template from above field','woocommerce_gift_cards_lite'),
 					'mwb_wgm_nonce' =>  wp_create_nonce( "mwb-wgm-verify-nonce" )
 				);
 
@@ -265,33 +265,33 @@ class Woocommerce_gift_cards_lite_Admin {
 			$previous_post = $post;
 			$post = $previous_post;
 
-			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_default', 'value'=>"$default_price" ,'label' => __( 'Default Price',  MWB_WGM_DOMAIN  ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card default price.',  MWB_WGM_DOMAIN  ), 'data_type' => 'price', 'desc_tip' => true ) );
-			woocommerce_wp_select( array( 'id' => 'mwb_wgm_pricing', 'value'=>"$selected_pricing", 'label' => __( 'Pricing type',  MWB_WGM_DOMAIN  ), 'options' => $this->mwb_wgc_get_pricing_type() ) );
+			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_default', 'value'=>"$default_price" ,'label' => __( 'Default Price', 'woocommerce_gift_cards_lite' ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card default price.', 'woocommerce_gift_cards_lite' ), 'data_type' => 'price', 'desc_tip' => true ) );
+			woocommerce_wp_select( array( 'id' => 'mwb_wgm_pricing', 'value'=>"$selected_pricing", 'label' => __( 'Pricing type', 'woocommerce_gift_cards_lite' ), 'options' => $this->mwb_wgc_get_pricing_type() ) );
 
 			 //Range Price
 			 //StartFrom
-			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_from_price', 'value'=>"$from", 'label' => __( 'From Price',  MWB_WGM_DOMAIN  ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card price range start from.',  MWB_WGM_DOMAIN  ), 'data_type' => 'price', 'desc_tip' => true ) );
+			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_from_price', 'value'=>"$from", 'label' => __( 'From Price', 'woocommerce_gift_cards_lite' ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card price range start from.', 'woocommerce_gift_cards_lite' ), 'data_type' => 'price', 'desc_tip' => true ) );
 			 //EndTo
-			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_to_price', 'value'=>"$to", 'label' => __( 'To Price',  MWB_WGM_DOMAIN  ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card price range end to.',  MWB_WGM_DOMAIN  ), 'data_type' => 'price', 'desc_tip' => true ) );
+			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_to_price', 'value'=>"$to", 'label' => __( 'To Price', 'woocommerce_gift_cards_lite' ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card price range end to.', 'woocommerce_gift_cards_lite' ), 'data_type' => 'price', 'desc_tip' => true ) );
 
 			 //Selected Price
-			woocommerce_wp_textarea_input(  array( 'id' => 'mwb_wgm_selected_price', 'value'=>"$price", 'label' => __( 'Price',  MWB_WGM_DOMAIN  ), 'desc_tip' => 'true', 'description' => __( 'Enter an price using seperator |. Ex : (10 | 20)',  MWB_WGM_DOMAIN ), 'placeholder' => '10|20|30'  ) );
+			woocommerce_wp_textarea_input(  array( 'id' => 'mwb_wgm_selected_price', 'value'=>"$price", 'label' => __( 'Price', 'woocommerce_gift_cards_lite' ), 'desc_tip' => 'true', 'description' => __( 'Enter an price using seperator |. Ex : (10 | 20)', 'woocommerce_gift_cards_lite'), 'placeholder' => '10|20|30'  ) );
 		 //Regular Price
 			echo 	'<p class="form-field mwb_wgm_default_price_field">
-			<label for="mwb_wgm_default_price_field"><b>'.__( 'Instruction',  MWB_WGM_DOMAIN ).'</b></label>
-			<span class="description">'.__( 'WooCommerce Product regular price is used as a gift card price.',  MWB_WGM_DOMAIN ).'</span>
+			<label for="mwb_wgm_default_price_field"><b>'.__( 'Instruction', 'woocommerce_gift_cards_lite').'</b></label>
+			<span class="description">'.__( 'WooCommerce Product regular price is used as a gift card price.', 'woocommerce_gift_cards_lite').'</span>
 			</p>';
 				//User Price
 			echo 	'<p class="form-field mwb_wgm_user_price_field ">
-			<label for="mwb_wgm_user_price_field"><b>'.__( 'Instruction',  MWB_WGM_DOMAIN ).'</b></label>
-			<span class="description">'.__( 'User can purchase any amount of Gift Card.',  MWB_WGM_DOMAIN ).'</span>
+			<label for="mwb_wgm_user_price_field"><b>'.__( 'Instruction', 'woocommerce_gift_cards_lite').'</b></label>
+			<span class="description">'.__( 'User can purchase any amount of Gift Card.', 'woocommerce_gift_cards_lite').'</span>
 			</p>';
 
 			$is_customizable = get_post_meta($product_id,'woocommerce_customizable_giftware',true);
 			if( empty( $is_customizable ) ){
 				?>
 				<p class="form-field mwb_wgm_email_template">
-					<label class = "mwb_wgm_email_template" for="mwb_wgm_email_template"><?php _e('Email Template',  MWB_WGM_DOMAIN );?></label>
+					<label class = "mwb_wgm_email_template" for="mwb_wgm_email_template"><?php _e('Email Template', 'woocommerce_gift_cards_lite');?></label>
 					<select id="mwb_wgm_email_template" multiple="multiple" name="mwb_wgm_email_template[]" class="mwb_wgm_email_template">
 						<?php 
 						$args = array( 'post_type' => 'giftcard', 'posts_per_page' => -1);
@@ -321,7 +321,7 @@ class Woocommerce_gift_cards_lite_Admin {
 					</select>
 				</p>
 				<p class="form-field mwb_wgm_email_defualt_template">
-					<label class = "mwb_wgm_email_defualt_template" for="mwb_wgm_email_defualt_template"><?php _e('Which template you want to be selected by default?',  MWB_WGM_DOMAIN );?></label>
+					<label class = "mwb_wgm_email_defualt_template" for="mwb_wgm_email_defualt_template"><?php _e('Which template you want to be selected by default?', 'woocommerce_gift_cards_lite');?></label>
 
 					<select id="mwb_wgm_email_defualt_template" name = "mwb_wgm_email_defualt_template" style="width: 50%">
 						<?php
@@ -329,7 +329,7 @@ class Woocommerce_gift_cards_lite_Admin {
 						if(empty($default_selected))
 						{
 							?>
-							<option value=""><?php _e('Select the template from above field ', MWB_WGM_DOMAIN );?></option>
+							<option value=""><?php _e('Select the template from above field ','woocommerce_gift_cards_lite');?></option>
 							<?php
 						}
 						elseif(is_array($selectedtemplate) && !empty($selectedtemplate) && !empty($default_selected))
@@ -377,9 +377,12 @@ class Woocommerce_gift_cards_lite_Admin {
 			if( isset( $_POST['product-type'] ) ){
 				$_POST['product-type'] = sanitize_text_field($_POST['product-type']);
 				if( $_POST['product-type'] == 'wgm_gift_card' ){
-					$mwb_wgm_categ_enable = get_option('mwb_wgm_general_setting_categ_enable','off');
-					if( $mwb_wgm_categ_enable == 'off' ){
-						$term = __('Gift Card',  MWB_WGM_DOMAIN  );
+					$general_settings = get_option('mwb_wgm_general_settings',array());
+					
+					$mwb_wgm_categ_enable = $this->mwb_common_fun->mwb_wgm_get_template_data($general_settings,'mwb_uwgc_general_setting_categ_enable');
+
+					if( empty($mwb_wgm_categ_enable)){
+						$term = __('Gift Card', 'woocommerce_gift_cards_lite' );
 						$taxonomy = 'product_cat';
 						$term_exist = term_exists( $term, $taxonomy);
 						if ($term_exist == 0 || $term_exist == null){
@@ -414,7 +417,10 @@ class Woocommerce_gift_cards_lite_Admin {
 						{
 							$mwb_wgm_pricing['template'] = $_POST['mwb_wgm_email_template'];
 						}
-						if( isset($_POST['mwb_wgm_email_defualt_template'])){
+						if (!isset($_POST['mwb_wgm_email_defualt_template']) || empty($_POST['mwb_wgm_email_defualt_template'])) {
+							$mwb_wgm_pricing['template'] = $template[0];
+						}
+						else{
 							$mwb_wgm_pricing['by_default_tem'] = $_POST['mwb_wgm_email_defualt_template'];
 						}
 						switch ( $selected_pricing ){
@@ -461,7 +467,8 @@ class Woocommerce_gift_cards_lite_Admin {
 				if( $key != 'general' && $key != 'advanced' && $key != 'inventory' && $key != 'shipping'){
 					$tabs[$key]['class'][] = 'hide_if_wgm_gift_card'; 
 				}
-			}	
+			}
+			$tabs = apply_filters('mwb_wgm_product_data_tabs',$tabs);	
 		}
 		return $tabs;
 	}
@@ -497,7 +504,7 @@ class Woocommerce_gift_cards_lite_Admin {
 									}
 									if( is_array( $giftcoupon ) && !empty( $giftcoupon ) ){	
 										?>
-										<p style="margin:0;"><b><?php _e('Gift Coupon', MWB_WGM_DOMAIN );?> :</b>
+										<p style="margin:0;"><b><?php _e('Gift Coupon','woocommerce_gift_cards_lite');?> :</b>
 											<?php
 											foreach ( $giftcoupon as $key => $value ){
 												?>
@@ -508,6 +515,7 @@ class Woocommerce_gift_cards_lite_Admin {
 										</p>
 										<?php
 									}
+									do_action('mwb_wgm_after_order_itemmeta',$item_id, $item, $_product);
 								}
 							}
 						}
@@ -528,7 +536,7 @@ class Woocommerce_gift_cards_lite_Admin {
 		if ( ! current_user_can( 'edit_shop_orders' ) ){
 			return;
 		}
-		array_push($order_items, 'Delivery Method','Original Price');
+		array_push($order_items, 'Delivery Method','Original Price','Selected Template');
 		$order_items = apply_filters('mwb_wgm_giftcard_hidden_order_itemmeta',$order_items);
 		return $order_items;
 	}
@@ -542,20 +550,20 @@ class Woocommerce_gift_cards_lite_Admin {
 		 */
 	public function mwb_wgm_giftcard_custom_post(){
 		$labels = array(
-			'name'               => __( 'Gift Cards', 'post type general name',  MWB_WGM_DOMAIN  ),
-			'singular_name'      => __( 'Gift Card', 'post type singular name',  MWB_WGM_DOMAIN  ),
-			'menu_name'          => __( 'Gift Cards', 'admin menu',  MWB_WGM_DOMAIN  ),
-			'name_admin_bar'     => __( 'Gift Card', 'add new on admin bar',  MWB_WGM_DOMAIN  ),
-			'add_new'            => __( 'Add New',  MWB_WGM_DOMAIN  ),
-			'add_new_item'       => __( 'Add New Gift Card',  MWB_WGM_DOMAIN  ),
-			'new_item'           => __( 'New Gift Card',  MWB_WGM_DOMAIN  ),
-			'edit_item'          => __( 'Edit Gift Card',  MWB_WGM_DOMAIN  ),
-			'view_item'          => __( 'View Gift Card',  MWB_WGM_DOMAIN  ),
-			'all_items'          => __( 'All Gift Cards',  MWB_WGM_DOMAIN  ),
-			'search_items'       => __( 'Search Gift Cards',  MWB_WGM_DOMAIN  ),
-			'parent_item_colon'  => __( 'Parent Gift Cards:',  MWB_WGM_DOMAIN  ),
-			'not_found'          => __( 'No giftcards found.',  MWB_WGM_DOMAIN  ),
-			'not_found_in_trash' => __( 'No giftcards found in Trash.',  MWB_WGM_DOMAIN  )
+			'name'               => __( 'Gift Cards', 'post type general name', 'woocommerce_gift_cards_lite' ),
+			'singular_name'      => __( 'Gift Card', 'post type singular name', 'woocommerce_gift_cards_lite' ),
+			'menu_name'          => __( 'Gift Cards', 'admin menu', 'woocommerce_gift_cards_lite' ),
+			'name_admin_bar'     => __( 'Gift Card', 'add new on admin bar', 'woocommerce_gift_cards_lite' ),
+			'add_new'            => __( 'Add New', 'woocommerce_gift_cards_lite' ),
+			'add_new_item'       => __( 'Add New Gift Card', 'woocommerce_gift_cards_lite' ),
+			'new_item'           => __( 'New Gift Card', 'woocommerce_gift_cards_lite' ),
+			'edit_item'          => __( 'Edit Gift Card', 'woocommerce_gift_cards_lite' ),
+			'view_item'          => __( 'View Gift Card', 'woocommerce_gift_cards_lite' ),
+			'all_items'          => __( 'All Gift Cards', 'woocommerce_gift_cards_lite' ),
+			'search_items'       => __( 'Search Gift Cards', 'woocommerce_gift_cards_lite' ),
+			'parent_item_colon'  => __( 'Parent Gift Cards:', 'woocommerce_gift_cards_lite' ),
+			'not_found'          => __( 'No giftcards found.', 'woocommerce_gift_cards_lite' ),
+			'not_found_in_trash' => __( 'No giftcards found in Trash.', 'woocommerce_gift_cards_lite' )
 		);
 		$mwb_wgm_template = array(
 			'create_posts' => false,
@@ -563,7 +571,7 @@ class Woocommerce_gift_cards_lite_Admin {
 		$mwb_wgm_template = apply_filters('mwb_wgm_template_capabilities', $mwb_wgm_template);
 		$args = array(
 			'labels'             => $labels,
-			'description'        => __( 'Description.',  MWB_WGM_DOMAIN  ),
+			'description'        => __( 'Description.', 'woocommerce_gift_cards_lite' ),
 			'public'             => false,
 			'publicly_queryable' => false,
 			'show_ui'            => true,
@@ -594,44 +602,44 @@ class Woocommerce_gift_cards_lite_Admin {
 			if(isset($mwb_wgm_post_type) && $mwb_wgm_post_type == 'giftcard') {
 				?>
 				<div class="postbox" id="mwb_wgm_mail_instruction" style="display: block;">
-					<h2 class="mwb_wgm_handle"><span><?php _e('Instruction for using Shortcode',  MWB_WGM_DOMAIN );?></span></h2>
+					<h2 class="mwb_wgm_handle"><span><?php _e('Instruction for using Shortcode', 'woocommerce_gift_cards_lite');?></span></h2>
 					<div class="mwb_wgm_inside">
 						<table  class="form-table">
 							<tr>
-								<th><?php _e('SHORTCODE',  MWB_WGM_DOMAIN );?></th>
-								<th><?php _e('DESCRIPTION.',  MWB_WGM_DOMAIN );?></th>			
+								<th><?php _e('SHORTCODE', 'woocommerce_gift_cards_lite');?></th>
+								<th><?php _e('DESCRIPTION.', 'woocommerce_gift_cards_lite');?></th>			
 							</tr>
 							<tr>
 								<td>[LOGO]</td>
-								<td><?php _e('Replace with logo of company on email template.',  MWB_WGM_DOMAIN );?></td>			
+								<td><?php _e('Replace with logo of company on email template.', 'woocommerce_gift_cards_lite');?></td>			
 							</tr>
 							<tr>
 								<td>[TO]</td>
-								<td><?php _e('Replace with email of user to which giftcard send.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with email of user to which giftcard send.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<tr>
 								<td>[FROM]</td>
-								<td><?php _e('Replace with email/name of the user who send the giftcard.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with email/name of the user who send the giftcard.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<tr>
 								<td>[MESSAGE]</td>
-								<td><?php _e('Replace with Message of user who send the giftcard.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with Message of user who send the giftcard.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<tr>
 								<td>[AMOUNT]</td>
-								<td><?php _e('Replace with Giftcard Amount.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with Giftcard Amount.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<tr>
 								<td>[COUPON]</td>
-								<td><?php _e('Replace with Giftcard Coupon Code.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with Giftcard Coupon Code.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<tr>
 								<td>[DEFAULTEVENT]</td>
-								<td><?php _e('Replace with Default event image set on Setting.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with Default event image set on Setting.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<tr>
 								<td>[EXPIRYDATE]</td>
-								<td><?php _e('Replace with Giftcard Expiry Date.',  MWB_WGM_DOMAIN );?></td>
+								<td><?php _e('Replace with Giftcard Expiry Date.', 'woocommerce_gift_cards_lite');?></td>
 							</tr>
 							<?php 
 							do_action('mwb_wgm_template_custom_shortcode');
@@ -693,7 +701,7 @@ class Woocommerce_gift_cards_lite_Admin {
 
 
 				$gifttemplate_new = array(
-					'post_title' => __('Happy Mothers Day', MWB_WGM_DOMAIN ),
+					'post_title' => __('Happy Mothers Day','woocommerce_gift_cards_lite'),
 					'post_content' => $mwb_wgm_new_mom_template,
 					'post_status' => 'publish',
 					'post_author' => get_current_user_id(),
@@ -809,7 +817,7 @@ class Woocommerce_gift_cards_lite_Admin {
 				$mwb_wgm_custom_template_html = '<table class="email-container" style="margin: auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="padding-top: 20px; text-align: center; color: #f48643; font-weight: bold; padding-left: 20px; font-size: 20px; font-family: sans-serif; position: absolute;">[LOGO]</td></tr></tbody></table><table class="email-container" style="margin: auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td bgcolor="#ffffff"><span class="feature_image" style="display: block; margin: 0px auto; width: 100%;"> [FEATUREDIMAGE] </span></td></tr><tr><td style="text-align: center; font-family: sans-serif; font-size: 15px; color: #1976e7; vertical-align: middle; display: table-cell; background: #7D0404;"><h2 style="font-size: 16px; display: block; text-align: center!important; border: 5px dashed #ffffff; padding: 15px 0px; margin: 0px; color: #fff;">COUPON CODE <span style="display: block; font-size: 24px; padding: 8px 0 0 0; color: #fff;">[COUPON]</span> <span style="display: block; font-size: 16px; padding: 8px 0 0 0;">(Ed:[EXPIRYDATE])</span></h2></td></tr><tr><td dir="ltr" style="padding: 22px 10px; background: #fff;" align="center" valign="top" bgcolor="#ffb001" width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" valign="top" width="50%"><table border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="img_width_left_table" dir="ltr" style="padding: 0 10px 0 10px; width: 50%;" valign="top">[DEFAULTEVENT]</td></tr></tbody></table></td><td class="stack-column-center" valign="top" width="50%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff; padding: 0px 30px 0px 0px; word-wrap: break-word; text-align: left;" valign="top"><p style="color: #000; font-size: 15px; height: auto; min-height: 180px; padding: 0px 0px 20px; text-align: left; word-break: break-word; white-space: pre-line;">[MESSAGE]</p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #000; word-wrap: break-word;" valign="top"><p style="margin-bottom: 0px; font-size: 16px; text-align: left; color: #000;"><span style="display: inline-block; text-align: right; font-size: 15px; vertical-align: top; color: #000;">From-</span><span style="display: inline-block; text-align: left; font-size: 14px; vertical-align: top; word-break: break-all; color: #000;">[FROM]</span></p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; word-wrap: break-word; color: #fff;" valign="top"><p style="margin-top: 0px; font-size: 16px; line-height: 25px; text-align: left;"><span style="display: inline-block; text-align: right; font-size: 15px; vertical-align: top; color: #000;">To-</span><span style="display: inline-block; text-align: left; font-size: 14px; vertical-align: top; word-break: break-all; color: #000;">[TO]</span></p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #fff; word-wrap: break-word;" valign="top"><p style="text-align: left; font-weight: bold; font-size: 28px;"><span style="color: #800505; margin: 20px 0; vertical-align: top;">[AMOUNT]/- </span></p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="background: #7D0404;"><table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding: 40px; font-family: sans-serif; font-size: 16px; mso-height-rule: exactly; line-height: 20px; color: #fff; text-align: center;">[DISCLAIMER]</td></tr></tbody></table></td></tr></tbody></table>';
 
 				$mwb_wgm_template = array(
-					'post_title' => __('Custom Template', MWB_WGM_DOMAIN ),
+					'post_title' => __('Custom Template','woocommerce_gift_cards_lite'),
 					'post_content' => $mwb_wgm_custom_template_html,
 					'post_status' => 'publish',
 					'post_author' => get_current_user_id(),
@@ -823,7 +831,7 @@ class Woocommerce_gift_cards_lite_Admin {
 		/*Add Preview button link in giftcard post */
 		public function mwb_wgm_preview_gift_template($actions, $post){
 			if ( $post->post_type == 'giftcard') {
-				$actions['mwb_wgm_quick_view'] = '<a href="' .admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID.'&mwb_wgm_template=giftcard&TB_iframe=true&width=600&height=500' ). '" rel="permalink" class="thickbox">' .  __( 'Preview', 'woocommerce_gift_cards_lit ) . '</a>';
+				$actions['mwb_wgm_quick_view'] = '<a href="' .admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID.'&mwb_wgm_template=giftcard&TB_iframe=true&width=600&height=500' ). '" rel="permalink" class="thickbox">' .  __( 'Preview', 'woocommerce_gift_cards_lite' ) . '</a>';
 			}
 			return $actions;
 		}
@@ -884,7 +892,6 @@ class Woocommerce_gift_cards_lite_Admin {
 					$args['expirydate'] = $expirydate_format;
 					$args['amount'] =  wc_price(100);
 					$args['templateid'] = $templateid;
-					
 					$style = '<style>
 					table, th, tr, td {
 						border: medium none;
@@ -906,7 +913,7 @@ class Woocommerce_gift_cards_lite_Admin {
 	public function mwb_wgm_append_default_template()
 	{	
 		check_ajax_referer( 'mwb-wgm-verify-nonce', 'mwb_nonce' );
-		$response['result'] = __( 'Fail due to an error', MWB_WGM_DOMAIN );
+		$response['result'] = __( 'Fail due to an error', 'woocommerce_gift_cards_lite');
 		$template_ids = $_POST['template_ids'];
 
 		if(isset($template_ids) && !empty($template_ids))

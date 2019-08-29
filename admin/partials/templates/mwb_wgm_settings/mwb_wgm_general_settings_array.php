@@ -23,7 +23,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'id' => 'mwb_wgm_general_setting_shop_page_enable',
 	  'type' => 'checkbox',
 	  'class' => 'input-text',
-	  'desc_tip' =>  __('Check this box to enable giftcard product listing on shop page.', 'giftware', MWB_WGM_DOMAIN ),
+	  'desc_tip' =>  __('Check this box to enable giftcard product listing on shop page.', MWB_WGM_DOMAIN ),
 	  'desc' => __('Enable Giftcard Product listing on shop page', MWB_WGM_DOMAIN )
 	 ),		
 	array(

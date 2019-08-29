@@ -32,32 +32,22 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 $activated = true;
-$mwb_wgc_pro_plugin_active = false;
-$mwb_gw_pro_plugin_active = false;
 if ( function_exists( 'is_multisite' ) && is_multisite() ){
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ){
 		$activated = false;
-	}
-	if ( !is_plugin_active( 'woocommerce-ultimate-gift-card/woocommerce-ultimate-gift-card.php' ) ){
-		$activated = false;
-		$mwb_wgc_pro_plugin_active = true;
 	}
 }
 else{
 	if ( !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) )) ){
 		$activated = false;
 	}
-	if ( in_array( 'woocommerce-ultimate-gift-card/woocommerce-ultimate-gift-card.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) )) ){
-		$activated = false;
-		$mwb_wgc_pro_plugin_active = true;
-	}
 }
 
 /**
  * Checking if WooCommerce is active
  **/
-if ($activated && !$mwb_wgc_pro_plugin_active){
+if ($activated){
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
@@ -130,7 +120,7 @@ if ($activated && !$mwb_wgc_pro_plugin_active){
 			}
 		}
 	}
-
+	
 	register_activation_hook(__FILE__, 'mwb_wgc_create_gift_card_taxonomy');
 
 	/**
@@ -258,13 +248,8 @@ if ($activated && !$mwb_wgc_pro_plugin_active){
 	include(MWB_WGC_DIRPATH.'/includes/giftcard_redeem_api_addon.php');
 }
 else{
-	if($mwb_wgc_pro_plugin_active){
-		//deactivate if Woocommerce Ultimate Gift Card is already active
-		add_action( 'admin_init', 'mwb_wgc_deactivate_pro_is_activated' ); 
-	}else{
 		//deactivate if Woocommerce is not activated
-		add_action( 'admin_init', 'mwb_wgc_plugin_deactivate' ); 
-	}
+		add_action( 'admin_init', 'mwb_wgc_plugin_deactivate' );
 
 	/**
 	 * Show warning message if woocommerce is not install
@@ -285,24 +270,6 @@ else{
  	}
 
  	/**
-	 * Show warning message if Woocommerce Ultimate Gift Card is already active
-	 * @since 1.0.0
-	 * @name mwb_wgc_plugin_error_notice_for_pro()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
- 	function mwb_wgc_plugin_error_notice_for_pro(){
- 	?>
- 		<div class="error notice is-dismissible">
- 			<p><?php _e( 'Ultimate_Woocommerce_Gift_Card deactivated successfully, As you have activated Ultimate_Woocommerce_Gift_Card-Premium', MWB_WGM_DOMAIN ); ?></p>
-   		</div>
-   		<style>
-   			#message{display:none;}
-   		</style>
- 	<?php
- 	}
-
- 	/**
  	 * Call Admin notices for Woocommerce
  	 * 
  	 * @name mwb_wgc_plugin_deactivate()
@@ -312,19 +279,6 @@ else{
   	function mwb_wgc_plugin_deactivate(){
 	   deactivate_plugins( plugin_basename( __FILE__ ) );
 	   add_action( 'admin_notices', 'mwb_wgc_plugin_error_notice' );
-	}
-
-	/**
- 	 * Call Admin notices for Pro version
- 	 * 
- 	 * @name mwb_wgc_deactivate_pro_is_activated()
- 	 * @author makewebbetter<webmaster@makewebbetter.com>
- 	 * @link https://www.makewebbetter.com/
- 	 */ 
-	function mwb_wgc_deactivate_pro_is_activated(){
-
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		add_action( 'admin_notices', 'mwb_wgc_plugin_error_notice_for_pro' );
 	}
 }
 

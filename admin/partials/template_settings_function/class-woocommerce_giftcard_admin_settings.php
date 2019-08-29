@@ -483,40 +483,74 @@ class Woocommerce_Giftcard_Admin_settings {
 		<p class="<?php echo (array_key_exists('class', $setting_html_array))?$setting_html_array['class']:'';?>"><?php echo (array_key_exists('bottom_desc', $setting_html_array))?$setting_html_array['bottom_desc']:'';?></p>
 		<?php
 	}
+
+	/**
+	*This function is used to sanitize email settings data
+	*@name mwb_wgm_sanitize_email_settings_data
+	*@param $value
+	*@since 1.0.0 
+	*/
+
+	public function mwb_wgm_sanitize_email_settings_data($posted_data, $setting_html_array){
+		if(is_array($setting_html_array) && !empty($setting_html_array) && is_array($posted_data)){
+			
+			if(isset($setting_html_array['top']) && is_array($setting_html_array['top'])){
+				foreach($setting_html_array['top'] as $top_section_setting){
+					if(isset($top_section_setting['id']) && array_key_exists($top_section_setting['id'], $posted_data)){
+						if( isset($top_section_setting['type']) && ( $top_section_setting['type'] === 'text' || $top_section_setting['type'] === 'textWithDesc' ) && $top_section_setting['type'] !== 'wp_editor' ){
+
+							$posted_values = preg_replace('/\\\\/', '', $posted_data[$top_section_setting['id']]);
+							$posted_data[$top_section_setting['id']] = sanitize_text_field($posted_values);
+
+						}
+					}
+				}
+			}
+			if(isset($setting_html_array['middle']) && is_array($setting_html_array['middle'])){
+				foreach($setting_html_array['middle'] as $mid_section_setting){
+					if(isset($mid_section_setting['id']) && array_key_exists($mid_section_setting['id'], $posted_data)){
+						if( isset($mid_section_setting['type']) && ( $mid_section_setting['type'] === 'text' || $mid_section_setting['type'] === 'textWithDesc' ) && $mid_section_setting['type'] !== 'wp_editor' ){
+
+							$posted_values = preg_replace('/\\\\/', '', $posted_data[$mid_section_setting['id']]);
+							$posted_data[$mid_section_setting['id']] = sanitize_text_field($posted_values);
+
+						}
+					}
+				}
+			}
+			if(isset($setting_html_array['bottom']) && is_array($setting_html_array['bottom'])){
+				foreach($setting_html_array['bottom'] as $bottom_section_setting){
+					if(isset($bottom_section_setting['id']) && array_key_exists($bottom_section_setting['id'], $posted_data)){
+						if( isset($bottom_section_setting['type']) && ( $bottom_section_setting['type'] === 'text' || $bottom_section_setting['type'] === 'textWithDesc' ) && $bottom_section_setting['type'] !== 'wp_editor' ){
+							$posted_values = preg_replace('/\\\\/', '', $posted_data[$bottom_section_setting['id']]);
+							$posted_data[$bottom_section_setting['id']] = sanitize_text_field($posted_values);
+
+						}
+					}
+				}
+			}
+		}
+		return $posted_data;
+	}
+
 	/**
 	*This function is used to sanitize data 
 	*@name mwb_wgm_sanitize_settings_data
 	*@param $value
 	*@since 1.0.0 
 	*/
+	
 	public function mwb_wgm_sanitize_settings_data( $posted_data, $setting_html_array ) {
-		if(isset( $posted_data ) && is_array( $posted_data ) && !empty( $posted_data ) ) {
-			if(array_key_exists('top', $setting_html_array ) ||  array_key_exists('middle', $setting_html_array ) || array_key_exists('bottom', $setting_html_array ) ) {
-				foreach($posted_data as $posted_key => $posted_values){
-					if(is_array($setting_html_array) && in_array($posted_key, array_column($setting_html_array['top'], 'id')) ){
-						$posted_values = preg_replace('/\\\\/', '', $posted_values);
-						$posted_data[$posted_key] = sanitize_text_field($posted_values);
-					}elseif(is_array($setting_html_array) && in_array($posted_key, array_column($setting_html_array['middle'], 'id') )){
-						$posted_values = preg_replace('/\\\\/', '', $posted_values);
-						$posted_data[$posted_key] = sanitize_text_field($posted_values);
-					}elseif( isset($setting_html_array['bottom']) ){
-						if( is_array($setting_html_array) && in_array($posted_key, array_column($setting_html_array['bottom'], 'id')) ){
+		if( isset( $posted_data ) && is_array( $posted_data ) && !empty( $posted_data ) ) {
+			foreach ( $posted_data as $posted_key => $posted_values ) {
+				foreach ( $setting_html_array as $htmlkey => $htmlvalue ) {
+					if( is_array($setting_html_array) && in_array($posted_key, $htmlvalue) ){
+						if( $htmlvalue['type'] == 'text' || $htmlvalue['type'] == 'textarea' ) {
 							$posted_values = preg_replace('/\\\\/', '', $posted_values);
 							$posted_data[$posted_key] = sanitize_text_field($posted_values);
 						}
 					}
-				}
-			}else{
-				foreach ( $posted_data as $posted_key => $posted_values ) {
-					foreach ( $setting_html_array as $htmlkey => $htmlvalue ) {
-						if( is_array($setting_html_array) && in_array($posted_key, $htmlvalue) ){
-							if( $htmlvalue['type'] == 'text' || $htmlvalue['type'] == 'textarea' ) {
-								$posted_values = preg_replace('/\\\\/', '', $posted_values);
-								$posted_data[$posted_key] = sanitize_text_field($posted_values);
-							}
-						}
-					}	
-				}
+				}	
 			}
 		}
 		return $posted_data;		
