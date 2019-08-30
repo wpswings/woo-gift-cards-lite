@@ -4,7 +4,7 @@
  * @return string The default policy content.
  */
 function mwb_wgm_plugin_get_default_privacy_content() {
-  return  '<h2>' . __( 'Stored Recipient Details for sending Gift Card','woocommerce_gift_cards_lite' ) . '</h2>' .
+  return  '<h2>' . __( 'Stored Recipient Details for sending Gift Card', MWB_WGM_DOMAIN ) . '</h2>' .
   '<p>' . __( "We store your recipient's email address, recipient's name, gift message, your name so that we can send them again your Gift Card with all proper details has been filled by you at the time of purchasing Gift Card Product if they are arrived","woocommerce_gift_cards_lite" ) . '</p>';
 }
 
@@ -13,7 +13,7 @@ function mwb_wgm_plugin_get_default_privacy_content() {
  */
 function mwb_wgm_plugin_add_suggested_privacy_content() {
   $content = mwb_wgm_plugin_get_default_privacy_content();
-  wp_add_privacy_policy_content( __( 'Woocommerce Gift Cards Lite','woocommerce_gift_cards_lite' ), $content );
+  wp_add_privacy_policy_content( __( 'Woocommerce Gift Cards Lite', MWB_WGM_DOMAIN ), $content );
 }
 
 add_action( 'admin_init', 'mwb_wgm_plugin_add_suggested_privacy_content', 20 );
@@ -31,7 +31,7 @@ add_action( 'admin_init', 'mwb_wgm_plugin_add_suggested_privacy_content', 20 );
  */
 function mwb_wgm_plugin_register_exporters( $exporters ) {
   $exporters[] = array(
-    'exporter_friendly_name' => __( 'Recipient Details','woocommerce_gift_cards_lite' ),
+    'exporter_friendly_name' => __( 'Recipient Details', MWB_WGM_DOMAIN ),
     'callback'               => 'mwb_wgm_plugin_user_data_exporter',
   );
   return $exporters;
@@ -56,7 +56,7 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
     
     $group_id = 'mwb-wgm-recipient-details';
    
-    $group_label = __( 'Gift Card Details','woocommerce_gift_cards_lite' );
+    $group_label = __( 'Gift Card Details', MWB_WGM_DOMAIN );
 
     // Plugins can add as many items in the item data array as they want
     $data = array();
@@ -95,19 +95,19 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 						//Add these data into $data
 						if ( !empty($to) ) {
 					      $data[] = array(
-					        'name'  => __( 'Recipient Name/Email', 'woocommerce_gift_cards_lite' ),
+					        'name'  => __( 'Recipient Name/Email',  MWB_WGM_DOMAIN ),
 					        'value' => $to,
 					      );
 					    }
 					    if ( !empty($from) ) {
 					      $data[] = array(
-					        'name'  => __( 'Buyer Name/Email', 'woocommerce_gift_cards_lite' ),
+					        'name'  => __( 'Buyer Name/Email',  MWB_WGM_DOMAIN ),
 					        'value' => $from,
 					      );
 					    }
 					    if ( !empty($gift_msg) ) {
 					      $data[] = array(
-					        'name'  => __( 'Gift Message', 'woocommerce_gift_cards_lite' ),
+					        'name'  => __( 'Gift Message',  MWB_WGM_DOMAIN ),
 					        'value' => $gift_msg,
 					      );
 					    }
@@ -144,7 +144,7 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
  */
 function mwb_wgm_plugin_register_erasers( $erasers = array() ) {
   $erasers[] = array(
-    'eraser_friendly_name' => __( 'Recipient Details','woocommerce_gift_cards_lite' ),
+    'eraser_friendly_name' => __( 'Recipient Details', MWB_WGM_DOMAIN ),
     'callback'               => 'mwb_wgm_plugin_user_data_eraser',
   );
   return $erasers;
@@ -197,7 +197,7 @@ function mwb_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 								if($status){
 									$items_removed  = true;
 								}else{
-									$messages[] = __( 'Removed key "TO"','woocommerce_gift_cards_lite');
+									$messages[] = __( 'Removed key "TO"', MWB_WGM_DOMAIN);
 	      							$items_retained = true;
 								}
 							}
@@ -206,7 +206,7 @@ function mwb_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 								if($status){
 									$items_removed  = true;
 								}else{
-									$messages[] = __( 'Removed key "From"','woocommerce_gift_cards_lite');
+									$messages[] = __( 'Removed key "From"', MWB_WGM_DOMAIN);
 	      							$items_retained = true;
 								}
 							}
@@ -215,7 +215,7 @@ function mwb_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 								if($status){
 									$items_removed  = true;
 								}else{
-									$messages[] = __( 'Removed key "Message"','woocommerce_gift_cards_lite');
+									$messages[] = __( 'Removed key "Message"', MWB_WGM_DOMAIN);
 	      							$items_retained = true;
 								}
 							}
