@@ -454,24 +454,38 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgc_check_expiry_date( $expiry_date ){
+
 			$todaydate = date_i18n("Y-m-d");
 			if(isset($expiry_date) && !empty($expiry_date)){
 				if($expiry_date > 0 || $expiry_date === 0){
 					
 					$general_settings = get_option('mwb_wgm_general_settings', array());
-					$selected_date = $this->mwb_wgm_get_template_data($general_settings,'mwb_gw_general_setting_enable_selected_format_1');
-					if( isset( $selected_date ) || empty($selected_date) ){
-						$selected_date = false;
-					}
+					$selected_date = $this->mwb_wgm_get_template_data($general_settings,'mwb_uwgc_general_setting_enable_selected_format');
+
 					if( isset($selected_date) && $selected_date != null && $selected_date != "")
 					{
-						if($selected_date == 'd/m/Y'){
-							$expirydate_format = date_i18n('Y-m-d',strtotime( "$todaydate +$expiry_date day" ));
-						}
-						else {
+							if($selected_date == 'yy/mm/dd'){
+								$selected_date = 'Y/m/d';
+							}
+							elseif($selected_date == 'mm/dd/yy'){
+								$selected_date = 'm/d/Y';
+							}
+							elseif($selected_date == 'd M, yy'){
+								$selected_date = 'd M, Y';
+							}
+							elseif($selected_date == 'DD, d MM, yy'){
+								$selected_date = 'l, d F, Y';
+							}
+							elseif($selected_date == 'yy-mm-dd'){
+								$selected_date = 'Y-m-d';
+							}
+							elseif($selected_date == 'dd/mm/yy'){
+								$selected_date = 'd/m/Y';
+							}
+							elseif($selected_date == 'd.m.Y'){
+								$selected_date = 'd.m.Y';
+							}
 							$expirydate_format = date_i18n($selected_date,strtotime( "$todaydate +$expiry_date day" ));
-						}
-						
 					}
 					else
 					{
@@ -483,7 +497,6 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 				$expirydate_format = __("No Expiration", MWB_WGM_DOMAIN);
 			}
 			return $expirydate_format;
-
 		}
 	}
 }
