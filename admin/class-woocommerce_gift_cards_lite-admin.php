@@ -850,17 +850,12 @@ class Woocommerce_gift_cards_lite_Admin {
 						$expirydate = date_i18n( "Y-m-d", strtotime( "$todaydate +$expiry_date day" ) );
 						$expirydate_format = date_create($expirydate);
 						
-						$format = array(
-							'for' => 'saved_dateformat',
-							'key'=>'',
-							'dateformat' => 'Y-m-d',
-						);
-						if(is_array($format) && !empty($format)){
-							$mwb_wgm_db_key = apply_filters('mwb_wgm_options_key',$format);
-							$selected_date =$this->mwb_common_fun->mwb_wgm_get_template_data($mwb_wgm_general_settings,$mwb_wgm_db_key['key']);  
-						}
+						$selected_date = $this->mwb_common_fun->mwb_wgm_get_template_data($mwb_wgm_general_settings,'mwb_uwgc_general_setting_enable_selected_format');
+
 						if( isset($selected_date) && $selected_date !=null && $selected_date != "")
 						{	
+							$selected_date = apply_filters('mwb_wgm_selected_date_format',$selected_date);
+
 							$expirydate_format = date_i18n($selected_date,strtotime( "$todaydate +$expiry_date day" ));
 						}
 						else
@@ -937,6 +932,18 @@ class Woocommerce_gift_cards_lite_Admin {
 		}
 		echo json_encode($response);
 		wp_die();
+	}
+	//plugin updation 
+	public function mwb_wgm_update_giftacard( $upgrader_object, $options ){
+		$current_plugin_path_name = plugin_basename( _FILE_ );
+	    if ($options['action'] == 'update' && $options['type'] == 'plugin' ){
+	       foreach($options['plugins'] as $each_plugin){
+	          if ($each_plugin == $current_plugin_path_name){
+	            $mwv_activator_obj = new MWB_WGM_GIFTCARD_ACTIVATION_FUNCTION();
+	            $mwv_activator_obj->mwb_wgm_restore_data();
+	          }
+	       }
+	    }
 	}
 }
 ?>

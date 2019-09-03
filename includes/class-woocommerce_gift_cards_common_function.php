@@ -454,7 +454,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgc_check_expiry_date( $expiry_date ){
-
+			
 			$todaydate = date_i18n("Y-m-d");
 			if(isset($expiry_date) && !empty($expiry_date)){
 				if($expiry_date > 0 || $expiry_date === 0){
@@ -464,27 +464,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 
 					if( isset($selected_date) && $selected_date != null && $selected_date != "")
 					{
-							if($selected_date == 'yy/mm/dd'){
-								$selected_date = 'Y/m/d';
-							}
-							elseif($selected_date == 'mm/dd/yy'){
-								$selected_date = 'm/d/Y';
-							}
-							elseif($selected_date == 'd M, yy'){
-								$selected_date = 'd M, Y';
-							}
-							elseif($selected_date == 'DD, d MM, yy'){
-								$selected_date = 'l, d F, Y';
-							}
-							elseif($selected_date == 'yy-mm-dd'){
-								$selected_date = 'Y-m-d';
-							}
-							elseif($selected_date == 'dd/mm/yy'){
-								$selected_date = 'd/m/Y';
-							}
-							elseif($selected_date == 'd.m.Y'){
-								$selected_date = 'd.m.Y';
-							}
+							$selected_date = apply_filters('mwb_wgm_selected_date_format',$selected_date);
 							$expirydate_format = date_i18n($selected_date,strtotime( "$todaydate +$expiry_date day" ));
 					}
 					else

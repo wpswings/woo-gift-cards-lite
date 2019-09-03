@@ -692,11 +692,12 @@ class Woocommerce_gift_cards_lite_Public {
 	 */
 	public function mwb_wgc_woocommerce_order_status_changed( $order_id, $old_status, $new_status ){
 		
-		do_action('mwb_uwgc_before_status_changed', $order_id, $old_status, $new_status );
+		$mwb_wgm_mail_template_data = array();
 		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			if($old_status != $new_status){
 				if($new_status == 'completed' || $new_status == 'processing'){
+
 					$mailalreadysend = get_post_meta( $order_id, 'mwb_wgm_order_giftcard', true );
 					if($mailalreadysend == "send"){
 						return;	
@@ -716,6 +717,7 @@ class Woocommerce_gift_cards_lite_Public {
 					$to = "";
 					$from = "";
 					$gift_order = false;
+					$selected_template = '';
 					$original_price = 0;
 					$order = wc_get_order( $order_id );
 					foreach( $order->get_items() as $item_id => $item ){
@@ -759,7 +761,6 @@ class Woocommerce_gift_cards_lite_Public {
 								$mailsend = true;
 								$selected_template = $item['item_meta']['Selected Template'][0];
 							}
-							do_action('mwb_uwgc_add_item_for_less_woo_version' , $item );
 						}
 						else
 						{
@@ -796,11 +797,24 @@ class Woocommerce_gift_cards_lite_Public {
 									$mailsend = true;
 									$selected_template = $value->value;				
 								}
-								do_action('mwb_uwgc_add_item_for_greater_woo_version' , $item );
 							}
-							do_action('mwb_uwgc_add_item_additional_check' , $item );
 						}
-						if( $mailsend ){
+						$mwb_wgm_mail_template_data = array(
+							'to' => $to,
+							'from' => $from,
+							'gift_msg' => $gift_msg,
+							'delivery_method' => $delivery_method,
+							'original_price' => $original_price,
+							'selected_template' => $selected_template,
+							'mail_send' => $mailsend,
+							'product_id' => $pro_id,
+							'item_id'	=> $item_id,
+							'item_quantity'=>$item_quantity
+						);
+						
+						$mwb_wgm_mail_template_data = apply_filters('mwb_wgm_mail_templates_data_set', $mwb_wgm_mail_template_data, $order->get_items(), $order_id);
+
+						if( isset($mwb_wgm_mail_template_data['mail_send']) && $mwb_wgm_mail_template_data['mail_send'] ){
 
 							$gift_order = true;
 							$inc_tax_status = get_option('woocommerce_prices_include_tax',false);
@@ -813,8 +827,8 @@ class Woocommerce_gift_cards_lite_Public {
 							$couponamont = $original_price;
 
 							$mwb_wgm_lite = true;
-							$mwb_wgm_lite = apply_filters('mwb_wgm_check_lite' , $mwb_wgm_lite );
-							do_action('mwb_wgm_additional_condition');
+							$mwb_wgm_lite = apply_filters('mwb_wgm_check_coupon_creation_mails' , $mwb_wgm_mail_template_data, $order_id, $item, $mwb_wgm_lite );
+							
 							if( $mwb_wgm_lite ){
 								$general_setting = get_option( 'mwb_wgm_general_settings' ,  array() );
 								$giftcard_coupon_length = $this->mwb_common_fun->mwb_wgm_get_template_data($general_setting,'mwb_wgm_general_setting_giftcard_coupon_length');
@@ -825,7 +839,7 @@ class Woocommerce_gift_cards_lite_Public {
 									$gift_couponnumber = mwb_wgc_coupon_generator($giftcard_coupon_length);
 									if($this->mwb_common_fun->mwb_wgc_create_gift_coupon($gift_couponnumber, $couponamont, $order_id, $item['product_id'],$to)){
 										$todaydate = date_i18n("Y-m-d");
-										$expiry_date = $general_setting['mwb_wgm_general_setting_giftcard_expiry'];
+										$expiry_date = $this->mwb_common_fun->mwb_wgm_get_template_data($general_setting,'mwb_wgm_general_setting_giftcard_expiry');
 										$expirydate_format = $this->mwb_common_fun->mwb_wgc_check_expiry_date($expiry_date);
 										$mwb_wgm_common_arr['order_id'] = $order_id;
 										$mwb_wgm_common_arr['product_id'] = $pro_id;
@@ -838,6 +852,7 @@ class Woocommerce_gift_cards_lite_Public {
 										$mwb_wgm_common_arr['selected_template'] = isset($selected_template) ? $selected_template :'';
 										$mwb_wgm_common_arr['delivery_method'] = $delivery_method;
 										$mwb_wgm_common_arr['item_id'] = $item_id;
+										$mwb_wgm_common_arr = apply_filters('mwb_wgm_common_arr_data',$mwb_wgm_common_arr, $item, $order);
 										if( $this->mwb_common_fun->mwb_wgc_common_functionality( $mwb_wgm_common_arr,$order ) ){
 										}
 									}								
@@ -848,10 +863,10 @@ class Woocommerce_gift_cards_lite_Public {
 					if( $gift_order && $datecheck ){
 						update_post_meta( $order_id, 'mwb_wgm_order_giftcard', "send" );
 					}
+					do_action('mwb_wgm_thankyou_coupon_order_status_change',$order_id,$new_status);
 				}
 			}
 		}
-		do_action( "mwb_uwgc_additional_condition_check");
 	}
 
 	/**

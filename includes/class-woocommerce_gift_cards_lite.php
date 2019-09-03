@@ -176,6 +176,8 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_action('wp_ajax_mwb_wgm_append_default_template',$plugin_admin,'mwb_wgm_append_default_template');
 
 		$this->loader->add_action('wp_ajax_nopriv_mwb_wgm_append_default_template',$plugin_admin,'mwb_wgm_append_default_template');
+
+		$this->loader->add_action('upgrader_process_complete',$plugin_admin,'mwb_wgm_update_giftacard',10,2);
 	}
 
 	/**
