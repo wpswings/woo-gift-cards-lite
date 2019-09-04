@@ -87,8 +87,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'title' => __('Giftcard No of time usage', MWB_WGM_DOMAIN ), 
 	  'id' => 'mwb_wgm_general_setting_giftcard_use',
 	  'type' => 'number',
-	  'default' => 1,
-	  'custom_attribute' => array( 'min' => '1'),
+	  'custom_attribute' => array( 'min' => '0'),
 	  'class' => 'input-text mwb_gw_new_woo_ver_style_text',
 	  'desc_tip' => __('How many times this coupon can be used before Giftcard is void.', MWB_WGM_DOMAIN )
 	)

@@ -16,7 +16,7 @@
  * Plugin Name:       Ultimate WooCommerce Gift Cards
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
  * Description:       Ultimate WooCommerce Gift Cards allows merchants to create and sell multiple Gift Card Product having multiple price variation 
- * Version:           1.2.0
+ * Version:           1.2.1
  * Author:            makewebbetter
  * Author URI:        https://makewebbetter.com/
  * License:           GPL-3.0+
@@ -43,6 +43,7 @@ else{
 		$activated = false;
 	}
 }
+define( 'MWB_WGM_DOMAIN', 'woocommerce_gift_cards_lite' );
 
 /**
  * Checking if WooCommerce is active
@@ -51,8 +52,6 @@ if ($activated){
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'MWB_WGM_DOMAIN', 'woocommerce_gift_cards_lite' );
-
 	/**
 	* Check whether the wordpress version is greater than 4.9.6
 	*/

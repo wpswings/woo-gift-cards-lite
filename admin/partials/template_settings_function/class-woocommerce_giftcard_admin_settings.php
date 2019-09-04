@@ -77,7 +77,7 @@ class Woocommerce_Giftcard_Admin_settings {
 	*/
 	public function mwb_wgm_generate_number_html($value,$general_settings) {
 		$mwb_wgm_value = isset( $general_settings[ $value ['id'] ] ) ? intval($general_settings[$value['id']]) : '';
-		if( array_key_exists('default', $value ) ){
+		if( ($mwb_wgm_value == '') && ( array_key_exists('default', $value ) ) ) {
 			$mwb_wgm_value = $value['default'];
 		}
 		?>

@@ -47,8 +47,6 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 				$background_image = $this->mwb_wgm_get_template_data($mwb_wgm_mail_settings,'mwb_wgm_mail_setting_background_logo_value');
 				
 				$featured_image = wp_get_attachment_url( get_post_thumbnail_id($templateid) );
-				
-				$background_color = $this->mwb_wgm_get_template_data($mwb_wgm_mail_settings,'mwb_wgm_mail_setting_background_color');
 
 				if(isset($background_image) && !empty($background_image))
 				{
@@ -72,7 +70,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 				{
 					$giftcard_css = "<style>
 					table{
-						background-color: $background_color ;
+						background-color: transparent;
 					}
 					</style>";
 				}
@@ -374,7 +372,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 						$send_subject = "$bloginfo:";
 						$send_subject.=__(" Hurry!!! Giftcard is Received", MWB_WGM_DOMAIN);
 					}
-					
+					$send_subject = str_replace('[SITENAME]', $bloginfo, $send_subject);
 					$send_subject = str_replace('[BUYEREMAILADDRESS]', $from, $send_subject);
 					$send_subject = stripcslashes($send_subject);
 					$send_subject = html_entity_decode($send_subject,ENT_QUOTES, "UTF-8");

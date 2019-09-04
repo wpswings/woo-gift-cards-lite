@@ -37,7 +37,7 @@ if($flag){
 ?>
 <?php $delivery_settings = get_option('mwb_wgm_delivery_settings',true); ?>
 <?php if(!is_array($delivery_settings)): $delivery_settings = array(); endif;?>
-<h3 class="mwb_wgm_overview_heading"><?php _e('Shipping Settings', MWB_WGM_DOMAIN )?></h3>
+<h3 class="mwb_wgm_overview_heading"><?php _e('Delivery Settings', MWB_WGM_DOMAIN )?></h3>
 <div class="mwb_wgm_table_wrapper">	
 	<div class="mwb_table">
 		<table class="form-table mwb_wgm_general_setting">

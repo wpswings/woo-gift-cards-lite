@@ -897,3 +897,7 @@ transform: rotate(90deg);
 #mwb_uwgc_customize_remove_giftcard_para{
    display:none;
 }
+#mwb_wgm_mail_setting_remove_background {
+    margin-left: 39px;
+    margin-top: 10px;
+}

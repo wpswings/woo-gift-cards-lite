@@ -26,7 +26,7 @@ if( isset( $_POST ['mwb_wgm_save_general'] ) )
 			if (is_array($general_settings_array) && !empty($general_settings_array)) {
 				$delivery_setting = get_option('mwb_wgm_delivery_settings', array());
 				if( empty( $delivery_setting ) ) {
-					$delivery_setting['mwb_wgm_send_giftcard'] = 'Mail_To_Recipient';
+					$delivery_setting['mwb_wgm_send_giftcard'] = 'Mail to recipient';
 					update_option('mwb_wgm_delivery_settings', $delivery_setting);
 				}
 				update_option('mwb_wgm_general_settings',$general_settings_array);

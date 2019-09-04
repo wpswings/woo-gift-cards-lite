@@ -91,7 +91,7 @@ class Woocommerce_gift_cards_lite_Public {
 	public function enqueue_scripts() {
 		$mail_settings = get_option( 'mwb_wgm_mail_settings' , array());
 		$giftcard_message_length = $this->mwb_common_fun->mwb_wgm_get_template_data($mail_settings,'mwb_wgm_mail_setting_giftcard_message_length');		
-		if( isset($giftcard_message_length) && empty($giftcard_message_length) )
+		if( $giftcard_message_length == '' )
 		{
 			$giftcard_message_length = 300;
 		}
@@ -191,16 +191,16 @@ class Woocommerce_gift_cards_lite_Public {
 												$from_price = wcpbc_the_zone()->get_exchange_rate_price($from_price);
 											}
 											?>
-											<p class="mwb_wgm_section">
-												<label><?php _e('Enter Price Within Above Range:', MWB_WGM_DOMAIN);?></label>	
+											<p class="mwb_wgm_section selected_price_type">
+												<label class="mwb_wgc_label"><?php _e('Enter Price Within Above Range:', MWB_WGM_DOMAIN);?></label>	
 												<input type="number" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="<?php echo ($default_price >= $from_price && $default_price<=$to_price) ? $default_price : $from_price; ?>" max="<?php echo $to_price;?>" min="<?php echo $from_price;?>">
 											</p>
 											<?php
 										}
 										else{
 											?>
-											<p class="mwb_wgm_section">
-												<label><?php _e('Enter Price Within Above Range:', MWB_WGM_DOMAIN);?></label>	
+											<p class="mwb_wgm_section selected_price_type">
+												<label class="mwb_wgc_label"><?php _e('Enter Price Within Above Range:', MWB_WGM_DOMAIN);?></label>	
 												<input type="number" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="<?php echo ($default_price >= $from_price && $default_price<=$to_price) ? $default_price : $from_price; ?>" max="<?php echo $to_price;?>" min="<?php echo $from_price;?>">
 											</p>
 											<?php
@@ -220,8 +220,8 @@ class Woocommerce_gift_cards_lite_Public {
 										$selected_price = $product_pricing['price'];
 										if( !empty( $selected_price ) ){
 											?>
-											<p class="mwb_wgm_section">
-												<label><?php _e('Choose Gift Card Selected Price:', MWB_WGM_DOMAIN);?></label><br/>
+											<p class="mwb_wgm_section selected_price_type">
+												<label class="mwb_wgc_label"><?php _e('Choose Gift Card Selected Price:', MWB_WGM_DOMAIN);?></label><br/>
 												<?php 
 												$selected_prices = explode('|', $selected_price);
 												if( isset( $selected_prices ) && !empty( $selected_prices ) ){?>
@@ -288,8 +288,8 @@ class Woocommerce_gift_cards_lite_Public {
 												$default_price = wcpbc_the_zone()->get_exchange_rate_price($default_price);
 											}
 											?>
-											<p class="mwb_wgm_section">
-												<label><?php _e('Enter Gift Card Price', MWB_WGM_DOMAIN);?>:</label>	
+											<p class="mwb_wgm_section selected_price_type">
+												<label class="mwb_wgc_label"><?php _e('Enter Gift Card Price', MWB_WGM_DOMAIN);?>:</label>	
 
 												<input type="number" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value=<?php echo $default_price?>>
 											</p>	
@@ -297,8 +297,8 @@ class Woocommerce_gift_cards_lite_Public {
 										}
 										else{
 											?>
-											<p class="mwb_wgm_section">
-												<label><?php _e('Enter Gift Card Price', MWB_WGM_DOMAIN);?>:</label>	
+											<p class="mwb_wgm_section selected_price_type">
+												<label class="mwb_wgc_label"><?php _e('Enter Gift Card Price', MWB_WGM_DOMAIN);?>:</label>	
 
 												<input type="number" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value=<?php echo $default_price?>>
 											</p>
@@ -308,17 +308,17 @@ class Woocommerce_gift_cards_lite_Public {
 								}
 								do_action('mwb_wgm_select_date', $product_id);
 								?>
-								<p class="mwb_wgm_section">
+								<p class="mwb_wgm_section mwb_from">
 									<label class="mwb_wgc_label"><?php _e('From', MWB_WGM_DOMAIN);?>:</label>	
 									<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="<?php _e('Enter the sender name', MWB_WGM_DOMAIN); ?>" required="required">
 								</p>
-								<p class="mwb_wgm_section">
+								<p class="mwb_wgm_section mwb_message">
 									<label class="mwb_wgc_label"><?php _e('Gift Message:', MWB_WGM_DOMAIN);?></label>	
 									<textarea name="mwb_wgm_message" id="mwb_wgm_message" class="mwb_wgm_message"></textarea>
 									<?php
 									$mail_settings = get_option( 'mwb_wgm_mail_settings' , array());
 									$giftcard_message_length = $this->mwb_common_fun->mwb_wgm_get_template_data($mail_settings,'mwb_wgm_mail_setting_giftcard_message_length');
-									if( !isset($giftcard_message_length) || empty($giftcard_message_length) )
+									if( $giftcard_message_length == '' )
 									{
 										$giftcard_message_length = 300;
 									} 
@@ -330,11 +330,11 @@ class Woocommerce_gift_cards_lite_Public {
 								$delivery_settings = get_option( 'mwb_wgm_delivery_settings', true);
 								$mwb_wgm_delivery_setting_method = $this->mwb_common_fun->mwb_wgm_get_template_data($delivery_settings,'mwb_wgm_send_giftcard');				
 								?>
-								<p class="mwb_wgm_section">
+								<p class="mwb_wgm_section mwb_delivery_method">
 
 									<label class = "mwb_wgc_label"><?php _e('Delivery Method', MWB_WGM_DOMAIN );?>:</label>
 									<?php 
-									if( isset($mwb_wgm_delivery_setting_method) && $mwb_wgm_delivery_setting_method == 'Mail_To_Recipient' || $mwb_wgm_delivery_setting_method == '' ){
+									if( isset($mwb_wgm_delivery_setting_method) && $mwb_wgm_delivery_setting_method == 'Mail to recipient' || $mwb_wgm_delivery_setting_method == '' ){
 										?>
 										<div class="mwb_wgm_delivery_method">
 											<input type="radio" name="mwb_wgm_send_giftcard" value="Mail to recipient" class="mwb_wgm_send_giftcard" checked="checked" id="mwb_wgm_to_email_send" >
@@ -354,7 +354,7 @@ class Woocommerce_gift_cards_lite_Public {
 											<span class="mwb_wgm_method"><?php _e( 'You Print & Give To Recipient' , MWB_WGM_DOMAIN ); ?></span>
 											<div class="mwb_wgm_delivery_via_buyer">
 												<input type="text"  name="mwb_wgm_to_email_name" id="mwb_wgm_to_download" class="mwb_wgm_to_email" placeholder="<?php _e('Enter the Recipient Name', MWB_WGM_DOMAIN ); ?>">
-												<span class= "mwb_wgm_msg_info"><?php _e('After checking out, you can print your giftcard', MWB_WGM_DOMAIN );?></span>
+												<span class= "mwb_wgm_msg_info"><?php _e('After Checkout, you can print your giftcard', MWB_WGM_DOMAIN );?></span>
 											</div>
 										</div>
 										<?php 
@@ -420,7 +420,7 @@ class Woocommerce_gift_cards_lite_Public {
 								if( empty( $mwb_wgm_preview_disable) ){
 									?>
 									<br/>
-									<span class="mwg_wgm_preview_email" ><a id="mwg_wgm_preview_email" href="javascript:void(0);"><?php _e('Preview',MWB_WGM_DOMAIN);?></a></span>
+									<span class="mwg_wgm_preview_email" ><a id="mwg_wgm_preview_email" href="javascript:void(0);"><?php _e('PREVIEW',MWB_WGM_DOMAIN);?></a></span>
 								<?php }
 								?>
 							</div>
@@ -461,13 +461,16 @@ class Woocommerce_gift_cards_lite_Public {
 					}
 					
 					if( isset( $_POST['mwb_wgm_send_giftcard'] ) && !empty( $_POST['mwb_wgm_send_giftcard'] ) ){
-
 						$product_pricing = get_post_meta($product_id, 'mwb_wgm_pricing', true);
 						if( isset( $product_pricing ) && !empty( $product_pricing ) ){
 
 							if(isset( $_POST['mwb_wgm_to_email'] )  && !empty( $_POST['mwb_wgm_to_email'] ) ){
 
 								$item_meta['mwb_wgm_to_email'] = sanitize_text_field( $_POST['mwb_wgm_to_email'] );
+							}
+							if(isset( $_POST['mwb_wgm_to_email_name'] )  && !empty( $_POST['mwb_wgm_to_email_name'] ) ){
+
+								$item_meta['mwb_wgm_to_email'] = sanitize_text_field( $_POST['mwb_wgm_to_email_name'] );
 							}
 							if(isset( $_POST['mwb_wgm_from_name'] )  && !empty( $_POST['mwb_wgm_from_name'] ) ){
 

@@ -33,6 +33,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 				  'title' => __('Logo Height (in "px")', MWB_WGM_DOMAIN ), 
 				  'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_height',
 				  'type' => 'number',
+				  'default' => 70,
 				  'class' => 'mwb_wgm_new_woo_ver_style_text',
 				  'desc_tip' =>  __('Set the height of logo in email template.', MWB_WGM_DOMAIN ),
 				),
@@ -40,6 +41,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 				  'title' => __('Logo Width (in "px")', MWB_WGM_DOMAIN ), 
 				  'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_width',
 				  'type' => 'number',
+				  'default' => 70,
 				  'class' => 'mwb_wgm_new_woo_ver_style_text',
 				  'desc_tip' =>  __('Set the width of logo in email template.', MWB_WGM_DOMAIN ),
 				),							
@@ -67,20 +69,12 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 				  			'spanX' => 'mwb_wgm_mail_setting_remove_background_span'	  		
 				  		)
 				  	)			  
-				 ),
-				array(
-				  'title' => __('Email Background Color', MWB_WGM_DOMAIN ), 
-				  'id' => 'mwb_wgm_mail_setting_background_color',
-				  'type' => 'text',
-				  'class' => 'mwb_wgm_new_woo_ver_style_text',
-				  'desc_tip' =>  __('Set the background color of Email Template.', MWB_WGM_DOMAIN )
-				  
-				 ),
-				 
+				 ),				 
 				array(
 				  'title' => __('Giftcard Message Length', MWB_WGM_DOMAIN ), 
 				  'id' => 'mwb_wgm_mail_setting_giftcard_message_length',
 				  'type' => 'number',
+				  'default' => 300,
 				  'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 				  'custom_attribute' => array('min'=> 0),
 				  'desc_tip' =>  __('Enter the Gift Car d Message length, used to limit the number of characters entered by the customers.', MWB_WGM_DOMAIN )

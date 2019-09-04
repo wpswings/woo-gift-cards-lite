@@ -464,7 +464,7 @@ class Woocommerce_gift_cards_lite_Admin {
 	public function mwb_wgc_woocommerce_product_data_tabs( $tabs ){
 		if( isset( $tabs ) && !empty( $tabs ) ){
 			foreach( $tabs as $key=>$tab ){	
-				if( $key != 'general' && $key != 'advanced' && $key != 'inventory' && $key != 'shipping'){
+				if( $key != 'general' && $key != 'advanced' && $key != 'shipping'){
 					$tabs[$key]['class'][] = 'hide_if_wgm_gift_card'; 
 				}
 			}
@@ -932,18 +932,6 @@ class Woocommerce_gift_cards_lite_Admin {
 		}
 		echo json_encode($response);
 		wp_die();
-	}
-	//plugin updation 
-	public function mwb_wgm_update_giftacard( $upgrader_object, $options ){
-		$current_plugin_path_name = plugin_basename( _FILE_ );
-	    if ($options['action'] == 'update' && $options['type'] == 'plugin' ){
-	       foreach($options['plugins'] as $each_plugin){
-	          if ($each_plugin == $current_plugin_path_name){
-	            $mwv_activator_obj = new MWB_WGM_GIFTCARD_ACTIVATION_FUNCTION();
-	            $mwv_activator_obj->mwb_wgm_restore_data();
-	          }
-	       }
-	    }
 	}
 }
 ?>

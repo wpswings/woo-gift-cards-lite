@@ -94,9 +94,6 @@
 	    $("#mwb_wgm_mail_setting_remove_background").show();
 	    
 	}
-
-  	$("#mwb_wgm_mail_setting_background_color").wpColorPicker();
-
 	function mwb_wgc_show_and_hide_panels() {
 		var product_type    = $( 'select#product-type' ).val();
 		var is_mwb_wgm_gift = false;

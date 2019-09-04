@@ -153,31 +153,27 @@ class Woocommerce_gift_cards_lite {
 	private function define_admin_hooks() {
 		$plugin_admin = new Woocommerce_gift_cards_lite_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		 $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_styles' );
-		 $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_scripts' );
-		 $this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wgc_admin_menu', 10, 2);
-		 $this->loader->add_filter( 'product_type_selector', $plugin_admin,'mwb_wgc_gift_card_product' );
-		 $this->loader->add_action( 'woocommerce_product_options_general_product_data', $plugin_admin, 'mwb_wgc_woocommerce_product_options_general_product_data' );
-		 $this->loader->add_action( 'save_post', $plugin_admin, 'mwb_wgc_save_post');
-		 $this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_wgc_woocommerce_product_data_tabs' );
-		 $this->loader->add_action( 'woocommerce_after_order_itemmeta', $plugin_admin, 'mwb_wgc_woocommerce_after_order_itemmeta',10,3 );
-		 $this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin,'mwb_wgc_woocommerce_hidden_order_itemmeta' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wgc_admin_menu', 10, 2);
+		$this->loader->add_filter( 'product_type_selector', $plugin_admin,'mwb_wgc_gift_card_product' );
+		$this->loader->add_action( 'woocommerce_product_options_general_product_data', $plugin_admin, 'mwb_wgc_woocommerce_product_options_general_product_data' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_wgc_save_post');
+		$this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_wgc_woocommerce_product_data_tabs' );
+		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $plugin_admin, 'mwb_wgc_woocommerce_after_order_itemmeta',10,3 );
+		$this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin,'mwb_wgc_woocommerce_hidden_order_itemmeta' );
 		 
 		 //Added new Actions and Filters
-		 $this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_giftcard_custom_post');
-		 $this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'mwb_wgm_edit_form_after_title',10,1);
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_giftcard_custom_post');
+		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'mwb_wgm_edit_form_after_title',10,1);
 		 //include Gift card Template
-		 $this->loader->add_action('init',$plugin_admin,'mwb_wgm_mothers_day_template');
-		 $this->loader->add_action('init',$plugin_admin,'mwb_wgm_new_template');
-		 $this->loader->add_action('init',$plugin_admin,'mwb_wgm_insert_custom_template');
-		 $this->loader->add_filter('post_row_actions',$plugin_admin,'mwb_wgm_preview_gift_template',10,2);
+		$this->loader->add_action('init',$plugin_admin,'mwb_wgm_mothers_day_template');
+		$this->loader->add_action('init',$plugin_admin,'mwb_wgm_new_template');
+		$this->loader->add_action('init',$plugin_admin,'mwb_wgm_insert_custom_template');
+		$this->loader->add_filter('post_row_actions',$plugin_admin,'mwb_wgm_preview_gift_template',10,2);
 		$this->loader->add_action('init',$plugin_admin,'mwb_wgm_preview_email_template');
-
 		$this->loader->add_action('wp_ajax_mwb_wgm_append_default_template',$plugin_admin,'mwb_wgm_append_default_template');
-
 		$this->loader->add_action('wp_ajax_nopriv_mwb_wgm_append_default_template',$plugin_admin,'mwb_wgm_append_default_template');
-
-		$this->loader->add_action('upgrader_process_complete',$plugin_admin,'mwb_wgm_update_giftacard',10,2);
 	}
 
 	/**
