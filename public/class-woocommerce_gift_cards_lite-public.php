@@ -818,6 +818,10 @@ class Woocommerce_gift_cards_lite_Public {
 						
 						$mwb_wgm_mail_template_data = apply_filters('mwb_wgm_mail_templates_data_set', $mwb_wgm_mail_template_data, $order->get_items(), $order_id);
 
+						if (isset($mwb_wgm_mail_template_data['datecheck']) && !$mwb_wgm_mail_template_data['datecheck']) {
+							continue;
+						}
+
 						if( isset($mwb_wgm_mail_template_data['mail_send']) && $mwb_wgm_mail_template_data['mail_send'] ){
 
 							$gift_order = true;
