@@ -809,7 +809,8 @@ class Woocommerce_gift_cards_lite_Public {
 							'mail_send' => $mailsend,
 							'product_id' => $pro_id,
 							'item_id'	=> $item_id,
-							'item_quantity'=>$item_quantity
+							'item_quantity'=>$item_quantity,
+							'datecheck'	=>$datecheck
 						);
 						
 						$mwb_wgm_mail_template_data = apply_filters('mwb_wgm_mail_templates_data_set', $mwb_wgm_mail_template_data, $order->get_items(), $order_id);
@@ -860,7 +861,7 @@ class Woocommerce_gift_cards_lite_Public {
 							}
 						}
 					}
-					if( $gift_order && $datecheck ){
+					if( $gift_order && isset($mwb_wgm_mail_template_data['datecheck']) && $mwb_wgm_mail_template_data['datecheck']){
 						update_post_meta( $order_id, 'mwb_wgm_order_giftcard', "send" );
 					}
 					do_action('mwb_wgm_thankyou_coupon_order_status_change',$order_id,$new_status);
