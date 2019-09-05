@@ -326,7 +326,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 				$args['templateid'] = isset($mwb_wgm_common_arr['selected_template']) && !empty($mwb_wgm_common_arr['selected_template']) ? $mwb_wgm_common_arr['selected_template'] : $templateid;
 				$args['product_id'] = $product_id;
 
-				$args = apply_filters('mwb_wgm_common_functionality_template_args',$args);
+				$args = apply_filters('mwb_wgm_common_functionality_template_args',$args,$mwb_wgm_common_arr);
 
 				$message = apply_filters( 'mwb_wgm_customizable_email_template', $this->mwb_wgm_create_gift_template($args), $args);
 

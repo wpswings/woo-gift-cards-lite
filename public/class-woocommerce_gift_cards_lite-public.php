@@ -368,11 +368,10 @@ class Woocommerce_gift_cards_lite_Public {
 								$assigned_temp = '';
 								$choosed_temp = '';
 								$default_selected = isset($mwb_wgm_pricing['by_default_tem'])?$mwb_wgm_pricing['by_default_tem']:false;
-								$other_settings = get_option( 'mwb_wgm_other_settings', array());
-								$mwb_wgm_hide_giftcard_thumbnail = $this->mwb_common_fun->mwb_wgm_get_template_data($other_settings,'mwb_wgm_hide_giftcard_thumbnail');
-								if( !isset( $mwb_wgm_hide_giftcard_thumbnail ) || empty( $mwb_wgm_hide_giftcard_thumbnail ) ) {
-									$mwb_wgm_hide_giftcard_thumbnail = 'off';
-								}
+								
+								$mwb_wgm_hide_giftcard_thumbnail = '';
+								$mwb_wgm_hide_giftcard_thumbnail = apply_filters('mwb_wgm_hide_giftcard_product_thumbnail',$mwb_wgm_hide_giftcard_thumbnail);
+								
 								if( is_array($templateid) && !empty($templateid))
 								{
 									foreach($templateid as $key => $temp_id)
@@ -404,7 +403,7 @@ class Woocommerce_gift_cards_lite_Public {
 									$assigned_temp .= '<img class = "mwb_wgm_featured_img mwb_wgm_pre_selected_temp" id="'.$templateid.'" style="width: 70px; height: 70px; display: inline-block;" src="'.$featured_img[0].'">';
 									$choosed_temp = $templateid;
 								}
-								if( isset( $mwb_wgm_hide_giftcard_thumbnail ) && $mwb_wgm_hide_giftcard_thumbnail == 'off' ){
+								if( isset( $mwb_wgm_hide_giftcard_thumbnail ) && $mwb_wgm_hide_giftcard_thumbnail != 'on' ){
 									echo '<div class="mwb_wgm_selected_template" style="display: inline-block; text-decoration: none; padding-right:20px;">'.$assigned_temp.'</div>';
 								}
 								else{
