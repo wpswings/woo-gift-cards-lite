@@ -410,6 +410,9 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 
 					wc_mail($to, $send_subject, $message, $headers, $attachments);
 					do_action('mwb_wgm_send_mail_to_others',$send_subject,$message,$attachments);
+					if (isset($attachments) && is_array($attachments) && !empty($attachments)) {
+						unlink($attachments[0]);
+					}
 					
 					if (isset($mwb_wgm_common_arr['receive_subject']) && !empty($mwb_wgm_common_arr['receive_subject'])) {
 						$receive_subject = $mwb_wgm_common_arr['receive_subject'];
