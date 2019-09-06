@@ -330,7 +330,7 @@ class Woocommerce_gift_cards_lite_Public {
 								$delivery_settings = get_option( 'mwb_wgm_delivery_settings', true);
 								$mwb_wgm_delivery_setting_method = $this->mwb_common_fun->mwb_wgm_get_template_data($delivery_settings,'mwb_wgm_send_giftcard');				
 								?>
-								<p class="mwb_wgm_section mwb_delivery_method">
+								<div class="mwb_wgm_section mwb_delivery_method">
 
 									<label class = "mwb_wgc_label"><?php _e('Delivery Method', MWB_WGM_DOMAIN );?>:</label>
 									<?php 
@@ -361,7 +361,7 @@ class Woocommerce_gift_cards_lite_Public {
 									}
 									do_action( 'mwb_wgm_add_delivery_method',$product_id);
 									?>	
-								</p>
+								</div>
 								<?php 
 								$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
 								$templateid = $mwb_wgm_pricing['template'];

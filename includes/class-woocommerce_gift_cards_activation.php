@@ -29,7 +29,6 @@ if( !class_exists( 'MWB_WGM_GIFTCARD_ACTIVATION_FUNCTION' ) )
 	        if( isset( $giftcard_enable )  && $giftcard_enable == 'on'){
 	        	$mwb_check_enable = true;
 	        }
-	        $mwb_check_enable = true;
 	        if( $mwb_check_enable ) {
 	        	$general_process_completion_flag = false;
 	        	$general_flag = false;
@@ -168,6 +167,9 @@ if( !class_exists( 'MWB_WGM_GIFTCARD_ACTIVATION_FUNCTION' ) )
 			$mwb_delivery_settings = get_option("mwb_wgm_delivery_settings", array());
 			if( empty( $mwb_delivery_settings ) ) {
 				$mwb_wgm_delivery_setting_method = get_option('mwb_wgm_delivery_setting_method',false);
+				if($mwb_wgm_delivery_setting_method == 'Mail_To_Recipient'){
+					$mwb_wgm_delivery_setting_method = 'Mail to recipient';
+				}
 				$mwb_wgm_delivery_settings = array(
 					'mwb_wgm_send_giftcard' => $mwb_wgm_delivery_setting_method
 				);
