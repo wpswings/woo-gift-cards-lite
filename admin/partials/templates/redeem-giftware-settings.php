@@ -134,7 +134,7 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 				</div>
 
 				<div class="mwb_redeem_main_content">
-					<h2 class="text-left"><?php _e('Hello Dear', MWB_WGM_DOMAIN )?></h2>	
+					<h3 class="text-left"><?php _e('Hello Dear', MWB_WGM_DOMAIN )?></h3>	
 					<p><?php _e(' We are thrilled to announce that we have launched a', MWB_WGM_DOMAIN )?><span class="mwb-reddem-free-text"><?php _e('FREE', MWB_WGM_DOMAIN )?></span><?php _e('service to simplify the problem of redeeming giftcards at retail store', MWB_WGM_DOMAIN )?></p>
 
 					<p><?php _e('We have made this just on your demand so we would love your suggestion to improve it.', MWB_WGM_DOMAIN )?></p>

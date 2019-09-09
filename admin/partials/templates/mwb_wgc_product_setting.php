@@ -39,7 +39,7 @@ if($flag){
 ?>
 <?php $product_settings = get_option('mwb_wgm_product_settings',true); ?>
 <?php if(!is_array($product_settings)): $product_settings = array(); endif;?>
-<h2 class="mwb_wgm_overview_heading"><?php _e('Product Settings', MWB_WGM_DOMAIN )?></h2>
+<h3 class="mwb_wgm_overview_heading"><?php _e('Product Settings', MWB_WGM_DOMAIN )?></h3>
 <div class="mwb_wgm_table_wrapper">
 	<table class="form-table mwb_wgm_product_setting">
 		<tbody>
