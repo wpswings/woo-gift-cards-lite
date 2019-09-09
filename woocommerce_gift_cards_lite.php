@@ -233,14 +233,15 @@ if ($activated){
 	function mwb_wgc_admin_update_notices() {
 	    $user_id = get_current_user_id();
 	    if ( !get_user_meta( $user_id, 'giftware_notice_dismissed' ) ) 
-	        echo '<div class="update-nag mwb_gw_admin_notices"><p>Check New Giftcard Redeem feature <a href="'.admin_url('admin.php').'?page=mwb-gw-setting&tab=redeem_section"> check now </a> </p><a href="?gifware-dismissed">Dismiss</a></div>';
+	        echo '<div class="update-nag mwb_gw_admin_notices"><p>New Giftcard Redeem feature <a href="'.admin_url('admin.php').'?page=mwb-wgc-setting-lite&tab=redeem_tab">Check Now</a></p><a href="?gifware-dismissed">Dismiss</a></div>';
 	}
 	add_action( 'admin_notices', 'mwb_wgc_admin_update_notices' );
 
 	function mwb_wgc_dismiss_admin_notices() {
 	    $user_id = get_current_user_id();
-	    if ( isset( $_GET['gifware-dismissed'] ) )
+	    if ( isset( $_GET['gifware-dismissed'] ) ) {
 	        add_user_meta( $user_id, 'giftware_notice_dismissed', 'true', true );
+	    }
 	}
 
 	add_action( 'admin_init', 'mwb_wgc_dismiss_admin_notices' );

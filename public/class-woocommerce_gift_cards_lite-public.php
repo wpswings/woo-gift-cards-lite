@@ -1128,17 +1128,15 @@ class Woocommerce_gift_cards_lite_Public {
 					if (wcpbc_the_zone() != null && wcpbc_the_zone()) {
 
 						$rate = wcpbc_the_zone()->get_exchange_rate();
-
 					}	  	
 				}
 				$giftcardcoupon = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 				if( !empty($giftcardcoupon) ){
-					$mwb_wgc_discount=$item->get_discount();
-					$mwb_wgc_discount_tax=$item->get_discount_tax();
+					$mwb_wgm_discount=$item->get_discount();
+					$mwb_wgm_discount_tax=$item->get_discount_tax();
 					$amount = get_post_meta( $coupon_id, 'coupon_amount', true );
-					$total_discount = $mwb_wgc_discount+$mwb_wgc_discount_tax;
-					$total_discount = apply_filters('mwb_wgm_calculate_online_coupon_discount',$total_discount,$mwb_wgc_discount,$mwb_wgc_discount_tax);
-
+					
+					$total_discount = $this->mwb_common_fun->mwb_wgm_calculate_coupon_discount($mwb_wgm_discount,$mwb_wgm_discount_tax);
 					$total_discount = $total_discount/$rate;
 
 					if( $amount < $total_discount ){

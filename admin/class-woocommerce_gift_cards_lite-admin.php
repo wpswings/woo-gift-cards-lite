@@ -411,14 +411,14 @@ class Woocommerce_gift_cards_lite_Admin {
 									$template[] = $template_id;
 								endwhile;
 							endif;
-							$mwb_wgm_pricing['template'] = $template[0];
+							$mwb_wgm_pricing['template'] = array($template[0]);
 						}
 						else
 						{
 							$mwb_wgm_pricing['template'] = $_POST['mwb_wgm_email_template'];
 						}
 						if (!isset($_POST['mwb_wgm_email_defualt_template']) || empty($_POST['mwb_wgm_email_defualt_template'])) {
-							$mwb_wgm_pricing['template'] = $template[0];
+							$mwb_wgm_pricing['by_default_tem'] =  $mwb_wgm_pricing['template'];
 						}
 						else{
 							$mwb_wgm_pricing['by_default_tem'] = $_POST['mwb_wgm_email_defualt_template'];

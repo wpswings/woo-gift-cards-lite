@@ -479,5 +479,38 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 			}
 			return $expirydate_format;
 		}
+
+		/**
+		 * This function is used to return the remaining coupon amount according to Tax setting you have in your system.
+		 * @name mwb_wgm_calculate_coupon_discount
+		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @link http://www.makewebbetter.com/
+		 */
+
+		public function mwb_wgm_calculate_coupon_discount($mwb_wgm_discount,$mwb_wgm_discount_tax){
+			$price_in_ex_option = get_option('woocommerce_prices_include_tax');
+			$tax_display_shop = get_option( 'woocommerce_tax_display_shop','excl' );
+			$tax_display_cart = get_option( 'woocommerce_tax_display_cart','excl');
+
+			if(isset($tax_display_shop) && isset($tax_display_cart) ){
+				if( $tax_display_cart == 'excl' && $tax_display_shop == 'excl' ){
+
+					if($price_in_ex_option == 'yes' || $price_in_ex_option == 'no'){
+
+						return $total_discount = $mwb_wgm_discount;
+					}
+				}
+				elseif( $tax_display_cart == 'incl' && $tax_display_shop == 'incl' ) {
+
+					if($price_in_ex_option == 'yes' || $price_in_ex_option == 'no'){
+
+						return $total_discount = $mwb_wgm_discount+$mwb_wgm_discount_tax;
+					}
+				}
+				else{
+					return $total_discount = $mwb_wgm_discount;
+				}
+			}
+		}
 	}
 }
