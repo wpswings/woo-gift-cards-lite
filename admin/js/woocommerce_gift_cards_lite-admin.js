@@ -137,10 +137,6 @@
 					$( '.product_data_tabs' ).find( 'li a[href="#' + $id + '"]' ).parent().hide();
 				}
 			});
-			$(".inventory_tab").attr("style", "display:block !important;");
-			$("#inventory_product_data ._manage_stock_field").attr("style", "display:block !important;");
-			$("#inventory_product_data .options_group").attr("style", "display:block !important;");
-			$("#inventory_product_data ._sold_individually_field").attr("style", "display:block !important;");
 			$("#general_product_data .show_if_simple.show_if_external.show_if_variabled").attr("style", "display:block !important;");
 			if(is_tax_enable_for_gift == 'on'){
 				$(document).find("#general_product_data .options_group.show_if_simple.show_if_external.show_if_variable").attr("style", "display:block !important;");

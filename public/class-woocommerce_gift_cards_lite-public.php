@@ -328,13 +328,17 @@ class Woocommerce_gift_cards_lite_Public {
 								</p>
 								<?php
 								$delivery_settings = get_option( 'mwb_wgm_delivery_settings', true);
-								$mwb_wgm_delivery_setting_method = $this->mwb_common_fun->mwb_wgm_get_template_data($delivery_settings,'mwb_wgm_send_giftcard');				
+								$mwb_wgm_delivery_setting_method = $this->mwb_common_fun->mwb_wgm_get_template_data($delivery_settings,'mwb_wgm_send_giftcard');
+								if( !mwb_uwgc_pro_active() ){
+									if( $mwb_wgm_delivery_setting_method == 'customer_choose' || $mwb_wgm_delivery_setting_method == 'shipping') {
+										$mwb_wgm_delivery_setting_method = 'Mail to recipient';
+									}
+								}				
 								?>
 								<div class="mwb_wgm_section mwb_delivery_method">
-
 									<label class = "mwb_wgc_label"><?php _e('Delivery Method', MWB_WGM_DOMAIN );?>:</label>
 									<?php 
-									if( isset($mwb_wgm_delivery_setting_method) && $mwb_wgm_delivery_setting_method == 'Mail to recipient' || $mwb_wgm_delivery_setting_method == '' ){
+									if( (isset($mwb_wgm_delivery_setting_method) && $mwb_wgm_delivery_setting_method == 'Mail to recipient') || ( $mwb_wgm_delivery_setting_method == '' )){
 										?>
 										<div class="mwb_wgm_delivery_method">
 											<input type="radio" name="mwb_wgm_send_giftcard" value="Mail to recipient" class="mwb_wgm_send_giftcard" checked="checked" id="mwb_wgm_to_email_send" >
@@ -721,6 +725,7 @@ class Woocommerce_gift_cards_lite_Public {
 					$gift_order = false;
 					$selected_template = '';
 					$original_price = 0;
+					$delivery_method = '';
 					$order = wc_get_order( $order_id );
 					foreach( $order->get_items() as $item_id => $item ){
 						$mailsend = false;

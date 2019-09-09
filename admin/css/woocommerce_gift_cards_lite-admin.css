@@ -28,11 +28,11 @@
 .mwb_wgm_header_content_left {
     align-items: center;
     display: flex;
-    flex: 0 0 60%;
+    flex: 0 0 35%;
     padding: 20px 15px;
 }
 .mwb_wgm_header_content_right {
-    flex: 0 0 40%;
+    flex: 0 0 65%;
     padding: 20px 15px;
 }
 .mwb_wgm_header_content_left .mwb_wgm_setting_title {
@@ -900,4 +900,23 @@ transform: rotate(90deg);
 #mwb_wgm_mail_setting_remove_background {
     margin-left: 39px;
     margin-top: 10px;
+}
+.mwb_wgm_redeem_link {
+    background-color: #ef5350;
+    color: #ffffff !important;
+    padding: 11px 16px;
+    position: relative;
+    font-size: 16px;
+    border-radius: 4px;
+    display: inline-block;
+}
+.mwb_wgm_redeem_link span {
+    background-color: #f1cb32;
+    padding: 5px 12px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    color: #000000 !important;
 }
