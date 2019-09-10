@@ -577,7 +577,7 @@ transform: rotate(90deg);
   .mwb_redeem_details td textarea:focus, .mwb_redeem_details td input[type="text"]:focus{
     border-color: #ffffff;
   }
-  .mwb_gw_admin_notices {
+  .mwb_wgm_admin_notices {
     display: flex;
     background-color: #4F3154;
     color: #ffffff;
@@ -586,15 +586,15 @@ transform: rotate(90deg);
     align-items: center;
     flex-wrap: wrap;
 }
-.mwb_gw_admin_notices p {
+.mwb_wgm_admin_notices p {
   margin: 5px 0;
 }
-.mwb_gw_admin_notices a {
+.mwb_wgm_admin_notices a {
   color: #ffffff;
   font-weight: 600;
   margin-left: 10px;
 }
-.mwb_gw_admin_notices p ~ a {
+.mwb_wgm_admin_notices p ~ a {
   font-weight: normal;
   font-size: 13px;
 }

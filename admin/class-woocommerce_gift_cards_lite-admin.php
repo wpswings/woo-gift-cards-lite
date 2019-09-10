@@ -160,6 +160,17 @@ class Woocommerce_gift_cards_lite_Admin {
 				wp_enqueue_script($this->plugin_name.'admin-product');
 			}
 		}
+
+		//enqueue script for admin notices.
+		$mwb_wgm_notice = array(
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'mwb_wgm_nonce' =>  wp_create_nonce( "mwb-wgm-verify-notice-nonce" )
+		);
+		wp_register_script($this->plugin_name.'admin-notice', plugin_dir_url( __FILE__ ) . 'js/mwb-wgm-gift-card-notices.js',array('jquery'),'1.2.0',false);
+
+		wp_localize_script($this->plugin_name.'admin-notice', 'mwb_wgm_notice', $mwb_wgm_notice );
+		wp_enqueue_script($this->plugin_name.'admin-notice');
+
 	}
 
 	/**

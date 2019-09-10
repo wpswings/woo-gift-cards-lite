@@ -232,19 +232,25 @@ if ($activated){
 
 	function mwb_wgc_admin_update_notices() {
 	    $user_id = get_current_user_id();
-	    if ( !get_user_meta( $user_id, 'giftware_notice_dismissed' ) ) 
-	        echo '<div class="update-nag mwb_gw_admin_notices"><p>New Giftcard Redeem feature <a href="'.admin_url('admin.php').'?page=mwb-wgc-setting-lite&tab=redeem_tab">Check Now</a></p><a href="?gifware-dismissed">Dismiss</a></div>';
+	    if ( !get_user_meta( $user_id, 'giftcard_redeem_notice_dismissed' ) ) {
+	        echo '<div class="update-nag mwb_wgm_admin_notices"><p>New Giftcard Redeem feature <a href="'.admin_url('admin.php').'?page=mwb-wgc-setting-lite&tab=redeem_tab">Check Now</a></p><a id="dismiss_notice" href="#">Dismiss</a></div>';
+	    }
 	}
 	add_action( 'admin_notices', 'mwb_wgc_admin_update_notices' );
 
-	function mwb_wgc_dismiss_admin_notices() {
-	    $user_id = get_current_user_id();
-	    if ( isset( $_GET['gifware-dismissed'] ) ) {
-	        add_user_meta( $user_id, 'giftware_notice_dismissed', 'true', true );
-	    }
+	//hide admin notices 
+	add_action( 'wp_ajax_mwb_wgm_dismiss_notice','mwb_wgm_dismiss_notice'  );
+
+	function mwb_wgm_dismiss_notice(){
+		check_ajax_referer( 'mwb-wgm-verify-notice-nonce', 'mwb_nonce' );
+		$user_id = get_current_user_id();
+		if (isset($user_id) && !empty($user_id)) {
+			add_user_meta( $user_id, 'giftcard_redeem_notice_dismissed', 'true', true );
+		}
+		echo "succes";
+		wp_die();
 	}
 
-	add_action( 'admin_init', 'mwb_wgc_dismiss_admin_notices' );
 	include(MWB_WGC_DIRPATH.'/includes/giftcard_redeem_api_addon.php');
 }
 else{
