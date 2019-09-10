@@ -85,10 +85,12 @@ if ($activated){
 			$plugin = plugin_basename ( __FILE__ );
 		}
 		if ($plugin == $plugin_file) {
+			$settings = array();
 			if ( !mwb_uwgc_pro_active() ) {
-				$actions[] = '<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . __ ( 'Get Premium Version', MWB_WGM_DOMAIN ) . '</a>';
+				$settings['settings'] = '<a href="' . admin_url ( 'admin.php?page=mwb-wgc-setting-lite' ) . '">' . __ ( 'Settings', MWB_WGM_DOMAIN ) . '</a>';
 
-				$actions[] = '<a href="' . admin_url ( 'admin.php?page=mwb-wgc-setting-lite' ) . '">' . __ ( 'Settings', MWB_WGM_DOMAIN ) . '</a>';
+				$settings['get_paid_version'] = '<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . __ ( 'Get Premium Version', MWB_WGM_DOMAIN ) . '</a>';
+				$actions = array_merge ( $settings, $actions );
 			}
 		}
 		return $actions;

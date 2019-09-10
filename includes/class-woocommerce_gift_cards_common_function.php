@@ -179,18 +179,13 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 					$individual_use = ($individual_use == 'on') ? 'yes':'no';
 
 					$usage_limit = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_use');
-					$usage_limit = (empty($usage_limit)) ? 1:$usage_limit;
+					$usage_limit = ($usage_limit !='') ? $usage_limit:1;
 
 					$expiry_date = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_expiry');
 					$expiry_date = ($expiry_date == '') ? 1:$expiry_date;
 					
 					$free_shipping = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_freeshipping');
 					$free_shipping = ($free_shipping == 'on') ? 'yes':'no';
-
-					$apply_before_tax = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_applybeforetx');
-					if(!isset($apply_before_tax) || empty( $apply_before_tax )){
-						$apply_before_tax = 'yes';
-					}
 
 					$minimum_amount = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_minspend');
 					if(!isset($minimum_amount) || empty( $minimum_amount )){
@@ -236,7 +231,6 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 					update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
 					update_post_meta( $new_coupon_id, 'individual_use', $individual_use );
 					update_post_meta( $new_coupon_id, 'usage_limit', $usage_limit );
-					update_post_meta( $new_coupon_id, 'apply_before_tax', $apply_before_tax );
 					update_post_meta( $new_coupon_id, 'free_shipping', $free_shipping );
 					update_post_meta( $new_coupon_id, 'minimum_amount', $minimum_amount );
 					update_post_meta( $new_coupon_id, 'maximum_amount', $maximum_amount );
