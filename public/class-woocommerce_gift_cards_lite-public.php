@@ -76,6 +76,7 @@ class Woocommerce_gift_cards_lite_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style('thickbox');
 
 	}
 
@@ -142,7 +143,6 @@ class Woocommerce_gift_cards_lite_Public {
 
 					$mwb_wgm['pricing_type'] = $mwb_wgm_pricing;
 					$mwb_wgm['product_id'] = $product_id;
-					wp_enqueue_style('thickbox');
 					wp_enqueue_script('thickbox');
 					$mwb_wgm['mwb_wgm_nonce'] = wp_create_nonce( "mwb-wgc-verify-nonce" );
 					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-public.js', array('jquery') );

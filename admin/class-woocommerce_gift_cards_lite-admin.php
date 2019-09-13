@@ -74,8 +74,13 @@ class Woocommerce_gift_cards_lite_Admin {
 		 * class.
 		 */
 		wp_enqueue_style('thickbox');
-		wp_enqueue_script('select2');
+		wp_enqueue_style('select2');
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
+		wp_enqueue_style( 'woocommerce_admin_menu_styles' );
+
+		wp_enqueue_style( 'woocommerce_admin_styles' );
 
 	}
 
@@ -103,11 +108,7 @@ class Woocommerce_gift_cards_lite_Admin {
 
 				wp_enqueue_script('mwb_lite_select2', plugin_dir_url( __FILE__ ),'js/select2.min.js',array('jquery'),'1.0.3', false);
 				
-				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				
-				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
-				
-				wp_enqueue_style( 'woocommerce_admin_styles' );
 				
 				wp_register_script($this->plugin_name.'clipboard', plugin_dir_url( __FILE__ )."js/clipboard.min.js");
 
@@ -143,7 +144,6 @@ class Woocommerce_gift_cards_lite_Admin {
 				);
 
 				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
-				wp_enqueue_style( 'wp-color-picker' );
 				wp_enqueue_script( 'woocommerce_admin' );
 				wp_enqueue_script('media-upload');
 
