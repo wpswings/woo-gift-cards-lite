@@ -155,14 +155,14 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Adds some of the fields for Gift Card Product
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_before_add_to_cart_button()
+	 * @name mwb_wgm_woocommerce_before_add_to_cart_button()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_before_add_to_cart_button(){
+	public function mwb_wgm_woocommerce_before_add_to_cart_button(){
 		global $product;
 		if( isset( $product ) && !empty( $product ) ){
-			$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+			$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 			if($mwb_wgc_enable){
 				$product_id = $product->get_id();
 				if( isset( $product_id ) && !empty( $product_id ) ){
@@ -207,7 +207,6 @@ class Woocommerce_gift_cards_lite_Public {
 										}
 										
 									}
-									
 									if($product_pricing_type == 'mwb_wgm_default_price'){
 										$default_price = $product_pricing['default_price'];?>
 										<input type="hidden" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="<?php echo $default_price?>">
@@ -380,7 +379,6 @@ class Woocommerce_gift_cards_lite_Public {
 								{
 									foreach($templateid as $key => $temp_id)
 									{
-
 										$featured_img = wp_get_attachment_image_src( get_post_thumbnail_id($temp_id), 'single-post-thumbnail' );
 										if(empty($featured_img[0])){
 											$featured_img[0] = MWB_WGC_URL.'assets/images/mom.png';
@@ -391,9 +389,14 @@ class Woocommerce_gift_cards_lite_Public {
 											$selected_class = "mwb_wgm_pre_selected_temp";
 											$choosed_temp = $temp_id;
 										}
-										else if(empty($default_selected) && is_array($templateid))
+										elseif(empty($default_selected) && is_array($templateid))
 										{
 											$selected_class = "mwb_wgm_pre_selected_temp";
+										}
+										elseif(is_array($default_selected) && !empty($default_selected))
+										{
+											$selected_class = "mwb_wgm_pre_selected_temp";
+											$choosed_temp = $temp_id;
 										}
 										$assigned_temp .= '<img class = "mwb_wgm_featured_img '.$selected_class.'" id="'.$temp_id.'" style="width: 70px; height: 70px; display: inline-block;margin-right:5px;" src="'.$featured_img[0].'">';
 									}
@@ -438,12 +441,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Adds the meta data into the Cart Item
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_add_cart_item_data()
+	 * @name mwb_wgm_woocommerce_add_cart_item_data()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_add_cart_item_data($the_cart_data, $product_id,$variation_id){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_add_cart_item_data($the_cart_data, $product_id,$variation_id){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if($mwb_wgc_enable){
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if( isset( $product_types[0] ) ){
@@ -541,13 +544,13 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * List out the Meta Data into the Cart Items
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_get_item_data()
+	 * @name mwb_wgm_woocommerce_get_item_data()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_get_item_data($item_meta, $existing_item_meta){
+	public function mwb_wgm_woocommerce_get_item_data($item_meta, $existing_item_meta){
 
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			if(isset( $existing_item_meta ['product_meta' ]['meta_data'] ) ){
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ){
@@ -579,12 +582,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Set the Gift Card Price into Cart
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_before_calculate_totals()
+	 * @name mwb_wgm_woocommerce_before_calculate_totals()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_before_calculate_totals($cart){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_before_calculate_totals($cart){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			if( isset( $cart ) && !empty( $cart ) ){
 				foreach ( $cart->cart_contents as $key => $value ){
@@ -611,12 +614,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Displays the Different Price type for Gift Cards into single product page
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_get_price_html()
+	 * @name mwb_wgm_woocommerce_get_price_html()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_get_price_html( $price_html, $product ){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_get_price_html( $price_html, $product ){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			$product_id = $product->get_id();
 			if( isset( $product_id ) ){
@@ -676,9 +679,9 @@ class Woocommerce_gift_cards_lite_Public {
 										}
 									}
 								}
-								if($product_pricing_type == 'mwb_wgm_user_price'){
-									$price_html = apply_filters("mwb_wgm_user_price_text", __('Enter Giftcard Value:', MWB_WGM_DOMAIN));
-								}
+								// if($product_pricing_type == 'mwb_wgm_user_price'){
+								// 	$price_html = apply_filters("mwb_wgm_user_price_text", __('Enter Giftcard Value:', MWB_WGM_DOMAIN));
+								// }
 							}
 						}
 						$price_html = apply_filters('mwb_wgm_pricing_html',$price_html,$product,$product_pricing);
@@ -692,14 +695,14 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Handles Coupon Generation process on the order Status Changed process
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_order_status_changed()
+	 * @name mwb_wgm_woocommerce_order_status_changed()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_order_status_changed( $order_id, $old_status, $new_status ){
+	public function mwb_wgm_woocommerce_order_status_changed( $order_id, $old_status, $new_status ){
 		
 		$mwb_wgm_mail_template_data = array();
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			if($old_status != $new_status){
 				if($new_status == 'completed' || $new_status == 'processing'){
@@ -848,11 +851,11 @@ class Woocommerce_gift_cards_lite_Public {
 									$giftcard_coupon_length = 5;
 								}
 								for ($i=1; $i <= $item_quantity; $i++) { 
-									$gift_couponnumber = mwb_wgc_coupon_generator($giftcard_coupon_length);
-									if($this->mwb_common_fun->mwb_wgc_create_gift_coupon($gift_couponnumber, $couponamont, $order_id, $item['product_id'],$to)){
+									$gift_couponnumber = mwb_wgm_coupon_generator($giftcard_coupon_length);
+									if($this->mwb_common_fun->mwb_wgm_create_gift_coupon($gift_couponnumber, $couponamont, $order_id, $item['product_id'],$to)){
 										$todaydate = date_i18n("Y-m-d");
 										$expiry_date = $this->mwb_common_fun->mwb_wgm_get_template_data($general_setting,'mwb_wgm_general_setting_giftcard_expiry');
-										$expirydate_format = $this->mwb_common_fun->mwb_wgc_check_expiry_date($expiry_date);
+										$expirydate_format = $this->mwb_common_fun->mwb_wgm_check_expiry_date($expiry_date);
 										$mwb_wgm_common_arr['order_id'] = $order_id;
 										$mwb_wgm_common_arr['product_id'] = $pro_id;
 										$mwb_wgm_common_arr['to'] = $to;
@@ -865,7 +868,7 @@ class Woocommerce_gift_cards_lite_Public {
 										$mwb_wgm_common_arr['delivery_method'] = $delivery_method;
 										$mwb_wgm_common_arr['item_id'] = $item_id;
 										$mwb_wgm_common_arr = apply_filters('mwb_wgm_common_arr_data',$mwb_wgm_common_arr, $item, $order);
-										if( $this->mwb_common_fun->mwb_wgc_common_functionality( $mwb_wgm_common_arr,$order ) ){
+										if( $this->mwb_common_fun->mwb_wgm_common_functionality( $mwb_wgm_common_arr,$order ) ){
 										}
 									}								
 								}
@@ -943,12 +946,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Adds the Order-item-meta inside the each gift card orders
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_checkout_create_order_line_item()
+	 * @name mwb_wgm_woocommerce_checkout_create_order_line_item()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_checkout_create_order_line_item( $item,$cart_key,$values ){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_checkout_create_order_line_item( $item,$cart_key,$values ){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			if (isset ( $values ['product_meta'] )){
 				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ){	
@@ -983,12 +986,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Removes Add to cart button and Adds View Card Button
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_loop_add_to_cart_link()
+	 * @name mwb_wgm_woocommerce_loop_add_to_cart_link()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_loop_add_to_cart_link( $link, $product ){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_loop_add_to_cart_link( $link, $product ){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			$product_id = $product->get_id();
 			if( isset( $product_id ) ){
@@ -1015,12 +1018,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Enable the Taxes for Gift Card if the required setting is enabled
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_product_is_taxable()
+	 * @name mwb_wgm_woocommerce_product_is_taxable()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_product_is_taxable($taxable, $product){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_product_is_taxable($taxable, $product){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			$genaral_settings = get_option( 'mwb_wgm_general_settings' , array());
 			$giftcard_tax_cal_enable = $this->mwb_common_fun->mwb_wgm_get_template_data($genaral_settings,'mwb_wgm_general_setting_tax_cal_enable');
@@ -1044,11 +1047,11 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Set the error notice div on single product page
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_before_main_content()
+	 * @name mwb_wgm_woocommerce_before_main_content()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_before_main_content(){
+	public function mwb_wgm_woocommerce_before_main_content(){
 		global $post;
 		if( isset($post->ID ) ){
 			$product_id = $post->ID;
@@ -1067,12 +1070,12 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Show/Hide Gift Card product from shop page depending upon the required setting
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_product_query()
+	 * @name mwb_wgm_woocommerce_product_query()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_product_query($query, $query_object){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_woocommerce_product_query($query, $query_object){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if($mwb_wgc_enable){
 			$genaral_settings = get_option( 'mwb_wgm_general_settings' , array());
 			$giftcard_shop_page = $this->mwb_common_fun->mwb_wgm_get_template_data($genaral_settings,'mwb_wgm_general_setting_shop_page_enable');
@@ -1110,11 +1113,11 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Adjust the Gift Card Amount, when it has been applied to any product for getting discount
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_new_order_item()
+	 * @name mwb_wgm_woocommerce_new_order_item()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_new_order_item( $item_id,$item ){
+	public function mwb_wgm_woocommerce_new_order_item( $item_id,$item ){
 		if(get_class($item)=='WC_Order_Item_Coupon'){
 
 			$coupon_code=$item->get_code();
@@ -1159,11 +1162,11 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Disable the Shipping fee if there is only Gift Card Product
 	 * @since 1.0.0
-	 * @name mwb_wgc_wc_shipping_enabled()
+	 * @name mwb_wgm_wc_shipping_enabled()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_wc_shipping_enabled($enable){
+	public function mwb_wgm_wc_shipping_enabled($enable){
 		if(is_checkout() || is_cart()){	
 			global $woocommerce;
 			$gift_bool = false;
@@ -1203,18 +1206,16 @@ class Woocommerce_gift_cards_lite_Public {
 	/**
 	 * Create the Thickbox Query
 	 * @since 1.0.0
-	 * @name mwb_wgc_preview_thickbox_rqst
+	 * @name mwb_wgm_preview_thickbox_rqst
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_preview_thickbox_rqst(){
+	public function mwb_wgm_preview_thickbox_rqst(){
 		check_ajax_referer( 'mwb-wgc-verify-nonce', 'mwb_nonce' );
 		$_POST['mwb_wgc_preview_email'] = "mwb_wgm_single_page_popup";
 		$_POST['tempId'] = isset($_POST['tempId']) ? stripcslashes($_POST['tempId']) : '';
 		$_POST['message'] = stripcslashes($_POST['message']);
-
 		$_POST = apply_filters('mwb_wgm_upload_giftcard_image',$_POST);
-
 		$_POST['width'] = "630";
 		$_POST['height'] = "530";
 		$_POST['TB_iframe']=true;
@@ -1231,7 +1232,7 @@ class Woocommerce_gift_cards_lite_Public {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_preview_email_on_single_page(){
+	public function mwb_wgm_preview_email_on_single_page(){
 
 		if(isset($_GET['mwb_wgc_preview_email']) && $_GET['mwb_wgc_preview_email'] == 'mwb_wgm_single_page_popup')
 		{
@@ -1250,7 +1251,7 @@ class Woocommerce_gift_cards_lite_Public {
 			$giftcard_prefix = $general_setting['mwb_wgm_general_setting_giftcard_prefix'];
 			$coupon = $giftcard_prefix.$password;
 			$expiry_date = $general_setting['mwb_wgm_general_setting_giftcard_expiry'];
-			$expirydate_format = $this->mwb_common_fun->mwb_wgc_check_expiry_date($expiry_date);
+			$expirydate_format = $this->mwb_common_fun->mwb_wgm_check_expiry_date($expiry_date);
 			$tempId = isset($_GET['tempId']) ? $_GET['tempId'] : '';
 			$templateid = $product_pricing['template'];
 			if(is_array($templateid) && array_key_exists(0, $templateid))

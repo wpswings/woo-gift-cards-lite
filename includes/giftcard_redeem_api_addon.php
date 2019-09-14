@@ -47,8 +47,7 @@ function mwb_get_giftcard_details($request) {
 		else {	   
 			$coupon_expiry =get_post_meta( $coupon_id, 'date_expires', true);
 		}
-
-
+		
 		$coupon_data = array(
 			'remaining_amount' => $coupon_details->amount,
 			'discount_type' => $coupon_details->discount_type,
@@ -94,13 +93,11 @@ function mwb_get_giftcard_details($request) {
 
 function mwb_redeem_giftcard_offline($request){
 
-	
-
 	global $woocommerce;
 
 	$request_params = $request->get_params();	
 
-
+	
 	$coupon_code = $request_params['coupon_code'];
 	$redeem_amount = $request_params['redeem_amount'];
 	$coupon_code = strtolower($coupon_code);	
@@ -127,8 +124,7 @@ function mwb_redeem_giftcard_offline($request){
 				$coupon_expiry =get_post_meta( $coupon_id, 'date_expires', true);
 			}
 
-			
-			$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_gw_giftcard_coupon', true );
+			$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 
 			if(isset($giftcardcoupon_order_id) && $giftcardcoupon_order_id!= ''){
 
@@ -188,7 +184,6 @@ function mwb_redeem_giftcard_offline($request){
 			}
 			else{
 				
-
 				$response['code'] ="error";
 				$response['message'] = "Coupon is not valid Giftcard Coupon" ;
 
@@ -264,7 +259,7 @@ function mwb_recharge_giftcard_offine($request){
 			$coupon_expiry =get_post_meta( $coupon_id, 'date_expires', true);
 		}
 
-		$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_gw_giftcard_coupon', true );
+		$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 
 		if(isset($giftcardcoupon_order_id) && $giftcardcoupon_order_id!= ''){
 			if( $coupon_expiry == '' || $coupon_expiry > current_time('timestamp')){
@@ -298,11 +293,9 @@ function mwb_recharge_giftcard_offine($request){
 				$response['data'] = $data;			
 				$response = new WP_REST_Response($response);
 
-
 			}
 			else{
 				
-
 				$response['code'] ="error";
 				$response['message'] = "Coupon is expired" ;
 
@@ -315,7 +308,6 @@ function mwb_recharge_giftcard_offine($request){
 			}
 		}
 		else{	
-
 
 			$response['code'] ="error";
 			$response['message'] = "Coupon is not valid  Giftcard Coupon" ;
@@ -347,7 +339,7 @@ function mwb_recharge_giftcard_offine($request){
 function mwb_permission_check($request){
 	$license = $request->get_header('licensecode');
 
-	$client_license_code = get_option( 'mwb_gw_lcns_key');
+	$client_license_code = get_option( 'mwb_uwgc_lcns_key');
 	if(trim($client_license_code) === trim($license)){
 		return true;
 	}

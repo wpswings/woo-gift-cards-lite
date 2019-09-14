@@ -63,7 +63,8 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'title' => __('Giftcard Expiry After Days', MWB_WGM_DOMAIN ), 
 	  'id' => 'mwb_wgm_general_setting_giftcard_expiry',
 	  'type' => 'number',
-	  'custom_attribute' => array( 'min' => '0'),		
+	  'custom_attribute' => array( 'min' => '0'),
+	  'default' => 0,		
 	  'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 	  'desc_tip' => __('Enter number of days after purchased Giftcard is expired. Keep value "1" for one day expiry when order is completed. Keep value "0" for no expiry.', MWB_WGM_DOMAIN ),
 	 ),	
@@ -71,7 +72,8 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'title' => __('Minimum Spend', MWB_WGM_DOMAIN ), 
 	  'id' => 'mwb_wgm_general_setting_giftcard_minspend',
 	  'type' => 'number',
-	  'custom_attribute' => array( 'min' => '0'),		
+	  'custom_attribute' => array( 'min' => '"0"', 'placeholder' => '"No Minimum"'),
+	  'default' => '',		
 	  'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 	  'desc_tip' => __('This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the Giftcard coupon.', MWB_WGM_DOMAIN )
 	),
@@ -79,7 +81,8 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'title' => __('Maximum Spend', MWB_WGM_DOMAIN ), 
 	  'id' => 'mwb_wgm_general_setting_giftcard_maxspend',
 	  'type' => 'number',
-	  'custom_attribute' => array( 'min' => '0'),
+	  'custom_attribute' => array(  'min' => '"0"', 'placeholder' => '"No Maximum"'),
+	  'default' => '',
 	  'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 	  'desc_tip' => __('This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Giftcard coupon.', MWB_WGM_DOMAIN )
 	),		
@@ -88,8 +91,9 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'id' => 'mwb_wgm_general_setting_giftcard_use',
 	  'type' => 'number',
 	  'custom_attribute' => array( 'min' => '0'),
+	  'default' => 0,
 	  'class' => 'input-text mwb_gw_new_woo_ver_style_text',
-	  'desc_tip' => __('How many times this coupon can be used before Giftcard is void.', MWB_WGM_DOMAIN )
+	  'desc_tip' => __('How many times this coupon can be used before Giftcard is void. keep value "0" for unlimited use.', MWB_WGM_DOMAIN )
 	)
 	);
  $mwb_wgm_general_setting = apply_filters("mwb_wgm_general_setting",$mwb_wgm_general_setting);

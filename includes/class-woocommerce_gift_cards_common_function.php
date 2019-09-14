@@ -151,12 +151,12 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 		/**
 		 * Create the Gift Certificate(Coupon)
 		 * @since 1.0.0
-		 * @name mwb_wgc_create_gift_coupon()
+		 * @name mwb_wgm_create_gift_coupon()
 		 * @author makewebbetter<webmaster@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		function mwb_wgc_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id,$to ){
-			$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+		function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id,$to ){
+			$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 			if( $mwb_wgc_enable ){
 				$alreadycreated = get_post_meta( $order_id, 'mwb_wgm_order_giftcard', true );
 				if( $alreadycreated != 'send' ){
@@ -180,7 +180,6 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 
 					$usage_limit = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_use');
 					$usage_limit = ($usage_limit !='') ? $usage_limit:1;
-
 					$expiry_date = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_expiry');
 					$expiry_date = ($expiry_date == '') ? 1:$expiry_date;
 					
@@ -188,13 +187,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 					$free_shipping = ($free_shipping == 'on') ? 'yes':'no';
 
 					$minimum_amount = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_minspend');
-					if(!isset($minimum_amount) || empty( $minimum_amount )){
-						$minimum_amount = ' ';
-					}
 					$maximum_amount = $this->mwb_wgm_get_template_data($general_settings,'mwb_wgm_general_setting_giftcard_maxspend');
-					if(!isset($maximum_amount) || empty( $maximum_amount )){
-						$maximum_amount = ' ';
-					}
 					$exclude_sale_items = $this->mwb_wgm_get_template_data($product_settings,'mwb_wgm_product_setting_giftcard_ex_sale');
 					$exclude_sale_items = ($exclude_sale_items == 'on') ? 'yes':'no';
 					
@@ -279,11 +272,11 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 		/**
 		 * Some common mail functionality handles here
 		 * @since 1.0.0
-		 * @name mwb_wgc_common_functionality()
+		 * @name mwb_wgm_common_functionality()
 		 * @author makewebbetter<webmaster@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		public function mwb_wgc_common_functionality($mwb_wgm_common_arr,$order){
+		public function mwb_wgm_common_functionality($mwb_wgm_common_arr,$order){
 
 			if(!empty($mwb_wgm_common_arr)){
 				$to = $mwb_wgm_common_arr['to'];
@@ -297,7 +290,7 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 				$args['message'] = stripcslashes($mwb_wgm_common_arr['gift_msg']);
 				$args['coupon'] = apply_filters('mwb_wgm_qrcode_coupon',$mwb_wgm_common_arr['gift_couponnumber']);
 				$args['expirydate'] = $mwb_wgm_common_arr['expirydate_format'];
-				//$args['amount'] =  wc_price($mwb_wgm_common_arr['couponamont']);
+				
 				//price based on country
 				if( class_exists('WCPBC_Pricing_Zones')){
 					
@@ -366,13 +359,14 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 						$send_subject = "$bloginfo:";
 						$send_subject.=__(" Hurry!!! Giftcard is Received", MWB_WGM_DOMAIN);
 					}
+					$buyer_email = $order->get_billing_email();
+					$buyer_email = !empty($buyer_email)?$buyer_email:'';
 					$send_subject = str_replace('[SITENAME]', $bloginfo, $send_subject);
-					$send_subject = str_replace('[BUYEREMAILADDRESS]', $from, $send_subject);
+					$send_subject = str_replace('[BUYEREMAILADDRESS]', $buyer_email, $send_subject);
 					$send_subject = stripcslashes($send_subject);
 					$send_subject = html_entity_decode($send_subject,ENT_QUOTES, "UTF-8");
 					if(isset($mwb_wgm_common_arr['delivery_method']))
 					{
-						
 						if($mwb_wgm_common_arr['delivery_method'] == 'Mail to recipient')
 						{	
 							$woo_ver = WC()->version;
@@ -444,11 +438,11 @@ if (!class_exists('Woocommerce_gift_cards_common_function')) {
 		/**
 		 * Check the Expiry Date for priniting this out inside the Email template
 		 * @since 1.0.0
-		 * @name mwb_wgc_check_expiry_date()
+		 * @name mwb_wgm_check_expiry_date()
 		 * @author makewebbetter<webmaster@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		public function mwb_wgc_check_expiry_date( $expiry_date ){
+		public function mwb_wgm_check_expiry_date( $expiry_date ){
 			
 			$todaydate = date_i18n("Y-m-d");
 			if(isset($expiry_date) && !empty($expiry_date)){

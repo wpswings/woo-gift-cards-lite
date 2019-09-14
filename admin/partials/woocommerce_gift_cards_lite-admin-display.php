@@ -18,33 +18,33 @@
 $mwb_wgm_setting_tab = array(
 						'overview_setting'=>array(
 							                'title' => __( 'OverView', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgc_overview_setting.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_overview_setting.php',
 							           		 ),
 						'general_setting'=>array(
 							                'title' => __( 'General', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgc_general_setting.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_general_setting.php',
 							           		 ),
 						'product_setting'=>array(
 							                'title' => __( 'Product', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgc_product_setting.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_product_setting.php',
 							           		 ),
 						'email_setting'=>array(
 							                'title' => __( 'Email Template', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgc_email_template_setting.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_email_template_setting.php',
 							           		 ),
 						'delivery_method'=>array(
 							                'title' => __( 'Delivery Method', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgc_delivery_setting.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_delivery_setting.php',
 							           		 ),
 						'other_setting'=>array(
 							                'title' => __( 'Other Settings', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgc_other_setting.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/mwb_wgm_other_setting.php',
 							            	),
 					);
 		$mwb_wgm_setting_tab= apply_filters( 'mwb_wgm_add_gift_card_setting_tab_before', $mwb_wgm_setting_tab );
 		$mwb_wgm_setting_tab['redeem_tab'] = array(
 							                'title' => __( 'Gift Card Redeem', MWB_WGM_DOMAIN ),
-							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/redeem-giftware-settings.php',
+							                'file_path'=>MWB_WGC_DIRPATH.'admin/partials/templates/redeem-giftcard-settings.php',
 										);
 		$mwb_wgm_setting_tab= apply_filters( 'mwb_wgm_add_gift_card_setting_tab_after', $mwb_wgm_setting_tab );
 do_action('mwb_uwgc_show_notice');

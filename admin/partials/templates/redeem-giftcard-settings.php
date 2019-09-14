@@ -10,7 +10,7 @@ if(isset($_POST['wcgm_generate_offine_redeem_url'])){
 	$client_name = isset($_POST['wcgm_offine_redeem_name'])? sanitize_text_field( $_POST['wcgm_offine_redeem_name'] ):'';
 	$client_email = isset($_POST['wcgm_offine_redeem_email'])? sanitize_text_field( $_POST['wcgm_offine_redeem_email'] ):'';
 	$enable = isset($_POST['wcgm_offine_redeem_enable'])? sanitize_text_field( $_POST['wcgm_offine_redeem_enable'] ):'';
-	$client_license_code = get_option( 'mwb_gw_lcns_key');
+	$client_license_code = get_option( 'mwb_uwgc_lcns_key');
 	$client_domain = home_url();
 	$currency = get_option('woocommerce_currency');
 	$client_currency = get_woocommerce_currency_symbol();	
@@ -86,7 +86,7 @@ else if(isset($_POST['update_giftcard_redeem_details'])){
 	$client_domain = home_url();
 	$url ='https://gifting.makewebbetter.com/api/generate/update';
 
-	$client_license_code = get_option( 'mwb_gw_lcns_key');
+	$client_license_code = get_option( 'mwb_uwgc_lcns_key');
 	
 	if($client_license_code != ''){
 		$curl_data = array('user_id' =>$userid ,'domain' => $client_domain,'license' =>$client_license_code);
@@ -210,7 +210,7 @@ $offine_giftcard_redeem_link = get_option('giftcard_offline_redeem_link',true);
 							</td>
 							
 						</tr>
-						<?php if($offine_giftcard_redeem_link['license'] =='') { ?>
+						<?php if(isset($offine_giftcard_redeem_link['license']) && $offine_giftcard_redeem_link['license'] =='') { ?>
 							<tr>
 								<td colspan="2">
 									<?php _e('This is your limited  account so please purchase the pro and update the details .', MWB_WGM_DOMAIN )?>

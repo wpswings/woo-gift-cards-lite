@@ -108,8 +108,6 @@ class Woocommerce_gift_cards_lite_Admin {
 
 				wp_enqueue_script('mwb_lite_select2', plugin_dir_url( __FILE__ ),'js/select2.min.js',array('jquery'),'1.0.3', false);
 				
-				
-				
 				wp_register_script($this->plugin_name.'clipboard', plugin_dir_url( __FILE__ )."js/clipboard.min.js");
 
 				wp_enqueue_script($this->plugin_name.'clipboard' );
@@ -176,12 +174,12 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Add a submenu inside the Woocommerce Menu Page
 	 * @since 1.0.0
-	 * @name mwb_wgc_admin_menu()
+	 * @name mwb_wgm_admin_menu()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_admin_menu(){
-		add_submenu_page( "woocommerce", __("Gift Card", MWB_WGM_DOMAIN ), __("Gift Card", MWB_WGM_DOMAIN ), "manage_options", "mwb-wgc-setting-lite", array($this, "mwb_wgc_admin_setting"));
+	public function mwb_wgm_admin_menu(){
+		add_submenu_page( "woocommerce", __("Gift Card", MWB_WGM_DOMAIN ), __("Gift Card", MWB_WGM_DOMAIN ), "manage_options", "mwb-wgc-setting-lite", array($this, "mwb_wgm_admin_setting"));
 		//hooks to add sub menu 
 		do_action('mwb_wgm_admin_sub_menu');
 	}
@@ -189,23 +187,23 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Including a File for displaying the required setting page for setup the plugin
 	 * @since 1.0.0
-	 * @name mwb_wgc_admin_setting()
+	 * @name mwb_wgm_admin_setting()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgc_admin_setting(){
+	function mwb_wgm_admin_setting(){
 		include_once MWB_WGC_DIRPATH.'/admin/partials/woocommerce_gift_cards_lite-admin-display.php';
 	}
 
 	/**
 	 * Create a custom Product Type for Gift Card
 	 * @since 1.0.0
-	 * @name mwb_wgc_gift_card_product()
+	 * @name mwb_wgm_gift_card_product()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_gift_card_product( $types ){
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+	public function mwb_wgm_gift_card_product( $types ){
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if($mwb_wgc_enable){
 			$types[ 'wgm_gift_card' ] = __( 'Gift Card', MWB_WGM_DOMAIN );
 		}
@@ -215,11 +213,11 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Provide multiple Price variations for Gift Card Product
 	 * @since 1.0.0
-	 * @name mwb_wgc_get_pricing_type()
+	 * @name mwb_wgm_get_pricing_type()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgc_get_pricing_type(){
+	function mwb_wgm_get_pricing_type(){
 		$pricing_options = array(
 			'mwb_wgm_default_price' => __('Default Price', MWB_WGM_DOMAIN ),
 			'mwb_wgm_range_price' => __('Price Range', MWB_WGM_DOMAIN ),
@@ -232,11 +230,11 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Add some required fields (data-tabs) for Gift Card product
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_product_options_general_product_data()
+	 * @name mwb_wgm_woocommerce_product_options_general_product_data()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_product_options_general_product_data(){
+	public function mwb_wgm_woocommerce_product_options_general_product_data(){
 		global $post;
 		$product_id = $post->ID;
 		if(isset($product_id)){
@@ -246,7 +244,7 @@ class Woocommerce_gift_cards_lite_Admin {
 		}
 		$mwb_wgm_pricing = get_post_meta($product_id, 'mwb_wgm_pricing', true);
 		$selected_pricing = isset($mwb_wgm_pricing['type'])?$mwb_wgm_pricing['type']:false;
-		$giftcard_enable = mwb_wgc_giftcard_enable();
+		$giftcard_enable = mwb_wgm_giftcard_enable();
 		
 		$default_price = "";
 		$from = "";
@@ -277,7 +275,7 @@ class Woocommerce_gift_cards_lite_Admin {
 			$post = $previous_post;
 
 			woocommerce_wp_text_input( array( 'id' => 'mwb_wgm_default', 'value'=>"$default_price" ,'label' => __( 'Default Price', MWB_WGM_DOMAIN ), 'placeholder' => wc_format_localized_price( 0 ), 'description' => __( 'Gift card default price.', MWB_WGM_DOMAIN ), 'data_type' => 'price', 'desc_tip' => true ) );
-			woocommerce_wp_select( array( 'id' => 'mwb_wgm_pricing', 'value'=>"$selected_pricing", 'label' => __( 'Pricing type', MWB_WGM_DOMAIN ), 'options' => $this->mwb_wgc_get_pricing_type() ) );
+			woocommerce_wp_select( array( 'id' => 'mwb_wgm_pricing', 'value'=>"$selected_pricing", 'label' => __( 'Pricing type', MWB_WGM_DOMAIN ), 'options' => $this->mwb_wgm_get_pricing_type() ) );
 
 			 //Range Price
 			 //StartFrom
@@ -305,6 +303,7 @@ class Woocommerce_gift_cards_lite_Admin {
 					<label class = "mwb_wgm_email_template" for="mwb_wgm_email_template"><?php _e('Email Template', MWB_WGM_DOMAIN);?></label>
 					<select id="mwb_wgm_email_template" multiple="multiple" name="mwb_wgm_email_template[]" class="mwb_wgm_email_template">
 						<?php 
+						$pro_template = get_option('mwb_uwgc_templateid',array());
 						$args = array( 'post_type' => 'giftcard', 'posts_per_page' => -1);
 						$loop = new WP_Query( $args );
 						$template = array();
@@ -324,9 +323,19 @@ class Woocommerce_gift_cards_lite_Admin {
 									$tempselect = "selected='selected'";
 								}
 							}
-							?>
+							if(!mwb_uwgc_pro_active() && is_array($pro_template) && !empty($pro_template)){
+
+								if (!in_array($template_id, $pro_template)) {
+									?>
+								<option value="<?php echo $template_id; ?>"<?php echo $tempselect;?>><?php echo $template_title; ?></option>
+								<?php
+								}
+							}
+							else{
+								?>
 							<option value="<?php echo $template_id; ?>"<?php echo $tempselect;?>><?php echo $template_title; ?></option>
 							<?php
+							}
 						}
 						?>
 					</select>
@@ -345,6 +354,7 @@ class Woocommerce_gift_cards_lite_Admin {
 						}
 						elseif(is_array($selectedtemplate) && !empty($selectedtemplate) && !empty($default_selected))
 						{	
+							
 							$args = array( 'post_type' => 'giftcard' ,'post__in' => $selectedtemplate );
 							$loop = new WP_Query( $args );
 							foreach ($loop->posts as $key => $value){
@@ -353,6 +363,7 @@ class Woocommerce_gift_cards_lite_Admin {
 								$alreadyselected = "";
 								if(is_array($selectedtemplate) && in_array($default_selected, $selectedtemplate) && $default_selected == $template_id)
 								{	
+									
 									$alreadyselected = " selected='selected'";
 								}
 								?>
@@ -373,11 +384,11 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Saves the all required details for each product
 	 * @since 1.0.0
-	 * @name mwb_wgc_save_post()
+	 * @name mwb_wgm_save_post()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_save_post(){
+	public function mwb_wgm_save_post(){
 		global $post;
 		if(isset($post->ID))
 		{	
@@ -417,12 +428,26 @@ class Woocommerce_gift_cards_lite_Admin {
 							$loop = new WP_Query( $args );
 							$template = array();
 							if( $loop->have_posts() ):
-								while ( $loop->have_posts() ) : $loop->the_post(); global $product;
+								while ( $loop->have_posts() ) : $loop->the_post();
 									$template_id = $loop->post->ID;
 									$template[] = $template_id;
 								endwhile;
 							endif;
-							$mwb_wgm_pricing['template'] = array($template[0]);
+							$pro_template = get_option('mwb_uwgc_templateid',array());
+							$temp_array = array();
+							if(!mwb_uwgc_pro_active() && is_array($pro_template) && !empty($pro_template)){
+								foreach ($template as $value) {
+									if (!in_array($value, $pro_template)) {
+										$temp_array[] = $value;
+									}
+								}
+								if (isset($temp_array) && !empty($temp_array)) {
+									$mwb_wgm_pricing['template'] = array($temp_array[0]);
+								}
+							}
+							else{
+								$mwb_wgm_pricing['template'] = array($template[0]);
+							}
 						}
 						else
 						{
@@ -468,11 +493,11 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Hides some of the tabs if the Product is Gift Card
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_product_data_tabs()
+	 * @name mwb_wgm_woocommerce_product_data_tabs()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_product_data_tabs( $tabs ){
+	public function mwb_wgm_woocommerce_product_data_tabs( $tabs ){
 		if( isset( $tabs ) && !empty( $tabs ) ){
 			foreach( $tabs as $key=>$tab ){	
 				if( $key != 'general' && $key != 'advanced' && $key != 'shipping'){
@@ -487,15 +512,15 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Add the Gift Card Coupon code as an item meta for each Gift Card Order
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_after_order_itemmeta()
+	 * @name mwb_wgm_woocommerce_after_order_itemmeta()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_after_order_itemmeta( $item_id, $item, $_product ){
+	public function mwb_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ){
 		if ( ! current_user_can( 'edit_shop_orders' ) ){
 			return;
 		}
-		$mwb_wgc_enable = mwb_wgc_giftcard_enable();
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if( $mwb_wgc_enable ){
 			if( isset( $_GET['post'] ) ){	
 				$order_id = sanitize_text_field( $_GET['post'] );
@@ -539,11 +564,11 @@ class Woocommerce_gift_cards_lite_Admin {
 	/**
 	 * Hides the non-required Item Meta
 	 * @since 1.0.0
-	 * @name mwb_wgc_woocommerce_hidden_order_itemmeta()
+	 * @name mwb_wgm_woocommerce_hidden_order_itemmeta()
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgc_woocommerce_hidden_order_itemmeta( $order_items ){
+	public function mwb_wgm_woocommerce_hidden_order_itemmeta( $order_items ){
 		if ( ! current_user_can( 'edit_shop_orders' ) ){
 			return;
 		}
