@@ -2,7 +2,12 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
- 
+ .product-type-wgm_gift_card .price {
+  margin: 0 !important;
+}
+.product-type-wgm_gift_card .price ~ .cart {
+  padding-top: 0 !important;
+}
  .mwb_wgm_added_wrapper {
  	margin-bottom: 20px ;
  }

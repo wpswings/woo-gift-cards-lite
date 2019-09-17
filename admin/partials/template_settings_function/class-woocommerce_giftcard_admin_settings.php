@@ -225,7 +225,7 @@ class Woocommerce_Giftcard_Admin_settings {
 	public function mwb_wgm_save_button_html($name){
 		?>
 		<p class="submit">
-			<input type="submit" value="<?php _e('Save changes', MWB_WGM_DOMAIN ); ?>" class="button-primary woocommerce-save-button" name="<?php echo $name;?>" id="<?php echo $name;?>" >
+			<input type="submit" value="<?php _e('Save changes', MWB_WGM_DOMAIN ); ?>" class="mwb_wgm_save_button" name="<?php echo $name;?>" id="<?php echo $name;?>" >
 			</p><?php
 		}
 
