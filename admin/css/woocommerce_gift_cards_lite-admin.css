@@ -7,6 +7,9 @@
  * {
     box-sizing: border-box;
 }
+.mwb_wgm_main_template .woocommerce-help-tip {
+  margin-right: 15px !important;
+}
 .mwb_wgm_main_template, .mwb_wgm_main_template p, .mwb_wgm_main_template li {
   font-size: 16px;
 }
@@ -28,11 +31,11 @@
 .mwb_wgm_header_content_left {
     align-items: center;
     display: flex;
-    flex: 0 0 60%;
+    flex: 0 0 35%;
     padding: 20px 15px;
 }
 .mwb_wgm_header_content_right {
-    flex: 0 0 40%;
+    flex: 0 0 65%;
     padding: 20px 15px;
 }
 .mwb_wgm_header_content_left .mwb_wgm_setting_title {
@@ -64,8 +67,6 @@
     border-radius: 4px;
     color: #ffffff !important;
 }
-
-
 #mwb_wgm_setting_wrapper .mwb_wgc_pro_version_wrapper .mwb_wgc_about_pro_version {
     font-size: 15px;
     font-weight: bold;
@@ -82,35 +83,74 @@
   border: 1px solid #bababa;
   width: 100%;
 }
-#mwb_wgm_setting_wrapper .mwb_wgc_pro_version_wrapper .mwb_wgc_get_it_button {
+#mwb_wgm_setting_wrapper .mwb_wgc_pro_version_wrapper .mwb_wgc_get_it_button,.mwb_wgm_save_button,
+.mwb_wgm_small_button,#mwb_wgm_csv_offlinecoupon_import,#mwb_wgm_import_button,
+#mwb_wgm_add_new_card_button, .resend.column-resend .mwb_wgm_offline_resend_mail,
+#mwb_uwgc_qrcode_setting_save,#uwgc_custom_giftcard ,#mwb_uwgc-license-activate{
     background-color: #ef5350;
-    color: #fff;
+    color: #ffffff;
     display: inline-block;
     padding: 10px 25px;
     text-decoration: none;
     font-weight: bold;
     font-size: 14px;
+    height: auto;
+    text-shadow: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    line-height: 1.3;
+    border-radius: 0;
+}
+.mwb_wgm_small_button:hover,
+.mwb_wgm_small_button:focus{
+  color: #ffffff;
+}
+#mwb_uwgc_qrcode_setting_save {
+  min-width: 133px;
+}
+.resend.column-resend .mwb_wgm_offline_resend_mail,#uwgc_custom_giftcard {
+  padding: 5px 8px;
+  font-size: 13px;
 }
 #mwb_wgm_setting_wrapper .mwb_wgc_pro_version_wrapper .mwb_wgc_get_it_button:hover{
-  color: #fff;
+  color: #ffffff;
 }
 #mwb_wgm_setting_wrapper .mwb_wgc_pro_version_wrapper .mwb_wgc_get_it_now {
   text-align: center;
   margin-top: 20px;
 }
+#mwb_uwgc-license-key {
+  padding: 10px;
+}
 #mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_general_setting tr:nth-child(2n+1) {
   background-color: #efefef;
 }
-#mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_general_setting tr label{
-  padding-left: 15px;
+.mwb_uwgc_thankyouorder_row .form-table.wp-list-table.widefat.fixed.striped,
+.mwb_wgm_discount_row .form-table.wp-list-table.widefat.fixed.striped {
+  table-layout: auto;
+  width: 100%;
 }
-#mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_product_setting tr label{
-  padding-left: 15px;
+.mwb_wgm_discount_row .form-table.wp-list-table.widefat.fixed.striped .mwb_wgm_discount_tbody{
+  display: table-header-group;
 }
+.mwb_uwgc_thankyouorder_row .form-table.wp-list-table.widefat.fixed.striped input[type="text"],
+.mwb_wgm_discount_row .form-table.wp-list-table.widefat.fixed.striped input[type="text"] {
+  width: 110px;
+}
+#mwb_uwgc_add_more ,#mwb_wgm_add_more{
+  margin-top: 10px;
+}
+/*#mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_general_setting tr label{
+  padding-left: 15px;
+}*/
+/*#mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_product_setting tr label{
+  padding-left: 15px;
+}*/
 #mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_product_setting tr:nth-child(2n+1) {
     background-color: #efefef;
 }
-.mwb_wgm_other_setting_remove_logo_span {
+.mwb_wgm_mail_setting_remove_logo_span {
     background-color: #ef5350;
     border-radius: 100%;
     color: #ffffff;
@@ -123,11 +163,11 @@
     vertical-align: middle;
     cursor: pointer;
 }
-.mwb_wgm_other_setting_remove_logo {
+.mwb_wgm_mail_setting_remove_logo {
     display: inline-block;
     position: relative;
 }
-#mwb_wgm_other_setting_remove_logo{
+#mwb_wgm_mail_setting_remove_logo{
     display:none;
     padding: 14px 24px;
 }
@@ -149,16 +189,27 @@
 .form-table th {
     vertical-align: top;
     text-align: left;
-    padding: 20px 10px 20px 0;
+    padding: 20px 10px 20px 13px;
     width: 200px;
     line-height: 1.3;
     font-weight: 600;
 }
 .form-table td {
     margin-bottom: 9px;
-    padding: 5px 0px;
+    padding: 5px 13px;
     line-height: 1.3;
     vertical-align: middle;
+}
+#mwb_uwgc_pdf_deprecated {
+  background-color: #ef5350;
+  color: #ffffff;
+  border: none;
+  margin-left: 6px;
+  padding: 4px 7px;
+  display: inline-block;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
 }
 #mwb_wgm_other_setting_giftcard_html {
     width: 100%;
@@ -250,7 +301,7 @@
     color: #fff !important;
     display: block;
 }
-.mwb_gw_nav_tab {
+.mwb_wgm_nav_tab {
   background-color: #fff;
   color: #2b5d89;
   display: block;
@@ -276,10 +327,10 @@
     margin-top: -8px;
     z-index: 2;
 }
-.mwb_gw_nav_tab:hover {
+.mwb_wgm_nav_tab:hover {
   color: #2b5d89;
 }
-.mwb_gw_nav_tab:focus, .mwb_gw_nav_tab:hover {
+.mwb_wgm_nav_tab:focus, .mwb_wgm_nav_tab:hover {
   box-shadow: none;
 }
 
@@ -577,7 +628,7 @@ transform: rotate(90deg);
   .mwb_redeem_details td textarea:focus, .mwb_redeem_details td input[type="text"]:focus{
     border-color: #ffffff;
   }
-  .mwb_gw_admin_notices {
+  .mwb_wgm_admin_notices {
     display: flex;
     background-color: #4F3154;
     color: #ffffff;
@@ -585,16 +636,17 @@ transform: rotate(90deg);
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    width: 98%;
 }
-.mwb_gw_admin_notices p {
+.mwb_wgm_admin_notices p {
   margin: 5px 0;
 }
-.mwb_gw_admin_notices a {
+.mwb_wgm_admin_notices a {
   color: #ffffff;
   font-weight: 600;
   margin-left: 10px;
 }
-.mwb_gw_admin_notices p ~ a {
+.mwb_wgm_admin_notices p ~ a {
   font-weight: normal;
   font-size: 13px;
 }
@@ -831,4 +883,95 @@ transform: rotate(90deg);
   text-align: center;
   top: 50%;
   transform: translateY(-50%);
+}
+
+/*css for wp editor text area*/
+.mwb_wgm_new_woo_ver_style_textarea{
+      width: 100% !important;
+    }
+/*css for email upload default event*/
+.mwb_wgm_mail_setting_remove_background {
+  display: inline-block;
+  position: relative;
+}
+#mwb_wgm_mail_setting_remove_background {
+  display:none;
+}
+.mwb_wgm_mail_setting_remove_background_span {
+    background-color: #ef5350;
+    border-radius: 100%;
+    color: #ffffff;
+    font-size: 18px;
+    height: 25px;
+    line-height: 24px;
+    text-align: center;
+    width: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.mwb_wgm_mail_setting_tab{
+  background-color: #ef5350;
+  color: #ffffff;
+  margin: 9px 0 0;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#mwb_wgm_mail_setting_wrapper{
+  display:none;
+}
+/*custom css for preview template of giftcard post*/
+#TB_window iframe#TB_iframeContent {
+  margin: 0 auto;
+  
+  width: 100% !important;
+  height: 480px!important;
+}
+#mwb_wgm_email_template + span{
+  width: 50% !important;
+}
+.select2-container.select2-container-multi.mwb_wgm_email_template {
+ width: 50% !important;
+}
+.submit.mwb_wgm_email_template {
+  width: 100%;
+}
+
+/*css for general setting tab additional info display */
+.mwb_uwgc_additional_info {
+    font-size: 19px;
+    padding-left: 24px;
+}
+#mwb_uwgc_customize_remove_email_template_image_para{
+  display:none;
+}
+#mwb_uwgc_customize_remove_giftcard_para{
+   display:none;
+}
+#mwb_wgm_mail_setting_remove_background {
+    margin-left: 39px;
+    margin-top: 10px;
+}
+.mwb_wgm_redeem_link {
+    background-color: #ef5350;
+    color: #ffffff !important;
+    padding: 11px 16px;
+    position: relative;
+    font-size: 16px;
+    border-radius: 4px;
+    display: inline-block;
+}
+.mwb_wgm_redeem_link span {
+    background-color: #f1cb32;
+    padding: 5px 12px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    color: #000000 !important;
+}
+#mwb_wgm_mail_setting_upload_image {
+    margin-left: 15px;
 }
