@@ -1312,7 +1312,7 @@ class Woocommerce_gift_cards_lite_Public {
 			$args['templateid'] = isset( $mwb_temp_id ) && ! empty( $mwb_temp_id ) ? $mwb_temp_id : $temp;
 			$args['product_id'] = $product_id;
 			$message = $this->mwb_common_fun->mwb_wgm_create_gift_template( $args );
-			echo $message; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+			echo $message; //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 			die;
 		}
 	}

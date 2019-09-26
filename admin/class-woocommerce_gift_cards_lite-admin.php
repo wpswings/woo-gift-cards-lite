@@ -540,6 +540,8 @@ class Woocommerce_gift_cards_lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_woocommerce_product_data_tabs()
+	 * @param array $tabs product tabs.
+	 * @return $tabs.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
@@ -560,6 +562,9 @@ class Woocommerce_gift_cards_lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_woocommerce_after_order_itemmeta()
+	 * @param int   $item_id item id.
+	 * @param array $item item.
+	 * @param array $_product product.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
@@ -613,6 +618,8 @@ class Woocommerce_gift_cards_lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_woocommerce_hidden_order_itemmeta()
+	 * @param array $order_items order items.
+	 * @return $order_items.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
@@ -677,6 +684,7 @@ class Woocommerce_gift_cards_lite_Admin {
 		 * This function is to add meta field like field for instruction how to use shortcode in email template
 		 *
 		 * @name mwb_wgm_edit_form_after_title
+		 * @param object $post post.
 		 * @author makewebbetter<webmaster@makewebbetter.com>
 		 * @link http://www.makewebbetter.com/
 		 */
@@ -733,7 +741,14 @@ class Woocommerce_gift_cards_lite_Admin {
 				<?php
 		}
 	}
-		/*Added Mothers Day Template */
+
+	/**
+	 * Added Mothers Day Template
+	 *
+	 * @name mwb_wgm_mothers_day_template
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 */
 	public function mwb_wgm_mothers_day_template() {
 
 		$mwb_wgm_template = get_option( 'mwb_wgm_new_mom_template', '' );
@@ -788,13 +803,17 @@ class Woocommerce_gift_cards_lite_Admin {
 				'post_type'     => 'giftcard',
 			);
 			$parent_post_id = wp_insert_post( $gifttemplate_new );
-			// update_post_meta($parent_post_id,'mwb_css_field',trim($new_mom_css));
 			set_post_thumbnail( $parent_post_id, $arr[0] );
-
 		}
-
 	}
-		/*Added New Template*/
+
+	/**
+	 * Added New Template
+	 *
+	 * @name mwb_wgm_new_template
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 */
 	public function mwb_wgm_new_template() {
 
 		$mwb_wgm_template = get_option( 'mwb_wgm_happy_birthday_template', '' );
@@ -847,13 +866,19 @@ class Woocommerce_gift_cards_lite_Admin {
 				'post_type'     => 'giftcard',
 			);
 			$parent_post_id = wp_insert_post( $gifttemplate_new );
-			// update_post_meta($parent_post_id,'mwb_css_field',trim($new_mom_css));
 			set_post_thumbnail( $parent_post_id, $arr[0] );
 		}
 
 	}
-	public function mwb_wgm_insert_custom_template() {
 
+	/**
+	 * Added custom Template
+	 *
+	 * @name mwb_wgm_insert_custom_template
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_insert_custom_template() {
 		$mwb_wgm_template = get_option( 'mwb_wgm_insert_custom_template', '' );
 		if ( empty( $mwb_wgm_template ) ) {
 			update_option( 'mwb_wgm_insert_custom_template', true );
@@ -908,14 +933,31 @@ class Woocommerce_gift_cards_lite_Admin {
 			set_post_thumbnail( $parent_post_id, $arr[0] );
 		}
 	}
-		/*Add Preview button link in giftcard post */
+
+	/**
+	 * Add Preview button link in giftcard post
+	 *
+	 * @name mwb_wgm_preview_gift_template
+	 * @param array  $actions actions.
+	 * @param object $post post.
+	 * @return $actions.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 */
 	public function mwb_wgm_preview_gift_template( $actions, $post ) {
 		if ( $post->post_type == 'giftcard' ) {
 			$actions['mwb_wgm_quick_view'] = '<a href="' . admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID . '&mwb_wgm_template=giftcard&TB_iframe=true&width=600&height=500' ) . '" rel="permalink" class="thickbox">' . __( 'Preview', 'woocommerce_gift_cards_lite' ) . '</a>';
 		}
 		return $actions;
 	}
-		/*Preview of email template*/
+
+	/**
+	 * Preview of email template
+	 *
+	 * @name mwb_wgm_preview_email_template
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 */
 	public function mwb_wgm_preview_email_template() {
 		if ( isset( $_GET['mwb_wgm_template'] ) ) {
 			if ( isset( $_GET['mwb_wgm_template'] ) == 'giftcard' ) {
@@ -974,12 +1016,19 @@ class Woocommerce_gift_cards_lite_Admin {
 				</style>';
 				$message = $this->mwb_common_fun->mwb_wgm_create_gift_template( $args );
 				$finalhtml = $style . $message;
-				echo $finalhtml;
+				echo $finalhtml; //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 				die();
 			}
 		}
 	}
 
+	/**
+	 * Append template on product edit page for giftcard.
+	 *
+	 * @name mwb_wgm_append_default_template
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 */
 	public function mwb_wgm_append_default_template() {
 		check_ajax_referer( 'mwb-wgm-verify-nonce', 'mwb_nonce' );
 		$response['result'] = __( 'Fail due to an error', 'woocommerce_gift_cards_lite' );
