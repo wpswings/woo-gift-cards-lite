@@ -418,11 +418,9 @@ if ( ! class_exists( 'Woocommerce_gift_cards_common_function' ) ) {
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( $expiry_date > 0 || $expiry_date === 0 ) {
-
 					$general_settings = get_option( 'mwb_wgm_general_settings', array() );
 					$selected_date = $this->mwb_wgm_get_template_data( $general_settings, 'mwb_uwgc_general_setting_enable_selected_format' );
-
-					if ( isset( $selected_date ) && $selected_date != null && $selected_date != '' ) {
+					if ( isset( $selected_date ) && $selected_date != null && $selected_date != '' && mwb_uwgc_pro_active() ) {
 						$selected_date = apply_filters( 'mwb_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );
 					} else {
