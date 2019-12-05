@@ -8,7 +8,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_settings();
 	  'type' => 'checkbox',
 	  'class' => 'input-text',
 	  'desc_tip' =>  __('Check this box to enable giftcard',MWB_WGM_DOMAIN),
-	  'desc' =>  __('Enable WooCommerce Gift Card',MWB_WGM_DOMAIN)
+	  'desc' =>  __('Enable Gift Cards',MWB_WGM_DOMAIN)
 	),					
 	array(
 	  'title' => __('Enable Tax', MWB_WGM_DOMAIN ), 
