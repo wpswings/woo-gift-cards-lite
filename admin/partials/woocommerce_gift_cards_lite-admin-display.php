@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin
  *
@@ -11,21 +10,22 @@
  * @package    Woocommerce_gift_cards_lite
  * @subpackage Woocommerce_gift_cards_lite/admin/partials
  */
-/*if ( ! defined( 'ABSPATH' ) ) {
+
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-}*/
-$overview = "";
-$generaltab = "";
-$producttab = "";
-$tab = "";
-$emailtab = "";
-$offlinetab = "";
-$exporttab = "";
-$additionaltab = "";
-$discounttab = "";
-$thankyouordertab = "";
-$deliverytab = "";
-$qrbartab = "";
+}
+$overview = '';
+$generaltab = '';
+$producttab = '';
+$tab = '';
+$emailtab = '';
+$offlinetab = '';
+$exporttab = '';
+$additionaltab = '';
+$discounttab = '';
+$thankyouordertab = '';
+$deliverytab = '';
+$qrbartab = '';
 $exportcoupontabactive = false;
 $generaltabactive = false;
 $producttabactive = false;
@@ -34,67 +34,66 @@ $offlinepaymenttabactive = false;
 $additionalsettingtabactive = false;
 $discounttabactive = false;
 $thankyouordertabactive = false;
+$deliverytabactive = false;
 $qrbartabactive = false;
 $overviewactive = false;
-$redeem_tab = "";
+$redeem_tab = '';
 $redeem_tab_active = false;
 
-if(isset($_GET['tab']) && !empty($_GET['tab']))
-{
-	$tab = sanitize_text_field( $_GET['tab'] );
-	if($tab == 'overview'){
-		$overview = "nav-tab-active";
+if ( isset( $_GET['tab'] ) && ! empty( $_GET['tab'] ) ) {
+	$tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
+	if ( $tab == 'overview' ) {
+		$overview = 'nav-tab-active';
 		$overviewactive = true;
-	}	
-	if($tab == 'general-setting'){
-		$generaltab = "nav-tab-active";
+	}
+	if ( $tab == 'general-setting' ) {
+		$generaltab = 'nav-tab-active';
 		$generaltabactive = true;
-	}	
-	if($tab == 'product-setting'){
-		$producttab = "nav-tab-active";
+	}
+	if ( $tab == 'product-setting' ) {
+		$producttab = 'nav-tab-active';
 		$producttabactive = true;
 	}
-	if($tab == 'email-setting'){
-		$emailtab = "nav-tab-active";
+	if ( $tab == 'email-setting' ) {
+		$emailtab = 'nav-tab-active';
 		$emailtabactive = true;
 	}
-	if($tab == 'offline-giftcard'){
-		$offlinetab = "nav-tab-active";
+	if ( $tab == 'offline-giftcard' ) {
+		$offlinetab = 'nav-tab-active';
 		$offlinepaymenttabactive = true;
 	}
-	if($tab == 'export-coupon'){
-		$exporttab = "nav-tab-active";
+	if ( $tab == 'export-coupon' ) {
+		$exporttab = 'nav-tab-active';
 		$exportcoupontabactive = true;
 	}
-	if($tab == 'other-additional-setting'){
-		$additionaltab = "nav-tab-active";
+	if ( $tab == 'other-additional-setting' ) {
+		$additionaltab = 'nav-tab-active';
 		$additionalsettingtabactive = true;
 	}
-	if($tab == 'discount-tab'){
-		$discounttab = "nav-tab-active";
+	if ( $tab == 'discount-tab' ) {
+		$discounttab = 'nav-tab-active';
 		$discounttabactive = true;
 	}
-	if($tab == 'thankyou-tab'){
-		$thankyouordertab = "nav-tab-active";
+	if ( $tab == 'thankyou-tab' ) {
+		$thankyouordertab = 'nav-tab-active';
 		$thankyouordertabactive = true;
 	}
-	if($tab == 'qr-barcode-tab'){
-		$qrbartab = "nav-tab-active";
+	if ( $tab == 'qr-barcode-tab' ) {
+		$qrbartab = 'nav-tab-active';
 		$qrbartabactive = true;
 	}
-	if($tab == 'delivery-tab'){
-		$deliverytab = "nav-tab-active";
+	if ( $tab == 'delivery-tab' ) {
+		$deliverytab = 'nav-tab-active';
 		$deliverytabactive = true;
 	}
-	if($tab == 'redeem_section')
-	{
-		$redeem_tab = "nav-tab-active";
+	if ( $tab == 'redeem_section' ) {
+		$redeem_tab = 'nav-tab-active';
 		$redeem_tab_active = true;
 	}
-	do_action('mwb_wgm_setting_tab_active');
-}	
-if(empty($tab)){
-	$overview = "nav-tab-active";
+	do_action( 'mwb_wgm_setting_tab_active' );
+}
+if ( empty( $tab ) ) {
+	$overview = 'nav-tab-active';
 	$overviewactive = true;
 }
 ?>
@@ -104,7 +103,7 @@ if(empty($tab)){
 		<div class="mwb_wgm_header">
 			<div class="mwb_wgm_header_content_left">
 				<div>
-					<h3 class="mwb_wgm_setting_title"><?php _e('GiftWare Lite Settings', 'woocommerce_gift_cards_lite')?></h3>
+					<h3 class="mwb_wgm_setting_title"><?php esc_html_e( 'GiftWare Lite Settings', 'woocommerce_gift_cards_lite' ); ?></h3>
 				</div>
 			</div>
 			<div class="mwb_wgm_header_content_right">
@@ -121,7 +120,8 @@ if(empty($tab)){
 		</ul>
 	</div>
 </div>
-<input type="hidden" name="mwb-wgc-nonce" value="<?php echo wp_create_nonce('mwb-wgc-nonce'); ?>">
+
+<?php wp_nonce_field( 'mwb-wgc-nonce', 'mwb-wgc-nonce' ); ?>
 <div class="mwb_wgm_main_template">
 	<div class="mwb_wgm_body_template">
 		<div class="mwb_wgm_mobile_nav">
@@ -130,85 +130,87 @@ if(empty($tab)){
 		<div class="mwb_wgm_navigator_template">
 			<div class="hubwoo-navigations">
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $overview ;?>" href="?page=mwb-wgc-setting-lite&tab=overview"><?php _e('OverView', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $overview ); ?>" href="?page=mwb-wgc-setting-lite&tab=overview"><?php esc_html_e( 'OverView', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $generaltab;?>" href="?page=mwb-wgc-setting-lite&tab=general-setting"><?php _e('General', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $generaltab ); ?>" href="?page=mwb-wgc-setting-lite&tab=general-setting"><?php esc_html_e( 'General', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $producttab;?>" href="?page=mwb-wgc-setting-lite&tab=product-setting"><?php _e('Products', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $producttab ); ?>" href="?page=mwb-wgc-setting-lite&tab=product-setting"><?php esc_html_e( 'Products', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $emailtab;?>" href="?page=mwb-wgc-setting-lite&tab=email-setting"><?php _e('Email Template', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $emailtab ); ?>" href="?page=mwb-wgc-setting-lite&tab=email-setting"><?php esc_html_e( 'Email Template', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $offlinetab;?>" href="?page=mwb-wgc-setting-lite&tab=offline-giftcard"><?php _e('Offline Giftcard', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $offlinetab ); ?>" href="?page=mwb-wgc-setting-lite&tab=offline-giftcard"><?php esc_html_e( 'Offline Giftcard', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $exporttab;?>" href="?page=mwb-wgc-setting-lite&tab=export-coupon"><?php _e('Import/Export', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $exporttab ); ?>" href="?page=mwb-wgc-setting-lite&tab=export-coupon"><?php esc_html_e( 'Import/Export', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $additionaltab;?>" href="?page=mwb-wgc-setting-lite&tab=other-additional-setting"><?php _e('Other Setting', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $additionaltab ); ?>" href="?page=mwb-wgc-setting-lite&tab=other-additional-setting"><?php esc_html_e( 'Other Setting', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $discounttab;?>" href="?page=mwb-wgc-setting-lite&tab=discount-tab"><?php _e('Discount', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $discounttab ); ?>" href="?page=mwb-wgc-setting-lite&tab=discount-tab"><?php esc_html_e( 'Discount', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $thankyouordertab;?>" href="?page=mwb-wgc-setting-lite&tab=thankyou-tab"><?php _e('Thank You Order', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $thankyouordertab ); ?>" href="?page=mwb-wgc-setting-lite&tab=thankyou-tab"><?php esc_html_e( 'Thank You Order', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $qrbartab;?>" href="?page=mwb-wgc-setting-lite&tab=qr-barcode-tab"><?php _e('QRCode/BarCode', 'woocommerce_gift_cards_lite');?></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $qrbartab ); ?>" href="?page=mwb-wgc-setting-lite&tab=qr-barcode-tab"><?php esc_html_e( 'QRCode/BarCode', 'woocommerce_gift_cards_lite' ); ?></a>
 				</div>
 				<div class="mwb_wgm_tabs">	
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $deliverytab;?>" href="?page=mwb-wgc-setting-lite&tab=delivery-tab"><?php _e('Delivery Method', 'woocommerce_gift_cards_lite');?></a>	
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $deliverytab ); ?>" href="?page=mwb-wgc-setting-lite&tab=delivery-tab"><?php esc_html_e( 'Delivery Method', 'woocommerce_gift_cards_lite' ); ?></a>	
 				</div>	
 				<div class="mwb_wgm_tabs">
-					<a class="mwb_gw_nav_tab nav-tab <?php echo $redeem_tab;?>" href="?page=mwb-wgc-setting-lite&tab=redeem_section"><?php _e('Gift Card Redeem','woocommerce_gift_cards_lite' );?><span class="mwb_gw_new_badge">New</span></a>
+					<a class="mwb_gw_nav_tab nav-tab <?php echo esc_attr( $redeem_tab ); ?>" href="?page=mwb-wgc-setting-lite&tab=redeem_section"><?php esc_html_e( 'Gift Card Redeem', 'woocommerce_gift_cards_lite' ); ?><span class="mwb_gw_new_badge">New</span></a>
 				</div>
-				<?php 
-				do_action('mwb_wgm_setting_tab');
-				?>	
+				<?php
+				do_action( 'mwb_wgm_setting_tab' );
+				?>
+					
 			</div>
 		</div>
 		<div class="mwb_wgm_content_template">
-			<?php 
-			if($generaltabactive == true){	
+			<?php
+			if ( $generaltabactive == true ) {
 				include_once 'templates/mwb_wgc_general_setting.php';
-			}	
-			if($producttabactive == true){	
+			}
+			if ( $producttabactive == true ) {
 				include_once 'templates/mwb_wgc_product_setting.php';
 			}
-			if($emailtabactive == true){	
+			if ( $emailtabactive == true ) {
 				include_once 'templates/mwb_wgc_email_template_setting.php';
 			}
-			if($offlinepaymenttabactive == true){	
+			if ( $offlinepaymenttabactive == true ) {
 				include_once 'templates/mwb_wgc_pro_version.php';
 			}
-			if($exportcoupontabactive == true){	
+			if ( $exportcoupontabactive == true ) {
 				include_once 'templates/mwb_wgc_pro_version.php';
 			}
-			if($additionalsettingtabactive == true){	
+			if ( $additionalsettingtabactive == true ) {
 				include_once 'templates/mwb_wgc_pro_version.php';
 			}
-			if($discounttabactive == true){	
+			if ( $discounttabactive == true ) {
 				include_once 'templates/mwb_wgc_pro_version.php';
 			}
-			if($thankyouordertabactive == true){	
+			if ( $thankyouordertabactive == true ) {
 				include_once 'templates/mwb_wgc_pro_version.php';
 			}
-			if($qrbartabactive == true){	
+			if ( $qrbartabactive == true ) {
 				include_once 'templates/mwb_wgc_pro_version.php';
 			}
-			if($overviewactive == true){
+			if ( $deliverytabactive == true ) {
+				include_once 'templates/mwb_wgc_pro_version.php';
+			}
+			if ( $overviewactive == true ) {
 				include_once 'templates/mwb_wgc_overview_setting.php';
 			}
-			if($redeem_tab_active == true)
-			{	
-
+			if ( $redeem_tab_active == true ) {
 				include_once 'templates/redeem-giftware-settings.php';
 			}
-			do_action('mwb_wgm_setting_tab_html');
-			?>			
+			?>
+						
 		</div>
 	</div>
 </div>

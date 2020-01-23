@@ -1,17 +1,24 @@
 <?php
-// This is Redeem Section tab page ...
+/**
+ * Exit if accessed directly
+ *
+ * @package    Woocommerce_gift_cards_lite
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/*
+ * Redeem Settings Template
+ */
 if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	if ( isset( $_REQUEST['mwb-redeem-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-redeem-nonce'] ) ), 'mwb-redeem-nonce' ) ) {
 		global $woocommerce;
 		$client_name = isset( $_POST['wcgm_offine_redeem_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_name'] ) ) : '';
 		$client_email = isset( $_POST['wcgm_offine_redeem_email'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_email'] ) ) : '';
 		$enable = isset( $_POST['wcgm_offine_redeem_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_enable'] ) ) : '';
-		$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
+		$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
 		$client_domain = home_url();
 		$currency = get_option( 'woocommerce_currency' );
 		$client_currency = get_woocommerce_currency_symbol();
@@ -40,7 +47,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			if ( 'error' == $response->status ) {
 				$mwb_wgm_error_message = $response->message;
 			} else {
-				if ( isset( $response->status ) && $response->status == 'success' ) {
+				if ( isset( $response->status ) && 'success' == $response->status ) {
 					$mwb_redeem_link['shop_url'] = $response->shop_url;
 					$mwb_redeem_link['embed_url'] = $response->embed_url;
 					$mwb_redeem_link['user_id'] = $response->user_id;
@@ -79,7 +86,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			if ( 'error' == $response->status ) {
 				$mwb_wgm_error_message = $response->message;
 			} else {
-				if ( isset( $response->status ) && $response->status == 'success' ) {
+				if ( isset( $response->status ) && 'success' == $response->status ) {
 					delete_option( 'giftcard_offline_redeem_link' );
 					delete_option( 'giftcard_offline_redeem_settings' );
 				}
@@ -93,7 +100,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	$url = 'https://gifting.makewebbetter.com/api/generate/update';
 	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
 
-	if ( $client_license_code != '' ) {
+	if ( '' !== $client_license_code ) {
 		$curl_data = array(
 			'user_id' => $userid,
 			'domain' => $client_domain,
@@ -115,7 +122,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			if ( 'error' == $response->status ) {
 				$mwb_wgm_error_message = $response->message;
 			} else {
-				if ( isset( $response->status ) && $response->status == 'success' ) {
+				if ( isset( $response->status ) && 'success' == $response->status ) {
 					$offine_giftcard_redeem_details ['license'] = $client_license_code;
 					update_option( 'giftcard_offline_redeem_link', $offine_giftcard_redeem_details );
 				}
@@ -142,7 +149,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 		<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
 	<div class="mwb_redeem_div_wrapper">
-		<?php if ( ! isset( $offine_giftcard_redeem_link ['shop_url'] ) || $offine_giftcard_redeem_link['shop_url'] == '' ) { ?>
+		<?php if ( ! isset( $offine_giftcard_redeem_link ['shop_url'] ) || '' == $offine_giftcard_redeem_link['shop_url'] ) { ?>
 			<div>
 				<div class="mwb-giftware-reddem-image text-center">
 					
@@ -187,16 +194,14 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$attribut_description = __( 'please open the link to redeem the giftcard', 'woocommerce_gift_cards_lite' );
-								echo wc_help_tip( $attribut_description ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+								$attribut_description = __( 'please open the link to redeem the giftcard', 'woocommerce_gift_cards_lite' );/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+								echo wp_kses_post( wc_help_tip( $attribut_description ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 								?>
 								<label for="wcgw_plugin_enable">
-									<input type="text" name="wcgm_offine_redeem_link" id="wcgm_offine_redeem_link" class="input-text" value="
-									<?php
-									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && $offine_giftcard_redeem_link['shop_url'] !== '' ) {
+									<input type="text" name="wcgm_offine_redeem_link" id="wcgm_offine_redeem_link" class="input-text" value="<?php
+									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && '' !== $offine_giftcard_redeem_link['shop_url'] ) {
 										echo esc_html( $offine_giftcard_redeem_link['shop_url'] );  }
-									?>
-									">
+									?>">
 									<div class="mwb-giftware-copy-icon" >
 										<button  class="mwb_link_copy mwb_redeem_copy" data-clipboard-target="#wcgm_offine_redeem_link" title="copy">
 											<i class="far fa-copy" ></i>
@@ -214,17 +219,14 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$attribut_description = __( 'Enter this code to add the redeem page in your site', 'woocommerce_gift_cards_lite' );
-									echo wc_help_tip( $attribut_description ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+								$attribut_description = __( 'Enter this code to add the redeem page in your site', 'woocommerce_gift_cards_lite' ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+								echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 								?>
-									<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text">
-									<?php
-									if ( isset( $offine_giftcard_redeem_link ['embed_url'] ) && $offine_giftcard_redeem_link['embed_url'] !== '' ) {
+									<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text"><?php
+									if ( isset( $offine_giftcard_redeem_link ['embed_url'] ) && '' !== $offine_giftcard_redeem_link['embed_url'] ) {
 										echo esc_html( $offine_giftcard_redeem_link['embed_url'] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
-
 									}
-									?>
-									</textarea>
+									?></textarea>
 									<div class="mwb-giftware-copy-icon">									
 										<button  class="mwb_embeded_copy mwb_redeem_copy" data-clipboard-target="#mwb_gw_embeded_input_text" title="copy">
 											<i class="far fa-copy" ></i>
@@ -240,14 +242,14 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 								<td>
 									<a target="_blank" href="
 									<?php
-									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && $offine_giftcard_redeem_link['shop_url'] !== '' ) {
+									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && '' !== $offine_giftcard_redeem_link['shop_url'] ) {
 										echo esc_attr( $offine_giftcard_redeem_link['shop_url'] );  }
 									?>
 										" class= "mwb_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woocommerce_gift_cards_lite' ); ?></a>
 									</td>
 
 								</tr>
-								<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && $offine_giftcard_redeem_link['license'] == '' ) { ?>
+								<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && '' == $offine_giftcard_redeem_link['license'] ) { ?>
 									<tr>
 										<td colspan="2">
 											<?php esc_html_e( 'This is your limited  account so please purchase the pro and update the details .', 'woocommerce_gift_cards_lite' ); ?>								
@@ -284,17 +286,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 					<div class="mwb_wgm_video_wrapper">
 						<h3><?php esc_html_e( 'See it in Action', 'woocommerce_gift_cards_lite' ); ?></h3>
 						<iframe height="411" src="https://www.youtube.com/embed/H1cYF4F5JA8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					</div>		
-		<!-- <div class="text-center">
-			<H2>How it Work </H2>	
-			<ul class="text-left mwb-readem-work-listing">
-				<li><i class="far fa-check-circle"></i> Generate the Link</li>
-				<li><i class="far fa-check-circle"></i> Genertaed link will be mailed to you</li>
-				<li><i class="far fa-check-circle"></i> Click on the link</li>
-				<li><i class="far fa-check-circle"></i> Login</li>
-				<li><i class="far fa-check-circle"></i> Enjoy</li>
-			</ul>
-		</div> -->
+					</div>
 		
 	</div>
 
@@ -310,8 +302,8 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribut_description = __( 'Enter the email for account creation', 'woocommerce_gift_cards_lite' );
-							echo wc_help_tip( $attribut_description ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+							$attribut_description = __( 'Enter the email for account creation', 'woocommerce_gift_cards_lite' );/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+							echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 							?>
 							<label for="wcgw_plugin_enable">
 								<input type="email" name="wcgm_offine_redeem_email" id="wcgm_offine_redeem_email" class="input-text" value="<?php echo esc_attr( $mwb_current_user->user_email ); ?> ">
@@ -324,8 +316,8 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribut_description = __( 'Enter the name for account creation', 'woocommerce_gift_cards_lite' );
-							echo wc_help_tip( $attribut_description ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+							$attribut_description = __( 'Enter the name for account creation', 'woocommerce_gift_cards_lite' );/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+							echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 							?>
 							<label for="wcgw_plugin_enable">
 								<input type="text" name="wcgm_offine_redeem_name" id="wcgm_offine_redeem_name" class="input-text" value="<?php echo esc_attr( $mwb_current_user->display_name ); ?> ">
