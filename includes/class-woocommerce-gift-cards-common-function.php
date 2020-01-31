@@ -177,6 +177,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						'post_type'     => 'shop_coupon',
 					);
 					$new_coupon_id = wp_insert_post( $coupon );
+					if( $new_coupon_id ){
+						$coupon_obj = new WC_Coupon( $new_coupon_id );
+						$coupon_obj->save();
+					}
 					$general_settings = get_option( 'mwb_wgm_general_settings', array() );
 					$product_settings = get_option( 'mwb_wgm_product_settings', array() );
 					$individual_use = $this->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_giftcard_individual_use' );

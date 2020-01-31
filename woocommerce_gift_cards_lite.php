@@ -291,7 +291,7 @@ if ( $activated ) {
 			delete_transient( 'mwb-wgm-giftcard-setting-notice' );
 		}
 	}
-	include( MWB_WGC_DIRPATH . '/includes/giftcard-redeem-api-addon.php' );
+	include_once MWB_WGC_DIRPATH . 'includes/giftcard_redeem_api_addon.php';
 } else {
 		// Deactivate if Woocommerce is not activated.
 		add_action( 'admin_init', 'mwb_wgm_plugin_deactivate' );
