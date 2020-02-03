@@ -166,8 +166,8 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_giftcard_custom_post' );
 		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'mwb_wgm_edit_form_after_title', 10, 1 );
 		 // include Gift card Template.
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_mothers_day_template' ,10 );
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_new_template' ,10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_mothers_day_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_new_template', 10 );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_custom_template', 10 );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_christmas_template', 10 );
 		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_preview_gift_template', 10, 2 );

@@ -177,7 +177,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						'post_type'     => 'shop_coupon',
 					);
 					$new_coupon_id = wp_insert_post( $coupon );
-					if( $new_coupon_id ){
+					if ( $new_coupon_id ) {
 						$coupon_obj = new WC_Coupon( $new_coupon_id );
 						$coupon_obj->save();
 					}
@@ -235,8 +235,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					update_post_meta( $new_coupon_id, 'mwb_wgm_giftcard_coupon_unique', 'online' );
 					update_post_meta( $new_coupon_id, 'mwb_wgm_giftcard_coupon_product_id', $product_id );
 					update_post_meta( $new_coupon_id, 'mwb_wgm_giftcard_coupon_mail_to', $to );
-					//This key is used for updating coupon amount.
-					update_post_meta( $new_coupon_id, 'mwb_wgm_coupon_amount',$amount);
+					// This key is used for updating coupon amount.
+					update_post_meta( $new_coupon_id, 'mwb_wgm_coupon_amount', $amount );
 
 					// exclude products.
 					if ( isset( $mwb_wgm_extra_data['exclude_per_products'] ) && '' != $mwb_wgm_extra_data['exclude_per_products'] ) {

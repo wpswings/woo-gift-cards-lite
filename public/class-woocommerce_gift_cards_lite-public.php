@@ -307,9 +307,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											</p>';
 									}
 								}
-								$cart_html .= apply_filters( 'mwb_wgm_add_price_types',$mwb_additional_section, $product, $product_pricing );
+								$cart_html .= apply_filters( 'mwb_wgm_add_price_types', $mwb_additional_section, $product, $product_pricing );
 							}
-							$cart_html .= apply_filters( 'mwb_wgm_select_date',$mwb_additional_section, $product_id);
+							$cart_html .= apply_filters( 'mwb_wgm_select_date', $mwb_additional_section, $product_id );
 							$cart_html .= '<p class="mwb_wgm_section mwb_from">
 								<label class="mwb_wgc_label">' . __( 'From', 'woocommerce_gift_cards_lite' ) . '</label>	
 								<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woocommerce_gift_cards_lite' ) . '" required="required">
@@ -324,7 +324,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							$cart_html .= __( 'Characters:', 'woocommerce_gift_cards_lite' ) . '(<span id="mwb_box_char">0</span>/' . $giftcard_message_length . ')
 							</p>';
-							$cart_html .= apply_filters('mwb_wgm_add_notiication_section', $mwb_additional_section, $product_id );
+							$cart_html .= apply_filters( 'mwb_wgm_add_notiication_section', $mwb_additional_section, $product_id );
 							$delivery_settings = get_option( 'mwb_wgm_delivery_settings', true );
 							$mwb_wgm_delivery_setting_method = $this->mwb_common_fun->mwb_wgm_get_template_data( $delivery_settings, 'mwb_wgm_send_giftcard' );
 							if ( ! mwb_uwgc_pro_active() ) {
@@ -359,19 +359,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$cart_html .= '</div>';
 							$cart_html .= apply_filters( 'mwb_wgm_add_section_after_delivery', $mwb_additional_section, $product_id );
 							$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
-							$templateid = $mwb_wgm_pricing['template'];	
+							$templateid = $mwb_wgm_pricing['template'];
 							$choosed_temp = '';
-							if( ! mwb_uwgc_pro_active() ){
-								if( '1' < count( $templateid ) ){
+							if ( ! mwb_uwgc_pro_active() ) {
+								if ( '1' < count( $templateid ) ) {
 									$mwb_get_pro_templates = get_option( 'mwb_uwgc_templateid', array() );
-									if( ! empty( $mwb_get_pro_templates ) ){
+									if ( ! empty( $mwb_get_pro_templates ) ) {
 										$mwb_get_lite_temp = array_diff( $templateid, $mwb_get_pro_templates );
-										if( !empty( $mwb_get_lite_temp ) ) {
-											$mwb_index = array_keys($mwb_get_lite_temp)[0];
-											if( 0 !== count( $mwb_get_lite_temp ) ){
-												$choosed_temp = $mwb_get_lite_temp[$mwb_index];	
+										if ( ! empty( $mwb_get_lite_temp ) ) {
+											$mwb_index = array_keys( $mwb_get_lite_temp )[0];
+											if ( 0 !== count( $mwb_get_lite_temp ) ) {
+												$choosed_temp = $mwb_get_lite_temp[ $mwb_index ];
 											}
-										} else{
+										} else {
 											$args = array(
 												'post_type' => 'giftcard',
 												'posts_per_page' => -1,
@@ -383,22 +383,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$template_title = $value->post_title;
 												$template[ $template_id ] = $template_title;
 											}
-											if( ! empty( $template ) ){
-												$mwb_get_lite_temp = array_diff( array_keys($template), $mwb_get_pro_templates );
-												$mwb_index = array_keys($mwb_get_lite_temp)[0];
-												if( 0 !== count( $mwb_get_lite_temp ) ){
-													$choosed_temp = $mwb_get_lite_temp[$mwb_index];	
-												}	
-											}	
+											if ( ! empty( $template ) ) {
+												$mwb_get_lite_temp = array_diff( array_keys( $template ), $mwb_get_pro_templates );
+												$mwb_index = array_keys( $mwb_get_lite_temp )[0];
+												if ( 0 !== count( $mwb_get_lite_temp ) ) {
+													$choosed_temp = $mwb_get_lite_temp[ $mwb_index ];
+												}
+											}
 										}
-									}else{
-										$choosed_temp = $templateid[0];	
+									} else {
+										$choosed_temp = $templateid[0];
 									}
 								} else {
-									$choosed_temp = $templateid[0];	
-								}	
+									$choosed_temp = $templateid[0];
+								}
 							}
-							if( '' !== apply_filters( 'mwb_wgm_display_thumbnail', $mwb_additional_section, $product_id ) ) {
+							if ( '' !== apply_filters( 'mwb_wgm_display_thumbnail', $mwb_additional_section, $product_id ) ) {
 								$cart_html .= apply_filters( 'mwb_wgm_display_thumbnail', $mwb_additional_section, $product_id )['html'];
 								$choosed_temp = apply_filters( 'mwb_wgm_display_thumbnail', $mwb_additional_section, $product_id )['choosen_temp_id'];
 							}
@@ -409,7 +409,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							$other_settings = get_option( 'mwb_wgm_other_settings', array() );
 							$mwb_wgm_preview_disable = $this->mwb_common_fun->mwb_wgm_get_template_data( $other_settings, 'mwb_wgm_additional_preview_disable' );
-							
+
 							if ( empty( $mwb_wgm_preview_disable ) ) {
 								$cart_html .= '<span class="mwg_wgm_preview_email"><a id="mwg_wgm_preview_email" href="javascript:void(0);">' . __( 'PREVIEW', 'woocommerce_gift_cards_lite' ) . '</a></span>';
 							}
@@ -752,10 +752,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$mailsend = true;
 								$selected_template = $value->value;
 							}
-							if( isset( $value->key ) && ! empty( $value->value ) ) {
+							if ( isset( $value->key ) && ! empty( $value->value ) ) {
 								do_action( 'mwb_wgm_add_additional_meta', $key, $value );
 							}
-						}						
+						}
 						$mwb_wgm_mail_template_data = array(
 							'to' => $to,
 							'from' => $from,
@@ -880,7 +880,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$temp_metas = array();
 		if ( isset( $formatted_meta ) && ! empty( $formatted_meta ) && is_array( $formatted_meta ) ) {
 			foreach ( $formatted_meta as $key => $meta ) {
-				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Delivery Method', 'Original Price', 'Selected Template') ) ) {
+				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Delivery Method', 'Original Price', 'Selected Template' ) ) ) {
 
 					$temp_metas[ $key ] = $meta;
 				}
@@ -1122,7 +1122,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				} else {
 					do_action( 'mwb_wgm_offline_giftcard_coupon', $coupon_id, $item );
 				}
-				do_action('mwb_wgm_coupon_reporting_with_order', $coupon_id, $item, $total_discount, $remaining_amount );
+				do_action( 'mwb_wgm_coupon_reporting_with_order', $coupon_id, $item, $total_discount, $remaining_amount );
 			}
 		}
 	}
@@ -1258,8 +1258,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$args['product_id'] = $product_id;
 			$message = $this->mwb_common_fun->mwb_wgm_create_gift_template( $args );
 			if ( mwb_uwgc_pro_active() ) {
-					do_action( 'preview_email_template_for_pro' , $message );
-			} else{
+					do_action( 'preview_email_template_for_pro', $message );
+			} else {
 				$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
 				//@codingStandardsIgnoreStart
 				echo wp_kses($message,$allowed_tags);

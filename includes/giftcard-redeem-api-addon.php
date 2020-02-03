@@ -1,4 +1,13 @@
 <?php
+/**
+ * Exit if accessed directly
+ *
+ * @package    Woocommerce_gift_cards_lite
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 // Redeem api work...
 
 add_action(
@@ -43,7 +52,7 @@ add_action(
  * Get_giftcard_details
  *
  * @name mwb_get_giftcard_details
- * @param $request
+ * @param mixed $request Request.
  * @author makewebbetter<webmaster@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
@@ -57,7 +66,7 @@ function mwb_get_giftcard_details( $request ) {
 
 	$coupon_details = new WC_Coupon( $coupon_code );
 	$coupon_id = $coupon_details->get_id();
-	if ( $coupon_id !== '' && $coupon_id !== 0 ) {
+	if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 
 		$woo_ver = WC()->version;
 		if ( $woo_ver < '3.6.0' ) {
@@ -103,11 +112,10 @@ function mwb_get_giftcard_details( $request ) {
  * Redeem Giftcard Offline
  *
  * @name mwb_redeem_giftcard_offline
- * @param $request
+ * @param mixed $request Request.
  * @author makewebbetter<webmaster@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
-
 function mwb_redeem_giftcard_offline( $request ) {
 
 	global $woocommerce;
@@ -120,12 +128,12 @@ function mwb_redeem_giftcard_offline( $request ) {
 
 	$the_coupon = new WC_Coupon( $coupon_code );
 	$coupon_id = $the_coupon->get_id();
-	if ( $coupon_id !== '' && $coupon_id !== 0 ) {
+	if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 		$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
 		$coupon_usage_count = get_post_meta( $coupon_id, 'usage_count', true );
 		$coupon_usage_limit = get_post_meta( $coupon_id, 'usage_limit', true );
 
-		if ( $coupon_usage_limit == 0 || $coupon_usage_limit > $coupon_usage_count ) {
+		if ( 0 === $coupon_usage_limit || $coupon_usage_limit > $coupon_usage_count ) {
 
 			$woo_ver = WC()->version;
 
@@ -140,9 +148,9 @@ function mwb_redeem_giftcard_offline( $request ) {
 
 			$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 
-			if ( isset( $giftcardcoupon_order_id ) && $giftcardcoupon_order_id != '' ) {
+			if ( isset( $giftcardcoupon_order_id ) && '' !== $giftcardcoupon_order_id ) {
 
-				if ( $coupon_expiry == '' || $coupon_expiry > current_time( 'timestamp' ) ) {
+				if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
 					if ( $coupon_amount >= $redeem_amount ) {
 
@@ -239,27 +247,23 @@ function mwb_redeem_giftcard_offline( $request ) {
  * Recharge Giftcard Offline
  *
  * @name mwb_recharge_giftcard_offine
- * @param $request
+ * @param mixed $request request.
  * @author makewebbetter<webmaster@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
-
 function mwb_recharge_giftcard_offine( $request ) {
-
 	global $woocommerce;
 	$request_params = $request->get_params();
-
 	$coupon_code = $request_params['coupon_code'];
 	$recharge_amount = $request_params['recharge_amount'];
-	$coupon_expiry = ( $request_params['coupon_expiry'] !== '' ) ? $request_params['coupon_expiry'] : null;
-	$usage_limit = ( $request_params['usage_limit'] !== '' ) ? $request_params['usage_limit'] : 0;
-
+	$coupon_expiry = ( '' !== $request_params['coupon_expiry'] ) ? $request_params['coupon_expiry'] : null;
+	$usage_limit = ( '' !== $request_params['usage_limit'] ) ? $request_params['usage_limit'] : 0;
 	$coupon_code = strtolower( $coupon_code );
 
 	$the_coupon = new WC_Coupon( $coupon_code );
 	$coupon_id = $the_coupon->get_id();
 
-	if ( $coupon_id !== '' && $coupon_id !== 0 ) {
+	if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 		$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
 
 		$coupon_expiry = '';
@@ -275,8 +279,8 @@ function mwb_recharge_giftcard_offine( $request ) {
 
 		$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 
-		if ( isset( $giftcardcoupon_order_id ) && $giftcardcoupon_order_id != '' ) {
-			if ( $coupon_expiry == '' || $coupon_expiry > current_time( 'timestamp' ) ) {
+		if ( isset( $giftcardcoupon_order_id ) && '' !== $giftcardcoupon_order_id ) {
+			if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
 				$updated_amount = $coupon_amount + $recharge_amount;
 
@@ -349,18 +353,14 @@ function mwb_recharge_giftcard_offine( $request ) {
  * Check permission
  *
  * @name mwb_permission_check
- * @param $request
+ * @param mixed $request Request.
  * @author makewebbetter<webmaster@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
-
-
 function mwb_permission_check( $request ) {
 	$license = $request->get_header( 'licensecode' );
-
 	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
-
-	if ( $license == '' ) {
+	if ( '' == $license ) {
 		return true;
 	} elseif ( trim( $client_license_code ) === trim( $license ) ) {
 		return true;

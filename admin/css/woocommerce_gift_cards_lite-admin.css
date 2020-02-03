@@ -584,7 +584,7 @@ transform: rotate(90deg);
   .mwb_redeem_registraion_div .mwb_gw_general_setting input[type="email"],
   .mwb_redeem_registraion_div .mwb_gw_general_setting input[type="text"]{
 	padding: 10px !important;
-	width: 95% !important;
+	width: 90% !important;
   }
   .mwb_redeem_details {
 	border-collapse: collapse;

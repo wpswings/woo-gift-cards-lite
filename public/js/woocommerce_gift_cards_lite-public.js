@@ -179,21 +179,21 @@
 			$( '#mwg_wgm_preview_email' ).click(
 				function() {
 
-				   var form_Data = new FormData();
-				   $( "#mwb_wgm_error_notice" ).hide();
-				   var from_mail = $( "#mwb_wgm_from_name" ).val();
-				   var message = $( "#mwb_wgm_message" ).val();
-				   message = message.trim();
-				   var regex = /(<([^>]+)>)/ig;
-				   var message = message.replace( regex,'' );
-				   var price = $( "#mwb_wgm_price" ).val();
-				   var error = false;
-				   var product_type = mwb_wgm.pricing_type.type;
-				   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
-				   var to_mail = '';
-				   var html = "<ul>";
-				   var delivery_method = jQuery( document ).find( 'input[name="mwb_wgm_send_giftcard"]:checked' ).val();
-				   // remove validation from to fields.
+					var form_Data = new FormData();
+					$( "#mwb_wgm_error_notice" ).hide();
+					var from_mail = $( "#mwb_wgm_from_name" ).val();
+					var message = $( "#mwb_wgm_message" ).val();
+					message = message.trim();
+					var regex = /(<([^>]+)>)/ig;
+					var message = message.replace( regex,'' );
+					var price = $( "#mwb_wgm_price" ).val();
+					var error = false;
+					var product_type = mwb_wgm.pricing_type.type;
+					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
+					var to_mail = '';
+					var html = "<ul>";
+					var delivery_method = jQuery( document ).find( 'input[name="mwb_wgm_send_giftcard"]:checked' ).val();
+					// remove validation from to fields.
 					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to() == 'on') {
 						if (delivery_method == 'Mail to recipient') {
 							to_mail = $( "#mwb_wgm_to_email" ).val();
@@ -308,7 +308,7 @@
 					} else {
 
 						var product_id = mwb_wgm.product_id;
-						var tempId = $( document ).find( '#mwb_wgm_selected_temp' ).val( );
+						var tempId = $( document ).find( '#mwb_wgm_selected_temp' ).val();
 						form_Data.append( 'action', 'mwb_wgc_preview_thickbox_rqst' );
 						form_Data.append( 'mwb_nonce', mwb_wgm.mwb_wgm_nonce );
 						form_Data.append( 'price', price );
