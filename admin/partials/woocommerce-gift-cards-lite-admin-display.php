@@ -66,7 +66,7 @@ do_action( 'mwb_uwgc_show_notice' );
 					if ( mwb_uwgc_pro_active() ) {
 						?>
 						<li><a href="?page=mwb-wgc-setting-lite&tab=redeem_tab" class="mwb_wgm_redeem_link"><span><?php esc_html_e( 'New', 'woocommerce_gift_cards_lite' ); ?></span><?php esc_html_e( 'Giftcard Redeem Feature', 'woocommerce_gift_cards_lite' ); ?></a></li>
-						<li><a href="https://makewebbetter.com/contact-us/" target="_blank">
+						<li><a href="https://makewebbetter.com/contact-us/?utm_source=mwb-giftcard-wp-org&utm_medium=wp-org&utm_campaign=giftcard-org" target="_blank">
 							<span class="dashicons dashicons-phone"></span></a>
 						</li>
 						<li><a href="https://docs.makewebbetter.com/giftware-woocommerce-gift-cards/" target="_blank">
@@ -76,17 +76,17 @@ do_action( 'mwb_uwgc_show_notice' );
 					} else {
 						?>
 						<li><a href="?page=mwb-wgc-setting-lite&tab=redeem_tab" class="mwb_wgm_redeem_link"><span><?php esc_html_e( 'New', 'woocommerce_gift_cards_lite' ); ?></span><?php esc_html_e( 'Giftcard Redeem Feature', 'woocommerce_gift_cards_lite' ); ?></a></li>
-						<li><a href="https://makewebbetter.com/contact-us/" target="_blank">
+						<li><a href="https://makewebbetter.com/contact-us/?utm_source=mwb-giftcard-wp-org&utm_medium=wp-org&utm_campaign=giftcard-org" target="_blank">
 							<span class="dashicons dashicons-phone"></span>
+							</a>
+						</li>
+						<li><a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc" target="_blank">
+							<span class="dashicons dashicons-media-document"></span>
 						</a>
-					</li>
-					<li><a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/" target="_blank">
-						<span class="dashicons dashicons-media-document"></span>
-					</a>
-				</li>
-				<li class="mwb_wgm_header_menu_button">
-					<a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woocommerce_gift_cards_lite' ); ?></a>
-				</li>	
+						</li>
+						<li class="mwb_wgm_header_menu_button">
+							<a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woocommerce_gift_cards_lite' ); ?></a>
+						</li>	
 						<?php
 					}
 					?>
