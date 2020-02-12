@@ -1295,7 +1295,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$selected_template_name = 'Merry Christmas Template';
 					break;
 			}
-		}			
+		}
 		if( isset( $selected_template_name ) && ! empty( $selected_template_name ) ) {
 			$args = array(
 			'post_type' => 'giftcard',

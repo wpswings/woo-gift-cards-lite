@@ -246,9 +246,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 * @link http://www.makewebbetter.com/
 		 */
 		public function delete_additional_data() {
-			//delete_option( 'mwb_wgm_general_setting_select_template' );
 			delete_option( 'mwb_wgm_general_setting_giftcard_applybeforetx' );
-			//delete_option( 'mwb_wgm_select_email_format' );
 			delete_option( 'mwb_wgm_product_setting_exclude_product_format' );
 		}
 	}

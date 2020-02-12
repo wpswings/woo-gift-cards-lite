@@ -165,15 +165,15 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @since 1.0.0
 	 */
 	public function mwb_wgm_generate_tool_tip( $value ) {
+		$allowed_tags = $this->mwb_wgm_allowed_html_for_tool_tip();
 		if ( array_key_exists( 'desc_tip', $value ) ) {
-			$description = esc_html__( $value['desc_tip'], 'woocommerce_gift_cards_lite' ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-			echo wp_kses_post( wc_help_tip( $description ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+			echo wp_kses( wc_help_tip( $value['desc_tip'] ), $allowed_tags );
+
 		}
 		if ( array_key_exists( 'additional_info', $value ) ) {
 			?>
-			<span class="description"><?php esc_attr_e( $value['additional_info'], 'woocommerce_gift_cards_lite' ); ?></span>
+			<span class="description"><?php echo wp_kses( $value['additional_info'], $allowed_tags ); ?></span>
 			<?php
-			/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 		}
 	}
 
@@ -578,5 +578,28 @@ class Woocommerce_Giftcard_Admin_Settings {
 			}
 		}
 		return $posted_data;
+	}
+	/**
+	 * This is function is used for the validating the data.
+	 *
+	 * @name mwb_wpr_allowed_html
+	 * @since 1.0.0
+	 */
+	public function mwb_wgm_allowed_html_for_tool_tip() {
+		$allowed_tags = array(
+			'span' => array(
+				'class' => array(),
+				'title' => array(),
+				'style' => array(),
+				'data-tip' => array(),
+			),
+			'min' => array(),
+			'max' => array(),
+			'class' => array(),
+			'style' => array(),
+			'<br>'  => array(),
+		);
+		return $allowed_tags;
+
 	}
 }

@@ -198,10 +198,12 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 								echo wp_kses_post( wc_help_tip( $attribut_description ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 								?>
 								<label for="wcgw_plugin_enable">
-									<input type="text" name="wcgm_offine_redeem_link" id="wcgm_offine_redeem_link" class="input-text" value="<?php
+									<input type="text" name="wcgm_offine_redeem_link" id="wcgm_offine_redeem_link" class="input-text" value="
+									<?php
 									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && '' !== $offine_giftcard_redeem_link['shop_url'] ) {
 										echo esc_html( $offine_giftcard_redeem_link['shop_url'] );  }
-									?>">
+									?>
+									">
 									<div class="mwb-giftware-copy-icon" >
 										<button  class="mwb_link_copy mwb_redeem_copy" data-clipboard-target="#wcgm_offine_redeem_link" title="copy">
 											<i class="far fa-copy" ></i>
@@ -222,11 +224,13 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 								$attribut_description = __( 'Enter this code to add the redeem page in your site', 'woocommerce_gift_cards_lite' ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 								echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 								?>
-									<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text"><?php
+									<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text">
+									<?php
 									if ( isset( $offine_giftcard_redeem_link ['embed_url'] ) && '' !== $offine_giftcard_redeem_link['embed_url'] ) {
 										echo esc_html( $offine_giftcard_redeem_link['embed_url'] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
 									}
-									?></textarea>
+									?>
+									</textarea>
 									<div class="mwb-giftware-copy-icon">									
 										<button  class="mwb_embeded_copy mwb_redeem_copy" data-clipboard-target="#mwb_gw_embeded_input_text" title="copy">
 											<i class="far fa-copy" ></i>
