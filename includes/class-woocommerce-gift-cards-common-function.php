@@ -536,6 +536,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				'br' => array(),
 				'img' => array(
 					'alt'    => array(),
+					'id'    => array(),
 					'class'  => array(),
 					'height' => array(),
 					'src'    => array(),

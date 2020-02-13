@@ -51,6 +51,7 @@
 }
 #mwb_wgm_to_email {
 	width: 99%;
+  margin-bottom: 10px  !important;
 }
 #mwb_wgm_message {
 	width: 99%;
@@ -68,9 +69,6 @@
 .mwb_wgm_msg_info {
  display: block;
  font-size: 13px;
-}
-.mwb_wgm_to_email{
-margin-bottom: 10px  !important;
 }
 #mwb_wgm_to_name_optional {
 	width: 99%;
@@ -103,4 +101,7 @@ margin-bottom: 10px  !important;
   display: block;
   width:99%;
   cursor: pointer;
+}
+.mwb_wgm_selected_template {
+    overflow: auto;
 }

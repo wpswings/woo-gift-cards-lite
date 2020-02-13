@@ -26,7 +26,7 @@
 			/*Js for select template on single product page*/
 			$( '.mwb_wgm_featured_img' ).click(
 				function(){
-					$( '.mwb_wgm_selected_template' ).find( '.mwb_wgm_featured_img' ).removeClass( 'mwb_wgm_pre_selected_temp' )
+					$( '.mwb_wgm_selected_template' ).find( '.mwb_wgm_featured_img' ).removeClass( 'mwb_wgm_pre_selected_temp' );
 					var img_id = $( this ).attr( 'id' );
 					$( '#' + img_id ).addClass( 'mwb_wgm_pre_selected_temp' );
 					$( '#mwb_wgm_selected_temp' ).val( img_id );
