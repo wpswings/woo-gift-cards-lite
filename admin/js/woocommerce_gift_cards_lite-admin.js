@@ -294,8 +294,8 @@
 					if ( jQuery( window ).width() >= 900 ) {
 						jQuery( '.mwb_wgm_navigator_template' ).stickySidebar(
 							{
-								topSpacing: 60,
-								bottomSpacing: 60
+								topSpacing: 30,
+								bottomSpacing: 10
 								}
 						);
 					}

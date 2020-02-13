@@ -86,7 +86,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), $this->version );
 		wp_enqueue_style( 'woocommerce_admin_menu_styles' );
-
 		wp_enqueue_style( 'woocommerce_admin_styles' );
 
 	}
@@ -101,7 +100,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
-			if ( 'product' == $pagescreen || 'shop_order' == $pagescreen || 'woocommerce_page_mwb-wgc-setting-lite' == $pagescreen ) {
+			if ( 'product' == $pagescreen || 'shop_order' == $pagescreen || 'woocommerce_page_mwb-wgc-setting-lite' == $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' == $pagescreen ) {
 
 				$mwb_wgm_general_settings = get_option( 'mwb_wgm_general_settings', false );
 
