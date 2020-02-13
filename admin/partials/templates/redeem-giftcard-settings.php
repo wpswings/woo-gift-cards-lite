@@ -8,6 +8,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+require_once MWB_WGC_DIRPATH . 'admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php';
+$settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 
 /*
  * Redeem Settings Template
@@ -194,8 +196,9 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$attribut_description = __( 'please open the link to redeem the giftcard', 'woocommerce_gift_cards_lite' );/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-								echo wp_kses_post( wc_help_tip( $attribut_description ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+								$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
+								$attribute_description = __( 'please open the link to redeem the giftcard', 'woocommerce_gift_cards_lite' );
+								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
 								<label for="wcgw_plugin_enable">
 									<input type="text" name="wcgm_offine_redeem_link" id="wcgm_offine_redeem_link" class="input-text" value="
@@ -221,8 +224,9 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$attribut_description = __( 'Enter this code to add the redeem page in your site', 'woocommerce_gift_cards_lite' ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-								echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+								$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
+								$attribute_description = __( 'Enter this code to add the redeem page in your site', 'woocommerce_gift_cards_lite' );
+								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
 									<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text">
 									<?php
@@ -306,8 +310,9 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribut_description = __( 'Enter the email for account creation', 'woocommerce_gift_cards_lite' );/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-							echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+							$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
+							$attribute_description = __( 'Enter the email for account creation', 'woocommerce_gift_cards_lite' );
+							echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 							?>
 							<label for="wcgw_plugin_enable">
 								<input type="email" name="wcgm_offine_redeem_email" id="wcgm_offine_redeem_email" class="input-text" value="<?php echo esc_attr( $mwb_current_user->user_email ); ?> ">
@@ -320,8 +325,9 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribut_description = __( 'Enter the name for account creation', 'woocommerce_gift_cards_lite' );/* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-							echo wc_help_tip( $attribut_description ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+							$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
+							$attribute_description = __( 'Enter the name for account creation', 'woocommerce_gift_cards_lite' );
+							echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 							?>
 							<label for="wcgw_plugin_enable">
 								<input type="text" name="wcgm_offine_redeem_name" id="wcgm_offine_redeem_name" class="input-text" value="<?php echo esc_attr( $mwb_current_user->display_name ); ?> ">

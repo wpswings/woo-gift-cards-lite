@@ -84,7 +84,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		wp_enqueue_style( 'select2' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
+		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), $this->version );
 		wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 
 		wp_enqueue_style( 'woocommerce_admin_styles' );
@@ -124,8 +124,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 				wp_enqueue_script( $this->plugin_name );
 
-				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, false );
-				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, false );
+				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), $this->version, false );
+				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), $this->version, false );
 				$locale  = localeconv();
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
 				$params = array(
@@ -150,6 +150,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
 				wp_enqueue_script( 'woocommerce_admin' );
 				wp_enqueue_script( 'media-upload' );
+				/*sticky sidebar*/
+				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), '1.2.1', true );
+
 			}
 		}
 
@@ -162,6 +165,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		wp_localize_script( $this->plugin_name . 'admin-notice', 'mwb_wgm_notice', $mwb_wgm_notice );
 		wp_enqueue_script( $this->plugin_name . 'admin-notice' );
+
 	}
 
 	/**
@@ -251,7 +255,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$to = '';
 		$price = '';
 		$default_price  = isset( $mwb_wgm_pricing['default_price'] ) ? $mwb_wgm_pricing['default_price'] : 0;
-		$selectedtemplate  = isset( $mwb_wgm_pricing['template'] ) ? $mwb_wgm_pricing['template'] : false;
+
+		if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
+				$selectedtemplate  = isset( $mwb_wgm_pricing['template'] ) ? $mwb_wgm_pricing['template'] : false;
+		} else {
+			$selectedtemplate = $this->mwb_common_fun->mwb_get_org_selected_template();
+		}
 
 		$default_selected = isset( $mwb_wgm_pricing['by_default_tem'] ) ? $mwb_wgm_pricing['by_default_tem'] : false;
 		if ( $selected_pricing ) {
@@ -1117,6 +1126,69 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'Merry Christmas Template',
 		);
 		return $mwb_lite_templates;
+	}
+
+	/**
+	 * Show plugin changes from upgrade notice
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param  string $args Holds the arguments.
+	 * @param  string $response Holds the response.
+	 */
+	public function in_plugin_update_message( $args, $response ) {
+		$transient_name = 'giftcard_upgrade_notice_' . $args['Version'];
+		$upgrade_notice = get_transient( $transient_name );
+		if ( ! $upgrade_notice ) {
+			$response = wp_safe_remote_get( 'https://plugins.svn.wordpress.org/woo-gift-cards-lite/trunk/readme.txt' );
+			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
+				$upgrade_notice = $this->parse_update_notice( $response['body'], $args['new_version'] );
+				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
+			}
+		}
+		echo wp_kses_post( $upgrade_notice );
+	}
+	/**
+	 * Parse upgrade notice from readme.txt file.
+	 *
+	 * @since 2.5.8
+	 *
+	 * @param  string $content Holds the content.
+	 * @param  string $new_version Holds the new version.
+	 * @return string
+	 */
+	public function parse_update_notice( $content, $new_version ) {
+		// Output Upgrade Notice.
+		$matches        = null;
+		$regexp         = '~==\s*Upgrade Notice\s*==\s*=\s*(.*)\s*=(.*)(=\s*' . preg_quote( $this->version ) . '\s*=|$)~Uis';
+		$upgrade_notice = '';
+
+		if ( preg_match( $regexp, $content, $matches ) ) {
+			$notices = (array) preg_split( '~[\r\n]+~', trim( $matches[2] ) );
+
+			// Convert the full version strings to minor versions.
+			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
+			$current_version_parts = explode( '.', $this->version );
+
+			if ( 3 !== sizeof( $notice_version_parts ) ) {
+				return;
+			}
+
+			$notice_version  = $notice_version_parts[0] . '.' . $notice_version_parts[1] . '.' . $notice_version_parts[2];
+			$current_version = $current_version_parts[0] . '.' . $current_version_parts[1] . '.' . $current_version_parts[2];
+
+			// Check the latest stable version and ignore trunk.
+			if ( version_compare( $current_version, $notice_version, '<' ) ) {
+
+				$upgrade_notice .= '</p><p class="giftcard-plugin-upgrade-notice" style="padding: 14px 10px !important;background: #1a4251 !important;color: #fff !important;">';
+
+				foreach ( $notices as $index => $line ) {
+					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
+				}
+			}
+		}
+
+		return wp_kses_post( $upgrade_notice );
 	}
 }
 ?>

@@ -284,7 +284,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$item_id = $mwb_wgm_common_arr['item_id'];
 				$product_id = $mwb_wgm_common_arr['product_id'];
 				$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
-				$templateid = $mwb_wgm_pricing['template'];
+				if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
+					$templateid = $mwb_wgm_pricing['template'];
+				} else {
+					$templateid = $this->mwb_get_org_selected_template();
+				}
 				$args['from'] = $from;
 				$args['to'] = $to;
 				$args['message'] = stripcslashes( $mwb_wgm_common_arr['gift_msg'] );
@@ -604,8 +608,84 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				'center'     => array(
 					'style' => array(),
 				),
+				'select'      => array(
+					'id'         => array(),
+					'class'       => array(),
+					'name'       => array(),
+				),
+				'option'      => array(
+					'value'         => array(),
+				),
+				'label'      => array(
+					'class'      => array(),
+					'id'         => array(),
+				),
+				'input'      => array(
+					'class'      => array(),
+					'id'         => array(),
+					'type'         => array(),
+					'name'         => array(),
+					'placeholder'  => array(),
+					'value'         => array(),
+					'checked'         => array(),
+					'selected'         => array(),
+				),
+				'textarea'      => array(
+					'class'      => array(),
+					'id'         => array(),
+					'name'         => array(),
+					'placeholder'         => array(),
+				),
+				'a'      => array(
+					'id'         => array(),
+				),
+
 			);
 			return apply_filters( 'mwb_allowed_html_for_preview', $allowed_tags );
+		}
+		/**
+		 * Get the templates selected in Giftcard lite plugin earlier.
+		 *
+		 * @since 1.0.0
+		 * @name mwb_get_org_selected_template
+		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
+		 */
+		public function mwb_get_org_selected_template() {
+			$mwb_wgm_select_email_format = get_option( 'mwb_wgm_select_email_format', 'normal' );
+			$custom_email_template = get_option( 'mwb_wgm_general_setting_select_template', 'off' );
+			$selected_template_name = '';
+			if ( 'on' == $custom_email_template ) {
+				$selected_template_name = 'Custom Template';
+			} else {
+				switch ( $mwb_wgm_select_email_format ) {
+					case 'normal':
+						$selected_template_name = 'Gift for You';
+						break;
+					case 'mom':
+						$selected_template_name = 'Love You Mom';
+						break;
+					case 'christmas':
+						$selected_template_name = 'Merry Christmas Template';
+						break;
+				}
+			}
+			if ( isset( $selected_template_name ) && ! empty( $selected_template_name ) ) {
+				$args = array(
+					'post_type' => 'giftcard',
+					'posts_per_page' => -1,
+				);
+				$loop = new WP_Query( $args );
+				$template = array();
+				foreach ( $loop->posts as $key => $value ) {
+					$template_id = $value->ID;
+					$template_title = $value->post_title;
+					$template[ $template_id ] = $template_title;
+				}
+				$selected_temp_id = array_search( $selected_template_name, $template );
+				$template_id = array( 0 => $selected_temp_id );
+				return $template_id;
+			}
 		}
 	}
 }

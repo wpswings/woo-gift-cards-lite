@@ -177,7 +177,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function mwb_wgm_woocommerce_before_add_to_cart_button( $mwb_product ) {
 		$mwb_cart_html = $this->mwb_wgm_before_cart_data( $mwb_product );
-		echo $mwb_cart_html;  //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
+		//@codingStandardsIgnoreStart
+		echo wp_kses( $mwb_cart_html , $allowed_tags );
+		//@codingStandardsIgnoreEnd
+
 	}
 
 	/**
@@ -339,7 +343,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<input type="radio" name="mwb_wgm_send_giftcard" value="Mail to recipient" class="mwb_wgm_send_giftcard" checked="checked" id="mwb_wgm_to_email_send" >
 											<span class="mwb_wgm_method">' . __( 'Mail To Recipient', 'woocommerce_gift_cards_lite' ) . '</span>
 											<div class="mwb_wgm_delivery_via_email">
-												<input type="text"  name="mwb_wgm_to_email" id="mwb_wgm_to_email" class="mwb_wgm_to_email"placeholder="	' . __( 'Enter the Recipient Email', 'woocommerce_gift_cards_lite' ) . '">
+												<input type="text"  name="mwb_wgm_to_email" id="mwb_wgm_to_email" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Email', 'woocommerce_gift_cards_lite' ) . '">
 												<input type="text"  name="mwb_wgm_to_name_optional" id="mwb_wgm_to_name_optional" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woocommerce_gift_cards_lite' ) . '">
 												<span class= "mwb_wgm_msg_info">' . __( 'We will send it to recipient email address.', 'woocommerce_gift_cards_lite' ) . '</span>
 											</div>
@@ -359,11 +363,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$cart_html .= '</div>';
 							$cart_html .= apply_filters( 'mwb_wgm_add_section_after_delivery', $mwb_additional_section, $product_id );
 							$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
-							if( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
+							if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 								$templateid = $mwb_wgm_pricing['template'];
-							} else{
-								$templateid = $this->mwb_get_org_selected_template();
-							}							
+							} else {
+								$templateid = $this->mwb_common_fun->mwb_get_org_selected_template();
+							}
 							$choosed_temp = '';
 							if ( ! mwb_uwgc_pro_active() ) {
 								if ( '1' < count( $templateid ) ) {
@@ -1225,10 +1229,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$expiry_date = $general_setting['mwb_wgm_general_setting_giftcard_expiry'];
 			$expirydate_format = $this->mwb_common_fun->mwb_wgm_check_expiry_date( $expiry_date );
 			$mwb_temp_id = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
-			if( array_key_exists( 'template', $product_pricing ) ) {
+			if ( array_key_exists( 'template', $product_pricing ) ) {
 				$templateid = $product_pricing['template'];
-			} else{
-				$templateid = $this->mwb_get_org_selected_template();
+			} else {
+				$templateid = $this->mwb_common_fun->mwb_get_org_selected_template();
 			}
 			if ( is_array( $templateid ) && array_key_exists( 0, $templateid ) ) {
 				$temp = $templateid[0];
@@ -1275,42 +1279,5 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				die();
 			}
 		}
-	}
-
-	public function mwb_get_org_selected_template(){
-		$mwb_wgm_select_email_format = get_option( 'mwb_wgm_select_email_format', 'normal' );
-		$custom_email_template = get_option( 'mwb_wgm_general_setting_select_template', 'off' );
-		$selected_template_name = '';
-		if ( 'on' == $custom_email_template ) {
-			$selected_template_name = 'Custom Template';
-		} else{
-			switch ( $mwb_wgm_select_email_format ) {
-				case 'normal':
-					$selected_template_name = 'Gift for You';
-					break;
-				case 'mom':
-					$selected_template_name = 'Love You Mom';
-					break;
-				case 'christmas':
-					$selected_template_name = 'Merry Christmas Template';
-					break;
-			}
-		}
-		if( isset( $selected_template_name ) && ! empty( $selected_template_name ) ) {
-			$args = array(
-			'post_type' => 'giftcard',
-			'posts_per_page' => -1,
-			);
-			$loop = new WP_Query( $args );
-			$template = array();
-			foreach ( $loop->posts as $key => $value ) {
-				$template_id = $value->ID;
-				$template_title = $value->post_title;
-				$template[ $template_id ] = $template_title;
-			}
-			$selected_temp_id =  array_search( $selected_template_name, $template );
-			$template_id = array( 0 => $selected_temp_id );
-			return $template_id;			
-		}			
 	}
 }

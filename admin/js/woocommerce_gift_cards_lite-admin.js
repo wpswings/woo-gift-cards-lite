@@ -285,6 +285,25 @@
 
 				}
 			);
+			/*======================================
+			=            Sticky-Sidebar            =
+			======================================*/
+			setTimeout(
+				function()
+				  {
+					if ( jQuery( window ).width() >= 900 ) {
+						jQuery( '.mwb_wgm_navigator_template' ).stickySidebar(
+							{
+								topSpacing: 60,
+								bottomSpacing: 60
+								}
+						);
+					}
+				},
+				500
+			);
+
+			/*=====  End of Sticky-Sidebar  ======*/
 		}
 	);
 })( jQuery );

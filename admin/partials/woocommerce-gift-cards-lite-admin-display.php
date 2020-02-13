@@ -57,7 +57,7 @@ do_action( 'mwb_uwgc_show_notice' );
 		<div class="mwb_wgm_header">
 			<div class="mwb_wgm_header_content_left">
 				<div>
-					<h3 class="mwb_wgm_setting_title"><?php esc_html_e( 'GiftCard Settings', 'woocommerce_gift_cards_lite' ); ?></h3>
+					<h3 class="mwb_wgm_setting_title"><?php esc_html_e( 'Gift Card Settings', 'woocommerce_gift_cards_lite' ); ?></h3>
 				</div>
 			</div>
 			<div class="mwb_wgm_header_content_right">

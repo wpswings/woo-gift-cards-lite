@@ -173,8 +173,9 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_preview_gift_template', 10, 2 );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_preview_email_template' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'mwb_custom_plugin_row_meta', 10, 2 );
+		/*Update_Notice*/
+		$this->loader->add_action( 'in_plugin_update_message-woo-gift-cards-lite/woocommerce_gift_cards_lite.php', $plugin_admin, 'in_plugin_update_message', 10, 2 );
 	}
-
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
