@@ -141,12 +141,6 @@
 #mwb_uwgc_add_more ,#mwb_wgm_add_more{
   margin-top: 10px;
 }
-/*#mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_general_setting tr label{
-  padding-left: 15px;
-}*/
-/*#mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_product_setting tr label{
-  padding-left: 15px;
-}*/
 #mwb_wgm_setting_wrapper .mwb_wgm_table_wrapper .mwb_wgm_product_setting tr:nth-child(2n+1) {
 	background-color: #efefef;
 }

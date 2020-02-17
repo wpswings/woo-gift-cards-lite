@@ -178,10 +178,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	public function mwb_wgm_woocommerce_before_add_to_cart_button( $mwb_product ) {
 		$mwb_cart_html = $this->mwb_wgm_before_cart_data( $mwb_product );
 		$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
-		//@codingStandardsIgnoreStart
-		echo wp_kses( $mwb_cart_html , $allowed_tags );
-		//@codingStandardsIgnoreEnd
-
+		// @codingStandardsIgnoreStart.
+		echo wp_kses( $mwb_cart_html, $allowed_tags );
+		// @codingStandardsIgnoreEnd.
 	}
 
 	/**
@@ -1094,7 +1093,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_woocommerce_new_order_item( $item_id, $item ) {
+	public function mwb_wgm_woocommerce_new_order_item( $item_id,  $item,  $order_id ) {
 		if ( get_class( $item ) == 'WC_Order_Item_Coupon' ) {
 
 			$coupon_code = $item->get_code();
@@ -1273,9 +1272,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					do_action( 'preview_email_template_for_pro', $message );
 			} else {
 				$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
-				//@codingStandardsIgnoreStart
-				echo wp_kses($message,$allowed_tags);
-				//@codingStandardsIgnoreEnd
+				// @codingStandardsIgnoreStart.
+				echo wp_kses( $message, $allowed_tags );
+				// @codingStandardsIgnoreEnd.
 				die();
 			}
 		}

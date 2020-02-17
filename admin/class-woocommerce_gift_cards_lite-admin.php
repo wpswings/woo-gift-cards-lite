@@ -751,8 +751,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function mwb_wgm_mothers_day_template() {
 
 		$mwb_wgm_template = get_option( 'mwb_wgm_new_mom_template', '' );
-		// $mwb_wgm_template_already_exist = get_option( 'mwb_gw_new_mom_temp', false );
-		// if ( false == $mwb_wgm_template_already_exist ) {
 		if ( empty( $mwb_wgm_template ) ) {
 			update_option( 'mwb_wgm_new_mom_template', true );
 			$filename = array( MWB_WGC_URL . 'assets/images/mom.png' );
@@ -805,7 +803,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$parent_post_id = wp_insert_post( $gifttemplate_new );
 			set_post_thumbnail( $parent_post_id, $arr[0] );
 		}
-		// }
 	}
 
 	/**
@@ -1080,9 +1077,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					do_action( 'preview_email_template_for_pro', $finalhtml );
 				} else {
 					$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
-					//@codingStandardsIgnoreStart
-					echo wp_kses($finalhtml,$allowed_tags);
-					//@codingStandardsIgnoreEnd
+					// @codingStandardsIgnoreStart.
+					echo wp_kses( $finalhtml, $allowed_tags );
+					// @codingStandardsIgnoreEnd.
 					die();
 				}
 			}
@@ -1169,7 +1166,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
 			$current_version_parts = explode( '.', $this->version );
 
-			if ( 3 !== sizeof( $notice_version_parts ) ) {
+			if ( 3 !== count( $notice_version_parts ) ) {
 				return;
 			}
 

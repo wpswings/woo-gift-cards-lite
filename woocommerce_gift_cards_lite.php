@@ -67,7 +67,7 @@ if ( $activated ) {
 	/**
 	Add link for settings
 	*/
-	add_filter( 'plugin_action_links', 'mwb_wgm_admin_settings', 10, 5 );
+	add_filter( 'plugin_action_links', 'mwb_wgm_admin_settings', 10, 4 );
 
 	/**
 	 * Adds the Setting Links
@@ -79,7 +79,7 @@ if ( $activated ) {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgm_admin_settings( $actions, $plugin_file ) {
+	function mwb_wgm_admin_settings( $actions, $plugin_file, $plugin_data, $context ) {
 		static $plugin;
 		if ( ! isset( $plugin ) ) {
 			$plugin = plugin_basename( __FILE__ );

@@ -133,7 +133,7 @@ function mwb_redeem_giftcard_offline( $request ) {
 		$coupon_usage_count = get_post_meta( $coupon_id, 'usage_count', true );
 		$coupon_usage_limit = get_post_meta( $coupon_id, 'usage_limit', true );
 
-		if ( 0 === $coupon_usage_limit || $coupon_usage_limit > $coupon_usage_count ) {
+		if ( 0 == $coupon_usage_limit || $coupon_usage_limit > $coupon_usage_count ) {
 
 			$woo_ver = WC()->version;
 
@@ -157,7 +157,7 @@ function mwb_redeem_giftcard_offline( $request ) {
 						$remaining_amount = $coupon_amount - $redeem_amount;
 
 						update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
-						$coupon_usage_count = $coupon_usage_count + 1;
+						$coupon_usage_count = $coupon_usage_count ++;
 						update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
 
 						$response['code'] = 'success';
@@ -359,7 +359,7 @@ function mwb_recharge_giftcard_offine( $request ) {
  */
 function mwb_permission_check( $request ) {
 	$license = $request->get_header( 'licensecode' );
-	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
+	$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
 	if ( '' == $license ) {
 		return true;
 	} elseif ( trim( $client_license_code ) === trim( $license ) ) {

@@ -100,7 +100,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	$userid = $offine_giftcard_redeem_details['user_id'];
 	$client_domain = home_url();
 	$url = 'https://gifting.makewebbetter.com/api/generate/update';
-	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
+	$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
 
 	if ( '' !== $client_license_code ) {
 		$curl_data = array(
@@ -147,7 +147,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 ?>
 <h3 class="mwb_wgm_overview_heading text-center"><?php esc_html_e( 'Gift Card  Redeem / Recharge ', 'woocommerce_gift_cards_lite' ); ?></h3>
 <div class="mwb_table">
-	<div style="display: none;" class="loading-style-bg" id="mwb_gw_loader">
+	<div style="display: none;" class="loading-style-bg" id="mwb_wgm_loader">
 		<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
 	<div class="mwb_redeem_div_wrapper">

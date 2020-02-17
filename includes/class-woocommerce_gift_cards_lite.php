@@ -201,7 +201,7 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'woocommerce_product_is_taxable', $plugin_public, 'mwb_wgm_woocommerce_product_is_taxable', 10, 2 );
 		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'mwb_wgm_woocommerce_before_main_content' );
 		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'mwb_wgm_woocommerce_product_query', 10, 2 );
-		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'mwb_wgm_woocommerce_new_order_item', 10, 5 );
+		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'mwb_wgm_woocommerce_new_order_item', 10, 3 );
 		$this->loader->add_filter( 'wc_shipping_enabled', $plugin_public, 'mwb_wgm_wc_shipping_enabled' );
 		$this->loader->add_action( 'wp_ajax_mwb_wgc_preview_thickbox_rqst', $plugin_public, 'mwb_wgm_preview_thickbox_rqst' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgc_preview_thickbox_rqst', $plugin_public, 'mwb_wgm_preview_thickbox_rqst' );

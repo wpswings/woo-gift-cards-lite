@@ -298,8 +298,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				if ( class_exists( 'WCPBC_Pricing_Zones' ) ) {
 
 					$billing_country = $order->get_billing_country();
-					// $shipping_country = $order->get_shipping_country();
-
 					$wcpbc_the_zone = WCPBC_Pricing_Zones::get_zone_by_country( $billing_country );
 					if ( isset( $wcpbc_the_zone ) && null != $wcpbc_the_zone ) {
 						$cur = $wcpbc_the_zone->get_currency();

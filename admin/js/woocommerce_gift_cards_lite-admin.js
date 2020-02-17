@@ -17,7 +17,6 @@
 			mwb_wgc_show_and_hide_panels();
 			$( 'select#product-type' ).change(
 				function() {
-					// mwb_wgc_show_and_hide_panels();!
 				}
 			);
 			var pricing_option = $( '#mwb_wgm_pricing' ).val();
@@ -276,7 +275,6 @@
 
 			var clipboard1 = new Clipboard( '.mwb_link_copy' );
 			var clipboard2 = new Clipboard( '.mwb_embeded_copy' );
-			// document.execCommand("copy");!
 			$( document ).on(
 				'click',
 				'.mwb_redeem_copy',
