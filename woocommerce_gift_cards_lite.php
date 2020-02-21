@@ -30,15 +30,15 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-$activated = true;
+$activated = false;
 if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-		$activated = false;
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		$activated = true;
 	}
 } else {
-	if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-		$activated = false;
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		$activated = true;
 	}
 }
 
@@ -311,6 +311,7 @@ if ( $activated ) {
 		   </div>
 		<?php
 	}
+	add_action( 'admin_notices', 'mwb_wgm_plugin_error_notice' );
 
 	/**
 	 * Call Admin notices for Woocommerce
@@ -321,7 +322,6 @@ if ( $activated ) {
 	 */
 	function mwb_wgm_plugin_deactivate() {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		add_action( 'admin_notices', 'mwb_wgm_plugin_error_notice' );
 	}
 }
 
