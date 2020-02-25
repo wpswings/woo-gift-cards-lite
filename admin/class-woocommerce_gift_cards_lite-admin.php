@@ -254,9 +254,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$to = '';
 		$price = '';
 		$default_price  = isset( $mwb_wgm_pricing['default_price'] ) ? $mwb_wgm_pricing['default_price'] : 0;
-
-		if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
+		if( is_array( $mwb_wgm_pricing ) && !empty( $mwb_wgm_pricing ) ) {
+			if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 				$selectedtemplate  = isset( $mwb_wgm_pricing['template'] ) ? $mwb_wgm_pricing['template'] : false;
+			}
 		} else {
 			$selectedtemplate = $this->mwb_common_fun->mwb_get_org_selected_template();
 		}
