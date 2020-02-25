@@ -2,14 +2,19 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
- 
+ .product-type-wgm_gift_card .price {
+  margin: 0 !important;
+}
+.product-type-wgm_gift_card .price ~ .cart {
+  padding-top: 0 !important;
+}
  .mwb_wgm_added_wrapper {
- 	margin-bottom: 20px ;
+	margin-bottom: 20px ;
  }
  .mwb_wgm_added_wrapper .mwb_wgm_section .mwb_wgc_label {
- 	font-size: 14px;
- 	font-weight: bold;
- 	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+	text-transform: uppercase;
  }
 #TB_window {
   left: 0 !important;
@@ -20,7 +25,7 @@
   width: 95% !important;
   /*IOS issue(Mobile device)*/
   -webkit-overflow-scrolling: touch!important;
-  z-index: 9999999;    
+  z-index: 9999999;
 }
 #TB_window iframe#TB_iframeContent {
   margin: 0 auto;
@@ -39,20 +44,64 @@
  }
 }
 #mwb_wgm_from_name {
-    width: 99%;
+	width: 99%;
 }
 #mwb_wgm_to_download {
-    width: 99%;
+	width: 99%;
 }
 #mwb_wgm_to_email {
-    width: 99%;
+	width: 99%;
+  margin-bottom: 10px  !important;
 }
 #mwb_wgm_message {
-    width: 99%;
+	width: 99%;
 }
 /* custom css for redeem iframe*/
 .mwb_redeem_embed {
   width: 100%;
   height: 610px;
   display: block;
+}
+/*css for single product page on front end */
+.mwb_wgm_send_giftcard {
+  margin-right: 5px;
+}
+.mwb_wgm_msg_info {
+ display: block;
+ font-size: 13px;
+}
+#mwb_wgm_to_name_optional {
+	width: 99%;
+	display:none;
+}
+.mwb_wgm_delivery_method {
+	border: 1px solid #f1f1f1;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+	margin-bottom: 25px;
+	padding: 20px;
+}
+.mwb_wgm_featured_img {
+	margin-right: 12px;
+	margin-bottom: 10px;
+	border: solid 3px #d2d2d2;
+	background-color: #00897b;
+  float:left;
+}
+.mwb_wgm_pre_selected_temp {
+	border: 3px solid #2c2726 !important;
+	border-radius: 5px;
+	margin-right: 12px;
+}
+#mwb_wgm_price{
+  width:99%;
+}
+#mwg_wgm_preview_email {
+	font-weight: bold;
+	letter-spacing: 1px;
+  display: block;
+  width:99%;
+  cursor: pointer;
+}
+.mwb_wgm_selected_template {
+    overflow: auto;
 }

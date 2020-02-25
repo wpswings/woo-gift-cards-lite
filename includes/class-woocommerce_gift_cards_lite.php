@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -88,8 +87,8 @@ class Woocommerce_gift_cards_lite {
 	 *
 	 * - Woocommerce_gift_cards_lite_Loader. Orchestrates the hooks of the plugin.
 	 * - Woocommerce_gift_cards_lite_i18n. Defines internationalization functionality.
-	 * - Woocommerce_gift_cards_lite_Admin. Defines all hooks for the admin area.
-	 * - Woocommerce_gift_cards_lite_Public. Defines all hooks for the public side of the site.
+	 * - Woocommerce_Gift_Cards_Lite_Admin. Defines all hooks for the admin area.
+	 * - Woocommerce_Gift_Cards_Lite_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -151,20 +150,32 @@ class Woocommerce_gift_cards_lite {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin = new Woocommerce_gift_cards_lite_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		 $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		 $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		 $this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wgc_admin_menu', 10, 2);
-		 $this->loader->add_filter( 'product_type_selector', $plugin_admin,'mwb_wgc_gift_card_product' );
-		 $this->loader->add_action( 'woocommerce_product_options_general_product_data', $plugin_admin, 'mwb_wgc_woocommerce_product_options_general_product_data' );
-		 $this->loader->add_action( 'save_post', $plugin_admin, 'mwb_wgc_save_post');
-		 $this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_wgc_woocommerce_product_data_tabs' );
-		 $this->loader->add_action( 'woocommerce_after_order_itemmeta', $plugin_admin, 'mwb_wgc_woocommerce_after_order_itemmeta',10,3 );
-		 $this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin,'mwb_wgc_woocommerce_hidden_order_itemmeta' );
-		
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wgm_admin_menu', 10, 2 );
+		$this->loader->add_filter( 'product_type_selector', $plugin_admin, 'mwb_wgm_gift_card_product' );
+		$this->loader->add_action( 'woocommerce_product_options_general_product_data', $plugin_admin, 'mwb_wgm_woocommerce_product_options_general_product_data' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_wgm_save_post' );
+		$this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_wgm_woocommerce_product_data_tabs' );
+		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $plugin_admin, 'mwb_wgm_woocommerce_after_order_itemmeta', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin, 'mwb_wgm_woocommerce_hidden_order_itemmeta' );
+
+		 // Added new Actions and Filters.
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_giftcard_custom_post' );
+		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'mwb_wgm_edit_form_after_title', 10, 1 );
+		 // include Gift card Template.
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_mothers_day_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_new_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_custom_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_christmas_template', 10 );
+		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_preview_gift_template', 10, 2 );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_preview_email_template' );
+		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'mwb_custom_plugin_row_meta', 10, 2 );
+		/*Update_Notice*/
+		$this->loader->add_action( 'in_plugin_update_message-woo-gift-cards-lite/woocommerce_gift_cards_lite.php', $plugin_admin, 'in_plugin_update_message', 10, 2 );
 	}
-
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
@@ -174,34 +185,36 @@ class Woocommerce_gift_cards_lite {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Woocommerce_gift_cards_lite_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Woocommerce_Gift_Cards_Lite_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'mwb_wgc_woocommerce_get_price_html', 10,2 );
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button',$plugin_public,'mwb_wgc_woocommerce_before_add_to_cart_button' );
-		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public,'mwb_wgc_woocommerce_add_cart_item_data', 10,2 );
-		$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public,'mwb_wgc_woocommerce_get_item_data', 10,2 );
-		$this->loader->add_action( 'woocommerce_before_calculate_totals',$plugin_public, 'mwb_wgc_woocommerce_before_calculate_totals' );
-		$this->loader->add_action( 'woocommerce_order_status_changed',$plugin_public,'mwb_wgc_woocommerce_order_status_changed', 10,3);
-		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item',$plugin_public,'mwb_wgc_woocommerce_checkout_create_order_line_item',10,3 );
+		$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'mwb_wgm_woocommerce_get_price_html', 10, 2 );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'mwb_wgm_woocommerce_before_add_to_cart_button' );
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'mwb_wgm_woocommerce_add_cart_item_data', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'mwb_wgm_woocommerce_get_item_data', 10, 2 );
+		$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_wgm_woocommerce_before_calculate_totals' );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wgm_woocommerce_order_status_changed', 10, 3 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'mwb_wgm_woocommerce_checkout_create_order_line_item', 10, 3 );
 		add_action( 'woocommerce_wgm_gift_card_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
-		$this->loader->add_filter( 'woocommerce_loop_add_to_cart_link', $plugin_public, 'mwb_wgc_woocommerce_loop_add_to_cart_link', 10, 2 );
-		$this->loader->add_filter( 'woocommerce_product_is_taxable',$plugin_public, 'mwb_wgc_woocommerce_product_is_taxable',10,2 );
-		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public,'mwb_wgc_woocommerce_before_main_content');
-		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'mwb_wgc_woocommerce_product_query',10,2 );
-		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'mwb_wgc_woocommerce_new_order_item',10,5 );
-		$this->loader->add_filter( 'wc_shipping_enabled', $plugin_public, 'mwb_wgc_wc_shipping_enabled' );
-		$this->loader->add_action( 'wp_ajax_mwb_wgc_preview_thickbox_rqst',$plugin_public,'mwb_wgc_preview_thickbox_rqst' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgc_preview_thickbox_rqst',$plugin_public,'mwb_wgc_preview_thickbox_rqst' );
-		$this->loader->add_action( 'init', $plugin_public, 'mwb_wgc_preview_email' );
-		$mwb_wgm_apply_coupon_disable = get_option('mwb_wgm_additional_apply_coupon_disable','off');
-		if( $mwb_wgm_apply_coupon_disable == 'on' )
-			{
-				$this->loader->add_filter( 'woocommerce_coupons_enabled', $plugin_public,'mwb_wgm_hidding_coupon_field_on_cart', 10,1 );
+		$this->loader->add_filter( 'woocommerce_loop_add_to_cart_link', $plugin_public, 'mwb_wgm_woocommerce_loop_add_to_cart_link', 10, 2 );
+		$this->loader->add_filter( 'woocommerce_product_is_taxable', $plugin_public, 'mwb_wgm_woocommerce_product_is_taxable', 10, 2 );
+		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'mwb_wgm_woocommerce_before_main_content' );
+		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'mwb_wgm_woocommerce_product_query', 10, 2 );
+		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'mwb_wgm_woocommerce_new_order_item', 10, 3 );
+		$this->loader->add_filter( 'wc_shipping_enabled', $plugin_public, 'mwb_wgm_wc_shipping_enabled' );
+		$this->loader->add_action( 'wp_ajax_mwb_wgc_preview_thickbox_rqst', $plugin_public, 'mwb_wgm_preview_thickbox_rqst' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgc_preview_thickbox_rqst', $plugin_public, 'mwb_wgm_preview_thickbox_rqst' );
+		$this->loader->add_action( 'init', $plugin_public, 'mwb_wgm_preview_email_on_single_page' );
+		$other_setting = get_option( 'mwb_wgm_other_settings', array() );
+		if ( is_array( $other_setting ) && ! empty( $other_setting ) && array_key_exists( 'mwb_wgm_additional_apply_coupon_disable', $other_setting ) ) {
+			$mwb_wgm_apply_coupon_disable = $other_setting['mwb_wgm_additional_apply_coupon_disable'];
+			if ( 'on' == $mwb_wgm_apply_coupon_disable ) {
+				$this->loader->add_filter( 'woocommerce_coupons_enabled', $plugin_public, 'mwb_wgm_hidding_coupon_field_on_cart', 10, 1 );
 			}
-		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'mwb_wgm_woocommerce_hide_order_metafields',10,1 );
-		$this->loader->add_filter('wc_price_based_country_product_types_overriden',$plugin_public,'mwb_wgm_price_based_country_giftcard' );
+		}
+		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'mwb_wgm_woocommerce_hide_order_metafields', 10, 1 );
+		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'mwb_wgm_price_based_country_giftcard' );
 
 	}
 
@@ -244,5 +257,7 @@ class Woocommerce_gift_cards_lite {
 	public function get_version() {
 		return $this->version;
 	}
+
+
 
 }
