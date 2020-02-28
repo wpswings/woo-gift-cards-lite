@@ -69,7 +69,7 @@ class Woocommerce_gift_cards_lite {
 		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
 			$this->version = PLUGIN_NAME_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '2.0.0';
 		}
 		$this->plugin_name = 'woocommerce_gift_cards_lite';
 
@@ -215,6 +215,7 @@ class Woocommerce_gift_cards_lite {
 		}
 		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'mwb_wgm_woocommerce_hide_order_metafields', 10, 1 );
 		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'mwb_wgm_price_based_country_giftcard' );
+		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
 
 	}
 

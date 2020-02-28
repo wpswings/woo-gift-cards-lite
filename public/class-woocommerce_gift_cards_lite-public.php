@@ -1279,4 +1279,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 	}
+
+	/*Need to remove hold coupon time.*/
+	public function mwb_wgm_apply_already_created_giftcard_coupons() {
+		return false;
+	}
 }
