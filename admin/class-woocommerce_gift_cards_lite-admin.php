@@ -112,12 +112,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 				);
 
-				wp_enqueue_script( 'mwb_lite_select2', plugin_dir_url( __FILE__ ), 'js/select2.min.js', array( 'jquery' ) );
+				wp_enqueue_script( 'mwb_lite_select2', plugin_dir_url( __FILE__ ), 'js/select2.min.js', array( 'jquery' ), true );
 
-				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), '1.2.1' );
+				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version );
 
 				wp_enqueue_script( $this->plugin_name . 'clipboard' );
-				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'mwb_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), '1.2.1', true );
+				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'mwb_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), $this->version, true );
 
 				wp_localize_script( $this->plugin_name, 'mwb_wgc', $mwb_wgc );
 
@@ -150,7 +150,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( 'woocommerce_admin' );
 				wp_enqueue_script( 'media-upload' );
 				/*sticky sidebar*/
-				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), '1.2.1', true );
+				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), $this->version, true );
 
 			}
 		}
@@ -160,7 +160,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'mwb_wgm_nonce' => wp_create_nonce( 'mwb-wgm-verify-notice-nonce' ),
 		);
-		wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/mwb-wgm-gift-card-notices.js', array( 'jquery' ), '1.2.1', false );
+		wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/mwb-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
 
 		wp_localize_script( $this->plugin_name . 'admin-notice', 'mwb_wgm_notice', $mwb_wgm_notice );
 		wp_enqueue_script( $this->plugin_name . 'admin-notice' );

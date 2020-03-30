@@ -361,10 +361,12 @@ class Woocommerce_Giftcard_Admin_Settings {
 			$mwb_wgm_get_product = array();
 			foreach ( $mwb_wgm_exclude_product[ $id ] as $pro_id ) {
 				$product      = wc_get_product( $pro_id );
-				$mwb_wgm_get_product[] = array(
-					'id' => $pro_id,
-					'name' => $product->get_formatted_name(),
-				);
+				if( !empty( $product ) ) {
+					$mwb_wgm_get_product[] = array(
+						'id' => $pro_id,
+						'name' => $product->get_formatted_name(),
+					);
+				}
 			}
 			return $mwb_wgm_get_product;
 		} else {
