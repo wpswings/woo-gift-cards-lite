@@ -60,6 +60,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$this->version = $version;
 
 		$this->mwb_common_fun = new Woocommerce_Gift_Cards_Common_Function();
+		define( 'MWB_SITE_URL', 'http://192.168.1.219/' );
 	}
 
 	/**
@@ -109,7 +110,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$mwb_wgc = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'is_tax_enable_for_gift' => $giftcard_tax_cal_enable,
-
+					'mwb_wgm_nonce'      => wp_create_nonce( 'mwb-wgm-verify-nonce' ),
 				);
 
 				wp_enqueue_script( 'mwb_lite_select2', plugin_dir_url( __FILE__ ), 'js/select2.min.js', array( 'jquery' ), true );
@@ -1186,6 +1187,169 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 
 		return wp_kses_post( $upgrade_notice );
+	}
+
+	/**
+	 * This function is used to send email of client site data.
+	 *
+	 * @name mwb_wgm_support_popup.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_support_popup(){
+		check_ajax_referer( 'mwb-wgm-verify-nonce', 'mwb_nonce' );
+		if( current_user_can('administrator') ) { 
+			$status = get_option( 'mwb_wgm_suggestions_sent', false );
+			if( ! $status ){
+				$current_user = wp_get_current_user();
+				if( !empty( $current_user ) ){
+					$message  = 'Plugin : woo-gift-cards-lite<br/>';
+					$message .= 'Email Id : ' . $current_user->user_email . '<br/>';
+					$message .= 'First Name : ' . $current_user->user_firstname . '<br/>';
+					$message .= 'Last Name : ' . $current_user->user_lastname . '<br/>';
+					$message .= 'Site URL : ' . site_url() . '<br/>';
+					$message .= 'Wordpress Version : ' . get_bloginfo( 'version' ) . '<br/>';
+					$message .= 'Plugin Version : ' . PLUGIN_NAME_VERSION . '<br/>';
+					$message .= 'Woocommerce Version : ' . WC()->version . '<br/>';
+
+					$to      = 'plugins@makewebbetter.com';
+					$subject = 'Giftcard Customers Details';
+					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+					$status  = wp_mail( $to, $subject, $message, $headers );
+				}
+				if( $status){
+		    		update_option('mwb_wgm_suggestions_sent', true );
+		    		do_action('mwb_set_cron_for_notification');
+		    	}
+			}
+    	}
+    	wp_die();
+	}
+
+	/**
+	 * This function is used to save data if user is not interested in support .
+	 *
+	 * @name mwb_wgm_support_popup_later.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_support_popup_later(){
+		check_ajax_referer( 'mwb-wgm-verify-nonce', 'mwb_nonce' );
+		if( current_user_can('administrator') ) { 
+			$status = get_option( 'mwb_wgm_suggestions_later', false );
+			if( ! $status ){
+				update_option('mwb_wgm_suggestions_later', true );
+			}
+    	}
+    	wp_die();
+	}
+
+	/**
+	 * This function is used to set cron if user want to get support.
+	 */
+	public function mwb_wgm_check_for_notification_daily() {
+		$status = get_option( 'mwb_wgm_suggestions_sent', false );
+		if( $status ){
+			$offset = get_option( 'gmt_offset' );
+			$time = time() + $offset * 60 * 60;
+			if ( ! wp_next_scheduled( 'mwb_wgm_check_for_notification_update' ) ) {
+				wp_schedule_event( $time, 'daily', 'mwb_wgm_check_for_notification_update' );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to save notification message with notification id.
+	 */
+	public function mwb_wgm_save_notice_message() {
+		$mwb_notification_data = $this->mwb_get_update_notification_data();
+		if ( is_array( $mwb_notification_data ) && ! empty( $mwb_notification_data ) ) {
+			$notification_id = array_key_exists('notification_id', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_id'] : '';
+			$notification_message = array_key_exists('notification_message', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_message'] : '';
+			update_option( 'mwb_notify_current_id', $notification_id );	
+			update_option( 'mwb_notify_msg_id#'.$notification_id, $notification_message );	
+		}
+	}
+
+	/**
+	 * This function is used to get notification data from server.
+	 */
+	public function mwb_get_update_notification_data(){
+		$url  = MWB_SITE_URL . 'client_notify/mwb-client-notify.php';
+		$mwb_notification_data = array();
+		//$url  = MWB_WGC_URL . 'client_notify/mwb-client-notify.php';
+		$mwb_response = wp_remote_post( $url );
+		if ( is_wp_error( $mwb_response ) ) {
+		   $error_message = $mwb_response->get_error_message();
+		   echo '<p><strong>' . 'Something went wrong: '. $error_message . '</strong></p>';
+		} else {
+			$mwb_response = wp_remote_retrieve_body( $mwb_response );
+			$mwb_notification_data = json_decode( $mwb_response , true );
+		}
+		return $mwb_notification_data;
+	}
+
+	/**
+	 * This function is used to display notoification bar at admin.
+	 */
+	public function mwb_wgm_display_notification_bar(){
+		$notification_id = get_option( 'mwb_notify_current_id', false );
+		if( isset ( $notification_id ) && "" !== $notification_id ) {
+			$user_notice = get_option( 'mwb_notify_id#'.$notification_id, 'show' );
+			$notification_message = get_option( 'mwb_notify_msg_id#'.$notification_id, '' );
+			if ( 'show' == $user_notice ) {
+				if( "" !== $notification_message ){
+					echo '<div class="update-nag mwb_wgm_admin_notices"><p>'.esc_html( stripslashes( $notification_message ) ).'</p><a id="dismiss_notice" href="#">Dismiss</a></div>';	
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to dismiss admin notices.
+	 *
+	 * @name mwb_wgm_dismiss_notice
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_dismiss_notice() {
+		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+			$notification_id = get_option( 'mwb_notify_current_id', false );
+			if( isset ( $notification_id ) && "" !== $notification_id ) {
+				update_option( 'mwb_notify_id#'.$notification_id, 'hide' );
+			}				
+			wp_send_json_success();
+		}
+	}
+
+	/**
+	 * The function displays a button to enable plugin after plugin activation.
+	 */
+	public function mwb_wgm_setting_notice_on_activation() {
+		/* Check transient, if available display notice */
+		if ( get_transient( 'mwb-wgm-giftcard-setting-notice' ) ) {
+			?>
+			<div class="updated notice is-dismissible" class="mwb-wgm-is-dismissible">
+			<p class="mwb_wgm_plugin_active_para"><strong><?php esc_html_e( 'Welcome to Ultimate Gift Cards For WooCommerce', 'woocommerce_gift_cards_lite' ); ?></strong><?php esc_html_e( '– Create and sell multiple gift cards with ease.', 'woocommerce_gift_cards_lite' ); ?>
+			</p>
+			<?php
+			$general_settings = get_option( 'mwb_wgm_general_settings', array() );
+			require_once MWB_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
+			$mwb_obj = new Woocommerce_Gift_Cards_Common_Function();
+			$mwb_wgm_general_setting_enable = $mwb_obj->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_enable' );
+			if( 'on' !== $mwb_wgm_general_setting_enable ){
+				?>
+				<p class="mwb_show_setting_on_activation">
+					<a class="mwb_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'admin.php?page=mwb-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Giftcards', 'woocommerce_gift_cards_lite' ); ?></a>
+				</p>
+				<?php
+			}
+			?>		
+			</div>
+			<?php
+			/* Delete transient, only display this notice once. */
+			delete_transient( 'mwb-wgm-giftcard-setting-notice' );
+		}
 	}
 }
 ?>

@@ -15,7 +15,7 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
  * Description:       Ultimate Gift Cards For WooCommerce allows merchants to create and sell multiple Gift Card Product having multiple price variation.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * License:           GPL-3.0+
@@ -49,6 +49,7 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
+	define( 'PLUGIN_NAME_VERSION', '2.0.2' );
 	/**
 	* Check whether the wordpress version is greater than 4.9.6
 	*/
@@ -240,57 +241,11 @@ if ( $activated ) {
 	}
 	run_woocommerce_gift_cards_lite();
 
-	/**
-	 * This function is used to add admin notices.
-	 *
-	 * @name mwb_wgm_admin_update_notices
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	function mwb_wgm_admin_update_notices() {
-		$user_notice = get_option( 'giftcard_redeem_notice_dismissed', 'show' );
-		if ( 'show' == $user_notice ) {
-			echo '<div class="update-nag mwb_wgm_admin_notices"><p>New Giftcard Redeem feature <a href="' . esc_url( admin_url( 'admin.php' ) ) . '?page=mwb-wgc-setting-lite&tab=redeem_tab">Check Now</a></p><a id="dismiss_notice" href="#">Dismiss</a></div>';
-		}
+	register_deactivation_hook( __FILE__, 'mwb_uwgc_remove_cron_for_notification_update' );
+	function mwb_uwgc_remove_cron_for_notification_update() {
+		wp_clear_scheduled_hook( 'mwb_wgm_check_for_notification_update' );
 	}
-	add_action( 'admin_notices', 'mwb_wgm_admin_update_notices' );
-
-	// hide admin notices.
-	add_action( 'wp_ajax_mwb_wgm_dismiss_notice', 'mwb_wgm_dismiss_notice' );
-
-	/**
-	 * This function is used to dismiss admin notices.
-	 *
-	 * @name mwb_wgm_dismiss_notice
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	function mwb_wgm_dismiss_notice() {
-		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) { // WPCS: input var ok, sanitization ok.
-			update_option( 'giftcard_redeem_notice_dismissed', 'hide' );
-			wp_send_json_success();
-		}
-	}
-	add_action( 'admin_notices', 'mwb_wgm_setting_notice_on_activation' );
-	/**
-	 * The code that runs during plugin activation to display admin notice.
-	 */
-	function mwb_wgm_setting_notice_on_activation() {
-
-		/* Check transient, if available display notice */
-		if ( get_transient( 'mwb-wgm-giftcard-setting-notice' ) ) {
-			?>
-			<div class="updated notice is-dismissible" class="mwb-wgm-is-dismissible">
-			<p class="mwb_wgm_plugin_active_para"><strong><?php esc_html_e( 'Welcome to Ultimate Gift Cards For WooCommerce', 'woocommerce_gift_cards_lite' ); ?></strong><?php esc_html_e( '– Create and sell multiple gift cards with ease.', 'woocommerce_gift_cards_lite' ); ?></p>
-			<p class="mwb_show_setting_on_activation">
-				<a class="mwb_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'admin.php?page=mwb-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Giftcards', 'woocommerce_gift_cards_lite' ); ?></a>
-			</p>			
-			</div>
-			<?php
-			/* Delete transient, only display this notice once. */
-			delete_transient( 'mwb-wgm-giftcard-setting-notice' );
-		}
-	}
+	
 	include_once MWB_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
 } else {
 		// Deactivate if Woocommerce is not activated.

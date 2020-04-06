@@ -584,7 +584,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	/**
 	 * This is function is used for the validating the data.
 	 *
-	 * @name mwb_wpr_allowed_html
+	 * @name mwb_wgm_allowed_html
 	 * @since 1.0.0
 	 */
 	public function mwb_wgm_allowed_html_for_tool_tip() {
@@ -602,6 +602,51 @@ class Woocommerce_Giftcard_Admin_Settings {
 			'<br>'  => array(),
 		);
 		return $allowed_tags;
+	}
 
+	/**
+	 * Plugin developement show suggestion popup
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_wgm_show_support_popup(){
+		$display = 'none';
+		if ( $this->is_display_suggestion_popup() ) {
+			$display = 'block';
+		}
+		?>
+		<div class="mwb_wgm_pop_up_wrap" style="display: <?php echo esc_attr( $display ); ?>">
+			<div class="pop_up_sub_wrap">
+				<p>
+					<strong><?php esc_html_e( ' Help improve Ultimate Gift Cards For WooCommerce by proving your name and email only once, for better assistance and support.', 'woocommerce_gift_cards_lite' ); ?></strong>
+				</p>
+				<p>
+					<?php esc_html_e( 'We don\'t spam or market. Your information is safe with us.', 'woocommerce_gift_cards_lite' ); ?>
+				</p>
+				<div class="button_wrap">
+					<a href="javascript:void(0);" class="mwb_wgm_accept"><?php esc_html_e( 'Yes support it', 'woocommerce_gift_cards_lite' ); ?></a>
+					<a href="javascript:void(0);" class="mwb_wgm_later"><?php esc_html_e( "I'll decide later", 'woocommerce_gift_cards_lite' ); ?></a>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Plugin developement suggestion popup
+	 *
+	 * @since 1.0.0
+	 */
+	public function is_display_suggestion_popup() {
+		$success = get_option( 'mwb_wgm_suggestions_sent', false );
+		if ( ! $success ) {
+			$later = get_option( 'mwb_wgm_suggestions_later', false );
+
+			if ( ! $later ) {
+
+				return true;
+			}
+		}
+		return false;
 	}
 }

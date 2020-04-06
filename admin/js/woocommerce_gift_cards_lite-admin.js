@@ -15,10 +15,6 @@
 			$( "#mwb_wgm_product_setting_exclude_category" ).select2();
 			$( "#mwb_wgm_email_template" ).select2();
 			mwb_wgc_show_and_hide_panels();
-			$( 'select#product-type' ).change(
-				function() {
-				}
-			);
 			var pricing_option = $( '#mwb_wgm_pricing' ).val();
 			mwb_wgc_show_and_hide_pricing_option( pricing_option );
 			$( '#mwb_wgm_pricing' ).change(
@@ -302,6 +298,50 @@
 			);
 
 			/*=====  End of Sticky-Sidebar  ======*/
+
+			/*support popup form */
+			$( '.mwb_wgm_accept' ).click(
+				function(){
+					jQuery( "#mwb_wgm_loader" ).show();
+					var data = {
+						action:'mwb_wgm_support_popup',
+						mwb_nonce:mwb_wgc.mwb_wgm_nonce,
+					};
+					$.ajax(
+						{
+							url: mwb_wgc.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								jQuery( "#mwb_wgm_loader" ).hide();
+								jQuery( ".mwb_wgm_pop_up_wrap" ).hide();
+							}
+						}
+					);
+				}
+			);
+			$( '.mwb_wgm_later' ).click(
+				function(){
+					jQuery( "#mwb_wgm_loader" ).show();
+					var data = {
+						action:'mwb_wgm_support_popup_later',
+						mwb_nonce:mwb_wgc.mwb_wgm_nonce,
+					};
+					$.ajax(
+						{
+							url: mwb_wgc.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								jQuery( "#mwb_wgm_loader" ).hide();
+								jQuery( ".mwb_wgm_pop_up_wrap" ).hide();
+							}
+						}
+					);
+				}
+			);
 		}
 	);
 })( jQuery );
