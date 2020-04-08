@@ -1266,8 +1266,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		if ( is_array( $mwb_notification_data ) && ! empty( $mwb_notification_data ) ) {
 			$notification_id = array_key_exists('notification_id', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_id'] : '';
 			$notification_message = array_key_exists('notification_message', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_message'] : '';
-			update_option( 'mwb_notify_current_id', $notification_id );	
-			update_option( 'mwb_notify_msg_id#'.$notification_id, $notification_message );	
+			update_option( 'mwb_notify_new_msg_id', $notification_id );	
+			update_option( 'mwb_notify_new_message', $notification_message );	
 		}
 	}
 
@@ -1275,16 +1275,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to get notification data from server.
 	 */
 	public function mwb_get_update_notification_data(){
-		$url  = MWB_SITE_URL . 'client_notify/mwb-client-notify.php';
 		$mwb_notification_data = array();
-		//$url  = MWB_WGC_URL . 'client_notify/mwb-client-notify.php';
-		$mwb_response = wp_remote_post( $url );
-		if ( is_wp_error( $mwb_response ) ) {
-		   $error_message = $mwb_response->get_error_message();
+		$url = 'https://demo.makewebbetter.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
+		$attr = array(
+			'action' => 'mwb_notification_fetch',
+			'plugin_version' => PLUGIN_NAME_VERSION,
+		);
+		$query = esc_url_raw( add_query_arg( $attr, $url ) );
+		$response = wp_remote_get( $query, array( 'timeout' => 20, 'sslverify' => false ) );
+		if ( is_wp_error( $response ) ) {
+		   $error_message = $response->get_error_message();
 		   echo '<p><strong>' . 'Something went wrong: '. $error_message . '</strong></p>';
 		} else {
-			$mwb_response = wp_remote_retrieve_body( $mwb_response );
-			$mwb_notification_data = json_decode( $mwb_response , true );
+			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
 		return $mwb_notification_data;
 	}
@@ -1293,13 +1296,25 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to display notoification bar at admin.
 	 */
 	public function mwb_wgm_display_notification_bar(){
-		$notification_id = get_option( 'mwb_notify_current_id', false );
+		$notification_id = get_option( 'mwb_notify_new_msg_id', false );
 		if( isset ( $notification_id ) && "" !== $notification_id ) {
-			$user_notice = get_option( 'mwb_notify_id#'.$notification_id, 'show' );
-			$notification_message = get_option( 'mwb_notify_msg_id#'.$notification_id, '' );
-			if ( 'show' == $user_notice ) {
+			$hidden_id = get_option( 'mwb_notify_hide_notification', false );
+			$notification_message = get_option( 'mwb_notify_new_message', '' );
+			if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
 				if( "" !== $notification_message ){
-					echo '<div class="update-nag mwb_wgm_admin_notices"><p>'.esc_html( stripslashes( $notification_message ) ).'</p><a id="dismiss_notice" href="#">Dismiss</a></div>';	
+					?>
+					<div class="notice is-dismissible notice-info" id="dismiss_notice">
+						<div class="notice-container">
+							<div class="notice-image">
+								<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/mwb.png' ); ?>" alt="MakeWebBetter">
+							</div> 
+							<div class="notice-content">
+								<?php echo esc_html( stripslashes( $notification_message ) );?>
+							</div>				
+						</div>
+						<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+					</div>
+					<?php
 				}
 			}
 		}
@@ -1314,9 +1329,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_wgm_dismiss_notice() {
 		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) { // WPCS: input var ok, sanitization ok.
-			$notification_id = get_option( 'mwb_notify_current_id', false );
+			$notification_id = get_option( 'mwb_notify_new_msg_id', false );
 			if( isset ( $notification_id ) && "" !== $notification_id ) {
-				update_option( 'mwb_notify_id#'.$notification_id, 'hide' );
+				update_option( 'mwb_notify_hide_notification', $notification_id );
 			}				
 			wp_send_json_success();
 		}

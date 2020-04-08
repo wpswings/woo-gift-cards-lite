@@ -316,6 +316,7 @@
 							{
 								jQuery( "#mwb_wgm_loader" ).hide();
 								jQuery( ".mwb_wgm_pop_up_wrap" ).hide();
+								location.reload();
 							}
 						}
 					);
