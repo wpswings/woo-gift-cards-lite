@@ -526,6 +526,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								// nothing for default.
 						}
 					}
+					// compatibility with product filter by price.
+					if ( mwb_uwgc_pro_active() ) {
+						do_action( 'mwb_wgm_set_dicount_price_for_filter', $product_id );
+					} else {
+						global $wpdb;
+						$table_name = $wpdb->prefix . 'wc_product_meta_lookup';
+						$sql = "UPDATE " . $table_name . " SET `min_price`=".$default_price.",`max_price`=".$default_price." WHERE product_id = ".$product_id;
+						$results = $wpdb->get_results($sql);
+					}
 					do_action( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
 					$mwb_wgm_pricing = apply_filters( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
 					update_post_meta( $product_id, 'mwb_wgm_pricing', $mwb_wgm_pricing );
