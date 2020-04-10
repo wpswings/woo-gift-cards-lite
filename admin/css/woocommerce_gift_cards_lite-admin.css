@@ -622,29 +622,7 @@ transform: rotate(90deg);
   .mwb_redeem_details td textarea:focus, .mwb_redeem_details td input[type="text"]:focus{
 	border-color: #ffffff;
   }
-  .mwb_wgm_admin_notices {
-	display: flex;
-	background-color: #4F3154;
-	color: #ffffff;
-	border-left-color: #ef5350;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
-	width: 98%;
-}
-.mwb_wgm_admin_notices p {
-  margin: 5px 0;
-}
-.mwb_wgm_admin_notices a {
-  color: #ffffff;
-  font-weight: 600;
-  margin-left: 10px;
-}
-.mwb_wgm_admin_notices p ~ a {
-  font-weight: normal;
-  font-size: 13px;
-}
-
+  
 .mwb_gw_new_badge {
   background-color: #4F3154;
   border-radius: 6px;
@@ -983,4 +961,95 @@ a.mwb_wgm_plugin_activation_msg {
 	min-height: 24px;
 	font-size: 13px;
 	line-height: 1.5;
+}
+
+/*chat now on skype*/
+#mwb-wgm-skype-link img {
+margin-right: 5px;
+vertical-align: text-bottom;
+}
+#mwb-wgm-skype-link {
+color: #00AAF2;
+background: #fff;
+border-radius: 4px;
+display: inline-block;
+padding: 7px 8px;
+font-weight: bold;
+}
+
+/*popup for lead*/
+.mwb_wgm_pop_up_wrap {
+background-color: rgba(0, 0, 0, 0.55);
+bottom: 0;
+height: 100%;
+left: 0;
+position: fixed;
+right: 0;
+top: 0;
+width: 100%;
+z-index: 9999;
+}
+.mwb_wgm_pop_up_wrap p {
+color: #232323;
+font-size: 17px;
+text-align: center;
+}
+.mwb_wgm_pop_up_wrap .pop_up_sub_wrap {
+background-color: #fff;
+border-radius: 3px;
+box-shadow: 0 6px 5px rgba(0, 0, 0, 0.4);
+box-sizing: border-box;
+left: 0;
+margin: 0 auto;
+max-width: 595px;
+min-height: 228px;
+padding: 16px;
+position: absolute;
+right: 0;
+top: 50%;
+transform: translateY(-50%);
+}
+.mwb_wgm_pop_up_wrap .pop_up_sub_wrap .button_wrap {
+margin-top: 35px;
+text-align: center;
+}
+.mwb_wgm_pop_up_wrap .pop_up_sub_wrap .button_wrap a {
+border-radius: 3px;
+box-sizing: border-box;
+color: #fff;
+display: block;
+font-size: 17px;
+padding: 10px;
+text-decoration: none;
+width: 80%;
+margin: 0 auto 15px;
+}
+.mwb_wgm_pop_up_wrap .pop_up_sub_wrap .button_wrap a:nth-child(1) {
+background-color: #26488f;
+}
+.mwb_wgm_pop_up_wrap .pop_up_sub_wrap .button_wrap a:nth-child(2) {
+text-decoration: underline;
+color: #252525;
+}
+/*notification bar*/
+
+.notice-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.notice-image img {
+    max-width: 50px;
+}
+img {
+    border: none;
+}
+.notice-content {
+    margin-left: 15px;
+}
+div#dismiss_notice {
+    margin-left: 2px;
+    margin-right: 20px;
 }

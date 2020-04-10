@@ -33,6 +33,7 @@ if ( isset( $_POST ['mwb_wgm_save_general'] ) ) {
 					update_option( 'mwb_wgm_delivery_settings', $delivery_setting );
 				}
 				update_option( 'mwb_wgm_general_settings', $general_settings_array );
+				$settings_obj->mwb_wgm_show_support_popup();
 			}
 		}
 		$flag = true;

@@ -60,6 +60,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$this->version = $version;
 
 		$this->mwb_common_fun = new Woocommerce_Gift_Cards_Common_Function();
+		define( 'MWB_SITE_URL', 'http://192.168.1.219/' );
 	}
 
 	/**
@@ -109,15 +110,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$mwb_wgc = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'is_tax_enable_for_gift' => $giftcard_tax_cal_enable,
-
+					'mwb_wgm_nonce'      => wp_create_nonce( 'mwb-wgm-verify-nonce' ),
 				);
 
-				wp_enqueue_script( 'mwb_lite_select2', plugin_dir_url( __FILE__ ), 'js/select2.min.js', array( 'jquery' ) );
+				wp_enqueue_script( 'mwb_lite_select2', plugin_dir_url( __FILE__ ), 'js/select2.min.js', array( 'jquery' ), true );
 
-				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), '1.2.1' );
+				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version );
 
 				wp_enqueue_script( $this->plugin_name . 'clipboard' );
-				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'mwb_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), '1.2.1', true );
+				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'mwb_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), $this->version, true );
 
 				wp_localize_script( $this->plugin_name, 'mwb_wgc', $mwb_wgc );
 
@@ -150,7 +151,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( 'woocommerce_admin' );
 				wp_enqueue_script( 'media-upload' );
 				/*sticky sidebar*/
-				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), '1.2.1', true );
+				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), $this->version, true );
 
 			}
 		}
@@ -160,7 +161,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'mwb_wgm_nonce' => wp_create_nonce( 'mwb-wgm-verify-notice-nonce' ),
 		);
-		wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/mwb-wgm-gift-card-notices.js', array( 'jquery' ), '1.2.1', false );
+		wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/mwb-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
 
 		wp_localize_script( $this->plugin_name . 'admin-notice', 'mwb_wgm_notice', $mwb_wgm_notice );
 		wp_enqueue_script( $this->plugin_name . 'admin-notice' );
@@ -254,7 +255,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$to = '';
 		$price = '';
 		$default_price  = isset( $mwb_wgm_pricing['default_price'] ) ? $mwb_wgm_pricing['default_price'] : 0;
-		if( is_array( $mwb_wgm_pricing ) && !empty( $mwb_wgm_pricing ) ) {
+		if ( is_array( $mwb_wgm_pricing ) && ! empty( $mwb_wgm_pricing ) ) {
 			if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 				$selectedtemplate  = isset( $mwb_wgm_pricing['template'] ) ? $mwb_wgm_pricing['template'] : false;
 			}
@@ -524,6 +525,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							default:
 								// nothing for default.
 						}
+					}
+					// compatibility with product filter by price.
+					if ( mwb_uwgc_pro_active() ) {
+						do_action( 'mwb_wgm_set_dicount_price_for_filter', $product_id );
+					} else {
+						global $wpdb;
+						$table_name = $wpdb->prefix . 'wc_product_meta_lookup';
+						$sql = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
+						$results = $wpdb->get_results( $sql );
 					}
 					do_action( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
 					$mwb_wgm_pricing = apply_filters( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
@@ -1186,6 +1196,191 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 
 		return wp_kses_post( $upgrade_notice );
+	}
+
+	/**
+	 * This function is used to send email of client site data.
+	 *
+	 * @name mwb_wgm_support_popup.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_support_popup() {
+		check_ajax_referer( 'mwb-wgm-verify-nonce', 'mwb_nonce' );
+		if ( current_user_can( 'administrator' ) ) {
+			$status = get_option( 'mwb_wgm_suggestions_sent', false );
+			if ( ! $status ) {
+				$current_user = wp_get_current_user();
+				if ( ! empty( $current_user ) ) {
+					$message  = 'Plugin : woo-gift-cards-lite<br/>';
+					$message .= 'Email Id : ' . $current_user->user_email . '<br/>';
+					$message .= 'First Name : ' . $current_user->user_firstname . '<br/>';
+					$message .= 'Last Name : ' . $current_user->user_lastname . '<br/>';
+					$message .= 'Site URL : ' . site_url() . '<br/>';
+					$message .= 'Wordpress Version : ' . get_bloginfo( 'version' ) . '<br/>';
+					$message .= 'Plugin Version : ' . PLUGIN_NAME_VERSION . '<br/>';
+					$message .= 'Woocommerce Version : ' . WC()->version . '<br/>';
+
+					$to      = 'plugins@makewebbetter.com';
+					$subject = 'Giftcard Customers Details';
+					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+					$status  = wp_mail( $to, $subject, $message, $headers );
+				}
+				if ( $status ) {
+					update_option( 'mwb_wgm_suggestions_sent', true );
+					do_action( 'mwb_set_cron_for_notification' );
+				}
+			}
+		}
+		wp_die();
+	}
+
+	/**
+	 * This function is used to save data if user is not interested in support .
+	 *
+	 * @name mwb_wgm_support_popup_later.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_support_popup_later() {
+		check_ajax_referer( 'mwb-wgm-verify-nonce', 'mwb_nonce' );
+		if ( current_user_can( 'administrator' ) ) {
+			$status = get_option( 'mwb_wgm_suggestions_later', false );
+			if ( ! $status ) {
+				update_option( 'mwb_wgm_suggestions_later', true );
+			}
+		}
+		wp_die();
+	}
+
+	/**
+	 * This function is used to set cron if user want to get support.
+	 */
+	public function mwb_wgm_check_for_notification_daily() {
+		$status = get_option( 'mwb_wgm_suggestions_sent', false );
+		if ( $status ) {
+			$offset = get_option( 'gmt_offset' );
+			$time = time() + $offset * 60 * 60;
+			if ( ! wp_next_scheduled( 'mwb_wgm_check_for_notification_update' ) ) {
+				wp_schedule_event( $time, 'daily', 'mwb_wgm_check_for_notification_update' );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to save notification message with notification id.
+	 */
+	public function mwb_wgm_save_notice_message() {
+		$mwb_notification_data = $this->mwb_get_update_notification_data();
+		if ( is_array( $mwb_notification_data ) && ! empty( $mwb_notification_data ) ) {
+			$notification_id = array_key_exists( 'notification_id', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_id'] : '';
+			$notification_message = array_key_exists( 'notification_message', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_message'] : '';
+			update_option( 'mwb_notify_new_msg_id', $notification_id );
+			update_option( 'mwb_notify_new_message', $notification_message );
+		}
+	}
+
+	/**
+	 * This function is used to get notification data from server.
+	 */
+	public function mwb_get_update_notification_data() {
+		$mwb_notification_data = array();
+		$url = 'https://demo.makewebbetter.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
+		$attr = array(
+			'action' => 'mwb_notification_fetch',
+			'plugin_version' => PLUGIN_NAME_VERSION,
+		);
+		$query = esc_url_raw( add_query_arg( $attr, $url ) );
+		$response = wp_remote_get(
+			$query,
+			array(
+				'timeout' => 20,
+				'sslverify' => false,
+			)
+		);
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo '<p><strong>' . 'Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
+		}
+		return $mwb_notification_data;
+	}
+
+	/**
+	 * This function is used to display notoification bar at admin.
+	 */
+	public function mwb_wgm_display_notification_bar() {
+		$notification_id = get_option( 'mwb_notify_new_msg_id', false );
+		if ( isset( $notification_id ) && '' !== $notification_id ) {
+			$hidden_id = get_option( 'mwb_notify_hide_notification', false );
+			$notification_message = get_option( 'mwb_notify_new_message', '' );
+			if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
+				if ( '' !== $notification_message ) {
+					?>
+					<div class="notice is-dismissible notice-info" id="dismiss_notice">
+						<div class="notice-container">
+							<div class="notice-image">
+								<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/mwb.png' ); ?>" alt="MakeWebBetter">
+							</div> 
+							<div class="notice-content">
+								<?php echo wp_kses_post( $notification_message ); ?>
+							</div>				
+						</div>
+						<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+					</div>
+					<?php
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to dismiss admin notices.
+	 *
+	 * @name mwb_wgm_dismiss_notice
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wgm_dismiss_notice() {
+		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+			$notification_id = get_option( 'mwb_notify_new_msg_id', false );
+			if ( isset( $notification_id ) && '' !== $notification_id ) {
+				update_option( 'mwb_notify_hide_notification', $notification_id );
+			}
+			wp_send_json_success();
+		}
+	}
+
+	/**
+	 * The function displays a button to enable plugin after plugin activation.
+	 */
+	public function mwb_wgm_setting_notice_on_activation() {
+		/* Check transient, if available display notice */
+		if ( get_transient( 'mwb-wgm-giftcard-setting-notice' ) ) {
+			?>
+			<div class="updated notice is-dismissible" class="mwb-wgm-is-dismissible">
+			<p class="mwb_wgm_plugin_active_para"><strong><?php esc_html_e( 'Welcome to Ultimate Gift Cards For WooCommerce', 'woocommerce_gift_cards_lite' ); ?></strong><?php esc_html_e( '– Create and sell multiple gift cards with ease.', 'woocommerce_gift_cards_lite' ); ?>
+			</p>
+			<?php
+			$general_settings = get_option( 'mwb_wgm_general_settings', array() );
+			require_once MWB_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
+			$mwb_obj = new Woocommerce_Gift_Cards_Common_Function();
+			$mwb_wgm_general_setting_enable = $mwb_obj->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_enable' );
+			if ( 'on' !== $mwb_wgm_general_setting_enable ) {
+				?>
+				<p class="mwb_show_setting_on_activation">
+					<a class="mwb_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'admin.php?page=mwb-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Giftcards', 'woocommerce_gift_cards_lite' ); ?></a>
+				</p>
+				<?php
+			}
+			?>
+					
+			</div>
+			<?php
+			/* Delete transient, only display this notice once. */
+			delete_transient( 'mwb-wgm-giftcard-setting-notice' );
+		}
 	}
 }
 ?>

@@ -86,6 +86,11 @@ do_action( 'mwb_uwgc_show_notice' );
 						</li>
 						<li class="mwb_wgm_header_menu_button">
 							<a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woocommerce_gift_cards_lite' ); ?></a>
+						</li>
+						<li>
+							<a id="mwb-wgm-skype-link" href="<?php echo esc_url( 'https://join.skype.com/invite/IKVeNkLHebpC' ); ?>" target="_blank">
+								<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/skype_logo.png' ); ?>" style="height: 15px;width: 15px;" ><?php esc_html_e( 'CHAT NOW', 'woocommerce_gift_cards_lite' ); ?>
+							</a>
 						</li>	
 						<?php
 					}
