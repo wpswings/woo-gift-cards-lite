@@ -31,7 +31,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		public function mwb_wgm_create_gift_template( $args ) {
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
 				$templateid = $args['templateid'];
-				$product_id = array_key_exists('product_id', $args ) ? $args['product_id'] : '';
+				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
 				$template = get_post( $templateid, ARRAY_A );
 				$templatehtml = $template['post_content'];
 				$giftcard_logo_html = '';
@@ -58,8 +58,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$giftcard_disclaimer = stripcslashes( $giftcard_disclaimer );
 
 				$background_image = wp_get_attachment_url( get_post_thumbnail_id( $product_id ) );
-				if( empty( $background_image ) )
-				{
+				if ( empty( $background_image ) ) {
 					$background_image = $this->mwb_wgm_get_template_data( $mwb_wgm_mail_settings, 'mwb_wgm_mail_setting_background_logo_value' );
 
 				}

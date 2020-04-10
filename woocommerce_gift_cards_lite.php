@@ -21,8 +21,8 @@
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woocommerce_gift_cards_lite
- * Tested up to:      5.3
- * WC tested up to:   3.9.2
+ * Tested up to:      5.4
+ * WC tested up to:   4.0
  * Domain Path:       /languages
  */
 
@@ -245,7 +245,7 @@ if ( $activated ) {
 	function mwb_uwgc_remove_cron_for_notification_update() {
 		wp_clear_scheduled_hook( 'mwb_wgm_check_for_notification_update' );
 	}
-	
+
 	include_once MWB_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
 } else {
 		// Deactivate if Woocommerce is not activated.
