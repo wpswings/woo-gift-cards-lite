@@ -110,22 +110,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'pricing_type' => array(),
 			'product_id' => 0,
 			/* translators: %s: seconds */
-			'price_field' => sprintf( __( 'Price: %sField is empty', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'price_field' => sprintf( __( 'Price: %sField is empty', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'to_empty' => sprintf( __( 'Recipient Email: %sField is empty.', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'to_empty' => sprintf( __( 'Recipient Email: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'to_empty_name' => sprintf( __( 'Recipient Name: %sField is empty.', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'to_empty_name' => sprintf( __( 'Recipient Name: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'to_invalid' => sprintf( __( 'Recipient Email: %sInvalid email format.', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'to_invalid' => sprintf( __( 'Recipient Email: %sInvalid email format.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'from_empty' => sprintf( __( 'From: %sField is empty.', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'from_empty' => sprintf( __( 'From: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'msg_empty' => sprintf( __( 'Message: %sField is empty.', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'msg_empty' => sprintf( __( 'Message: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'msg_length_err' => sprintf( __( 'Message: %1$sMessage length cannot exceed %2$s characters.', 'woocommerce_gift_cards_lite' ), '</b>', $giftcard_message_length ),
+			'msg_length_err' => sprintf( __( 'Message: %1$sMessage length cannot exceed %2$s characters.', 'woo-gift-cards-lite' ), '</b>', $giftcard_message_length ),
 			'msg_length' => $giftcard_message_length,
 			/* translators: %s: seconds */
-			'price_range' => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woocommerce_gift_cards_lite' ), '</b>' ),
+			'price_range' => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woo-gift-cards-lite' ), '</b>' ),
 			'is_pro_active' => mwb_uwgc_pro_active(),
 		);
 		if ( is_product() ) {
@@ -231,13 +231,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										}
 										$mwb_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type">
-											<label>' . __( 'Enter Price Within Above Range', 'woocommerce_gift_cards_lite' ) . '</label>	
+											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="number" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
 									} else {
 										$mwb_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type">
-											<label>' . __( 'Enter Price Within Above Range', 'woocommerce_gift_cards_lite' ) . '</label>	
+											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="number" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
 									}
@@ -252,7 +252,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$default_price = $product_pricing['default_price'];
 									$selected_price = $product_pricing['price'];
 									if ( ! empty( $selected_price ) ) {
-										$label = __( 'Choose Gift Card Selected Price: ', 'woocommerce_gift_cards_lite' );
+										$label = __( 'Choose Gift Card Selected Price: ', 'woo-gift-cards-lite' );
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type">
 													<label class="mwb_wgc_label">' . $label . '</label><br/>';
 											$selected_prices = explode( '|', $selected_price );
@@ -300,12 +300,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$default_price = wcpbc_the_zone()->get_exchange_rate_price( $default_price );
 										}
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type"">
-											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woocommerce_gift_cards_lite' ) . '</label>	
+											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="number" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
 											</p>';
 									} else {
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type"">
-											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woocommerce_gift_cards_lite' ) . '</label>	
+											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="number" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
 											</p>';
 									}
@@ -314,18 +314,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							$cart_html .= apply_filters( 'mwb_wgm_select_date', $mwb_additional_section, $product_id );
 							$cart_html .= '<p class="mwb_wgm_section mwb_from">
-								<label class="mwb_wgc_label">' . __( 'From', 'woocommerce_gift_cards_lite' ) . '</label>	
-								<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woocommerce_gift_cards_lite' ) . '" required="required">
+								<label class="mwb_wgc_label">' . __( 'From', 'woo-gift-cards-lite' ) . '</label>	
+								<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woo-gift-cards-lite' ) . '" required="required">
 								</p>';
 							$cart_html .= '<p class="mwb_wgm_section mwb_message">
-							<label class="mwb_wgc_label">' . __( 'Gift Message : ', 'woocommerce_gift_cards_lite' ) . '</label>	
+							<label class="mwb_wgc_label">' . __( 'Gift Message : ', 'woo-gift-cards-lite' ) . '</label>	
 							<textarea name="mwb_wgm_message" id="mwb_wgm_message" class="mwb_wgm_message"></textarea>';
 							$mail_settings = get_option( 'mwb_wgm_mail_settings', array() );
 							$giftcard_message_length = $this->mwb_common_fun->mwb_wgm_get_template_data( $mail_settings, 'mwb_wgm_mail_setting_giftcard_message_length' );
 							if ( '' == $giftcard_message_length ) {
 								$giftcard_message_length = 300;
 							}
-							$cart_html .= __( 'Characters:', 'woocommerce_gift_cards_lite' ) . '(<span id="mwb_box_char">0</span>/' . $giftcard_message_length . ')
+							$cart_html .= __( 'Characters:', 'woo-gift-cards-lite' ) . '(<span id="mwb_box_char">0</span>/' . $giftcard_message_length . ')
 							</p>';
 							$cart_html .= apply_filters( 'mwb_wgm_add_notiication_section', $mwb_additional_section, $product_id );
 							$delivery_settings = get_option( 'mwb_wgm_delivery_settings', true );
@@ -336,25 +336,25 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 							}
 								$cart_html .= '<div class="mwb_wgm_section mwb_delivery_method">';
-									$cart_html .= '<label class = "mwb_wgc_label">' . __( 'Delivery Method', 'woocommerce_gift_cards_lite' ) . '</label>';
+									$cart_html .= '<label class = "mwb_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $mwb_wgm_delivery_setting_method ) && 'Mail to recipient' == $mwb_wgm_delivery_setting_method ) || ( '' == $mwb_wgm_delivery_setting_method ) ) {
 								$cart_html .= '<div class="mwb_wgm_delivery_method">
 											<input type="radio" name="mwb_wgm_send_giftcard" value="Mail to recipient" class="mwb_wgm_send_giftcard" checked="checked" id="mwb_wgm_to_email_send" >
-											<span class="mwb_wgm_method">' . __( 'Mail To Recipient', 'woocommerce_gift_cards_lite' ) . '</span>
+											<span class="mwb_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>
 											<div class="mwb_wgm_delivery_via_email">
-												<input type="text"  name="mwb_wgm_to_email" id="mwb_wgm_to_email" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Email', 'woocommerce_gift_cards_lite' ) . '">
-												<input type="text"  name="mwb_wgm_to_name_optional" id="mwb_wgm_to_name_optional" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woocommerce_gift_cards_lite' ) . '">
-												<span class= "mwb_wgm_msg_info">' . __( 'We will send it to recipient email address.', 'woocommerce_gift_cards_lite' ) . '</span>
+												<input type="text"  name="mwb_wgm_to_email" id="mwb_wgm_to_email" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Email', 'woo-gift-cards-lite' ) . '">
+												<input type="text"  name="mwb_wgm_to_name_optional" id="mwb_wgm_to_name_optional" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woo-gift-cards-lite' ) . '">
+												<span class= "mwb_wgm_msg_info">' . __( 'We will send it to recipient email address.', 'woo-gift-cards-lite' ) . '</span>
 											</div>
 										</div>';
 							}
 							if ( isset( $mwb_wgm_delivery_setting_method ) && 'Downloadable' == $mwb_wgm_delivery_setting_method ) {
 								$cart_html .= '<div class="mwb_wgm_delivery_method">
 											<input type="radio" name="mwb_wgm_send_giftcard" value="Downloadable" class="mwb_wgm_send_giftcard" checked="checked" id="mwb_wgm_send_giftcard_download">
-											<span class="mwb_wgm_method">' . __( 'You Print & Give To Recipient', 'woocommerce_gift_cards_lite' ) . '</span>
+											<span class="mwb_wgm_method">' . __( 'You Print & Give To Recipient', 'woo-gift-cards-lite' ) . '</span>
 											<div class="mwb_wgm_delivery_via_buyer">
-												<input type="text"  name="mwb_wgm_to_email_name" id="mwb_wgm_to_download" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woocommerce_gift_cards_lite' ) . '">
-												<span class= "mwb_wgm_msg_info">' . __( 'After Checkout, you can print your giftcard', 'woocommerce_gift_cards_lite' ) . '</span>
+												<input type="text"  name="mwb_wgm_to_email_name" id="mwb_wgm_to_download" class="mwb_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woo-gift-cards-lite' ) . '">
+												<span class= "mwb_wgm_msg_info">' . __( 'After Checkout, you can print your giftcard', 'woo-gift-cards-lite' ) . '</span>
 											</div>
 										</div>';
 							}
@@ -418,7 +418,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$mwb_wgm_preview_disable = $this->mwb_common_fun->mwb_wgm_get_template_data( $other_settings, 'mwb_wgm_additional_preview_disable' );
 
 							if ( empty( $mwb_wgm_preview_disable ) ) {
-								$cart_html .= '<span class="mwg_wgm_preview_email"><a id="mwg_wgm_preview_email" href="javascript:void(0);">' . __( 'PREVIEW', 'woocommerce_gift_cards_lite' ) . '</a></span>';
+								$cart_html .= '<span class="mwg_wgm_preview_email"><a id="mwg_wgm_preview_email" href="javascript:void(0);">' . __( 'PREVIEW', 'woo-gift-cards-lite' ) . '</a></span>';
 							}
 							$cart_html .= apply_filters( 'mwb_wgm_after_preview_section', $mwb_additional_section, $product_id );
 							$cart_html .= '</div>';
@@ -451,7 +451,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' == $product_type ) {
 					$mwb_field_nonce = isset( $_POST['mwb_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['mwb_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! isset( $mwb_field_nonce ) || ! wp_verify_nonce( $mwb_field_nonce, 'mwb_wgm_single_nonce' ) ) {
-						echo esc_html__( 'Sorry, your nonce did not verify.', 'woocommerce_gift_cards_lite' );
+						echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
 						exit;
 					} else {
 						// for price based on country.
@@ -554,19 +554,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
 					if ( 'mwb_wgm_to_email' == $key ) {
 						$item_meta [] = array(
-							'name' => esc_html__( 'To', 'woocommerce_gift_cards_lite' ),
+							'name' => esc_html__( 'To', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'mwb_wgm_from_name' == $key ) {
 						$item_meta [] = array(
-							'name' => esc_html__( 'From', 'woocommerce_gift_cards_lite' ),
+							'name' => esc_html__( 'From', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'mwb_wgm_message' == $key ) {
 						$item_meta [] = array(
-							'name' => esc_html__( 'Gift Message', 'woocommerce_gift_cards_lite' ),
+							'name' => esc_html__( 'Gift Message', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
@@ -973,7 +973,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								'<a rel="nofollow" href="%s" class="%s">%s</a>',
 								esc_url( get_the_permalink() ),
 								esc_attr( isset( $class ) ? $class : 'button' ),
-								esc_html( apply_filters( 'mwb_wgm_view_card_text', __( 'VIEW CARD', 'woocommerce_gift_cards_lite' ) ) )
+								esc_html( apply_filters( 'mwb_wgm_view_card_text', __( 'VIEW CARD', 'woo-gift-cards-lite' ) ) )
 							);
 						}
 						$link = apply_filters( 'mwb_wgm_loop_add_to_cart_link', $link, $product );

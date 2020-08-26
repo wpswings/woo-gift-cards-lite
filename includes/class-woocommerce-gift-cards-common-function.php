@@ -358,7 +358,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					if ( empty( $send_subject ) ) {
 
 						$send_subject = "$bloginfo:";
-						$send_subject .= __( ' Hurry!!! Giftcard is Received', 'woocommerce_gift_cards_lite' );
+						$send_subject .= __( ' Hurry!!! Giftcard is Received', 'woo-gift-cards-lite' );
 					}
 					$buyer_email = $order->get_billing_email();
 					$buyer_email = ! empty( $buyer_email ) ? $buyer_email : '';
@@ -398,14 +398,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$receive_subject = $mwb_wgm_common_arr['receive_subject'];
 					} else {
 						$receive_subject = "$bloginfo:";
-						$receive_subject .= __( ' Gift Card is Sent Successfully', 'woocommerce_gift_cards_lite' );
+						$receive_subject .= __( ' Gift Card is Sent Successfully', 'woo-gift-cards-lite' );
 					}
 
 					if ( isset( $mwb_wgm_common_arr['receive_message'] ) && ! empty( $mwb_wgm_common_arr['receive_message'] ) ) {
 						$receive_message = $mwb_wgm_common_arr['receive_message'];
 					} else {
 						$receive_message = "$bloginfo:";
-						$receive_message .= __( ' Gift Card is Sent Successfully to the Email Id: [TO]', 'woocommerce_gift_cards_lite' );
+						$receive_message .= __( ' Gift Card is Sent Successfully to the Email Id: [TO]', 'woo-gift-cards-lite' );
 
 					}
 					$receive_message = stripcslashes( $receive_message );
@@ -446,7 +446,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 				}
 			} else {
-				$expirydate_format = __( 'No Expiration', 'woocommerce_gift_cards_lite' );
+				$expirydate_format = __( 'No Expiration', 'woo-gift-cards-lite' );
 			}
 			return $expirydate_format;
 		}

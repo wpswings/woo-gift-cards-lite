@@ -301,7 +301,8 @@
 
 			/*support popup form */
 			$( '.mwb_wgm_accept' ).click(
-				function(){
+				function(e){
+					e.preventDefault();
 					jQuery( "#mwb_wgm_loader" ).show();
 					var data = {
 						action:'mwb_wgm_support_popup',
@@ -316,7 +317,6 @@
 							{
 								jQuery( "#mwb_wgm_loader" ).hide();
 								jQuery( ".mwb_wgm_pop_up_wrap" ).hide();
-								location.reload();
 							}
 						}
 					);

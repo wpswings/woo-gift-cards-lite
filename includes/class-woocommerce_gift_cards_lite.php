@@ -69,9 +69,9 @@ class Woocommerce_gift_cards_lite {
 		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
 			$this->version = PLUGIN_NAME_VERSION;
 		} else {
-			$this->version = '2.0.2';
+			$this->version = '2.0.3';
 		}
-		$this->plugin_name = 'woocommerce_gift_cards_lite';
+		$this->plugin_name = 'woo-gift-cards-lite';
 
 		$this->load_dependencies();
 		$this->set_locale();

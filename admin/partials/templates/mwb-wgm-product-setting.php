@@ -38,7 +38,7 @@ if ( $flag ) {
 }
 ?>
 <?php $product_settings = get_option( 'mwb_wgm_product_settings', array() ); ?>
-<h3 class="mwb_wgm_overview_heading"><?php esc_html_e( 'Product Settings', 'woocommerce_gift_cards_lite' ); ?></h3>
+<h3 class="mwb_wgm_overview_heading"><?php esc_html_e( 'Product Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="mwb_wgm_table_wrapper">
 	<table class="form-table mwb_wgm_product_setting">
 		<tbody>
