@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,7 +17,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 		 'id' => 'mwb_wgm_additional_apply_coupon_disable',
 		 'type' => 'checkbox',
 		 'class' => 'input-text',
-		 'desc_tip' => esc_html__( 'Check this if you want to disable Apply Coupon Fields if there only GifCard Products are in Cart/Checkout Page', 'woo-gift-cards-lite' ),
+		 'desc_tip' => esc_html__( 'Check this if you want to disable Apply Coupon Fields if there only Gift Card Products are in Cart/Checkout Page', 'woo-gift-cards-lite' ),
 		 'desc' => esc_html__( 'Disable Apply Coupon Fields on Cart/Checkout page', 'woo-gift-cards-lite' ),
 	 ),
 	 array(

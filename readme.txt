@@ -6,7 +6,7 @@ Requires at least: 5.0
 Tested up to: 5.5
 WC requires at least: 4.0.0
 WC tested up to: 4.4
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -85,7 +85,7 @@ Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makew
 * Discount offerings on Gift Card purchase
 
 
-== TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF GIFT COUPON PLUGIN ==
+== TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE GIFT CARD PLUGIN ==
 > Note://  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org)
 
 
@@ -112,7 +112,7 @@ In the search field type **"Ultimate Gift Cards For WooCommerce"** and click Sea
 
 = Manual installation =
 
-The manual installation method involves downloading our Ultimate Gift Cards For WooCommerce and uploading it to your web server via your favorite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+The manual installation method involves downloading our Ultimate Gift Cards For WooCommerce and uploading it to your webserver via your favorite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
 == Screenshots ==
 
@@ -178,8 +178,11 @@ Yes. In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
+= 2.0.4 - Released on 25 August 2020 =
+* New: Compatibility with WooCommerce 4.4 and WordPress 5.5
+
 = 2.0.3 Released on 07 July 2020 =
-* Important: Your translation might be lost please take backup of your language translations before update.
+* Important: Your translation might be lost please take the backup of your language translations before the update.
 
 = 2.0.2 =
 * New: Compatibility with WooCommerce 4.0 and WordPress 5.4
@@ -225,6 +228,5 @@ New: Email Template for Mothers Day
 
 
 == Upgrade Notice ==
-
-= 2.0.3 Released on 07 July 2020 =
-* Important: Your translation might be lost please take backup of your language translations before the update.
+= 2.0.4 - Released on 25 August 2020 =
+* New: Compatibility with WooCommerce 4.4 and WordPress 5.5

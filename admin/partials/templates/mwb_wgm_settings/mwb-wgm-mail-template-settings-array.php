@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,7 +45,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'type' => 'number',
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
-			 'desc_tip' => esc_html__( 'Set the height of logo in email template.', 'woo-gift-cards-lite' ),
+			 'desc_tip' => esc_html__( 'Set the height of the logo in the email template.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
 			 'title' => esc_html__( 'Logo Width (in "px")', 'woo-gift-cards-lite' ),
@@ -53,7 +53,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'type' => 'number',
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
-			 'desc_tip' => esc_html__( 'Set the width of logo in email template.', 'woo-gift-cards-lite' ),
+			 'desc_tip' => esc_html__( 'Set the width of the logo in the email template.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
 			 'title' => esc_html__( 'Email Default Event Image', 'woo-gift-cards-lite' ),

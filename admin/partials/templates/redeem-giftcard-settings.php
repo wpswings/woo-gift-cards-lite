@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -163,8 +163,8 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 				</div>
 
 				<div class="mwb_redeem_main_content">
-					<h3 class="text-left"><?php esc_html_e( 'Hello Dear', 'woo-gift-cards-lite' ); ?></h3>
-					<p><?php esc_html_e('We are thrilled to announce that we have launched a FREE service to simplify the problem of redeeming giftcards at retail store.','woo-gift-cards-lite');?></p>
+					<h3 class="text-left"><?php esc_html_e( 'Hello Dear', 'woo-gift-cards-lite' ); ?></h3>	
+					<p><?php esc_html_e( 'We are thrilled to announce that we have launched a FREE service to simplify the problem of redeeming gift cards at a retail store', 'woo-gift-cards-lite' ); ?></p>
 
 					<p><?php esc_html_e( 'We have made this just on your demand so we would love your suggestion to improve it.', 'woo-gift-cards-lite' ); ?></p>
 				</div>
@@ -197,7 +197,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 							<td class="forminp forminp-text">
 								<?php
 								$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
-								$attribute_description = __( 'please open the link to redeem the giftcard', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Please open the link to redeem the gift card', 'woo-gift-cards-lite' );
 								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
 								<label for="wcgw_plugin_enable">
@@ -267,7 +267,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 							</tbody>
 						</table>
 						<p><b>
-							<?php esc_html_e( 'To use redeem link as it is, follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
+							<?php esc_html_e( 'To use the redeem link as it is, follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
 							<ol>
 								<li><?php esc_html_e( 'Click on Open Shop button and login using the credentials provided in the received email', 'woo-gift-cards-lite' ); ?></li>
 								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woo-gift-cards-lite' ); ?></li>

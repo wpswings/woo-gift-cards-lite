@@ -14,15 +14,15 @@
  * @wordpress-plugin
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
- * Description:       Ultimate Gift Cards For WooCommerce allows merchants to create and sell multiple Gift Card Product having multiple price variation.
- * Version:           2.0.3
+ * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>. 
+ * Version:           2.0.4
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * Tested up to:      5.4
- * WC tested up to:   4.2
+ * Tested up to:      5.5
+ * WC tested up to:   4.4
  * Domain Path:       /languages
  */
 
@@ -49,7 +49,7 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'PLUGIN_NAME_VERSION', '2.0.3' );
+	define( 'PLUGIN_NAME_VERSION', '2.0.4' );
 	/**
 	* Check whether the wordpress version is greater than 4.9.6
 	*/
@@ -88,8 +88,8 @@ if ( $activated ) {
 		if ( $plugin == $plugin_file ) {
 			$settings = array();
 			if ( ! mwb_uwgc_pro_active() ) {
-				$settings['settings'] = '<a href="' . esc_url( admin_url( 'admin.php?page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
-				$settings['get_paid_version'] = '<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'Get Premium Version', 'woo-gift-cards-lite' ) . '</a>';
+				$settings['settings'] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
+				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
 				$actions = array_merge( $settings, $actions );
 			}
 		}

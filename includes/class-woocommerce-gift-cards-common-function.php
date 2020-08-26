@@ -358,7 +358,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					if ( empty( $send_subject ) ) {
 
 						$send_subject = "$bloginfo:";
-						$send_subject .= __( ' Hurry!!! Giftcard is Received', 'woo-gift-cards-lite' );
+						$send_subject .= __( ' Hurry!  the gift card is Received', 'woo-gift-cards-lite' );
 					}
 					$buyer_email = $order->get_billing_email();
 					$buyer_email = ! empty( $buyer_email ) ? $buyer_email : '';

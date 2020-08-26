@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,7 +17,7 @@ $mwb_wgm_general_setting = array(
 		'id' => 'mwb_wgm_general_setting_enable',
 		'type' => 'checkbox',
 		'class' => 'input-text',
-		'desc_tip' => esc_html__( 'Check this box to enable giftcard', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Check this box to enable gift card', 'woo-gift-cards-lite' ),
 		'desc' => esc_html__( 'Enable WooCommerce Gift Card', 'woo-gift-cards-lite' ),
 	),
 	array(
@@ -25,7 +25,7 @@ $mwb_wgm_general_setting = array(
 		'id' => 'mwb_wgm_general_setting_tax_cal_enable',
 		'type' => 'checkbox',
 		'class' => 'input-text',
-		'desc_tip' => esc_html__( 'Check this box to enable tax for giftcard product.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Check this box to enable tax for gift card products.', 'woo-gift-cards-lite' ),
 		'desc' => esc_html__( 'Enable Tax Calculation for Gift Card', 'woo-gift-cards-lite' ),
 	),
 	array(
@@ -33,7 +33,7 @@ $mwb_wgm_general_setting = array(
 		'id' => 'mwb_wgm_general_setting_shop_page_enable',
 		'type' => 'checkbox',
 		'class' => 'input-text',
-		'desc_tip' => esc_html__( 'Check this box to enable giftcard product listing on shop page.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Check this box to enable gift card product listing on the shop page.', 'woo-gift-cards-lite' ),
 		'desc' => esc_html__( 'Enable Giftcard Product listing on shop page', 'woo-gift-cards-lite' ),
 	),
 	array(
@@ -62,10 +62,10 @@ $mwb_wgm_general_setting = array(
 		),
 		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 		'default' => 5,
-		'desc_tip' => esc_html__( 'Enter giftcard coupon length excluding the prefix.(Minimum length is set to 5)', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Enter gift card coupon length excluding the prefix.(Minimum length is set to 5)', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Giftcard Prefix', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift card Prefix', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_prefix',
 		'type' => 'text',
 		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
@@ -73,7 +73,7 @@ $mwb_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'Enter Gift Card Prefix. Ex: PREFIX_CODE', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Giftcard Expiry After Days', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift card Expiry After Days', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_expiry',
 		'type' => 'number',
 		'custom_attribute' => array( 'min' => '0' ),
@@ -91,7 +91,7 @@ $mwb_wgm_general_setting = array(
 		),
 		'default' => '',
 		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
-		'desc_tip' => esc_html__( 'This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the Giftcard coupon.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the Gift card coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Maximum Spend', 'woo-gift-cards-lite' ),
@@ -106,7 +106,7 @@ $mwb_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Giftcard coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Giftcard No of time usage', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift card No of time usage', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_use',
 		'type' => 'number',
 		'custom_attribute' => array( 'min' => '0' ),

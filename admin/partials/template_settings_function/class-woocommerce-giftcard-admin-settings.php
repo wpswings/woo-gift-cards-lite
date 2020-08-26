@@ -218,7 +218,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 		<div class="notice notice-success is-dismissible">
 			<p><strong><?php esc_html_e( 'Settings saved.', 'woo-gift-cards-lite' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'woo-gift-cards-lite' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
 			</button>
 		</div>
 		<?php
@@ -602,51 +602,5 @@ class Woocommerce_Giftcard_Admin_Settings {
 			'<br>'  => array(),
 		);
 		return $allowed_tags;
-	}
-
-	/**
-	 * Plugin developement show suggestion popup
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_wgm_show_support_popup() {
-		$display = 'none';
-		if ( $this->is_display_suggestion_popup() ) {
-			$display = 'block';
-		}
-		?>
-		<div class="mwb_wgm_pop_up_wrap" style="display: <?php echo esc_attr( $display ); ?>">
-			<div class="pop_up_sub_wrap">
-				<p>
-					<strong><?php esc_html_e( ' Help improve Ultimate Gift Cards For WooCommerce by proving your name and email only once, for better assistance and support.', 'woo-gift-cards-lite' ); ?></strong>
-				</p>
-				<p>
-					<?php esc_html_e( 'We don\'t spam or market. Your information is safe with us.', 'woo-gift-cards-lite' ); ?>
-				</p>
-				<div class="button_wrap">
-					<a href="javascript:void(0);" class="mwb_wgm_accept"><?php esc_html_e( 'Yes support it', 'woo-gift-cards-lite' ); ?></a>
-					<a href="javascript:void(0);" class="mwb_wgm_later"><?php esc_html_e( "I'll decide later", 'woo-gift-cards-lite' ); ?></a>
-				</div>
-			</div>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Plugin developement suggestion popup
-	 *
-	 * @since 1.0.0
-	 */
-	public function is_display_suggestion_popup() {
-		$success = get_option( 'mwb_wgm_suggestions_sent', false );
-		if ( ! $success ) {
-			$later = get_option( 'mwb_wgm_suggestions_later', false );
-
-			if ( ! $later ) {
-
-				return true;
-			}
-		}
-		return false;
 	}
 }

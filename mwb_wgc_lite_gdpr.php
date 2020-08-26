@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function mwb_wgm_plugin_get_default_privacy_content() {
 	return '<h2>' . __( 'Stored Recipient Details for sending Gift Card', 'woo-gift-cards-lite' ) . '</h2>' .
-	'<p>' . __( "We store your recipient's email address, recipient's name, gift message, your name so that we can send them again your Gift Card with all proper details has been filled by you at the time of purchasing Gift Card Product if they are arrived", 'woo-gift-cards-lite' ) . '</p>';
+	'<p>' . __( "We store your recipient's email address, recipient's name, gift message, your name so that we can send them again your Gift Card with all proper details have been filled by you at the time of purchasing Gift Card Product if they arrive", 'woo-gift-cards-lite' ) . '</p>';
 }
 
 /**

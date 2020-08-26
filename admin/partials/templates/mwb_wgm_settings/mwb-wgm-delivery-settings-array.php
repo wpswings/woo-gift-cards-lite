@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,7 +30,7 @@ $mwb_wgm_delivery_settings = array(
 		'name'          => 'mwb_wgm_send_giftcard',
 		'class'         => 'mwb_wgm_send_giftcard',
 		'value'         => 'Downloadable',
-		'desc_tip'      => esc_html__( 'Check this box to enable downladable feature for  Gift Card Products.', 'woo-gift-cards-lite' ),
+		'desc_tip'      => esc_html__( 'Check this box to enable the downloadable feature for  Gift Card Products.', 'woo-gift-cards-lite' ),
 		'desc'          => esc_html__( 'Enable Downloadable feature', 'woo-gift-cards-lite' ),
 		'default_value' => 0,
 	),

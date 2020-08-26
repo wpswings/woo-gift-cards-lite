@@ -2,7 +2,7 @@
  /**
   * Exit if accessed directly
   *
-  * @package    Woocommerce_gift_cards_lite
+  * @package    woo-gift-cards-lite
   */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -31,7 +31,7 @@ $mwb_wgm_product_settings = array(
 			'data-action' => '"woocommerce_json_search_products_and_variations"',
 			'data-placeholder' => esc_html__( 'Search for a product', 'woo-gift-cards-lite' ),
 		),
-		'desc_tip' => esc_html__( 'Products which must not be in the cart to use Giftcard coupon or, for "Product Discounts", which products are not discounted.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Products which must not be in the cart to use Gift card coupon or, for "Product Discounts", which products are not discounted.', 'woo-gift-cards-lite' ),
 		'options' => $settings_obj->mwb_wgm_get_product( 'mwb_wgm_product_setting_exclude_product', 'mwb_wgm_product_settings' ),
 	),
 	array(
