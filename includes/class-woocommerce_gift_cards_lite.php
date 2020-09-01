@@ -71,7 +71,7 @@ class Woocommerce_gift_cards_lite {
 		} else {
 			$this->version = '2.0.2';
 		}
-		$this->plugin_name = 'woocommerce_gift_cards_lite';
+		$this->plugin_name = 'woo-gift-cards-lite';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -123,6 +123,12 @@ class Woocommerce_gift_cards_lite {
 
 		$this->loader = new Woocommerce_gift_cards_lite_Loader();
 
+		/**
+		 * The class responsible for defining all actions that occur in the onboarding the site data
+		 * in the admin side of the site.
+		 */
+		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
+		$this->onboard = new Makewebbetter_Onboarding_Helper();
 	}
 
 	/**
@@ -150,6 +156,7 @@ class Woocommerce_gift_cards_lite {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
+
 		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_styles' );
@@ -177,17 +184,15 @@ class Woocommerce_gift_cards_lite {
 		/*Update_Notice on plugin dashboard*/
 		$this->loader->add_action( 'in_plugin_update_message-woo-gift-cards-lite/woocommerce_gift_cards_lite.php', $plugin_admin, 'in_plugin_update_message', 10, 2 );
 
-		/*confirmation popup*/
-		$this->loader->add_action( 'wp_ajax_mwb_wgm_support_popup', $plugin_admin, 'mwb_wgm_support_popup' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgm_support_popup', $plugin_admin, 'mwb_wgm_support_popup' );
-		$this->loader->add_action( 'wp_ajax_mwb_wgm_support_popup_later', $plugin_admin, 'mwb_wgm_support_popup_later' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgm_support_popup_later', $plugin_admin, 'mwb_wgm_support_popup_later' );
-
 		/*cron for notification*/
-		$this->loader->add_action( 'mwb_set_cron_for_notification', $plugin_admin, 'mwb_wgm_check_for_notification_daily' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wgm_set_cron_for_plugin_notification' );
 		$this->loader->add_action( 'mwb_wgm_check_for_notification_update', $plugin_admin, 'mwb_wgm_save_notice_message' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wgm_display_notification_bar' );
 		$this->loader->add_action( 'wp_ajax_mwb_wgm_dismiss_notice', $plugin_admin, 'mwb_wgm_dismiss_notice' );
+		// Add your screen.
+		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
+		// Add Deactivation screen.
+		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality

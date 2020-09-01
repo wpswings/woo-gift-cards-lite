@@ -14,7 +14,7 @@ $current_tab = 'mwb_wgm_mail_setting';
 if ( isset( $_POST['mwb_wgm_save_mail'] ) ) {
 	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) { // WPCS: input var ok, sanitization ok.
 		unset( $_POST['mwb_wgm_save_mail'] );
-		$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
+		$postdata =  wp_kses_post_deep( wp_unslash( $_POST ) );
 		if ( 'mwb_wgm_mail_setting' == $current_tab ) {
 			$mail_settings_array = array();
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
@@ -34,7 +34,7 @@ if ( $flag ) {
 }
 ?>
 <?php $mail_settings = get_option( 'mwb_wgm_mail_settings', array() ); ?>
-<h3 class="mwb_wgm_overview_heading"><?php esc_html_e( 'Email Settings', 'woocommerce_gift_cards_lite' ); ?></h3>
+<h3 class="mwb_wgm_overview_heading"><?php esc_html_e( 'Email Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="mwb_wgm_table_wrapper">	
 	<div class="mwb_table">
 		<table class="form-table mwb_wgm_general_setting">
@@ -46,7 +46,7 @@ if ( $flag ) {
 		</table>
 	</div>
 </div>
-<h3 id="mwb_wgm_mail_setting" class="mwb_wgm_mail_setting_tab"><?php esc_html_e( 'Mail Setting', 'woocommerce_gift_cards_lite' ); ?></h3>
+<h3 id="mwb_wgm_mail_setting" class="mwb_wgm_mail_setting_tab"><?php esc_html_e( 'Mail Setting', 'woo-gift-cards-lite' ); ?></h3>
 <div id="mwb_wgm_mail_setting_wrapper" class="mwb_wgm_table_wrapper">
 	<table class="form-table mwb_wgm_general_setting">	
 		<tbody>

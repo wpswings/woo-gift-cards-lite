@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,25 +13,25 @@ require_once MWB_WGC_DIRPATH . 'admin/partials/template_settings_function/class-
 $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 $mwb_wgm_delivery_settings = array(
 	array(
-		'title'         => esc_html__( 'Enable Email To Recipient', 'woocommerce_gift_cards_lite' ),
+		'title'         => esc_html__( 'Enable Email To Recipient', 'woo-gift-cards-lite' ),
 		'id'            => 'mwb_wgm_email_to_recipient_setting_enable',
 		'type'          => 'radio',
 		'class'         => 'mwb_wgm_send_giftcard',
 		'name'          => 'mwb_wgm_send_giftcard',
 		'value'         => 'Mail to recipient',
-		'desc_tip'      => esc_html__( 'Check this box to enable normal functionality for sending mails to recipients on Gift Card Products.', 'woocommerce_gift_cards_lite' ),
-		'desc'          => esc_html__( 'Enable Email To Recipient.', 'woocommerce_gift_cards_lite' ),
+		'desc_tip'      => esc_html__( 'Check this box to enable normal functionality for sending mails to recipients on Gift Card Products.', 'woo-gift-cards-lite' ),
+		'desc'          => esc_html__( 'Enable Email To Recipient.', 'woo-gift-cards-lite' ),
 		'default_value' => 1,
 	),
 	array(
-		'title'         => esc_html__( 'Enable Downloadable', 'woocommerce_gift_cards_lite' ),
+		'title'         => esc_html__( 'Enable Downloadable', 'woo-gift-cards-lite' ),
 		'id'            => 'mwb_wgm_downladable_setting_enable',
 		'type'          => 'radio',
 		'name'          => 'mwb_wgm_send_giftcard',
 		'class'         => 'mwb_wgm_send_giftcard',
 		'value'         => 'Downloadable',
-		'desc_tip'      => esc_html__( 'Check this box to enable downladable feature for  Gift Card Products.', 'woocommerce_gift_cards_lite' ),
-		'desc'          => esc_html__( 'Enable Downloadable feature', 'woocommerce_gift_cards_lite' ),
+		'desc_tip'      => esc_html__( 'Check this box to enable the downloadable feature for  Gift Card Products.', 'woo-gift-cards-lite' ),
+		'desc'          => esc_html__( 'Enable Downloadable feature', 'woo-gift-cards-lite' ),
 		'default_value' => 0,
 	),
 );

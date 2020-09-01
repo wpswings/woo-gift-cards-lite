@@ -15,9 +15,9 @@
 					var msg_length = $( document ).find( '#mwb_wgm_message' ).val().length;
 					if (msg_length == 0) {
 
-						$( '#mwb_box_char' ).text( 0 );
+						$( '.mwb_box_char' ).text( 0 );
 					} else {
-						$( '#mwb_box_char' ).text( msg_length );
+						$( '.mwb_box_char' ).text( msg_length );
 					}
 
 				}
