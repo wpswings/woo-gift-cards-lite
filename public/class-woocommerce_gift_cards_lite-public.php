@@ -450,10 +450,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'wgm_gift_card' == $product_type ) {
-					$mwb_field_nonce = isset( $_POST['mwb_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['mwb_wgm_single_nonce_field'] ) ) ) : '';
-					if ( ! isset( $mwb_field_nonce ) || ! wp_verify_nonce( $mwb_field_nonce, 'mwb_wgm_single_nonce' ) ) {
-						echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
-						exit;
+					$mwb_field_nonce = isset( $_POST['mwb_wgm_single_nonce_field'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_single_nonce_field'] ) ) : '';
+					if ( ! wp_verify_nonce( $mwb_field_nonce, 'mwb_wgm_single_nonce' ) ) {
+						return;
 					} else {
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
