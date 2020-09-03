@@ -288,7 +288,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$item_id = $mwb_wgm_common_arr['item_id'];
 				$product_id = $mwb_wgm_common_arr['product_id'];
 				$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
-				if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
+				if ( is_array( $mwb_wgm_pricing ) && array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 					$templateid = $mwb_wgm_pricing['template'];
 				} else {
 					$templateid = $this->mwb_get_org_selected_template();
@@ -437,7 +437,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( 0 < $expiry_date || 0 === $expiry_date ) {
 					$general_settings = get_option( 'mwb_wgm_general_settings', array() );
-					$selected_date = $this->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_enable_selected_format' );
+					$selected_date = $this->mwb_wgm_get_template_data( $general_settings, 'mwb_uwgc_general_setting_enable_selected_format' );
 					if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date && mwb_uwgc_pro_active() ) {
 						$selected_date = apply_filters( 'mwb_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );

@@ -46,7 +46,7 @@ $mwb_wgm_setting_tab['redeem_tab'] = array(
 	'title' => esc_html__( 'Gift Card Redeem', 'woo-gift-cards-lite' ),
 	'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/redeem-giftcard-settings.php',
 );
-if ( ! is_plugin_active( 'giftware/ultimate-woocommerce-gift-card.php' ) ) {
+if ( !mwb_uwgc_pro_active() ) {
 	$mwb_wgm_setting_tab['premium_plugin'] = array(
 		'title' => esc_html__( 'Premium Features', 'woo-gift-cards-lite' ),
 			'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-premium-features.php',
@@ -89,12 +89,10 @@ do_action( 'mwb_uwgc_show_notice' );
 							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>
-						<?php if( ! is_plugin_active( 'giftware/ultimate-woocommerce-gift-card.php' ) ) : ?>
-							<li class="mwb_wgm_header_menu_button">
-								<a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
-							</li>	
+						<li class="mwb_wgm_header_menu_button">
+							<a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
+						</li>	
 						<?php
-						endif;
 					}
 					?>
 					<li>

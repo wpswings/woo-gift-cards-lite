@@ -87,7 +87,7 @@ if ( $activated ) {
 		}
 		if ( $plugin == $plugin_file ) {
 			$settings = array();
-			if (  ! is_plugin_active( 'giftware/ultimate-woocommerce-gift-card.php' ) ) {
+			if ( ! mwb_uwgc_pro_active() ) {
 				$settings['settings'] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
 				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
 				$actions = array_merge( $settings, $actions );

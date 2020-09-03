@@ -450,9 +450,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'wgm_gift_card' == $product_type ) {
-					$mwb_field_nonce = isset( $_POST['mwb_wgm_single_nonce_field'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_single_nonce_field'] ) ) : '';
-					if ( ! wp_verify_nonce( $mwb_field_nonce, 'mwb_wgm_single_nonce' ) ) {
-						return;
+					$mwb_field_nonce = isset( $_POST['mwb_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['mwb_wgm_single_nonce_field'] ) ) ) : '';
+					if ( ! isset( $mwb_field_nonce ) || ! wp_verify_nonce( $mwb_field_nonce, 'mwb_wgm_single_nonce' ) ) {
+						echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
+						exit;
 					} else {
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
@@ -848,7 +849,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( $gift_order && isset( $mwb_wgm_mail_template_data['datecheck'] ) && $mwb_wgm_mail_template_data['datecheck'] ) {
 						update_post_meta( $order_id, 'mwb_wgm_order_giftcard', 'send' );
 					}
-					do_action( 'mwb_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status, $mwb_wgm_mail_template_data );
+					do_action( 'mwb_wgm_thankyou_coupon_order_status_change', $order_id, $new_status );
 				}
 			}
 		}

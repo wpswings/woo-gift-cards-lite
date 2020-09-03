@@ -14,7 +14,7 @@ $current_tab = 'mwb_wgm_mail_setting';
 if ( isset( $_POST['mwb_wgm_save_mail'] ) ) {
 	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) { // WPCS: input var ok, sanitization ok.
 		unset( $_POST['mwb_wgm_save_mail'] );
-		$postdata =  wp_kses_post_deep( wp_unslash( $_POST ) );
+		$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
 		if ( 'mwb_wgm_mail_setting' == $current_tab ) {
 			$mail_settings_array = array();
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
