@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +14,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
  $mwb_wgm_mail_template_settings = array(
 	 'top' => array(
 		 array(
-			 'title' => esc_html__( 'Upload Default Logo', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Upload Default Logo', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo',
 			 'type' => 'textWithButton',
 			 'custom_attribute' => array(
@@ -26,7 +26,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 				 ),
 				 array(
 					 'type' => 'button',
-					 'value' => esc_html__( 'Upload Logo', 'woocommerce_gift_cards_lite' ),
+					 'value' => esc_html__( 'Upload Logo', 'woo-gift-cards-lite' ),
 					 'class' => 'mwb_wgm_mail_setting_upload_logo button',
 				 ),
 				 array(
@@ -37,29 +37,29 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 				 ),
 			 ),
 			 'class' => 'mwb_wgm_mail_setting_upload_logo_value mwb_wgm_new_woo_ver_style_text',
-			 'desc_tip' => esc_html__( 'Upload the image which is used as logo on your Email Template.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Upload the image which is used as logo on your Email Template.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
-			 'title' => esc_html__( 'Logo Height (in "px")', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Logo Height (in "px")', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_height',
 			 'type' => 'number',
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
-			 'desc_tip' => esc_html__( 'Set the height of logo in email template.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Set the height of the logo in the email template.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
-			 'title' => esc_html__( 'Logo Width (in "px")', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Logo Width (in "px")', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_width',
 			 'type' => 'number',
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
-			 'desc_tip' => esc_html__( 'Set the width of logo in email template.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Set the width of the logo in the email template.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
-			 'title' => esc_html__( 'Email Default Event Image', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Email Default Event Image', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_background_logo',
 			 'type' => 'textWithButton',
-			 'desc_tip' => esc_html__( 'Upload image which is used as a default Event/Occasion in Email Template.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Upload image which is used as a default Event/Occasion in Email Template.', 'woo-gift-cards-lite' ),
 			 'custom_attribute' => array(
 				 array(
 					 'type' => 'text',
@@ -69,7 +69,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 				 ),
 				 array(
 					 'type' => 'button',
-					 'value' => esc_html__( 'Upload Image', 'woocommerce_gift_cards_lite' ),
+					 'value' => esc_html__( 'Upload Image', 'woo-gift-cards-lite' ),
 					 'class' => 'mwb_wgm_mail_setting_background_logo button',
 				 ),
 				 array(
@@ -81,30 +81,30 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 ),
 		 ),
 		 array(
-			 'title' => esc_html__( 'Giftcard Message Length', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Giftcard Message Length', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_giftcard_message_length',
 			 'type' => 'number',
 			 'default' => 300,
 			 'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 			 'custom_attribute' => array( 'min' => 0 ),
-			 'desc_tip' => esc_html__( 'Enter the Gift Car d Message length, used to limit the number of characters entered by the customers.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Enter the Gift Card Message length, used to limit the number of characters entered by the customers.', 'woo-gift-cards-lite' ),
 
 		 ),
 		 array(
-			 'title' => esc_html__( 'Disclaimer Text', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Disclaimer Text', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_disclaimer',
 			 'type' => 'wp_editor',
-			 'desc_tip' => esc_html__( 'Set the Disclaimer Text for Email Template.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Set the Disclaimer Text for Email Template.', 'woo-gift-cards-lite' ),
 		 ),
 	 ),
 	 'middle' => array(
 		 array(
-			 'title' => esc_html__( 'Giftcard Email Subject', 'woocommerce_gift_cards_lite' ),
+			 'title' => esc_html__( 'Giftcard Email Subject', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_giftcard_subject',
 			 'type' => 'textWithDesc',
 			 'class' => 'description',
-			 'desc_tip' => esc_html__( 'Email Subject for notifying receiver about Giftcard Mail send.', 'woocommerce_gift_cards_lite' ),
-			 'bottom_desc' => esc_html__( 'Use [SITENAME] shortcode as the name of the site and [BUYEREMAILADDRESS] shortcode as buyer email address to be placed dynamically.', 'woocommerce_gift_cards_lite' ),
+			 'desc_tip' => esc_html__( 'Email Subject for notifying receiver about Giftcard Mail send.', 'woo-gift-cards-lite' ),
+			 'bottom_desc' => esc_html__( 'Use [SITENAME] shortcode as the name of the site and [BUYEREMAILADDRESS] shortcode as buyer email address to be placed dynamically.', 'woo-gift-cards-lite' ),
 		 ),
 	 ),
  );

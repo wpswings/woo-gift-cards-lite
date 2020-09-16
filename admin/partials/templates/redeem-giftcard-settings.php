@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -137,15 +137,15 @@ $offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true 
 if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 	?>
 <div class="notice notice-success is-dismissible"> 
-	<p><strong><?php echo wp_kses_post( $mwb_wgm_error_message, 'woocommerce_gift_cards_lite' ); ?></strong></p>
+	<p><strong><?php echo wp_kses_post( $mwb_wgm_error_message, 'woo-gift-cards-lite' ); ?></strong></p>
 	<button type="button" class="notice-dismiss">
-		<span class="screen-reader-text"><?php echo wp_kses_post( 'Dismiss this notice', 'woocommerce_gift_cards_lite' ); ?></span>
+		<span class="screen-reader-text"><?php echo wp_kses_post( 'Dismiss this notice', 'woo-gift-cards-lite' ); ?></span>
 	</button>
 </div>
 	<?php
 }
 ?>
-<h3 class="mwb_wgm_overview_heading text-center"><?php esc_html_e( 'Gift Card  Redeem / Recharge ', 'woocommerce_gift_cards_lite' ); ?></h3>
+<h3 class="mwb_wgm_overview_heading text-center"><?php esc_html_e( 'Gift Card  Redeem / Recharge ', 'woo-gift-cards-lite' ); ?></h3>
 <div class="mwb_table">
 	<div style="display: none;" class="loading-style-bg" id="mwb_wgm_loader">
 		<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/loading.gif' ); ?>">
@@ -157,25 +157,25 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 					
 					<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/giftware-redeem-image.png' ); ?>" alt="GiftWare">
 					<div class="mwb_giftware_reddem_link_wrapper">
-						<a href="#" class="generate_link"><i class="fas fa-link"></i><?php esc_html_e( 'Get me My FREE redeem Link', 'woocommerce_gift_cards_lite' ); ?> </a>
-						<span><?php esc_html_e( '(you can delete your redeem link anytime)', 'woocommerce_gift_cards_lite' ); ?></span>
+						<a href="#" class="generate_link"><i class="fas fa-link"></i><?php esc_html_e( 'Get me My FREE redeem Link', 'woo-gift-cards-lite' ); ?> </a>
+						<span><?php esc_html_e( '(you can delete your redeem link anytime)', 'woo-gift-cards-lite' ); ?></span>
 					</div>
 				</div>
 
 				<div class="mwb_redeem_main_content">
-					<h3 class="text-left"><?php esc_html_e( 'Hello Dear', 'woocommerce_gift_cards_lite' ); ?></h3>	
-					<p><?php esc_html_e( 'We are thrilled to announce that we have launched a', 'woocommerce_gift_cards_lite' ); ?><span class="mwb-reddem-free-text"><?php esc_html_e( 'FREE', 'woocommerce_gift_cards_lite' ); ?></span><?php esc_html_e( 'service to simplify the problem of redeeming giftcards at retail store ', 'woocommerce_gift_cards_lite' ); ?></p>
+					<h3 class="text-left"><?php esc_html_e( 'Hello Dear', 'woo-gift-cards-lite' ); ?></h3>	
+					<p><?php esc_html_e( 'We are thrilled to announce that we have launched a FREE service to simplify the problem of redeeming gift cards at a retail store', 'woo-gift-cards-lite' ); ?></p>
 
-					<p><?php esc_html_e( 'We have made this just on your demand so we would love your suggestion to improve it.', 'woocommerce_gift_cards_lite' ); ?></p>
+					<p><?php esc_html_e( 'We have made this just on your demand so we would love your suggestion to improve it.', 'woo-gift-cards-lite' ); ?></p>
 				</div>
 
 				
-				<h3 class="text-center"><?php esc_html_e( 'What it Contains', 'woocommerce_gift_cards_lite' ); ?></h3>	
+				<h3 class="text-center"><?php esc_html_e( 'What it Contains', 'woo-gift-cards-lite' ); ?></h3>	
 				<ul class="mwb_redeem_listing">	
-					<li class="mwb_redeem_item scan"> <div class="mwb_redeem_content"><?php esc_html_e( 'Scan', 'woocommerce_gift_cards_lite' ); ?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>	
-					<li class="mwb_redeem_item redeem"> <div class="mwb_redeem_content"><?php esc_html_e( 'Redeem', 'woocommerce_gift_cards_lite' ); ?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
-					<li class="mwb_redeem_item recharge"> <div class="mwb_redeem_content"><?php esc_html_e( 'Recharge', 'woocommerce_gift_cards_lite' ); ?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
-					<li class="mwb_redeem_item reports"> <div class="mwb_redeem_content"><?php esc_html_e( 'Reports', 'woocommerce_gift_cards_lite' ); ?></div></li>
+					<li class="mwb_redeem_item scan"> <div class="mwb_redeem_content"><?php esc_html_e( 'Scan', 'woo-gift-cards-lite' ); ?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>	
+					<li class="mwb_redeem_item redeem"> <div class="mwb_redeem_content"><?php esc_html_e( 'Redeem', 'woo-gift-cards-lite' ); ?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
+					<li class="mwb_redeem_item recharge"> <div class="mwb_redeem_content"><?php esc_html_e( 'Recharge', 'woo-gift-cards-lite' ); ?></div> <div class="mwb_redeem_arrow"><i class="fas fa-arrows-alt-h"></i></div></li>
+					<li class="mwb_redeem_item reports"> <div class="mwb_redeem_content"><?php esc_html_e( 'Reports', 'woo-gift-cards-lite' ); ?></div></li>
 				</ul>
 			</div>	
 		<?php } else { ?>
@@ -186,18 +186,18 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 
 					<thead>
 						<tr>
-							<th colspan="2"><?php esc_html_e( 'Your Gift Card Redeem Details', 'woocommerce_gift_cards_lite' ); ?></th>
+							<th colspan="2"><?php esc_html_e( 'Your Gift Card Redeem Details', 'woo-gift-cards-lite' ); ?></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="wcgw_plugin_enable"><?php esc_html_e( 'Giftcard Redeem Link', 'woocommerce_gift_cards_lite' ); ?></label>
+								<label for="wcgw_plugin_enable"><?php esc_html_e( 'Giftcard Redeem Link', 'woo-gift-cards-lite' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<?php
 								$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
-								$attribute_description = __( 'please open the link to redeem the giftcard', 'woocommerce_gift_cards_lite' );
+								$attribute_description = __( 'Please open the link to redeem the gift card', 'woo-gift-cards-lite' );
 								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
 								<label for="wcgw_plugin_enable">
@@ -220,12 +220,12 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="wcgw_plugin_enable"><?php esc_html_e( 'Embedded Link', 'woocommerce_gift_cards_lite' ); ?></label>
+								<label for="wcgw_plugin_enable"><?php esc_html_e( 'Embedded Link', 'woo-gift-cards-lite' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<?php
 								$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
-								$attribute_description = __( 'Enter this code to add the redeem page in your site', 'woocommerce_gift_cards_lite' );
+								$attribute_description = __( 'Enter this code to add the redeem page in your site', 'woo-gift-cards-lite' );
 								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
 									<textarea cols="20" rows="3" id="mwb_gw_embeded_input_text">
@@ -253,46 +253,46 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && '' !== $offine_giftcard_redeem_link['shop_url'] ) {
 										echo esc_attr( $offine_giftcard_redeem_link['shop_url'] );  }
 									?>
-										" class= "mwb_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woocommerce_gift_cards_lite' ); ?></a>
+										" class= "mwb_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woo-gift-cards-lite' ); ?></a>
 									</td>
 
 								</tr>
 								<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && '' == $offine_giftcard_redeem_link['license'] ) { ?>
 									<tr>
 										<td colspan="2">
-											<?php esc_html_e( 'This is your limited  account so please purchase the pro and update the details .', 'woocommerce_gift_cards_lite' ); ?>								
+											<?php esc_html_e( 'This is your limited  account so please purchase the pro and update the details .', 'woo-gift-cards-lite' ); ?>								
 										</td>
 									</tr>
 								<?php } ?>
 							</tbody>
 						</table>
 						<p><b>
-							<?php esc_html_e( 'To use redeem link as it is, follow the steps below', 'woocommerce_gift_cards_lite' ); ?></b></p>
+							<?php esc_html_e( 'To use the redeem link as it is, follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
 							<ol>
-								<li><?php esc_html_e( 'Click on Open Shop button and login using the credentials provided in the received email', 'woocommerce_gift_cards_lite' ); ?></li>
-								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woocommerce_gift_cards_lite' ); ?></li>
+								<li><?php esc_html_e( 'Click on Open Shop button and login using the credentials provided in the received email', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woo-gift-cards-lite' ); ?></li>
 							</ol>
 
-							<p><b><?php esc_html_e( 'To use the redeem link on the web store follow the steps below', 'woocommerce_gift_cards_lite' ); ?></b></p>
+							<p><b><?php esc_html_e( 'To use the redeem link on the web store follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
 							<ol>
-								<li><?php esc_html_e( 'Create a page', 'woocommerce_gift_cards_lite' ); ?></li>
-								<li><?php esc_html_e( 'Copy the embed link and paste it in the created page', 'woocommerce_gift_cards_lite' ); ?></li>
-								<li><?php esc_html_e( 'Login using the credentials given in the received email', 'woocommerce_gift_cards_lite' ); ?></li>
-								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woocommerce_gift_cards_lite' ); ?></li>
+								<li><?php esc_html_e( 'Create a page', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Copy the embed link and paste it in the created page', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Login using the credentials given in the received email', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woo-gift-cards-lite' ); ?></li>
 							</ol>
 
-							<p><b><?php esc_html_e( 'To use the redeem link on this POS system, follow the steps below', 'woocommerce_gift_cards_lite' ); ?></b></p>
+							<p><b><?php esc_html_e( 'To use the redeem link on this POS system, follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
 							<ol>
-								<li><?php esc_html_e( 'Copy the embed link and paste it on any page at POS', 'woocommerce_gift_cards_lite' ); ?></li>
-								<li><?php esc_html_e( 'Login using the credentials given in the received email', 'woocommerce_gift_cards_lite' ); ?></li>
-								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woocommerce_gift_cards_lite' ); ?></li>
+								<li><?php esc_html_e( 'Copy the embed link and paste it on any page at POS', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Login using the credentials given in the received email', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woo-gift-cards-lite' ); ?></li>
 							</ol>
 
 						</div>
 					<?php	} ?>
 
 					<div class="mwb_wgm_video_wrapper">
-						<h3><?php esc_html_e( 'See it in Action', 'woocommerce_gift_cards_lite' ); ?></h3>
+						<h3><?php esc_html_e( 'See it in Action', 'woo-gift-cards-lite' ); ?></h3>
 						<iframe height="411" src="https://www.youtube.com/embed/H1cYF4F5JA8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
 		
@@ -306,12 +306,12 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 				<tbody>			
 					<tr valign="top">
 						<th scope="row" class="titledesc">
-							<label for="wcgw_plugin_enable"><?php esc_html_e( 'Email', 'woocommerce_gift_cards_lite' ); ?></label>
+							<label for="wcgw_plugin_enable"><?php esc_html_e( 'Email', 'woo-gift-cards-lite' ); ?></label>
 						</th>
 						<td class="forminp forminp-text">
 							<?php
 							$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
-							$attribute_description = __( 'Enter the email for account creation', 'woocommerce_gift_cards_lite' );
+							$attribute_description = __( 'Enter the email for account creation', 'woo-gift-cards-lite' );
 							echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 							?>
 							<label for="wcgw_plugin_enable">
@@ -321,12 +321,12 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 					</tr>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
-							<label for="wcgw_plugin_enable"><?php esc_html_e( 'Name', 'woocommerce_gift_cards_lite' ); ?></label>
+							<label for="wcgw_plugin_enable"><?php esc_html_e( 'Name', 'woo-gift-cards-lite' ); ?></label>
 						</th>
 						<td class="forminp forminp-text">
 							<?php
 							$allowed_tags = $settings_obj->mwb_wgm_allowed_html_for_tool_tip();
-							$attribute_description = __( 'Enter the name for account creation', 'woocommerce_gift_cards_lite' );
+							$attribute_description = __( 'Enter the name for account creation', 'woo-gift-cards-lite' );
 							echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 							?>
 							<label for="wcgw_plugin_enable">

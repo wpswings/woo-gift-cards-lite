@@ -35,7 +35,7 @@ class Woocommerce_gift_cards_lite_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'woocommerce_gift_cards_lite',
+			'woo-gift-cards-lite',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

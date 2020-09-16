@@ -14,15 +14,15 @@
  * @wordpress-plugin
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
- * Description:       Ultimate Gift Cards For WooCommerce allows merchants to create and sell multiple Gift Card Product having multiple price variation.
- * Version:           2.0.2
+ * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>. 
+ * Version:           2.0.5
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       woocommerce_gift_cards_lite
- * Tested up to:      5.4
- * WC tested up to:   4.0
+ * Text Domain:       woo-gift-cards-lite
+ * Tested up to:      5.5
+ * WC tested up to:   4.4
  * Domain Path:       /languages
  */
 
@@ -49,7 +49,7 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'PLUGIN_NAME_VERSION', '2.0.2' );
+	define( 'PLUGIN_NAME_VERSION', '2.0.5' );
 	/**
 	* Check whether the wordpress version is greater than 4.9.6
 	*/
@@ -88,8 +88,8 @@ if ( $activated ) {
 		if ( $plugin == $plugin_file ) {
 			$settings = array();
 			if ( ! mwb_uwgc_pro_active() ) {
-				$settings['settings'] = '<a href="' . esc_url( admin_url( 'admin.php?page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woocommerce_gift_cards_lite' ) . '</a>';
-				$settings['get_paid_version'] = '<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'Get Premium Version', 'woocommerce_gift_cards_lite' ) . '</a>';
+				$settings['settings'] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
+				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
 				$actions = array_merge( $settings, $actions );
 			}
 		}
@@ -140,7 +140,7 @@ if ( $activated ) {
 		$page_taxonomy_created = get_option( 'mwb_wgc_create_gift_card_taxonomy', false );
 		if ( false == $page_taxonomy_created ) {
 			update_option( 'mwb_wgc_create_gift_card_taxonomy', true );
-			$term = esc_html__( 'Gift Card', 'woocommerce_gift_cards_lite' );
+			$term = esc_html__( 'Gift Card', 'woo-gift-cards-lite' );
 			$taxonomy = 'product_cat';
 			$term_exist = term_exists( $term, $taxonomy );
 			if ( 0 == $term_exist || null == $term_exist ) {
@@ -152,8 +152,8 @@ if ( $activated ) {
 			$giftcard_content = "[product_category category='$giftcard_category']";
 			$customer_reports = array(
 				'post_author'    => get_current_user_id(),
-				'post_name'      => esc_html__( 'Gift Card', 'woocommerce_gift_cards_lite' ),
-				'post_title'     => esc_html__( 'Gift Card', 'woocommerce_gift_cards_lite' ),
+				'post_name'      => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
+				'post_title'     => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
 				'post_type'      => 'page',
 				'post_status'    => 'publish',
 				'post_content'   => $giftcard_content,
@@ -264,7 +264,7 @@ if ( $activated ) {
 		unset( $_GET['activate'] );
 		?>
 		  <div class="error notice is-dismissible">
-			 <p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Ultimate Gift Cards For WooCommerce', 'woocommerce_gift_cards_lite' ); ?></p>
+			 <p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?></p>
 		   </div>
 		<?php
 	}
