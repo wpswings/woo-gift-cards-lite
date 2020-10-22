@@ -117,7 +117,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'mwb_wgm_nonce'      => wp_create_nonce( 'mwb-wgm-verify-nonce' ),
 				);
 				$url = plugins_url();
-				wp_enqueue_script( 'mwb_lite_select2', $url.'/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), true );
+				wp_enqueue_script( 'mwb_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), true );
 				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version );
 
 				wp_enqueue_script( $this->plugin_name . 'clipboard' );
@@ -179,7 +179,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_wgm_admin_menu() {
 		add_submenu_page( 'edit.php?post_type=giftcard', __( 'Settings', 'woo-gift-cards-lite' ), __( 'Settings', 'woo-gift-cards-lite' ), 'manage_options', 'mwb-wgc-setting-lite', array( $this, 'mwb_wgm_admin_setting' ) );
-		if( !mwb_uwgc_pro_active()){
+		if ( ! mwb_uwgc_pro_active() ) {
 			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Premium Plugin', 'woo-gift-cards-lite' ), __( 'Premium Plugin', 'woo-gift-cards-lite' ), 'manage_options', 'mwb-wgc-premium-plugin', array( $this, 'mwb_wgm_premium_features' ) );
 		}
 		// hooks to add sub menu.
@@ -208,9 +208,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_wgm_premium_features() {
 		if ( isset( $_GET['page'] ) && 'mwb-wgc-premium-plugin' == $_GET['page'] ) {
-			$mwb_premium_page = esc_url_raw( 'https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org');
+			$mwb_premium_page = esc_url_raw( 'https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org' );
 			wp_redirect( $mwb_premium_page );
-    	  	exit;
+			exit;
 		}
 	}
 
@@ -469,7 +469,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					}
 					$general_settings = get_option( 'mwb_wgm_general_settings', array() );
 					$mwb_wgm_categ_enable = $this->mwb_common_fun->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_categ_enable' );
-					if ( '' === $mwb_wgm_categ_enable ||  'off' === $mwb_wgm_categ_enable ) {
+					if ( '' === $mwb_wgm_categ_enable || 'off' === $mwb_wgm_categ_enable ) {
 						$term = __( 'Gift Card', 'woo-gift-cards-lite' );
 						$taxonomy = 'product_cat';
 						$term_exist = term_exists( $term, $taxonomy );
@@ -613,7 +613,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
 							$product_types = wp_get_object_terms( $product_id, 'product_type' );
-							
+
 							if ( isset( $product_types[0] ) ) {
 								$product_type = $product_types[0]->slug;
 								if ( 'wgm_gift_card' == $product_type || 'gw_gift_card' == $product_type ) {
@@ -1228,7 +1228,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_wgm_set_cron_for_plugin_notification(){
+	public function mwb_wgm_set_cron_for_plugin_notification() {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
 		// Already submitted the data.
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
@@ -1367,24 +1367,24 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_mwb_frontend_screens( $valid_screens=array() ) {
+	public function add_mwb_frontend_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
-			
+
 			// Push your screen here.
 			array_push( $valid_screens, 'giftcard_page_mwb-wgc-setting-lite' );
 		}
-		return $valid_screens;	}
+		return $valid_screens;  }
 
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_mwb_deactivation_screens( $valid_screens=array() ) {
+	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
-			
+
 			// Push your screen here.
 			array_push( $valid_screens, 'woo-gift-cards-lite' );
 		}

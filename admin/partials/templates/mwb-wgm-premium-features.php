@@ -13,21 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="mwb_wgm__wrapper">
 		<div class="mwb_wgm__container">
 			<!--=====================================
-		    =            UPGRADE SECTION            =
-		    ======================================-->
-		    <div class="mwb_wgm_upgrade">
-		        <div class="mwb_wgm_upgrade__wrapper">
-		            <div class="mwb_wgm_upgrade_desc">
-		                <p class="mwb_wgm-body"><?php esc_html_e( 'Upgrade to the ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( 'PREMIUM VERSION ', 'woo-gift-cards-lite' ); ?></strong></p>
-		                <p class="mwb_wgm-body"><?php esc_html_e( 'and enjoy the plugin\'s best features!', 'woo-gift-cards-lite' ); ?>
-		                </p>
-		            </div>
-		            <div class="mwb_wgm_upgrade_btn">
-		                <a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
-		            </div>
-		        </div>
-		    </div>
-		    <!--====  End of UPGRADE SECTION  ====-->
+			=            UPGRADE SECTION            =
+			======================================-->
+			<div class="mwb_wgm_upgrade">
+				<div class="mwb_wgm_upgrade__wrapper">
+					<div class="mwb_wgm_upgrade_desc">
+						<p class="mwb_wgm-body"><?php esc_html_e( 'Upgrade to the ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( 'PREMIUM VERSION ', 'woo-gift-cards-lite' ); ?></strong></p>
+						<p class="mwb_wgm-body"><?php esc_html_e( 'and enjoy the plugin\'s best features!', 'woo-gift-cards-lite' ); ?>
+						</p>
+					</div>
+					<div class="mwb_wgm_upgrade_btn">
+						<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
+					</div>
+				</div>
+			</div>
+			<!--====  End of UPGRADE SECTION  ====-->
 			<div class="mwb_wgm__row">
 				<div class="mwb_wgm__column">
 					<div class="mwb_wgm__content">
@@ -113,21 +113,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
+			<div class="mwb_wgm__row">
+				<div class="mwb_wgm__column mwb_center_div">
+					<div class="mwb_wgm__content">
+						<h3 class="mwb_wgm__heading"><?php esc_html_e( 'Refund or Cancel Gift Card Product', 'woo-gift-cards-lite' ); ?></h3>
+						<p class="mwb_wgm__text"><?php esc_html_e( 'Just like any other product, you can now refund or cancel your Gift Card product if customers don’t want them.', 'woo-gift-cards-lite' ); ?></p>
+						
+					</div>
+					
+				</div>
+			</div>
 			<!--=====================================
-		    =            UPGRADE SECTION            =
-		    ======================================-->
-		     <div class="mwb_wgm_upgrade">
-		        <div class="mwb_wgm_upgrade__wrapper">
-		            <div class="mwb_wgm_upgrade_desc">
-		                <p class="mwb_wgm-body"><?php esc_html_e( 'Upgrade to the ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( 'PREMIUM VERSION ', 'woo-gift-cards-lite' ); ?></strong></p>
-		                <p class="mwb_wgm-body"><?php esc_html_e( 'and enjoy the plugin\'s best features!', 'woo-gift-cards-lite' ); ?>
-		                </p>
-		            </div>
-		            <div class="mwb_wgm_upgrade_btn">
-		                <a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
-		            </div>
-		        </div>
-		    </div>
-		    <!--====  End of UPGRADE SECTION  ====-->
+			=            UPGRADE SECTION            =
+			======================================-->
+			 <div class="mwb_wgm_upgrade">
+				<div class="mwb_wgm_upgrade__wrapper">
+					<div class="mwb_wgm_upgrade_desc">
+						<p class="mwb_wgm-body"><?php esc_html_e( 'Upgrade to the ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( 'PREMIUM VERSION ', 'woo-gift-cards-lite' ); ?></strong></p>
+						<p class="mwb_wgm-body"><?php esc_html_e( 'and enjoy the plugin\'s best features!', 'woo-gift-cards-lite' ); ?>
+						</p>
+					</div>
+					<div class="mwb_wgm_upgrade_btn">
+						<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
+					</div>
+				</div>
+			</div>
+			<!--====  End of UPGRADE SECTION  ====-->
 		</div>
 	</div>

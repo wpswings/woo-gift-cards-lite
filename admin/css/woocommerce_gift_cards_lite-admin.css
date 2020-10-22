@@ -1083,3 +1083,6 @@ a.mwb-wgm-go-pro {
 span.mwb-wgn-icon-text {
     padding-left: 1px;
 }
+.mwb_wgm__column.mwb_center_div {
+    margin: 0 auto;
+}

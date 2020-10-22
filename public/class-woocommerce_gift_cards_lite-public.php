@@ -680,7 +680,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									}
 								}
 								if ( 'mwb_wgm_user_price' == $product_pricing_type ) {
-									$price_html = apply_filters("mwb_wgm_user_price_text", __('','giftware') );
+									$price_html = apply_filters( 'mwb_wgm_user_price_text', __( '', 'giftware' ) );
 								}
 							}
 						}
@@ -714,11 +714,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
-						if ($product->is_type('wgm_gift_card')) {
+						if ( $product->is_type( 'wgm_gift_card' ) ) {
 							$is_gift_card = true;
 						}
 					}
-					if ( !$is_gift_card ) {
+					if ( ! $is_gift_card ) {
 						return;
 					}
 					$mailalreadysend = get_post_meta( $order_id, 'mwb_wgm_order_giftcard', true );
@@ -868,7 +868,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$bool = false;
 		$bool2 = false;
 		$is_checkout = false;
-		if( is_cart() || is_checkout() ){
+		if ( is_cart() || is_checkout() ) {
 			if ( ! empty( WC()->cart ) ) {
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 					$_product = wc_get_product( $cart_item['product_id'] );

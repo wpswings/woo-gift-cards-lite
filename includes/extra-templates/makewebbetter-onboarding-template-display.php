@@ -12,14 +12,14 @@
  * @subpackage Makewebbetter_Onboarding/admin/onboarding
  */
 ?>
-<?php 
+<?php
 
 	$screen = get_current_screen();
-	$is_valid = in_array( $screen->id, apply_filters( 'mwb_helper_valid_frontend_screens' , array() ) );
-	if ( ! $is_valid ) {
+	$is_valid = in_array( $screen->id, apply_filters( 'mwb_helper_valid_frontend_screens', array() ) );
+if ( ! $is_valid ) {
 
-		return false;
-	}
+	return false;
+}
 
 	$form_fields = apply_filters( 'mwb_on_boarding_form_fields', array() );
 
@@ -48,7 +48,7 @@
 					<input type="submit" class="mwb-on-boarding-submit mwb-on-boarding-verify " value="Send Us">
 				</div>
 				<div class="mwb-on-boarding-form-no_thanks">
-					<a href="javascript:void(0);" class="mwb-on-boarding-no_thanks"><?php esc_html_e( 'Skip For Now', 'woo-gift-cards-lite' ) ?></a>
+					<a href="javascript:void(0);" class="mwb-on-boarding-no_thanks"><?php esc_html_e( 'Skip For Now', 'woo-gift-cards-lite' ); ?></a>
 				</div>
 				</div>
 			</form>
