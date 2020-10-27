@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,19 +14,20 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 	 * Define the common functionality.
 	 *
 	 * @since      1.0.0
-	 * @package    Woocommerce_gift_cards_lite
-	 * @author     makewebbetter <webmaster@makewebbetter.com>
+	 * @package    woo-gift-cards-lite
+	 * @author     makewebbetter <ticket@makewebbetter.com>
 	 */
 	class Woocommerce_Gift_Cards_Common_Function {
 
 		/**
 		 * This function is used to create giftcard template.
 		 *
+		 * @since 1.0.0
 		 * @name mwb_wgm_create_gift_template
 		 * @param array $args args.
 		 * @return $templatehtml.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_create_gift_template( $args ) {
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
@@ -131,12 +132,13 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		/**
 		 * Function to get template data from data base.
 		 *
+		 * @since 1.0.0
 		 * @name mwb_wgm_get_template_data
 		 * @param array  $mwb_wgm_settings mwb_wgm_settings.
 		 * @param string $key databse key name.
 		 * @return $mwb_wgm_data.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_get_template_data( $mwb_wgm_settings, $key ) {
 			$mwb_wgm_data = '';
@@ -160,7 +162,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int    $order_id order id.
 		 * @param int    $product_id product id.
 		 * @param int    $to email id or name to whome coupon send.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to ) {
@@ -277,7 +279,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @name mwb_wgm_common_functionality()
 		 * @param array  $mwb_wgm_common_arr email template data.
 		 * @param object $order order.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_common_functionality( $mwb_wgm_common_arr, $order ) {
@@ -429,7 +431,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @name mwb_wgm_check_expiry_date()
 		 * @param string $expiry_date expiry date of giftcard coupon.
 		 * @return $expirydate_format.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_check_expiry_date( $expiry_date ) {
@@ -454,12 +456,13 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		/**
 		 * This function is used to return the remaining coupon amount according to Tax setting you have in your system.
 		 *
+		 * @since 1.0.0
 		 * @name mwb_wgm_calculate_coupon_discount
 		 * @param int $mwb_wgm_discount coupon discount.
 		 * @param int $mwb_wgm_discount_tax coupon discount tax.
 		 * @return $total_discount.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_calculate_coupon_discount( $mwb_wgm_discount, $mwb_wgm_discount_tax ) {
 			$price_in_ex_option = get_option( 'woocommerce_prices_include_tax' );
@@ -489,10 +492,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		/**
 		 * This function is used to return the allowed html tags in the preview template.
 		 *
+		 * @since 1.0.0
 		 * @name mwb_allowed_html_tags
 		 * @return $allowed_tags.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_allowed_html_tags() {
 			$allowed_tags = array(
@@ -646,12 +650,13 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			);
 			return apply_filters( 'mwb_allowed_html_for_preview', $allowed_tags );
 		}
+
 		/**
 		 * Get the templates selected in Giftcard lite plugin earlier.
 		 *
 		 * @since 1.0.0
 		 * @name mwb_get_org_selected_template
-		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_get_org_selected_template() {

@@ -343,204 +343,202 @@
   }
   .mwb_wgm_header_content_left div {
 	margin: 0 auto;
-}
+  }
   .mwb_wgm_navigator_template {
 	display: none;
   }
 }
 .mwb_wgm_header_content_right ul li:first-child .dashicons.dashicons-phone {
-transform: rotate(90deg);
+	transform: rotate(90deg);
 }
 
-
-
-	.mwb_redeem_main_content{
-	  margin-bottom: 70px;
-	}
-	.text-left{
-	  text-align: left;
-	}
-	table.mwb_redeem_details {
-	  -moz-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
-	  -ms-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
-	  -o-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
-	  -webkit-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
-	  border-radius: 10px;
-	  box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
-	  margin: 40px 0 60px 0;
-	  overflow: hidden;
-	  width: 100%;
-	}
-	.mwb-reedem-video video {
-		max-width: 100%;
-		width: 100%;
-		display: block;
-		margin: 0 auto;
-	}
-	.mwb-reedem-video {
-	  margin-bottom: 60px;
-	}
-	table.mwb_redeem_details thead {
-	  background-color: #ef5350;
-	  color: #ffffff;
-	}
-	 table.mwb_redeem_details tbody th {
-	  width: 200px;
-	}
-	.mwb-readem-work-listing {
-	  display: flex;
-	  flex-wrap: wrap;
-	  justify-content: flex-start;
-	  margin-left: -15px;
-	  margin-right: -15px;
-	}
-	.text-left {
-	  text-align: left;
-	}
-	.mwb-readem-work-listing li {
-	  float: left;
-	  padding-left: 15px;
-	  padding-right: 15px;
-	  width: 33.333%;
-	}
-	.mwb-readem-work-listing li i {
-	  color: #ef5350;
-	  margin-right: 7px;
-	  vertical-align: middle;
-	}
-	.mwb_redeem_listing {
-	  display: flex;
-	  flex-wrap: wrap;
-	  justify-content: center;
-	  margin: 0 -15px 70px -15px;
-	}
-	.mwb_redeem_listing .mwb_redeem_item {
-	  flex: 0 0 25%;
-	  margin-bottom: 15px;
-	  padding-left: 15px;
-	  padding-right: 15px;
-	  position: relative;
-	}
-	.mwb_redeem_arrow {
-	  color: #ef5350;
-	  font-size: 31px;
-	  margin-left: auto;
-	  margin-right: 0;
-	  position: absolute;
-	  right: -15px;
-	  top: 50%;
-	  transform: translateY(-50%);
-	  z-index: 1;
-	}
-	.mwb_redeem_content {
-	  align-items: center;
-	  border-radius: 4px;
-	  box-shadow: 1px 2px 10px rgba(0 ,0,0,0.1);
-	  color: #ffffff;
-	  display: flex;
-	  font-size: 20px;
-	  justify-content: center;
-	  min-height: 70px;
-	  padding:10px;
-	  text-align: center;
-	}
-	.mwb_redeem_item.scan .mwb_redeem_content{
-	  background-color: #e0a944;
-	}
-	.mwb_redeem_item.redeem  .mwb_redeem_content{
-	  background-color: #ef5350;
-	}
-	.mwb_redeem_item.recharge .mwb_redeem_content{
-	  background-color:#0cb6ef;
-	}
-	.mwb_redeem_item.reports .mwb_redeem_content{
-	  background-color: #4bc74b;
-	}
-	.text-center{
-	  text-align: center;
-	}
-	.mwb_redeem_div_wrapper .generate_link,
-	input#wcgm_generate_offine_redeem_url,
-	input.remove_giftcard_redeem_details,
-	.mwb_gw_open_redeem_link,.update_giftcard_redeem_details{
-	  background-color: #ef5350;
-	  color: #ffffff;
-	  padding: 17px 30px;
-	  display: inline-block;
-	  text-decoration: none;
-	  margin-top: 15px;
-	  border-radius: 4px;
-	  border: 2px solid #ef5350;
-	  text-transform: capitalize;
-	  font-size: 16px;
-	  cursor: pointer;
-	  line-height: 1.4;
-	}
-	.mwb_redeem_details .remove_giftcard_redeem_details,
-	.mwb_gw_open_redeem_link{
-	  margin-right: 15px;
-	}
-	input#wcgm_generate_offine_redeem_url{
-	 padding: 10px 20px;
-   }
-   .mwb_giftware_reddem_link_wrapper {
+.mwb_redeem_main_content{
+  margin-bottom: 70px;
+}
+.text-left{
+  text-align: left;
+}
+table.mwb_redeem_details {
+  -moz-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
+  -ms-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
+  -o-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
+  border-radius: 10px;
+  box-shadow: 0 23px 83px rgba(0, 0, 0, 0.16);
+  margin: 40px 0 60px 0;
+  overflow: hidden;
+  width: 100%;
+}
+.mwb-reedem-video video {
+	max-width: 100%;
+	width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+.mwb-reedem-video {
+  margin-bottom: 60px;
+}
+table.mwb_redeem_details thead {
+  background-color: #ef5350;
+  color: #ffffff;
+}
+ table.mwb_redeem_details tbody th {
+  width: 200px;
+}
+.mwb-readem-work-listing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.text-left {
+  text-align: left;
+}
+.mwb-readem-work-listing li {
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 33.333%;
+}
+.mwb-readem-work-listing li i {
+  color: #ef5350;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.mwb_redeem_listing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -15px 70px -15px;
+}
+.mwb_redeem_listing .mwb_redeem_item {
+  flex: 0 0 25%;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+}
+.mwb_redeem_arrow {
+  color: #ef5350;
+  font-size: 31px;
+  margin-left: auto;
+  margin-right: 0;
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.mwb_redeem_content {
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 1px 2px 10px rgba(0 ,0,0,0.1);
+  color: #ffffff;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  min-height: 70px;
+  padding:10px;
+  text-align: center;
+}
+.mwb_redeem_item.scan .mwb_redeem_content{
+  background-color: #e0a944;
+}
+.mwb_redeem_item.redeem  .mwb_redeem_content{
+  background-color: #ef5350;
+}
+.mwb_redeem_item.recharge .mwb_redeem_content{
+  background-color:#0cb6ef;
+}
+.mwb_redeem_item.reports .mwb_redeem_content{
+  background-color: #4bc74b;
+}
+.text-center{
+  text-align: center;
+}
+.mwb_redeem_div_wrapper .generate_link,
+input#wcgm_generate_offine_redeem_url,
+input.remove_giftcard_redeem_details,
+.mwb_gw_open_redeem_link,.update_giftcard_redeem_details{
+  background-color: #ef5350;
+  color: #ffffff;
+  padding: 17px 30px;
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 15px;
+  border-radius: 4px;
+  border: 2px solid #ef5350;
+  text-transform: capitalize;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.mwb_redeem_details .remove_giftcard_redeem_details,
+.mwb_gw_open_redeem_link{
+  margin-right: 15px;
+}
+input#wcgm_generate_offine_redeem_url{
+ 	padding: 10px 20px;
+}
+.mwb_giftware_reddem_link_wrapper {
 	position: absolute;
 	left: -60px;
 	top: 50%;
 	transform: translateY(-50%);
 	right: 0;
-  }
-  .mwb_giftware_reddem_link_wrapper span {
+}
+.mwb_giftware_reddem_link_wrapper span {
 	display: block;
 	width: 223px;
 	margin: 0 auto;
-  }
-  .mwb_redeem_div_wrapper .generate_link {
+}
+.mwb_redeem_div_wrapper .generate_link {
 	box-shadow: 0 4px 11px rgba(145, 92, 182, .55),0 -2px 0 rgba(0,0,0,0.2) inset;
 	font-size: 15px;
 	font-weight: 600;
 	left: 0;
 	margin: 0 auto;
 	padding: 12px;
-  }
-  .mwb-giftware-reddem-image.text-center {
+}
+.mwb-giftware-reddem-image.text-center {
 	position: relative;
-  }
-  .mwb-giftware-reddem-image img {
+}
+.mwb-giftware-reddem-image img {
 	max-width: 100%;
 	width: auto;
-  }
-  .mwb_redeem_div_wrapper .generate_link:hover, .mwb_redeem_div_wrapper .generate_link:focus{
+}
+.mwb_redeem_div_wrapper .generate_link:hover, .mwb_redeem_div_wrapper .generate_link:focus{
 	outline: 0;
 	background-color: #ffffff;
 	color: #333333;
 	box-shadow: 0 7px 21px rgba(145, 92, 182, .55),0 -2px 0 rgba(0,0,0,0.2) inset;
-  }
-  a.mwb_gw_open_redeem_link{
+}
+a.mwb_gw_open_redeem_link{
 	background-color: #ffffff;
 	color: #ef5350;
-  }
-  input#wcgm_generate_offine_redeem_url:hover,input#wcgm_generate_offine_redeem_url:focus,
-  input.remove_giftcard_redeem_details:hover,input.remove_giftcard_redeem_details:focus,
-  .update_giftcard_redeem_details:hover, .update_giftcard_redeem_details:focus{
+}
+input#wcgm_generate_offine_redeem_url:hover,input#wcgm_generate_offine_redeem_url:focus,
+input.remove_giftcard_redeem_details:hover,input.remove_giftcard_redeem_details:focus,
+.update_giftcard_redeem_details:hover, .update_giftcard_redeem_details:focus{
 	background-color: #ffffff;
 	color: #333333;
 	outline: 0;
 	box-shadow: none;
-  }
-  .mwb_gw_open_redeem_link:hover,.mwb_gw_open_redeem_link:focus{
+}
+.mwb_gw_open_redeem_link:hover,.mwb_gw_open_redeem_link:focus{
 	background-color: #4F3154;
 	color: #ffffff;
 	box-shadow: none;
 	outline: 0;
 	border-color: #4F3154;
-  }
-  .mwb_redeem_registraion_div .mwb_gw_general_setting {
+}
+.mwb_redeem_registraion_div .mwb_gw_general_setting {
 	max-width: 767px;
 	margin: 0 auto;
 	position: relative;
-  }
-  .mwb-redeem-pop-close {
+}
+.mwb-redeem-pop-close {
 	background-color: #eeeeee;
 	border-radius: 50%;
 	color: #ef5350;
@@ -552,7 +550,7 @@ transform: rotate(90deg);
 	top: -23px;
 	width: 30px;
 	cursor: pointer;
-  }
+}
 .mwb_redeem_registraion_div .mwb_gw_general_setting tr:nth-child(2n+1) {
 	background: #efefef none repeat scroll 0 0;
 }
@@ -562,7 +560,7 @@ transform: rotate(90deg);
 .mwb_redeem_registraion_div .mwb_gw_general_setting th {
   padding-left: 10px;
 }
-  .mwb_redeem_registraion_div {
+.mwb_redeem_registraion_div {
 	position: fixed;
 	background-color: rgba(0,0,0,0.55);
 	left: 0;
@@ -574,54 +572,54 @@ transform: rotate(90deg);
 	align-items: center;
 	padding: 15px;
 	z-index: 999999;
-  }
-  .mwb_redeem_registraion_div .mwb_gw_general_setting input[type="email"],
-  .mwb_redeem_registraion_div .mwb_gw_general_setting input[type="text"]{
+}
+.mwb_redeem_registraion_div .mwb_gw_general_setting input[type="email"],
+.mwb_redeem_registraion_div .mwb_gw_general_setting input[type="text"]{
 	padding: 10px !important;
 	width: 90% !important;
-  }
-  .mwb_redeem_details {
+}
+.mwb_redeem_details {
 	border-collapse: collapse;
 	margin-top: 20px;
-  }
-  .mwb_redeem_details td, .mwb_redeem_details th {
+}
+.mwb_redeem_details td, .mwb_redeem_details th {
 	padding: 15px;
-  }
-  #mwb_gw_setting_wrapper table.mwb_redeem_details thead th {
+}
+#mwb_gw_setting_wrapper table.mwb_redeem_details thead th {
 	font-size: 20px;
 	padding: 20px;
-  }
-  #mwb_gw_setting_wrapper * {
+}
+#mwb_gw_setting_wrapper * {
 	box-sizing: border-box;
-  }
-  thead {
+}
+thead {
 	display: table-header-group;
 	vertical-align: middle;
 	border-color: inherit;
-  }
-  .mwb_redeem_details tbody th{
+}
+.mwb_redeem_details tbody th{
 	text-align: left;
-  }
-  .mwb_redeem_details td textarea, .mwb_redeem_details td input[type="text"] {
+}
+.mwb_redeem_details td textarea, .mwb_redeem_details td input[type="text"] {
 	width: 89%;
 	padding: 10px;
 	vertical-align: middle;
 	background-color: transparent;
-  }
-  .mwb-giftware-copy-icon {
+}
+.mwb-giftware-copy-icon {
 	display: inline-block;
 	margin-left: 10px;
 	cursor: pointer;
-  }
-  .mwb-giftware-copy-icon button {
+}
+.mwb-giftware-copy-icon button {
 	background-color: #fff;
 	border: none;
 	padding: 0;
 	cursor: pointer;
-  }
-  .mwb_redeem_details td textarea:focus, .mwb_redeem_details td input[type="text"]:focus{
+}
+.mwb_redeem_details td textarea:focus, .mwb_redeem_details td input[type="text"]:focus{
 	border-color: #ffffff;
-  }
+}
   
 .mwb_gw_new_badge {
   background-color: #4F3154;
@@ -639,8 +637,8 @@ transform: rotate(90deg);
   top: -11px;
 }
 
-  /* ======== LOADER CSS =======*/
-  #mwb_wgm_loader {
+/* ======== LOADER CSS =======*/
+#mwb_wgm_loader {
 	background-color: rgba(255, 255, 255, 0.6);
 	bottom: 0;
 	height: 100%;
@@ -650,15 +648,15 @@ transform: rotate(90deg);
 	top: 0;
 	width: 100%;
 	z-index: 99999;
-  }
-  #mwb_wgm_loader img {
+}
+#mwb_wgm_loader img {
 	display: block;
 	left: 0;
 	margin: 0 auto;
 	position: absolute;
 	right: 0;
 	top: 40%;
-  }
+}
 /*======================================
 =             media query            =
 ======================================*/
@@ -859,8 +857,8 @@ transform: rotate(90deg);
 
 /*css for wp editor text area*/
 .mwb_wgm_new_woo_ver_style_textarea{
-	  width: 100% !important;
-	}
+	width: 100% !important;
+}
 /*css for email upload default event*/
 .mwb_wgm_mail_setting_remove_background {
   display: inline-block;

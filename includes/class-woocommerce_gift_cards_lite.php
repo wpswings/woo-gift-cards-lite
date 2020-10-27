@@ -5,11 +5,11 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://makewebbetter.com/
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/includes
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes
  */
 
 /**
@@ -22,9 +22,9 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Woocommerce_gift_cards_lite {
 

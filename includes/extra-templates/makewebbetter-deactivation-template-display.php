@@ -8,20 +8,17 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes/extra-templates
  */
-?>
-<?php
 
-	global $pagenow;
+global $pagenow;
 if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 	return false;
 }
 
-	$form_fields = apply_filters( 'mwb_deactivation_form_fields', array() );
-?>
-<?php if ( ! empty( $form_fields ) ) : ?>
+$form_fields = apply_filters( 'mwb_deactivation_form_fields', array() );
+if ( ! empty( $form_fields ) ) : ?>
 	<div style="display: none;" class="loading-style-bg" id="mwb_wgm_loader">
 		<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>

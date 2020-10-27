@@ -2,7 +2,8 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
+ * @since      1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -48,12 +49,14 @@ add_action(
 		);
 	}
 );
+
 /**
  * Get_giftcard_details
  *
+ * @since      1.0.0
  * @name mwb_get_giftcard_details
  * @param mixed $request Request.
- * @author makewebbetter<webmaster@makewebbetter.com>
+ * @author makewebbetter<ticket@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_get_giftcard_details( $request ) {
@@ -111,9 +114,10 @@ function mwb_get_giftcard_details( $request ) {
 /**
  * Redeem Giftcard Offline
  *
+ * @since      1.0.0
  * @name mwb_redeem_giftcard_offline
  * @param mixed $request Request.
- * @author makewebbetter<webmaster@makewebbetter.com>
+ * @author makewebbetter<ticket@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_redeem_giftcard_offline( $request ) {
@@ -246,9 +250,10 @@ function mwb_redeem_giftcard_offline( $request ) {
 /**
  * Recharge Giftcard Offline
  *
+ * @since      1.0.0
  * @name mwb_recharge_giftcard_offine
  * @param mixed $request request.
- * @author makewebbetter<webmaster@makewebbetter.com>
+ * @author makewebbetter<ticket@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_recharge_giftcard_offine( $request ) {
@@ -352,9 +357,10 @@ function mwb_recharge_giftcard_offine( $request ) {
 /**
  * Check permission
  *
+ * @since      1.0.0
  * @name mwb_permission_check
  * @param mixed $request Request.
- * @author makewebbetter<webmaster@makewebbetter.com>
+ * @author makewebbetter<ticket@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_permission_check( $request ) {

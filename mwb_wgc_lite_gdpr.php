@@ -2,7 +2,8 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
+ * @since             1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Return the default suggested privacy policy content.
  *
+ * @since             1.0.0
  * @return string The default policy content.
+ * @name mwb_wgm_plugin_get_default_privacy_content
+ * @author makewebbetter<ticket@makewebbetter.com>
+ * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_get_default_privacy_content() {
 	return '<h2>' . __( 'Stored Recipient Details for sending Gift Card', 'woo-gift-cards-lite' ) . '</h2>' .
@@ -21,6 +26,11 @@ function mwb_wgm_plugin_get_default_privacy_content() {
 
 /**
  * Add the suggested privacy policy text to the policy postbox.
+ *
+ * @since             1.0.0
+ * @name mwb_wgm_plugin_add_suggested_privacy_content
+ * @author makewebbetter<ticket@makewebbetter.com>
+ * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_add_suggested_privacy_content() {
 	$content = mwb_wgm_plugin_get_default_privacy_content();
@@ -34,9 +44,13 @@ add_action( 'admin_init', 'mwb_wgm_plugin_add_suggested_privacy_content', 20 );
 /**
  * Register exporter for Plugin user data.
  *
+ * @since             1.0.0
  * @see https://github.com/allendav/wp-privacy-requests/blob/master/EXPORT.md
  * @param array $exporters Details of all the exporters.
  * @return array
+ * @name mwb_wgm_plugin_register_exporters
+ * @author makewebbetter<ticket@makewebbetter.com>
+ * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_register_exporters( $exporters ) {
 	$exporters[] = array(
@@ -52,10 +66,14 @@ add_filter( 'wp_privacy_personal_data_exporters', 'mwb_wgm_plugin_register_expor
 /**
  * Exporter for Plugin user data.
  *
+ * @since             1.0.0
  * @see https://github.com/allendav/wp-privacy-requests/blob/master/EXPORT.md
  * @param string $email_address Contains Email Addresss.
  * @param int    $page contains page.
  * @return array
+ * @name mwb_wgm_plugin_user_data_exporter
+ * @author makewebbetter<ticket@makewebbetter.com>
+ * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 	$export_items = array();
@@ -127,7 +145,6 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 								);
 							}
 						}
-						// Add $data to $export items
 						// Add this group of items to the exporters data array.
 						$export_items[] = array(
 							'group_id'    => $group_id,
@@ -153,8 +170,12 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 /**
  * Register eraser for Plugin user data.
  *
+ * @since             1.0.0
  * @param array $erasers contains erased data.
  * @return array
+ * @name mwb_wgm_plugin_register_erasers
+ * @author makewebbetter<ticket@makewebbetter.com>
+ * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_register_erasers( $erasers = array() ) {
 	$erasers[] = array(
@@ -169,9 +190,13 @@ add_filter( 'wp_privacy_personal_data_erasers', 'mwb_wgm_plugin_register_erasers
 /**
  * Eraser for Plugin user data.
  *
+ * @since             1.0.0
  * @param string $email_address contains email address.
  * @param int    $page conains page.
  * @return array
+ * @name mwb_wgm_plugin_user_data_eraser
+ * @author makewebbetter<ticket@makewebbetter.com>
+ * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 	if ( empty( $email_address ) ) {

@@ -4,11 +4,11 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       http://makewebbetter.com/
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/admin/partials
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

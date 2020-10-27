@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,17 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/admin
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin
  */
 
 /**This class is for generating the html for the settings.
  *
  * This file use to display the function fot the html
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/admin
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Woocommerce_Giftcard_Admin_Settings {
 
@@ -34,7 +34,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_generate_checkbox_html
 	 * @param array $value contains the setting array.
 	 * @param array $general_settings contains the setting array.
-	 * @since 1.0.0
+	 * @since 2.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_generate_checkbox_html( $value, $general_settings ) {
 		if ( ( isset( $general_settings [ $value ['id'] ] ) && ( 'on' == $general_settings [ $value ['id'] ] ) ) || ( isset( $general_settings [ $value ['id'] ] ) && ( 'yes' == $general_settings [ $value ['id'] ] ) ) ) {
@@ -55,7 +57,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_generate_radiobuttons_html
 	 * @param array $value contains array of html.
 	 * @param array $general_settings contains array of html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_radiobuttons_html( $value, $general_settings ) {
 		if ( ! empty( $general_settings[ $value['name'] ] ) ) {
@@ -75,12 +79,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 	}
 
 	/**
-	 * This function is for generating for the number for the Settings
+	 * This function is for generating for the number field for the Settings
 	 *
 	 * @name mwb_wgm_generate_number_html
 	 * @param array $value contains array of html.
 	 * @param array $general_settings contains array of html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_number_html( $value, $general_settings ) {
 
@@ -113,7 +119,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_generate_label
 	 * @param array $value contains array of html.
 	 * @param array $notification_settings contains array of html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_wp_editor( $value, $notification_settings ) {
 		if ( isset( $value['id'] ) && ! empty( $value['id'] ) ) {
@@ -149,7 +157,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 *
 	 * @name mwb_wgm_generate_label
 	 * @param array $value contains array of html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_label( $value ) {
 		?>
@@ -162,7 +172,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 *
 	 * @name mwb_wgm_generate_tool_tip
 	 * @param array $value contains array of html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_tool_tip( $value ) {
 		$allowed_tags = $this->mwb_wgm_allowed_html_for_tool_tip();
@@ -183,7 +195,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_generate_textarea_html
 	 * @param array $value contains array of html.
 	 * @param array $general_settings contains array of html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_textarea_html( $value, $general_settings ) {
 		$mwb_wgm_value = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : $value['default'];
@@ -211,7 +225,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * This function is for generating the notice of the save settings
 	 *
 	 * @name mwb_wgm_generate_textarea_html
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_settings_saved() {
 		?>
@@ -223,13 +239,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 		</div>
 		<?php
 	}
+
 	/**
 	 * Generate save button html for setting page
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_save_button_html()
 	 * @param string $name name of button.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_save_button_html( $name ) {
@@ -246,7 +263,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_generate_text_html
 	 * @param array $value contains array of settings.
 	 * @param array $general_settings contains array of settings.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_text_html( $value, $general_settings ) {
 		$mwb_wgm_value = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : '';
@@ -272,11 +291,11 @@ class Woocommerce_Giftcard_Admin_Settings {
 	/**
 	 * Generate Drop down menu fields
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_generate_search_select_html()
 	 * @param array $value contains array of settings.
 	 * @param array $general_settings contains array of settings.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_generate_search_select_html( $value, $general_settings ) {
@@ -313,9 +332,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	/**
 	 * Get the entire category in store
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_get_category()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_get_category() {
@@ -324,13 +343,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 		$category_data = $this->mwb_wgm_show_category( $categories );
 		return $category_data;
 	}
+
 	/**
 	 * Returns the category id and name
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_show_category()
 	 * @param array $categories contain array of categories.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_show_category( $categories ) {
@@ -345,6 +365,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 			return $category;
 		}
 	}
+
 	/**
 	 * Returns globally excluded products
 	 *
@@ -352,7 +373,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_get_product()
 	 * @param string $id contain id of tag.
 	 * @param string $tag contain tag.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_get_product( $id, $tag ) {
@@ -378,11 +399,11 @@ class Woocommerce_Giftcard_Admin_Settings {
 	/**
 	 * Generates input text with button
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_generate_input_text_with_button_html()
 	 * @param array $value contain array of html.
 	 * @param array $general_settings Contains array of html.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_generate_input_text_with_button_html( $value, $general_settings ) {
@@ -399,13 +420,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 		}
 		$this->mwb_wgm_generate_bottom_description_field( $value );
 	}
+
 	/**
 	 * Generates button
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_generate_input_text_with_button_html()
 	 * @param array $val Contains array of html.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_generate_button_html( $val ) {
@@ -413,13 +435,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 		<input class = "<?php echo esc_attr( array_key_exists( 'class', $val ) ? $val['class'] : '' ); ?>"  type = "button" value = "<?php echo esc_attr( array_key_exists( 'value', $val ) ? $val['value'] : '' ); ?>" />
 		<?php
 	}
+
 	/**
 	 * Generates paragraph to show picture
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_generate_showbox()
 	 * @param array $val Contains array of html.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_generate_showbox( $val ) {
@@ -439,7 +462,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_sanitize_settings_data
 	 * @param array $setting_html_array Contains array of settings.
 	 * @param array $saved_settings Contains array of saved settings.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_common_settings( $setting_html_array, $saved_settings ) {
 		if ( isset( $setting_html_array ) && is_array( $setting_html_array ) && ! empty( $setting_html_array ) ) {
@@ -487,7 +512,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_generate_text_with_description
 	 * @param array $setting_html_array Contains array of settings.
 	 * @param array $saved_settings Contains array of saved settings.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_text_with_description( $setting_html_array, $saved_settings ) {
 		$this->mwb_wgm_generate_text_html( $setting_html_array, $saved_settings );
@@ -495,11 +522,13 @@ class Woocommerce_Giftcard_Admin_Settings {
 	}
 
 	/**
-	 * This function is used to generate bottom description field
+	 * This function is used to generate bottom description field.
 	 *
 	 * @name mwb_wgm_generate_bottom_description_field
 	 * @param array $setting_html_array contains array of setting html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_generate_bottom_description_field( $setting_html_array ) {
 		?>
@@ -513,7 +542,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_sanitize_email_settings_data
 	 * @param array $posted_data contains array of posted data.
 	 * @param array $setting_html_array contains array of setting html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_sanitize_email_settings_data( $posted_data, $setting_html_array ) {
 		if ( is_array( $setting_html_array ) && ! empty( $setting_html_array ) && is_array( $posted_data ) ) {
@@ -564,7 +595,9 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name mwb_wgm_sanitize_settings_data
 	 * @param array $posted_data contains array of posted data.
 	 * @param array $setting_html_array contains array of setting html.
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_sanitize_settings_data( $posted_data, $setting_html_array ) {
 		if ( isset( $posted_data ) && is_array( $posted_data ) && ! empty( $posted_data ) ) {
@@ -581,11 +614,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 		}
 		return $posted_data;
 	}
+
 	/**
 	 * This is function is used for the validating the data.
 	 *
 	 * @name mwb_wgm_allowed_html
-	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 2.0.0
 	 */
 	public function mwb_wgm_allowed_html_for_tool_tip() {
 		$allowed_tags = array(

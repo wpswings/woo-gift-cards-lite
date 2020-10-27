@@ -2,5 +2,5 @@
 /**
  * Silence is golden.
  *
- * @package           Woocommerce_gift_cards_lite
+ * @package           woo-gift-cards-lite
  */

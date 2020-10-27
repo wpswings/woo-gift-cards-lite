@@ -2,11 +2,11 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://makewebbetter.com/
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/admin
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin
  */
 
 /**
@@ -15,9 +15,9 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/admin
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin
+ * @author     makewebbetter<ticket@makewebbetter.com>
  */
 class Woocommerce_Gift_Cards_Lite_Admin {
 
@@ -170,11 +170,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Add a submenu inside the Woocommerce Menu Page
+	 * Add a submenu inside the Giftcard CPT Menu.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_admin_menu()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_admin_menu() {
@@ -191,7 +191,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_admin_setting()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_admin_setting() {
@@ -201,9 +201,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Contain all the giftcard premium features inside this panel.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @name mwb_wgm_premium_features()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_premium_features() {
@@ -221,7 +221,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name mwb_wgm_gift_card_product()
 	 * @param array $types product types.
 	 * @return $types.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_gift_card_product( $types ) {
@@ -237,7 +237,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_get_pricing_type()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_get_pricing_type() {
@@ -255,7 +255,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_woocommerce_product_options_general_product_data()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_product_options_general_product_data() {
@@ -451,7 +451,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_save_post()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_save_post() {
@@ -571,7 +571,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name mwb_wgm_woocommerce_product_data_tabs()
 	 * @param array $tabs product tabs.
 	 * @return $tabs.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_product_data_tabs( $tabs ) {
@@ -594,7 +594,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param int   $item_id item id.
 	 * @param array $item item.
 	 * @param array $_product product.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ) {
@@ -653,7 +653,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name mwb_wgm_woocommerce_hidden_order_itemmeta()
 	 * @param array $order_items order items.
 	 * @return $order_items.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_hidden_order_itemmeta( $order_items ) {
@@ -668,9 +668,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Create custom post name Giftcard for creating Giftcard Template
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_giftcard_custompost
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_giftcard_custom_post() {
 		$labels = array(
@@ -717,10 +718,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * This function is to add meta field like field for instruction how to use shortcode in email template
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_edit_form_after_title
 	 * @param object $post post.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_edit_form_after_title( $post ) {
 		$mwb_wgm_post_type = get_post_type( $post );
@@ -779,9 +781,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Added Mothers Day Template
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_mothers_day_template
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_mothers_day_template() {
 
@@ -843,9 +846,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Added New Template
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_new_template
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_new_template() {
 
@@ -907,9 +911,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Added custom Template
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_insert_custom_template
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_insert_custom_template() {
 		$mwb_wgm_template = get_option( 'mwb_wgm_insert_custom_template', '' );
@@ -969,9 +974,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Added Christmas Template
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_insert_christmas_template
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_insert_christmas_template() {
 		$mwb_wgm_template = get_option( 'mwb_wgm_merry_christmas_template', '' );
@@ -1047,8 +1053,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array  $actions actions.
 	 * @param object $post post.
 	 * @return $actions.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 1.0.0
 	 */
 	public function mwb_wgm_preview_gift_template( $actions, $post ) {
 		if ( 'giftcard' == $post->post_type ) {
@@ -1061,8 +1068,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Preview of email template
 	 *
 	 * @name mwb_wgm_preview_email_template
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @since 1.0.0
 	 */
 	public function mwb_wgm_preview_email_template() {
 		if ( isset( $_GET['mwb_wgm_template'] ) ) {
@@ -1124,11 +1132,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * This is used to add row meta on plugin activation.
 	 *
+	 * @since 1.0.0
 	 * @name mwb_custom_plugin_row_meta
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @param mixed $links Contains links.
 	 * @param mixed $file Contains main file.
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
@@ -1146,9 +1155,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * This function is used to get all the templates in giftcard lite plugin.
 	 *
+	 * @since 1.0.0
 	 * @name mwb_wgm_get_all_lite_templates
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_get_all_lite_templates() {
 		$mwb_lite_templates = array(
@@ -1164,9 +1174,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Show plugin changes from upgrade notice
 	 *
 	 * @since 2.0.0
-	 *
+	 * @name in_plugin_update_message
 	 * @param  string $args Holds the arguments.
 	 * @param  string $response Holds the response.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function in_plugin_update_message( $args, $response ) {
 		$transient_name = 'giftcard_upgrade_notice_' . $args['Version'];
@@ -1183,11 +1195,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Parse upgrade notice from readme.txt file.
 	 *
-	 * @since 2.5.8
-	 *
+	 * @since 2.0.0
+	 * @name parse_update_notice
 	 * @param  string $content Holds the content.
 	 * @param  string $new_version Holds the new version.
 	 * @return string
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function parse_update_notice( $content, $new_version ) {
 		// Output Upgrade Notice.
@@ -1226,7 +1240,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Set Cron for plugin notification.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name mwb_wgm_set_cron_for_plugin_notification
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_set_cron_for_plugin_notification() {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
@@ -1242,6 +1259,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * This function is used to save notification message with notification id.
+	 *
+	 * @since    2.0.0
+	 * @name mwb_wgm_save_notice_message
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_save_notice_message() {
 		$mwb_notification_data = $this->mwb_get_update_notification_data();
@@ -1255,6 +1277,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * This function is used to get notification data from server.
+	 *
+	 * @since    2.0.0
+	 * @name mwb_get_update_notification_data
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_get_update_notification_data() {
 		$mwb_notification_data = array();
@@ -1282,6 +1309,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * This function is used to display notoification bar at admin.
+	 *
+	 * @since    2.0.0
+	 * @name mwb_wgm_display_notification_bar
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_display_notification_bar() {
 		$screen = get_current_screen();
@@ -1317,8 +1349,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * This function is used to dismiss admin notices.
 	 *
+	 * @since    2.0.0
 	 * @name mwb_wgm_dismiss_notice
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_dismiss_notice() {
@@ -1333,6 +1366,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * The function displays a button to enable plugin after plugin activation.
+	 *
+	 * @since    2.0.0
+	 * @name mwb_wgm_setting_notice_on_activation
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_setting_notice_on_activation() {
 		/* Check transient, if available display notice */
@@ -1365,7 +1403,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
-	 * @since    1.0.0
+	 * @since    2.5.0
+	 * @name add_mwb_frontend_screens
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_mwb_frontend_screens( $valid_screens = array() ) {
 
@@ -1379,7 +1420,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
-	 * @since    1.0.0
+	 * @since    2.5.0
+	 * @name add_mwb_deactivation_screens
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
 

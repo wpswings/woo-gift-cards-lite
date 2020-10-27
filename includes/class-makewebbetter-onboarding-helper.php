@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding_Helper
- * @subpackage Makewebbetter_Onboarding_Helper/includes/
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes/
  */
 
 /**
@@ -15,9 +15,9 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Makewebbetter_Onboarding_Helper
- * @subpackage Makewebbetter_Onboarding_Helper/admin
- * @author     Make Web Better <dev@mwb.com>
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin
+ * @author     makewebbetter<ticket@makewebbetter.com>
  */
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	return;
@@ -115,7 +115,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name add_onboarding_popup_screen
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_onboarding_popup_screen() {
 
@@ -128,7 +131,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name add_deactivation_popup_screen
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_deactivation_popup_screen() {
 
@@ -142,7 +148,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Validate current screen.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name is_valid_page_screen
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function is_valid_page_screen() {
 
@@ -166,7 +175,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Validate the popup to be shown on screen.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name can_show_onboarding_popup
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function can_show_onboarding_popup() {
 
@@ -190,15 +202,16 @@ class Makewebbetter_Onboarding_Helper {
 				return false;
 			}
 		}
-
-		// By default Show.
 		return true;
 	}
 
 	/**
 	 * Add your onboarding form fields.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name add_on_boarding_form_fields
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_on_boarding_form_fields() {
 
@@ -339,7 +352,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Add your deactivation form fields.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name add_deactivation_form_fields
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_deactivation_form_fields() {
 
@@ -448,6 +464,8 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since       1.0.0
 	 * @param       array  $attr               The attributes of this field.
 	 * @param       string $base_class         The basic class for the label.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function render_field_html( $attr = array(), $base_class = 'on-boarding' ) {
 		$id     = ! empty( $attr['id'] ) ? $attr['id'] : '';
@@ -580,7 +598,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Send the data to MWB server.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name send_onboarding_data
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function send_onboarding_data() {
 
@@ -655,7 +676,10 @@ class Makewebbetter_Onboarding_Helper {
 	 * Covert array to html.
 	 *
 	 * @param      array $formatted_data       The parsed data submitted vai form.
-	 * @since      1.0.0
+	 * @since      2.0.0
+	 * @name    render_form_data_into_table
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function render_form_data_into_table( $formatted_data = array() ) {
 
@@ -688,7 +712,10 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Skip the popup for some days.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
+	 * @name    skip_onboarding_popup
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function skip_onboarding_popup() {
 
@@ -701,7 +728,10 @@ class Makewebbetter_Onboarding_Helper {
 	 * Add additional validations to onboard screen.
 	 *
 	 * @param      string $result       The result of this validation.
-	 * @since    1.0.0
+	 * @since      1.0.0
+	 * @name       add_mwb_additional_validation
+	 * @author     makewebbetter<ticket@makewebbetter.com>
+	 * @link       https://www.makewebbetter.com/
 	 */
 	public function add_mwb_additional_validation( $result = true ) {
 
@@ -711,6 +741,4 @@ class Makewebbetter_Onboarding_Helper {
 
 		return $result;
 	}
-
-	// End of Class.
 }
