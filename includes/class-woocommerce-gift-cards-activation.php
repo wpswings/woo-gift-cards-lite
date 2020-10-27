@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package    Woocommerce_gift_cards_lite
+ * @package    woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,15 +14,15 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 	 *
 	 * @name    Woocommerce_Gift_Cards_Activation
 	 * @category Class
-	 * @author   makewebbetter <webmaster@makewebbetter.com>
+	 * @author   makewebbetter <ticket@makewebbetter.com>
 	 */
 	class Woocommerce_Gift_Cards_Activation {
 		/**
 		 * This function is used to restore the overall functionality of plugin
 		 *
 		 * @name mwb_wgm_restore_data
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_restore_data() {
 			/*General setting tab data*/
@@ -67,8 +67,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_general_settings_data
 		 * @param boolean $general_process_completion_flag contains the flag value.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_general_settings_data( $general_process_completion_flag ) {
 			$mwb_general_settings = get_option( 'mwb_wgm_general_settings', array() );
@@ -124,8 +124,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_product_settings_data
 		 * @param boolean $product_process_completion_flag contains the flag value.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_product_settings_data( $product_process_completion_flag ) {
 			$product_setting_flag = false;
@@ -156,8 +156,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_mail_settings_data
 		 * @param boolean $mail_process_completion_flag contains the flag value.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_mail_settings_data( $mail_process_completion_flag ) {
 
@@ -188,8 +188,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_delivery_settings_data
 		 * @param boolean $delivery_process_completion_flag contains the flag value.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_delivery_settings_data( $delivery_process_completion_flag ) {
 			$delivery_setting_flag = false;
@@ -217,8 +217,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_other_settings_data
 		 * @param boolean $other_process_completion_flag contains the flag value.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_other_settings_data( $other_process_completion_flag ) {
 			$other_setting_flag = false;
@@ -242,8 +242,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 * Removed fields in new lite plugin
 		 *
 		 * @name delete_additional_data
-		 * @author makewebbetter<webmaster@makewebbetter.com>
-		 * @link http://www.makewebbetter.com/
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
 		 */
 		public function delete_additional_data() {
 			delete_option( 'mwb_wgm_general_setting_giftcard_applybeforetx' );

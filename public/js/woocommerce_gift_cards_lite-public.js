@@ -2,7 +2,7 @@
  * All of the code for public-facing JavaScript source
  * should reside in this file.
  *
- * @package           Woocommerce_gift_cards_lite
+ * @package           woo-gift-cards-lite
  */
 
 (function( $ ) {

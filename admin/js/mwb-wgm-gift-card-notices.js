@@ -2,7 +2,7 @@
  * All of the code for notices on your admin-facing JavaScript source
  * should reside in this file.
  *
- * @package           Woocommerce_gift_cards_lite
+ * @package           woo-gift-cards-lite
  */
 
 jQuery( document ).ready(
@@ -22,7 +22,7 @@ jQuery( document ).ready(
 						type: "POST",
 						data: data,
 						success: function(response)
-					{
+						{
 							window.location.reload();
 						}
 					}

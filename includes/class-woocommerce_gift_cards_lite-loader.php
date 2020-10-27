@@ -2,11 +2,11 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       http://makewebbetter.com/
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/includes
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes
  */
 
 /**
@@ -16,9 +16,9 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Woocommerce_gift_cards_lite_Loader {
 

@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://makewebbetter.com/
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/includes
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes
  */
 
 /**
@@ -20,17 +20,19 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/includes
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Woocommerce_gift_cards_lite_i18n {
-
 
 	/**
 	 * Load the plugin text domain for translation.
 	 *
 	 * @since    1.0.0
+	 * @name load_plugin_textdomain
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function load_plugin_textdomain() {
 
@@ -39,9 +41,5 @@ class Woocommerce_gift_cards_lite_i18n {
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
 	}
-
-
-
 }

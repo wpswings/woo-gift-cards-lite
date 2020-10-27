@@ -4,11 +4,11 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       http://makewebbetter.com/
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Woocommerce_gift_cards_lite
- * @subpackage Woocommerce_gift_cards_lite/admin/partials
+ * @package    woo-gift-cards-lite
+ * @subpackage woo-gift-cards-lite/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,10 +46,10 @@ $mwb_wgm_setting_tab['redeem_tab'] = array(
 	'title' => esc_html__( 'Gift Card Redeem', 'woo-gift-cards-lite' ),
 	'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/redeem-giftcard-settings.php',
 );
-if ( !mwb_uwgc_pro_active() ) {
+if ( ! mwb_uwgc_pro_active() ) {
 	$mwb_wgm_setting_tab['premium_plugin'] = array(
 		'title' => esc_html__( 'Premium Features', 'woo-gift-cards-lite' ),
-			'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-premium-features.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-premium-features.php',
 	);
 }
 $mwb_wgm_setting_tab = apply_filters( 'mwb_wgm_add_gift_card_setting_tab_after', $mwb_wgm_setting_tab );

@@ -2,7 +2,7 @@
  * All of the code for notices on your admin-facing JavaScript source
  * should reside in this file.
  *
- * @package           Woocommerce_gift_cards_lite
+ * @package          woo-gift-cards-lite
  */
 
 (function( $ ) {
@@ -77,20 +77,20 @@
 			jQuery( '.mwb_wgm_mail_setting_background_logo' ).click(
 				function()
 				{
-							var imageurl = $( "#mwb_mail_other_setting_background_logo_value" ).val();
-							tb_show( '', 'media-upload.php?TB_iframe=true' );
-							 window.send_to_editor = function(html)
+					var imageurl = $( "#mwb_mail_other_setting_background_logo_value" ).val();
+					tb_show( '', 'media-upload.php?TB_iframe=true' );
+					 window.send_to_editor = function(html)
 					{
-								var imageurl = jQuery( html ).attr( 'href' );
-								if (typeof imageurl == 'undefined') {
-									imageurl = jQuery( html ).attr( 'src' );
-								}
-								$( "#mwb_wgm_mail_setting_background_logo_value" ).val( imageurl );
-								$( "#mwb_wgm_mail_setting_background_logo_image" ).attr( "src",imageurl );
-								$( "#mwb_wgm_mail_setting_remove_background" ).show();
-								tb_remove();
-							 };
-							return false;
+						var imageurl = jQuery( html ).attr( 'href' );
+						if (typeof imageurl == 'undefined') {
+							imageurl = jQuery( html ).attr( 'src' );
+						}
+						$( "#mwb_wgm_mail_setting_background_logo_value" ).val( imageurl );
+						$( "#mwb_wgm_mail_setting_background_logo_image" ).attr( "src",imageurl );
+						$( "#mwb_wgm_mail_setting_remove_background" ).show();
+						tb_remove();
+					 };
+					return false;
 				}
 			);
 
