@@ -16,9 +16,9 @@ jQuery(document).ready( function($) {
 	embed_id_to_deactivation_urls();
 
 	// On click of deactivate.
-	if( 'plugins.php' == mwb.current_screen ) {
+	if( 'plugins.php' == mwb_onboarding.current_screen ) {
 
-		add_deactivate_slugs_callback( mwb.current_supported_slug );
+		add_deactivate_slugs_callback( mwb_onboarding.current_supported_slug );
 
 		jQuery( document ).on( 'change','.on-boarding-radio-field' ,function(e){
 
@@ -58,9 +58,9 @@ jQuery(document).ready( function($) {
 		jQuery.ajax({
             type: 'post',
             dataType: 'json',
-            url: mwb.ajaxurl,
+            url: mwb_onboarding.ajaxurl,
             data: {
-                nonce : mwb.auth_nonce, 
+                nonce : mwb_onboarding.auth_nonce, 
                 action: 'skip_onboarding_popup' ,
             },
             success: function( msg ){
@@ -80,15 +80,15 @@ jQuery(document).ready( function($) {
 		jQuery.ajax({
             type: 'post',
             dataType: 'json',
-            url: mwb.ajaxurl,
+            url: mwb_onboarding.ajaxurl,
             data: {
-                nonce : mwb.auth_nonce, 
+                nonce : mwb_onboarding.auth_nonce, 
                 action: 'send_onboarding_data' ,
                 form_data: form_data,  
             },
             success: function( msg ){
             	jQuery( document ).find('#mwb_wgm_loader').hide();
-        		if( 'plugins.php' == mwb.current_screen ) {
+        		if( 'plugins.php' == mwb_onboarding.current_screen ) {
 					window.location.replace( deactivate_url );
 				}
                 mwb_hide_onboard_popup();

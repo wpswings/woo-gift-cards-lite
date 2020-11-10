@@ -1313,4 +1313,20 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	public function mwb_wgm_apply_already_created_giftcard_coupons() {
 		return false;
 	}
+
+	/**
+	 * Compatible with flatsome minicart price issue
+	 *
+	 * @since 2.0.6
+	 * @name mwb_mini_cart_product_price
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_mini_cart_product_price( $html, $cart_item, $cart_item_key ){
+		if ( isset( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) && !empty( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) ) {
+			$product_price = $cart_item['product_meta']['meta_data']['mwb_wgm_price'];
+			$html = wc_price( $product_price);
+		}
+		return $html;
+	}
 }
