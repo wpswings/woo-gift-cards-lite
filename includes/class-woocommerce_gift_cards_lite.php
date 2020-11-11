@@ -127,7 +127,7 @@ class Woocommerce_gift_cards_lite {
 		 * The class responsible for defining all actions that occur in the onboarding the site data
 		 * in the admin side of the site.
 		 */
-		! class_exists( 'WooCommerce_Gift_Cards_Lite_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
+		! class_exists( 'WooCommerce_Gift_Cards_Lite_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce_gift_cards_lite-onboarding-helper.php';
 		$this->onboard = new WooCommerce_Gift_Cards_Lite_Onboarding_Helper();
 	}
 
