@@ -16,17 +16,17 @@
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @package    woo-gift-cards-lite
- * @subpackage woo-gift-cards-lite/admin
+ * @subpackage woo-gift-cards-lite/includes/
  * @author     makewebbetter<ticket@makewebbetter.com>
  */
-if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
+if ( class_exists( 'WooCommerce_Gift_Cards_Lite_Onboarding_Helper' ) ) {
 	return;
 }
 
 /**
- * Helper module for MakeWebBetter plugins.
+ * Helper module for WooCommerce Gift Cards Lite plugins.
  */
-class Makewebbetter_Onboarding_Helper {
+class WooCommerce_Gift_Cards_Lite_Onboarding_Helper {
 
 	/**
 	 * The single instance of the class.
@@ -67,7 +67,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 */
 	private static $plugin_name = 'Ultimate Gift Cards For WooCommerce';
-	
+
 	private static $plugin_url;
 
 	/**
@@ -287,7 +287,7 @@ class Makewebbetter_Onboarding_Helper {
 		}
 
 		$currency_symbol = get_woocommerce_currency_symbol();
-		$store_name = get_bloginfo('name');
+		$store_name = get_bloginfo( 'name' );
 		$store_url = get_home_url();
 
 		/**
@@ -401,6 +401,16 @@ class Makewebbetter_Onboarding_Helper {
 			),
 
 			rand() => array(
+				'id' => 'plugin-name',
+				'label' => '',
+				'type' => 'hidden',
+				'name' => 'org_plugin_name',
+				'value' => self::$plugin_name,
+				'required' => '',
+				'extra-class' => '',
+			),
+			
+			rand() => array(
 				'id' => 'show-counter',
 				'label' => '',
 				'type' => 'hidden',
@@ -430,7 +440,7 @@ class Makewebbetter_Onboarding_Helper {
 			$current_user_email = $current_user->user_email ? $current_user->user_email : '';
 		}
 
-		$store_name = get_bloginfo('name');
+		$store_name = get_bloginfo( 'name' );
 		$store_url = get_home_url();
 
 		/**
@@ -570,14 +580,15 @@ class Makewebbetter_Onboarding_Helper {
 						</div>
 					<?php endforeach; ?>
 
-				 <?php endif; 
+					<?php
+				 endif;
 
 				break;
 
 			case 'checkbox':
-			   
-			   // If field requires multiple answers.
-				if ( ! empty( $options ) && is_array( $options ) ) : ?>
+				// If field requires multiple answers.
+				if ( ! empty( $options ) && is_array( $options ) ) :
+					?>
 
 					<label class="on-boarding-label" for="<?php echo esc_attr( $id ); ?>'"><?php echo esc_attr( $label ); ?></label>
 					
@@ -680,52 +691,61 @@ class Makewebbetter_Onboarding_Helper {
 
 			foreach ( $form_data as $key => $input ) {
 
-				if( 'show-counter' == $input->name ) {
+				if ( 'show-counter' == $input->name ) {
 					continue;
 				}
-			
+
 				if ( false !== strrpos( $input->name, '[]' ) ) {
 
 					$new_key = str_replace( '[]', '', $input->name );
 					$new_key = str_replace( '"', '', $new_key );
-					
-					array_push( $formatted_data, array(
-						'name'	=>	$new_key,
-						'value'	=>	$input->value,	
-					));
+
+					array_push(
+						$formatted_data,
+						array(
+							'name'  => $new_key,
+							'value' => $input->value,
+						)
+					);
 
 				} else {
 
 					$input->name = str_replace( '"', '', $input->name );
 
-					array_push( $formatted_data, array(
-						'name'	=>	$input->name,
-						'value'	=>	$input->value,	
-					));
+					array_push(
+						$formatted_data,
+						array(
+							'name'  => $input->name,
+							'value' => $input->value,
+						)
+					);
 				}
 			}
 		}
 
 		try {
 
-			$found = current(array_filter($formatted_data, function($item) {
-				return isset($item['name']) && 'plugin_deactivation_reason' == $item['name'];
-			}));
-			
-			if( ! empty( $found ) ) {
+			$found = current(
+				array_filter(
+					$formatted_data,
+					function( $item ) {
+						return isset( $item['name'] ) && 'plugin_deactivation_reason' == $item['name'];
+					}
+				)
+			);
+
+			if ( ! empty( $found ) ) {
 				$action_type = 'deactivation';
-			}
-			else {
-				$action_type =  'onboarding';
+			} else {
+				$action_type = 'onboarding';
 			}
 
 			if ( ! empty( $formatted_data ) && is_array( $formatted_data ) ) {
 
 				unset( $formatted_data['show-counter'] );
-				
+
 				$this->handle_form_submission_for_hubspot( $formatted_data, $action_type );
 			}
-
 		} catch ( Exception $e ) {
 
 			echo json_encode( $e->getMessage() );
@@ -817,21 +837,23 @@ class Makewebbetter_Onboarding_Helper {
 	 * @param      string $result       The result of this validation.
 	 * @since    1.0.0
 	 */
-	protected function handle_form_submission_for_hubspot( $submission = false, $action_type="onboarding" ) {
-		
-		if( 'onboarding' ==  $action_type ) {
-			array_push( $submission, array(
-				'name'	=>	'currency',
-				'value'	=>	get_woocommerce_currency(),	
-			));
+	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
+
+		if ( 'onboarding' == $action_type ) {
+			array_push(
+				$submission,
+				array(
+					'name'  => 'currency',
+					'value' => get_woocommerce_currency(),
+				)
+			);
 		}
 
 		$result = $this->hubwoo_submit_form( $submission, $action_type );
 
-		if ( true == $result[ 'success' ] ) {
+		if ( true == $result['success'] ) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -842,23 +864,27 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	private function hic_get( $endpoint, $headers ){
+	private function hic_get( $endpoint, $headers ) {
 
-		$url = $this->base_url.$endpoint;
+		$url = $this->base_url . $endpoint;
 
 		$ch = @curl_init();
-		@curl_setopt($ch, CURLOPT_POST, false);
-		@curl_setopt($ch, CURLOPT_URL, $url);
-		@curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		@curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		@curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-		$response = @curl_exec($ch);
-		$status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$curl_errors = curl_error($ch);
-		@curl_close($ch);
+		@curl_setopt( $ch, CURLOPT_POST, false );
+		@curl_setopt( $ch, CURLOPT_URL, $url );
+		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
+		$response = @curl_exec( $ch );
+		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+		$curl_errors = curl_error( $ch );
+		@curl_close( $ch );
 
-		return array( 'status_code' => $status_code, 'response' => $response, 'errors' => $curl_errors );
+		return array(
+			'status_code' => $status_code,
+			'response' => $response,
+			'errors' => $curl_errors,
+		);
 	}
 
 
@@ -867,67 +893,69 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	private function hic_post( $endpoint, $post_params, $headers ){
-		
+	private function hic_post( $endpoint, $post_params, $headers ) {
+
 		$url = $this->base_url . $endpoint;
 
 		$ch = @curl_init();
-		@curl_setopt($ch, CURLOPT_POST, true);
-		@curl_setopt($ch, CURLOPT_URL, $url);
-		@curl_setopt($ch, CURLOPT_POSTFIELDS,  $post_params  );
-		@curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		@curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		@curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-		$response = @curl_exec($ch);
-		$status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$curl_errors = curl_error($ch);
-		@curl_close($ch);
+		@curl_setopt( $ch, CURLOPT_POST, true );
+		@curl_setopt( $ch, CURLOPT_URL, $url );
+		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
+		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
+		$response = @curl_exec( $ch );
+		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+		$curl_errors = curl_error( $ch );
+		@curl_close( $ch );
 
-		return array( 'status_code' => $status_code, 'response' => $response, 'errors' => $curl_errors );
+		return array(
+			'status_code' => $status_code,
+			'response' => $response,
+			'errors' => $curl_errors,
+		);
 	}
 
 	/**
 	 *  Hubwoo Onboarding Submission :: Get a form.
 	 *
-	 * @param      		$form_id   	form ID.
-	 * @since      	1.0.0
+	 * @param           $form_id    form ID.
+	 * @since       1.0.0
 	 */
-	protected function hubwoo_submit_form( $form_data=array(), $action_type ="onboarding" ) {
+	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
-		if( 'onboarding' == $action_type ) {
+		if ( 'onboarding' == $action_type ) {
 			$form_id = self::$onboarding_form_id;
-		}
-		else {
+		} else {
 			$form_id = self::$deactivation_form_id;
 		}
-			
+
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
 		$headers = array(
 			'Content-Type: application/json',
 		);
 
-		$form_data = json_encode( array( 
-				"fields" => $form_data,
-				"context"  => array(
-					"pageUri" => self::$plugin_url,
-					"pageName" => self::$plugin_name,
-					"ipAddress"	=> $this->get_client_ip()
+		$form_data = json_encode(
+			array(
+				'fields' => $form_data,
+				'context'  => array(
+					'pageUri' => self::$plugin_url,
+					'pageName' => self::$plugin_name,
+					'ipAddress' => $this->get_client_ip(),
 				),
 			)
 		);
 
 		$response = $this->hic_post( $url, $form_data, $headers );
 
-		if( $response['status_code'] == 200 ) {
-			$result = json_decode($response['response'], true);  
-			$result['success'] = true;  
-		}
+		if ( $response['status_code'] == 200 ) {
+			$result = json_decode( $response['response'], true );
+			$result['success'] = true;
+		} else {
 
-		else {
-
-			$result = $response; 
+			$result = $response;
 		}
 
 		return $result;
@@ -937,22 +965,23 @@ class Makewebbetter_Onboarding_Helper {
 	// Function to get the client IP address
 	function get_client_ip() {
 		$ipaddress = '';
-		if (getenv('HTTP_CLIENT_IP'))
-			$ipaddress = getenv('HTTP_CLIENT_IP');
-		else if(getenv('HTTP_X_FORWARDED_FOR'))
-			$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-		else if(getenv('HTTP_X_FORWARDED'))
-			$ipaddress = getenv('HTTP_X_FORWARDED');
-		else if(getenv('HTTP_FORWARDED_FOR'))
-			$ipaddress = getenv('HTTP_FORWARDED_FOR');
-		else if(getenv('HTTP_FORWARDED'))
-		$ipaddress = getenv('HTTP_FORWARDED');
-		else if(getenv('REMOTE_ADDR'))
-			$ipaddress = getenv('REMOTE_ADDR');
-		else
+		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
+			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
+		} else if ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
+			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
+		} else if ( getenv( 'HTTP_X_FORWARDED' ) ) {
+			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
+		} else if ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
+			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
+		} else if ( getenv( 'HTTP_FORWARDED' ) ) {
+			$ipaddress = getenv( 'HTTP_FORWARDED' );
+		} else if ( getenv( 'REMOTE_ADDR' ) ) {
+			$ipaddress = getenv( 'REMOTE_ADDR' );
+		} else {
 			$ipaddress = 'UNKNOWN';
+		}
 		return $ipaddress;
 	}
 
-// End of Class.
+	// End of Class.
 }

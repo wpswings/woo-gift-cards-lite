@@ -1322,10 +1322,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_mini_cart_product_price( $html, $cart_item, $cart_item_key ){
-		if ( isset( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) && !empty( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) ) {
+	public function mwb_mini_cart_product_price( $html, $cart_item, $cart_item_key ) {
+		if ( isset( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) && ! empty( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) ) {
 			$product_price = $cart_item['product_meta']['meta_data']['mwb_wgm_price'];
-			$html = wc_price( $product_price);
+			$html = wc_price( $product_price );
 		}
 		return $html;
 	}
