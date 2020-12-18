@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.0.5\n"
-"POT-Creation-Date: 2020-10-26 16:24+0530\n"
-"PO-Revision-Date: 2020-10-26 16:26+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.0.7\n"
+"POT-Creation-Date: 2020-11-13 17:55+0530\n"
+"PO-Revision-Date: 2020-11-13 17:56+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -133,7 +133,7 @@ msgid "Users can purchase any amount of Gift Card."
 msgstr ""
 
 #: admin/class-woocommerce_gift_cards_lite-admin.php:381
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:32
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:38
 msgid "Email Template"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgid "General Settings"
 msgstr ""
 
 #: admin/partials/templates/mwb-wgm-other-setting.php:41
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:40
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:46
 msgid "Other Settings"
 msgstr ""
 
@@ -747,7 +747,7 @@ msgid "Gift Card  Redeem / Recharge "
 msgstr ""
 
 #: admin/partials/templates/redeem-giftcard-settings.php:151
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:60
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:66
 #: includes/extra-templates/makewebbetter-deactivation-template-display.php:23
 #: includes/extra-templates/makewebbetter-onboarding-template-display.php:24
 msgid "assets/images/loading.gif"
@@ -892,77 +892,77 @@ msgstr ""
 msgid "Enter the name for account creation"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:20
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:26
 msgid "OverView"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:24
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:30
 msgid "General"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:28
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:34
 msgid "Product"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:36
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:42
 #: public/class-woocommerce_gift_cards_lite-public.php:340
 msgid "Delivery Method"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:46
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:52
 msgid "Gift Card Redeem"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:51
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:57
 msgid "Premium Features"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:66
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:72
 msgid "Gift Card Settings"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:73
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:79
 msgid "CONTACT US"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:81
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:89
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:87
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:95
 msgid "DOC"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:93
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:99
 msgid "GO PRO NOW"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:99
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:105
 msgid "https://join.skype.com/invite/IKVeNkLHebpC"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:100
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:106
 msgid "assets/images/skype_logo.png"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:100
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:106
 msgid "CHAT NOW"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:247
+#: includes/class-makewebbetter-onboarding-helper.php:320
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:264
+#: includes/class-makewebbetter-onboarding-helper.php:337
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:299
+#: includes/class-makewebbetter-onboarding-helper.php:372
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:309
+#: includes/class-makewebbetter-onboarding-helper.php:382
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:545
+#: includes/class-makewebbetter-onboarding-helper.php:628
 msgid "Select Any One Option..."
 msgstr ""
 

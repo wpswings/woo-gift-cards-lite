@@ -714,7 +714,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
-						if ( $product->is_type( 'wgm_gift_card' ) ) {
+						if ( isset( $product ) && $product->is_type( 'wgm_gift_card' ) ) {
 							$is_gift_card = true;
 						}
 					}
@@ -1312,5 +1312,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function mwb_wgm_apply_already_created_giftcard_coupons() {
 		return false;
+	}
+
+	/**
+	 * Compatible with flatsome minicart price issue
+	 *
+	 * @since 2.0.6
+	 * @name mwb_mini_cart_product_price
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_mini_cart_product_price( $html, $cart_item, $cart_item_key ) {
+		if ( isset( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) && ! empty( $cart_item['product_meta']['meta_data']['mwb_wgm_price'] ) ) {
+			$product_price = $cart_item['product_meta']['meta_data']['mwb_wgm_price'];
+			$html = wc_price( $product_price );
+			$html = apply_filters( 'mwb_wgm_updated_minicart_price', $html, $cart_item, $cart_item_key );
+		}
+		return $html;
 	}
 }

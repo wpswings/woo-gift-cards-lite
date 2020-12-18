@@ -5,11 +5,13 @@ Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, woocomm
 Requires at least: 5.0
 Tested up to: 5.5
 WC requires at least: 4.0.0
-WC tested up to: 4.6
-Stable tag: 2.0.6
+WC tested up to: 4.7
+Stable tag: 2.0.8
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
+
 
 
 Create and sell gift cards to your customers to attract more sales and multiply your revenue at your WooCommerce store
@@ -70,7 +72,8 @@ With this feature, you can exclude specific categories, products, or sale items.
 
 Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc) and learn more about the features and working of the plugin.
 
-== WHAT PREMIUM VERSION OF ULTIMATE GIFT CARDS FOR WOOCOMMERCE OFFERS ==
+== WHAT PREMIUM VERSION OF ULTIMATE WOOCOMMERCE GIFT CARDS OFFERS ==
+
 * Gift Card reporting
 * Generates Gift Card in PDF
 * 20+ pre-designed Gift Card templates
@@ -178,6 +181,12 @@ Yes. In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
+= 2.0.8 - Released on 13 November 2020 =
+* Fix: Minor Issues
+
+= 2.0.7 - Released on 10 November 2020 =
+* Fix: Mini cart issue
+
 = 2.0.6 - Released on 26 October 2020 =
 * New: Compatibility with WooCommerce 4.6
 
@@ -234,5 +243,5 @@ New: Email Template for Mothers Day
 
 
 == Upgrade Notice ==
-= 2.0.6 - Released on 26 October 2020 =
-* New: Compatibility with WooCommerce 4.6
+= 2.0.8 - Released on 13 November 2020 =
+* Fix: Minor Issues

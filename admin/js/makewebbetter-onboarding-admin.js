@@ -16,9 +16,9 @@ jQuery(document).ready( function($) {
 	embed_id_to_deactivation_urls();
 
 	// On click of deactivate.
-	if( 'plugins.php' == mwb.current_screen ) {
+	if( 'plugins.php' == mwb_onboarding.current_screen ) {
 
-		add_deactivate_slugs_callback( mwb.current_supported_slug );
+		add_deactivate_slugs_callback( mwb_onboarding.current_supported_slug );
 
 		jQuery( document ).on( 'change','.on-boarding-radio-field' ,function(e){
 
@@ -58,9 +58,9 @@ jQuery(document).ready( function($) {
 		jQuery.ajax({
             type: 'post',
             dataType: 'json',
-            url: mwb.ajaxurl,
+            url: mwb_onboarding.ajaxurl,
             data: {
-                nonce : mwb.auth_nonce, 
+                nonce : mwb_onboarding.auth_nonce, 
                 action: 'skip_onboarding_popup' ,
             },
             success: function( msg ){
@@ -80,15 +80,15 @@ jQuery(document).ready( function($) {
 		jQuery.ajax({
             type: 'post',
             dataType: 'json',
-            url: mwb.ajaxurl,
+            url: mwb_onboarding.ajaxurl,
             data: {
-                nonce : mwb.auth_nonce, 
+                nonce : mwb_onboarding.auth_nonce, 
                 action: 'send_onboarding_data' ,
                 form_data: form_data,  
             },
             success: function( msg ){
             	jQuery( document ).find('#mwb_wgm_loader').hide();
-        		if( 'plugins.php' == mwb.current_screen ) {
+        		if( 'plugins.php' == mwb_onboarding.current_screen ) {
 					window.location.replace( deactivate_url );
 				}
                 mwb_hide_onboard_popup();
@@ -139,7 +139,7 @@ jQuery(document).ready( function($) {
 	/* Add deactivate id in all the plugins links. */
 	function embed_id_to_deactivation_urls() {
 		jQuery( 'a' ).each(function(){
-		    if ( 'Deactivate' == jQuery(this).text() || 0 < jQuery(this).attr( 'href' ).search( 'action=deactivate' ) ) {
+		    if ( 'Deactivate' == jQuery(this).text() && 0 < jQuery(this).attr( 'href' ).search( 'action=deactivate' ) ) {
 		    	if( 'undefined' == typeof jQuery(this).attr( 'id' ) ) {
 			    	var slug = jQuery(this).closest( 'tr' ).attr( 'data-slug' );
 			    	jQuery(this).attr( 'id', 'deactivate-' + slug );
