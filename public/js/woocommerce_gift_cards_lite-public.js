@@ -10,6 +10,15 @@
 	'use strict';
 	jQuery( document ).ready(
 		function($){
+			var check_elementor = $(document).find('.mwb_wgm_added_wrapper').parents('.elementor-product-wgm_gift_card').length;
+			if (check_elementor != 0) {
+				if ($(document).find('.mwb_wgm_added_wrapper').length) {
+					$(document).find('.mwb_wgm_added_wrapper').siblings().wrapAll('<div class="mwb_wgm_elementor"></div>');
+					var modified_div = $(document).find('.mwb_wgm_elementor');
+					$(document).find('.mwb_wgm_added_wrapper').append(modified_div);
+				}
+			}
+
 			$( "#mwb_wgm_message" ).keyup(
 				function(){
 					var msg_length = $( document ).find( '#mwb_wgm_message' ).val().length;

@@ -234,6 +234,8 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'mwb_wgm_woocommerce_hide_order_metafields', 10, 1 );
 		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'mwb_wgm_price_based_country_giftcard' );
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
+		// Compatibility with Flatsome theme minicart price issue
+		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
 
 	}
 
