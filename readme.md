@@ -1,125 +1,111 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-300%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.5-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-4.5-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-2000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.6-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-4.8-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Ultimate Gift Cards For WooCommerce
 ![Ultimate Gift Cards For WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.png)
-* Contributors:MakeWebBetter
-* Author URI: http://makewebbetter.com/
-* Tags: gift cards, gift certificates, gift voucher, gift card, woocommerce, gift, gift certificates for woocommerce, gift card for woocommerce, woocommerce gift card, gift card plugin for woocommerce, woocommerce gift cards
+* Contributor: MakeWebBetter
+* Author URI: https://makewebbetter.com/
+* Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, woocommerce
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
 
 
 # Description
 
-_You can sell a gift card like any other product on your WooCommerce store!_
+**SELL GIFT CARD ON WORDPRESS WITH ONE OF THE HIGHEST RATED PLUGIN**
 
-_**Ultimate Gift Cards For WooCommerce**_  **plugin** will add Gift card product as a new product type and manage everything from the selling of Gift Cards to its use. This comes with many gift templates that fit with every occasion like Christmas, Valentine&#39;s Day, birthday and many more.
+[Ultimate Gift Cards for WooCommerce](https://wordpress.org/plugins/woo-gift-cards-lite/) plugin allows merchants to create, sell, and manage gift cards at their WooCommerce store. Customers can purchase these gift cards and send them to anyone by email. The recipient can use this card to make purchases at your store and he/she can also recharge/redeem these cards at your online or retail store.
 
-Start selling gift cards on your WooCommerce stores in 3 steps.
+[How To Sell Gift Cards In Your WooCommerce Store?](https://www.youtube.com/watch?v=YgPLO8HDGtc)
 
-**Start**      Create a gift card product
+**WITH THE ULTIMATE GIFT CARDS FOR WOOCOMMERCE PLUGIN YOU CAN:**
 
-**Modeling**   Save your configuration
+* Create and sell gift cards in your native language
+* Sell Gift Cards at your store in four different pricing types
+* Customize predefined gift card templates
+* Customize the coupon code length, usage, prefix, expiry date, etc.
+* Showcase gift card products on the shop page as well as on a separate page
+* Redeem gift card on online and retail store
+* Set gift cards for individual use so that customers can’t use any other coupon along with the gift card
+* Exclude products, categories, or sale items to restrict customers from buying specific items
+* Enable or Disable tax calculation for gift card products
 
-**Showcase**   List gift cards products for customers
 
-## What makes this plugin the best WooCommerce gift card plugin?
+## WHAT’S INCLUDED IN OUR FREE ULTIMATE GIFT CARD FOR WOOCOMMERCE PLUGIN: 
 
-- One click gift card product creation as well as many options for customizing according to need makes this setup _Effortless_
+**1) Flexible Delivery Options**
+Ultimate Gift Cards for WooCommerce provides you two different methods - Email and Downloadable, to deliver gift cards. You can select either as per your convenience. If you select the email method, the customer will need to enter the email of the recipient while buying the gift card. The card will be sent to the recipient’s email. Or you can choose the downloadable feature. In the downloadable delivery method gift card, an email will be sent to the buyer. 
 
-- Easy to purchase Gift Cards, customers need to specify the _recipient_, _message_ and _amount_ when purchasing
+**2) Offering in Your Local Currency**
+Compatible with Price Based on Country for WooCommerce plugin, which enables customers to place an order in their currency. This eliminates the hesitation customers face while purchasing a product in a different currency.
 
-- Gift cards touches the actual needs of the customers. Reflects the _balance_ and _no. of usages left_ after redemption. For retail stores, facilities available to redeem physical gift cards
+**3) WPML Multilingual Support**
+The plugin has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
-- Customers can get Delivery of Gift Cards through email. Plugin offering gift cards predefined email templates layout in free as per event
+**4) Four Different Pricing Types**
+The plugin offers 4 types of pricing options that are:
 
-- Compatible with _Price Based on Country for WooCommerce_ plugin which enables customers to place an order in their own currency
+*  **Default Price:** Fixed-price
+*  **Price Range:** Any price within a set range
+*  **Selected Price:** Several different but fixed price options
+*  **User Price:** Any price entered by a customer
 
-- 4 types of Pricing Options available – _Default price_, _Price Range_, _Selected Price_ and _User Price_ in this Ultimate Gift cards plugin
+**5) Tax Calculation**
+This gift card plugin allows you to calculate the tax on gift card products. You can enable this feature to let customers pay tax on the purchase of gift card products. If you don’t want them to pay tax, simply disable the feature.
 
-- Store owners can _ask customers to pay a tax_ on gift card products like other WooCommerce Products
+**6) Easy Online and Retail Redeeming**
+Customers can redeem gift cards at your online WooCommerce store or also through a Point of Sale(POS) system from a brick and mortar store. To enable this feature, you just need to generate a FREE Redeem link by providing your email and name. When you do that, you get the login credentials via email for logged in to the redeem/recharge portal, a redeem link, and an embed link. You can directly go to the redeem link to recharge or redeem gift cards. Or you can also add the embed code on your web page to create a portal for recharging/redeeming gift cards at your online store.
 
-- Shop owners can showcase Gift Card products on the _shop page_ as well as on a _separate page_
+**7) Coupon Codes and Customizable Email Templates**
+Ultimate Gift Cards for WooCommerce provide you coupon codes. You can tweak the coupon code length, prefix, expiry date, number of usages, min, and max spending limit. Moreover, you can customize the email template that delivers the gift card to the recipient. You can upload and change the height and width of the logo, change gift card message length, disclaimer text, gift card email subject, etc.
 
-- Use _Gift Cards Individually_ , this allows your customers to use gift cards individually. So that the Gift Card coupon cannot be used in conjunction with other coupons
+**8) Product and Category Exclusion Feature**
+With this feature, you can exclude specific categories, products, or sale items. If you do this, the customers won’t be able to buy the excluded products through gift cards.
 
-- For gift card coupon several customization options available to – Set the coupon code length | Add a prefix in the Gift Card coupon codes | Set expiry date of the coupon code | Set no. of usage before Gift Card is void | Set least and most amount spent allowed to use the Gift Card Coupons
+[**Free demo of Ultimate Gift Cards for WooCommerce**](https://demo.makewebbetter.com/ultimate-woocommerce-giftcard-lite/product/makewebbetter-gift-card/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-- Predefined email templates are available and _it can be customized_ according to need
+Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git) and learn more about the features and working of the plugin.
 
-- Shop owners can also _exclude some products and categories_ if they don&#39;t want to sell them using Gift Cards
+## WHAT PREMIUM VERSION OF ULTIMATE WOOCOMMERCE GIFT CARDS OFFERS 
 
-#### [_Free demo of Ultimate Gift Cards for WooCommerce_](https://demo.makewebbetter.com/ultimate-woocommerce-giftcard-lite/product/makewebbetter-gift-card/?utm_source=MWB-giftcard-git&amp;utm_medium=MWB-git-Page&amp;utm_campaign=freeDemo)
+* Gift Card reporting
+* Generates Gift Card in PDF
+* 20+ pre-designed Gift Card templates
+* Image gallery for Gift Cards
+* Gift Card scheduling
+* Import/Export Gift coupons
+* Gift Card shipping to recipient’s address
+* Twilio integration for SMS notification
+* WhatsApp sharing for Gift Cards
+* Automated balance updates
+* QR/Barcode coupon codes
+* Discount offerings on Gift Card purchase
 
-## Plugin meets your requirement, So
 
-**[Download Now](https://downloads.wordpress.org/plugin/woo-gift-cards-lite.zip)**
+## TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE GIFT CARD PLUGIN 
 
-Visit[**Ultimate Gift Cards for WooCommerce Documentation**](http://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-git&amp;utm_medium=MWB-git-Page&amp;utm_campaign=pluginDoc) and take help to configure it.
+> Note:  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-## What premium version Ultimate WooCommerce Gift Cards offers
 
-Try something out of the box and allow your customers to give surprises to their loved ones in a unique way with our Ultimate WooCommerce Gift Cards Premium Version
 
-> Note:// Take advantage of the exclusive features for your [Ultimate WooCommerce gift cards with the Premium Version](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-git&amp;utm_medium=mwb-git&amp;utm_campaign=giftcard-git)
+**LIVE DEMO OF PREMIUM VERSION** 
 
-### Generate PDF Format
+* [ **WooCommerce Gift Cards Frontend demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-The customers can generate Gift Cards in PDF format and share with their dear ones
+* [ **WooCommerce Gift Cards Backend demo**](http://demo.makewebbetter.com/woocommerce-ultimate-gift-cards/request-for-personal-demo/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-### Gallery for Gift Card
+* [ **Gift Card Redeem/Recharge demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/redeem-recharge-gift-card-vouchers/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-Create an Image Gallery for Gift Cards. The user can choose an image from the gallery of their own choice and customize gift card as per need
+### **SUPPORT**
 
-### Scheduling
+If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-Allow customers to schedule the delivery of gift cards on their special occasions
 
-### Import/Export Gift Coupons
+### **MORE ABOUT MAKEWEBBETTER**
 
-WooCommerce gift cards plugin finds an easy way for importing pre-defined coupons without any expert help. Here, you can also export gift coupons
+- [**Our Official Website**](https://makewebbetter.com/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
+- [**Follow us on Facebook Page**](https://www.facebook.com/makewebbetter)
+- [**Tweet us on @MakeWebBetter**](https://twitter.com/makewebbetter)
+- [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
+- [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
+- [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
 
-### Multiple delivery options
 
-Shop owners have an option to provide one method for delivery or multiple
-
-Here are some options this plugin covers –
-
-*  **Email To Recipient**
-
-*  **Direct Download**
-
-*  **Shipping** ( _In this feature gift card email is sent to the admin and admin will deliver the gift card to the shipping address of the recipient_ )
-
-*  **Allow Customers** _to choose any delivery method mentioned above_
-
-### Bonus for your sales team
-
-Analyze Gift Card Performance via Reporting and enable your sales team to take timely follow-ups. Each detail of the gift card sold like the amount credited, balance remaining, scheduled expiry date is very beneficial for the team
-
-### Provides Integration with Twilio
-
-Twilio integration empowers the user to share the gift cards via SMS notifications
-
-### Share with Whatsapp
-
-Buyer can share the gift card to their whatsapp contacts with predefined messages
-
-## Live Demo of Premium version
-
-[Ultimate WooCommerce Gift Card Frontend demo](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-org&amp;utm_medium=MWB-ORG-Page&amp;utm_campaign=frontend)
-
-[Ultimate WooCommerce Gift Card Backend demo](http://demo.makewebbetter.com/woocommerce-ultimate-gift-cards/request-for-personal-demo/?utm_source=MWB-giftcard-org&amp;utm_medium=MWB-ORG-Page&amp;utm_campaign=backend)
-
-[Gift Card Redeem/Recharge demo](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/redeem-recharge-gift-card-vouchers/?utm_source=MWB-giftcard-org&amp;utm_medium=MWB-ORG-Page&amp;utm_campaign=redeem)
-
-## Don&#39;t hesitate to reach us!
-
-If you need support or have any question then kindly use our online chat window [here](https://makewebbetter.com/?utm_source=MWB-giftcard-org&amp;utm_medium=MWB-org-page&amp;utm_campaign=MWB-giftcard-org) or connect with us then [Generate a Ticket](https://makewebbetter.freshdesk.com/support/tickets/new)
-
-## MORE ABOUT MAKEWEBBETTER
-
-- [Our Official Website](https://makewebbetter.com/?utm_source=MWB-giftcard-org&amp;utm_medium=MWB-org-page&amp;utm_campaign=MWB-giftcard-org)
-- [Follow us on Facebook Page](https://www.facebook.com/makewebbetter)
-- [Tweet us on @MakeWebBetter](https://twitter.com/makewebbetter)
-- [Visit our LinkedIn Account](https://www.linkedin.com/company/makewebbetter)
-- [Subscribe To Our YouTube Channel](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-- [Follow Our SlideShare](https://www.slideshare.net/MakeWebBetter)
