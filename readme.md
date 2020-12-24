@@ -1,6 +1,6 @@
 [![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-2000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.6-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-4.8-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Ultimate Gift Cards For WooCommerce
-![Ultimate Gift Cards For WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.png)
+![Ultimate Gift Cards For WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.png?rev=2406856)
 * Contributor: MakeWebBetter
 * Author URI: https://makewebbetter.com/
 * Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, woocommerce
