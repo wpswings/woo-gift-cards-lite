@@ -3,10 +3,10 @@ Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, woocommerce
 Requires at least: 5.0
-Tested up to: 5.5
+Tested up to: 5.6
 WC requires at least: 4.0.0
-WC tested up to: 4.7
-Stable tag: 2.0.8
+WC tested up to: 4.8
+Stable tag: 2.0.9
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,7 +20,7 @@ Create and sell gift cards to your customers to attract more sales and multiply 
 
 **SELL GIFT CARD ON WORDPRESS WITH ONE OF THE HIGHEST RATED PLUGIN**
 
-Ultimate Gift Cards for WooCommerce plugin allows merchants to create, sell, and manage gift cards at their WooCommerce store. Customers can purchase these gift cards and send it to anyone as an email. The recipient can use this card to make purchases at your store and he/she can also recharge/redeem these cards at your online or retail store.
+Ultimate Gift Cards for WooCommerce plugin allows merchants to create, sell, and manage gift cards at their WooCommerce store. Customers can purchase these gift cards and send them to anyone by email. The recipient can use this card to make purchases at your store and he/she can also recharge/redeem these cards at your online or retail store.
 
 [youtube https://www.youtube.com/watch?v=YgPLO8HDGtc]
 
@@ -165,7 +165,7 @@ Yes. In the Product Settings of the plugin, you can exclude the categories to re
 Yes. You can modify the Gift card email template from the "Gift Card" menu where all the templates are listed. Click on “Edit” to edit a particular gift card template. Now the editing page of the template will open. You can make the changes and update the template.
 
 = Does the Gift card plugin support multiple languages? = 
-Yes, the plugin supports multiple languages and is WPML compatible. You can also use the Loco Translate plugin to translate the strings in another language.
+Yes, the plugin supports multiple languages and is WPML compatible. You can also use the Loco Translate plugin to translate the strings into another language.
 
 = Does this Gift card plugin support Price Based on Country for WooCommerce plugin? = 
 Yes. The plugin is compatible with Price Based on Country for WooCommerce plugin which enables customers to place an order in their own currency.
@@ -180,6 +180,9 @@ Yes. In the General settings, you can set the minimum and maximum spend for your
 
 
 == Changelog ==
+
+= 2.0.9 - Released on 19 December 2020 =
+* New: Compatibility with WooCommerce 4.8 and WordPress 5.6
 
 = 2.0.8 - Released on 13 November 2020 =
 * Fix: Minor Issues
@@ -243,5 +246,5 @@ New: Email Template for Mothers Day
 
 
 == Upgrade Notice ==
-= 2.0.8 - Released on 13 November 2020 =
-* Fix: Minor Issues
+= 2.0.9 - Released on 19 December 2020 =
+* New: Compatibility with WooCommerce 4.8 and WordPress 5.6

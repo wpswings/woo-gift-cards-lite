@@ -711,6 +711,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( $old_status != $new_status ) {
 				if ( 'completed' == $new_status || 'processing' == $new_status ) {
 					$is_gift_card = false;
+					$datecheck = true;
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
@@ -725,7 +726,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'send' == $mailalreadysend ) {
 						return;
 					} else {
-						$datecheck = true;
 						$general_setting = get_option( 'mwb_wgm_general_settings', array() );
 						$giftcard_selected_date = $this->mwb_common_fun->mwb_wgm_get_template_data( $general_setting, 'mwb_wgm_general_setting_enable_selected_date' );
 						if ( 'on' == $giftcard_selected_date ) {
@@ -849,7 +849,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( $gift_order && isset( $mwb_wgm_mail_template_data['datecheck'] ) && $mwb_wgm_mail_template_data['datecheck'] ) {
 						update_post_meta( $order_id, 'mwb_wgm_order_giftcard', 'send' );
 					}
-					do_action( 'mwb_wgm_thankyou_coupon_order_status_change', $order_id, $new_status );
+					do_action( 'mwb_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status );
 				}
 			}
 		}
