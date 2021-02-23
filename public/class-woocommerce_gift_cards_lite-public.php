@@ -232,13 +232,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$mwb_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type">
 											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
-											<input type="number" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
+											<input type="text" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
 									} else {
 										$mwb_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type">
 											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
-											<input type="number" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
+											<input type="text" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
 									}
 								}
@@ -301,12 +301,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										}
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type"">
 											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
-											<input type="number" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
+											<input type="text" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
 											</p>';
 									} else {
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type"">
 											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
-											<input type="number" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
+											<input type="text" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
 											</p>';
 									}
 								}

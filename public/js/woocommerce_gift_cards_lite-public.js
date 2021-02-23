@@ -10,6 +10,11 @@
 	'use strict';
 	jQuery( document ).ready(
 		function($){
+
+			$('#mwb_wgm_price').keyup(function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			});
+
 			$("#mwb_wgm_price").attr( "min", 1);
 			var check_elementor = $(document).find('.mwb_wgm_added_wrapper').parents('.elementor-product-wgm_gift_card').length;
 			if (check_elementor != 0) {
