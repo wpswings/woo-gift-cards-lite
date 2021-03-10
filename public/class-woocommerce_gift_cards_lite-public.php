@@ -1167,7 +1167,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_wc_shipping_enabled( $enable ) {
-		if ( is_checkout() || is_cart() ) {
+		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
+		if ( ( is_checkout() || is_cart() ) && $mwb_wgc_enable ) {
 			global $woocommerce;
 			$gift_bool = false;
 			$other_bool = false;
@@ -1178,15 +1179,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 					$product_types = wp_get_object_terms( $product_id, 'product_type' );
 					if ( isset( $product_types[0] ) ) {
-						$product_type = $product_types[0]->slug;
-						if ( 'wgm_gift_card' == $product_type ) {
-							if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-								$gift_bool = true;
-							} elseif ( 'Shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-								$gift_bool_ship = true;
+						if ( isset( $cart_item['product_meta'] ) ) {
+							$product_type = $product_types[0]->slug;
+							if ( 'wgm_gift_card' == $product_type ) {
+								if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+									$gift_bool = true;
+								} elseif ( 'Shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+									$gift_bool_ship = true;
+								}
+							} else if ( ! $cart_item['data']->is_virtual() ) {
+								$other_bool = true;
 							}
-						} else if ( ! $cart_item['data']->is_virtual() ) {
-							$other_bool = true;
 						}
 					}
 				}
