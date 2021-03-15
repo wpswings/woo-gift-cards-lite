@@ -25,18 +25,44 @@
 				}
 			}
 
-			$( "#mwb_wgm_message" ).keyup(
-				function(){
-					var msg_length = $( document ).find( '#mwb_wgm_message' ).val().length;
-					if (msg_length == 0) {
-
-						$( '.mwb_box_char' ).text( 0 );
-					} else {
-						$( '.mwb_box_char' ).text( msg_length );
-					}
-
+			var max_length = mwb_wgm.msg_length;
+			var msg_length = $(document).find('#mwb_wgm_message').val().length;
+			$('.mwb_box_char').text(msg_length);
+			
+			$("#mwb_wgm_message").keyup(function(){
+				var msg_length = $(document).find('#mwb_wgm_message').val().length;
+				var html = '<ul>';
+				var error = false;
+				if ( msg_length > max_length ) {
+					this.value = this.value.substring( 0, max_length );
+					error = true;
+					$("#mwb_wgm_message").addClass("mwb_gw_error");
+					html+="<li><b>";
+					html+=mwb_wgm.msg_length_err;
+					html+="</li>";
 				}
-			);
+				if(msg_length == 0){
+					$('.mwb_box_char').text(0);
+				}
+				else if( msg_length > max_length ){
+					$('.mwb_box_char').text(max_length);
+				} else {
+					$('.mwb_box_char').text(msg_length);
+				}
+
+				html += "</ul>";
+				if(error)
+				{
+					$("#mwb_wgm_error_notice").html(html);
+					$("#mwb_wgm_error_notice").show();
+					jQuery('html, body').animate({
+						scrollTop: jQuery(".woocommerce-page").offset().top
+					}, 800);
+				} else {
+					$("#mwb_wgm_error_notice").hide();
+				}
+			});
+
 
 			/*Js for select template on single product page*/
 			$( '.mwb_wgm_featured_img' ).click(

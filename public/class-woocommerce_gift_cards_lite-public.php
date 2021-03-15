@@ -317,10 +317,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								<label class="mwb_wgc_label">' . __( 'From', 'woo-gift-cards-lite' ) . '</label>	
 								<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woo-gift-cards-lite' ) . '" required="required">
 								</p>';
+							$mail_settings = get_option( 'mwb_wgm_mail_settings', array() );
+							$default_giftcard_message = $this->mwb_common_fun->mwb_wgm_get_template_data( $mail_settings, 'mwb_wgm_mail_setting_default_message' );
 							$cart_html .= '<p class="mwb_wgm_section mwb_message">
 							<label class="mwb_wgc_label">' . __( 'Gift Message : ', 'woo-gift-cards-lite' ) . '</label>	
-							<textarea name="mwb_wgm_message" id="mwb_wgm_message" class="mwb_wgm_message"></textarea>';
-							$mail_settings = get_option( 'mwb_wgm_mail_settings', array() );
+							<textarea name="mwb_wgm_message" id="mwb_wgm_message" class="mwb_wgm_message">' . $default_giftcard_message . '</textarea>';
 							$giftcard_message_length = $this->mwb_common_fun->mwb_wgm_get_template_data( $mail_settings, 'mwb_wgm_mail_setting_giftcard_message_length' );
 							if ( '' == $giftcard_message_length ) {
 								$giftcard_message_length = 300;

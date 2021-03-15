@@ -91,6 +91,12 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 
 		 ),
 		 array(
+			'title'    => esc_html__( 'Default Giftcard Message', 'woo-gift-cards-lite' ),
+			'id'       => 'mwb_wgm_mail_setting_default_message',
+			'type'     => 'text',
+			'desc_tip' => esc_html__( 'Set the Default Message for Giftcard.', 'woo-gift-cards-lite' ),
+		),
+		 array(
 			 'title' => esc_html__( 'Disclaimer Text', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_disclaimer',
 			 'type' => 'wp_editor',
