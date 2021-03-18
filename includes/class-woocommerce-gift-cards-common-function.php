@@ -80,6 +80,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				if ( null != $template_css && '' != $template_css ) {
 					$template_css = "<style>$template_css</style>";
 				}
+
+				if ( isset( $args['product_id'] ) && ! empty( $args['product_id'] ) ) {
+					$product_short_desc = get_the_excerpt( $args['product_id'] );
+					$templatehtml       = str_replace( '[SHORTDESCRIPTION]', $product_short_desc, $templatehtml );
+				} else {
+					$templatehtml = str_replace( '[SHORTDESCRIPTION]', '', $templatehtml );
+				}
+
 				if ( isset( $args['message'] ) && ! empty( $args['message'] ) ) {
 					$templatehtml = str_replace( '[MESSAGE]', $args['message'], $templatehtml );
 				} else {
