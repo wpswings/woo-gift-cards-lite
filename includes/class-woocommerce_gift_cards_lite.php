@@ -193,6 +193,8 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
 		// Add Deactivation screen.
 		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
+
+		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_admin, 'mwb_wgm_woocommerce_order_status_changed', 10, 3 );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -236,7 +238,8 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
 		// Compatibility with Flatsome theme minicart price issue
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
-
+		$this->loader->add_action( 'wp_ajax_mwb_get_data', $plugin_public, 'mwb_cart_form' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_get_data', $plugin_public, 'mwb_cart_form' );
 	}
 
 	/**

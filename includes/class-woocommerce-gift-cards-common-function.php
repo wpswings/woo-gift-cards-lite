@@ -173,7 +173,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		public function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to ) {
+		public function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to, $item_id ) {
 			$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 			if ( $mwb_wgc_enable ) {
 				$alreadycreated = get_post_meta( $order_id, 'mwb_wgm_order_giftcard', true );
@@ -273,6 +273,21 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$expirydate = strtotime( $expirydate );
 						update_post_meta( $new_coupon_id, 'date_expires', $expirydate );
 					}
+
+					// purchase as a product.
+					$mwb_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
+					update_option( 'dekho' . $item_id, $mwb_gift_product );
+					if ( isset( $mwb_gift_product ) && 'on' === $mwb_gift_product ) {
+						update_post_meta( $new_coupon_id, 'individual_use', 'yes' );
+						update_post_meta( $new_coupon_id, 'product_ids', $product_id );
+						update_post_meta( $new_coupon_id, 'usage_limit', '1' );
+						update_post_meta( $new_coupon_id, 'minimum_amount', '' );
+						update_post_meta( $new_coupon_id, 'maximum_amount', '' );
+						update_post_meta( $new_coupon_id, 'exclude_sale_items', 'on' );
+						update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+						update_post_meta( $new_coupon_id, 'exclude_product_categories', '' );
+					}
+
 					return true;
 				} else {
 					return false;
@@ -297,7 +312,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$from = $mwb_wgm_common_arr['from'];
 				$item_id = $mwb_wgm_common_arr['item_id'];
 				$product_id = $mwb_wgm_common_arr['product_id'];
-				$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
+				$mwb_wgm_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
 				if ( is_array( $mwb_wgm_pricing ) && array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 					$templateid = $mwb_wgm_pricing['template'];
 				} else {

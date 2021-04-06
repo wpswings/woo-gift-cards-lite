@@ -25,47 +25,53 @@
 				}
 			}
 
-			var max_length = mwb_wgm.msg_length;
-			var msg_length = $(document).find('#mwb_wgm_message').val().length;
-			$('.mwb_box_char').text(msg_length);
-			
-			$("#mwb_wgm_message").keyup(function(){
-				var msg_length = $(document).find('#mwb_wgm_message').val().length;
-				var html = '<ul>';
-				var error = false;
-				if ( msg_length > max_length ) {
-					this.value = this.value.substring( 0, max_length );
-					error = true;
-					$("#mwb_wgm_message").addClass("mwb_gw_error");
-					html+="<li><b>";
-					html+=mwb_wgm.msg_length_err;
-					html+="</li>";
-				}
-				if(msg_length == 0){
-					$('.mwb_box_char').text(0);
-				}
-				else if( msg_length > max_length ){
-					$('.mwb_box_char').text(max_length);
-				} else {
+			$('body').on('click', '#mwb_gift_this_product', function() {
+				$(document).ajaxComplete(function() {
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
 					$('.mwb_box_char').text(msg_length);
-				}
-
-				html += "</ul>";
-				if(error)
-				{
-					$("#mwb_wgm_error_notice").html(html);
-					$("#mwb_wgm_error_notice").show();
-					jQuery('html, body').animate({
-						scrollTop: jQuery(".woocommerce-page").offset().top
-					}, 800);
-				} else {
-					$("#mwb_wgm_error_notice").hide();
-				}
+				})
 			});
+			
+			$("body").on( 'keyup', '#mwb_wgm_message', 
+				function(){
+					var max_length = mwb_wgm.msg_length;
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					var html = '<ul>';
+					var error = false;
+					if ( msg_length > max_length ) {
+						this.value = this.value.substring( 0, max_length );
+						error = true;
+						$("#mwb_wgm_message").addClass("mwb_gw_error");
+						html+="<li><b>";
+						html+=mwb_wgm.msg_length_err;
+						html+="</li>";
+					}
+					if(msg_length == 0){
+						$('.mwb_box_char').text(0);
+					}
+					else if( msg_length > max_length ){
+						$('.mwb_box_char').text(max_length);
+					} else {
+						$('.mwb_box_char').text(msg_length);
+					}
+
+					html += "</ul>";
+					if(error)
+					{
+						$("#mwb_wgm_error_notice").html(html);
+						$("#mwb_wgm_error_notice").show();
+						jQuery('html, body').animate({
+							scrollTop: jQuery(".woocommerce-page").offset().top
+						}, 800);
+					} else {
+						$("#mwb_wgm_error_notice").hide();
+					}
+				}
+			);
 
 
 			/*Js for select template on single product page*/
-			$( '.mwb_wgm_featured_img' ).click(
+			$( 'body' ).on( 'click', '.mwb_wgm_featured_img',
 				function(){
 					$( '.mwb_wgm_selected_template' ).find( '.mwb_wgm_featured_img' ).removeClass( 'mwb_wgm_pre_selected_temp' );
 					var img_id = $( this ).attr( 'id' );
@@ -77,9 +83,9 @@
 			/*
 			Adds the Validation for some required fields for Single Product Page.
 			*/
-			jQuery( ".single_add_to_cart_button" ).click(
+			jQuery( "body" ).on( 'click', '.single_add_to_cart_button',
 				function(e){
-					if (typeof mwb_wgm.pricing_type.type != 'undefined') {
+					if ( ( typeof mwb_wgm.pricing_type.type != 'undefined' || $( '#mwb_gift_this_product' ).prop("checked") == true ) ) {
 						e.preventDefault();
 						$( "#mwb_wgm_error_notice" ).hide();
 						var from_mail = $( "#mwb_wgm_from_name" ).val();
@@ -232,9 +238,8 @@
 
 			/* Adds the Preview Validtion Here*/
 
-			$( '#mwg_wgm_preview_email' ).click(
+			$( 'body' ).on('click', '#mwg_wgm_preview_email',
 				function() {
-
 					var form_Data = new FormData();
 					$( "#mwb_wgm_error_notice" ).hide();
 					var from_mail = $( "#mwb_wgm_from_name" ).val();
@@ -397,6 +402,22 @@
 					}
 				}
 			);
+			
+			$('#mwb_gift_this_product').on( 'click', function() {
+				if ( $(this).prop("checked") == true ) {
+					var mwb_product = $(this).data( 'product' );
+					$.ajax({
+						type: "POST",
+						url: mwb_wgm.ajaxurl,
+						data: {action: "mwb_get_data", mwb_product: mwb_product},
+						success: function(data) {
+							$('#mwb_purchase_as_a_gc').html(data);
+						},
+					});
+				} else {
+					$('#mwb_purchase_as_a_gc').html('');
+				}
+			});
 		}
 	);
 

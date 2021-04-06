@@ -617,11 +617,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
 							$product_types = wp_get_object_terms( $product_id, 'product_type' );
-
 							if ( isset( $product_types[0] ) ) {
 								$product_type = $product_types[0]->slug;
-								if ( 'wgm_gift_card' == $product_type || 'gw_gift_card' == $product_type ) {
-
+								$mwb_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
+								if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $mwb_gift_product ) {
 									$giftcoupon = get_post_meta( $order_id, "$order_id#$item_id", true );
 
 									if ( empty( $giftcoupon ) ) {
