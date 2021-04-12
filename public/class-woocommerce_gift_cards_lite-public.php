@@ -1411,11 +1411,24 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$product_id = $product['id'];
 		$price      = get_post_meta( $product_id, '_price', true );
 
+		$params   = array(
+			'post_type'   => 'giftcard',
+			'post_status' => 'publish',
+		);
+		$wc_query = new WP_Query( $params );
+
+		while ( $wc_query->have_posts() ) {
+			$wc_query->the_post();
+			if ( get_the_title() === 'Purchase as a Gift' ) {
+				$temp_id = get_the_ID();
+			}
+		}
+
 		$details = array(
 			'default_price'  => $price,
 			'type'           => 'mwb_wgm_default_price',
-			'template'       => array( '701' ),
-			'by_default_tem' => '701',
+			'template'       => array( $temp_id ),
+			'by_default_tem' => $temp_id,
 		);
 
 		WC()->session->set( 'mwb_wgm_pricing', $details );
