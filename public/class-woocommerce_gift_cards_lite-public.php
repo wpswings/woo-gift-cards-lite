@@ -1531,11 +1531,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							$cart_html .= apply_filters( 'mwb_wgm_add_price_types', $mwb_additional_section, $product, $product_pricing );
 						}
-						$cart_html .= apply_filters( 'mwb_wgm_select_date', $mwb_additional_section, $product_id );
 						$cart_html .= '<p class="mwb_wgm_section mwb_from">
-							<label class="mwb_wgc_label">' . __( 'From', 'woo-gift-cards-lite' ) . '</label>	
-							<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woo-gift-cards-lite' ) . '" required="required">
-							</p>';
+						<label class="mwb_wgc_label">' . __( 'From', 'woo-gift-cards-lite' ) . '</label>	
+						<input type="text"  name="mwb_wgm_from_name" id="mwb_wgm_from_name" class="mwb_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woo-gift-cards-lite' ) . '" required="required">
+						</p>';
 						$mail_settings = get_option( 'mwb_wgm_mail_settings', array() );
 						$default_giftcard_message = $this->mwb_common_fun->mwb_wgm_get_template_data( $mail_settings, 'mwb_wgm_mail_setting_default_message' );
 						$cart_html .= '<p class="mwb_wgm_section mwb_message">
