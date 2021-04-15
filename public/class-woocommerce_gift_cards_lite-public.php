@@ -190,7 +190,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( 'wgm_gift_card' === $product_type ) {
 			$mwb_cart_html = $this->mwb_wgm_before_cart_data( $mwb_product );
 		} else {
-			$mwb_cart_html = $this->mwb_enable_sell_as_a_gc( $mwb_product );
+			$mwb_cart_html = apply_filters( 'mwb_wgm_enable_sell_as_a_gc', $mwb_product );
 		}
 		$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
 		// @codingStandardsIgnoreStart.
@@ -472,9 +472,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						exit;
 					} else {
 						// for price based on country.
-						if ( isset( $_POST['mwb_gift_this_product'] ) ) {
-							$item_meta['sell_as_a_gc'] = sanitize_text_field( wp_unslash( $_POST['mwb_gift_this_product'] ) );
-						}
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 							if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 								$product_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
@@ -588,12 +585,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'mwb_wgm_message' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'Gift Message', 'woo-gift-cards-lite' ),
-							'value' => stripslashes( $val ),
-						);
-					}
-					if ( 'sell_as_a_gc' == $key ) {
-						$item_meta [] = array(
-							'name' => esc_html__( 'Purchase as a Gift', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
@@ -741,15 +732,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
-						$data    = $item->get_meta_data();
-						foreach( $data as $k => $val ) {
-							foreach ( $val->get_data() as $key => $value ) {
-								if ( 'Purchase as a Gift' === $value ) {
-									update_post_meta( $order_id, 'sell_as_a_gc' . $item_id, 'on' );
-								}
-							}
-						}
-						$mwb_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
+
+						$mwb_gift_product = apply_filters( 'mwb_wgm_update_item_meta_as_a_gift', $item, $item_id, $order_id );
+
 						if ( ( isset( $product ) && $product->is_type( 'wgm_gift_card' ) ) || 'on' === $mwb_gift_product ) {
 							$is_gift_card = true;
 						}
@@ -1373,65 +1358,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 
 	/**
-	 * Enable purchase product as a gift.
-	 *
-	 * @param array $mwb_product product details.
-	 * @return void
-	 * @since 1.0.0
-	 * @name mwb_wgm_apply_already_created_giftcard_coupons
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	public function mwb_enable_sell_as_a_gc( $mwb_product ) {
-		if ( '' === $mwb_product ) {
-			global $product;
-			$product = $product;
-		} else {
-			$product = $mwb_product;
-		}
-		$sell_as_a_giftcard = get_post_meta( $product->get_id(), '_sell_as_a_giftcard' );
-		if ( isset( $sell_as_a_giftcard[0] ) && 'yes' === $sell_as_a_giftcard[0] && in_array( 'giftware/giftware.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-			echo '<input type="checkbox" id="mwb_gift_this_product" name="mwb_gift_this_product" data-product="' . esc_html( $product ) . '" value="on">
-				<label for="mwb_gift_this_product">Gift This Product</label><br><br>';
-		}
-
-		?>
-		<div id="mwb_purchase_as_a_gc"></div>
-		<?php
-	}
-
-	/**
 	 * Adding dynamically GC form for Purchase as a gift.
 	 *
 	 * @return void
+	 * @since 1.0.0
+	 * @name mwb_cart_form_for_product_as_a_gift
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_cart_form() {
+	public function mwb_cart_form_for_product_as_a_gift() {
 
 		$product    = wp_unslash( $_POST['mwb_product'] );
-		$product_id = $product['id'];
-		$price      = get_post_meta( $product_id, '_price', true );
-
-		$params   = array(
-			'post_type'   => 'giftcard',
-			'post_status' => 'publish',
-		);
-		$wc_query = new WP_Query( $params );
-
-		while ( $wc_query->have_posts() ) {
-			$wc_query->the_post();
-			if ( get_the_title() === 'Purchase as a Gift' ) {
-				$temp_id = get_the_ID();
-			}
-		}
-
-		$details = array(
-			'default_price'  => $price,
-			'type'           => 'mwb_wgm_default_price',
-			'template'       => array( $temp_id ),
-			'by_default_tem' => $temp_id,
-		);
-
-		WC()->session->set( 'mwb_wgm_pricing', $details );
+		$product_id = apply_filters( 'mwb_wgm_ajax_product_as_a_gift', $product );
 
 		$sell_as_a_giftcard = get_post_meta( $product_id, '_sell_as_a_giftcard' );
 

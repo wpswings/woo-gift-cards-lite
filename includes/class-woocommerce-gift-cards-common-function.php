@@ -81,13 +81,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$template_css = "<style>$template_css</style>";
 				}
 
-				if ( isset( $args['product_id'] ) && ! empty( $args['product_id'] ) ) {
-					$product_short_desc = get_the_excerpt( $args['product_id'] );
-					$templatehtml       = str_replace( '[SHORTDESCRIPTION]', $product_short_desc, $templatehtml );
-				} else {
-					$templatehtml = str_replace( '[SHORTDESCRIPTION]', '', $templatehtml );
-				}
-
 				if ( isset( $args['message'] ) && ! empty( $args['message'] ) ) {
 					$templatehtml = str_replace( '[MESSAGE]', $args['message'], $templatehtml );
 				} else {
@@ -275,18 +268,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					// purchase as a product.
-					$mwb_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
-					update_option( 'dekho' . $item_id, $mwb_gift_product );
-					if ( isset( $mwb_gift_product ) && 'on' === $mwb_gift_product ) {
-						update_post_meta( $new_coupon_id, 'individual_use', 'yes' );
-						update_post_meta( $new_coupon_id, 'product_ids', $product_id );
-						update_post_meta( $new_coupon_id, 'usage_limit', '1' );
-						update_post_meta( $new_coupon_id, 'minimum_amount', '' );
-						update_post_meta( $new_coupon_id, 'maximum_amount', '' );
-						update_post_meta( $new_coupon_id, 'exclude_sale_items', 'on' );
-						update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-						update_post_meta( $new_coupon_id, 'exclude_product_categories', '' );
-					}
+					do_action( 'mwb_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
 
 					return true;
 				} else {

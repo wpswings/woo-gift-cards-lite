@@ -402,7 +402,7 @@
 					}
 				}
 			);
-			
+
 			$('#mwb_gift_this_product').on( 'click', function() {
 				if ( $(this).prop("checked") == true ) {
 					var mwb_product = $(this).data( 'product' );
