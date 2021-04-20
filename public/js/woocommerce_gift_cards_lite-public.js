@@ -29,9 +29,15 @@
 				$(document).ajaxComplete(function() {
 					var msg_length = $(document).find('#mwb_wgm_message').val().length;
 					$('.mwb_box_char').text(msg_length);
-				})
+				});
 			});
 			
+			$(window).load( function() {
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					$('.mwb_box_char').text(msg_length);
+				}
+			);
+
 			$("body").on( 'keyup', '#mwb_wgm_message', 
 				function(){
 					var max_length = mwb_wgm.msg_length;

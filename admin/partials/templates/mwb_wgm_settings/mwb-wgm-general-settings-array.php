@@ -84,25 +84,25 @@ $mwb_wgm_general_setting = array(
 	array(
 		'title' => esc_html__( 'Minimum Spend', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_minspend',
-		'type' => 'number',
+		'type' => 'text',
 		'custom_attribute' => array(
 			'min' => '"0"',
 			'placeholder' => '"No Minimum"',
 		),
 		'default' => '',
-		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
+		'class' => 'input-text mwb_wgm_new_woo_ver_style_text mwb_wgm_gc_price_range',
 		'desc_tip' => esc_html__( 'This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the Gift card coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Maximum Spend', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_maxspend',
-		'type' => 'number',
+		'type' => 'text',
 		'custom_attribute' => array(
 			'min' => '"0"',
 			'placeholder' => '"No Maximum"',
 		),
 		'default' => '',
-		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
+		'class' => 'input-text mwb_wgm_new_woo_ver_style_text mwb_wgm_gc_price_range',
 		'desc_tip' => esc_html__( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Giftcard coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(

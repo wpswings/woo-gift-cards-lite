@@ -301,7 +301,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templateid = $this->mwb_get_org_selected_template();
 				}
 				$args['from'] = $from;
-				$args['order_id'] = $order->get_id();
+				$args['order_id'] = $order->get_id();    
 				$args['to'] = $to;
 				$args['message'] = stripcslashes( $mwb_wgm_common_arr['gift_msg'] );
 				$args['coupon'] = apply_filters( 'mwb_wgm_qrcode_coupon', $mwb_wgm_common_arr['gift_couponnumber'] );

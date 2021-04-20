@@ -11,6 +11,24 @@
 	jQuery( document ).ready(
 		function(){
 
+			$('.mwb_wgm_new_woo_ver_style_text').keyup(function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			});
+
+			$('.mwb_wgm_gc_price_range').keyup( function() {
+				var minspend = parseInt( $('#mwb_wgm_general_setting_giftcard_minspend').val() );
+				var maxspend = parseInt( $('#mwb_wgm_general_setting_giftcard_maxspend').val() );
+				if (minspend > maxspend) {
+					$('#mwb_wgm_save_general').css('display','none');
+					$('#mwb_wgm_general_setting_giftcard_minspend').css('border-color','red');
+					$('#mwb_wgm_general_setting_giftcard_maxspend').css('border-color','red');
+				} else {
+					$('#mwb_wgm_general_setting_giftcard_minspend').css('border-color','');
+					$('#mwb_wgm_general_setting_giftcard_maxspend').css('border-color','');
+					$('#mwb_wgm_save_general').css('display','block');
+				}
+			});
+
 			$( document ).find( '.wc-pbc-show-if-not-supported' ).remove();
 			$( "#mwb_wgm_product_setting_exclude_category" ).select2();
 			$( "#mwb_wgm_email_template" ).select2();

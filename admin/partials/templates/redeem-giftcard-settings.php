@@ -137,7 +137,7 @@ $offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true 
 if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 	?>
 <div class="notice notice-success is-dismissible"> 
-	<p><strong><?php echo wp_kses_post( $mwb_wgm_error_message, 'woo-gift-cards-lite' ); ?></strong></p>
+	<p><strong><?php _e( $mwb_wgm_error_message, 'woo-gift-cards-lite' ); ?></strong></p>
 	<button type="button" class="notice-dismiss">
 		<span class="screen-reader-text"><?php echo wp_kses_post( 'Dismiss this notice', 'woo-gift-cards-lite' ); ?></span>
 	</button>
@@ -154,7 +154,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 		<?php if ( ! isset( $offine_giftcard_redeem_link ['shop_url'] ) || '' == $offine_giftcard_redeem_link['shop_url'] ) { ?>
 			<div>
 				<div class="mwb-giftware-reddem-image text-center">
-					
+
 					<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/giftware-redeem-image.png' ); ?>" alt="GiftWare">
 					<div class="mwb_giftware_reddem_link_wrapper">
 						<a href="#" class="generate_link"><i class="fas fa-link"></i><?php esc_html_e( 'Get me My FREE redeem Link', 'woo-gift-cards-lite' ); ?> </a>
