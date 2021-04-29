@@ -415,7 +415,7 @@
 					$.ajax({
 						type: "POST",
 						url: mwb_wgm.ajaxurl,
-						data: {action: "mwb_get_data", mwb_product: mwb_product},
+						data: {action: "mwb_get_data", mwb_product: mwb_product, mwb_gc_nonce:mwb_wgm.mwb_gc_nonce},
 						success: function(data) {
 							$('#mwb_purchase_as_a_gc').html(data);
 						},

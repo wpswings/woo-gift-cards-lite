@@ -84,7 +84,7 @@ $mwb_wgm_general_setting = array(
 	array(
 		'title' => esc_html__( 'Minimum Spend', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_minspend',
-		'type' => 'text',
+		'type' => 'number',
 		'custom_attribute' => array(
 			'min' => '"0"',
 			'placeholder' => '"No Minimum"',
@@ -96,7 +96,7 @@ $mwb_wgm_general_setting = array(
 	array(
 		'title' => esc_html__( 'Maximum Spend', 'woo-gift-cards-lite' ),
 		'id' => 'mwb_wgm_general_setting_giftcard_maxspend',
-		'type' => 'text',
+		'type' => 'number',
 		'custom_attribute' => array(
 			'min' => '"0"',
 			'placeholder' => '"No Maximum"',

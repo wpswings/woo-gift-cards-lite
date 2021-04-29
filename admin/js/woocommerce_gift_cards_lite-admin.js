@@ -11,9 +11,9 @@
 	jQuery( document ).ready(
 		function(){
 
-			$('.mwb_wgm_new_woo_ver_style_text').keyup(function() {
-				this.value = this.value.replace(/[^0-9]/g, '');
-			});
+			// $('.mwb_wgm_new_woo_ver_style_text').keyup(function() {
+			// 	this.value = this.value.replace(/[^0-9]/g, '');
+			// });
 
 			$('.mwb_wgm_gc_price_range').keyup( function() {
 				var minspend = parseInt( $('#mwb_wgm_general_setting_giftcard_minspend').val() );
@@ -47,7 +47,8 @@
 				$( "#mwb_wgm_mail_setting_remove_logo" ).show();
 
 			}
-			jQuery( ".mwb_wgm_mail_setting_remove_logo_span" ).click(
+			jQuery( ".mwb_wgm_mail_setting_remove_logo_span" ).on ( 
+				'click',
 				function(){
 					jQuery( "#mwb_wgm_mail_setting_remove_logo" ).hide();
 					jQuery( "#mwb_wgm_mail_setting_upload_logo" ).val( "" );
@@ -59,13 +60,15 @@
 				$( "#mwb_wgm_mail_setting_remove_logo" ).show();
 
 			}
-			jQuery( "#mwb_wgm_mail_setting" ).click(
+			jQuery( "#mwb_wgm_mail_setting" ).on( 
+				'click',
 				function(){
 					jQuery( "#mwb_wgm_mail_setting_wrapper" ).slideToggle();
 				}
 			);
 
-			jQuery( '.mwb_wgm_mail_setting_upload_logo' ).click(
+			jQuery( '.mwb_wgm_mail_setting_upload_logo' ).on( 
+				'click',
 				function(){
 					var imageurl = $( "#mwb_wgm_mail_setting_upload_logo" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
@@ -92,7 +95,8 @@
 				}
 			);
 
-			jQuery( '.mwb_wgm_mail_setting_background_logo' ).click(
+			jQuery( '.mwb_wgm_mail_setting_background_logo' ).on( 
+				'click',
 				function()
 				{
 					var imageurl = $( "#mwb_mail_other_setting_background_logo_value" ).val();
@@ -112,7 +116,8 @@
 				}
 			);
 
-			jQuery( ".mwb_wgm_mail_setting_remove_background_span" ).click(
+			jQuery( ".mwb_wgm_mail_setting_remove_background_span" ).on( 
+				'click',
 				function(){
 					jQuery( "#mwb_wgm_mail_setting_remove_background" ).hide();
 					jQuery( "#mwb_wgm_mail_setting_background_logo_value" ).val( "" );
@@ -217,12 +222,14 @@
 				}
 			}
 			// Hide-show the instruction box.
-			$( '.mwb_wgm_instructions_reminder' ).click(
+			$( '.mwb_wgm_instructions_reminder' ).on( 
+				'click',
 				function(){
 					$( '#mwb-modal-main-wrapper' ).css( 'display','block' );
 				}
 			);
-			$( '.mwb_no_thanks_general' ).click(
+			$( '.mwb_no_thanks_general' ).on( 
+				'click',
 				function(){
 					$( '#mwb-modal-main-wrapper' ).css( 'display','none' );
 				}

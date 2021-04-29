@@ -163,6 +163,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int    $order_id order id.
 		 * @param int    $product_id product id.
 		 * @param int    $to email id or name to whome coupon send.
+		 * @param int    $item_id item_id.
 		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
@@ -301,7 +302,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templateid = $this->mwb_get_org_selected_template();
 				}
 				$args['from'] = $from;
-				$args['order_id'] = $order->get_id();    
+				$args['order_id'] = $order->get_id();
 				$args['to'] = $to;
 				$args['message'] = stripcslashes( $mwb_wgm_common_arr['gift_msg'] );
 				$args['coupon'] = apply_filters( 'mwb_wgm_qrcode_coupon', $mwb_wgm_common_arr['gift_couponnumber'] );

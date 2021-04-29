@@ -137,7 +137,10 @@ $offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true 
 if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 	?>
 <div class="notice notice-success is-dismissible"> 
-	<p><strong><?php _e( $mwb_wgm_error_message, 'woo-gift-cards-lite' ); ?></strong></p>
+	<p><strong><?php // @codingStandardsIgnoreStart.
+	_e( $mwb_wgm_error_message, 'woo-gift-cards-lite' );
+	// @codingStandardsIgnoreEnd.?>
+	</strong></p>
 	<button type="button" class="notice-dismiss">
 		<span class="screen-reader-text"><?php echo wp_kses_post( 'Dismiss this notice', 'woo-gift-cards-lite' ); ?></span>
 	</button>

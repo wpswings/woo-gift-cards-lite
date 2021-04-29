@@ -73,10 +73,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Woocommerce_gift_cards_lite_Loader as all of the hooks are defined
+		 * defined in Woocommerce_Gift_Cards_Lite_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Woocommerce_gift_cards_lite_Loader will then create the relationship
+		 * The Woocommerce_Gift_Cards_Lite_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -556,8 +556,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					} else {
 						global $wpdb;
 						$table_name = $wpdb->prefix . 'wc_product_meta_lookup';
-						$sql = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
-						$results = $wpdb->get_results( $sql );
+						$sql        = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
+						$results    = $wpdb->get_results( '%d', $sql );
 					}
 					do_action( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
 					$mwb_wgm_pricing = apply_filters( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
@@ -1075,7 +1075,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.makewebbetter.com/
 	 * @since 1.0.0
 	 */
-	public function mwb_wgm_preview_email_template() {
+	public function mwb_wgm_preview_email_template() {	
 		if ( isset( $_GET['mwb_wgm_template'] ) ) {
 			if ( isset( $_GET['mwb_wgm_template'] ) == 'giftcard' ) {
 				$post_id = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
@@ -1125,8 +1125,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
 					// @codingStandardsIgnoreStart.
 					echo wp_kses( $finalhtml, $allowed_tags );
-					// @codingStandardsIgnoreEnd.
 					die();
+					// @codingStandardsIgnoreEnd.
 				}
 			}
 		}
@@ -1143,7 +1143,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_custom_plugin_row_meta( $links, $file ) {
-		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
+		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce-gift-cards-lite.php' ) !== false ) {
 			$new_links = array(
 				'demo' => '<a href="https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
 				'doc' => '<a href="http://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
@@ -1303,7 +1303,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		);
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
-			echo '<p><strong>' . 'Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
 		} else {
 			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
@@ -1395,7 +1395,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				<?php
 			}
 			?>
-					
+
 			</div>
 			<?php
 			/* Delete transient, only display this notice once. */
@@ -1406,6 +1406,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
+	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
 	 * @name add_mwb_frontend_screens
 	 * @author makewebbetter<ticket@makewebbetter.com>
@@ -1423,6 +1424,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
+	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
 	 * @name add_mwb_deactivation_screens
 	 * @author makewebbetter<ticket@makewebbetter.com>

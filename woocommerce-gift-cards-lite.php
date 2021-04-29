@@ -49,19 +49,19 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'PLUGIN_NAME_VERSION', '2.0.9' );
+	define( 'PLUGIN_NAME_VERSION', '2.1.0' );
 	/**
-	* Check whether the wordpress version is greater than 4.9.6
+	* Check whether the WordPress version is greater than 4.9.6
 	*/
 	global $wp_version;
 	if ( $wp_version >= '4.9.6' ) {
-		include_once MWB_WGC_DIRPATH . 'mwb_wgc_lite_gdpr.php';
+		include_once MWB_WGC_DIRPATH . 'mwb-wgc-lite-gdpr.php';
 	}
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
-	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce_gift_cards_lite.php';
+	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-lite.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 
 
@@ -77,6 +77,8 @@ if ( $activated ) {
 	 * @name mwb_wgm_admin_settings
 	 * @param array  $actions actions.
 	 * @param string $plugin_file plugin file name.
+	 * @param array  $plugin_data plugin_data.
+	 * @param string $context context.
 	 * @return $actions
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -246,7 +248,7 @@ if ( $activated ) {
 	 * @since    1.0.0
 	 */
 	function run_woocommerce_gift_cards_lite() {
-		$plugin = new Woocommerce_gift_cards_lite();
+		$plugin = new Woocommerce_Gift_Cards_Lite();
 		$plugin->run();
 	}
 	run_woocommerce_gift_cards_lite();

@@ -43,6 +43,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'title' => esc_html__( 'Logo Height (in "px")', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_height',
 			 'type' => 'number',
+			 'custom_attribute' => array( 'min' => '0' ),
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
 			 'desc_tip' => esc_html__( 'Set the height of the logo in the email template.', 'woo-gift-cards-lite' ),
@@ -51,6 +52,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'title' => esc_html__( 'Logo Width (in "px")', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_width',
 			 'type' => 'number',
+			 'custom_attribute' => array( 'min' => '0' ),
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
 			 'desc_tip' => esc_html__( 'Set the width of the logo in the email template.', 'woo-gift-cards-lite' ),
@@ -91,11 +93,11 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 
 		 ),
 		 array(
-			'title'    => esc_html__( 'Default Giftcard Message', 'woo-gift-cards-lite' ),
-			'id'       => 'mwb_wgm_mail_setting_default_message',
-			'type'     => 'text',
-			'desc_tip' => esc_html__( 'Set the Default Message for Giftcard.', 'woo-gift-cards-lite' ),
-		),
+			 'title'    => esc_html__( 'Default Giftcard Message', 'woo-gift-cards-lite' ),
+			 'id'       => 'mwb_wgm_mail_setting_default_message',
+			 'type'     => 'text',
+			 'desc_tip' => esc_html__( 'Set the Default Message for Giftcard.', 'woo-gift-cards-lite' ),
+		 ),
 		 array(
 			 'title' => esc_html__( 'Disclaimer Text', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_disclaimer',

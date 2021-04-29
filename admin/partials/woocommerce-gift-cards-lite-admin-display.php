@@ -18,7 +18,7 @@ define( 'ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
-	
+
 }
 /*  create the settings tabs*/
 $mwb_wgm_setting_tab = array(
