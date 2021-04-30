@@ -352,14 +352,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'desc_tip' => true,
 				)
 			);
-			 // Selected Price.
+			// Selected Price.
 			woocommerce_wp_textarea_input(
 				array(
 					'id' => 'mwb_wgm_selected_price',
 					'value' => "$price",
 					'label' => __( 'Price', 'woo-gift-cards-lite' ),
 					'desc_tip' => 'true',
-					'description' => __( 'Enter price using seperator |. Ex : (10 | 20)', 'woo-gift-cards-lite' ),
+					'description' => __( 'Enter price using separator |. Ex : (10 | 20)', 'woo-gift-cards-lite' ),
 					'placeholder' => '10|20|30',
 				)
 			);
@@ -369,7 +369,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				<label for="mwb_wgm_default_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
 				<span class="description"><?php esc_html_e( 'WooCommerce Product regular price is used as a gift card price.', 'woo-gift-cards-lite' ); ?></span>
 			</p>
-			
+
 			<p class="form-field mwb_wgm_user_price_field ">
 				<label for="mwb_wgm_user_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
 				<span class="description"> <?php esc_html_e( 'Users can purchase any amount of Gift Card.', 'woo-gift-cards-lite' ); ?></span>

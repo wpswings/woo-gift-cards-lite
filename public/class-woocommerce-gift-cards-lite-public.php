@@ -697,8 +697,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										}
 									}
 								}
-								if ( 'mwb_wgm_user_price' == $product_pricing_type ) {
+								if ( 'mwb_wgm_user_price' === $product_pricing_type ) {
+									// @codingStandardsIgnoreStart.
 									$price_html = apply_filters( 'mwb_wgm_user_price_text', __( '', 'woo-gift-cards-lite' ) );
+									// @codingStandardsIgnoreEnd.
 								}
 							}
 						}

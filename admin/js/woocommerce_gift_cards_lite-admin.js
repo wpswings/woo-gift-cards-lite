@@ -11,10 +11,6 @@
 	jQuery( document ).ready(
 		function(){
 
-			// $('.mwb_wgm_new_woo_ver_style_text').keyup(function() {
-			// 	this.value = this.value.replace(/[^0-9]/g, '');
-			// });
-
 			$('.mwb_wgm_gc_price_range').keyup( function() {
 				var minspend = parseInt( $('#mwb_wgm_general_setting_giftcard_minspend').val() );
 				var maxspend = parseInt( $('#mwb_wgm_general_setting_giftcard_maxspend').val() );
