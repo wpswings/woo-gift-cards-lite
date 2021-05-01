@@ -46,7 +46,7 @@ msgid "Export"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:185
-#: woocommerce-gift-cards-lite.php:94
+#: woocommerce_gift_cards_lite.php:94
 msgid "Settings"
 msgstr ""
 
@@ -58,8 +58,8 @@ msgstr ""
 #: admin/class-woocommerce-gift-cards-lite-admin.php:477
 #: admin/class-woocommerce-gift-cards-lite-admin.php:682
 #: admin/class-woocommerce-gift-cards-lite-admin.php:684
-#: woocommerce-gift-cards-lite.php:151 woocommerce-gift-cards-lite.php:163
-#: woocommerce-gift-cards-lite.php:164
+#: woocommerce_gift_cards_lite.php:151 woocommerce_gift_cards_lite.php:163
+#: woocommerce_gift_cards_lite.php:164
 msgid "Gift Card"
 msgstr ""
 
@@ -1153,11 +1153,11 @@ msgstr ""
 msgid "VIEW CARD"
 msgstr ""
 
-#: woocommerce-gift-cards-lite.php:95
+#: woocommerce_gift_cards_lite.php:95
 msgid "GO PRO"
 msgstr ""
 
-#: woocommerce-gift-cards-lite.php:284
+#: woocommerce_gift_cards_lite.php:284
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Ultimate Gift Cards For WooCommerce"

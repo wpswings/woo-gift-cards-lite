@@ -182,7 +182,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_preview_email_template' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'mwb_custom_plugin_row_meta', 10, 2 );
 		/*Update_Notice on plugin dashboard*/
-		$this->loader->add_action( 'in_plugin_update_message-woo-gift-cards-lite/woocommerce-gift-cards-lite.php', $plugin_admin, 'in_plugin_update_message', 10, 2 );
+		$this->loader->add_action( 'in_plugin_update_message-woo-gift-cards-lite/woocommerce_gift_cards_lite.php', $plugin_admin, 'in_plugin_update_message', 10, 2 );
 
 		/*cron for notification*/
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wgm_set_cron_for_plugin_notification' );
