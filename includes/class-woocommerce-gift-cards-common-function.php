@@ -167,7 +167,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		public function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to, $item_id ) {
+		public function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to ) {
 			$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 			if ( $mwb_wgc_enable ) {
 				$alreadycreated = get_post_meta( $order_id, 'mwb_wgm_order_giftcard', true );
@@ -269,6 +269,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					// purchase as a product.
+					$item_id = WC()->session->get( 'mwb_sell_as_a_gift_item_id' );
 					do_action( 'mwb_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
 
 					return true;

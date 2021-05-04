@@ -228,7 +228,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$product_pricing        = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
 						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 							$cart_html .= '<div class="mwb_wgm_added_wrapper">';
-								wp_nonce_field( 'mwb_wgm_single_nonce', 'mwb_wgm_single_nonce_field' );
+							wp_nonce_field( 'mwb_wgm_single_nonce', 'mwb_wgm_single_nonce_field' );
 							if ( isset( $product_pricing['type'] ) ) {
 								$product_pricing_type = $product_pricing['type'];
 								if ( 'mwb_wgm_range_price' === $product_pricing_type ) {
@@ -461,6 +461,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if ( $mwb_wgc_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
@@ -552,6 +553,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 		return $the_cart_data;
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 	}
 
 	/**
@@ -842,9 +844,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( '' == $giftcard_coupon_length ) {
 									$giftcard_coupon_length = 5;
 								}
+								WC()->session->set( 'mwb_sell_as_a_gift_item_id', $item_id );
 								for ( $i = 1; $i <= $item_quantity; $i++ ) {
 									$gift_couponnumber = mwb_wgm_coupon_generator( $giftcard_coupon_length );
-									if ( $this->mwb_common_fun->mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to, $item_id ) ) {
+									if ( $this->mwb_common_fun->mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to ) ) {
 										$todaydate = date_i18n( 'Y-m-d' );
 										$expiry_date = $this->mwb_common_fun->mwb_wgm_get_template_data( $general_setting, 'mwb_wgm_general_setting_giftcard_expiry' );
 										$expirydate_format = $this->mwb_common_fun->mwb_wgm_check_expiry_date( $expiry_date );
@@ -1395,7 +1398,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$product_pricing        = WC()->session->get( 'mwb_wgm_pricing' );
 							if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 								$cart_html .= '<div class="mwb_wgm_added_wrapper" id="mwb_product_as_a_gift_form">';
-									wp_nonce_field( 'mwb_wgm_single_nonce', 'mwb_wgm_single_nonce_field' );
+								wp_nonce_field( 'mwb_wgm_single_nonce', 'mwb_wgm_single_nonce_field' );
 								if ( isset( $product_pricing['type'] ) ) {
 									$product_pricing_type = $product_pricing['type'];
 									if ( 'mwb_wgm_range_price' == $product_pricing_type ) {
