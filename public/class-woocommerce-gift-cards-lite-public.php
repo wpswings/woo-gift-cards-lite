@@ -461,7 +461,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
 		if ( $mwb_wgc_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
@@ -553,7 +552,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 		return $the_cart_data;
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
 	}
 
 	/**
@@ -872,7 +870,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( $gift_order && isset( $mwb_wgm_mail_template_data['datecheck'] ) && $mwb_wgm_mail_template_data['datecheck'] ) {
 						update_post_meta( $order_id, 'mwb_wgm_order_giftcard', 'send' );
 					}
-					do_action( 'mwb_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status );
+					do_action( 'mwb_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status, $mwb_wgm_mail_template_data );
 				}
 			}
 		}
