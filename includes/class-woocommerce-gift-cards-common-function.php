@@ -163,7 +163,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int    $order_id order id.
 		 * @param int    $product_id product id.
 		 * @param int    $to email id or name to whome coupon send.
-		 * @param int    $item_id item_id.
 		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */

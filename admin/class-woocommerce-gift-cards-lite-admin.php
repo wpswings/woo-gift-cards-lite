@@ -1075,7 +1075,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.makewebbetter.com/
 	 * @since 1.0.0
 	 */
-	public function mwb_wgm_preview_email_template() {	
+	public function mwb_wgm_preview_email_template() {
 		if ( isset( $_GET['mwb_wgm_template'] ) ) {
 			if ( isset( $_GET['mwb_wgm_template'] ) == 'giftcard' ) {
 				$post_id = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
