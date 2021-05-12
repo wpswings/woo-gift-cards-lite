@@ -45,7 +45,7 @@ if ( $flag ) {
 			<?php
 				$settings_obj->mwb_wgm_generate_common_settings( $mwb_wgm_product_settings, $product_settings );
 			?>
-					</tbody>
+		</tbody>
 	</table>
 </div>
 <?php

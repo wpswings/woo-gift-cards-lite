@@ -18,7 +18,7 @@ define( 'ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
-	
+
 }
 /*  create the settings tabs*/
 $mwb_wgm_setting_tab = array(
@@ -101,11 +101,6 @@ do_action( 'mwb_uwgc_show_notice' );
 						<?php
 					}
 					?>
-					<li>
-						<a id="mwb-wgm-skype-link" href="<?php echo esc_url( 'https://join.skype.com/invite/IKVeNkLHebpC' ); ?>" target="_blank">
-							<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/skype_logo.png' ); ?>" style="height: 15px;width: 15px;" ><span class="mwb-wgn-icon-text"><?php esc_html_e( 'CHAT NOW', 'woo-gift-cards-lite' ); ?></span>
-						</a>
-					</li>
 				</ul>
 			</div>
 		</div>

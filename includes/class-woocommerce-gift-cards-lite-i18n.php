@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage woo-gift-cards-lite/includes
  * @author     makewebbetter <ticket@makewebbetter.com>
  */
-class Woocommerce_gift_cards_lite_i18n {
+class Woocommerce_Gift_Cards_Lite_I18n {
 
 	/**
 	 * Load the plugin text domain for translation.

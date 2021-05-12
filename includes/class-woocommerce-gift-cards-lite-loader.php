@@ -20,7 +20,7 @@
  * @subpackage woo-gift-cards-lite/includes
  * @author     makewebbetter <ticket@makewebbetter.com>
  */
-class Woocommerce_gift_cards_lite_Loader {
+class Woocommerce_Gift_Cards_Lite_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
