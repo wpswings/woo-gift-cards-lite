@@ -1,12 +1,10 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-2000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.6-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-4.8-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
-# Ultimate Gift Cards For WooCommerce
-![Ultimate Gift Cards For WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.png?rev=2406856)
-* Contributor: MakeWebBetter
-* Author URI: https://makewebbetter.com/
-* Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, woocommerce
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-2000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.7-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.2-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+# Ultimate Gift Cards for WooCommerce
+![Ultimate Gift Cards for WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.png)
+* Contributors: MakeWebBetter
+* Author URI: [MakeWebBetter](https://makewebbetter.com/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
+* Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, gift cards
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
-
 
 # Description
 
@@ -18,7 +16,7 @@
 
 **WITH THE ULTIMATE GIFT CARDS FOR WOOCOMMERCE PLUGIN YOU CAN:**
 
-* Create and sell gift cards in your native language
+* Create and sell WordPress gift cards in your native language
 * Sell Gift Cards at your store in four different pricing types
 * Customize predefined gift card templates
 * Customize the coupon code length, usage, prefix, expiry date, etc.
@@ -55,7 +53,7 @@ This gift card plugin allows you to calculate the tax on gift card products. You
 Customers can redeem gift cards at your online WooCommerce store or also through a Point of Sale(POS) system from a brick and mortar store. To enable this feature, you just need to generate a FREE Redeem link by providing your email and name. When you do that, you get the login credentials via email for logged in to the redeem/recharge portal, a redeem link, and an embed link. You can directly go to the redeem link to recharge or redeem gift cards. Or you can also add the embed code on your web page to create a portal for recharging/redeeming gift cards at your online store.
 
 **7) Coupon Codes and Customizable Email Templates**
-Ultimate Gift Cards for WooCommerce provide you coupon codes. You can tweak the coupon code length, prefix, expiry date, number of usages, min, and max spending limit. Moreover, you can customize the email template that delivers the gift card to the recipient. You can upload and change the height and width of the logo, change gift card message length, disclaimer text, gift card email subject, etc.
+Ultimate WooCommerce Gift Cards provide you coupon codes. You can tweak the coupon code length, prefix, expiry date, number of usages, min, and max spending limit. Moreover, you can customize the email template that delivers the gift card to the recipient. You can upload and change the height and width of the logo, change gift card message length, disclaimer text, gift card email subject, etc.
 
 **8) Product and Category Exclusion Feature**
 With this feature, you can exclude specific categories, products, or sale items. If you do this, the customers won’t be able to buy the excluded products through gift cards.
@@ -84,13 +82,11 @@ Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makew
 
 > Note:  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-
-
 **LIVE DEMO OF PREMIUM VERSION** 
 
 * [ **WooCommerce Gift Cards Frontend demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-* [ **WooCommerce Gift Cards Backend demo**](http://demo.makewebbetter.com/woocommerce-ultimate-gift-cards/request-for-personal-demo/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
+* [ **WooCommerce Gift Cards Backend demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/request-for-personal-demo/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
 * [ **Gift Card Redeem/Recharge demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/redeem-recharge-gift-card-vouchers/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
@@ -107,5 +103,7 @@ If you need support or have questions, kindly use our online chat window [**here
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
 - [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+
+
 
 
