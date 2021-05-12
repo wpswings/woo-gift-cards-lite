@@ -475,7 +475,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 							if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
-								$product_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
+								$product_pricing      = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 								$product_pricing_type = $product_pricing['type'];
 								if ( isset( $_POST['mwb_wgm_price'] ) && ! empty( $_POST['mwb_wgm_price'] ) ) {
 									if ( 'mwb_wgm_range_price' == $product_pricing_type || 'mwb_wgm_user_price' == $product_pricing_type ) {
@@ -487,7 +487,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 						}
 						if ( isset( $_POST['mwb_wgm_send_giftcard'] ) && ! empty( $_POST['mwb_wgm_send_giftcard'] ) ) {
-							$product_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
+							$product_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 							if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 
 								if ( isset( $_POST['mwb_wgm_to_email'] ) && ! empty( $_POST['mwb_wgm_to_email'] ) ) {
@@ -650,7 +650,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( isset( $product_types[0] ) ) {
 					$product_type = $product_types[0]->slug;
 					if ( 'wgm_gift_card' == $product_type ) {
-						$product_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
+						$product_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 							if ( isset( $product_pricing['type'] ) ) {
 								$product_pricing_type = $product_pricing['type'];
@@ -817,7 +817,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'item_quantity' => $item_quantity,
 							'datecheck' => $datecheck,
 						);
-
+						update_post_meta( $order_id, 'temp_item_id', $item_id );
 						$mwb_wgm_mail_template_data = apply_filters( 'mwb_wgm_mail_templates_data_set', $mwb_wgm_mail_template_data, $order->get_items(), $order_id );
 
 						if ( isset( $mwb_wgm_mail_template_data['datecheck'] ) && ! $mwb_wgm_mail_template_data['datecheck'] ) {
@@ -842,7 +842,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( '' == $giftcard_coupon_length ) {
 									$giftcard_coupon_length = 5;
 								}
-								WC()->session->set( 'mwb_sell_as_a_gift_item_id', $item_id );
 								for ( $i = 1; $i <= $item_quantity; $i++ ) {
 									$gift_couponnumber = mwb_wgm_coupon_generator( $giftcard_coupon_length );
 									if ( $this->mwb_common_fun->mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to ) ) {
@@ -1260,7 +1259,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( isset( $_GET['mwb_wgc_preview_email'] ) && 'mwb_wgm_single_page_popup' == $_GET['mwb_wgc_preview_email'] ) {
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
-			$product_pricing                = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
+			$product_pricing                = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 			$product_pricing_type           = $product_pricing['type'];
 			$general_setting                = get_option( 'mwb_wgm_general_settings', array() );
 			$giftcard_coupon_length_display = $this->mwb_common_fun->mwb_wgm_get_template_data( $general_setting, 'mwb_wgm_general_setting_giftcard_coupon_length' );
@@ -1395,7 +1394,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
 							$cart_html = '';
 							$mwb_additional_section = '';
-							$product_pricing        = WC()->session->get( 'mwb_wgm_pricing' );
+							$product_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 							if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 								$cart_html .= '<div class="mwb_wgm_added_wrapper" id="mwb_product_as_a_gift_form">';
 								wp_nonce_field( 'mwb_wgm_single_nonce', 'mwb_wgm_single_nonce_field' );
@@ -1548,7 +1547,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$cart_html .= apply_filters( 'mwb_wgm_add_delivery_method', $mwb_additional_section, $product_id );
 								$cart_html .= '</div>';
 								$cart_html .= apply_filters( 'mwb_wgm_add_section_after_delivery', $mwb_additional_section, $product_id );
-								$mwb_wgm_pricing = WC()->session->get( 'mwb_wgm_pricing' );
+								$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 								if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 									$templateid = $mwb_wgm_pricing['template'];
 								} else {

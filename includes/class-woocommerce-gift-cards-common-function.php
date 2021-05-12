@@ -268,7 +268,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					// purchase as a product.
-					$item_id = WC()->session->get( 'mwb_sell_as_a_gift_item_id' );
+					$item_id = get_post_meta( $order_id, 'temp_item_id', true );
 					do_action( 'mwb_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
 
 					return true;
@@ -295,7 +295,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$from = $mwb_wgm_common_arr['from'];
 				$item_id = $mwb_wgm_common_arr['item_id'];
 				$product_id = $mwb_wgm_common_arr['product_id'];
-				$mwb_wgm_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
+				$mwb_wgm_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 				if ( is_array( $mwb_wgm_pricing ) && array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 					$templateid = $mwb_wgm_pricing['template'];
 				} else {
