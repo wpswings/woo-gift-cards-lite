@@ -33,6 +33,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * The single instance of the class.
 	 *
 	 * @since   1.0.0
+	 * @var null _instance.
 	 */
 	protected static $_instance = null;
 
@@ -59,17 +60,37 @@ class Makewebbetter_Onboarding_Helper {
 	 * @var string Form id.
 	 */
 	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
-	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
+	/**
+	 * Form id of hubspot api.
+	 *
+	 * @since 1.0.0
+	 * @var string deactivation_form_id.
+	 */
+	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 	/**
 	 * Plugin Name.
 	 *
 	 * @since 1.0.0
+	 * @var string plugin_name.
 	 */
-	
 	private static $plugin_name;
+
+	/**
+	 * Store Name.
+	 *
+	 * @var string store_name.
+	 * @since 1.0.0
+	 */
 	private static $store_name;
+
+	/**
+	 * Store URL.
+	 *
+	 * @since 1.0.0
+	 * @var string store_url.
+	 */
 	private static $store_url;
 
 	/**
@@ -79,9 +100,8 @@ class Makewebbetter_Onboarding_Helper {
 	 */
 	public function __construct() {
 
-
 		self::$store_name = get_bloginfo( 'name' );
-		self::$store_url = home_url();
+		self::$store_url  = home_url();
 
 		if ( defined( 'ONBOARD_PLUGIN_NAME' ) ) {
 			self::$plugin_name = ONBOARD_PLUGIN_NAME;
@@ -174,10 +194,10 @@ class Makewebbetter_Onboarding_Helper {
 				'makewebbetter-onboarding-scripts',
 				'mwb_onboarding',
 				array(
-					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'auth_nonce'    => wp_create_nonce( 'mwb_onboarding_nonce' ),
-					'current_screen'    => $pagenow,
-					'current_supported_slug'    => apply_filters( 'mwb_deactivation_supported_slug', array( $current_slug ) ),
+					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+					'auth_nonce'             => wp_create_nonce( 'mwb_onboarding_nonce' ),
+					'current_screen'         => $pagenow,
+					'current_supported_slug' => apply_filters( 'mwb_deactivation_supported_slug', array( $current_slug ) ),
 				)
 			);
 		}
@@ -192,7 +212,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_onboarding_popup_screen() {
-		
+
 		if ( $this->is_valid_page_screen() && $this->can_show_onboarding_popup() ) {
 			require_once MWB_WGC_DIRPATH . 'includes/extra-templates/makewebbetter-onboarding-template-display.php';
 		}
@@ -254,7 +274,7 @@ class Makewebbetter_Onboarding_Helper {
 	public function can_show_onboarding_popup() {
 
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
-		
+
 		// Already submitted the data.
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 			return false;
@@ -416,7 +436,7 @@ class Makewebbetter_Onboarding_Helper {
 				'required' => '',
 				'extra-class' => '',
 			),
-			
+
 			rand() => array(
 				'id' => 'show-counter',
 				'label' => '',
@@ -841,12 +861,14 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot form submission.
 	 *
-	 * @param      string $result       The result of this validation.
-	 * @since    1.0.0
+	 * @param       array  $submission  submission.
+	 * @param       string $action_type action_type.
+	 * @return      string $result      The_result_of_this_validation.
+	 * @since       1.0.0
 	 */
 	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
-		if ( 'onboarding' == $action_type ) {
+		if ( 'onboarding' === $action_type ) {
 			array_push(
 				$submission,
 				array(
@@ -858,7 +880,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		$result = $this->hubwoo_submit_form( $submission, $action_type );
 
-		if ( true == $result['success'] ) {
+		if ( true === $result['success'] ) {
 			return true;
 		} else {
 			return false;
@@ -869,12 +891,15 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot GET api calls.
 	 *
-	 * @since    1.0.0
+	 * @param string $endpoint endpoint.
+	 * @param string $headers headers.
+	 * @since        1.0.0
 	 */
 	private function hic_get( $endpoint, $headers ) {
 
 		$url = $this->base_url . $endpoint;
 
+		// @codingStandardsIgnoreStart.
 		$ch = @curl_init();
 		@curl_setopt( $ch, CURLOPT_POST, false );
 		@curl_setopt( $ch, CURLOPT_URL, $url );
@@ -886,11 +911,12 @@ class Makewebbetter_Onboarding_Helper {
 		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 		$curl_errors = curl_error( $ch );
 		@curl_close( $ch );
+		// @codingStandardsIgnoreEnd.
 
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $curl_errors,
 		);
 	}
 
@@ -898,12 +924,16 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot POST api calls.
 	 *
+	 * @param string $endpoint    endpoint.
+	 * @param string $post_params post_params.
+	 * @param string $headers     headers.
 	 * @since    1.0.0
 	 */
 	private function hic_post( $endpoint, $post_params, $headers ) {
 
 		$url = $this->base_url . $endpoint;
 
+		// @codingStandardsIgnoreStart.
 		$ch = @curl_init();
 		@curl_setopt( $ch, CURLOPT_POST, true );
 		@curl_setopt( $ch, CURLOPT_URL, $url );
@@ -916,23 +946,25 @@ class Makewebbetter_Onboarding_Helper {
 		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 		$curl_errors = curl_error( $ch );
 		@curl_close( $ch );
+		// @codingStandardsIgnoreEnd.
 
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $curl_errors,
 		);
 	}
 
 	/**
 	 *  Hubwoo Onboarding Submission :: Get a form.
 	 *
-	 * @param           $form_id    form ID.
-	 * @since       1.0.0
+	 * @param  array  $form_data    form data.
+	 * @param  string $action_type  action_type.
+	 * @since                       1.0.0
 	 */
 	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
-		if ( 'onboarding' == $action_type ) {
+		if ( 'onboarding' === $action_type ) {
 			$form_id = self::$onboarding_form_id;
 		} else {
 			$form_id = self::$deactivation_form_id;
@@ -957,8 +989,8 @@ class Makewebbetter_Onboarding_Helper {
 
 		$response = $this->hic_post( $url, $form_data, $headers );
 
-		if ( $response['status_code'] == 200 ) {
-			$result = json_decode( $response['response'], true );
+		if ( 200 === $response['status_code'] ) {
+			$result            = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
 
@@ -968,9 +1000,13 @@ class Makewebbetter_Onboarding_Helper {
 		return $result;
 	}
 
-
-	// Function to get the client IP address
-	function get_client_ip() {
+	/**
+	 * Function to get the client IP address.
+	 *
+	 * @return string $ipaddress ipaddress.
+	 * @since         1.0.0
+	 */
+	public function get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );

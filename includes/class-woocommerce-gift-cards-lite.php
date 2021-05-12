@@ -26,7 +26,7 @@
  * @subpackage woo-gift-cards-lite/includes
  * @author     makewebbetter <ticket@makewebbetter.com>
  */
-class Woocommerce_gift_cards_lite {
+class Woocommerce_Gift_Cards_Lite {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -34,7 +34,7 @@ class Woocommerce_gift_cards_lite {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Woocommerce_gift_cards_lite_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Woocommerce_Gift_Cards_Lite_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -85,8 +85,8 @@ class Woocommerce_gift_cards_lite {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Woocommerce_gift_cards_lite_Loader. Orchestrates the hooks of the plugin.
-	 * - Woocommerce_gift_cards_lite_i18n. Defines internationalization functionality.
+	 * - Woocommerce_Gift_Cards_Lite_Loader. Orchestrates the hooks of the plugin.
+	 * - Woocommerce_Gift_Cards_Lite_I18n. Defines internationalization functionality.
 	 * - Woocommerce_Gift_Cards_Lite_Admin. Defines all hooks for the admin area.
 	 * - Woocommerce_Gift_Cards_Lite_Public. Defines all hooks for the public side of the site.
 	 *
@@ -102,26 +102,26 @@ class Woocommerce_gift_cards_lite {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce_gift_cards_lite-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-gift-cards-lite-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce_gift_cards_lite-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-gift-cards-lite-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woocommerce_gift_cards_lite-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woocommerce-gift-cards-lite-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woocommerce_gift_cards_lite-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woocommerce-gift-cards-lite-public.php';
 
-		$this->loader = new Woocommerce_gift_cards_lite_Loader();
+		$this->loader = new Woocommerce_Gift_Cards_Lite_Loader();
 
 		/**
 		 * The class responsible for defining all actions that occur in the onboarding the site data
@@ -134,7 +134,7 @@ class Woocommerce_gift_cards_lite {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Woocommerce_gift_cards_lite_i18n class in order to set the domain and to register the hook
+	 * Uses the Woocommerce_Gift_Cards_Lite_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -142,7 +142,7 @@ class Woocommerce_gift_cards_lite {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Woocommerce_gift_cards_lite_i18n();
+		$plugin_i18n = new Woocommerce_Gift_Cards_Lite_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -170,10 +170,10 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin, 'mwb_wgm_woocommerce_hidden_order_itemmeta' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wgm_setting_notice_on_activation' );
 
-		 // Added new Actions and Filters.
+		// Added new Actions and Filters.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_giftcard_custom_post' );
 		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'mwb_wgm_edit_form_after_title', 10, 1 );
-		 // include Gift card Template.
+		// include Gift card Template.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_mothers_day_template', 10 );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_new_template', 10 );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_custom_template', 10 );
@@ -234,9 +234,11 @@ class Woocommerce_gift_cards_lite {
 		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'mwb_wgm_woocommerce_hide_order_metafields', 10, 1 );
 		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'mwb_wgm_price_based_country_giftcard' );
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
-		// Compatibility with Flatsome theme minicart price issue
+		// Compatibility with Flatsome theme minicart price issue.
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
 
+		$this->loader->add_action( 'wp_ajax_mwb_get_data', $plugin_public, 'mwb_cart_form_for_product_as_a_gift' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_get_data', $plugin_public, 'mwb_cart_form_for_product_as_a_gift' );
 	}
 
 	/**
@@ -263,7 +265,7 @@ class Woocommerce_gift_cards_lite {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Woocommerce_gift_cards_lite_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Woocommerce_Gift_Cards_Lite_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

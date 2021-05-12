@@ -73,10 +73,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Woocommerce_gift_cards_lite_Loader as all of the hooks are defined
+		 * defined in Woocommerce_Gift_Cards_Lite_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Woocommerce_gift_cards_lite_Loader will then create the relationship
+		 * The Woocommerce_Gift_Cards_Lite_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -106,6 +106,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
+			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'giftware/giftware.php' ) ) {
+				wp_enqueue_script( $this->plugin_name . 'mwb_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/mwb_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, true );
+			}
+
 			if ( 'product' == $pagescreen || 'shop_order' == $pagescreen || 'giftcard_page_mwb-wgc-setting-lite' == $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' == $pagescreen || 'plugins' == $pagescreen ) {
 
 				$mwb_wgm_general_settings = get_option( 'mwb_wgm_general_settings', false );
@@ -348,14 +352,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'desc_tip' => true,
 				)
 			);
-			 // Selected Price.
+			// Selected Price.
 			woocommerce_wp_textarea_input(
 				array(
 					'id' => 'mwb_wgm_selected_price',
 					'value' => "$price",
 					'label' => __( 'Price', 'woo-gift-cards-lite' ),
 					'desc_tip' => 'true',
-					'description' => __( 'Enter price using seperator |. Ex : (10 | 20)', 'woo-gift-cards-lite' ),
+					'description' => __( 'Enter price using separator |. Ex : (10 | 20)', 'woo-gift-cards-lite' ),
 					'placeholder' => '10|20|30',
 				)
 			);
@@ -365,7 +369,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				<label for="mwb_wgm_default_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
 				<span class="description"><?php esc_html_e( 'WooCommerce Product regular price is used as a gift card price.', 'woo-gift-cards-lite' ); ?></span>
 			</p>
-			
+
 			<p class="form-field mwb_wgm_user_price_field ">
 				<label for="mwb_wgm_user_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
 				<span class="description"> <?php esc_html_e( 'Users can purchase any amount of Gift Card.', 'woo-gift-cards-lite' ); ?></span>
@@ -552,8 +556,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					} else {
 						global $wpdb;
 						$table_name = $wpdb->prefix . 'wc_product_meta_lookup';
-						$sql = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
-						$results = $wpdb->get_results( $sql );
+						$sql        = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
+						$results    = $wpdb->get_results( '%d', $sql );
 					}
 					do_action( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
 					$mwb_wgm_pricing = apply_filters( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
@@ -613,11 +617,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
 							$product_types = wp_get_object_terms( $product_id, 'product_type' );
-
-							if ( isset( $product_types[0] ) ) {
-								$product_type = $product_types[0]->slug;
-								if ( 'wgm_gift_card' == $product_type || 'gw_gift_card' == $product_type ) {
-
+							$mwb_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
+							if ( isset( $product_types[0] ) || 'on' === $mwb_gift_product ) {
+								$product_type     = isset( $product_types[0] ) ? $product_types[0]->slug : '';
+								if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $mwb_gift_product ) {
 									$giftcoupon = get_post_meta( $order_id, "$order_id#$item_id", true );
 
 									if ( empty( $giftcoupon ) ) {
@@ -1122,8 +1125,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
 					// @codingStandardsIgnoreStart.
 					echo wp_kses( $finalhtml, $allowed_tags );
-					// @codingStandardsIgnoreEnd.
 					die();
+					// @codingStandardsIgnoreEnd.
 				}
 			}
 		}
@@ -1142,9 +1145,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function mwb_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
 			$new_links = array(
-				'demo' => '<a href="https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
-				'doc' => '<a href="http://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
-				'support' => '<a href="https://makewebbetter.com/submit-query/" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
+				'demo' => '<a href="https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
+				'doc' => '<a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-doc" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
+				'support' => '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -1300,7 +1303,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		);
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
-			echo '<p><strong>' . 'Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
 		} else {
 			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
@@ -1392,7 +1395,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				<?php
 			}
 			?>
-					
+
 			</div>
 			<?php
 			/* Delete transient, only display this notice once. */
@@ -1403,6 +1406,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
+	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
 	 * @name add_mwb_frontend_screens
 	 * @author makewebbetter<ticket@makewebbetter.com>
@@ -1420,6 +1424,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
+	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
 	 * @name add_mwb_deactivation_screens
 	 * @author makewebbetter<ticket@makewebbetter.com>

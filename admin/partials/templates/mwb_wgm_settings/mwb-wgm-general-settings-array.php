@@ -62,7 +62,7 @@ $mwb_wgm_general_setting = array(
 		),
 		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
 		'default' => 5,
-		'desc_tip' => esc_html__( 'Enter gift card coupon length excluding the prefix.(Minimum length is set to 5)', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Enter gift card coupon length excluding the prefix. (Minimum length is set to 5)', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Gift card Prefix', 'woo-gift-cards-lite' ),
@@ -79,7 +79,7 @@ $mwb_wgm_general_setting = array(
 		'custom_attribute' => array( 'min' => '0' ),
 		'default' => 0,
 		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
-		'desc_tip' => esc_html__( 'Enter number of days after purchased Giftcard is expired. Keep value "1" for one day expiry when order is completed. Keep value "0" for no expiry.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Enter number of days after purchased Giftcard is expired. Keep value "1" for one-day expiry when order is completed. Keep value "0" for no expiry.', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Minimum Spend', 'woo-gift-cards-lite' ),
@@ -90,7 +90,7 @@ $mwb_wgm_general_setting = array(
 			'placeholder' => '"No Minimum"',
 		),
 		'default' => '',
-		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
+		'class' => 'input-text mwb_wgm_new_woo_ver_style_text mwb_wgm_gc_price_range',
 		'desc_tip' => esc_html__( 'This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the Gift card coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(
@@ -102,7 +102,7 @@ $mwb_wgm_general_setting = array(
 			'placeholder' => '"No Maximum"',
 		),
 		'default' => '',
-		'class' => 'input-text mwb_wgm_new_woo_ver_style_text',
+		'class' => 'input-text mwb_wgm_new_woo_ver_style_text mwb_wgm_gc_price_range',
 		'desc_tip' => esc_html__( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Giftcard coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(

@@ -80,6 +80,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				if ( null != $template_css && '' != $template_css ) {
 					$template_css = "<style>$template_css</style>";
 				}
+
 				if ( isset( $args['message'] ) && ! empty( $args['message'] ) ) {
 					$templatehtml = str_replace( '[MESSAGE]', $args['message'], $templatehtml );
 				} else {
@@ -265,6 +266,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$expirydate = strtotime( $expirydate );
 						update_post_meta( $new_coupon_id, 'date_expires', $expirydate );
 					}
+
+					// purchase as a product.
+					$item_id = WC()->session->get( 'mwb_sell_as_a_gift_item_id' );
+					do_action( 'mwb_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
+
 					return true;
 				} else {
 					return false;
@@ -289,13 +295,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$from = $mwb_wgm_common_arr['from'];
 				$item_id = $mwb_wgm_common_arr['item_id'];
 				$product_id = $mwb_wgm_common_arr['product_id'];
-				$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
+				$mwb_wgm_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
 				if ( is_array( $mwb_wgm_pricing ) && array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 					$templateid = $mwb_wgm_pricing['template'];
 				} else {
 					$templateid = $this->mwb_get_org_selected_template();
 				}
 				$args['from'] = $from;
+				$args['order_id'] = $order->get_id();
 				$args['to'] = $to;
 				$args['message'] = stripcslashes( $mwb_wgm_common_arr['gift_msg'] );
 				$args['coupon'] = apply_filters( 'mwb_wgm_qrcode_coupon', $mwb_wgm_common_arr['gift_couponnumber'] );
@@ -418,6 +425,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						wc_mail( $from, $receive_subject, $receive_message );
 					}
 				}
+				do_action( 'mwb_wgm_send_giftcard_over_sms', $mwb_wgm_common_arr, $order );
 				return true;
 			} else {
 				return false;

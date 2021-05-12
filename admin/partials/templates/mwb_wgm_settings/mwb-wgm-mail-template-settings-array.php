@@ -37,12 +37,13 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 				 ),
 			 ),
 			 'class' => 'mwb_wgm_mail_setting_upload_logo_value mwb_wgm_new_woo_ver_style_text',
-			 'desc_tip' => esc_html__( 'Upload the image which is used as logo on your Email Template.', 'woo-gift-cards-lite' ),
+			 'desc_tip' => esc_html__( 'Upload the image which is used as a logo on your Email Template.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
 			 'title' => esc_html__( 'Logo Height (in "px")', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_height',
 			 'type' => 'number',
+			 'custom_attribute' => array( 'min' => '0' ),
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
 			 'desc_tip' => esc_html__( 'Set the height of the logo in the email template.', 'woo-gift-cards-lite' ),
@@ -51,6 +52,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'title' => esc_html__( 'Logo Width (in "px")', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_upload_logo_dimension_width',
 			 'type' => 'number',
+			 'custom_attribute' => array( 'min' => '0' ),
 			 'default' => 70,
 			 'class' => 'mwb_wgm_new_woo_ver_style_text',
 			 'desc_tip' => esc_html__( 'Set the width of the logo in the email template.', 'woo-gift-cards-lite' ),
@@ -59,7 +61,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'title' => esc_html__( 'Email Default Event Image', 'woo-gift-cards-lite' ),
 			 'id' => 'mwb_wgm_mail_setting_background_logo',
 			 'type' => 'textWithButton',
-			 'desc_tip' => esc_html__( 'Upload image which is used as a default Event/Occasion in Email Template.', 'woo-gift-cards-lite' ),
+			 'desc_tip' => esc_html__( 'Upload an image which is used as a default Event/Occasion in Email Template.', 'woo-gift-cards-lite' ),
 			 'custom_attribute' => array(
 				 array(
 					 'type' => 'text',
@@ -89,6 +91,12 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'custom_attribute' => array( 'min' => 0 ),
 			 'desc_tip' => esc_html__( 'Enter the Gift Card Message length, used to limit the number of characters entered by the customers.', 'woo-gift-cards-lite' ),
 
+		 ),
+		 array(
+			 'title'    => esc_html__( 'Default Giftcard Message', 'woo-gift-cards-lite' ),
+			 'id'       => 'mwb_wgm_mail_setting_default_message',
+			 'type'     => 'text',
+			 'desc_tip' => esc_html__( 'Set the Default Message for Giftcard.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
 			 'title' => esc_html__( 'Disclaimer Text', 'woo-gift-cards-lite' ),

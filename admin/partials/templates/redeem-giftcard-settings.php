@@ -134,10 +134,16 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 }
 $mwb_current_user = wp_get_current_user();
 $offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true );
-if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
+if ( isset( $mwb_wgm_error_message ) && null !== $mwb_wgm_error_message ) {
 	?>
 <div class="notice notice-success is-dismissible"> 
-	<p><strong><?php echo wp_kses_post( $mwb_wgm_error_message, 'woo-gift-cards-lite' ); ?></strong></p>
+	<p><strong>
+	<?php
+	// phpcs:disable.
+	_e( $mwb_wgm_error_message, 'woo-gift-cards-lite' );
+	// phpcs:enable.
+	?>
+	</strong></p>
 	<button type="button" class="notice-dismiss">
 		<span class="screen-reader-text"><?php echo wp_kses_post( 'Dismiss this notice', 'woo-gift-cards-lite' ); ?></span>
 	</button>
@@ -154,7 +160,7 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 		<?php if ( ! isset( $offine_giftcard_redeem_link ['shop_url'] ) || '' == $offine_giftcard_redeem_link['shop_url'] ) { ?>
 			<div>
 				<div class="mwb-giftware-reddem-image text-center">
-					
+
 					<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/giftware-redeem-image.png' ); ?>" alt="GiftWare">
 					<div class="mwb_giftware_reddem_link_wrapper">
 						<a href="#" class="generate_link"><i class="fas fa-link"></i><?php esc_html_e( 'Get me My FREE redeem Link', 'woo-gift-cards-lite' ); ?> </a>
@@ -269,11 +275,11 @@ if ( isset( $mwb_wgm_error_message ) && null != $mwb_wgm_error_message ) {
 						<p><b>
 							<?php esc_html_e( 'To use the redeem link as it is, follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
 							<ol>
-								<li><?php esc_html_e( 'Click on Open Shop button and login using the credentials provided in the received email', 'woo-gift-cards-lite' ); ?></li>
+								<li><?php esc_html_e( 'Click on the Open Shop button and log in using the credentials provided in the received email', 'woo-gift-cards-lite' ); ?></li>
 								<li><?php esc_html_e( 'Start Scan/Fetch and Redeem/Recharge', 'woo-gift-cards-lite' ); ?></li>
 							</ol>
 
-							<p><b><?php esc_html_e( 'To use the redeem link on the web store follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
+							<p><b><?php esc_html_e( 'To use the redeem link on the web-store follow the steps below', 'woo-gift-cards-lite' ); ?></b></p>
 							<ol>
 								<li><?php esc_html_e( 'Create a page', 'woo-gift-cards-lite' ); ?></li>
 								<li><?php esc_html_e( 'Copy the embed link and paste it in the created page', 'woo-gift-cards-lite' ); ?></li>

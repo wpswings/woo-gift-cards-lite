@@ -10,6 +10,12 @@
 	'use strict';
 	jQuery( document ).ready(
 		function($){
+
+			$('#mwb_wgm_price').keyup(function() {
+				this.value = this.value.replace(/[^0-9]/g, '');
+			});
+
+			$("#mwb_wgm_price").attr( "min", 1);
 			var check_elementor = $(document).find('.mwb_wgm_added_wrapper').parents('.elementor-product-wgm_gift_card').length;
 			if (check_elementor != 0) {
 				if ($(document).find('.mwb_wgm_added_wrapper').length) {
@@ -19,21 +25,59 @@
 				}
 			}
 
-			$( "#mwb_wgm_message" ).keyup(
-				function(){
-					var msg_length = $( document ).find( '#mwb_wgm_message' ).val().length;
-					if (msg_length == 0) {
-
-						$( '.mwb_box_char' ).text( 0 );
-					} else {
-						$( '.mwb_box_char' ).text( msg_length );
-					}
-
+			$('body').on('click', '#mwb_gift_this_product', function() {
+				$(document).ajaxComplete(function() {
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					$('.mwb_box_char').text(msg_length);
+				});
+			});
+			
+			$(window).load( function() {
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					$('.mwb_box_char').text(msg_length);
 				}
 			);
 
+			$("body").on( 'keyup', '#mwb_wgm_message', 
+				function(){
+					var max_length = mwb_wgm.msg_length;
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					var html = '<ul>';
+					var error = false;
+					if ( msg_length > max_length ) {
+						this.value = this.value.substring( 0, max_length );
+						error = true;
+						$("#mwb_wgm_message").addClass("mwb_gw_error");
+						html+="<li><b>";
+						html+=mwb_wgm.msg_length_err;
+						html+="</li>";
+					}
+					if(msg_length == 0){
+						$('.mwb_box_char').text(0);
+					}
+					else if( msg_length > max_length ){
+						$('.mwb_box_char').text(max_length);
+					} else {
+						$('.mwb_box_char').text(msg_length);
+					}
+
+					html += "</ul>";
+					if(error)
+					{
+						$("#mwb_wgm_error_notice").html(html);
+						$("#mwb_wgm_error_notice").show();
+						jQuery('html, body').animate({
+							scrollTop: jQuery(".woocommerce-page").offset().top
+						}, 800);
+					} else {
+						$("#mwb_wgm_error_notice").hide();
+					}
+				}
+			);
+
+
 			/*Js for select template on single product page*/
-			$( '.mwb_wgm_featured_img' ).click(
+			$( 'body' ).on( 'click', '.mwb_wgm_featured_img',
 				function(){
 					$( '.mwb_wgm_selected_template' ).find( '.mwb_wgm_featured_img' ).removeClass( 'mwb_wgm_pre_selected_temp' );
 					var img_id = $( this ).attr( 'id' );
@@ -45,9 +89,9 @@
 			/*
 			Adds the Validation for some required fields for Single Product Page.
 			*/
-			jQuery( ".single_add_to_cart_button" ).click(
+			jQuery( "body" ).on( 'click', '.single_add_to_cart_button',
 				function(e){
-					if (typeof mwb_wgm.pricing_type.type != 'undefined') {
+					if ( ( typeof mwb_wgm.pricing_type.type != 'undefined' || $( '#mwb_gift_this_product' ).prop("checked") == true ) ) {
 						e.preventDefault();
 						$( "#mwb_wgm_error_notice" ).hide();
 						var from_mail = $( "#mwb_wgm_from_name" ).val();
@@ -89,11 +133,26 @@
 									html += "</li>";
 								}
 							}
+						}
+
+						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to_name() == 'on') {
+							
+						} else {
 							if (delivery_method == 'Downloadable') {
 								to_mail = $( "#mwb_wgm_to_download" ).val();
 								if (to_mail == null || to_mail == "") {
 									error = true;
 									$( "#mwb_wgm_to_download" ).addClass( "mwb_wgm_error" );
+									html += "<li><b>";
+									html += mwb_wgm.to_empty_name;
+									html += "</li>";
+								}
+							}
+							if (delivery_method == 'shipping') {
+								to_mail = $( "#mwb_wgm_to_ship" ).val();
+								if (to_mail == null || to_mail == "") {
+									error = true;
+									$( "#mwb_wgm_to_ship" ).addClass( "mwb_wgm_error" );
 									html += "<li><b>";
 									html += mwb_wgm.to_empty_name;
 									html += "</li>";
@@ -110,7 +169,7 @@
 						}
 						// Remove validation from field.
 						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_from() == 'on') {
-							error = false;
+							
 						} else {
 							if (from_mail == null || from_mail == "") {
 								error = true;
@@ -122,7 +181,7 @@
 						}
 						// for validation from message field.
 						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_msg() == 'on') {
-							error = false;
+							
 						} else {
 							if (message == null || message == "") {
 								error = true;
@@ -185,9 +244,8 @@
 
 			/* Adds the Preview Validtion Here*/
 
-			$( '#mwg_wgm_preview_email' ).click(
+			$( 'body' ).on('click', '#mwg_wgm_preview_email',
 				function() {
-
 					var form_Data = new FormData();
 					$( "#mwb_wgm_error_notice" ).hide();
 					var from_mail = $( "#mwb_wgm_from_name" ).val();
@@ -229,6 +287,11 @@
 								html += "</li>";
 							}
 						}
+					}
+
+					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to_name() == 'on') {
+
+					} else {
 						if (delivery_method == 'Downloadable') {
 							to_mail = $( "#mwb_wgm_to_download" ).val();
 							if (to_mail == null || to_mail == "") {
@@ -240,6 +303,7 @@
 							}
 						}
 					}
+					
 					if (price == null || price == "") {
 						error = true;
 						$( "#mwb_wgm_price" ).addClass( "mwb_wgm_error" );
@@ -249,7 +313,7 @@
 					}
 					// remove validation from field.
 					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_from() == 'on') {
-						error = false;
+						
 					} else {
 						if (from_mail == null || from_mail == "") {
 								error = true;
@@ -261,7 +325,7 @@
 					}
 					// for validation from message.
 					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_msg() == 'on') {
-						error = false;
+						
 					} else {
 						if (message == null || message == "") {
 								error = true;
@@ -344,6 +408,22 @@
 					}
 				}
 			);
+
+			$('#mwb_gift_this_product').on( 'click', function() {
+				if ( $(this).prop("checked") == true ) {
+					var mwb_product = $(this).data( 'product' );
+					$.ajax({
+						type: "POST",
+						url: mwb_wgm.ajaxurl,
+						data: {action: "mwb_get_data", mwb_product: mwb_product, mwb_gc_nonce:mwb_wgm.mwb_gc_nonce},
+						success: function(data) {
+							$('#mwb_purchase_as_a_gc').html(data);
+						},
+					});
+				} else {
+					$('#mwb_purchase_as_a_gc').html('');
+				}
+			});
 		}
 	);
 

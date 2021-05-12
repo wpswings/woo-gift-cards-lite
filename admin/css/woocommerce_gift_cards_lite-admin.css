@@ -943,20 +943,6 @@ a.mwb_wgm_plugin_activation_msg {
 	line-height: 1.5;
 }
 
-/*chat now on skype*/
-#mwb-wgm-skype-link img {
-margin-right: 5px;
-vertical-align: text-bottom;
-}
-#mwb-wgm-skype-link {
-color: #00AAF2;
-background: #fff;
-border-radius: 4px;
-display: inline-block;
-padding: 7px 8px;
-font-weight: bold;
-}
-
 /*notification bar*/
 
 .notice-container {

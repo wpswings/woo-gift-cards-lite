@@ -15,14 +15,14 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>.
- * Version:           2.0.9
+ * Version:           2.1.0
  * Author:            MakeWebBetter
- * Author URI:        https://makewebbetter.com/
+ * Author URI:        https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-site/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * Tested up to:      5.6
- * WC tested up to:   4.8
+ * Tested up to:      5.7.1
+ * WC tested up to:   5.2.2
  * Domain Path:       /languages
  */
 
@@ -49,19 +49,19 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'PLUGIN_NAME_VERSION', '2.0.9' );
+	define( 'PLUGIN_NAME_VERSION', '2.1.0' );
 	/**
-	* Check whether the wordpress version is greater than 4.9.6
+	* Check whether the WordPress version is greater than 4.9.6
 	*/
 	global $wp_version;
 	if ( $wp_version >= '4.9.6' ) {
-		include_once MWB_WGC_DIRPATH . 'mwb_wgc_lite_gdpr.php';
+		include_once MWB_WGC_DIRPATH . 'mwb-wgc-lite-gdpr.php';
 	}
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
-	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce_gift_cards_lite.php';
+	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-lite.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 
 
@@ -77,6 +77,8 @@ if ( $activated ) {
 	 * @name mwb_wgm_admin_settings
 	 * @param array  $actions actions.
 	 * @param string $plugin_file plugin file name.
+	 * @param array  $plugin_data plugin_data.
+	 * @param string $context context.
 	 * @return $actions
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -246,7 +248,7 @@ if ( $activated ) {
 	 * @since    1.0.0
 	 */
 	function run_woocommerce_gift_cards_lite() {
-		$plugin = new Woocommerce_gift_cards_lite();
+		$plugin = new Woocommerce_Gift_Cards_Lite();
 		$plugin->run();
 	}
 	run_woocommerce_gift_cards_lite();
