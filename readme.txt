@@ -5,8 +5,8 @@ Tags: gift card, gift certificate, woocommerce gift cards, gift voucher, gift ca
 Requires at least: 5.0
 Tested up to: 5.7
 WC requires at least: 4.0.0
-WC tested up to: 5.2
-Stable tag: 2.1.0
+WC tested up to: 5.3
+Stable tag: 2.1.1
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -178,11 +178,12 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
+= 2.1.1 - Released on 13 May 2021 =
+* Fix: Minor issues
 
 = 2.1.0 - Released on 7 May 2021 =
 * New: Compatible with WP 5.7 and WC 5.2
 * Fix: Minor issues
-
 
 = 2.0.9 - Released on 19 December 2020 =
 * New: Compatibility with WooCommerce 4.8 and WordPress 5.6
@@ -250,6 +251,5 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.1.0 - Released on 7 May 2021 =
-* New: Compatible with WP 5.7 and WC 5.2
+= 2.1.1 - Released on 13 May 2021 =
 * Fix: Minor issues
