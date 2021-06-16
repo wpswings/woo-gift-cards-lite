@@ -468,7 +468,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$product = wc_get_product( $product_id );
 			if ( isset( $product ) && is_object( $product ) ) {
 				if ( $product->get_type() == 'wgm_gift_card' ) {
-					if ( isset( $_POST['mwb_wgm_product_nonce_field'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_wgm_product_nonce_field'] ) ), 'mwb_wgm_lite_nonce' ) ) {
+					if ( ! isset( $_POST['mwb_wgm_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_wgm_product_nonce_field'] ) ), 'mwb_wgm_lite_nonce' ) ) {
 						return;
 					}
 					$general_settings = get_option( 'mwb_wgm_general_settings', array() );
