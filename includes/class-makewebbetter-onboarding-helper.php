@@ -103,8 +103,8 @@ class Makewebbetter_Onboarding_Helper {
 		self::$store_name = get_bloginfo( 'name' );
 		self::$store_url  = home_url();
 
-		if ( defined( 'ONBOARD_PLUGIN_NAME' ) ) {
-			self::$plugin_name = ONBOARD_PLUGIN_NAME;
+		if ( defined( 'MWB_WGC_ONBOARD_PLUGIN_NAME' ) ) {
+			self::$plugin_name = MWB_WGC_ONBOARD_PLUGIN_NAME;
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -121,7 +121,10 @@ class Makewebbetter_Onboarding_Helper {
 		// Ajax to Skip popup.
 		add_action( 'wp_ajax_skip_onboarding_popup', array( $this, 'skip_onboarding_popup' ) );
 		add_action( 'wp_ajax_nopriv_skip_onboarding_popup', array( $this, 'skip_onboarding_popup' ) );
+
 	}
+
+
 
 	/**
 	 * Main HubWooConnectionMananager Instance.
@@ -189,7 +192,9 @@ class Makewebbetter_Onboarding_Helper {
 			wp_enqueue_script( 'makewebbetter-onboarding-scripts', MWB_WGC_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery' ), '1.0.0', true );
 
 			global $pagenow;
-			$current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
+
+			$current_slug = array_key_exists( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php', get_plugins() ) ? sanitize_title( get_plugins()['woo-gift-cards-lite/woocommerce_gift_cards_lite.php']['Name'] ) : '';
+
 			wp_localize_script(
 				'makewebbetter-onboarding-scripts',
 				'mwb_onboarding',
@@ -710,7 +715,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		check_ajax_referer( 'mwb_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
+		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 
 		$formatted_data = array();
 
@@ -889,39 +894,6 @@ class Makewebbetter_Onboarding_Helper {
 
 
 	/**
-	 * Handle Hubspot GET api calls.
-	 *
-	 * @param string $endpoint endpoint.
-	 * @param string $headers headers.
-	 * @since        1.0.0
-	 */
-	private function hic_get( $endpoint, $headers ) {
-
-		$url = $this->base_url . $endpoint;
-
-		// @codingStandardsIgnoreStart.
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, false );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-		// @codingStandardsIgnoreEnd.
-
-		return array(
-			'status_code' => $status_code,
-			'response'    => $response,
-			'errors'      => $curl_errors,
-		);
-	}
-
-
-	/**
 	 * Handle Hubspot POST api calls.
 	 *
 	 * @param string $endpoint    endpoint.
@@ -932,26 +904,35 @@ class Makewebbetter_Onboarding_Helper {
 	private function hic_post( $endpoint, $post_params, $headers ) {
 
 		$url = $this->base_url . $endpoint;
+		$request = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'headers'     => $headers,
+			'body'        => $post_params,
+			'cookies'     => array(),
+		);
 
-		// @codingStandardsIgnoreStart.
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, true );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-		// @codingStandardsIgnoreEnd.
+		$response = wp_remote_post( $url, $request );
+
+		if ( is_wp_error( $response ) ) {
+
+			$status_code = 500;
+			$response    = esc_html__( 'Unexpected Error Occured', 'woo-gift-cards-lite' );
+			$errors      = $response;
+
+		} else {
+
+			$status_code = wp_remote_retrieve_response_code( $response );
+			$response    = wp_remote_retrieve_body( $response );
+			$errors      = $response;
+		}
 
 		return array(
 			'status_code' => $status_code,
 			'response'    => $response,
-			'errors'      => $curl_errors,
+			'errors'      => $errors,
 		);
 	}
 
@@ -973,7 +954,7 @@ class Makewebbetter_Onboarding_Helper {
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
 		$headers = array(
-			'Content-Type: application/json',
+			'Content-Type' => 'application/json',
 		);
 
 		$form_data = json_encode(

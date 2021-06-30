@@ -66,10 +66,10 @@ class Woocommerce_Gift_Cards_Lite {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'MWB_WGC_VERSION' ) ) {
+			$this->version = MWB_WGC_VERSION;
 		} else {
-			$this->version = '2.0.5';
+			$this->version = '2.1.2';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -181,8 +181,6 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_preview_gift_template', 10, 2 );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_preview_email_template' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'mwb_custom_plugin_row_meta', 10, 2 );
-		/*Update_Notice on plugin dashboard*/
-		$this->loader->add_action( 'in_plugin_update_message-woo-gift-cards-lite/woocommerce_gift_cards_lite.php', $plugin_admin, 'in_plugin_update_message', 10, 2 );
 
 		/*cron for notification*/
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wgm_set_cron_for_plugin_notification' );
@@ -236,9 +234,6 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
 		// Compatibility with Flatsome theme minicart price issue.
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
-
-		$this->loader->add_action( 'wp_ajax_mwb_get_data', $plugin_public, 'mwb_cart_form_for_product_as_a_gift' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_get_data', $plugin_public, 'mwb_cart_form_for_product_as_a_gift' );
 	}
 
 	/**

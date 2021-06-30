@@ -14,7 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
+define( 'MWB_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();

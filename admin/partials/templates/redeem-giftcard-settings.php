@@ -139,9 +139,7 @@ if ( isset( $mwb_wgm_error_message ) && null !== $mwb_wgm_error_message ) {
 <div class="notice notice-success is-dismissible"> 
 	<p><strong>
 	<?php
-	// phpcs:disable.
-	_e( $mwb_wgm_error_message, 'woo-gift-cards-lite' );
-	// phpcs:enable.
+	echo wp_kses_post( $mwb_wgm_error_message );
 	?>
 	</strong></p>
 	<button type="button" class="notice-dismiss">
@@ -249,20 +247,20 @@ if ( isset( $mwb_wgm_error_message ) && null !== $mwb_wgm_error_message ) {
 								</td>
 							</tr>
 							<tr valign="top">
-								<td>
+								<td colspan="2">
 									<input type="submit" name="remove_giftcard_redeem_details" class="remove_giftcard_redeem_details"  class="input-text" value = 'Remove Details' >
 									<?php wp_nonce_field( 'mwb-remove-nonce', 'mwb-remove-nonce' ); ?>
-								</td>
-								<td>
 									<a target="_blank" href="
 									<?php
 									if ( isset( $offine_giftcard_redeem_link ['shop_url'] ) && '' !== $offine_giftcard_redeem_link['shop_url'] ) {
 										echo esc_attr( $offine_giftcard_redeem_link['shop_url'] );  }
 									?>
 										" class= "mwb_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woo-gift-cards-lite' ); ?></a>
-									</td>
-
-								</tr>
+									<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && $offine_giftcard_redeem_link['license'] == '' ) { ?>
+										<input type="submit" name="update_giftcard_redeem_details" class="update_giftcard_redeem_details"  class="input-text" value ='Update License' >
+									<?php } ?>
+								</td>
+							</tr>
 								<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && '' == $offine_giftcard_redeem_link['license'] ) { ?>
 									<tr>
 										<td colspan="2">

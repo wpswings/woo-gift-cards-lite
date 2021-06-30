@@ -301,6 +301,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				} else {
 					$templateid = $this->mwb_get_org_selected_template();
 				}
+				if ( is_array( $templateid ) && array_key_exists( 0, $templateid ) ) {
+					$temp = $templateid[0];
+				} else {
+					$temp = $templateid;
+				}
 				$args['from'] = $from;
 				$args['order_id'] = $order->get_id();
 				$args['to'] = $to;
@@ -322,7 +327,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				} else {
 					$args['amount'] = wc_price( $mwb_wgm_common_arr['couponamont'] );
 				}
-				$args['templateid'] = isset( $mwb_wgm_common_arr['selected_template'] ) && ! empty( $mwb_wgm_common_arr['selected_template'] ) ? $mwb_wgm_common_arr['selected_template'] : $templateid;
+				$args['templateid'] = isset( $mwb_wgm_common_arr['selected_template'] ) && ! empty( $mwb_wgm_common_arr['selected_template'] ) ? $mwb_wgm_common_arr['selected_template'] : $temp;
 				$args['product_id'] = $product_id;
 
 				$args = apply_filters( 'mwb_wgm_common_functionality_template_args', $args, $mwb_wgm_common_arr );

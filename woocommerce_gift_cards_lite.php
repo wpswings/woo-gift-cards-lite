@@ -15,14 +15,14 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>.
- * Version:           2.1.1
+ * Version:           2.1.2
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-site/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
  * Tested up to:      5.7.2
- * WC tested up to:   5.3
+ * WC tested up to:   5.4
  * Domain Path:       /languages
  */
 
@@ -49,7 +49,7 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'PLUGIN_NAME_VERSION', '2.1.1' );
+	define( 'MWB_WGC_VERSION', '2.1.2' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
@@ -111,25 +111,26 @@ if ( $activated ) {
 	function mwb_uwgc_pro_active() {
 		return apply_filters( 'mwb_uwgc_pro_active', false );
 	}
-
-	/**
-	 * This function is used to check if the giftcard plugin is activated.
-	 *
-	 * @since 1.0.0
-	 * @name mwb_wgm_giftcard_enable
-	 * @return boolean
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	function mwb_wgm_giftcard_enable() {
-		$giftcard_enable = get_option( 'mwb_wgm_general_settings', array() );
-		if ( ! empty( $giftcard_enable ) && array_key_exists( 'mwb_wgm_general_setting_enable', $giftcard_enable ) ) {
-			$check_enable = $giftcard_enable['mwb_wgm_general_setting_enable'];
-			if ( isset( $check_enable ) && ! empty( $check_enable ) ) {
-				if ( 'on' == $check_enable ) {
-					return true;
-				} else {
-					return false;
+	if ( ! function_exists( 'mwb_wgm_giftcard_enable' ) ) {
+		/**
+		 * This function is used to check if the giftcard plugin is activated.
+		 *
+		 * @since 1.0.0
+		 * @name mwb_wgm_giftcard_enable
+		 * @return boolean
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
+		 */
+		function mwb_wgm_giftcard_enable() {
+			$giftcard_enable = get_option( 'mwb_wgm_general_settings', array() );
+			if ( ! empty( $giftcard_enable ) && array_key_exists( 'mwb_wgm_general_setting_enable', $giftcard_enable ) ) {
+				$check_enable = $giftcard_enable['mwb_wgm_general_setting_enable'];
+				if ( isset( $check_enable ) && ! empty( $check_enable ) ) {
+					if ( 'on' == $check_enable ) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			}
 		}
@@ -207,35 +208,37 @@ if ( $activated ) {
 		}
 	}
 
-	/**
-	 * Generate the Dynamic code for Gift Cards.
-	 *
-	 * @since 1.0.0
-	 * @name mwb_wgm_coupon_generator
-	 * @param int $length length of coupon code.
-	 * @return string $password.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	function mwb_wgm_coupon_generator( $length = 5 ) {
-		$password = '';
-		$alphabets = range( 'A', 'Z' );
-		$numbers = range( '0', '9' );
-		$final_array = array_merge( $alphabets, $numbers );
-		while ( $length-- ) {
-			$key = array_rand( $final_array );
-			$password .= $final_array[ $key ];
-		}
+	if ( ! function_exists( 'mwb_wgm_coupon_generator' ) ) {
+		/**
+		 * Generate the Dynamic code for Gift Cards.
+		 *
+		 * @since 1.0.0
+		 * @name mwb_wgm_coupon_generator
+		 * @param int $length length of coupon code.
+		 * @return string $password.
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
+		 */
+		function mwb_wgm_coupon_generator( $length = 5 ) {
+			$password = '';
+			$alphabets = range( 'A', 'Z' );
+			$numbers = range( '0', '9' );
+			$final_array = array_merge( $alphabets, $numbers );
+			while ( $length-- ) {
+				$key = array_rand( $final_array );
+				$password .= $final_array[ $key ];
+			}
 
-		$general_settings = get_option( 'mwb_wgm_general_settings', array() );
-		if ( ! empty( $general_settings ) && array_key_exists( 'mwb_wgm_general_setting_giftcard_prefix', $general_settings ) ) {
-			$giftcard_prefix = $general_settings['mwb_wgm_general_setting_giftcard_prefix'];
-		} else {
-			$giftcard_prefix = '';
+			$general_settings = get_option( 'mwb_wgm_general_settings', array() );
+			if ( ! empty( $general_settings ) && array_key_exists( 'mwb_wgm_general_setting_giftcard_prefix', $general_settings ) ) {
+				$giftcard_prefix = $general_settings['mwb_wgm_general_setting_giftcard_prefix'];
+			} else {
+				$giftcard_prefix = '';
+			}
+			$password = $giftcard_prefix . $password;
+			$password = apply_filters( 'mwb_wgm_custom_coupon', $password );
+			return $password;
 		}
-		$password = $giftcard_prefix . $password;
-		$password = apply_filters( 'mwb_wgm_custom_coupon', $password );
-		return $password;
 	}
 
 	/**

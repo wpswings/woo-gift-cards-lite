@@ -458,13 +458,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_save_post() {
+	public function mwb_wgm_save_post( $post_id ) {
 		global $post;
-		if ( isset( $post->ID ) ) {
-			if ( ! current_user_can( 'edit_post', $post->ID ) ) {
+		if ( isset( $post_id ) ) {
+			if ( ! current_user_can( 'edit_post', $post_id ) || ! is_admin() ) {
 				return;
 			}
-			$product_id = $post->ID;
+			$product_id = $post_id;
 			$product = wc_get_product( $product_id );
 			if ( isset( $product ) && is_object( $product ) ) {
 				if ( $product->get_type() == 'wgm_gift_card' ) {
@@ -1173,72 +1173,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		return $mwb_lite_templates;
 	}
 
-	/**
-	 * Show plugin changes from upgrade notice
-	 *
-	 * @since 2.0.0
-	 * @name in_plugin_update_message
-	 * @param  string $args Holds the arguments.
-	 * @param  string $response Holds the response.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	public function in_plugin_update_message( $args, $response ) {
-		$transient_name = 'giftcard_upgrade_notice_' . $args['Version'];
-		$upgrade_notice = get_transient( $transient_name );
-		if ( ! $upgrade_notice ) {
-			$response = wp_safe_remote_get( 'https://plugins.svn.wordpress.org/woo-gift-cards-lite/trunk/readme.txt' );
-			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
-				$upgrade_notice = $this->parse_update_notice( $response['body'], $args['new_version'] );
-				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
-			}
-		}
-		echo wp_kses_post( $upgrade_notice );
-	}
-	/**
-	 * Parse upgrade notice from readme.txt file.
-	 *
-	 * @since 2.0.0
-	 * @name parse_update_notice
-	 * @param  string $content Holds the content.
-	 * @param  string $new_version Holds the new version.
-	 * @return string
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	public function parse_update_notice( $content, $new_version ) {
-		// Output Upgrade Notice.
-		$matches        = null;
-		$regexp         = '~==\s*Upgrade Notice\s*==\s*=\s*(.*)\s*=(.*)(=\s*' . preg_quote( $this->version ) . '\s*=|$)~Uis';
-		$upgrade_notice = '';
-
-		if ( preg_match( $regexp, $content, $matches ) ) {
-			$notices = (array) preg_split( '~[\r\n]+~', trim( $matches[2] ) );
-
-			// Convert the full version strings to minor versions.
-			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
-			$current_version_parts = explode( '.', $this->version );
-
-			if ( 3 !== count( $notice_version_parts ) ) {
-				return;
-			}
-
-			$notice_version  = $notice_version_parts[0] . '.' . $notice_version_parts[1] . '.' . $notice_version_parts[2];
-			$current_version = $current_version_parts[0] . '.' . $current_version_parts[1] . '.' . $current_version_parts[2];
-
-			// Check the latest stable version and ignore trunk.
-			if ( version_compare( $current_version, $notice_version, '<' ) ) {
-
-				$upgrade_notice .= '</p><p class="giftcard-plugin-upgrade-notice" style="padding: 14px 10px !important;background: #1a4251 !important;color: #fff !important;">';
-
-				foreach ( $notices as $index => $line ) {
-					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
-				}
-			}
-		}
-
-		return wp_kses_post( $upgrade_notice );
-	}
 
 	/**
 	 * Set Cron for plugin notification.
@@ -1291,7 +1225,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$url = 'https://demo.makewebbetter.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
 		$attr = array(
 			'action' => 'mwb_notification_fetch',
-			'plugin_version' => PLUGIN_NAME_VERSION,
+			'plugin_version' => MWB_WGC_VERSION,
 		);
 		$query = esc_url_raw( add_query_arg( $attr, $url ) );
 		$response = wp_remote_get(
