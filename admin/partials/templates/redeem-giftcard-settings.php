@@ -97,16 +97,25 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	}
 } else if ( isset( $_POST['update_giftcard_redeem_details'] ) ) {
 	$offine_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
+	$offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings' );
 	$userid = $offine_giftcard_redeem_details['user_id'];
 	$client_domain = home_url();
 	$url = 'https://gifting.makewebbetter.com/api/generate/update';
 	$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
+	if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) && ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
+		$request_type = 'both';
+	} elseif ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) {
+		$request_type = 'domainupdate';
+	} elseif ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) {
+		$request_type = 'licenseupdate';
+	}
 
 	if ( '' !== $client_license_code ) {
 		$curl_data = array(
 			'user_id' => $userid,
 			'domain' => $client_domain,
 			'license' => $client_license_code,
+			'request_type' => $request_type,
 		);
 
 		$response = wp_remote_post(
@@ -125,8 +134,9 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 				$mwb_wgm_error_message = $response->message;
 			} else {
 				if ( isset( $response->status ) && 'success' == $response->status ) {
-					$offine_giftcard_redeem_details ['license'] = $client_license_code;
-					update_option( 'giftcard_offline_redeem_link', $offine_giftcard_redeem_details );
+					$offine_giftcard_redeem_settings['license'] = $client_license_code;
+					$offine_giftcard_redeem_settings['domain']  = $client_domain;
+					update_option( 'giftcard_offline_redeem_settings', $offine_giftcard_redeem_settings );
 				}
 			}
 		}
@@ -134,6 +144,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 }
 $mwb_current_user = wp_get_current_user();
 $offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true );
+$offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings', true );
 if ( isset( $mwb_wgm_error_message ) && null !== $mwb_wgm_error_message ) {
 	?>
 <div class="notice notice-success is-dismissible"> 
@@ -256,8 +267,8 @@ if ( isset( $mwb_wgm_error_message ) && null !== $mwb_wgm_error_message ) {
 										echo esc_attr( $offine_giftcard_redeem_link['shop_url'] );  }
 									?>
 										" class= "mwb_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woo-gift-cards-lite' ); ?></a>
-									<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && $offine_giftcard_redeem_link['license'] == '' ) { ?>
-										<input type="submit" name="update_giftcard_redeem_details" class="update_giftcard_redeem_details"  class="input-text" value ='Update License' >
+									<?php if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) { ?>
+										<input type="submit" name="update_giftcard_redeem_details" class="update_giftcard_redeem_details"  class="input-text" value ='Update Authorization' >
 									<?php } ?>
 								</td>
 							</tr>
