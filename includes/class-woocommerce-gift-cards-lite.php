@@ -69,7 +69,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'MWB_WGC_VERSION' ) ) {
 			$this->version = MWB_WGC_VERSION;
 		} else {
-			$this->version = '2.1.2';
+			$this->version = '2.1.3';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
