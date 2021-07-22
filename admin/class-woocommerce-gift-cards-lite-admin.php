@@ -454,6 +454,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Saves the all required details for each product
 	 *
 	 * @since 1.0.0
+	 * @param int $post_id post id.
 	 * @name mwb_wgm_save_post()
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -798,7 +799,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, file_get_contents( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -862,7 +863,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$filename = array( MWB_WGC_URL . 'assets/images/giftcard.jpg' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, file_get_contents( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -926,7 +927,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$filename = array( MWB_WGC_URL . 'assets/images/custom_template.png' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, file_get_contents( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -989,7 +990,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$filename = array( MWB_WGC_URL . 'assets/images/merry_christmas.png' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, file_get_contents( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -1373,6 +1374,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 
 		return $valid_screens;
+	}
+
+	/**
+	 * Get the File Content
+	 *
+	 * @param string $mwb_file_path file path.
+	 * @return string $response['body'].
+	 */
+	public function mwb_wgm_get_file_content( $mwb_file_path ) {
+
+		$response = wp_remote_get( $mwb_file_path );
+
+		return $response['body'];
 	}
 }
 ?>
