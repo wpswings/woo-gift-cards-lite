@@ -173,7 +173,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				if ( 'send' != $alreadycreated ) {
 					$coupon_code = $gift_couponnumber; // Code.
 					$amount = $couponamont; // Amount.
-					$discount_type = 'fixed_cart';
+					$discount_type = apply_filters( 'mwb_wgm_discount_type', 'fixed_cart' );
 					$coupon_description = "GIFTCARD ORDER #$order_id";
 					$coupon = array(
 						'post_title' => $coupon_code,
@@ -224,6 +224,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 							$expirydate = '';
 						}
 					}
+
 					// Add meta.
 					// price based on country.
 					if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
