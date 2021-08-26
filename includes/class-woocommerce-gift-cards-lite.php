@@ -69,7 +69,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'MWB_WGC_VERSION' ) ) {
 			$this->version = MWB_WGC_VERSION;
 		} else {
-			$this->version = '2.1.3';
+			$this->version = '2.1.4';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -234,6 +234,8 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
 		// Compatibility with Flatsome theme minicart price issue.
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
+		// Compatibilty with MWB Currency Switcher.
+		$this->loader->add_filter( 'mwb_currency_switcher_get_custom_product_type', $plugin_public, 'mwb_currency_switcher_get_custom_product_type', 10, 2 );
 	}
 
 	/**

@@ -20,7 +20,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 		$client_name = isset( $_POST['wcgm_offine_redeem_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_name'] ) ) : '';
 		$client_email = isset( $_POST['wcgm_offine_redeem_email'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_email'] ) ) : '';
 		$enable = isset( $_POST['wcgm_offine_redeem_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_enable'] ) ) : '';
-		$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
+		$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
 		$client_domain = home_url();
 		$currency = get_option( 'woocommerce_currency' );
 		$client_currency = get_woocommerce_currency_symbol();
@@ -101,7 +101,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	$userid = $offine_giftcard_redeem_details['user_id'];
 	$client_domain = home_url();
 	$url = 'https://gifting.makewebbetter.com/api/generate/update';
-	$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
+	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
 	if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) && ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
 		$request_type = 'both';
 	} elseif ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) {

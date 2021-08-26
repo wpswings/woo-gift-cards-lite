@@ -153,6 +153,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 							}
 						}
+					} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+						$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
+						if ( isset( $mwb_wgm_pricing['type'] ) ) {
+							$product_pricing_type = $mwb_wgm_pricing['type'];
+							if ( 'mwb_wgm_range_price' === $product_pricing_type ) {
+								$from_price              = $mwb_wgm_pricing['from'];
+								$to_price                = $mwb_wgm_pricing['to'];
+								$from_price              = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+								$to_price                = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+								$mwb_wgm_pricing['from'] = $from_price;
+								$mwb_wgm_pricing['to']   = $to_price;
+							}
+						}
 					} else {
 						$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
 					}
@@ -250,6 +263,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
+									} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+										$default_price = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
+										$to_price      = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+										$from_price    = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+										$mwb_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
+										$cart_html    .= '<p class="mwb_wgm_section selected_price_type">
+											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
+											<input type="text" class="input-text mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" value="' . $mwb_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
+											</p>';
 									} else {
 										$mwb_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html    .= '<p class="mwb_wgm_section selected_price_type">
@@ -292,6 +314,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 															$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
 														}
 													}
+												} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+													$default_price = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
+													$prices        = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $price );
+													if ( $prices === $default_price ) {
+														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
+													} else {
+														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
+													}
 												} else {
 													if ( $price == $default_price ) {
 														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
@@ -315,6 +345,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 											$default_price = wcpbc_the_zone()->get_exchange_rate_price( $default_price );
 										}
+										$cart_html .= '<p class="mwb_wgm_section selected_price_type"">
+											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
+											<input type="text" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
+											</p>';
+									} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+										$default_price = $product_pricing['default_price'];
+										$default_price = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
 										$cart_html .= '<p class="mwb_wgm_section selected_price_type"">
 											<label class="mwb_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="mwb_wgm_price" id="mwb_wgm_price" name="mwb_wgm_price" min="1" value = ' . $default_price . '>
@@ -483,6 +520,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$mwb_price = sanitize_text_field( wp_unslash( $_POST['mwb_wgm_price'] ) );
 										$_POST['mwb_wgm_price'] = floatval( $mwb_price / $exchange_rate );
 									}
+								}
+							}
+						} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+							$product_pricing      = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
+							$product_pricing_type = $product_pricing['type'];
+							$is_customizable      = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+							if ( isset( $_POST['mwb_wgm_price'] ) && ! empty( $_POST['mwb_wgm_price'] ) ) {
+								if ( 'mwb_wgm_range_price' == $product_pricing_type || 'mwb_wgm_user_price' == $product_pricing_type ) {
+									$_POST['mwb_wgm_price'] = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', $_POST['mwb_wgm_price'] );
+								} elseif ( 'yes' === $is_customizable && 'mwb_wgm_selected_price' == $product_pricing_type ) {
+									$_POST['mwb_wgm_price'] = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', $_POST['mwb_wgm_price'] );
 								}
 							}
 						}
@@ -657,7 +705,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( 'mwb_wgm_default_price' == $product_pricing_type ) {
 									$new_price = '';
 									$default_price = $product_pricing['default_price'];
-									$price_html = $price_html;
+									if ( ! is_admin() && function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+										$default_price = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
+										$price_html    = mwb_mmcsfw_get_custom_currency_symbol( '' ) . $default_price;
+									} else {
+										$price_html = $price_html;
+									}
 								}
 								if ( 'mwb_wgm_range_price' == $product_pricing_type ) {
 									$price_html = '';
@@ -670,6 +723,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$to_price = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
 										}
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+									} elseif ( ! is_admin() && function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+										$from_price  = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+										$to_price    = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . mwb_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . mwb_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
 									} else {
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
 									}
@@ -686,10 +743,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 
 												if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
-													$last_range = wcpbc_the_zone()->get_exchange_rate_price( $last_range );
+													$last_range         = wcpbc_the_zone()->get_exchange_rate_price( $last_range );
 													$selected_prices[0] = wcpbc_the_zone()->get_exchange_rate_price( $selected_prices[0] );
 												}
 												$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+											} elseif ( ! is_admin() && function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+												$last_range         = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $last_range );
+												$selected_prices[0] = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $selected_prices[0] );
+												$price_html        .= mwb_mmcsfw_get_custom_currency_symbol( '' ) . ( $selected_prices[0] ) . '-' . mwb_mmcsfw_get_custom_currency_symbol( '' ) . ( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 											} else {
 												$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 											}
@@ -1153,12 +1214,21 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				}
 				$giftcardcoupon = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 				if ( ! empty( $giftcardcoupon ) ) {
+
+					if ( apply_filters( 'mwb_wgm_subscription_renewal_order_coupon', false, $order_id, $the_coupon ) ) {
+						return;
+					}
 					$mwb_wgm_discount = $item->get_discount();
 					$mwb_wgm_discount_tax = $item->get_discount_tax();
 					$amount = get_post_meta( $coupon_id, 'coupon_amount', true );
 
 					$total_discount = $this->mwb_common_fun->mwb_wgm_calculate_coupon_discount( $mwb_wgm_discount, $mwb_wgm_discount_tax );
 					$total_discount = $total_discount / $rate;
+
+					if ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+						$from_currency  = get_post_meta( $order_id, '_order_currency', true );
+						$total_discount = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
+					}
 
 					if ( $amount < $total_discount ) {
 						$remaining_amount = 0;
@@ -1308,6 +1378,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
 					$args['amount'] = wc_price( $amt );
 				}
+			} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+				if ( isset( $product_pricing_type ) && 'mwb_wgm_range_price' == $product_pricing_type ) {
+					$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
+				} elseif ( isset( $product_pricing_type ) && 'mwb_wgm_user_price' == $product_pricing_type ) {
+					$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
+				} else {
+					$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
+					$amt = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $amt );
+				}
+				$args['amount'] = mwb_mmcsfw_get_custom_currency_symbol( '' ) . ( $amt );
 			} else {
 				$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
 				$args['amount'] = wc_price( $amt );
@@ -1359,11 +1439,36 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 						$html = wcpbc_the_zone()->get_exchange_rate_price( $html );
 					}
+				} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+					$html = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $html );
 				}
 				$html = str_replace( ',', '.', $html );
 				$html = wc_price( $html );
 			}
 		}
 		return $html;
+	}
+
+	/**
+	 * Comapatibilty with currency switcher.
+	 *
+	 * @param string $custom_product_type custom_product_type.
+	 * @param int    $product_id id.
+	 * @return $product_type
+	 */
+	public function mwb_currency_switcher_get_custom_product_type( $custom_product_type, $product_id ) {
+		$product_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
+		if ( ! empty( $product_pricing ) ) {
+			$product_pricing_type = $product_pricing['type'];
+			if ( ! empty( $product_pricing_type ) ) {
+				if ( 'mwb_wgm_default_price' === $product_pricing_type ) {
+					return 'simple';
+				} else {
+					return 'variable';
+				}
+			} else {
+				return '';
+			}
+		}
 	}
 }

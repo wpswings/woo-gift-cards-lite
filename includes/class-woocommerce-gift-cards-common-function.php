@@ -325,6 +325,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					} else {
 						$args['amount'] = wc_price( $mwb_wgm_common_arr['couponamont'] );
 					}
+				} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+					$to_currency    = get_post_meta( $order->get_id(), '_order_currency', true );
+					$args['amount'] = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( $to_currency, $mwb_wgm_common_arr['couponamont'] );
+					$args['amount'] = mwb_mmcsfw_get_custom_currency_symbol( $to_currency ) . $args['amount'];
 				} else {
 					$args['amount'] = wc_price( $mwb_wgm_common_arr['couponamont'] );
 				}
