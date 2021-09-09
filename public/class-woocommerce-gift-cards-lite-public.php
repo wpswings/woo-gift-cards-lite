@@ -1471,4 +1471,58 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 	}
+
+	/**
+	 * This function is used to manage coupon amount when order status will be cancelled or failed.
+	 *
+	 * @param int    $order_id id.
+	 * @param string $old_status old status.
+	 * @param string $new_status new status.
+	 * @return void
+	 */
+	public function mwb_wgm_manage_coupon_amount_on_refund( $order_id, $old_status, $new_status ) {
+		$order       = new WC_Order( $order_id );
+		$coupon_code = $order->get_coupon_codes();
+
+		if ( ! empty( $coupon_code ) ) {
+			$the_coupon = new WC_Coupon( $coupon_code[0] );
+			$coupon_id  = $the_coupon->get_id();
+			$orderid    = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
+			if ( isset( $orderid ) && ! empty( $orderid ) ) {
+				if ( ! metadata_exists( 'post', $order_id, 'coupon_used' ) ) {
+					$coupon_used = 1;
+					update_post_meta( $order_id, 'coupon_used', $coupon_used );
+
+				} else {
+					$coupon_used = get_post_meta( $order_id, 'coupon_used' )[0];
+				}
+
+				if ( ( $new_status == 'cancelled' || $new_status == 'failed' ) && $coupon_used == 1 ) {
+
+					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
+					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
+
+					$remaining_amount = $amount + $total_discount;
+					$remaining_amount = round( $remaining_amount, 2 );
+					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+					$coupon_used = 0;
+					update_post_meta( $order_id, 'coupon_used', $coupon_used );
+
+				} elseif ( ( $new_status == 'pending' || $new_status == 'processing' || $new_status == 'on-hold' || $new_status == 'completed' ) && $coupon_used == 0 ) {
+					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
+					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
+
+					if ( $amount < $total_discount ) {
+						$remaining_amount = 0;
+					} else {
+						$remaining_amount = $amount - $total_discount;
+						$remaining_amount = round( $remaining_amount, 2 );
+					}
+					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+					$coupon_used = 1;
+					update_post_meta( $order_id, 'coupon_used', $coupon_used );
+				}
+			}
+		}
+	}
 }

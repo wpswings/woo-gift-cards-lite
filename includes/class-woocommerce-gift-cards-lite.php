@@ -236,6 +236,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
 		// Compatibilty with MWB Currency Switcher.
 		$this->loader->add_filter( 'mwb_currency_switcher_get_custom_product_type', $plugin_public, 'mwb_currency_switcher_get_custom_product_type', 10, 2 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wgm_manage_coupon_amount_on_refund', 10, 3 );
 	}
 
 	/**
