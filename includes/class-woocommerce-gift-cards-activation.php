@@ -18,47 +18,28 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 	 */
 	class Woocommerce_Gift_Cards_Activation {
 		/**
-		 * This function is used to restore the overall functionality of plugin
+		 * This function is used to restore the overall functionality of plugin.
 		 *
 		 * @name mwb_wgm_restore_data
+		 * @param boolean $network_wide for multisite.
 		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		public function mwb_wgm_restore_data() {
+		public function mwb_wgm_restore_data( $network_wide ) {
 			/*General setting tab data*/
-			$mwb_check_enable = false;
-			$giftcard_enable = get_option( 'mwb_wgm_general_setting_enable', false );
-			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {
-				$mwb_check_enable = true;
-			}
-			if ( $mwb_check_enable ) {
-				$general_process_completion_flag = false;
-				$general_flag = false;
-				$product_flag = false;
-				$mail_flag = false;
-				$delivery_flag = false;
-				$other_flag = false;
-
-				$general_flag = $this->restore_general_settings_data( $general_process_completion_flag );
-				if ( $general_flag ) {
-					$product_process_completion_flag = false;
-					$product_flag = $this->restore_product_settings_data( $product_process_completion_flag );
+			global $wpdb;
+			// check if the plugin has been activated on the network.
+			if ( is_multisite() && $network_wide ) {
+				// Get all blogs in the network and activate plugins on each one.
+				$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+				foreach ( $blog_ids as $blog_id ) {
+					switch_to_blog( $blog_id );
+					$this->on_activation();
+					restore_current_blog();
 				}
-				if ( $product_flag ) {
-					$mail_process_completion_flag = false;
-					$mail_flag = $this->restore_mail_settings_data( $mail_process_completion_flag );
-				}
-				if ( $mail_flag ) {
-					$delivery_process_completion_flag = false;
-					$delivery_flag = $this->restore_delivery_settings_data( $delivery_process_completion_flag );
-				}
-				if ( $delivery_flag ) {
-					$other_process_completion_flag = false;
-					$other_flag = $this->restore_other_settings_data( $other_process_completion_flag );
-				}
-				if ( $other_flag ) {
-					$this->delete_additional_data();
-				}
+			} else {
+				// activated on a single site, in a multi-site or on a single site.
+				$this->on_activation();
 			}
 		}
 
@@ -248,6 +229,48 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		public function delete_additional_data() {
 			delete_option( 'mwb_wgm_general_setting_giftcard_applybeforetx' );
 			delete_option( 'mwb_wgm_product_setting_exclude_product_format' );
+		}
+
+		/**
+		 * This function is used to restore the overall functionality of plugin
+		 *
+		 * @return void
+		 */
+		public function on_activation() {
+			$mwb_check_enable = false;
+			$giftcard_enable  = get_option( 'mwb_wgm_general_setting_enable', false );
+			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {
+				$mwb_check_enable = true;
+			}
+			if ( $mwb_check_enable ) {
+				$general_process_completion_flag = false;
+				$general_flag                    = false;
+				$product_flag                    = false;
+				$mail_flag                       = false;
+				$delivery_flag                   = false;
+				$other_flag                      = false;
+
+				$general_flag = $this->restore_general_settings_data( $general_process_completion_flag );
+				if ( $general_flag ) {
+					$product_process_completion_flag = false;
+					$product_flag                    = $this->restore_product_settings_data( $product_process_completion_flag );
+				}
+				if ( $product_flag ) {
+					$mail_process_completion_flag = false;
+					$mail_flag                    = $this->restore_mail_settings_data( $mail_process_completion_flag );
+				}
+				if ( $mail_flag ) {
+					$delivery_process_completion_flag = false;
+					$delivery_flag                    = $this->restore_delivery_settings_data( $delivery_process_completion_flag );
+				}
+				if ( $delivery_flag ) {
+					$other_process_completion_flag = false;
+					$other_flag                    = $this->restore_other_settings_data( $other_process_completion_flag );
+				}
+				if ( $other_flag ) {
+					$this->delete_additional_data();
+				}
+			}
 		}
 	}
 }
