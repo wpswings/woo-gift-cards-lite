@@ -298,24 +298,6 @@ if ( $activated ) {
 	add_action( 'admin_init', 'mwb_wgm_plugin_deactivate' );
 
 	/**
-	 * Show warning message if woocommerce is not install
-	 *
-	 * @since 1.0.0
-	 * @name mwb_wgm_plugin_error_notice()
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	function mwb_wgm_plugin_error_notice() {
-		unset( $_GET['activate'] );
-		?>
-		<div class="error notice is-dismissible">
-			<p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?></p>
-		</div>
-		<?php
-	}
-	add_action( 'admin_notices', 'mwb_wgm_plugin_error_notice' );
-
-	/**
 	 * Deactivate plugin.
 	 *
 	 * @since 1.0.0
@@ -324,7 +306,14 @@ if ( $activated ) {
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wgm_plugin_deactivate() {
+		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
+		?>
+		<!-- Show warning message if woocommerce is not install -->
+		<div class="error notice is-dismissible">
+			<p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?></p>
+		</div>
+		<?php
 	}
 }
 
