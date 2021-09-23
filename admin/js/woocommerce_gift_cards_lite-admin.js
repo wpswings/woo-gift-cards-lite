@@ -217,6 +217,13 @@
 					$( '#mwb_wgm_discount' ).parent().show();
 				}
 			}
+
+			$( '.notice-dismiss' ).click(
+				function(){
+					$( ".notice-success" ).remove();
+				}
+			);
+			
 			// Hide-show the instruction box.
 			$( '.mwb_wgm_instructions_reminder' ).on( 
 				'click',
