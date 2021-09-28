@@ -695,7 +695,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'not_found_in_trash' => esc_html__( 'No gift cards found in Trash.', 'woo-gift-cards-lite' ),
 		);
 		$mwb_wgm_template = array(
-			'create_posts' => false,
+			'create_posts' => 'do_not_allow',
 		);
 		$mwb_wgm_template = apply_filters( 'mwb_wgm_template_capabilities', $mwb_wgm_template );
 		$args = array(
