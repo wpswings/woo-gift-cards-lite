@@ -278,11 +278,9 @@ if ( $activated ) {
 		// check if the plugin has been activated on the network.
 		if ( is_plugin_active_for_network( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
 			$mwb_lcns_status = get_option( 'mwb_gw_lcns_status' );
-			$mwb_license_key = '';
-			if ( true == $mwb_lcns_status ) {
-				$mwb_license_key = get_option( 'mwb_gw_lcns_key' );
-			}
-			$blog_id = $new_site->blog_id;
+			$mwb_license_key = get_option( 'mwb_gw_lcns_key' );
+			$timestamp       = get_option( 'mwb_gw_lcns_thirty_days' );
+			$blog_id         = $new_site->blog_id;
 			// switch to newly created site.
 			switch_to_blog( $blog_id );
 			require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
@@ -290,7 +288,7 @@ if ( $activated ) {
 			mwb_create_giftcard_page();
 			$restore_data = new Woocommerce_Gift_Cards_Activation();
 			$restore_data->on_activation();
-			do_action( 'mwb_wgm_standard_plugin_on_create_blog', $mwb_license_key );
+			do_action( 'mwb_wgm_standard_plugin_on_create_blog', $mwb_lcns_status, $mwb_license_key, $timestamp );
 			restore_current_blog();
 		}
 	}
