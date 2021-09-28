@@ -1502,6 +1502,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
 					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
 
+					if ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+						$from_currency  = get_post_meta( $order_id, '_order_currency', true );
+						$total_discount = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
+					}
+
 					$remaining_amount = $amount + $total_discount;
 					$remaining_amount = round( $remaining_amount, 2 );
 					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
@@ -1511,6 +1516,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				} elseif ( ( $new_status == 'pending' || $new_status == 'processing' || $new_status == 'on-hold' || $new_status == 'completed' ) && $coupon_used == 0 ) {
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
 					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
+
+					if ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+						$from_currency  = get_post_meta( $order_id, '_order_currency', true );
+						$total_discount = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
+					}
 
 					if ( $amount < $total_discount ) {
 						$remaining_amount = 0;
