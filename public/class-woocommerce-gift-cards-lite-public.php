@@ -528,9 +528,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$is_customizable      = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 							if ( isset( $_POST['mwb_wgm_price'] ) && ! empty( $_POST['mwb_wgm_price'] ) ) {
 								if ( 'mwb_wgm_range_price' == $product_pricing_type || 'mwb_wgm_user_price' == $product_pricing_type ) {
-									$_POST['mwb_wgm_price'] = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', $_POST['mwb_wgm_price'] );
+									$_POST['mwb_wgm_price'] = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['mwb_wgm_price'] ) ) );
 								} elseif ( 'yes' === $is_customizable && 'mwb_wgm_selected_price' == $product_pricing_type ) {
-									$_POST['mwb_wgm_price'] = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', $_POST['mwb_wgm_price'] );
+									$_POST['mwb_wgm_price'] = mwb_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['mwb_wgm_price'] ) ) );
 								}
 							}
 						}
@@ -1497,7 +1497,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$coupon_used = get_post_meta( $order_id, 'coupon_used' )[0];
 				}
 
-				if ( ( $new_status == 'cancelled' || $new_status == 'failed' ) && $coupon_used == 1 ) {
+				if ( ( 'cancelled' == $new_status || 'failed' == $new_status ) && 1 == $coupon_used ) {
 
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
 					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
@@ -1513,7 +1513,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$coupon_used = 0;
 					update_post_meta( $order_id, 'coupon_used', $coupon_used );
 
-				} elseif ( ( $new_status == 'pending' || $new_status == 'processing' || $new_status == 'on-hold' || $new_status == 'completed' ) && $coupon_used == 0 ) {
+				} elseif ( ( 'pending' == $new_status || 'processing' == $new_status || 'on-hold' == $new_status || 'completed' == $new_status ) && 0 == $coupon_used ) {
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
 					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
 
