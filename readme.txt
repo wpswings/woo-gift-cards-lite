@@ -1,21 +1,22 @@
-=== Ultimate Gift Cards For WooCommerce ===
+=== Ultimate Gift Cards for WooCommerce - Create, Redeem & Manage Digital Gift Certificates with Pre-defined coupon codes ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
 Requires at least: 5.0
 Tested up to: 5.8
 WC requires at least: 4.0.0
-WC tested up to: 5.5
-Stable tag: 2.1.3
+WC tested up to: 5.7.1
+Stable tag: 2.2.0
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Create and sell gift cards to your customers to attract more sales and multiply your revenue at your WooCommerce store
+Create, sell and manage WooCommerce gift cards to attract more sales and multiply your revenue at your online store.
+
 
 == Description ==
 
-**SELL GIFT CARD ON WORDPRESS WEBSITE WITH ONE OF THE HIGHEST RATED PLUGIN**
+**SELL GIFT CARDS ON WORDPRESS WEBSITE WITH ONE OF THE HIGHEST-RATED PLUGIN. GET WOOCOMMERCE GIFT CARDS TO CREATE, REDEEM AND MANAGE DIGITAL GIFT CARD COUPONS. CUSTOMIZE GIFT CARDS, USE PREDEFINED TEMPLATES, SHARE GIFT VOUCHERS VIA EMAIL OR DOWNLOAD IT AS PDF**
 
 Ultimate WooCommerce Gift Cards plugin allows merchants to create, sell, and manage gift cards at their WooCommerce store. Customers can purchase these gift cards and send them to anyone by email. The recipient can use this card to make purchases at your store and he/she can also recharge/redeem these cards at your online or retail store.
 
@@ -25,7 +26,7 @@ Ultimate WooCommerce Gift Cards plugin allows merchants to create, sell, and man
 **WITH THE ULTIMATE GIFT CARDS FOR WOOCOMMERCE PLUGIN YOU CAN:**
 
 * Create and sell WordPress gift cards in your native language
-* Sell WooCommerce Gift Cards at your store in four different pricing types.
+* [**Sell WooCommerce Gift Cards**](https://makewebbetter.com/blog/sell-gift-cards-in-woocommerce-store/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) at your store in four different pricing types.
 * Customize predefined gift card templates
 * Customize the coupon code length, usage, prefix, expiry date, etc.
 * Showcase gift card products on the shop page as well as on a separate page
@@ -33,6 +34,15 @@ Ultimate WooCommerce Gift Cards plugin allows merchants to create, sell, and man
 * Set gift cards for individual use so that customers can’t use any other coupon along with the gift card
 * Exclude products, categories, or sale items to restrict customers from buying specific items
 * Enable or Disable tax calculation for gift card products
+* Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
+* Compatible with [**Subscriptions For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+* Compatible with Multisite
+* Compatible with WPML
+ 
+
+
+== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+[**Download Now!!**](https://downloads.wordpress.org/plugin/woo-gift-cards-lite.zip)
 
 
 == WHAT’S INCLUDED IN OUR FREE ULTIMATE GIFT CARD FOR WOOCOMMERCE PLUGIN: ==
@@ -90,9 +100,14 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.mak
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE GIFT CARD PLUGIN ==
 
-Ultimate WooCommerce Gift Cards helps merchants to create, sell & manage gift cards on their WooCommerce store. With the WordPress Gift cards plugin, the admin can customize gift card templates, send Gift Card coupon codes as QRCode/BARCode, create reusable gift cards, and send balance notifications to the customers.
+Gift cards for WooCommerce help merchants to create, sell & manage gift cards on their WooCommerce store. With the WordPress Gift cards plugin, the admin can customize gift card templates, send Gift Card coupon codes as QRCode/BARCode, create reusable gift cards, and send balance notifications to the customers.
 
 > Note:  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org)
+
+**See what Dee Why Therapeutic Centre is saying about Gift cards plugin:**
+
+> With Ultimate Gift Cards for WooCommerce plugin, I realized the potential of gift card marketing in the coming future. This plugin is loaded with some very useful features and is still easy to use. The design and layout of the plugin are interactive. About the support team, they are highly satisfied with prompt responses to tickets and chat queries. Also, I made some customization requests for additional features which they understood well and implemented in almost no waste of time. [**See Case Study**](https://makewebbetter.com/success-stories/dee-why-therapeutic-centre/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+
 
 
 == LIVE DEMO OF PREMIUM VERSION ==
@@ -109,7 +124,7 @@ Ultimate WooCommerce Gift Cards helps merchants to create, sell & manage gift ca
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org).
 
-If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) with your question.
+> Note: If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) with your question.
 
 
 
@@ -120,7 +135,7 @@ If our documentation doesn't contain the solution to your problem, you can visit
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of the gift voucher, login to your WordPress dashboard, navigate to the Plugins menu and click Add New.
 
-In the search field type **"Ultimate Gift Cards for WooCommerce"** and click Search Plugins. Once you've found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
+In the search field type **"Ultimate Gift Cards for WooCommerce"** and click Search Plugins. Once you've found Ultimate Gift Cards for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
 
 = Manual installation =
 
@@ -162,10 +177,10 @@ You can do this by setting the Pricing Type of a gift card to “User Price”. 
 = Where do my customers’ gift cards get delivered? = 
 The gift card gets delivered to the email ID the buyer enters in the email field at the time of purchase.
 
-= How can I redeem the gift card coupons at my retail store? = 
+= How can I redeem WordPress gift card coupons at my retail store? = 
 Yes, you can redeem gift card coupons at retail stores through the Point of Sale(POS) system. The plugin provides a free embed link that you can paste on any page in your website/POS system to create a portal for recharging/redeeming WooCommerce gift cards. You can then redeem the gift cards from that portal.
 
-= How many default templates are available in the Gift card plugin? = 
+= How many default templates are available in the Ultimate Gift card plugin? = 
 You get 4 default gift card templates with the plugin. You can also customize those templates according to your requirements.
 
 = Can we restrict the categories for the use of a gift card? = 
@@ -174,13 +189,13 @@ Yes. In the Product Settings of the plugin, you can exclude the categories to re
 = Can the admin customize Gift card email templates? = 
 Yes. You can modify the Gift card email template from the "Gift Card" menu where all the templates are listed. Click on “Edit” to edit a particular gift card template. Now the editing page of the template will open. You can make the changes and update the template.
 
-= Does the Gift card plugin support multiple languages? = 
+= Does the WooCommerce Gift card plugin support multiple languages? = 
 Yes, the plugin supports multiple languages and is WPML compatible. You can also use the Loco Translate plugin to translate the strings into another language.
 
-= Does the Gift card plugin support Price Based on Country for WooCommerce plugin? = 
+= Does the WordPress Gift card plugin support Price Based on Country for WooCommerce plugin? = 
 Yes. The plugin is compatible with Price Based on Country for WooCommerce plugin which enables customers to place an order in their own currency.
 
-= Can I set the expiry for the gift card coupons? = 
+= Can I set the expiry for the WooCommerce gift card coupons? = 
 Yes. In the General Settings of the plugin, you can set the number of days after which the gift card will expire.
 
 = Can we restrict the use of gift card coupons in maximum and minimum spend of order total? = 
@@ -191,6 +206,11 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
+= 2.2.0 - Released on 30 September 2021 =
+* New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
+* New: Compatible with [**Subscriptions For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+* New: Compatible with Multisite
+* New: Compatible with WPML
 
 = 2.1.3 - Released on 28 July 2021 =
 * New: Compatible with WP 5.8 and WC 5.5
@@ -271,5 +291,11 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.1.3 - Released on 28 July 2021 =
-* New: Compatible with WP 5.8 and WC 5.5
+= 2.2.0 - Released on 30 September 2021 =
+* New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
+* New: Compatible with [**Subscriptions For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+* New: Compatible with Multisite
+* New: Compatible with WPML
+
+
+
