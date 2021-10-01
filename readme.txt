@@ -34,12 +34,12 @@ Ultimate WooCommerce Gift Cards plugin allows merchants to create, sell, and man
 * Set gift cards for individual use so that customers can’t use any other coupon along with the gift card
 * Exclude products, categories, or sale items to restrict customers from buying specific items
 * Enable or Disable tax calculation for gift card products
-* Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
-* Compatible with [**Subscriptions For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
-* Compatible with Multisite
-* Compatible with WPML
- 
 
+== PLUGIN COMPATIBILITIES ==
+* Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org): Sell your gift cards in multiple currencies now because WooCommerce Gift Card plugin is now compatible with Currency Switcher plugin
+* Compatible with [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org): The Compatibility of WooCommerce Subscriptions with Gift Certificates brings new opportunities for your buyers to pay subscription charges using gift cards.
+* The Gift Cards for WooCommerce plugin are now compatible with WPML and Multisite.
+ 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now!!**](https://downloads.wordpress.org/plugin/woo-gift-cards-lite.zip)
@@ -124,7 +124,7 @@ Gift cards for WooCommerce help merchants to create, sell & manage gift cards on
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org).
 
-> Note: If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) with your question.
+> If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) with your question.
 
 
 
@@ -206,9 +206,9 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
-= 2.2.0 - Released on 30 September 2021 =
+= 2.2.0 - Released on 1 October 2021 =
 * New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
-* New: Compatible with [**Subscriptions For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+* New: Compatible with [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
 * New: Compatible with Multisite
 * New: Compatible with WPML
 
@@ -291,11 +291,8 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.2.0 - Released on 30 September 2021 =
+= 2.2.0 - Released on 1 October 2021 =
 * New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
-* New: Compatible with [**Subscriptions For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+* New: Compatible with [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
 * New: Compatible with Multisite
 * New: Compatible with WPML
-
-
-
