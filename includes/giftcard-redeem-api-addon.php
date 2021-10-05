@@ -68,6 +68,8 @@ function mwb_get_giftcard_details( $request ) {
 	$coupon_code = strtolower( $coupon_code );
 
 	$coupon_details = new WC_Coupon( $coupon_code );
+	$response['code'] = 'success';
+	$response['message'] = 'There is Giftcard Details ';
 	$coupon_id = $coupon_details->get_id();
 	if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 

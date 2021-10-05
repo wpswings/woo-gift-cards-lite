@@ -173,7 +173,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				if ( 'send' != $alreadycreated ) {
 					$coupon_code = $gift_couponnumber; // Code.
 					$amount = $couponamont; // Amount.
-					$discount_type = 'fixed_cart';
+					$discount_type = apply_filters( 'mwb_wgm_discount_type', 'fixed_cart' );
 					$coupon_description = "GIFTCARD ORDER #$order_id";
 					$coupon = array(
 						'post_title' => $coupon_code,
@@ -224,6 +224,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 							$expirydate = '';
 						}
 					}
+
 					// Add meta.
 					// price based on country.
 					if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
@@ -268,7 +269,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					// purchase as a product.
-					$item_id = WC()->session->get( 'mwb_sell_as_a_gift_item_id' );
+					$item_id = get_post_meta( $order_id, 'temp_item_id', true );
 					do_action( 'mwb_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
 
 					return true;
@@ -295,11 +296,16 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$from = $mwb_wgm_common_arr['from'];
 				$item_id = $mwb_wgm_common_arr['item_id'];
 				$product_id = $mwb_wgm_common_arr['product_id'];
-				$mwb_wgm_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : WC()->session->get( 'mwb_wgm_pricing' );
+				$mwb_wgm_pricing = ! empty( get_post_meta( $product_id, 'mwb_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'mwb_wgm_pricing', true ) : get_post_meta( $product_id, 'mwb_wgm_pricing_details', true );
 				if ( is_array( $mwb_wgm_pricing ) && array_key_exists( 'template', $mwb_wgm_pricing ) ) {
 					$templateid = $mwb_wgm_pricing['template'];
 				} else {
 					$templateid = $this->mwb_get_org_selected_template();
+				}
+				if ( is_array( $templateid ) && array_key_exists( 0, $templateid ) ) {
+					$temp = $templateid[0];
+				} else {
+					$temp = $templateid;
 				}
 				$args['from'] = $from;
 				$args['order_id'] = $order->get_id();
@@ -319,10 +325,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					} else {
 						$args['amount'] = wc_price( $mwb_wgm_common_arr['couponamont'] );
 					}
+				} elseif ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+					$to_currency    = get_post_meta( $order->get_id(), '_order_currency', true );
+					$args['amount'] = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( $to_currency, $mwb_wgm_common_arr['couponamont'] );
+					$args['amount'] = mwb_mmcsfw_get_custom_currency_symbol( $to_currency ) . $args['amount'];
 				} else {
 					$args['amount'] = wc_price( $mwb_wgm_common_arr['couponamont'] );
 				}
-				$args['templateid'] = isset( $mwb_wgm_common_arr['selected_template'] ) && ! empty( $mwb_wgm_common_arr['selected_template'] ) ? $mwb_wgm_common_arr['selected_template'] : $templateid;
+				$args['templateid'] = isset( $mwb_wgm_common_arr['selected_template'] ) && ! empty( $mwb_wgm_common_arr['selected_template'] ) ? $mwb_wgm_common_arr['selected_template'] : $temp;
 				$args['product_id'] = $product_id;
 
 				$args = apply_filters( 'mwb_wgm_common_functionality_template_args', $args, $mwb_wgm_common_arr );
