@@ -263,7 +263,7 @@ function mwb_recharge_giftcard_offine( $request ) {
 	$request_params = $request->get_params();
 	$coupon_code = $request_params['coupon_code'];
 	$recharge_amount = $request_params['recharge_amount'];
-	$coupon_expiry = ( '' !== $request_params['coupon_expiry'] ) ? $request_params['coupon_expiry'] : null;
+	$coupon_expirys = ( '' !== $request_params['coupon_expiry'] ) ? $request_params['coupon_expiry'] : null;
 	$usage_limit = ( '' !== $request_params['usage_limit'] ) ? $request_params['usage_limit'] : 0;
 	$coupon_code = strtolower( $coupon_code );
 
@@ -297,9 +297,9 @@ function mwb_recharge_giftcard_offine( $request ) {
 				update_post_meta( $coupon_id, 'usage_count', 0 );
 
 				if ( $woo_ver < '3.6.0' ) {
-					update_post_meta( $coupon_id, 'date_expires', $coupon_expiry );
+					update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
 				} else {
-					update_post_meta( $coupon_id, 'date_expires', $coupon_expiry );
+					update_post_meta( $coupon_id, 'date_expires', $coupon_expirys );
 				}
 
 				$response['code'] = 'success';
@@ -312,7 +312,7 @@ function mwb_recharge_giftcard_offine( $request ) {
 					'usage_count' => 0,
 					'usage_limit' => $usage_limit,
 					'description' => $the_coupon->description,
-					'coupon_expiry' => $coupon_expiry,
+					'coupon_expiry' => $coupon_expirys,
 				);
 				$response['data'] = $data;
 				$response = new WP_REST_Response( $response );
