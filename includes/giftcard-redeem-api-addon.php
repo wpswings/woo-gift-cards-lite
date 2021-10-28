@@ -366,8 +366,8 @@ function mwb_recharge_giftcard_offine( $request ) {
  * @link https://www.makewebbetter.com/
  */
 function mwb_permission_check( $request ) {
-	$license = $request->get_header( 'licensecode' );
-	$client_license_code = get_option( 'mwb_uwgc-license-key', '' );
+	$license             = $request->get_header( 'licensecode' );
+	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
 	if ( '' == $license ) {
 		return true;
 	} elseif ( trim( $client_license_code ) === trim( $license ) ) {
