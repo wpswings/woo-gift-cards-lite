@@ -1384,7 +1384,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_wgm_get_file_content( $mwb_file_path ) {
 
-		$response = wp_remote_get( $mwb_file_path );
+		$response = wp_remote_get(
+			$mwb_file_path,
+			array(
+				'timeout'    => 20,
+				'sslverify'  => false,
+				'user-agent' => 'Ultimate Woocommerce Gift Cards/' . $this->version,
+			)
+		);
 
 		return $response['body'];
 	}
