@@ -14,7 +14,7 @@ $current_tab = 'mwb_wgm_mail_setting';
 if ( isset( $_POST['mwb_wgm_save_mail'] ) ) {
 	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) { // WPCS: input var ok, sanitization ok.
 		unset( $_POST['mwb_wgm_save_mail'] );
-		if ( in_array( 'giftware/giftware.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		if ( in_array( 'giftware/giftware.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || is_plugin_active( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
 			$postdata = wp_unslash( $_POST );
 		} else {
 			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
