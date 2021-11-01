@@ -16,7 +16,7 @@ $flag = false;
 $current_tab = 'mwb_wgm_product_setting';
 if ( isset( $_POST['mwb_wgm_save_product'] ) ) {
 	unset( $_POST['mwb_wgm_save_product'] );
-	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) {
 		if ( 'mwb_wgm_product_setting' == $current_tab ) {
 			$product_settings_array = array();
 			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );

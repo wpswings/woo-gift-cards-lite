@@ -16,7 +16,7 @@ require_once MWB_WGC_DIRPATH . 'admin/partials/templates/mwb_wgm_settings/mwb-wg
 $current_tab = 'mwb_wgm_general_setting';
 $flag = false;
 if ( isset( $_POST ['mwb_wgm_save_general'] ) ) {
-	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+	if ( isset( $_REQUEST['mwb-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb-wgc-nonce'] ) ), 'mwb-wgc-nonce' ) ) {
 		unset( $_POST['mwb_wgm_save_general'] );
 		$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
 		$general_settings_array = array();
