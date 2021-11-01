@@ -1,4 +1,4 @@
-=== Ultimate Gift Cards For WooCommerce - Create, Redeem & Manage Digital Gift Certificates With Predefined Coupon Codes ===
+=== Ultimate Gift Cards For WooCommerce - Create, Redeem & Manage Digital Gift Certificates with Personalized Templates ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
@@ -35,25 +35,6 @@ Ultimate WooCommerce Gift Cards plugin allows merchants to create, sell, and man
 * Exclude products, categories, or sale items to restrict customers from buying specific items
 * Enable or Disable tax calculation for gift card products
 
-== PLUGIN COMPATIBILITIES ==
-
-**1. Ultimate Gift Cards for WooCommerce Compatibility with Multi-Currency Switcher for WooCommerce**
-This gift certificate plugin is now compatible with [**MWB Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi-Currency Switcher (PRO)**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org). Thereby, you can get the following benefits:
-
-* You can customize the gift card price according to the currency choice, user’s preference of currency, default price, or price range.
-* The gift card’s coupon price will be customized according to the selected currency.
-* Discounts on gift card products will come according to the selected currency.
-
-**2. Ultimate WooCommerce Gift Cards is Compatible with WooCommerce Subscriptions PRO**
-The gift card for the WooCommerce plugin’s compatibility with the [**WooCommerce Subscriptions PRO**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) plugin enables you to leverage the following benefits:
-
-* You can allow your users to use Gift Card Coupons for subscription-related activities like first signup fee discount, a signup percentage discount, recurring discounts.
-* Use gift cards on existing subscriptions for renewal orders based on coupon amount.
-* If the subscription is purchased using a gift card, the same gift card will be applicable for the renewals too.
-
-**3. WooCommerce Gift Cards Compatibility with WPML & Multisite**
-The Ultimate Gift Card for WooCommerce plugin is also compatible with the WPML and multisite.
-
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now!!**](https://downloads.wordpress.org/plugin/woo-gift-cards-lite.zip)
@@ -61,7 +42,7 @@ The Ultimate Gift Card for WooCommerce plugin is also compatible with the WPML a
 
 == WHAT’S INCLUDED IN OUR FREE ULTIMATE GIFT CARD FOR WOOCOMMERCE PLUGIN: ==
 **1)** **Flexible Delivery Options**
-Ultimate Gift Cards for WooCommerce provides you two different methods - Email and Downloadable, to deliver gift cards. You can select either as per your convenience. If you select the email method, the customer will need to enter the email of the recipient while buying the gift card. The card will be sent to the recipient’s email. Or you can choose the downloadable feature. In the downloadable delivery method gift card, an email will be sent to the buyer. 
+Ultimate Gift Cards for WooCommerce provides you with two different methods - Email and Downloadable, to deliver gift cards. You can select either as per your convenience. If you select the email method, the customer will need to enter the email of the recipient while buying the gift card. The card will be sent to the recipient’s email. Or you can choose the downloadable feature. In the downloadable delivery method gift card, an email will be sent to the buyer. 
 
 **2)** **Offering in Your Local Currency**
 Compatible with Price Based on Country for WooCommerce in Gift certificate plugin, enables customers to place an order in their currency. This eliminates the hesitation customers face while purchasing a product in a different currency.
@@ -94,6 +75,22 @@ With WooCommerce ultimate gift card plugin, you can exclude specific categories,
 Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc) and learn more about the features and working of the plugin. 
 Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/giftware-woocommerce-giftcard-kb/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
 
+
+== PLUGIN COMPATIBILITIES ==
+
+1) The gift certificate plugin is now compatible with **MWB Multi-Currency Switcher for WooCommerce** and **WooCommerce Multi-Currency Switcher (PRO)**. Thereby, you can get the following benefits:
+
+* You can customize the gift card price according to the currency choice, user’s preference of currency, default price, or price range.
+* The gift card’s coupon price will be customized according to the selected currency.
+* Discounts on gift card products will come according to the selected currency.
+
+2) The WooCommerce gift card plugin is compatible with the **WooCommerce Subscriptions PRO** plugin that enables you to leverage the following benefits:
+
+* You can allow your users to use Gift Card Coupons for subscription-related activities like first signup fee discount, a signup percentage discount, recurring discounts.
+* Use gift cards on existing subscriptions for renewal orders based on coupon amount.
+* If the subscription is purchased using a gift card, the same gift card will be applicable for the renewals too.
+
+3) The Ultimate Gift Card for WooCommerce plugin is also compatible with the **WPML** and **Multisite**.
 
 
 == WHAT PREMIUM VERSION OF ULTIMATE WOOCOMMERCE GIFT CARDS OFFERS ==
@@ -215,6 +212,10 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
+= 2.2.1 - Released on 1 November 2021 =
+* Fix: Minor bug fixes
+* New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
+
 = 2.2.0 - Released on 1 October 2021 =
 * New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
 * New: Compatible with [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
@@ -300,9 +301,6 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.2.0 - Released on 1 October 2021 =
-* New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
-* New: Compatible with [**WooCommerce Subscriptions Pro**](https://makewebbetter.com/product/woocommerce-subscriptions-pro/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
-* New: Compatible with Multisite
-* New: Compatible with WPML
-
+= 2.2.1 - Released on 1 November 2021 =
+* Fix: Minor bug fixes
+* New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
