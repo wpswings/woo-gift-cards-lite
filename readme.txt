@@ -1,4 +1,4 @@
-=== Ultimate Gift Cards For WooCommerce - Create, Redeem & Manage Digital Gift Certificates with Personalized Templates ===
+=== Ultimate Gift Cards For WooCommerce - Create, Redeem & Manage Digital Gift Certificates With Personalized Templates ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
@@ -30,10 +30,10 @@ Ultimate WooCommerce Gift Cards plugin allows merchants to create, sell, and man
 * Customize predefined gift card templates
 * Customize the coupon code length, usage, prefix, expiry date, etc.
 * Showcase gift card products on the shop page as well as on a separate page
-* Redeem gift card on online and retail store
-* Set gift cards for individual use so that customers can’t use any other coupon along with the gift card
+* Redeem WooCommerce gift card on online and retail store
+* Set gift cards WooCommerce for individual use so that customers can’t use any other coupon along with the gift card
 * Exclude products, categories, or sale items to restrict customers from buying specific items
-* Enable or Disable tax calculation for gift card products
+* Enable or Disable tax calculation for WooCommerce gift card products
 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
@@ -189,7 +189,7 @@ Yes, you can redeem gift card coupons at retail stores through the Point of Sale
 = How many default templates are available in the Ultimate Gift card plugin? = 
 You get 4 default gift card templates with the plugin. You can also customize those templates according to your requirements.
 
-= Can we restrict the categories for the use of a gift card? = 
+= Can we restrict the categories for the use of gift card? = 
 Yes. In the Product Settings of the plugin, you can exclude the categories to restrict customers from buying any product from that category through gift cards. Along with the category, you can also exclude Sale items and a specific product.
 
 = Can the admin customize Gift card email templates? = 
@@ -212,9 +212,10 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
-= 2.2.1 - Released on 1 November 2021 =
+= 2.2.1 - Released on 2 November 2021 =
 * Fix: Minor bug fixes
 * New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
+
 
 = 2.2.0 - Released on 1 October 2021 =
 * New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
@@ -301,6 +302,7 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.2.1 - Released on 1 November 2021 =
+= 2.2.1 - Released on 2 November 2021 =
 * Fix: Minor bug fixes
 * New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
+
