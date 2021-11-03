@@ -1293,7 +1293,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_dismiss_notice() {
-		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) {
 			$notification_id = get_option( 'mwb_wgm_notify_new_msg_id', false );
 			if ( isset( $notification_id ) && '' !== $notification_id ) {
 				update_option( 'mwb_wgm_notify_hide_notification', $notification_id );
@@ -1384,7 +1384,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_wgm_get_file_content( $mwb_file_path ) {
 
-		$response = wp_remote_get( $mwb_file_path );
+		$response = wp_remote_get(
+			$mwb_file_path,
+			array(
+				'timeout'    => 20,
+				'sslverify'  => false,
+				'user-agent' => 'Ultimate Woocommerce Gift Cards/' . $this->version,
+			)
+		);
 
 		return $response['body'];
 	}

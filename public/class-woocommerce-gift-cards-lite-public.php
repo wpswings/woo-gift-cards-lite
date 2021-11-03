@@ -1271,7 +1271,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( isset( $product_types[0] ) ) {
 						$product_type = $product_types[0]->slug;
 						if ( isset( $cart_item['product_meta'] ) ) {
-							if ( 'wgm_gift_card' == $product_type || 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) {
+							if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
 								if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
 									$gift_bool = true;
 								} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
