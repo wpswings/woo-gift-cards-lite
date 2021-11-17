@@ -3,10 +3,10 @@ Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
 Requires at least: 5.0
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 WC requires at least: 4.0.0
-WC tested up to: 5.8.0
-Stable tag: 2.2.1
+WC tested up to: 5.9.0
+Stable tag: 2.2.2
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
