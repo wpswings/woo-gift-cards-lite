@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.2.1\n"
-"POT-Creation-Date: 2021-11-01 19:52+0530\n"
-"PO-Revision-Date: 2021-11-01 19:54+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.2.2\n"
+"POT-Creation-Date: 2021-11-27 13:22+0530\n"
+"PO-Revision-Date: 2021-11-27 13:23+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -13,9 +13,8 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: _e;__;esc_html_e;esc_attr_e;esc_url;esc_attr;esc_html;"
-"esc_html__;_n;_x;_ex;_nx;esc_attr__;esc_attr_x;esc_html_x;_n_noop;_nx_noop;"
-"translate_nooped_plural\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
+"esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;translate_nooped_plural\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:140
@@ -258,10 +257,6 @@ msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:1104
 msgid "Your gift message will appear here which you send to your receiver. "
-msgstr ""
-
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1272
-msgid "assets/images/mwb.png"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:1318
@@ -748,17 +743,6 @@ msgstr ""
 msgid "Gift Card  Redeem / Recharge "
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:166
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:66
-#: includes/extra-templates/makewebbetter-deactivation-template-display.php:22
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:23
-msgid "assets/images/loading.gif"
-msgstr ""
-
-#: admin/partials/templates/redeem-giftcard-settings.php:173
-msgid "assets/images/giftware-redeem-image.png"
-msgstr ""
-
 #: admin/partials/templates/redeem-giftcard-settings.php:175
 msgid "Get me My FREE redeem Link"
 msgstr ""
@@ -950,10 +934,6 @@ msgstr ""
 
 #: includes/class-makewebbetter-onboarding-helper.php:407
 msgid "What is your contact number?"
-msgstr ""
-
-#: includes/class-makewebbetter-onboarding-helper.php:653
-msgid "Select Any One Option..."
 msgstr ""
 
 #: includes/class-makewebbetter-onboarding-helper.php:922
@@ -1155,10 +1135,6 @@ msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:624
 msgid "To"
-msgstr ""
-
-#: public/class-woocommerce-gift-cards-lite-public.php:1071
-msgid "button"
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:1072

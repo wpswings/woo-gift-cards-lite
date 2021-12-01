@@ -15,14 +15,14 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>.
- * Version:           2.2.1
+ * Version:           2.2.2
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-site/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * Tested up to:      5.8.1
- * WC tested up to:   5.8.0
+ * Tested up to:      5.8.2
+ * WC tested up to:   5.9.0
  * Domain Path:       /languages
  */
 
@@ -49,7 +49,7 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'MWB_WGC_VERSION', '2.2.1' );
+	define( 'MWB_WGC_VERSION', '2.2.2' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
@@ -263,7 +263,7 @@ if ( $activated ) {
 	include_once MWB_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
 
 	// Multisite Compatibilty for new site creation.
-	add_action( 'wp_initialize_site', 'mwb_standard_plugin_on_create_blog', 900 );
+	add_action( 'wp_initialize_site', 'mwb_wgc_standard_plugin_on_create_blog', 900 );
 
 	/**
 	 * Compatibilty with multisite.
@@ -271,7 +271,7 @@ if ( $activated ) {
 	 * @param object $new_site subsite.
 	 * @return void
 	 */
-	function mwb_standard_plugin_on_create_blog( $new_site ) {
+	function mwb_wgc_standard_plugin_on_create_blog( $new_site ) {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
