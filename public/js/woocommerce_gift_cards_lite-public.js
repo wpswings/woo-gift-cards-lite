@@ -408,6 +408,34 @@
 					}
 				}
 			);
+			
+			$( 'body' ).on( 'click', '#mwb_recharge_wallet_giftcard',
+				function() {
+					$( '.error' ).hide();
+					var mwb_gc_code = $( '#mwb_giftcard_code' ).val();
+					var mwb_wgm_nonce = mwb_wgm.mwb_wgm_nonce;
+					$.ajax({
+						url: mwb_wgm.ajaxurl,
+						type: 'POST',
+						data: { mwb_gc_code : mwb_gc_code, mwb_wgm_nonce: mwb_wgm_nonce, action: 'mwb_recharge_wallet_via_giftcard' },
+						dataType: 'json',
+						success: function( response ) {
+							if ( response['status'] == 'success' ){
+								$( '.success' ).css( 'color', 'green' );
+								$( '.success' ).html( 'Wallet Recharge with amount of ' + mwb_wgm.mwb_currency + response['message'] );
+								setTimeout(location.reload.bind(location), 3000);
+							} else if( response['status'] == 'failed' ) {
+								$( '.error' ).show();
+								$( '.error' ).html( response['message'] );
+							}
+						}
+					});
+				}
+			);
+
+			$( '#mwb_giftcard_code' ).keyup(function() {
+				$( '.error' ).hide();
+			});
 		}
 	);
 
