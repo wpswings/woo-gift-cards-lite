@@ -191,6 +191,8 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
 		// Add Deactivation screen.
 		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
+		// Disable Quick Edit option.
+		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_remove_row_actions', 10, 2 );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
