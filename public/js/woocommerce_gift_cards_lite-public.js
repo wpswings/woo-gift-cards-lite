@@ -258,6 +258,7 @@
 					var product_type = mwb_wgm.pricing_type.type;
 					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
 					var to_mail = '';
+					var send_date = '';
 					var html = "<ul>";
 					var delivery_method = jQuery( document ).find( 'input[name="mwb_wgm_send_giftcard"]:checked' ).val();
 					// remove validation from to fields.
@@ -364,6 +365,7 @@
 						html += response.html;
 						to_mail = response.to_mail;
 						form_Data = response.form_Data;
+						send_date = response.send_date;
 					}
 					html += "</ul>";
 					if (error) {
@@ -390,6 +392,7 @@
 						form_Data.append( 'message', message );
 						form_Data.append( 'product_id', product_id );
 						form_Data.append( 'tempId', tempId );
+						form_Data.append( 'send_date', send_date );
 
 						$.ajax(
 							{
