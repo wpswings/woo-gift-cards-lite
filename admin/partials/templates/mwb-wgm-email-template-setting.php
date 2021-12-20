@@ -50,7 +50,7 @@ if ( $flag ) {
 		</table>
 	</div>
 </div>
-<h3 id="mwb_wgm_mail_setting" class="mwb_wgm_mail_setting_tab"><?php esc_html_e( 'Mail Setting', 'woo-gift-cards-lite' ); ?></h3>
+<h3 id="mwb_wgm_mail_setting" class="mwb_wgm_mail_setting_tab"><?php esc_html_e( 'Mail Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div id="mwb_wgm_mail_setting_wrapper" class="mwb_wgm_table_wrapper">
 	<table class="form-table mwb_wgm_general_setting">	
 		<tbody>
