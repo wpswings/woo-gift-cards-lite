@@ -22,7 +22,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
  * Tested up to:      5.8.2
- * WC tested up to:   5.9.0
+ * WC tested up to:   6.0.0
  * Domain Path:       /languages
  */
 

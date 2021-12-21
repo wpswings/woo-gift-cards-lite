@@ -2,7 +2,7 @@
 /**
  * Exit if accessed directly
  *
- * @package Wallet_System_For_Woocommerce
+ * @package woo-gift-cards-lite
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
