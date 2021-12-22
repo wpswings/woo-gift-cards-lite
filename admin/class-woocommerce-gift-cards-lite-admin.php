@@ -1395,5 +1395,21 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		return $response['body'];
 	}
+
+	/**
+	 * Remove Quick Edit option from giftcard post type.
+	 *
+	 * @param array  $actions actions.
+	 * @param object $post post.
+	 * @return array $actions.
+	 */
+	public function mwb_wgm_remove_row_actions( $actions, $post ) {
+		global $current_screen;
+		if ( 'giftcard' != $current_screen->post_type ) {
+			return $actions;
+		}
+		unset( $actions['inline hide-if-no-js'] );
+		return $actions;
+	}
 }
 ?>

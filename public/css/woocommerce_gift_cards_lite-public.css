@@ -105,3 +105,8 @@
 .mwb_wgm_selected_template {
     overflow: auto;
 }
+
+#mwb_recharge_wallet_giftcard {
+  width: unset !important; 
+  color: #fff !important;
+}

@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.2.2\n"
-"POT-Creation-Date: 2021-11-27 13:22+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.3.0\n"
+"POT-Creation-Date: 2021-12-21 20:24+0530\n"
 "PO-Revision-Date: 2020-08-22 10:41+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
@@ -293,7 +293,7 @@ msgid "Email Settings"
 msgstr ""
 
 #: admin/partials/templates/mwb-wgm-email-template-setting.php:53
-msgid "Mail Setting"
+msgid "Mail Settings"
 msgstr ""
 
 #: admin/partials/templates/mwb-wgm-general-setting.php:46
@@ -670,8 +670,8 @@ msgstr ""
 
 #: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:115
 msgid ""
-"Use [SITENAME] shortcode as the name of the site and [BUYEREMAILADDRESS] "
-"shortcode as buyer email address to be placed dynamically."
+"Use [SITENAME] shortcode as the name of the site and [FROM] shortcode as "
+"buyer name to be placed dynamically."
 msgstr ""
 
 #: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:16
@@ -1140,6 +1140,38 @@ msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:1072
 msgid "VIEW CARD"
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1557
+msgid "Recharge via Gift Card"
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1598
+msgid "Wallet credited by "
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1598
+msgid " through Gift Card"
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1601
+msgid "Wallet updating notification"
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1610
+msgid "Wallet credited through Gift Card Code : "
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1628
+msgid "Enter Valid Gift Card Code"
+msgstr ""
+
+#: public/partials/wallet-system-for-woocommerce-wallet-giftcard.php:17
+msgid "Enter Gift Card Code : "
+msgstr ""
+
+#: public/partials/wallet-system-for-woocommerce-wallet-giftcard.php:23
+msgid "Proceed"
 msgstr ""
 
 #: woocommerce_gift_cards_lite.php:95

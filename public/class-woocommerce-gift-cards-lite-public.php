@@ -1535,4 +1535,100 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 	}
+
+	/**
+	 * Add endpoint for wallet plugin.
+	 *
+	 * @return void
+	 */
+	public function mwb_wgm_add_wallet_register_endpoint() {
+		add_rewrite_endpoint( 'wallet-giftcard', EP_PERMALINK | EP_PAGES );
+	}
+
+	/**
+	 * Add Tab in wallet plugin for recharge wallet by coupon.
+	 *
+	 * @param array $wallet_tabs wallet tabs.
+	 * @return array $wallet_tabs
+	 */
+	public function mwb_wgm_add_wallet_tabs( $wallet_tabs ) {
+		$giftcard_url                   = wc_get_endpoint_url( 'mwb-wallet', 'wallet-giftcard' );
+		$wallet_tabs['wallet_giftcard'] = array(
+			'title'     => esc_html__( 'Recharge via Gift Card', 'wallet-system-for-woocommerce' ),
+			'url'       => $giftcard_url,
+			'icon'      => '<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="3" y="8" width="28" height="21" rx="1.5" stroke="#1D201F" stroke-width="2.5" stroke-linejoin="round"/>
+			<circle cx="14.1304" cy="5" r="3" stroke="#1D201F" stroke-width="2.5"/>
+			<path d="M23.913 5C23.913 6.65685 22.5699 8 20.913 8C19.2562 8 17.913 6.65685 17.913 5C17.913 3.34315 19.2562 2 20.913 2C22.5699 2 23.913 3.34315 23.913 5Z" stroke="#1D201F" stroke-width="2.5"/>
+			<path d="M17.913 6.52173L10.913 13.5217" stroke="#1D201F" stroke-width="2.5" stroke-linecap="round"/>
+			<path d="M16.7826 6.52173L23.7826 13.5217" stroke="#1D201F" stroke-width="2.5" stroke-linecap="round"/>
+			<path d="M1.99994 23.3478H30.826" stroke="#1D201F" stroke-width="2.5"/>
+			</svg>',
+			'file-path' => plugin_dir_path( __FILE__ ) . 'partials/wallet-system-for-woocommerce-wallet-giftcard.php',
+		);
+		return $wallet_tabs;
+	}
+
+	/**
+	 * Recharge wallet via giftcard.
+	 *
+	 * @return void.
+	 */
+	public function mwb_recharge_wallet_via_giftcard() {
+		check_ajax_referer( 'mwb-wgc-verify-nonce', 'mwb_wgm_nonce' );
+		$mwb_giftcard_code      = ( ! empty( sanitize_text_field( wp_unslash( $_POST['mwb_gc_code'] ) ) ) ? sanitize_text_field( wp_unslash( $_POST['mwb_gc_code'] ) ) : '' );
+		$coupon                 = new WC_Coupon( $mwb_giftcard_code );
+		$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+		if ( $coupon->get_id() !== 0 ) {
+			$coupon_amount = $coupon->get_amount();
+			$coupon->set_amount( 0 );
+			$user_id = get_current_user_id();
+			$coupon->save();
+
+			$walletamount  = get_user_meta( $user_id, 'mwb_wallet', true );
+			$walletamount  = empty( $walletamount ) ? 0 : $walletamount;
+			$walletamount += $coupon_amount;
+			update_user_meta( $user_id, 'mwb_wallet', $walletamount );
+			$wallet_user       = get_user_by( 'id', $user_id );
+			$send_email_enable = get_option( 'mwb_wsfw_enable_email_notification_for_wallet_update', '' );
+
+			if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
+				$user_name  = $wallet_user->first_name . ' ' . $wallet_user->last_name;
+				$mail_text  = sprintf( 'Hello %s,<br/>', $user_name );
+				$mail_text .= __( 'Wallet credited by ', 'woo-gift-cards-lite' ) . wc_price( $coupon_amount, array( 'currency' => get_woocommerce_currency() ) ) . __( ' through Gift Card', 'woo-gift-cards-lite' );
+				$to         = $wallet_user->user_email;
+				$from       = get_option( 'admin_email' );
+				$subject    = __( 'Wallet updating notification', 'woo-gift-cards-lite' );
+				$headers    = 'MIME-Version: 1.0' . "\r\n";
+				$headers   .= 'Content-Type: text/html;  charset=UTF-8' . "\r\n";
+				$headers   .= 'From: ' . $from . "\r\n" .
+					'Reply-To: ' . $to . "\r\n";
+				$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
+
+			}
+
+			$transaction_type = __( 'Wallet credited through Gift Card Code : ', 'woo-gift-cards-lite' ) . $mwb_giftcard_code;
+			$transaction_data = array(
+				'user_id'          => $user_id,
+				'amount'           => $coupon_amount,
+				'currency'         => get_woocommerce_currency(),
+				'payment_method'   => 'Gift Card Redeem',
+				'transaction_type' => htmlentities( $transaction_type ),
+			);
+
+			$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+			$response = array(
+				'status'  => 'success',
+				'message' => $coupon_amount,
+			);
+		} else {
+			$response = array(
+				'status'  => 'failed',
+				'message' => __( 'Enter Valid Gift Card Code', 'woo-gift-cards-lite' ),
+			);
+		}
+		echo json_encode( $response );
+		wp_die();
+	}
 }

@@ -382,7 +382,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$buyer_email = $order->get_billing_email();
 					$buyer_email = ! empty( $buyer_email ) ? $buyer_email : '';
 					$send_subject = str_replace( '[SITENAME]', $bloginfo, $send_subject );
-					$send_subject = str_replace( '[BUYEREMAILADDRESS]', $buyer_email, $send_subject );
+					$send_subject = str_replace( '[FROM]', $from, $send_subject );
 					$send_subject = stripcslashes( $send_subject );
 					$send_subject = html_entity_decode( $send_subject, ENT_QUOTES, 'UTF-8' );
 					if ( isset( $mwb_wgm_common_arr['delivery_method'] ) ) {

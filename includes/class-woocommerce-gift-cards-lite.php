@@ -69,7 +69,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'MWB_WGC_VERSION' ) ) {
 			$this->version = MWB_WGC_VERSION;
 		} else {
-			$this->version = '2.2.2';
+			$this->version = '2.3.0';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -191,6 +191,8 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
 		// Add Deactivation screen.
 		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
+		// Disable Quick Edit option.
+		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_remove_row_actions', 10, 2 );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -237,6 +239,11 @@ class Woocommerce_Gift_Cards_Lite {
 		// Compatibilty with MWB Currency Switcher.
 		$this->loader->add_filter( 'mwb_currency_switcher_get_custom_product_type', $plugin_public, 'mwb_currency_switcher_get_custom_product_type', 10, 2 );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wgm_manage_coupon_amount_on_refund', 10, 3 );
+		// Compatible with Wallet.
+		$this->loader->add_action( 'mwb_wsfw_add_wallet_register_endpoint', $plugin_public, 'mwb_wgm_add_wallet_register_endpoint', 10 );
+		$this->loader->add_filter( 'mwb_wsfw_add_wallet_tabs', $plugin_public, 'mwb_wgm_add_wallet_tabs', 10, 1 );
+		$this->loader->add_action( 'wp_ajax_mwb_recharge_wallet_via_giftcard', $plugin_public, 'mwb_recharge_wallet_via_giftcard' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_recharge_wallet_via_giftcard', $plugin_public, 'mwb_recharge_wallet_via_giftcard' );
 	}
 
 	/**

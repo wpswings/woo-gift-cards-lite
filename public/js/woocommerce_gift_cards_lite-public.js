@@ -258,6 +258,7 @@
 					var product_type = mwb_wgm.pricing_type.type;
 					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
 					var to_mail = '';
+					var send_date = '';
 					var html = "<ul>";
 					var delivery_method = jQuery( document ).find( 'input[name="mwb_wgm_send_giftcard"]:checked' ).val();
 					// remove validation from to fields.
@@ -364,6 +365,7 @@
 						html += response.html;
 						to_mail = response.to_mail;
 						form_Data = response.form_Data;
+						send_date = response.send_date;
 					}
 					html += "</ul>";
 					if (error) {
@@ -390,6 +392,7 @@
 						form_Data.append( 'message', message );
 						form_Data.append( 'product_id', product_id );
 						form_Data.append( 'tempId', tempId );
+						form_Data.append( 'send_date', send_date );
 
 						$.ajax(
 							{
@@ -408,6 +411,34 @@
 					}
 				}
 			);
+			
+			$( 'body' ).on( 'click', '#mwb_recharge_wallet_giftcard',
+				function() {
+					$( '.error' ).hide();
+					var mwb_gc_code = $( '#mwb_giftcard_code' ).val();
+					var mwb_wgm_nonce = mwb_wgm.mwb_wgm_nonce;
+					$.ajax({
+						url: mwb_wgm.ajaxurl,
+						type: 'POST',
+						data: { mwb_gc_code : mwb_gc_code, mwb_wgm_nonce: mwb_wgm_nonce, action: 'mwb_recharge_wallet_via_giftcard' },
+						dataType: 'json',
+						success: function( response ) {
+							if ( response['status'] == 'success' ){
+								$( '.success' ).css( 'color', 'green' );
+								$( '.success' ).html( 'Wallet Recharge with amount of ' + mwb_wgm.mwb_currency + response['message'] );
+								setTimeout(location.reload.bind(location), 3000);
+							} else if( response['status'] == 'failed' ) {
+								$( '.error' ).show();
+								$( '.error' ).html( response['message'] );
+							}
+						}
+					});
+				}
+			);
+
+			$( '#mwb_giftcard_code' ).keyup(function() {
+				$( '.error' ).hide();
+			});
 		}
 	);
 
