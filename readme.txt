@@ -1,11 +1,11 @@
-=== Ultimate Gift Cards for WooCommerce - Create, Redeem & Manage Digital Gift Certificates With Personalized Templates ===
+=== Ultimate Gift Cards for WooCommerce - Create, Redeem & Manage Digital Gift Certificates with Personalized Templates ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
 Requires at least: 5.0
 Tested up to: 5.8.2
 WC requires at least: 4.0.0
-WC tested up to: 5.9.0
+WC tested up to: 6.0.0
 Stable tag: 2.3.0
 Requires PHP: 5.6
 License: GPLv3 or later 
@@ -124,7 +124,7 @@ Gift cards for WooCommerce help merchants to create, sell & manage gift cards on
 
 > Note:  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org)
 
-**See what Cast Iron Chef Chop House & Oyster Bar is saying about Gift cards plugin:**
+**See what Cast Iron Chef Chop House & Oyster Bar is saying about WooCommerce Gift cards plugin:**
 
 > My business took a drastic leap in almost every aspect. This gift card plugin is very well bundled with so many features. I’m highly satisfied with their plugin design and its ease of use. Their suggestions on various customization requests gave a great boost to the way we use gift cards for extending our outreach to our customers. [**See Gift Card Case Study**](https://makewebbetter.com/success-stories/cast-iron-chef/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
 
@@ -219,20 +219,19 @@ Yes. In the General Settings of the plugin, you can set the number of days after
 Yes, In the General settings, you can set the minimum and maximum spend for your WooCommerce gift cards.
 
 
-
-
 == Changelog ==
+= 2.3.0 - Released on 22 December 2021 =
+* New: **[BUYEREMAILADDRESS]** shortcode replace with **[FROM]** shortcode in mail setting tab
+* Fix: Minor bug fixes
 
 = 2.2.2 - Released on 29 November 2021 =
 * New: Compatible with [**Abandoned Cart for WooCommerce**](https://wordpress.org/plugins/abandoned-cart-for-woocommerce/)
 * New: Compatible with WP 5.8.2 and WC 5.9.0
 * Fix: Minor bug fixes
 
-
 = 2.2.1 - Released on 2 November 2021 =
 * Fix: Minor bug fixes
 * New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
-
 
 = 2.2.0 - Released on 1 October 2021 =
 * New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) 
@@ -305,7 +304,6 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 * New: Downloadable Delivery Method
 * New: Custom Email Template
 * New: Exclude Product Setting
-
 = 1.0.2 =
 * GDPR compliance for Data Access, Data Erasure
 * Preview for Email Templates at Frontend
@@ -316,10 +314,8 @@ New: Email Template for Mothers Day
 = 1.0.0 =
 * First version
 
-
 == Upgrade Notice ==
 
-= 2.2.2 - Released on 29 November 2021 =
-* New: Compatible with [**Abandoned Cart for WooCommerce**](https://wordpress.org/plugins/abandoned-cart-for-woocommerce/)
-* New: Compatible with WP 5.8.2 and WC 5.9.0
+= 2.3.0 - Released on 22 December 2021 =
+* New: **[BUYEREMAILADDRESS]** shortcode replace with **[FROM]** shortcode in mail setting tab
 * Fix: Minor bug fixes
