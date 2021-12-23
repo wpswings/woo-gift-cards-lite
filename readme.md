@@ -1,5 +1,5 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-3000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.9.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
-# Ultimate Gift Cards For WooCommerce - Create, Redeem & Manage Digital Gift Certificates With Personalized Templates
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-4000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+# Ultimate Gift Cards For WooCommerce - Create, Redeem & Manage Digital Gift Certificates with Personalized Templates
 ![Ultimate Gift Cards for WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.png)
 * Contributors: MakeWebBetter
 * Author URI: [MakeWebBetter](https://makewebbetter.com/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
@@ -62,11 +62,11 @@ Ultimate WooCommerce Gift Cards provide you with coupon codes. You can tweak the
 **8) Product and Category Exclusion Feature**
 With WooCommerce ultimate gift card plugin, you can exclude specific categories, products, or sale items. If you do this, the customers won’t be able to buy the excluded products through gift cards.
 
-[**Free demo of Ultimate Gift Cards for WooCommerce**](https://demo.makewebbetter.com/ultimate-woocommerce-giftcard-lite/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
+* [**Free demo of Ultimate Gift Cards for WooCommerce**](https://demo.makewebbetter.com/ultimate-woocommerce-giftcard-lite/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
-Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git) and learn more about the features and working of the plugin.
+* Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git) and learn more about the features and working of the plugin.
 
-Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/giftware-woocommerce-giftcard-kb/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
+* Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/giftware-woocommerce-giftcard-kb/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
 
 ## PLUGIN COMPATIBILITIES
@@ -114,7 +114,7 @@ Gift cards for WooCommerce help merchants to create, sell & manage gift cards on
 > Note:  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
 
-**See what Cast Iron Chef Chop House & Oyster Bar is saying about Gift cards plugin:**
+**See what Cast Iron Chef Chop House & Oyster Bar is saying about WooCommerce Gift cards plugin:**
 > My business took a drastic leap in almost every aspect. This gift card plugin is very well bundled with so many features. I’m highly satisfied with their plugin design and its ease of use. Their suggestions on various customization requests gave a great boost to the way we use gift cards for extending our outreach to our customers. [**See Gift Card Case Study**](https://makewebbetter.com/success-stories/cast-iron-chef/?utm_source=MWB-giftcard-git&utm_medium=MWB-git-page&utm_campaign=MWB-giftcard-git)
 
 
@@ -146,3 +146,6 @@ If you need support or have questions, kindly use our online chat window [**here
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
 - [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+
+
+
