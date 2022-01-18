@@ -15,7 +15,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 	 *
 	 * @since      1.0.0
 	 * @package    woo-gift-cards-lite
-	 * @author     makewebbetter <ticket@makewebbetter.com>
+	 * @author     WP Swings <webmaster@wpswings.com>
 	 */
 	class Woocommerce_Gift_Cards_Common_Function {
 
@@ -26,7 +26,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @name mwb_wgm_create_gift_template
 		 * @param array $args args.
 		 * @return $templatehtml.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_create_gift_template( $args ) {
@@ -138,7 +138,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param array  $mwb_wgm_settings mwb_wgm_settings.
 		 * @param string $key databse key name.
 		 * @return $mwb_wgm_data.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_get_template_data( $mwb_wgm_settings, $key ) {
@@ -163,7 +163,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int    $order_id order id.
 		 * @param int    $product_id product id.
 		 * @param int    $to email id or name to whome coupon send.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to ) {
@@ -286,7 +286,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @name mwb_wgm_common_functionality()
 		 * @param array  $mwb_wgm_common_arr email template data.
 		 * @param object $order order.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_common_functionality( $mwb_wgm_common_arr, $order ) {
@@ -449,7 +449,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @name mwb_wgm_check_expiry_date()
 		 * @param string $expiry_date expiry date of giftcard coupon.
 		 * @return $expirydate_format.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_check_expiry_date( $expiry_date ) {
@@ -479,7 +479,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int $mwb_wgm_discount coupon discount.
 		 * @param int $mwb_wgm_discount_tax coupon discount tax.
 		 * @return $total_discount.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_calculate_coupon_discount( $mwb_wgm_discount, $mwb_wgm_discount_tax ) {
@@ -513,7 +513,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @since 1.0.0
 		 * @name mwb_allowed_html_tags
 		 * @return $allowed_tags.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_allowed_html_tags() {
@@ -674,7 +674,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 *
 		 * @since 1.0.0
 		 * @name mwb_get_org_selected_template
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_get_org_selected_template() {

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since             1.0.0
  * @return string The default policy content.
  * @name mwb_wgm_plugin_get_default_privacy_content
- * @author makewebbetter<ticket@makewebbetter.com>
+ * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_get_default_privacy_content() {
@@ -29,7 +29,7 @@ function mwb_wgm_plugin_get_default_privacy_content() {
  *
  * @since             1.0.0
  * @name mwb_wgm_plugin_add_suggested_privacy_content
- * @author makewebbetter<ticket@makewebbetter.com>
+ * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_add_suggested_privacy_content() {
@@ -49,7 +49,7 @@ add_action( 'admin_init', 'mwb_wgm_plugin_add_suggested_privacy_content', 20 );
  * @param array $exporters Details of all the exporters.
  * @return array
  * @name mwb_wgm_plugin_register_exporters
- * @author makewebbetter<ticket@makewebbetter.com>
+ * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_register_exporters( $exporters ) {
@@ -72,7 +72,7 @@ add_filter( 'wp_privacy_personal_data_exporters', 'mwb_wgm_plugin_register_expor
  * @param int    $page contains page.
  * @return array
  * @name mwb_wgm_plugin_user_data_exporter
- * @author makewebbetter<ticket@makewebbetter.com>
+ * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
@@ -174,7 +174,7 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
  * @param array $erasers contains erased data.
  * @return array
  * @name mwb_wgm_plugin_register_erasers
- * @author makewebbetter<ticket@makewebbetter.com>
+ * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_register_erasers( $erasers = array() ) {
@@ -195,7 +195,7 @@ add_filter( 'wp_privacy_personal_data_erasers', 'mwb_wgm_plugin_register_erasers
  * @param int    $page conains page.
  * @return array
  * @name mwb_wgm_plugin_user_data_eraser
- * @author makewebbetter<ticket@makewebbetter.com>
+ * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
 function mwb_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
