@@ -13,16 +13,16 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
- * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
- * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/woocommerce-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
+ * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/
+ * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-gift-cards&utm_medium=giftcards-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
  * Version:           2.3.1
  * Author:            WP Swings
- * Author URI:        https://wpswings.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-site/
+ * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * Tested up to:      5.8.2
- * WC tested up to:   6.0.0
+ * Tested up to:      5.8.3
+ * WC tested up to:   6.1.0
  * Domain Path:       /languages
  */
 
@@ -92,7 +92,7 @@ if ( $activated ) {
 			$settings = array();
 			if ( ! mwb_uwgc_pro_active() ) {
 				$settings['settings']         = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
-				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
+				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
 				$actions                      = array_merge( $settings, $actions );
 			}
 		}

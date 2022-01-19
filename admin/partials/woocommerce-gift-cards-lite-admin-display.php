@@ -74,7 +74,7 @@ do_action( 'mwb_uwgc_show_notice' );
 			</div>
 			<div class="mwb_wgm_header_content_right">
 				<ul>
-					<li class="mwb_wgm_header_menu_button"><a href="https://makewebbetter.com/contact-us/?utm_source=mwb-giftcard-wp-org&utm_medium=wp-org&utm_campaign=giftcard-org" target="_blank">
+					<li class="mwb_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-org-backend&utm_campaign=contact" target="_blank">
 						<span class="dashicons dashicons-phone"></span>
 						<span class="mwb-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
 					</a>
@@ -82,7 +82,7 @@ do_action( 'mwb_uwgc_show_notice' );
 					<?php
 					if ( mwb_uwgc_pro_active() ) {
 						?>
-						<li class="mwb_wgm_header_menu_button"><a href="https://docs.makewebbetter.com/giftware-woocommerce-gift-cards/" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
 							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
 						</a>
@@ -90,13 +90,13 @@ do_action( 'mwb_uwgc_show_notice' );
 						<?php
 					} else {
 						?>
-						<li class="mwb_wgm_header_menu_button"><a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
 							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>
 						<li class="mwb_wgm_header_menu_button">
-							<a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
+							<a  href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="mwb-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
 						</li>	
 						<?php
 					}

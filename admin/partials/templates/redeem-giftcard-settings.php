@@ -32,7 +32,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			'currency' => $client_currency,
 		);
 		$redeem_data = get_option( 'giftcard_offline_redeem_link', true );
-		$url = 'https://gifting.makewebbetter.com/api/generate';
+		$url = 'https://gifting.wpswings.com/api/generate';
 		$response = wp_remote_post(
 			$url,
 			array(
@@ -65,7 +65,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 		$offine_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
 		$userid = $offine_giftcard_redeem_details['user_id'];
 		$client_domain = home_url();
-		$url = 'https://gifting.makewebbetter.com/api/generate/remove';
+		$url = 'https://gifting.wpswings.com/api/generate/remove';
 
 		$curl_data = array(
 			'user_id' => $userid,
@@ -100,7 +100,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	$offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings' );
 	$userid = $offine_giftcard_redeem_details['user_id'];
 	$client_domain = home_url();
-	$url = 'https://gifting.makewebbetter.com/api/generate/update';
+	$url = 'https://gifting.wpswings.com/api/generate/update';
 	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
 	if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) && ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
 		$request_type = 'both';

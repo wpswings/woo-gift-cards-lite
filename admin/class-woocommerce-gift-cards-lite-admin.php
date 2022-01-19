@@ -212,7 +212,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_wgm_premium_features() {
 		if ( isset( $_GET['page'] ) && 'mwb-wgc-premium-plugin' == $_GET['page'] ) {
-			$mwb_premium_page = esc_url_raw( 'https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org' );
+			$mwb_premium_page = esc_url_raw( 'https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro' );
 			wp_redirect( $mwb_premium_page );
 			exit;
 		}
@@ -1146,9 +1146,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function mwb_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
 			$new_links = array(
-				'demo' => '<a href="https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
-				'doc' => '<a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-doc" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
-				'support' => '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
+				'demo' => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
+				'doc' => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
+				'support' => '<a href="https://support.wpswings.com/wordpress-plugins-knowledge-base/category/gift-cards-for-woocommerce/?utm_source=wpswings-gift-cards&utm_medium=giftcards-org-backend&utm_campaign=kb" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -1223,7 +1223,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function mwb_get_update_notification_data() {
 		$mwb_notification_data = array();
-		$url = 'https://demo.makewebbetter.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
+		$url = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
 		$attr = array(
 			'action' => 'mwb_notification_fetch',
 			'plugin_version' => MWB_WGC_VERSION,

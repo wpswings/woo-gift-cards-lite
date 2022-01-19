@@ -1,15 +1,16 @@
 === Ultimate Gift Cards for WooCommerce - Create, Redeem & Manage Digital Gift Certificates with Personalized Templates ===
-Contributors: MakeWebBetter
-Donate link:  https://makewebbetter.com/
+Contributors: WP Swings
+Donate link:  https://wpswings.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
 Requires at least: 5.0
-Tested up to: 5.8.2
+Tested up to: 5.8.3
 WC requires at least: 4.0.0
-WC tested up to: 6.0.0
+WC tested up to: 6.1.0
 Stable tag: 2.3.1
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
 
 Create, sell and manage WooCommerce gift cards to attract more sales and multiply your revenue at your online store.
 
@@ -70,11 +71,11 @@ Ultimate WooCommerce Gift Cards provide you with coupon codes. You can tweak the
 **8)** **Product and Category Exclusion Feature**
 With WooCommerce ultimate gift card plugin, you can exclude specific categories, products, or sale items. If you do this, the customers won’t be able to buy the excluded products through gift cards.
 
-[**Free demo of Ultimate Gift Cards for WooCommerce**](https://demo.makewebbetter.com/ultimate-woocommerce-giftcard-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=freeDemo)
+[**Free demo of Gift cards for WooCommerce Pro**](https://demo.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=demo )
 
-Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=pluginDoc) and learn more about the features and working of the plugin. 
+Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://doc.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-page&utm_campaign=giftcards-doc) and learn more about the features and working of the plugin. 
 
-Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/giftware-woocommerce-giftcard-kb/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+
 
 
 == PLUGIN COMPATIBILITIES ==
@@ -122,31 +123,26 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.mak
 
 Gift cards for WooCommerce help merchants to create, sell & manage gift cards on their WooCommerce store. With the WordPress Gift cards plugin, the admin can customize gift card templates, send Gift Card coupon codes as QRCode/BARCode, create reusable gift cards, and send balance notifications to the customers.
 
-> Note:  Get [**Ultimate WooCommerce Gift Cards Pro**](https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org)
+> Note:  Get [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro)
 
-**See what Cast Iron Chef Chop House & Oyster Bar is saying about WooCommerce Gift cards plugin:**
-
-> My business took a drastic leap in almost every aspect. This gift card plugin is very well bundled with so many features. I’m highly satisfied with their plugin design and its ease of use. Their suggestions on various customization requests gave a great boost to the way we use gift cards for extending our outreach to our customers. [**See Gift Card Case Study**](https://makewebbetter.com/success-stories/cast-iron-chef/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
 
 
 
 == LIVE DEMO OF PREMIUM VERSION ==
 
-* [ **WooCommerce Gift Cards Frontend demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=frontend)
+* [ **WooCommerce Gift Cards Frontend demo**](https://demo.wpswingscom/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
 
-* [ **WooCommerce Gift Cards Backend demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/request-for-personal-demo/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=backend)
+* [ **WooCommerce Gift Cards Backend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/request-for-personal-demo/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=backend-demo)
 
 * [ **Gift Card Redeem/Recharge demo**](https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/redeem-recharge-gift-card-vouchers/?utm_source=MWB-giftcard-org&utm_medium=MWB-ORG-Page&utm_campaign=redeem)
 
 
 == DOCUMENTATION OF PREMIUM VERSION ==
 
-* [**Ultimate WooCommerce Gift Cards Documentation**](https://docs.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org)
+* [**Gift Cards for WooCommerce Pro  Documentation**](https://docs.wpswings.com/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-page&utm_campaign=giftcards-doc)
 
 == SUPPORT ==
-If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org).
-
-> If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-page&utm_campaign=MWB-giftcard-org) with your question.
+If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-query&utm_medium=giftcards-org-page&utm_campaign=submit-query).
 
 
 == Installation ==
@@ -200,7 +196,7 @@ Yes, you can redeem gift card coupons at retail stores through the Point of Sale
 = How many default templates are available in the Ultimate Gift card plugin? = 
 You get 4 default gift card templates with the plugin. You can also customize those templates according to your requirements.
 
-= Can we restrict the categories for the use of gift card? = 
+= Can we restrict the categories for the use of gift cards? = 
 Yes. In the Product Settings of the plugin, you can exclude the categories to restrict customers from buying any product from that category through gift cards. Along with the category, you can also exclude Sale items and a specific product.
 
 = Can the admin customize Gift card email templates? = 
@@ -220,6 +216,11 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 
 == Changelog ==
+= 2.3.1 - Released on 19 January 2022 =
+*New: Notice display of current version for WP Swings.
+* New: Minor Bug fixes
+* New: Compatible with latest WP and WC 
+
 = 2.3.0 - Released on 22 December 2021 =
 * New: **[BUYEREMAILADDRESS]** shortcode replace with **[FROM]** shortcode in mail setting tab
 * Fix: Minor bug fixes
@@ -316,6 +317,8 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.3.0 - Released on 22 December 2021 =
-* New: **[BUYEREMAILADDRESS]** shortcode replace with **[FROM]** shortcode in mail setting tab
-* Fix: Minor bug fixes
+Change log: 
+
+* New: Notice display of current version for WP Swings.
+* New: Minor Bug fixes
+* New: Compatible with latest WP and WC

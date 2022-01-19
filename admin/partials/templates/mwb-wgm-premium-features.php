@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 					<div class="mwb_wgm_upgrade_btn">
-						<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
+						<a href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
 					</div>
 				</div>
 			</div>
@@ -134,7 +134,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 					<div class="mwb_wgm_upgrade_btn">
-						<a href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
+						<a href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="mwb_wgm--cta"><?php esc_html_e( 'UPGRADE', 'woo-gift-cards-lite' ); ?></a>
 					</div>
 				</div>
 			</div>
