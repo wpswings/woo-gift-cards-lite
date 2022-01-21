@@ -1148,7 +1148,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$new_links = array(
 				'demo' => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
 				'doc' => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
-				'support' => '<a href="https://support.wpswings.com/wordpress-plugins-knowledge-base/category/gift-cards-for-woocommerce/?utm_source=wpswings-gift-cards&utm_medium=giftcards-org-backend&utm_campaign=kb" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
+				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
