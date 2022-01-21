@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
- * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/
+ * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-gift-cards&utm_medium=giftcards-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
  * Version:           2.3.1
  * Author:            WP Swings
