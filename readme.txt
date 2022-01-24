@@ -134,11 +134,6 @@ Gift cards for WooCommerce help merchants to create, sell & manage gift cards on
 
 > Note:  Get [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro)
 
-**See what Cast Iron Chef Chop House & Oyster Bar is saying about WooCommerce Gift cards plugin:**
-
-> Note: My business took a drastic leap in almost every aspect. This gift card plugin is very well bundled with so many features. I’m highly satisfied with their plugin design and its ease of use. Their suggestions on various customization requests gave a great boost to the way we use gift cards for extending our outreach to our customers. 
-
-
 == LIVE DEMO OF PREMIUM VERSION ==
 
 * [ **Gift Cards for WooCommerce Pro Frontend demo**](https://demo.wpswingscom/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
