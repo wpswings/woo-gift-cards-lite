@@ -74,15 +74,15 @@ do_action( 'mwb_uwgc_show_notice' );
 			</div>
 			<div class="mwb_wgm_header_content_right">
 				<ul>
-					<li class="mwb_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-org-backend&utm_campaign=contact" target="_blank">
-						<span class="dashicons dashicons-phone"></span>
-						<span class="mwb-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
-					</a>
-					</li>
 					<?php
 					if ( mwb_uwgc_pro_active() ) {
 						?>
-						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-pro-backend&utm_campaign=giftcards-contact" target="_blank">
+							<span class="dashicons dashicons-phone"></span>
+							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
+						</a>
+						</li>
+						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-pro-backend&utm_campaign=documentation" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
 							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
 						</a>
@@ -90,6 +90,11 @@ do_action( 'mwb_uwgc_show_notice' );
 						<?php
 					} else {
 						?>
+						<li class="mwb_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-org-backend&utm_campaign=contact" target="_blank">
+							<span class="dashicons dashicons-phone"></span>
+							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
+						</a>
+						</li>
 						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
 							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
