@@ -1560,7 +1560,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	public function mwb_wgm_add_wallet_tabs( $wallet_tabs ) {
 		$giftcard_url                   = wc_get_endpoint_url( 'mwb-wallet', 'wallet-giftcard' );
 		$wallet_tabs['wallet_giftcard'] = array(
-			'title'     => esc_html__( 'Recharge via Gift Card', 'wallet-system-for-woocommerce' ),
+			'title'     => esc_html__( 'Recharge via Gift Card', 'woo-gift-cards-lite' ),
 			'url'       => $giftcard_url,
 			'icon'      => '<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect x="3" y="8" width="28" height="21" rx="1.5" stroke="#1D201F" stroke-width="2.5" stroke-linejoin="round"/>
