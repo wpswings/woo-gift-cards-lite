@@ -306,11 +306,11 @@ if ( $activated ) {
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-success inline update-message notice-alt">
 					<div class='wps-notice-title wps-notice-section'>
-						<p><strong>IMPORTANT NOTICE:</strong></p>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'woo-gift-cards-lite' ); ?></strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update <strong>Version 2.3.1</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
-						Please connect with us for all setup, support, and update related queries without hesitation.</p>
+						<p><?php esc_html_e( 'From this update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
 					</div>
 				</div>
 			</td>
@@ -341,11 +341,11 @@ if ( $activated ) {
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-success inline update-message notice-alt">
 					<div class='wps-notice-title wps-notice-section'>
-						<p><strong>IMPORTANT NOTICE:</strong></p>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'woo-gift-cards-lite' ); ?></strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update <strong>Version 2.3.1</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
-						Please connect with us for all setup, support, and update related queries without hesitation.</p>
+						<p><?php esc_html_e( 'From this update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
 					</div>
 				</div>
 			</td>
