@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.3.1\n"
-"POT-Creation-Date: 2022-01-20 13:57+0530\n"
+"POT-Creation-Date: 2022-01-29 12:10+0530\n"
 "PO-Revision-Date: 2020-08-22 10:41+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -908,16 +908,17 @@ msgstr ""
 msgid "Gift Card Settings"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:79
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:82
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:95
 msgid "CONTACT US"
 msgstr ""
 
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:87
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:95
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:100
 msgid "DOC"
 msgstr ""
 
-#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:99
+#: admin/partials/woocommerce-gift-cards-lite-admin-display.php:104
 msgid "GO PRO NOW"
 msgstr ""
 
@@ -1176,6 +1177,42 @@ msgstr ""
 
 #: woocommerce_gift_cards_lite.php:95
 msgid "GO PRO"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:309 woocommerce_gift_cards_lite.php:344
+msgid "IMPORTANT NOTICE:"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:312 woocommerce_gift_cards_lite.php:347
+msgid "From this update"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:312 woocommerce_gift_cards_lite.php:347
+msgid " Version 2.3.1"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:312 woocommerce_gift_cards_lite.php:347
+msgid " onwards, the plugin and its support will be handled by"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:312 woocommerce_gift_cards_lite.php:347
+msgid " WP Swings"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:312 woocommerce_gift_cards_lite.php:347
+msgid "WP Swings"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:312 woocommerce_gift_cards_lite.php:347
+msgid ""
+" is just our improvised and rebranded version with all quality solutions and "
+"help being the same, so no worries at your end."
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:313 woocommerce_gift_cards_lite.php:348
+msgid ""
+"Please connect with us for all setup, support, and update related queries "
+"without hesitation."
 msgstr ""
 
 #: woocommerce_gift_cards_lite.php:378
