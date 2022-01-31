@@ -79,7 +79,7 @@ Ultimate WooCommerce Gift Cards provide you with coupon codes. You can tweak the
 **8)** **Product and Category Exclusion Feature**
 With WooCommerce ultimate gift card plugin, you can exclude specific categories, products, or sale items. If you do this, the customers won’t be able to buy the excluded products through gift cards.
 
-[**Free Demo of Ultimate Gift Cards for WooCommerce**](https://demo.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=demo )
+[**Free Demo of Ultimate Gift Cards for WooCommerce**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=demo )
 
 Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://doc.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-page&utm_campaign=giftcards-doc) and learn more about the features and working of the plugin. 
 
@@ -136,7 +136,7 @@ Gift cards for WooCommerce help merchants to create, sell & manage gift cards on
 
 == LIVE DEMO OF PREMIUM VERSION ==
 
-* [ **Gift Cards for WooCommerce Pro Frontend demo**](https://demo.wpswingscom/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
+* [ **Gift Cards for WooCommerce Pro Frontend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
 
 * [ **Gift Cards for WooCommerce Pro Backend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/request-for-personal-demo/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=backend-demo)
 
