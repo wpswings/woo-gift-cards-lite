@@ -88,7 +88,7 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.wps
 
 == LIVE DEMO OF GIFT CARDS PLUGIN ==
 
-* [ **Gift Cards Frontend demo**](https://demo.wpswingscom/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
+* [ **Gift Cards Frontend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
 
 * [ **Gift Cards  Backend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/request-for-personal-demo/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=backend-demo)
 
@@ -140,7 +140,7 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.wps
 
 Gift cards for WooCommerce help merchants to create, sell & manage gift cards on their WooCommerce store. With the WordPress Gift cards plugin, the admin can customize gift card templates, send Gift Card coupon codes as QRCode/BARCode, create reusable gift cards, and send balance notifications to the customers.
 
-> Note:  Get [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro)
+> Note:  Get [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro)
 
 
 == DOCUMENTATION OF PREMIUM VERSION ==
@@ -194,7 +194,7 @@ The gift card is used to purchase products at the online or retail store. People
 We have provided this feature under the "Other Setting" tab. After enabling this setting, the "Apply Coupon" field will not get displayed on the cart/checkout page if only the gift card product is in the cart.
 
 = How would I allow customers to select gift card product prices on their own? = 
-You can do this by setting the Pricing Type of a gift card to "User Price". To set the gift card pricing type to User Price, go to Products > Add New and create a new gift card product by selecting the Gift Card option in the ï¿½Product Dataï¿½ dropdown you get on the edit page. After selecting the Gift Card option, you get a ï¿½Pricing Typeï¿½ dropdown. Select ï¿½User Priceï¿½ from the dropdown which allows customers to enter a gift card price of their own.
+You can do this by setting the Pricing Type of a gift card to "User Price". To set the gift card pricing type to User Price, go to Products > Add New and create a new gift card product by selecting the Gift Card option in the “Product Data” dropdown you get on the edit page. After selecting the Gift Card option, you get a “Pricing Type” dropdown. Select “User Price” from the dropdown which allows customers to enter a gift card price of their own.
 
 = Where do my customers gift cards get delivered? = 
 The gift card gets delivered to the email ID the buyer enters in the email field at the time of purchase.
@@ -227,6 +227,7 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 == Changelog ==
 = 2.3.1 - Released on 03 February 2022 =
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-page&utm_campaign=official)
+* New: Change author from MakeWebBetter to WP Swings
 * New: Minor Bug fixes
 * New: Compatible with latest WP and WC 
 
@@ -245,7 +246,7 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 * New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
 
 = 2.2.0 - Released on 1 October 2021 =
-* New: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) .
+* New: Compatible with [**Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) .
 
 * New: Compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-org-page&utm_campaign=giftcards-product)
 * New: Compatible with Multisite
@@ -330,6 +331,8 @@ New: Email Template for Mothers Day
 == Upgrade Notice ==
 = 2.3.1 - Released on 03 February 2022 =
 * New: Notice display of current version for  [**WP Swings**](https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-page&utm_campaign=official).
+* New: Change author from MakeWebBetter to WP Swings
 * New: Minor Bug fixes
 * New: Compatible with latest WP and WC
+
 
