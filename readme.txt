@@ -88,7 +88,7 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.wps
 
 == LIVE DEMO OF GIFT CARDS PLUGIN ==
 
-* [ **Gift Cards Frontend demo**](https://demo.wpswingscom/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
+* [ **Gift Cards Frontend demo**](https://demo.wpswingscom/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=frontend-demo)
 
 * [ **Gift Cards  Backend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/request-for-personal-demo/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=backend-demo)
 
@@ -140,7 +140,7 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.wps
 
 Gift cards for WooCommerce help merchants to create, sell & manage gift cards on their WooCommerce store. With the WordPress Gift cards plugin, the admin can customize gift card templates, send Gift Card coupon codes as QRCode/BARCode, create reusable gift cards, and send balance notifications to the customers.
 
-> Note:  Get [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro)
+> Note:  Get [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro)
 
 
 == DOCUMENTATION OF PREMIUM VERSION ==
@@ -194,7 +194,7 @@ The gift card is used to purchase products at the online or retail store. People
 We have provided this feature under the "Other Setting" tab. After enabling this setting, the "Apply Coupon" field will not get displayed on the cart/checkout page if only the gift card product is in the cart.
 
 = How would I allow customers to select gift card product prices on their own? = 
-You can do this by setting the Pricing Type of a gift card to "User Price". To set the gift card pricing type to User Price, go to Products > Add New and create a new gift card product by selecting the Gift Card option in the “Product Data” dropdown you get on the edit page. After selecting the Gift Card option, you get a “Pricing Type” dropdown. Select “User Price” from the dropdown which allows customers to enter a gift card price of their own.
+You can do this by setting the Pricing Type of a gift card to "User Price". To set the gift card pricing type to User Price, go to Products > Add New and create a new gift card product by selecting the Gift Card option in the ï¿½Product Dataï¿½ dropdown you get on the edit page. After selecting the Gift Card option, you get a ï¿½Pricing Typeï¿½ dropdown. Select ï¿½User Priceï¿½ from the dropdown which allows customers to enter a gift card price of their own.
 
 = Where do my customers gift cards get delivered? = 
 The gift card gets delivered to the email ID the buyer enters in the email field at the time of purchase.
