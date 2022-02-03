@@ -21,7 +21,7 @@
  * @since      1.0.0
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes
- * @author     makewebbetter <ticket@makewebbetter.com>
+ * @author     WP Swings <webmaster@wpswings.com>
  */
 class Woocommerce_Gift_Cards_Lite_I18n {
 
@@ -30,7 +30,7 @@ class Woocommerce_Gift_Cards_Lite_I18n {
 	 *
 	 * @since    1.0.0
 	 * @name load_plugin_textdomain
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function load_plugin_textdomain() {

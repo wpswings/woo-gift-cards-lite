@@ -18,7 +18,7 @@
  *
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes
- * @author     makewebbetter <ticket@makewebbetter.com>
+ * @author     WP Swings <webmaster@wpswings.com>
  */
 class Woocommerce_Gift_Cards_Lite_Loader {
 

@@ -14,7 +14,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 	 *
 	 * @name    Woocommerce_Gift_Cards_Activation
 	 * @category Class
-	 * @author   makewebbetter <ticket@makewebbetter.com>
+	 * @author   WP Swings <webmaster@wpswings.com>
 	 */
 	class Woocommerce_Gift_Cards_Activation {
 		/**
@@ -22,7 +22,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name mwb_wgm_restore_data
 		 * @param boolean $network_wide for multisite.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function mwb_wgm_restore_data( $network_wide ) {
@@ -48,7 +48,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_general_settings_data
 		 * @param boolean $general_process_completion_flag contains the flag value.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_general_settings_data( $general_process_completion_flag ) {
@@ -105,7 +105,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_product_settings_data
 		 * @param boolean $product_process_completion_flag contains the flag value.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_product_settings_data( $product_process_completion_flag ) {
@@ -137,7 +137,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_mail_settings_data
 		 * @param boolean $mail_process_completion_flag contains the flag value.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_mail_settings_data( $mail_process_completion_flag ) {
@@ -169,7 +169,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_delivery_settings_data
 		 * @param boolean $delivery_process_completion_flag contains the flag value.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_delivery_settings_data( $delivery_process_completion_flag ) {
@@ -198,7 +198,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @name restore_other_settings_data
 		 * @param boolean $other_process_completion_flag contains the flag value.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function restore_other_settings_data( $other_process_completion_flag ) {
@@ -223,7 +223,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 * Removed fields in new lite plugin
 		 *
 		 * @name delete_additional_data
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		public function delete_additional_data() {

@@ -7,22 +7,22 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://makewebbetter.com/
+ * @link              https://wpswings.com/
  * @since             1.0.0
  * @package           woo-gift-cards-lite
  *
  * @wordpress-plugin
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
- * Plugin URI:        https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org
- * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=giftcard-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>.
- * Version:           2.3.0
- * Author:            MakeWebBetter
- * Author URI:        https://makewebbetter.com/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-site/
+ * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
+ * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-gift-cards&utm_medium=giftcards-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
+ * Version:           2.3.1
+ * Author:            WP Swings
+ * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * Tested up to:      5.8.2
- * WC tested up to:   6.0.0
+ * Tested up to:      5.8.3
+ * WC tested up to:   6.1.0
  * Domain Path:       /languages
  */
 
@@ -49,7 +49,7 @@ if ( $activated ) {
 	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'MWB_WGC_VERSION', '2.3.0' );
+	define( 'MWB_WGC_VERSION', '2.3.1' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
@@ -80,7 +80,7 @@ if ( $activated ) {
 	 * @param array  $plugin_data plugin_data.
 	 * @param string $context context.
 	 * @return $actions
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wgm_admin_settings( $actions, $plugin_file, $plugin_data, $context ) {
@@ -92,7 +92,7 @@ if ( $activated ) {
 			$settings = array();
 			if ( ! mwb_uwgc_pro_active() ) {
 				$settings['settings']         = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
-				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
+				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
 				$actions                      = array_merge( $settings, $actions );
 			}
 		}
@@ -105,7 +105,7 @@ if ( $activated ) {
 	 * @since 1.0.0
 	 * @name mwb_uwgc_pro_active
 	 * @return boolean
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_uwgc_pro_active() {
@@ -118,7 +118,7 @@ if ( $activated ) {
 		 * @since 1.0.0
 		 * @name mwb_wgm_giftcard_enable
 		 * @return boolean
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		function mwb_wgm_giftcard_enable() {
@@ -143,7 +143,7 @@ if ( $activated ) {
 	 * @since 1.0.0
 	 * @name mwb_wgm_create_gift_card_taxonomy
 	 * @param boolean $network_wide for multisite.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wgm_create_gift_card_taxonomy( $network_wide ) {
@@ -175,7 +175,7 @@ if ( $activated ) {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgc_register_gift_card_product_type
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wgc_register_gift_card_product_type() {
@@ -183,7 +183,7 @@ if ( $activated ) {
 		 * Set the giftcard product type.
 		 *
 		 * @since 1.0.0
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		class WC_Product_Wgm_Gift_Card extends WC_Product {
@@ -208,7 +208,7 @@ if ( $activated ) {
 		 * @name mwb_wgm_coupon_generator
 		 * @param int $length length of coupon code.
 		 * @return string $password.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		function mwb_wgm_coupon_generator( $length = 5 ) {
@@ -292,6 +292,72 @@ if ( $activated ) {
 			restore_current_blog();
 		}
 	}
+	/**
+	 * Migration to new domain notice.
+	 *
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status Status filter currently applied to the plugin list.
+	 */
+	function mwb_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+		?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-success inline update-message notice-alt">
+					<div class='wps-notice-title wps-notice-section'>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'woo-gift-cards-lite' ); ?></strong></p>
+					</div>
+					<div class='wps-notice-content wps-notice-section'>
+						<p><?php esc_html_e( 'From this update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+		<?php
+
+	}
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mwb_wgm_upgrade_notice', 0, 3 );
+
+	add_action( 'admin_notices', 'mwb_wgm_updgrade_notice' );
+
+	/**
+	 * Migration to new domain notice.
+	 */
+	function mwb_wgm_updgrade_notice() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+		if ( 'mwb-wgc-setting-lite' === $tab ) {
+			?>
+
+		<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-success inline update-message notice-alt">
+					<div class='wps-notice-title wps-notice-section'>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'woo-gift-cards-lite' ); ?></strong></p>
+					</div>
+					<div class='wps-notice-content wps-notice-section'>
+						<p><?php esc_html_e( 'From this update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+			<?php
+		}
+	}
 } else {
 	add_action( 'admin_init', 'mwb_wgm_plugin_deactivate' );
 
@@ -300,7 +366,7 @@ if ( $activated ) {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_plugin_deactivate()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wgm_plugin_deactivate() {

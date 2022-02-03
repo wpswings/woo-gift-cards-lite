@@ -17,7 +17,7 @@
  *
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes/
- * @author     makewebbetter<ticket@makewebbetter.com>
+ * @author     WP Swings <webmaster@wpswings.com>
  */
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 
@@ -51,7 +51,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string Portal id.
 	 */
-	private static $portal_id = '6493626';
+	private static $portal_id = '25444144';
 
 	/**
 	 * Form id of hubspot api.
@@ -59,7 +59,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	private static $onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
 
 	/**
 	 * Form id of hubspot api.
@@ -67,7 +67,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string deactivation_form_id.
 	 */
-	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
+	private static $deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
 
 	/**
 	 * Plugin Name.
@@ -213,7 +213,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name add_onboarding_popup_screen
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_onboarding_popup_screen() {
@@ -229,7 +229,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name add_deactivation_popup_screen
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_deactivation_popup_screen() {
@@ -246,7 +246,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name is_valid_page_screen
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function is_valid_page_screen() {
@@ -273,7 +273,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name can_show_onboarding_popup
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function can_show_onboarding_popup() {
@@ -308,7 +308,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name add_on_boarding_form_fields
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_on_boarding_form_fields() {
@@ -462,7 +462,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name add_deactivation_form_fields
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_deactivation_form_fields() {
@@ -708,7 +708,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name send_onboarding_data
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function send_onboarding_data() {
@@ -799,7 +799,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @param      array $formatted_data       The parsed data submitted vai form.
 	 * @since      2.0.0
 	 * @name    render_form_data_into_table
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function render_form_data_into_table( $formatted_data = array() ) {
@@ -835,7 +835,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since    2.0.0
 	 * @name    skip_onboarding_popup
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function skip_onboarding_popup() {
@@ -851,7 +851,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @param      string $result       The result of this validation.
 	 * @since      1.0.0
 	 * @name       add_mwb_additional_validation
-	 * @author     makewebbetter<ticket@makewebbetter.com>
+	 * @author     WP Swings <webmaster@wpswings.com>
 	 * @link       https://www.makewebbetter.com/
 	 */
 	public function add_mwb_additional_validation( $result = true ) {
@@ -953,9 +953,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-		);
+		$headers = 'Content-Type: application/json';
 
 		$form_data = json_encode(
 			array(

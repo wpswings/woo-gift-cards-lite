@@ -17,7 +17,7 @@
  *
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/admin
- * @author     makewebbetter<ticket@makewebbetter.com>
+ * @author     WP Swings <webmaster@wpswings.com>
  */
 class Woocommerce_Gift_Cards_Lite_Admin {
 
@@ -178,7 +178,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 2.0.0
 	 * @name mwb_wgm_admin_menu()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_admin_menu() {
@@ -195,7 +195,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_admin_setting()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_admin_setting() {
@@ -207,12 +207,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 2.0.0
 	 * @name mwb_wgm_premium_features()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_premium_features() {
 		if ( isset( $_GET['page'] ) && 'mwb-wgc-premium-plugin' == $_GET['page'] ) {
-			$mwb_premium_page = esc_url_raw( 'https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org' );
+			$mwb_premium_page = esc_url_raw( 'https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro' );
 			wp_redirect( $mwb_premium_page );
 			exit;
 		}
@@ -225,7 +225,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name mwb_wgm_gift_card_product()
 	 * @param array $types product types.
 	 * @return $types.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_gift_card_product( $types ) {
@@ -241,7 +241,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_get_pricing_type()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_get_pricing_type() {
@@ -259,7 +259,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_woocommerce_product_options_general_product_data()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_product_options_general_product_data() {
@@ -456,7 +456,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @param int $post_id post id.
 	 * @name mwb_wgm_save_post()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_save_post( $post_id ) {
@@ -576,7 +576,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name mwb_wgm_woocommerce_product_data_tabs()
 	 * @param array $tabs product tabs.
 	 * @return $tabs.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_product_data_tabs( $tabs ) {
@@ -599,7 +599,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param int   $item_id item id.
 	 * @param array $item item.
 	 * @param array $_product product.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ) {
@@ -657,7 +657,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name mwb_wgm_woocommerce_hidden_order_itemmeta()
 	 * @param array $order_items order items.
 	 * @return $order_items.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_woocommerce_hidden_order_itemmeta( $order_items ) {
@@ -674,7 +674,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_giftcard_custompost
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_giftcard_custom_post() {
@@ -725,7 +725,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name mwb_wgm_edit_form_after_title
 	 * @param object $post post.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_edit_form_after_title( $post ) {
@@ -787,7 +787,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_mothers_day_template
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_mothers_day_template() {
@@ -852,7 +852,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_new_template
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_new_template() {
@@ -917,7 +917,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_insert_custom_template
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_insert_custom_template() {
@@ -980,7 +980,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_insert_christmas_template
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_insert_christmas_template() {
@@ -1057,7 +1057,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array  $actions actions.
 	 * @param object $post post.
 	 * @return $actions.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @since 1.0.0
 	 */
@@ -1072,7 +1072,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Preview of email template
 	 *
 	 * @name mwb_wgm_preview_email_template
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @since 1.0.0
 	 */
@@ -1138,7 +1138,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_custom_plugin_row_meta
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @param mixed $links Contains links.
 	 * @param mixed $file Contains main file.
 	 * @link https://www.makewebbetter.com/
@@ -1146,9 +1146,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function mwb_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
 			$new_links = array(
-				'demo' => '<a href="https://demo.makewebbetter.com/giftware-woocommerce-gift-cards/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
-				'doc' => '<a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-doc" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
-				'support' => '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-giftcard-org&utm_medium=MWB-org-backend&utm_campaign=MWB-giftcard-support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
+				'demo' => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
+				'doc' => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
+				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -1161,7 +1161,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgm_get_all_lite_templates
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_get_all_lite_templates() {
@@ -1180,7 +1180,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    2.0.0
 	 * @name mwb_wgm_set_cron_for_plugin_notification
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_set_cron_for_plugin_notification() {
@@ -1200,7 +1200,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    2.0.0
 	 * @name mwb_wgm_save_notice_message
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_save_notice_message() {
@@ -1218,12 +1218,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    2.0.0
 	 * @name mwb_get_update_notification_data
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_get_update_notification_data() {
 		$mwb_notification_data = array();
-		$url = 'https://demo.makewebbetter.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
+		$url = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
 		$attr = array(
 			'action' => 'mwb_notification_fetch',
 			'plugin_version' => MWB_WGC_VERSION,
@@ -1250,7 +1250,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    2.0.0
 	 * @name mwb_wgm_display_notification_bar
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_display_notification_bar() {
@@ -1269,7 +1269,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						<div class="notice is-dismissible notice-info" id="dismiss_notice">
 							<div class="notice-container">
 								<div class="notice-image">
-									<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/mwb.png' ); ?>" alt="MakeWebBetter">
+									<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/wpswings_logo.png' ); ?>" alt="MakeWebBetter">
 								</div> 
 								<div class="notice-content">
 									<?php echo wp_kses_post( $notification_message ); ?>
@@ -1289,7 +1289,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    2.0.0
 	 * @name mwb_wgm_dismiss_notice
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_dismiss_notice() {
@@ -1307,7 +1307,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    2.0.0
 	 * @name mwb_wgm_setting_notice_on_activation
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wgm_setting_notice_on_activation() {
@@ -1344,7 +1344,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
 	 * @name add_mwb_frontend_screens
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_mwb_frontend_screens( $valid_screens = array() ) {
@@ -1362,7 +1362,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
 	 * @name add_mwb_deactivation_screens
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_mwb_deactivation_screens( $valid_screens = array() ) {

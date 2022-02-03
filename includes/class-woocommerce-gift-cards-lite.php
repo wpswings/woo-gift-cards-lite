@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes
- * @author     makewebbetter <ticket@makewebbetter.com>
+ * @author     WP Swings <webmaster@wpswings.com>
  */
 class Woocommerce_Gift_Cards_Lite {
 
@@ -69,7 +69,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'MWB_WGC_VERSION' ) ) {
 			$this->version = MWB_WGC_VERSION;
 		} else {
-			$this->version = '2.3.0';
+			$this->version = '2.3.1';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
