@@ -88,7 +88,7 @@ Check Out [**Gift Cards WooCommerce Plugin Knowledge Base**](https://support.wps
 
 ### PLUGIN COMPATIBILITIES 
 
-1) The gift certificate plugin is now compatible with  [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/). Thereby, you can get the following benefits:
+1) The gift certificate plugin is now compatible with  [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/wps-multi-currency-switcher-for-woocommerce/). Thereby, you can get the following benefits:
 
 * You can customize the gift card price according to the currency choice, user’s preference of currency, default price, or price range.
 * The gift card’s coupon price will be customized according to the selected currency.

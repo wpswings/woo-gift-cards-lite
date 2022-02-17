@@ -97,7 +97,7 @@ Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.wps
 
 == PLUGIN COMPATIBILITIES ==
 
-1) The gift certificate plugin is now compatible with  [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) .Thereby, you can get the following benefits:
+1) The gift certificate plugin is now compatible with  [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/wps-multi-currency-switcher-for-woocommerce/) .Thereby, you can get the following benefits:
 
 * You can customize the gift card price according to the currency choice, users preference of currency, default price, or price range.
 * The gift cards coupon price will be customized according to the selected currency.
@@ -246,7 +246,7 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 * New: Gifting feature added [Merchant can add multiple employees, Merchant can add multiple stores, Reporting to the admin]
 
 = 2.2.0 - Released on 1 October 2021 =
-* New: Compatible with [**Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) .
+* New: Compatible with [**Multi-Currency Switcher For WooCommerce**](https://wordpress.org/plugins/wps-multi-currency-switcher-for-woocommerce/) .
 
 * New: Compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-org-page&utm_campaign=giftcards-product)
 * New: Compatible with Multisite

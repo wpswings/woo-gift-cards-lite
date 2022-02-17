@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since             1.0.0
  * @return string The default policy content.
- * @name mwb_wgm_plugin_get_default_privacy_content
+ * @name wps_wgm_plugin_get_default_privacy_content
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function mwb_wgm_plugin_get_default_privacy_content() {
+function wps_wgm_plugin_get_default_privacy_content() {
 	return '<h2>' . __( 'Stored Recipient Details for sending Gift Card', 'woo-gift-cards-lite' ) . '</h2>' .
 	'<p>' . __( "We store your recipient's email address, recipient's name, gift message, your name so that we can send them again your Gift Card with all proper details have been filled by you at the time of purchasing Gift Card Product if they arrive", 'woo-gift-cards-lite' ) . '</p>';
 }
@@ -28,16 +28,16 @@ function mwb_wgm_plugin_get_default_privacy_content() {
  * Add the suggested privacy policy text to the policy postbox.
  *
  * @since             1.0.0
- * @name mwb_wgm_plugin_add_suggested_privacy_content
+ * @name wps_wgm_plugin_add_suggested_privacy_content
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function mwb_wgm_plugin_add_suggested_privacy_content() {
-	$content = mwb_wgm_plugin_get_default_privacy_content();
+function wps_wgm_plugin_add_suggested_privacy_content() {
+	$content = wps_wgm_plugin_get_default_privacy_content();
 	wp_add_privacy_policy_content( __( 'Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ), $content );
 }
 
-add_action( 'admin_init', 'mwb_wgm_plugin_add_suggested_privacy_content', 20 );
+add_action( 'admin_init', 'wps_wgm_plugin_add_suggested_privacy_content', 20 );
 
 // Export Personal Data.
 
@@ -48,19 +48,19 @@ add_action( 'admin_init', 'mwb_wgm_plugin_add_suggested_privacy_content', 20 );
  * @see https://github.com/allendav/wp-privacy-requests/blob/master/EXPORT.md
  * @param array $exporters Details of all the exporters.
  * @return array
- * @name mwb_wgm_plugin_register_exporters
+ * @name wps_wgm_plugin_register_exporters
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function mwb_wgm_plugin_register_exporters( $exporters ) {
+function wps_wgm_plugin_register_exporters( $exporters ) {
 	$exporters[] = array(
 		'exporter_friendly_name' => __( 'Recipient Details', 'woo-gift-cards-lite' ),
-		'callback'               => 'mwb_wgm_plugin_user_data_exporter',
+		'callback'               => 'wps_wgm_plugin_user_data_exporter',
 	);
 	return $exporters;
 }
 
-add_filter( 'wp_privacy_personal_data_exporters', 'mwb_wgm_plugin_register_exporters' );
+add_filter( 'wp_privacy_personal_data_exporters', 'wps_wgm_plugin_register_exporters' );
 
 
 /**
@@ -71,18 +71,18 @@ add_filter( 'wp_privacy_personal_data_exporters', 'mwb_wgm_plugin_register_expor
  * @param string $email_address Contains Email Addresss.
  * @param int    $page contains page.
  * @return array
- * @name mwb_wgm_plugin_user_data_exporter
+ * @name wps_wgm_plugin_user_data_exporter
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
+function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 	$export_items = array();
 	$user = get_user_by( 'email', $email_address );
 	if ( $user && $user->ID ) {
 
-		$item_id = "mwb-wgm-recipient-details-{$user->ID}";
+		$item_id = "wps-wgm-recipient-details-{$user->ID}";
 
-		$group_id = 'mwb-wgm-recipient-details';
+		$group_id = 'wps-wgm-recipient-details';
 
 		$group_label = __( 'Gift Card Details', 'woo-gift-cards-lite' );
 
@@ -173,19 +173,19 @@ function mwb_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
  * @since             1.0.0
  * @param array $erasers contains erased data.
  * @return array
- * @name mwb_wgm_plugin_register_erasers
+ * @name wps_wgm_plugin_register_erasers
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function mwb_wgm_plugin_register_erasers( $erasers = array() ) {
+function wps_wgm_plugin_register_erasers( $erasers = array() ) {
 	$erasers[] = array(
 		'eraser_friendly_name' => __( 'Recipient Details', 'woo-gift-cards-lite' ),
-		'callback'               => 'mwb_wgm_plugin_user_data_eraser',
+		'callback'               => 'wps_wgm_plugin_user_data_eraser',
 	);
 	return $erasers;
 }
 
-add_filter( 'wp_privacy_personal_data_erasers', 'mwb_wgm_plugin_register_erasers' );
+add_filter( 'wp_privacy_personal_data_erasers', 'wps_wgm_plugin_register_erasers' );
 
 /**
  * Eraser for Plugin user data.
@@ -194,11 +194,11 @@ add_filter( 'wp_privacy_personal_data_erasers', 'mwb_wgm_plugin_register_erasers
  * @param string $email_address contains email address.
  * @param int    $page conains page.
  * @return array
- * @name mwb_wgm_plugin_user_data_eraser
+ * @name wps_wgm_plugin_user_data_eraser
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function mwb_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
+function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 	if ( empty( $email_address ) ) {
 		return array(
 			'items_removed'  => false,

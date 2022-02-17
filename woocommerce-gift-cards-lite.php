@@ -30,6 +30,17 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+// var_dump( get_option('mwb_wgm_general_settings') );
+// $arr_val = get_option('mwb_wgm_general_settings');
+
+// if ( is_array($arr_val)) {
+// echo "stuti";
+// foreach ( $arr_val as $key => $value){
+// 	$new_key = str_replace( 'mwb_', 'wps_', $key );	
+// 	echo $new_key . "<br>";
+// }
+// }
+// 			die;
 $activated = false;
 /**
  * Checking if WooCommerce is active.
@@ -46,16 +57,16 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 }
 
 if ( $activated ) {
-	define( 'MWB_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
-	define( 'MWB_WGC_URL', plugin_dir_url( __FILE__ ) );
-	define( 'MWB_WGC_ADMIN_URL', admin_url() );
-	define( 'MWB_WGC_VERSION', '2.3.1' );
+	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
+	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
+	define( 'WPS_WGC_ADMIN_URL', admin_url() );
+	define( 'WPS_WGC_VERSION', '2.3.1' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
 	global $wp_version;
 	if ( $wp_version >= '4.9.6' ) {
-		include_once MWB_WGC_DIRPATH . 'mwb-wgc-lite-gdpr.php';
+		include_once WPS_WGC_DIRPATH . 'wps-wgc-lite-gdpr.php';
 	}
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -68,13 +79,13 @@ if ( $activated ) {
 	/**
 	Add link for settings
 	*/
-	add_filter( 'plugin_action_links', 'mwb_wgm_admin_settings', 10, 4 );
+	add_filter( 'plugin_action_links', 'wps_wgm_admin_settings', 10, 4 );
 
 	/**
 	 * Add the Setting Links
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_admin_settings
+	 * @name wps_wgm_admin_settings
 	 * @param array  $actions actions.
 	 * @param string $plugin_file plugin file name.
 	 * @param array  $plugin_data plugin_data.
@@ -83,16 +94,16 @@ if ( $activated ) {
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgm_admin_settings( $actions, $plugin_file, $plugin_data, $context ) {
+	function wps_wgm_admin_settings( $actions, $plugin_file, $plugin_data, $context ) {
 		static $plugin;
 		if ( ! isset( $plugin ) ) {
 			$plugin = plugin_basename( __FILE__ );
 		}
 		if ( $plugin == $plugin_file ) {
 			$settings = array();
-			if ( ! mwb_uwgc_pro_active() ) {
-				$settings['settings']         = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
-				$settings['get_paid_version'] = '<a class="mwb-wgm-go-pro" href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
+			if ( ! wps_uwgc_pro_active() ) {
+				$settings['settings']         = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
+				$settings['get_paid_version'] = '<a class="wps-wgm-go-pro" href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" target="_blank">' . esc_html__( 'GO PRO', 'woo-gift-cards-lite' ) . '</a>';
 				$actions                      = array_merge( $settings, $actions );
 			}
 		}
@@ -103,28 +114,28 @@ if ( $activated ) {
 	 * This function is used to check if premium plugin is activated.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_uwgc_pro_active
+	 * @name wps_uwgc_pro_active
 	 * @return boolean
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_uwgc_pro_active() {
-		return apply_filters( 'mwb_uwgc_pro_active', false );
+	function wps_uwgc_pro_active() {
+		return apply_filters( 'wps_uwgc_pro_active', false );
 	}
-	if ( ! function_exists( 'mwb_wgm_giftcard_enable' ) ) {
+	if ( ! function_exists( 'wps_wgm_giftcard_enable' ) ) {
 		/**
 		 * This function is used to check if the giftcard plugin is activated.
 		 *
 		 * @since 1.0.0
-		 * @name mwb_wgm_giftcard_enable
+		 * @name wps_wgm_giftcard_enable
 		 * @return boolean
 		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		function mwb_wgm_giftcard_enable() {
-			$giftcard_enable = get_option( 'mwb_wgm_general_settings', array() );
-			if ( ! empty( $giftcard_enable ) && array_key_exists( 'mwb_wgm_general_setting_enable', $giftcard_enable ) ) {
-				$check_enable = $giftcard_enable['mwb_wgm_general_setting_enable'];
+		function wps_wgm_giftcard_enable() {
+			$giftcard_enable = get_option( 'wps_wgm_general_settings', array() );
+			if ( ! empty( $giftcard_enable ) && array_key_exists( 'wps_wgm_general_setting_enable', $giftcard_enable ) ) {
+				$check_enable = $giftcard_enable['wps_wgm_general_setting_enable'];
 				if ( isset( $check_enable ) && ! empty( $check_enable ) ) {
 					if ( 'on' == $check_enable ) {
 						return true;
@@ -135,18 +146,18 @@ if ( $activated ) {
 			}
 		}
 	}
-	register_activation_hook( __FILE__, 'mwb_wgm_create_gift_card_taxonomy' );
+	register_activation_hook( __FILE__, 'wps_wgm_create_gift_card_taxonomy' );
 
 	/**
 	 * Create the Taxonomy for Gift Card Product at activation.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_create_gift_card_taxonomy
+	 * @name wps_wgm_create_gift_card_taxonomy
 	 * @param boolean $network_wide for multisite.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgm_create_gift_card_taxonomy( $network_wide ) {
+	function wps_wgm_create_gift_card_taxonomy( $network_wide ) {
 		global $wpdb;
 		// check if the plugin has been activated on the network.
 		if ( is_multisite() && $network_wide ) {
@@ -154,31 +165,31 @@ if ( $activated ) {
 			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
-				mwb_create_giftcard_page();
+				wps_create_giftcard_page();
 				restore_current_blog();
 			}
 		} else {
 			// activated on a single site, in a multi-site or on a single site.
-			mwb_create_giftcard_page();
+			wps_create_giftcard_page();
 		}
 		$restore_data = new Woocommerce_Gift_Cards_Activation();
-		$restore_data->mwb_wgm_restore_data( $network_wide );
-		set_transient( 'mwb-wgm-giftcard-setting-notice', true, 5 );
+		$restore_data->wps_wgm_restore_data( $network_wide );
+		set_transient( 'wps-wgm-giftcard-setting-notice', true, 5 );
 
 	}
 
 	// on plugin load.
-	add_action( 'plugins_loaded', 'mwb_wgc_register_gift_card_product_type' );
+	add_action( 'plugins_loaded', 'wps_wgc_register_gift_card_product_type' );
 
 	/**
 	 * Saving the Product Type by creating the Instance of this.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgc_register_gift_card_product_type
+	 * @name wps_wgc_register_gift_card_product_type
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgc_register_gift_card_product_type() {
+	function wps_wgc_register_gift_card_product_type() {
 		/**
 		 * Set the giftcard product type.
 		 *
@@ -200,18 +211,18 @@ if ( $activated ) {
 		}
 	}
 
-	if ( ! function_exists( 'mwb_wgm_coupon_generator' ) ) {
+	if ( ! function_exists( 'wps_wgm_coupon_generator' ) ) {
 		/**
 		 * Generate the Dynamic code for Gift Cards.
 		 *
 		 * @since 1.0.0
-		 * @name mwb_wgm_coupon_generator
+		 * @name wps_wgm_coupon_generator
 		 * @param int $length length of coupon code.
 		 * @return string $password.
 		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
-		function mwb_wgm_coupon_generator( $length = 5 ) {
+		function wps_wgm_coupon_generator( $length = 5 ) {
 			$password    = '';
 			$alphabets   = range( 'A', 'Z' );
 			$numbers     = range( '0', '9' );
@@ -221,14 +232,14 @@ if ( $activated ) {
 				$password .= $final_array[ $key ];
 			}
 
-			$general_settings = get_option( 'mwb_wgm_general_settings', array() );
-			if ( ! empty( $general_settings ) && array_key_exists( 'mwb_wgm_general_setting_giftcard_prefix', $general_settings ) ) {
-				$giftcard_prefix = $general_settings['mwb_wgm_general_setting_giftcard_prefix'];
+			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			if ( ! empty( $general_settings ) && array_key_exists( 'wps_wgm_general_setting_giftcard_prefix', $general_settings ) ) {
+				$giftcard_prefix = $general_settings['wps_wgm_general_setting_giftcard_prefix'];
 			} else {
 				$giftcard_prefix = '';
 			}
 			$password = $giftcard_prefix . $password;
-			$password = apply_filters( 'mwb_wgm_custom_coupon', $password );
+			$password = apply_filters( 'wps_wgm_custom_coupon', $password );
 			return $password;
 		}
 	}
@@ -248,7 +259,7 @@ if ( $activated ) {
 	}
 	run_woocommerce_gift_cards_lite();
 
-	register_deactivation_hook( __FILE__, 'mwb_uwgc_remove_cron_for_notification_update' );
+	register_deactivation_hook( __FILE__, 'wps_uwgc_remove_cron_for_notification_update' );
 
 
 	/**
@@ -256,14 +267,14 @@ if ( $activated ) {
 	 *
 	 * @since    2.0.0
 	 */
-	function mwb_uwgc_remove_cron_for_notification_update() {
-		wp_clear_scheduled_hook( 'mwb_wgm_check_for_notification_update' );
+	function wps_uwgc_remove_cron_for_notification_update() {
+		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 	}
 
-	include_once MWB_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
+	include_once WPS_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
 
 	// Multisite Compatibilty for new site creation.
-	add_action( 'wp_initialize_site', 'mwb_wgc_standard_plugin_on_create_blog', 900 );
+	add_action( 'wp_initialize_site', 'wps_wgc_standard_plugin_on_create_blog', 900 );
 
 	/**
 	 * Compatibilty with multisite.
@@ -271,24 +282,24 @@ if ( $activated ) {
 	 * @param object $new_site subsite.
 	 * @return void
 	 */
-	function mwb_wgc_standard_plugin_on_create_blog( $new_site ) {
+	function wps_wgc_standard_plugin_on_create_blog( $new_site ) {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 		// check if the plugin has been activated on the network.
 		if ( is_plugin_active_for_network( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
-			$mwb_lcns_status = get_option( 'mwb_gw_lcns_status' );
-			$mwb_license_key = get_option( 'mwb_gw_lcns_key' );
-			$timestamp       = get_option( 'mwb_gw_lcns_thirty_days' );
+			$wps_lcns_status = get_option( 'wps_gw_lcns_status' );
+			$wps_license_key = get_option( 'wps_gw_lcns_key' );
+			$timestamp       = get_option( 'wps_gw_lcns_thirty_days' );
 			$blog_id         = $new_site->blog_id;
 			// switch to newly created site.
 			switch_to_blog( $blog_id );
 			require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 			// code to be executed when site is created, call any function from activation file.
-			mwb_create_giftcard_page();
+			wps_create_giftcard_page();
 			$restore_data = new Woocommerce_Gift_Cards_Activation();
 			$restore_data->on_activation();
-			do_action( 'mwb_wgm_standard_plugin_on_create_blog', $mwb_lcns_status, $mwb_license_key, $timestamp );
+			do_action( 'wps_wgm_standard_plugin_on_create_blog', $wps_lcns_status, $wps_license_key, $timestamp );
 			restore_current_blog();
 		}
 	}
@@ -299,7 +310,7 @@ if ( $activated ) {
 	 * @param array  $plugin_data An array of plugin data.
 	 * @param string $status Status filter currently applied to the plugin list.
 	 */
-	function mwb_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+	function wps_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
@@ -323,18 +334,18 @@ if ( $activated ) {
 		<?php
 
 	}
-	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mwb_wgm_upgrade_notice', 0, 3 );
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wgm_upgrade_notice', 0, 3 );
 
-	add_action( 'admin_notices', 'mwb_wgm_updgrade_notice' );
+	add_action( 'admin_notices', 'wps_wgm_updgrade_notice' );
 
 	/**
 	 * Migration to new domain notice.
 	 */
-	function mwb_wgm_updgrade_notice() {
+	function wps_wgm_updgrade_notice() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-		if ( 'mwb-wgc-setting-lite' === $tab ) {
+		if ( 'wps-wgc-setting-lite' === $tab ) {
 			?>
 
 		<tr class="plugin-update-tr active notice-warning notice-alt">
@@ -359,17 +370,17 @@ if ( $activated ) {
 		}
 	}
 } else {
-	add_action( 'admin_init', 'mwb_wgm_plugin_deactivate' );
+	add_action( 'admin_init', 'wps_wgm_plugin_deactivate' );
 
 	/**
 	 * Deactivate plugin.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_plugin_deactivate()
+	 * @name wps_wgm_plugin_deactivate()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wgm_plugin_deactivate() {
+	function wps_wgm_plugin_deactivate() {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		?>
@@ -386,15 +397,15 @@ if ( $activated ) {
  *
  * @return void
  */
-function mwb_create_giftcard_page() {
-	$page_taxonomy_created = get_option( 'mwb_wgc_create_gift_card_taxonomy', false );
+function wps_create_giftcard_page() {
+	$page_taxonomy_created = get_option( 'wps_wgc_create_gift_card_taxonomy', false );
 	if ( false == $page_taxonomy_created ) {
-		update_option( 'mwb_wgc_create_gift_card_taxonomy', true );
+		update_option( 'wps_wgc_create_gift_card_taxonomy', true );
 		$term       = esc_html__( 'Gift Card', 'woo-gift-cards-lite' );
 		$taxonomy   = 'product_cat';
 		$term_exist = term_exists( $term, $taxonomy );
 		if ( 0 == $term_exist || null == $term_exist ) {
-			$args['slug'] = 'mwb_wgm_giftcard';
+			$args['slug'] = 'wps_wgm_giftcard';
 			$term_exist   = wp_insert_term( $term, $taxonomy, $args );
 		}
 		$terms             = get_term( $term_exist['term_id'], $taxonomy, ARRAY_A );
