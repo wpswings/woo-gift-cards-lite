@@ -30,17 +30,7 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-// var_dump( get_option('mwb_wgm_general_settings') );
-// $arr_val = get_option('mwb_wgm_general_settings');
 
-// if ( is_array($arr_val)) {
-// echo "stuti";
-// foreach ( $arr_val as $key => $value){
-// 	$new_key = str_replace( 'mwb_', 'wps_', $key );	
-// 	echo $new_key . "<br>";
-// }
-// }
-// 			die;
 $activated = false;
 /**
  * Checking if WooCommerce is active.
@@ -77,7 +67,7 @@ if ( $activated ) {
 
 
 	/**
-	Add link for settings
+	 *Add link for settings
 	*/
 	add_filter( 'plugin_action_links', 'wps_wgm_admin_settings', 10, 4 );
 

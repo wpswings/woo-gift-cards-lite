@@ -309,15 +309,26 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 
 				if ( ! empty( $products ) && is_array( $products ) ) {
 					foreach ( $products as $k => $product_id ) {
-							$value   = get_post_meta( $product_id, $meta_keys, true );
-							$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+						$values   = get_post_meta( $product_id, $meta_keys, true );
+						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
 						if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-								continue;
+							continue;
 						}
-
-						update_post_meta( $product_id, $new_key, $value );	
+					
+						$arr_val_post = array();
+						if ( is_array( $values  )) {
+							foreach ( $values  as $key => $value){
+								$keys = str_replace( 'mwb_', 'wps_', $key );
+						
+								$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+								$arr_val_post[ $key ] = $new_key1;
+							}
+							update_post_meta( $product_id, $new_key, $arr_val_post );
+						} else {
+							update_post_meta( $product_id, $new_key, $values );
 						}
+					}
 				}
 			}
 		}
@@ -330,7 +341,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 * @since    1.0.0
 		 */
 		public static function upgrade_wp_options() {
-			
 			$wp_options = array(
 				'mwb_wgm_general_settings' => '',
 				'mwb_gw_lcns_status'  => '',
@@ -389,21 +399,19 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				if ( ! empty( get_option( $new_key ) ) ) {
 					continue;
 				}
-				
 				$new_value = get_option( $key, $value );
 
 				$arr_val = array();
 				if ( is_array( $new_value )) {
-					foreach ( $new_value as $key => $value){
-						$new_key1 = str_replace( 'mwb_', 'wps_', $key );	
-						$arr_val[$new_key1] = $value; 
+					foreach ( $new_value as $key => $value) {
+						$new_key1 = str_replace( 'mwb_', 'wps_', $key );
+						$arr_val[ $new_key1 ] = $value;
 					}
 					update_option( $new_key, $arr_val );
 				}
 				else {
 					update_option( $new_key, $new_value );
 				}
-				
 			}
 		}
 
