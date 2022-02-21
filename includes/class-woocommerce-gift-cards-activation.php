@@ -237,8 +237,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 * @return void
 		 */
 		public function on_activation() {
-			$this->upgrade_wp_postmeta();
-			$this->upgrade_wp_options();
+			$this->wps_org_upgrade_wp_postmeta();
+			$this->wps_org_upgrade_wp_options();
 			$wps_check_enable = false;
 			$giftcard_enable  = get_option( 'wps_wgm_general_setting_enable', false );
 			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {
@@ -282,7 +282,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @since    1.0.0
 		 */
-		public static function upgrade_wp_postmeta() {
+		public static function wps_org_upgrade_wp_postmeta() {
 
 			$post_meta_keys = array(
 				'mwb_wgm_pricing',
@@ -340,7 +340,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @since    1.0.0
 		 */
-		public static function upgrade_wp_options() {
+		public static function wps_org_upgrade_wp_options() {
 			$wp_options = array(
 				'mwb_wgm_general_settings' => '',
 				'mwb_gw_lcns_status'  => '',
@@ -358,33 +358,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				'mwb_wgm_delivery_settings'  => '',
 				'mwb_wgm_email_to_recipient_setting_enable'  => '',
 				'mwb_wgm_downladable_setting_enable'  => '',
-				'mwb_wgm_mail_settings'  => '',
-				'mwb_wgm_mail_setting_upload_logo'  => '',
-				'mwb_wgm_mail_setting_upload_logo_dimension_height'  => '',
-				'mwb_wgm_mail_setting_upload_logo_dimension_width'  => '',
-				'mwb_wgm_mail_setting_background_logo'  => '',
-				'mwb_wgm_mail_setting_giftcard_message_length'  => '',
-				'mwb_wgm_mail_setting_default_message'  => '',
-				'mwb_wgm_mail_setting_disclaimer'  => '',
-				'mwb_wgm_mail_setting_giftcard_subject'  => '',
+				'mwb_wgm_mail_settings'  => '',	
 				'mwb_wgm_other_settings'  => '',
 				'mwb_wgm_product_settings'  => '',
-				'mwb_wgm_general_setting_enable'  => '',
-				'mwb_wgm_general_setting_tax_cal_enable'  => '',
-				'mwb_wgm_general_setting_shop_page_enable'  => '',
-				'mwb_wgm_general_setting_giftcard_individual_use'  => '',
-				'mwb_wgm_general_setting_giftcard_freeshipping'  => '',
-				'mwb_wgm_general_setting_giftcard_coupon_length'  => '',
-				'mwb_wgm_general_setting_giftcard_prefix'  => '',
-				'mwb_wgm_general_setting_giftcard_expiry'  => '',
-				'mwb_wgm_general_setting_giftcard_minspend'  => '',
-				'mwb_wgm_general_setting_giftcard_maxspend'  => '',
-				'mwb_wgm_general_setting_giftcard_use'  => '',
-				'mwb_wgm_product_setting_exclude_product'  => '',
-				'mwb_wgm_product_setting_exclude_category'  => '',
-				'mwb_wgm_product_setting_giftcard_ex_sale'  => '',
-				'mwb_wgm_other_setting_upload_logo'  => '',
-				'mwb_wgm_other_setting_giftcard_subject'  => '',
 				'mwb_wgm_additional_preview_disable'  => '',
 				'mwb_wgm_delivery_setting_method'  => '',
 				'mwb_wgm_additional_apply_coupon_disable'  => '',
@@ -404,8 +380,13 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				$arr_val = array();
 				if ( is_array( $new_value )) {
 					foreach ( $new_value as $key => $value) {
-						$new_key1 = str_replace( 'mwb_', 'wps_', $key );
-						$arr_val[ $new_key1 ] = $value;
+						$new_key2 = str_replace( 'mwb_', 'wps_', $key );
+						$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
+
+						$value_1 = str_replace( 'mwb_', 'wps_', $value );	
+						$value_2 = str_replace( 'mwb-', 'wps-',$value_1 );	
+
+						$arr_val[ $new_key1 ] = $value_2;
 					}
 					update_option( $new_key, $arr_val );
 				}
