@@ -412,7 +412,7 @@ function wps_create_giftcard_page() {
 		$page_id           = wp_insert_post( $customer_reports );
 	}
 }
-add_action( 'init', 'wps_migration_func' );
+add_action( 'admin_init', 'wps_migration_func' );
 /**
  * Migration code function
  */
