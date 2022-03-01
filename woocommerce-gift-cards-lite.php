@@ -417,9 +417,9 @@ add_action( 'init', 'wps_migration_func' );
  * Migration code function
  */
 function wps_migration_func() {
-	$migration_val_updated = get_option( 'wps_org_migration_value_updated', ' ' );
+	$migration_val_updated = get_option( 'wps_org_migration_value_updated', 'no' );
 
-	if ( $migration_val_updated == ' ' ) {
+	if ( $migration_val_updated == 'no' ) {
 
 		wps_org_upgrade_wp_postmeta();
 		wps_org_upgrade_wp_options();
@@ -620,10 +620,10 @@ function wps_org_replace_mwb_to_wps_in_shortcodes() {
 		}
 	}
 
-		$wps_page_id = get_option( 'wps_wgc_create_gift_card_taxonomy' );
-		$existing_page = get_option( 'existing_gift_card_page' );
-		if ( ! empty( $wps_page_id ) ) {
-			// wp_delete_post($existing_page );
-		}
+// 		$wps_page_id = get_option( 'wps_wgc_create_gift_card_taxonomy' );
+// 		$existing_page = get_option( 'existing_gift_card_page' );
+// 		if ( ! empty( $wps_page_id ) ) {
+// 			// wp_delete_post($existing_page );
+// 		}
 }
 
