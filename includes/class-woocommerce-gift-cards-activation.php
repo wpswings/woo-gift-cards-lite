@@ -236,9 +236,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @return void
 		 */
-		public function on_activation() {
-			$this->wps_org_upgrade_wp_postmeta();
-			$this->wps_org_upgrade_wp_options();
+		public function on_activation() {	
 			$wps_check_enable = false;
 			$giftcard_enable  = get_option( 'wps_wgm_general_setting_enable', false );
 			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {
@@ -271,127 +269,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				}
 				if ( $other_flag ) {
 					$this->delete_additional_data();
-				}
-			}
-		}
-
-		/**
-		 * Upgrade_wp_postmeta. (use period)
-		 *
-		 * Upgrade_wp_postmeta.
-		 *
-		 * @since    1.0.0
-		 */
-		public static function wps_org_upgrade_wp_postmeta() {
-
-			$post_meta_keys = array(
-				'mwb_wgm_pricing',
-				'mwb_wgm_giftcard_coupon',
-				'mwb_wgm_giftcard_coupon_unique',
-				'mwb_wgm_giftcard_coupon_product_id',
-				'mwb_wgm_giftcard_coupon_mail_to',
-				'mwb_wgm_coupon_amount',
-				'mwb_wgm_order_giftcard',
-
-				);
-
-			foreach ( $post_meta_keys as $key => $meta_keys ) {
-					$products = get_posts(
-						array(
-							'numberposts' => -1,
-							'post_status' => 'publish',
-							'fields'      => 'ids', // return only ids.
-							'meta_key'    => $meta_keys, //phpcs:ignore
-							'post_type'   => 'product',
-							'order'       => 'ASC',
-						)
-					);
-
-				if ( ! empty( $products ) && is_array( $products ) ) {
-					foreach ( $products as $k => $product_id ) {
-						$values   = get_post_meta( $product_id, $meta_keys, true );
-						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
-
-						if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-							continue;
-						}
-					
-						$arr_val_post = array();
-						if ( is_array( $values  )) {
-							foreach ( $values  as $key => $value){
-								$keys = str_replace( 'mwb_', 'wps_', $key );
-						
-								$new_key1 = str_replace( 'mwb_', 'wps_', $value );
-								$arr_val_post[ $key ] = $new_key1;
-							}
-							update_post_meta( $product_id, $new_key, $arr_val_post );
-						} else {
-							update_post_meta( $product_id, $new_key, $values );
-						}
-					}
-				}
-			}
-		}
-
-		/**
-		 * Upgrade_wp_options. (use period)
-		 *
-		 * Upgrade_wp_options.
-		 *
-		 * @since    1.0.0
-		 */
-		public static function wps_org_upgrade_wp_options() {
-			$wp_options = array(
-				'mwb_wgm_general_settings' => '',
-				'mwb_gw_lcns_status'  => '',
-				'mwb_gw_lcns_key'  => '',
-				'mwb_gw_lcns_thirty_days'  => '',
-				'mwb_wgc_create_gift_card_taxonomy'  => '',
-				'mwb_uwgc_templateid'  => '',
-				'mwb_wgm_new_mom_template'  => '',
-				'mwb_wgm_gift_for_you'  => '',
-				'mwb_wgm_insert_custom_template'  => '',
-				'mwb_wgm_merry_christmas_template'  => '',
-				'mwb_wgm_notify_new_msg_id'  => '',
-				'mwb_wgm_notify_hide_notification'  => '',
-				'mwb_wgm_notify_new_message'  => '',
-				'mwb_wgm_delivery_settings'  => '',
-				'mwb_wgm_email_to_recipient_setting_enable'  => '',
-				'mwb_wgm_downladable_setting_enable'  => '',
-				'mwb_wgm_mail_settings'  => '',	
-				'mwb_wgm_other_settings'  => '',
-				'mwb_wgm_product_settings'  => '',
-				'mwb_wgm_additional_preview_disable'  => '',
-				'mwb_wgm_delivery_setting_method'  => '',
-				'mwb_wgm_additional_apply_coupon_disable'  => '',
-				'mwb_wgm_select_email_format'  => '',
-				'mwb_wgm_general_setting_select_template'  => '',
-				'mwb_wsfw_enable_email_notification_for_wallet_update'  => '',	
-			);
-
-			foreach ( $wp_options as $key => $value ) {
-
-				$new_key = str_replace( 'mwb_', 'wps_', $key );	
-				if ( ! empty( get_option( $new_key ) ) ) {
-					continue;
-				}
-				$new_value = get_option( $key, $value );
-
-				$arr_val = array();
-				if ( is_array( $new_value )) {
-					foreach ( $new_value as $key => $value) {
-						$new_key2 = str_replace( 'mwb_', 'wps_', $key );
-						$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
-
-						$value_1 = str_replace( 'mwb_', 'wps_', $value );	
-						$value_2 = str_replace( 'mwb-', 'wps-',$value_1 );	
-
-						$arr_val[ $new_key1 ] = $value_2;
-					}
-					update_option( $new_key, $arr_val );
-				}
-				else {
-					update_option( $new_key, $new_value );
 				}
 			}
 		}
