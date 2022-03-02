@@ -30,7 +30,21 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+if ( is_plugin_active( 'giftware/giftware.php' ) ) {
 
+	$plug = get_plugins();
+
+    if ( isset( $plug[ 'giftware/giftware.php' ] ) ) {
+
+		if ( $plug['giftware/giftware.php']['Version'] < '3.4.2' ) {
+		
+			unset( $_GET['activate'] );
+			deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
+	}
+
+	}
+}
 $activated = false;
 /**
  * Checking if WooCommerce is active.
@@ -311,7 +325,7 @@ if ( $activated ) {
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
 						<p><?php esc_html_e( 'From update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
-						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
+						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?>
 					</div>
 				</div>
 			</td>
@@ -620,10 +634,6 @@ function wps_org_replace_mwb_to_wps_in_shortcodes() {
 		}
 	}
 
-// 		$wps_page_id = get_option( 'wps_wgc_create_gift_card_taxonomy' );
-// 		$existing_page = get_option( 'existing_gift_card_page' );
-// 		if ( ! empty( $wps_page_id ) ) {
-// 			// wp_delete_post($existing_page );
-// 		}
+
 }
 
