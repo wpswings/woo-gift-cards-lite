@@ -624,7 +624,7 @@ function wps_org_replace_mwb_to_wps_in_shortcodes() {
 							wp_update_post( $my_post );
 						}
 			} else {
-						$html = str_replace( 'mwb_check_your_gift_card_balance', 'wps_check_your_gift_card_balance', $content );
+						$html = str_replace( 'mwb_', 'wps_', $content );
 						$my_post = array(
 							'ID'           => $id,
 							'post_content' => $html,
