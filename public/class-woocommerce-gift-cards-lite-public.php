@@ -1537,7 +1537,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
 					$coupon_used = 1;
 					update_post_meta( $order_id, 'coupon_used', $coupon_used );
-				} 
+				}
 			}
 		}
 	}

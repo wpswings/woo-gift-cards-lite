@@ -236,7 +236,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 *
 		 * @return void
 		 */
-		public function on_activation() {	
+		public function on_activation() {
 			$wps_check_enable = false;
 			$giftcard_enable  = get_option( 'wps_wgm_general_setting_enable', false );
 			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {

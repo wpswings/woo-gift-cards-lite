@@ -34,15 +34,11 @@ include_once ABSPATH . 'wp-admin/includes/plugin.php';
 if ( is_plugin_active( 'giftware/giftware.php' ) ) {
 
 	$plug = get_plugins();
-
-    if ( isset( $plug[ 'giftware/giftware.php' ] ) ) {
-
+	if ( isset( $plug['giftware/giftware.php'] ) ) {
 		if ( $plug['giftware/giftware.php']['Version'] < '3.4.2' ) {
-		
 			unset( $_GET['activate'] );
 			deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
-	}
-
+		}
 	}
 }
 $activated = false;
@@ -563,9 +559,9 @@ function wps_org_upgrade_wp_options() {
 		 */
 function wps_update_terms() {
 
-		global $wpdb;
-		$term_table = $wpdb->prefix . 'terms';
-		if ( $wpdb->query( $wpdb->prepare( "SELECT * FROM %1s WHERE  `name` = 'Gift Card'", $term_table ) ) ) {
+	global $wpdb;
+	$term_table = $wpdb->prefix . 'terms';
+	if ( $wpdb->query( $wpdb->prepare( "SELECT * FROM %1s WHERE  `name` = 'Gift Card'", $term_table ) ) ) {
 			$wpdb->query(
 				$wpdb->prepare(
 					"UPDATE %1s SET `slug`='wps_wgm_giftcard'
@@ -613,16 +609,16 @@ function wps_org_replace_mwb_to_wps_in_shortcodes() {
 		foreach ( $array as $key => $val ) {
 					$split_val = explode( '=', $val );
 			if ( count( $split_val ) > 1 ) {
-						if ( $split_val[0] == 'category' ) {
+				if ( 'category' == $split_val[0] ) {
 
-							update_option( 'existing_gift_card_page', $id );
-							$html = str_replace( 'mwb_', 'wps_', $content );
-							$my_post = array(
-								'ID'           => $id,
-								'post_content' => $html,
-							);
-							wp_update_post( $my_post );
-						}
+					update_option( 'existing_gift_card_page', $id );
+					$html = str_replace( 'mwb_', 'wps_', $content );
+					$my_post = array(
+						'ID'           => $id,
+						'post_content' => $html,
+					);
+						wp_update_post( $my_post );
+				}
 			} else {
 						$html = str_replace( 'mwb_', 'wps_', $content );
 						$my_post = array(
@@ -633,7 +629,5 @@ function wps_org_replace_mwb_to_wps_in_shortcodes() {
 			}
 		}
 	}
-
-
 }
 
