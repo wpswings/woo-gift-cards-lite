@@ -11,62 +11,62 @@
 	jQuery( document ).ready(
 		function(){
 
-			$('.mwb_wgm_gc_price_range').keyup( function() {
-				var minspend = parseInt( $('#mwb_wgm_general_setting_giftcard_minspend').val() );
-				var maxspend = parseInt( $('#mwb_wgm_general_setting_giftcard_maxspend').val() );
+			$('.wps_wgm_gc_price_range').keyup( function() {
+				var minspend = parseInt( $('#wps_wgm_general_setting_giftcard_minspend').val() );
+				var maxspend = parseInt( $('#wps_wgm_general_setting_giftcard_maxspend').val() );
 				if (minspend > maxspend) {
-					$('#mwb_wgm_save_general').css('display','none');
-					$('#mwb_wgm_general_setting_giftcard_minspend').css('border-color','red');
-					$('#mwb_wgm_general_setting_giftcard_maxspend').css('border-color','red');
+					$('#wps_wgm_save_general').css('display','none');
+					$('#wps_wgm_general_setting_giftcard_minspend').css('border-color','red');
+					$('#wps_wgm_general_setting_giftcard_maxspend').css('border-color','red');
 				} else {
-					$('#mwb_wgm_general_setting_giftcard_minspend').css('border-color','');
-					$('#mwb_wgm_general_setting_giftcard_maxspend').css('border-color','');
-					$('#mwb_wgm_save_general').css('display','block');
+					$('#wps_wgm_general_setting_giftcard_minspend').css('border-color','');
+					$('#wps_wgm_general_setting_giftcard_maxspend').css('border-color','');
+					$('#wps_wgm_save_general').css('display','block');
 				}
 			});
 
 			$( document ).find( '.wc-pbc-show-if-not-supported' ).remove();
-			$( "#mwb_wgm_product_setting_exclude_category" ).select2();
-			$( "#mwb_wgm_email_template" ).select2();
-			mwb_wgc_show_and_hide_panels();
-			var pricing_option = $( '#mwb_wgm_pricing' ).val();
-			mwb_wgc_show_and_hide_pricing_option( pricing_option );
-			$( '#mwb_wgm_pricing' ).change(
+			$( "#wps_wgm_product_setting_exclude_category" ).select2();
+			$( "#wps_wgm_email_template" ).select2();
+			wps_wgc_show_and_hide_panels();
+			var pricing_option = $( '#wps_wgm_pricing' ).val();
+			wps_wgc_show_and_hide_pricing_option( pricing_option );
+			$( '#wps_wgm_pricing' ).change(
 				function() {
 					var pricing_option = $( this ).val();
-					mwb_wgc_show_and_hide_pricing_option( pricing_option );
+					wps_wgc_show_and_hide_pricing_option( pricing_option );
 				}
 			);
-			var imageurl = $( "#mwb_wgm_mail_setting_upload_logo" ).val();
+			var imageurl = $( "#wps_wgm_mail_setting_upload_logo" ).val();
 			if (imageurl != null && imageurl != "") {
-				$( "#mwb_wgm_mail_setting_upload_image" ).attr( "src",imageurl );
-				$( "#mwb_wgm_mail_setting_remove_logo" ).show();
+				$( "#wps_wgm_mail_setting_upload_image" ).attr( "src",imageurl );
+				$( "#wps_wgm_mail_setting_remove_logo" ).show();
 
 			}
-			jQuery( ".mwb_wgm_mail_setting_remove_logo_span" ).on ( 
+			jQuery( ".wps_wgm_mail_setting_remove_logo_span" ).on ( 
 				'click',
 				function(){
-					jQuery( "#mwb_wgm_mail_setting_remove_logo" ).hide();
-					jQuery( "#mwb_wgm_mail_setting_upload_logo" ).val( "" );
+					jQuery( "#wps_wgm_mail_setting_remove_logo" ).hide();
+					jQuery( "#wps_wgm_mail_setting_upload_logo" ).val( "" );
 				}
 			);
-			var imageurl = $( "#mwb_wgm_mail_setting_upload_logo" ).val();
+			var imageurl = $( "#wps_wgm_mail_setting_upload_logo" ).val();
 			if (imageurl != null && imageurl != "") {
-				$( "#mwb_wgm_mail_setting_upload_image" ).attr( "src",imageurl );
-				$( "#mwb_wgm_mail_setting_remove_logo" ).show();
+				$( "#wps_wgm_mail_setting_upload_image" ).attr( "src",imageurl );
+				$( "#wps_wgm_mail_setting_remove_logo" ).show();
 
 			}
-			jQuery( "#mwb_wgm_mail_setting" ).on( 
+			jQuery( "#wps_wgm_mail_setting" ).on( 
 				'click',
 				function(){
-					jQuery( "#mwb_wgm_mail_setting_wrapper" ).slideToggle();
+					jQuery( "#wps_wgm_mail_setting_wrapper" ).slideToggle();
 				}
 			);
 
-			jQuery( '.mwb_wgm_mail_setting_upload_logo' ).on( 
+			jQuery( '.wps_wgm_mail_setting_upload_logo' ).on( 
 				'click',
 				function(){
-					var imageurl = $( "#mwb_wgm_mail_setting_upload_logo" ).val();
+					var imageurl = $( "#wps_wgm_mail_setting_upload_logo" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
 
 					window.send_to_editor = function(html)
@@ -82,20 +82,20 @@
 
 							imageurl = jQuery( html ).children( "img" ).attr( "src" );
 						}
-							$( "#mwb_wgm_mail_setting_upload_logo" ).val( imageurl );
-							$( "#mwb_wgm_mail_setting_upload_image" ).attr( "src",imageurl );
-							$( "#mwb_wgm_mail_setting_remove_logo" ).show();
+							$( "#wps_wgm_mail_setting_upload_logo" ).val( imageurl );
+							$( "#wps_wgm_mail_setting_upload_image" ).attr( "src",imageurl );
+							$( "#wps_wgm_mail_setting_remove_logo" ).show();
 							tb_remove();
 					};
 					return false;
 				}
 			);
 
-			jQuery( '.mwb_wgm_mail_setting_background_logo' ).on( 
+			jQuery( '.wps_wgm_mail_setting_background_logo' ).on( 
 				'click',
 				function()
 				{
-					var imageurl = $( "#mwb_mail_other_setting_background_logo_value" ).val();
+					var imageurl = $( "#wps_mail_other_setting_background_logo_value" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
 					 window.send_to_editor = function(html)
 					{
@@ -103,39 +103,39 @@
 						if (typeof imageurl == 'undefined') {
 							imageurl = jQuery( html ).attr( 'src' );
 						}
-						$( "#mwb_wgm_mail_setting_background_logo_value" ).val( imageurl );
-						$( "#mwb_wgm_mail_setting_background_logo_image" ).attr( "src",imageurl );
-						$( "#mwb_wgm_mail_setting_remove_background" ).show();
+						$( "#wps_wgm_mail_setting_background_logo_value" ).val( imageurl );
+						$( "#wps_wgm_mail_setting_background_logo_image" ).attr( "src",imageurl );
+						$( "#wps_wgm_mail_setting_remove_background" ).show();
 						tb_remove();
 					 };
 					return false;
 				}
 			);
 
-			jQuery( ".mwb_wgm_mail_setting_remove_background_span" ).on( 
+			jQuery( ".wps_wgm_mail_setting_remove_background_span" ).on( 
 				'click',
 				function(){
-					jQuery( "#mwb_wgm_mail_setting_remove_background" ).hide();
-					jQuery( "#mwb_wgm_mail_setting_background_logo_value" ).val( "" );
+					jQuery( "#wps_wgm_mail_setting_remove_background" ).hide();
+					jQuery( "#wps_wgm_mail_setting_background_logo_value" ).val( "" );
 				}
 			);
-			var imageurl = $( "#mwb_wgm_mail_setting_background_logo_value" ).val();
+			var imageurl = $( "#wps_wgm_mail_setting_background_logo_value" ).val();
 			if (imageurl != null && imageurl != "") {
-				$( "#mwb_wgm_mail_setting_background_logo_image" ).attr( "src",imageurl );
-				$( "#mwb_wgm_mail_setting_remove_background" ).show();
+				$( "#wps_wgm_mail_setting_background_logo_image" ).attr( "src",imageurl );
+				$( "#wps_wgm_mail_setting_remove_background" ).show();
 
 			}
-			function mwb_wgc_show_and_hide_panels() {
+			function wps_wgc_show_and_hide_panels() {
 				var product_type    = $( 'select#product-type' ).val();
-				var is_mwb_wgm_gift = false;
-				var is_tax_enable_for_gift = mwb_wgc.is_tax_enable_for_gift;
+				var is_wps_wgm_gift = false;
+				var is_tax_enable_for_gift = wps_wgc.is_tax_enable_for_gift;
 				if (product_type == "wgm_gift_card") {
-					is_mwb_wgm_gift = true;
+					is_wps_wgm_gift = true;
 				}
-				if (is_mwb_wgm_gift) {
+				if (is_wps_wgm_gift) {
 					// Hide/Show all with rules.
-					var hide_classes = '.hide_if_mwb_wgm_gift, .hide_if_mwb_wgm_gift';
-					var show_classes = '.show_if_mwb_wgm_gift, .show_if_mwb_wgm_gift';
+					var hide_classes = '.hide_if_wps_wgm_gift, .hide_if_wps_wgm_gift';
+					var show_classes = '.show_if_wps_wgm_gift, .show_if_wps_wgm_gift';
 					$.each(
 						woocommerce_admin_meta_boxes.product_types,
 						function( index, value ) {
@@ -146,13 +146,13 @@
 					$( hide_classes ).show();
 					$( show_classes ).hide();
 					// Shows rules.
-					if ( is_mwb_wgm_gift ) {
-						$( '.show_if_mwb_wgm_gift' ).show();
+					if ( is_wps_wgm_gift ) {
+						$( '.show_if_wps_wgm_gift' ).show();
 					}
 					$( '.show_if_' + product_type ).show();
 					// Hide rules.
-					if ( ! is_mwb_wgm_gift ) {
-						$( '.show_if_mwb_wgm_gift' ).hide();
+					if ( ! is_wps_wgm_gift ) {
+						$( '.show_if_wps_wgm_gift' ).hide();
 					}
 					$( '.hide_if_' + product_type ).hide();
 					$( 'input#_manage_stock' ).change();
@@ -182,39 +182,39 @@
 				}
 			}
 
-			function mwb_wgc_show_and_hide_pricing_option(pricing_option){
-				$( '.mwb_wgm_from_price_field' ).show();
-				$( '.mwb_wgm_to_price_field' ).show();
-				$( '.mwb_wgm_selected_price_field' ).show();
-				$( '.mwb_wgm_default_price_field' ).show();
-				$( '.mwb_wgm_user_price_field' ).show();
+			function wps_wgc_show_and_hide_pricing_option(pricing_option){
+				$( '.wps_wgm_from_price_field' ).show();
+				$( '.wps_wgm_to_price_field' ).show();
+				$( '.wps_wgm_selected_price_field' ).show();
+				$( '.wps_wgm_default_price_field' ).show();
+				$( '.wps_wgm_user_price_field' ).show();
 
-				if (pricing_option == 'mwb_wgm_selected_price') {
-					$( '.mwb_wgm_from_price_field' ).hide();
-					$( '.mwb_wgm_to_price_field' ).hide();
-					$( '.mwb_wgm_default_price_field' ).hide();
-					$( '.mwb_wgm_user_price_field' ).hide();
-					$( '#mwb_wgm_discount' ).parent().hide();
+				if (pricing_option == 'wps_wgm_selected_price') {
+					$( '.wps_wgm_from_price_field' ).hide();
+					$( '.wps_wgm_to_price_field' ).hide();
+					$( '.wps_wgm_default_price_field' ).hide();
+					$( '.wps_wgm_user_price_field' ).hide();
+					$( '#wps_wgm_discount' ).parent().hide();
 				}
-				if (pricing_option == 'mwb_wgm_range_price') {
-					$( '.mwb_wgm_selected_price_field' ).hide();
-					$( '.mwb_wgm_default_price_field' ).hide();
-					$( '.mwb_wgm_user_price_field' ).hide();
-					$( '#mwb_wgm_discount' ).parent().show();
+				if (pricing_option == 'wps_wgm_range_price') {
+					$( '.wps_wgm_selected_price_field' ).hide();
+					$( '.wps_wgm_default_price_field' ).hide();
+					$( '.wps_wgm_user_price_field' ).hide();
+					$( '#wps_wgm_discount' ).parent().show();
 				}
-				if (pricing_option == 'mwb_wgm_default_price') {
-					$( '.mwb_wgm_from_price_field' ).hide();
-					$( '.mwb_wgm_to_price_field' ).hide();
-					$( '.mwb_wgm_selected_price_field' ).hide();
-					$( '.mwb_wgm_user_price_field' ).hide();
-					$( '#mwb_wgm_discount' ).parent().show();
+				if (pricing_option == 'wps_wgm_default_price') {
+					$( '.wps_wgm_from_price_field' ).hide();
+					$( '.wps_wgm_to_price_field' ).hide();
+					$( '.wps_wgm_selected_price_field' ).hide();
+					$( '.wps_wgm_user_price_field' ).hide();
+					$( '#wps_wgm_discount' ).parent().show();
 				}
-				if (pricing_option == 'mwb_wgm_user_price') {
-					$( '.mwb_wgm_from_price_field' ).hide();
-					$( '.mwb_wgm_to_price_field' ).hide();
-					$( '.mwb_wgm_default_price_field' ).hide();
-					$( '.mwb_wgm_selected_price_field' ).hide();
-					$( '#mwb_wgm_discount' ).parent().show();
+				if (pricing_option == 'wps_wgm_user_price') {
+					$( '.wps_wgm_from_price_field' ).hide();
+					$( '.wps_wgm_to_price_field' ).hide();
+					$( '.wps_wgm_default_price_field' ).hide();
+					$( '.wps_wgm_selected_price_field' ).hide();
+					$( '#wps_wgm_discount' ).parent().show();
 				}
 			}
 
@@ -225,45 +225,45 @@
 			);
 			
 			// Hide-show the instruction box.
-			$( '.mwb_wgm_instructions_reminder' ).on( 
+			$( '.wps_wgm_instructions_reminder' ).on( 
 				'click',
 				function(){
-					$( '#mwb-modal-main-wrapper' ).css( 'display','block' );
+					$( '#wps-modal-main-wrapper' ).css( 'display','block' );
 				}
 			);
-			$( '.mwb_no_thanks_general' ).on( 
+			$( '.wps_no_thanks_general' ).on( 
 				'click',
 				function(){
-					$( '#mwb-modal-main-wrapper' ).css( 'display','none' );
+					$( '#wps-modal-main-wrapper' ).css( 'display','none' );
 				}
 			);
 
 			// Email Selection from Backend.
-			var radio_on_load = $( "input[name='mwb_wgm_select_email_format']:checked" ).val();
+			var radio_on_load = $( "input[name='wps_wgm_select_email_format']:checked" ).val();
 			if (radio_on_load == 'normal') {
-				$( '#mwb_wgm_normal_card' ).css( 'border','3px solid #808080' );
+				$( '#wps_wgm_normal_card' ).css( 'border','3px solid #808080' );
 			} else if (radio_on_load == 'mom') {
-				$( '#mwb_wgm_mom_card' ).css( 'border','3px solid #808080' );
+				$( '#wps_wgm_mom_card' ).css( 'border','3px solid #808080' );
 			}
 			// On change selection for radio button border: 3px solid #808080;!
 
-			$( '.mwb_wgm_select_email' ).change(
+			$( '.wps_wgm_select_email' ).change(
 				function(){
 					var radioVal = $( this ).val();
 					if (radioVal == 'normal') {
-						$( '#mwb_wgm_normal_card' ).css( 'border','3px solid #808080' );
-						$( '#mwb_wgm_mom_card' ).css( 'border','none' );
+						$( '#wps_wgm_normal_card' ).css( 'border','3px solid #808080' );
+						$( '#wps_wgm_mom_card' ).css( 'border','none' );
 					} else if (radioVal == 'mom') {
-						$( '#mwb_wgm_mom_card' ).css( 'border','3px solid #808080' );
-						$( '#mwb_wgm_normal_card' ).css( 'border','none' );
+						$( '#wps_wgm_mom_card' ).css( 'border','3px solid #808080' );
+						$( '#wps_wgm_normal_card' ).css( 'border','none' );
 					}
 				}
 			);
-			jQuery( '.mwb_wgm_mobile_nav .dashicons' ).on(
+			jQuery( '.wps_wgm_mobile_nav .dashicons' ).on(
 				'click',
 				function(e) {
 					e.preventDefault();
-					jQuery( '.mwb_wgm_navigator_template' ).toggle( 'slow' );
+					jQuery( '.wps_wgm_navigator_template' ).toggle( 'slow' );
 				}
 			);
 
@@ -271,15 +271,15 @@
 				'click',
 				'.generate_link',
 				function(){
-					$( '.mwb_redeem_registraion_div' ).show();
+					$( '.wps_redeem_registraion_div' ).show();
 				}
 			);
 
 			$( document ).on(
 				'click',
-				'.mwb-redeem-pop-close',
+				'.wps-redeem-pop-close',
 				function(){
-					$( '.mwb_redeem_registraion_div' ).hide();
+					$( '.wps_redeem_registraion_div' ).hide();
 				}
 			);
 
@@ -297,11 +297,11 @@
 				}
 			);
 
-			var clipboard1 = new Clipboard( '.mwb_link_copy' );
-			var clipboard2 = new Clipboard( '.mwb_embeded_copy' );
+			var clipboard1 = new Clipboard( '.wps_link_copy' );
+			var clipboard2 = new Clipboard( '.wps_embeded_copy' );
 			$( document ).on(
 				'click',
-				'.mwb_redeem_copy',
+				'.wps_redeem_copy',
 				function(event) {
 					event.preventDefault();
 
@@ -314,7 +314,7 @@
 				function()
 				  {
 					if ( jQuery( window ).width() >= 900 ) {
-						jQuery( '.mwb_wgm_navigator_template' ).stickySidebar(
+						jQuery( '.wps_wgm_navigator_template' ).stickySidebar(
 							{
 								topSpacing: 30,
 								bottomSpacing: 10

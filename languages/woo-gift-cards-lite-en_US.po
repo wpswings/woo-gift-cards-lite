@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.3.1\n"
-"POT-Creation-Date: 2022-01-29 12:10+0530\n"
-"PO-Revision-Date: 2022-01-29 12:10+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.3.2\n"
+"POT-Creation-Date: 2022-03-09 13:37+0530\n"
+"PO-Revision-Date: 2022-03-09 13:37+0530\n"
 "Language-Team: WP Swings\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -283,33 +283,33 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-delivery-setting.php:47
+#: admin/partials/templates/wps-wgm-delivery-setting.php:47
 msgid "Delivery Settings"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-email-template-setting.php:41
+#: admin/partials/templates/wps-wgm-email-template-setting.php:41
 msgid "Email Settings"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-email-template-setting.php:53
+#: admin/partials/templates/wps-wgm-email-template-setting.php:53
 msgid "Mail Settings"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-general-setting.php:46
+#: admin/partials/templates/wps-wgm-general-setting.php:46
 msgid "General Settings"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-other-setting.php:41
+#: admin/partials/templates/wps-wgm-other-setting.php:41
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:46
 msgid "Other Settings"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-overview-setting.php:15
+#: admin/partials/templates/wps-wgm-overview-setting.php:15
 msgid ""
 "Connect With Us and Explore More About Ultimate Gift Cards For WooCommerce"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-overview-setting.php:16
+#: admin/partials/templates/wps-wgm-overview-setting.php:16
 msgid ""
 "Ultimate Gift Cards For WooCommerce is the plugin that allows merchants "
 "(admin) to manage store with digital gifting solutions like this. Here the "
@@ -320,419 +320,419 @@ msgid ""
 "emails. "
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:21
-#: admin/partials/templates/mwb-wgm-premium-features.php:132
+#: admin/partials/templates/wps-wgm-premium-features.php:21
+#: admin/partials/templates/wps-wgm-premium-features.php:132
 msgid "Upgrade to the "
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:21
-#: admin/partials/templates/mwb-wgm-premium-features.php:132
+#: admin/partials/templates/wps-wgm-premium-features.php:21
+#: admin/partials/templates/wps-wgm-premium-features.php:132
 msgid "PREMIUM VERSION "
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:22
-#: admin/partials/templates/mwb-wgm-premium-features.php:133
+#: admin/partials/templates/wps-wgm-premium-features.php:22
+#: admin/partials/templates/wps-wgm-premium-features.php:133
 msgid "and enjoy the plugin's best features!"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:26
-#: admin/partials/templates/mwb-wgm-premium-features.php:137
+#: admin/partials/templates/wps-wgm-premium-features.php:26
+#: admin/partials/templates/wps-wgm-premium-features.php:137
 msgid "UPGRADE"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:34
+#: admin/partials/templates/wps-wgm-premium-features.php:34
 msgid "20+ pre-designed and create new gift card template with PDF support"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:35
+#: admin/partials/templates/wps-wgm-premium-features.php:35
 msgid ""
 "Create your own template and enjoy the provided dazzling pre-designed "
 "templates for different occasions with PDF support."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:41
+#: admin/partials/templates/wps-wgm-premium-features.php:41
 msgid "Sell your own Gift Coupons with Import feature"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:42
+#: admin/partials/templates/wps-wgm-premium-features.php:42
 msgid "Import the coupons from a CSV file and sell them as gift coupons."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:49
+#: admin/partials/templates/wps-wgm-premium-features.php:49
 msgid "Secure your  gift cards with QR/Barcode"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:50
+#: admin/partials/templates/wps-wgm-premium-features.php:50
 msgid "Send secure Gift Coupons with QR/Barcode."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:57
+#: admin/partials/templates/wps-wgm-premium-features.php:57
 msgid "Schedule your Gift Cards for a specific date"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:58
+#: admin/partials/templates/wps-wgm-premium-features.php:58
 msgid ""
 "Let your customer schedule the gift cards and  deliver them on a specific "
 "date."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:67
+#: admin/partials/templates/wps-wgm-premium-features.php:67
 msgid "Discounts On Gift Cards"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:68
+#: admin/partials/templates/wps-wgm-premium-features.php:68
 msgid "Provide additional discount offers on the purchase of gift cards."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:75
+#: admin/partials/templates/wps-wgm-premium-features.php:75
 msgid "Automated Balance Updates"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:76
+#: admin/partials/templates/wps-wgm-premium-features.php:76
 msgid "Notify your customers for the remaining balance in their gift card."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:85
+#: admin/partials/templates/wps-wgm-premium-features.php:85
 msgid "Analyze Gift Card Performance via Reporting"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:86
+#: admin/partials/templates/wps-wgm-premium-features.php:86
 msgid "Get a complete report of your Gift Card Coupons."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:93
+#: admin/partials/templates/wps-wgm-premium-features.php:93
 msgid "Share Gift Cards On WhatsApp and SMS Notification via Twilio"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:94
+#: admin/partials/templates/wps-wgm-premium-features.php:94
 msgid ""
 "Notify your customer via SMS notifications and let them share gift cards on "
 "WhatsApp."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:103
+#: admin/partials/templates/wps-wgm-premium-features.php:103
 msgid "Create Image Gallery for Gift Cards"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:104
+#: admin/partials/templates/wps-wgm-premium-features.php:104
 msgid ""
 "Allow your customers to create attractive gift cards with the image gallery "
 "feature."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:111
+#: admin/partials/templates/wps-wgm-premium-features.php:111
 msgid "Offline Gift Card"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:112
+#: admin/partials/templates/wps-wgm-premium-features.php:112
 msgid "Create and send gift cards on the request of customers."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:119
+#: admin/partials/templates/wps-wgm-premium-features.php:119
 msgid "Refund or Cancel Gift Card Product"
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-premium-features.php:120
+#: admin/partials/templates/wps-wgm-premium-features.php:120
 msgid ""
 "Just like any other product, you can now refund or cancel your Gift Card "
 "product if customers don’t want them."
 msgstr ""
 
-#: admin/partials/templates/mwb-wgm-product-setting.php:41
+#: admin/partials/templates/wps-wgm-product-setting.php:41
 msgid "Product Settings"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-delivery-settings-array.php:16
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-delivery-settings-array.php:16
 msgid "Enable Email To Recipient"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-delivery-settings-array.php:22
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-delivery-settings-array.php:22
 msgid ""
 "Check this box to enable normal functionality for sending mails to "
 "recipients on Gift Card Products."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-delivery-settings-array.php:23
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-delivery-settings-array.php:23
 msgid "Enable Email To Recipient."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-delivery-settings-array.php:27
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-delivery-settings-array.php:27
 msgid "Enable Downloadable"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-delivery-settings-array.php:33
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-delivery-settings-array.php:33
 msgid ""
 "Check this box to enable the downloadable feature for  Gift Card Products."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-delivery-settings-array.php:34
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-delivery-settings-array.php:34
 msgid "Enable Downloadable feature"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:16
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:16
 msgid "Enable"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:20
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:20
 msgid "Check this box to enable gift card"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:21
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:21
 msgid "Enable WooCommerce Gift Card"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:24
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:24
 msgid "Enable Tax"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:28
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:28
 msgid "Check this box to enable tax for gift card products."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:29
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:29
 msgid "Enable Tax Calculation for Gift Card"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:32
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:32
 msgid "Enable Listing Shop Page"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:36
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:36
 msgid "Check this box to enable gift card product listing on the shop page."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:37
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:37
 msgid "Enable Giftcard Product listing on shop page"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:40
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:40
 msgid "Individual Use"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:44
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:44
 msgid ""
 "Check this box if the Giftcard Coupon cannot be used in conjunction with "
 "other Giftcards/Coupons."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:45
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:45
 msgid "Allow Giftcard to use Individually"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:48
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:48
 msgid "Free Shipping"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:52
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:52
 msgid ""
 "Check this box if the coupon grants free shipping. A free shipping method "
 "must be enabled in your shipping zone and be set to require \"a valid free "
 "shipping coupon\" (see the \"Free Shipping Requires\" setting)."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:53
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:53
 msgid "Allow Giftcard on Free Shipping"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:56
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:56
 msgid "Giftcard Coupon Length"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:65
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:65
 msgid ""
 "Enter gift card coupon length excluding the prefix. (Minimum length is set "
 "to 5)"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:68
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:68
 msgid "Gift card Prefix"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:73
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:73
 msgid "Enter Gift Card Prefix. Ex: PREFIX_CODE"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:76
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:76
 msgid "Gift card Expiry After Days"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:82
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:82
 msgid ""
 "Enter number of days after purchased Giftcard is expired. Keep value \"1\" "
 "for one-day expiry when order is completed. Keep value \"0\" for no expiry."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:85
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:85
 msgid "Minimum Spend"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:94
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:94
 msgid ""
 "This field allows you to set the minimum spend (subtotal, including taxes) "
 "allowed to use the Gift card coupon."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:97
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:97
 msgid "Maximum Spend"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:106
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:106
 msgid ""
 "This field allows you to set the maximum spend (subtotal, including taxes) "
 "allowed when using the Giftcard coupon."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:109
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:109
 msgid "Gift card No of time usage"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-general-settings-array.php:115
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:115
 msgid ""
 "How many times this coupon can be used before Giftcard is void. keep value "
 "\"0\" for unlimited use."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:17
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:17
 msgid "Upload Default Logo"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:29
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:29
 msgid "Upload Logo"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:40
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:40
 msgid "Upload the image which is used as a logo on your Email Template."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:43
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:43
 msgid "Logo Height (in \"px\")"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:49
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:49
 msgid "Set the height of the logo in the email template."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:52
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:52
 msgid "Logo Width (in \"px\")"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:58
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:58
 msgid "Set the width of the logo in the email template."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:61
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:61
 msgid "Email Default Event Image"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:64
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:64
 msgid ""
 "Upload an image which is used as a default Event/Occasion in Email Template."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:74
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:74
 msgid "Upload Image"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:86
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:86
 msgid "Giftcard Message Length"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:92
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:92
 msgid ""
 "Enter the Gift Card Message length, used to limit the number of characters "
 "entered by the customers."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:96
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:96
 msgid "Default Giftcard Message"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:99
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:99
 msgid "Set the Default Message for Giftcard."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:102
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:102
 msgid "Disclaimer Text"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:105
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:105
 msgid "Set the Disclaimer Text for Email Template."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:110
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:110
 msgid "Giftcard Email Subject"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:114
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:114
 msgid "Email Subject for notifying receiver about Giftcard Mail send."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-mail-template-settings-array.php:115
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php:115
 msgid ""
 "Use [SITENAME] shortcode as the name of the site and [FROM] shortcode as "
 "buyer name to be placed dynamically."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:16
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:16
 msgid "Disable Apply Coupon Fields"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:20
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:20
 msgid ""
 "Check this if you want to disable Apply Coupon Fields if there only Gift "
 "Card Products are in Cart/Checkout Page"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:21
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:21
 msgid "Disable Apply Coupon Fields on Cart/Checkout page"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:24
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:24
 msgid "Disable Preview Button"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:28
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:28
 msgid "Check this if you want to disable Preview Button At Front End"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-other-settings-array.php:29
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:29
 msgid "Disable Preview Button At Front End"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:16
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:16
 msgid "Exclude Sale Items"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:20
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:20
 msgid ""
 "Check this box if the Giftcard Coupon should not apply to items on sale. Per-"
 "item coupons will only work if the item is not on sale. Per-cart coupons "
 "will only work if there are no sale items in the cart."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:21
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:21
 msgid "Enable to exclude Sale Items"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:24
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:24
 msgid "Exclude Products"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:32
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:32
 msgid "Search for a product"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:34
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:34
 msgid ""
 "Products which must not be in the cart to use Gift card coupon or, for "
 "\"Product Discounts\", which products are not discounted."
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:38
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:38
 msgid "Exclude Product Category"
 msgstr ""
 
-#: admin/partials/templates/mwb_wgm_settings/mwb-wgm-product-settings-array.php:42
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:42
 msgid ""
 "Product must not be in this category for the Giftcard coupon to remain valid "
 "or, for \"Product Discounts\", products in these categories will not be "
@@ -980,11 +980,11 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:23
+#: wps-wgc-lite-gdpr.php:23
 msgid "Stored Recipient Details for sending Gift Card"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:24
+#: wps-wgc-lite-gdpr.php:24
 msgid ""
 "We store your recipient's email address, recipient's name, gift message, "
 "your name so that we can send them again your Gift Card with all proper "
@@ -992,40 +992,40 @@ msgid ""
 "if they arrive"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:37
+#: wps-wgc-lite-gdpr.php:37
 msgid "Ultimate Gift Cards For WooCommerce"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:57 mwb-wgc-lite-gdpr.php:182
+#: wps-wgc-lite-gdpr.php:57 wps-wgc-lite-gdpr.php:182
 msgid "Recipient Details"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:87
+#: wps-wgc-lite-gdpr.php:87
 msgid "Gift Card Details"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:131
+#: wps-wgc-lite-gdpr.php:131
 msgid "Recipient Name/Email"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:137
+#: wps-wgc-lite-gdpr.php:137
 msgid "Buyer Name/Email"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:143
+#: wps-wgc-lite-gdpr.php:143
 #: public/class-woocommerce-gift-cards-lite-public.php:636
 msgid "Gift Message"
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:243
+#: wps-wgc-lite-gdpr.php:243
 msgid "Removed key \"TO\""
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:252
+#: wps-wgc-lite-gdpr.php:252
 msgid "Removed key \"From\""
 msgstr ""
 
-#: mwb-wgc-lite-gdpr.php:261
+#: wps-wgc-lite-gdpr.php:261
 msgid "Removed key \"Message\""
 msgstr ""
 

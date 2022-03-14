@@ -66,8 +66,8 @@ class Woocommerce_Gift_Cards_Lite {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'MWB_WGC_VERSION' ) ) {
-			$this->version = MWB_WGC_VERSION;
+		if ( defined( 'WPS_WGC_VERSION' ) ) {
+			$this->version = WPS_WGC_VERSION;
 		} else {
 			$this->version = '2.3.1';
 		}
@@ -159,40 +159,40 @@ class Woocommerce_Gift_Cards_Lite {
 
 		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mwb_wgm_enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wgm_admin_menu', 10, 2 );
-		$this->loader->add_filter( 'product_type_selector', $plugin_admin, 'mwb_wgm_gift_card_product' );
-		$this->loader->add_action( 'woocommerce_product_options_general_product_data', $plugin_admin, 'mwb_wgm_woocommerce_product_options_general_product_data' );
-		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_wgm_save_post' );
-		$this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_wgm_woocommerce_product_data_tabs' );
-		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $plugin_admin, 'mwb_wgm_woocommerce_after_order_itemmeta', 10, 3 );
-		$this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin, 'mwb_wgm_woocommerce_hidden_order_itemmeta' );
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wgm_setting_notice_on_activation' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wgm_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wgm_enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_wgm_admin_menu', 10, 2 );
+		$this->loader->add_filter( 'product_type_selector', $plugin_admin, 'wps_wgm_gift_card_product' );
+		$this->loader->add_action( 'woocommerce_product_options_general_product_data', $plugin_admin, 'wps_wgm_woocommerce_product_options_general_product_data' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'wps_wgm_save_post' );
+		$this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'wps_wgm_woocommerce_product_data_tabs' );
+		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $plugin_admin, 'wps_wgm_woocommerce_after_order_itemmeta', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_hidden_order_itemmeta', $plugin_admin, 'wps_wgm_woocommerce_hidden_order_itemmeta' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wgm_setting_notice_on_activation' );
 
 		// Added new Actions and Filters.
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_giftcard_custom_post' );
-		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'mwb_wgm_edit_form_after_title', 10, 1 );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_giftcard_custom_post' );
+		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'wps_wgm_edit_form_after_title', 10, 1 );
 		// include Gift card Template.
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_mothers_day_template', 10 );
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_new_template', 10 );
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_custom_template', 10 );
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_insert_christmas_template', 10 );
-		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_preview_gift_template', 10, 2 );
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wgm_preview_email_template' );
-		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'mwb_custom_plugin_row_meta', 10, 2 );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_mothers_day_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_new_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_insert_custom_template', 10 );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_insert_christmas_template', 10 );
+		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'wps_wgm_preview_gift_template', 10, 2 );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_preview_email_template' );
+		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'wps_custom_plugin_row_meta', 10, 2 );
 
 		/*cron for notification*/
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wgm_set_cron_for_plugin_notification' );
-		$this->loader->add_action( 'mwb_wgm_check_for_notification_update', $plugin_admin, 'mwb_wgm_save_notice_message' );
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wgm_display_notification_bar' );
-		$this->loader->add_action( 'wp_ajax_mwb_wgm_dismiss_notice', $plugin_admin, 'mwb_wgm_dismiss_notice' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'wps_wgm_set_cron_for_plugin_notification' );
+		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wgm_save_notice_message' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wgm_display_notification_bar' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice', $plugin_admin, 'wps_wgm_dismiss_notice' );
 		// Add your screen.
-		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
+		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
 		// Add Deactivation screen.
-		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
+		$this->loader->add_filter( 'wps_deactivation_supported_slug', $plugin_admin, 'add_wps_deactivation_screens' );
 		// Disable Quick Edit option.
-		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'mwb_wgm_remove_row_actions', 10, 2 );
+		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'wps_wgm_remove_row_actions', 10, 2 );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -207,43 +207,43 @@ class Woocommerce_Gift_Cards_Lite {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'mwb_wgm_woocommerce_get_price_html', 10, 2 );
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'mwb_wgm_woocommerce_before_add_to_cart_button' );
-		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'mwb_wgm_woocommerce_add_cart_item_data', 10, 3 );
-		$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'mwb_wgm_woocommerce_get_item_data', 10, 2 );
-		$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_wgm_woocommerce_before_calculate_totals' );
-		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wgm_woocommerce_order_status_changed', 10, 3 );
-		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'mwb_wgm_woocommerce_checkout_create_order_line_item', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'wps_wgm_woocommerce_get_price_html', 10, 2 );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'wps_wgm_woocommerce_before_add_to_cart_button' );
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wgm_woocommerce_add_cart_item_data', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wgm_woocommerce_get_item_data', 10, 2 );
+		$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'wps_wgm_woocommerce_before_calculate_totals' );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wgm_woocommerce_order_status_changed', 10, 3 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'wps_wgm_woocommerce_checkout_create_order_line_item', 10, 3 );
 		add_action( 'woocommerce_wgm_gift_card_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
-		$this->loader->add_filter( 'woocommerce_loop_add_to_cart_link', $plugin_public, 'mwb_wgm_woocommerce_loop_add_to_cart_link', 10, 2 );
-		$this->loader->add_filter( 'woocommerce_product_is_taxable', $plugin_public, 'mwb_wgm_woocommerce_product_is_taxable', 10, 2 );
-		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'mwb_wgm_woocommerce_before_main_content' );
-		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'mwb_wgm_woocommerce_product_query', 10, 2 );
-		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'mwb_wgm_woocommerce_new_order_item', 10, 3 );
-		$this->loader->add_filter( 'wc_shipping_enabled', $plugin_public, 'mwb_wgm_wc_shipping_enabled' );
-		$this->loader->add_action( 'wp_ajax_mwb_wgc_preview_thickbox_rqst', $plugin_public, 'mwb_wgm_preview_thickbox_rqst' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgc_preview_thickbox_rqst', $plugin_public, 'mwb_wgm_preview_thickbox_rqst' );
-		$this->loader->add_action( 'init', $plugin_public, 'mwb_wgm_preview_email_on_single_page' );
-		$other_setting = get_option( 'mwb_wgm_other_settings', array() );
-		if ( is_array( $other_setting ) && ! empty( $other_setting ) && array_key_exists( 'mwb_wgm_additional_apply_coupon_disable', $other_setting ) ) {
-			$mwb_wgm_apply_coupon_disable = $other_setting['mwb_wgm_additional_apply_coupon_disable'];
-			if ( 'on' == $mwb_wgm_apply_coupon_disable ) {
-				$this->loader->add_filter( 'woocommerce_coupons_enabled', $plugin_public, 'mwb_wgm_hidding_coupon_field_on_cart', 10, 1 );
+		$this->loader->add_filter( 'woocommerce_loop_add_to_cart_link', $plugin_public, 'wps_wgm_woocommerce_loop_add_to_cart_link', 10, 2 );
+		$this->loader->add_filter( 'woocommerce_product_is_taxable', $plugin_public, 'wps_wgm_woocommerce_product_is_taxable', 10, 2 );
+		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'wps_wgm_woocommerce_before_main_content' );
+		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'wps_wgm_woocommerce_product_query', 10, 2 );
+		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'wps_wgm_woocommerce_new_order_item', 10, 3 );
+		$this->loader->add_filter( 'wc_shipping_enabled', $plugin_public, 'wps_wgm_wc_shipping_enabled' );
+		$this->loader->add_action( 'wp_ajax_wps_wgc_preview_thickbox_rqst', $plugin_public, 'wps_wgm_preview_thickbox_rqst' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgc_preview_thickbox_rqst', $plugin_public, 'wps_wgm_preview_thickbox_rqst' );
+		$this->loader->add_action( 'init', $plugin_public, 'wps_wgm_preview_email_on_single_page' );
+		$other_setting = get_option( 'wps_wgm_other_settings', array() );
+		if ( is_array( $other_setting ) && ! empty( $other_setting ) && array_key_exists( 'wps_wgm_additional_apply_coupon_disable', $other_setting ) ) {
+			$wps_wgm_apply_coupon_disable = $other_setting['wps_wgm_additional_apply_coupon_disable'];
+			if ( 'on' == $wps_wgm_apply_coupon_disable ) {
+				$this->loader->add_filter( 'woocommerce_coupons_enabled', $plugin_public, 'wps_wgm_hidding_coupon_field_on_cart', 10, 1 );
 			}
 		}
-		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'mwb_wgm_woocommerce_hide_order_metafields', 10, 1 );
-		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'mwb_wgm_price_based_country_giftcard' );
-		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'mwb_wgm_apply_already_created_giftcard_coupons' );
+		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'wps_wgm_woocommerce_hide_order_metafields', 10, 1 );
+		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'wps_wgm_price_based_country_giftcard' );
+		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'wps_wgm_apply_already_created_giftcard_coupons' );
 		// Compatibility with Flatsome theme minicart price issue.
-		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'mwb_mini_cart_product_price', 10, 3 );
-		// Compatibilty with MWB Currency Switcher.
-		$this->loader->add_filter( 'mwb_currency_switcher_get_custom_product_type', $plugin_public, 'mwb_currency_switcher_get_custom_product_type', 10, 2 );
-		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wgm_manage_coupon_amount_on_refund', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'wps_mini_cart_product_price', 10, 3 );
+		// Compatibilty with WPS Currency Switcher.
+		$this->loader->add_filter( 'wps_currency_switcher_get_custom_product_type', $plugin_public, 'wps_currency_switcher_get_custom_product_type', 10, 2 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wgm_manage_coupon_amount_on_refund', 10, 3 );
 		// Compatible with Wallet.
-		$this->loader->add_action( 'mwb_wsfw_add_wallet_register_endpoint', $plugin_public, 'mwb_wgm_add_wallet_register_endpoint', 10 );
-		$this->loader->add_filter( 'mwb_wsfw_add_wallet_tabs', $plugin_public, 'mwb_wgm_add_wallet_tabs', 10, 1 );
-		$this->loader->add_action( 'wp_ajax_mwb_recharge_wallet_via_giftcard', $plugin_public, 'mwb_recharge_wallet_via_giftcard' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_recharge_wallet_via_giftcard', $plugin_public, 'mwb_recharge_wallet_via_giftcard' );
+		$this->loader->add_action( 'wps_wsfw_add_wallet_register_endpoint', $plugin_public, 'wps_wgm_add_wallet_register_endpoint', 10 );
+		$this->loader->add_filter( 'wps_wsfw_add_wallet_tabs', $plugin_public, 'wps_wgm_add_wallet_tabs', 10, 1 );
+		$this->loader->add_action( 'wp_ajax_wps_recharge_wallet_via_giftcard', $plugin_public, 'wps_recharge_wallet_via_giftcard' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_recharge_wallet_via_giftcard', $plugin_public, 'wps_recharge_wallet_via_giftcard' );
 	}
 
 	/**

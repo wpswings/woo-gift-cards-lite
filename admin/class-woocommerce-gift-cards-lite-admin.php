@@ -34,9 +34,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   public
-	 * @var      string    $mwb_common_fun    The current version of this plugin.
+	 * @var      string    $wps_common_fun    The current version of this plugin.
 	 */
-	public $mwb_common_fun;
+	public $wps_common_fun;
 	/**
 	 * The version of this plugin.
 	 *
@@ -55,11 +55,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		require_once MWB_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
+		require_once WPS_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		$this->mwb_common_fun = new Woocommerce_Gift_Cards_Common_Function();
+		$this->wps_common_fun = new Woocommerce_Gift_Cards_Common_Function();
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_wgm_enqueue_styles() {
+	public function wps_wgm_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -85,7 +85,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
-		if ( ( isset( $_GET['page'] ) && 'mwb-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
+		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'select2' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-admin.css', array(), $this->version, 'all' );
@@ -101,33 +101,33 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_wgm_enqueue_scripts() {
+	public function wps_wgm_enqueue_scripts() {
 		$screen = get_current_screen();
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
-			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'giftware/giftware.php' ) ) {
-				wp_enqueue_script( $this->plugin_name . 'mwb_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/mwb_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, true );
+			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'gift-cards-for-woocommerce-pro/giftware.php' ) ) {
+				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, true );
 			}
 
-			if ( 'product' == $pagescreen || 'shop_order' == $pagescreen || 'giftcard_page_mwb-wgc-setting-lite' == $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' == $pagescreen || 'plugins' == $pagescreen ) {
+			if ( 'product' == $pagescreen || 'shop_order' == $pagescreen || 'giftcard_page_wps-wgc-setting-lite' == $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' == $pagescreen || 'plugins' == $pagescreen ) {
 
-				$mwb_wgm_general_settings = get_option( 'mwb_wgm_general_settings', false );
-				$giftcard_tax_cal_enable = $this->mwb_common_fun->mwb_wgm_get_template_data( $mwb_wgm_general_settings, 'mwb_wgm_general_setting_tax_cal_enable' );
+				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
+				$giftcard_tax_cal_enable = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_tax_cal_enable' );
 
-				$mwb_wgc = array(
+				$wps_wgc = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'is_tax_enable_for_gift' => $giftcard_tax_cal_enable,
-					'mwb_wgm_nonce'      => wp_create_nonce( 'mwb-wgm-verify-nonce' ),
+					'wps_wgm_nonce'      => wp_create_nonce( 'wps-wgm-verify-nonce' ),
 				);
 				$url = plugins_url();
-				wp_enqueue_script( 'mwb_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), true );
+				wp_enqueue_script( 'wps_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), true );
 				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version );
 
 				wp_enqueue_script( $this->plugin_name . 'clipboard' );
-				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'mwb_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), $this->version, true );
+				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'wps_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), $this->version, true );
 
-				wp_localize_script( $this->plugin_name, 'mwb_wgc', $mwb_wgc );
+				wp_localize_script( $this->plugin_name, 'wps_wgc', $wps_wgc );
 
 				wp_enqueue_script( $this->plugin_name );
 
@@ -160,13 +160,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				/*sticky sidebar*/
 				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), $this->version, true );
 
-				$mwb_wgm_notice = array(
+				$wps_wgm_notice = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'mwb_wgm_nonce' => wp_create_nonce( 'mwb-wgm-verify-notice-nonce' ),
+					'wps_wgm_nonce' => wp_create_nonce( 'wps-wgm-verify-notice-nonce' ),
 				);
-				wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/mwb-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
+				wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
 
-				wp_localize_script( $this->plugin_name . 'admin-notice', 'mwb_wgm_notice', $mwb_wgm_notice );
+				wp_localize_script( $this->plugin_name . 'admin-notice', 'wps_wgm_notice', $wps_wgm_notice );
 				wp_enqueue_script( $this->plugin_name . 'admin-notice' );
 
 			}
@@ -177,43 +177,43 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Add a submenu inside the Giftcard CPT Menu.
 	 *
 	 * @since 2.0.0
-	 * @name mwb_wgm_admin_menu()
+	 * @name wps_wgm_admin_menu()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_admin_menu() {
-		add_submenu_page( 'edit.php?post_type=giftcard', __( 'Settings', 'woo-gift-cards-lite' ), __( 'Settings', 'woo-gift-cards-lite' ), 'manage_options', 'mwb-wgc-setting-lite', array( $this, 'mwb_wgm_admin_setting' ) );
-		if ( ! mwb_uwgc_pro_active() ) {
-			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Premium Plugin', 'woo-gift-cards-lite' ), __( 'Premium Plugin', 'woo-gift-cards-lite' ), 'manage_options', 'mwb-wgc-premium-plugin', array( $this, 'mwb_wgm_premium_features' ) );
+	public function wps_wgm_admin_menu() {
+		add_submenu_page( 'edit.php?post_type=giftcard', __( 'Settings', 'woo-gift-cards-lite' ), __( 'Settings', 'woo-gift-cards-lite' ), 'manage_options', 'wps-wgc-setting-lite', array( $this, 'wps_wgm_admin_setting' ) );
+		if ( ! wps_uwgc_pro_active() ) {
+			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Premium Plugin', 'woo-gift-cards-lite' ), __( 'Premium Plugin', 'woo-gift-cards-lite' ), 'manage_options', 'wps-wgc-premium-plugin', array( $this, 'wps_wgm_premium_features' ) );
 		}
 		// hooks to add sub menu.
-		do_action( 'mwb_wgm_admin_sub_menu' );
+		do_action( 'wps_wgm_admin_sub_menu' );
 	}
 
 	/**
 	 * Including a File for displaying the required setting page for setup the plugin
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_admin_setting()
+	 * @name wps_wgm_admin_setting()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_admin_setting() {
-		include_once MWB_WGC_DIRPATH . '/admin/partials/woocommerce-gift-cards-lite-admin-display.php';
+	public function wps_wgm_admin_setting() {
+		include_once WPS_WGC_DIRPATH . '/admin/partials/woocommerce-gift-cards-lite-admin-display.php';
 	}
 
 	/**
 	 * Contain all the giftcard premium features inside this panel.
 	 *
 	 * @since 2.0.0
-	 * @name mwb_wgm_premium_features()
+	 * @name wps_wgm_premium_features()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_premium_features() {
-		if ( isset( $_GET['page'] ) && 'mwb-wgc-premium-plugin' == $_GET['page'] ) {
-			$mwb_premium_page = esc_url_raw( 'https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro' );
-			wp_redirect( $mwb_premium_page );
+	public function wps_wgm_premium_features() {
+		if ( isset( $_GET['page'] ) && 'wps-wgc-premium-plugin' == $_GET['page'] ) {
+			$wps_premium_page = esc_url_raw( 'https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro' );
+			wp_redirect( $wps_premium_page );
 			exit;
 		}
 	}
@@ -222,15 +222,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Create a custom Product Type for Gift Card
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_gift_card_product()
+	 * @name wps_wgm_gift_card_product()
 	 * @param array $types product types.
 	 * @return $types.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_gift_card_product( $types ) {
-		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
-		if ( $mwb_wgc_enable ) {
+	public function wps_wgm_gift_card_product( $types ) {
+		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		if ( $wps_wgc_enable ) {
 			$types['wgm_gift_card'] = __( 'Gift Card', 'woo-gift-cards-lite' );
 		}
 		return $types;
@@ -240,29 +240,29 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Provide multiple Price variations for Gift Card Product
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_get_pricing_type()
+	 * @name wps_wgm_get_pricing_type()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_get_pricing_type() {
+	public function wps_wgm_get_pricing_type() {
 		$pricing_options = array(
-			'mwb_wgm_default_price' => __( 'Default Price', 'woo-gift-cards-lite' ),
-			'mwb_wgm_range_price' => __( 'Price Range', 'woo-gift-cards-lite' ),
-			'mwb_wgm_selected_price' => __( 'Selected Price', 'woo-gift-cards-lite' ),
-			'mwb_wgm_user_price' => __( 'User Price', 'woo-gift-cards-lite' ),
+			'wps_wgm_default_price' => __( 'Default Price', 'woo-gift-cards-lite' ),
+			'wps_wgm_range_price' => __( 'Price Range', 'woo-gift-cards-lite' ),
+			'wps_wgm_selected_price' => __( 'Selected Price', 'woo-gift-cards-lite' ),
+			'wps_wgm_user_price' => __( 'User Price', 'woo-gift-cards-lite' ),
 		);
-		return apply_filters( 'mwb_wgm_pricing_type', $pricing_options );
+		return apply_filters( 'wps_wgm_pricing_type', $pricing_options );
 	}
 
 	/**
 	 * Add some required fields (data-tabs) for Gift Card product
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_woocommerce_product_options_general_product_data()
+	 * @name wps_wgm_woocommerce_product_options_general_product_data()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_woocommerce_product_options_general_product_data() {
+	public function wps_wgm_woocommerce_product_options_general_product_data() {
 		global $post;
 		$product_id = $post->ID;
 		if ( isset( $product_id ) ) {
@@ -270,47 +270,47 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				return;
 			}
 		}
-		$mwb_wgm_pricing = get_post_meta( $product_id, 'mwb_wgm_pricing', true );
-		$selected_pricing = isset( $mwb_wgm_pricing['type'] ) ? $mwb_wgm_pricing['type'] : false;
-		$giftcard_enable = mwb_wgm_giftcard_enable();
+		$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
+		$selected_pricing = isset( $wps_wgm_pricing['type'] ) ? $wps_wgm_pricing['type'] : false;
+		$giftcard_enable = wps_wgm_giftcard_enable();
 
 		$default_price = '';
 		$from = '';
 		$to = '';
 		$price = '';
-		$default_price  = isset( $mwb_wgm_pricing['default_price'] ) ? $mwb_wgm_pricing['default_price'] : 0;
-		if ( is_array( $mwb_wgm_pricing ) && ! empty( $mwb_wgm_pricing ) ) {
-			if ( array_key_exists( 'template', $mwb_wgm_pricing ) ) {
-				$selectedtemplate  = isset( $mwb_wgm_pricing['template'] ) ? $mwb_wgm_pricing['template'] : false;
+		$default_price  = isset( $wps_wgm_pricing['default_price'] ) ? $wps_wgm_pricing['default_price'] : 0;
+		if ( is_array( $wps_wgm_pricing ) && ! empty( $wps_wgm_pricing ) ) {
+			if ( array_key_exists( 'template', $wps_wgm_pricing ) ) {
+				$selectedtemplate  = isset( $wps_wgm_pricing['template'] ) ? $wps_wgm_pricing['template'] : false;
 			}
 		} else {
-			$selectedtemplate = $this->mwb_common_fun->mwb_get_org_selected_template();
+			$selectedtemplate = $this->wps_common_fun->wps_get_org_selected_template();
 		}
 
-		$default_selected = isset( $mwb_wgm_pricing['by_default_tem'] ) ? $mwb_wgm_pricing['by_default_tem'] : false;
+		$default_selected = isset( $wps_wgm_pricing['by_default_tem'] ) ? $wps_wgm_pricing['by_default_tem'] : false;
 		if ( $selected_pricing ) {
 			switch ( $selected_pricing ) {
-				case 'mwb_wgm_range_price':
-					$from = isset( $mwb_wgm_pricing['from'] ) ? $mwb_wgm_pricing['from'] : 0;
-					$to = isset( $mwb_wgm_pricing['to'] ) ? $mwb_wgm_pricing['to'] : 0;
+				case 'wps_wgm_range_price':
+					$from = isset( $wps_wgm_pricing['from'] ) ? $wps_wgm_pricing['from'] : 0;
+					$to = isset( $wps_wgm_pricing['to'] ) ? $wps_wgm_pricing['to'] : 0;
 					break;
-				case 'mwb_wgm_selected_price':
-					$price = isset( $mwb_wgm_pricing['price'] ) ? $mwb_wgm_pricing['price'] : 0;
+				case 'wps_wgm_selected_price':
+					$price = isset( $wps_wgm_pricing['price'] ) ? $wps_wgm_pricing['price'] : 0;
 					break;
 				default:
 					// Nothing for default.
 			}
 		}
 		if ( $giftcard_enable ) {
-			$src = MWB_WGC_URL . 'assets/images/loading.gif';
+			$src = WPS_WGC_URL . 'assets/images/loading.gif';
 			?>
-			<div class="options_group show_if_wgm_gift_card"><div id="mwb_wgm_loader" style="display: none;">
+			<div class="options_group show_if_wgm_gift_card"><div id="wps_wgm_loader" style="display: none;">
 				<img src="<?php echo esc_url( $src ); ?>">
 			</div>
 			<?php
 			woocommerce_wp_text_input(
 				array(
-					'id' => 'mwb_wgm_default',
+					'id' => 'wps_wgm_default',
 					'value' => "$default_price",
 					'label' => __( 'Default Price', 'woo-gift-cards-lite' ),
 					'placeholder' => wc_format_localized_price( 0 ),
@@ -321,17 +321,17 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			);
 			woocommerce_wp_select(
 				array(
-					'id' => 'mwb_wgm_pricing',
+					'id' => 'wps_wgm_pricing',
 					'value' => "$selected_pricing",
 					'label' => __( 'Pricing type', 'woo-gift-cards-lite' ),
-					'options' => $this->mwb_wgm_get_pricing_type(),
+					'options' => $this->wps_wgm_get_pricing_type(),
 				)
 			);
 			 // Range Price.
 			 // StartFrom.
 			woocommerce_wp_text_input(
 				array(
-					'id' => 'mwb_wgm_from_price',
+					'id' => 'wps_wgm_from_price',
 					'value' => "$from",
 					'label' => __( 'From Price', 'woo-gift-cards-lite' ),
 					'placeholder' => wc_format_localized_price( 0 ),
@@ -343,7 +343,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			 // EndTo.
 			woocommerce_wp_text_input(
 				array(
-					'id' => 'mwb_wgm_to_price',
+					'id' => 'wps_wgm_to_price',
 					'value' => "$to",
 					'label' => __( 'To Price', 'woo-gift-cards-lite' ),
 					'placeholder' => wc_format_localized_price( 0 ),
@@ -355,7 +355,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			// Selected Price.
 			woocommerce_wp_textarea_input(
 				array(
-					'id' => 'mwb_wgm_selected_price',
+					'id' => 'wps_wgm_selected_price',
 					'value' => "$price",
 					'label' => __( 'Price', 'woo-gift-cards-lite' ),
 					'desc_tip' => 'true',
@@ -365,32 +365,32 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			);
 			// Regular Price.
 			?>
-			<p class="form-field mwb_wgm_default_price_field">
-				<label for="mwb_wgm_default_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
+			<p class="form-field wps_wgm_default_price_field">
+				<label for="wps_wgm_default_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
 				<span class="description"><?php esc_html_e( 'WooCommerce Product regular price is used as a gift card price.', 'woo-gift-cards-lite' ); ?></span>
 			</p>
 
-			<p class="form-field mwb_wgm_user_price_field ">
-				<label for="mwb_wgm_user_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
+			<p class="form-field wps_wgm_user_price_field ">
+				<label for="wps_wgm_user_price_field"><b><?php esc_html_e( 'Instruction', 'woo-gift-cards-lite' ); ?></b></label>
 				<span class="description"> <?php esc_html_e( 'Users can purchase any amount of Gift Card.', 'woo-gift-cards-lite' ); ?></span>
 			</p>
 
 			<?php
 			$is_customizable = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
-			$mwb_get_pro_templates = get_option( 'mwb_uwgc_templateid', array() );
-			$mwb_get_lite_templates = $this->mwb_wgm_get_all_lite_templates();
+			$wps_get_pro_templates = get_option( 'wps_uwgc_templateid', array() );
+			$wps_get_lite_templates = $this->wps_wgm_get_all_lite_templates();
 			if ( empty( $is_customizable ) ) {
 				?>
-				<p class="form-field mwb_wgm_email_template">
-					<label class ="mwb_wgm_email_template" for="mwb_wgm_email_template"><?php esc_html_e( 'Email Template', 'woo-gift-cards-lite' ); ?></label>
+				<p class="form-field wps_wgm_email_template">
+					<label class ="wps_wgm_email_template" for="wps_wgm_email_template"><?php esc_html_e( 'Email Template', 'woo-gift-cards-lite' ); ?></label>
 					<?php
-					if ( mwb_uwgc_pro_active() ) {
+					if ( wps_uwgc_pro_active() ) {
 						?>
-						<select id="mwb_wgm_email_template" multiple="multiple" name="mwb_wgm_email_template[]" class="mwb_wgm_email_template">
+						<select id="wps_wgm_email_template" multiple="multiple" name="wps_wgm_email_template[]" class="wps_wgm_email_template">
 						<?php
 					} else {
 						?>
-						<select id="mwb_wgm_email_template" name="mwb_wgm_email_template[]" class="mwb_wgm_email_template">
+						<select id="wps_wgm_email_template" name="wps_wgm_email_template[]" class="wps_wgm_email_template">
 						<?php
 					}
 					$args = array(
@@ -403,23 +403,23 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$template_id = $value->ID;
 						$template_title = $value->post_title;
 						$template[ $template_id ] = $template_title;
-						$tempselect = '';
-						if ( mwb_uwgc_pro_active() ) {
+						$tewgclelect = '';
+						if ( wps_uwgc_pro_active() ) {
 							if ( is_array( $selectedtemplate ) && ( null != $selectedtemplate ) && in_array( $template_id, $selectedtemplate ) ) {
-								$tempselect = "selected='selected'";
+								$tewgclelect = "selected='selected'";
 							}
 							?>
-							<option value="<?php echo esc_attr( $template_id ); ?>"<?php echo esc_attr( $tempselect ); ?>><?php echo esc_attr( $template_title ); ?></option>
+							<option value="<?php echo esc_attr( $template_id ); ?>"<?php echo esc_attr( $tewgclelect ); ?>><?php echo esc_attr( $template_title ); ?></option>
 							<?php
 						} else {
-							if ( in_array( $template_title, $mwb_get_lite_templates ) ) {
+							if ( in_array( $template_title, $wps_get_lite_templates ) ) {
 								if ( is_array( $selectedtemplate ) && ! empty( $selectedtemplate ) ) {
 									if ( '1' < count( $selectedtemplate ) ) {
-										if ( ! empty( $mwb_get_pro_templates ) ) {
-											$mwb_get_lite_temp = array_diff( $selectedtemplate, $mwb_get_pro_templates );
-											$mwb_index = array_keys( $mwb_get_lite_temp )[0];
-											if ( 0 !== count( $mwb_get_lite_temp ) ) {
-												$choosed_temp = $mwb_get_lite_temp[ $mwb_index ];
+										if ( ! empty( $wps_get_pro_templates ) ) {
+											$wps_get_lite_temp = array_diff( $selectedtemplate, $wps_get_pro_templates );
+											$wps_index = array_keys( $wps_get_lite_temp )[0];
+											if ( 0 !== count( $wps_get_lite_temp ) ) {
+												$choosed_temp = $wps_get_lite_temp[ $wps_index ];
 											}
 										} else {
 											$choosed_temp = $selectedtemplate[0];
@@ -429,11 +429,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 									}
 								}
 								if ( $choosed_temp == $template_id ) {
-									$tempselect = "selected='selected'";
+									$tewgclelect = "selected='selected'";
 								}
-								if ( ! in_array( $template_id, $mwb_get_pro_templates ) ) {
+								if ( ! in_array( $template_id, $wps_get_pro_templates ) ) {
 									?>
-									<option value="<?php echo esc_attr( $template_id ); ?>"<?php echo esc_attr( $tempselect ); ?>><?php echo esc_attr( $template_title ); ?></option>
+									<option value="<?php echo esc_attr( $template_id ); ?>"<?php echo esc_attr( $tewgclelect ); ?>><?php echo esc_attr( $template_title ); ?></option>
 									<?php
 								}
 							}
@@ -444,8 +444,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				</p>
 				<?php
 			}
-			wp_nonce_field( 'mwb_wgm_lite_nonce', 'mwb_wgm_product_nonce_field' );
-			do_action( 'mwb_wgm_giftcard_product_type_field', $product_id );
+			wp_nonce_field( 'wps_wgm_lite_nonce', 'wps_wgm_product_nonce_field' );
+			do_action( 'wps_wgm_giftcard_product_type_field', $product_id );
 			echo '</div>';
 		}
 	}
@@ -455,11 +455,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since 1.0.0
 	 * @param int $post_id post id.
-	 * @name mwb_wgm_save_post()
+	 * @name wps_wgm_save_post()
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_save_post( $post_id ) {
+	public function wps_wgm_save_post( $post_id ) {
 		global $post;
 		if ( isset( $post_id ) ) {
 			if ( ! current_user_can( 'edit_post', $post_id ) || ! is_admin() ) {
@@ -469,31 +469,31 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$product = wc_get_product( $product_id );
 			if ( isset( $product ) && is_object( $product ) ) {
 				if ( $product->get_type() == 'wgm_gift_card' ) {
-					if ( ! isset( $_POST['mwb_wgm_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_wgm_product_nonce_field'] ) ), 'mwb_wgm_lite_nonce' ) ) {
+					if ( ! isset( $_POST['wps_wgm_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_wgm_product_nonce_field'] ) ), 'wps_wgm_lite_nonce' ) ) {
 						return;
 					}
-					$general_settings = get_option( 'mwb_wgm_general_settings', array() );
-					$mwb_wgm_categ_enable = $this->mwb_common_fun->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_categ_enable' );
-					if ( '' === $mwb_wgm_categ_enable || 'off' === $mwb_wgm_categ_enable ) {
+					$general_settings = get_option( 'wps_wgm_general_settings', array() );
+					$wps_wgm_categ_enable = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_categ_enable' );
+					if ( '' === $wps_wgm_categ_enable || 'off' === $wps_wgm_categ_enable ) {
 						$term = __( 'Gift Card', 'woo-gift-cards-lite' );
 						$taxonomy = 'product_cat';
 						$term_exist = term_exists( $term, $taxonomy );
 						if ( 0 == $term_exist || null == $term_exist ) {
-							$args['slug'] = 'mwb_wgm_giftcard';
+							$args['slug'] = 'wps_wgm_giftcard';
 							$term_exist = wp_insert_term( $term, $taxonomy, $args );
 						}
 						wp_set_object_terms( $product_id, 'wgm_gift_card', 'product_type' );
 						wp_set_post_terms( $product_id, $term_exist, $taxonomy );
 					}
-					$mwb_wgm_pricing = array();
-					$selected_pricing = isset( $_POST['mwb_wgm_pricing'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_pricing'] ) ) : false;
+					$wps_wgm_pricing = array();
+					$selected_pricing = isset( $_POST['wps_wgm_pricing'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_pricing'] ) ) : false;
 					if ( $selected_pricing ) {
-						$default_price = isset( $_POST['mwb_wgm_default'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_default'] ) ) : 0;
+						$default_price = isset( $_POST['wps_wgm_default'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_default'] ) ) : 0;
 						update_post_meta( $product_id, '_regular_price', $default_price );
 						update_post_meta( $product_id, '_price', $default_price );
-						$mwb_wgm_pricing['default_price'] = $default_price;
-						$mwb_wgm_pricing['type'] = $selected_pricing;
-						if ( ! isset( $_POST['mwb_wgm_email_template'] ) || empty( $_POST['mwb_wgm_email_template'] ) ) {
+						$wps_wgm_pricing['default_price'] = $default_price;
+						$wps_wgm_pricing['type'] = $selected_pricing;
+						if ( ! isset( $_POST['wps_wgm_email_template'] ) || empty( $_POST['wps_wgm_email_template'] ) ) {
 							$args = array(
 								'post_type' => 'giftcard',
 								'posts_per_page' => -1,
@@ -508,62 +508,62 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								endwhile;
 							endif;
 
-							$pro_template = get_option( 'mwb_uwgc_templateid', array() );
+							$pro_template = get_option( 'wps_uwgc_templateid', array() );
 							$temp_array = array();
-							if ( ! mwb_uwgc_pro_active() && is_array( $pro_template ) && ! empty( $pro_template ) ) {
+							if ( ! wps_uwgc_pro_active() && is_array( $pro_template ) && ! empty( $pro_template ) ) {
 								foreach ( $template as $value ) {
 									if ( ! in_array( $value, $pro_template ) ) {
 										$temp_array[] = $value;
 									}
 								}
 								if ( isset( $temp_array ) && ! empty( $temp_array ) ) {
-									$mwb_wgm_pricing['template'] = array( $temp_array[0] );
+									$wps_wgm_pricing['template'] = array( $temp_array[0] );
 								}
 							} else {
-								$mwb_wgm_pricing['template'] = array( $template[0] );
+								$wps_wgm_pricing['template'] = array( $template[0] );
 							}
 						} else {
-							$mwb_wgm_pricing['template'] = map_deep( wp_unslash( $_POST['mwb_wgm_email_template'] ), 'sanitize_text_field' );
+							$wps_wgm_pricing['template'] = map_deep( wp_unslash( $_POST['wps_wgm_email_template'] ), 'sanitize_text_field' );
 						}
-						if ( ! isset( $_POST['mwb_wgm_email_defualt_template'] ) || empty( $_POST['mwb_wgm_email_defualt_template'] ) ) {
-							$mwb_wgm_pricing['by_default_tem'] = $mwb_wgm_pricing['template'];
+						if ( ! isset( $_POST['wps_wgm_email_defualt_template'] ) || empty( $_POST['wps_wgm_email_defualt_template'] ) ) {
+							$wps_wgm_pricing['by_default_tem'] = $wps_wgm_pricing['template'];
 						} else {
-							$mwb_wgm_pricing['by_default_tem'] = sanitize_text_field( wp_unslash( $_POST['mwb_wgm_email_defualt_template'] ) );
+							$wps_wgm_pricing['by_default_tem'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_email_defualt_template'] ) );
 						}
 						switch ( $selected_pricing ) {
-							case 'mwb_wgm_range_price':
-								$from = isset( $_POST['mwb_wgm_from_price'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_from_price'] ) ) : 0;
-								$to = isset( $_POST['mwb_wgm_to_price'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_to_price'] ) ) : 0;
-								$mwb_wgm_pricing['type'] = $selected_pricing;
-								$mwb_wgm_pricing['from'] = $from;
-								$mwb_wgm_pricing['to'] = $to;
+							case 'wps_wgm_range_price':
+								$from = isset( $_POST['wps_wgm_from_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_price'] ) ) : 0;
+								$to = isset( $_POST['wps_wgm_to_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_price'] ) ) : 0;
+								$wps_wgm_pricing['type'] = $selected_pricing;
+								$wps_wgm_pricing['from'] = $from;
+								$wps_wgm_pricing['to'] = $to;
 								break;
-							case 'mwb_wgm_selected_price':
-								$price = isset( $_POST['mwb_wgm_selected_price'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wgm_selected_price'] ) ) : 0;
-								$mwb_wgm_pricing['type'] = $selected_pricing;
-								$mwb_wgm_pricing['price'] = $price;
+							case 'wps_wgm_selected_price':
+								$price = isset( $_POST['wps_wgm_selected_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_price'] ) ) : 0;
+								$wps_wgm_pricing['type'] = $selected_pricing;
+								$wps_wgm_pricing['price'] = $price;
 								break;
 
-							case 'mwb_wgm_user_price':
-								$mwb_wgm_pricing['type'] = $selected_pricing;
+							case 'wps_wgm_user_price':
+								$wps_wgm_pricing['type'] = $selected_pricing;
 								break;
 							default:
 								// nothing for default.
 						}
 					}
 					// compatibility with product filter by price.
-					if ( mwb_uwgc_pro_active() ) {
-						do_action( 'mwb_wgm_set_dicount_price_for_filter', $product_id );
+					if ( wps_uwgc_pro_active() ) {
+						do_action( 'wps_wgm_set_dicount_price_for_filter', $product_id );
 					} else {
 						global $wpdb;
 						$table_name = $wpdb->prefix . 'wc_product_meta_lookup';
 						$sql        = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
 						$results    = $wpdb->get_results( '%d', $sql );
 					}
-					do_action( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
-					$mwb_wgm_pricing = apply_filters( 'mwb_wgm_product_pricing', $mwb_wgm_pricing );
-					update_post_meta( $product_id, 'mwb_wgm_pricing', $mwb_wgm_pricing );
-					do_action( 'mwb_wgm_giftcard_product_type_save_fields', $product_id );
+					do_action( 'wps_wgm_product_pricing', $wps_wgm_pricing );
+					$wps_wgm_pricing = apply_filters( 'wps_wgm_product_pricing', $wps_wgm_pricing );
+					update_post_meta( $product_id, 'wps_wgm_pricing', $wps_wgm_pricing );
+					do_action( 'wps_wgm_giftcard_product_type_save_fields', $product_id );
 				}
 			}
 		}
@@ -573,20 +573,20 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Hides some of the tabs if the Product is Gift Card
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_woocommerce_product_data_tabs()
+	 * @name wps_wgm_woocommerce_product_data_tabs()
 	 * @param array $tabs product tabs.
 	 * @return $tabs.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_woocommerce_product_data_tabs( $tabs ) {
+	public function wps_wgm_woocommerce_product_data_tabs( $tabs ) {
 		if ( isset( $tabs ) && ! empty( $tabs ) ) {
 			foreach ( $tabs as $key => $tab ) {
 				if ( 'general' != $key && 'advanced' != $key && 'shipping' != $key ) {
 					$tabs[ $key ]['class'][] = 'hide_if_wgm_gift_card';
 				}
 			}
-			$tabs = apply_filters( 'mwb_wgm_product_data_tabs', $tabs );
+			$tabs = apply_filters( 'wps_wgm_product_data_tabs', $tabs );
 		}
 		return $tabs;
 	}
@@ -595,20 +595,20 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Add the Gift Card Coupon code as an item meta for each Gift Card Order
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_woocommerce_after_order_itemmeta()
+	 * @name wps_wgm_woocommerce_after_order_itemmeta()
 	 * @param int   $item_id item id.
 	 * @param array $item item.
 	 * @param array $_product product.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ) {
+	public function wps_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ) {
 
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
 			return;
 		}
-		$mwb_wgc_enable = mwb_wgm_giftcard_enable();
-		if ( $mwb_wgc_enable ) {
+		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		if ( $wps_wgc_enable ) {
 			if ( isset( $_GET['post'] ) ) {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
 				$order = new WC_Order( $order_id );
@@ -618,10 +618,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
 							$product_types = wp_get_object_terms( $product_id, 'product_type' );
-							$mwb_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
-							if ( isset( $product_types[0] ) || 'on' === $mwb_gift_product ) {
+							$wps_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
+							if ( isset( $product_types[0] ) || 'on' === $wps_gift_product ) {
 								$product_type     = isset( $product_types[0] ) ? $product_types[0]->slug : '';
-								if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $mwb_gift_product ) {
+								if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $wps_gift_product ) {
 									$giftcoupon = get_post_meta( $order_id, "$order_id#$item_id", true );
 
 									if ( empty( $giftcoupon ) ) {
@@ -640,7 +640,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 										</p>
 										<?php
 									}
-									do_action( 'mwb_wgm_after_order_itemmeta', $item_id, $item, $_product );
+									do_action( 'wps_wgm_after_order_itemmeta', $item_id, $item, $_product );
 								}
 							}
 						}
@@ -654,18 +654,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Hides the non-required Item Meta
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_woocommerce_hidden_order_itemmeta()
+	 * @name wps_wgm_woocommerce_hidden_order_itemmeta()
 	 * @param array $order_items order items.
 	 * @return $order_items.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_woocommerce_hidden_order_itemmeta( $order_items ) {
+	public function wps_wgm_woocommerce_hidden_order_itemmeta( $order_items ) {
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
 			return;
 		}
 		array_push( $order_items, 'Delivery Method', 'Original Price', 'Selected Template' );
-		$order_items = apply_filters( 'mwb_wgm_giftcard_hidden_order_itemmeta', $order_items );
+		$order_items = apply_filters( 'wps_wgm_giftcard_hidden_order_itemmeta', $order_items );
 		return $order_items;
 	}
 
@@ -673,11 +673,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Create custom post name Giftcard for creating Giftcard Template
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_giftcard_custompost
+	 * @name wps_wgm_giftcard_custompost
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_giftcard_custom_post() {
+	public function wps_wgm_giftcard_custom_post() {
 		$labels = array(
 			'name'               => esc_html__( 'Gift Cards', 'woo-gift-cards-lite' ),
 			'singular_name'      => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
@@ -694,10 +694,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'not_found'          => esc_html__( 'No gift cards found.', 'woo-gift-cards-lite' ),
 			'not_found_in_trash' => esc_html__( 'No gift cards found in Trash.', 'woo-gift-cards-lite' ),
 		);
-		$mwb_wgm_template = array(
+		$wps_wgm_template = array(
 			'create_posts' => 'do_not_allow',
 		);
-		$mwb_wgm_template = apply_filters( 'mwb_wgm_template_capabilities', $mwb_wgm_template );
+		$wps_wgm_template = apply_filters( 'wps_wgm_template_capabilities', $wps_wgm_template );
 		$args = array(
 			'labels'             => $labels,
 			'description'        => esc_html__( 'Description.', 'woo-gift-cards-lite' ),
@@ -708,7 +708,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'query_var'          => true,
 			'rewrite'            => array( 'slug' => 'giftcard' ),
 			'capability_type'    => 'post',
-			'capabilities'       => $mwb_wgm_template,
+			'capabilities'       => $wps_wgm_template,
 			'map_meta_cap'       => true,
 			'has_archive'        => true,
 			'hierarchical'       => false,
@@ -723,18 +723,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is to add meta field like field for instruction how to use shortcode in email template
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_edit_form_after_title
+	 * @name wps_wgm_edit_form_after_title
 	 * @param object $post post.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_edit_form_after_title( $post ) {
-		$mwb_wgm_post_type = get_post_type( $post );
-		if ( isset( $mwb_wgm_post_type ) && 'giftcard' == $mwb_wgm_post_type ) {
+	public function wps_wgm_edit_form_after_title( $post ) {
+		$wps_wgm_post_type = get_post_type( $post );
+		if ( isset( $wps_wgm_post_type ) && 'giftcard' == $wps_wgm_post_type ) {
 			?>
-				<div class="postbox" id="mwb_wgm_mail_instruction" style="display: block;">
-					<h2 class="mwb_wgm_handle"><span><?php esc_html_e( 'Instruction for using Shortcode', 'woo-gift-cards-lite' ); ?></span></h2>
-					<div class="mwb_wgm_inside">
+				<div class="postbox" id="wps_wgm_mail_instruction" style="display: block;">
+					<h2 class="wps_wgm_handle"><span><?php esc_html_e( 'Instruction for using Shortcode', 'woo-gift-cards-lite' ); ?></span></h2>
+					<div class="wps_wgm_inside">
 						<table  class="form-table">
 							<tr>
 								<th><?php esc_html_e( 'SHORTCODE', 'woo-gift-cards-lite' ); ?></th>
@@ -773,7 +773,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<td><?php esc_html_e( 'Replace with Giftcard Expiry Date.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 						<?php
-						do_action( 'mwb_wgm_template_custom_shortcode' );
+						do_action( 'wps_wgm_template_custom_shortcode' );
 						?>
 						</table>
 					</div>
@@ -786,20 +786,20 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Added Mothers Day Template
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_mothers_day_template
+	 * @name wps_wgm_mothers_day_template
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_mothers_day_template() {
+	public function wps_wgm_mothers_day_template() {
 
-		$mwb_wgm_template = get_option( 'mwb_wgm_new_mom_template', '' );
-		if ( empty( $mwb_wgm_template ) ) {
-			update_option( 'mwb_wgm_new_mom_template', true );
-			$filename = array( MWB_WGC_URL . 'assets/images/mom.png' );
+		$wps_wgm_template = get_option( 'wps_wgm_new_mom_template', '' );
+		if ( empty( $wps_wgm_template ) ) {
+			update_option( 'wps_wgm_new_mom_template', true );
+			$filename = array( WPS_WGC_URL . 'assets/images/mom.png' );
 
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -833,11 +833,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					}
 				}
 			}
-			$mwb_wgm_new_mom_template = '<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">(Optional) This text will appear in the inbox preview, but not the email body.</div><table class="email-container table-wrap" style="margin: auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#efefef;"><tbody><tr><td dir="ltr" style="padding: 10px;" align="center" bgcolor="#efefef" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center" class="logo-content-wrap"><tbody><tr><td class="stack-column-center logo-wrap" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 0px 25px; padding-left: 0;" valign="top"></td></tr></tbody></table></td><td class="stack-column-center content-wrap" style="" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff; text-align: right !important; padding: 0px 10px;" valign="top"><span class="mwb_receiver" style="color: #535151; font-size: 14px; line-height: 18px; display:block;">From- [FROM]</span><span style="color: #535151; font-size: 14px; line-height: 18px; display:block;">TO- [TO]</span></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><table class="email-container table-wrap" style="margin: auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding-top: 15px;" align="center" valign="top" bgcolor="#00897B" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center" class="img-content-wrap"><tbody><tr><td class="stack-column-center" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 0px 25px; padding-left: 0;" valign="top"><span class="img-wrap">[FEATUREDIMAGE]</span></td></tr></tbody></table></td><td class="stack-column-center" style="vertical-align: top;" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff; padding: 0px 30px; text-align: left; " valign="top"><p style="color: rgb(255, 255, 255); font-size: 46px; line-height: 60px; margin-top: 15px; margin-bottom: 15px;">I LOVE YOU MOM</p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td class="mwb_coupon_div" dir="ltr" align="center" valign="top" bgcolor="#fff" width="100%" style="position: relative;"><span class="back_bubble_img">[BACK]</span><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" style="vertical-align: top;" width="50%"><table class="mwb_mid_table" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center" style="position:relative; z-index:999;"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff; padding: 0px 30px; text-align: left; background-color: #efefef;" valign="top"><p class="mwb_message" style="text-align: center; line-height: 25px;white-space: pre-line; font-size: 16px; padding: 20px;">[MESSAGE]</p></td></tr></tbody></table></td></tr><tr><td class="mwb_coupon_code" style="padding: 15px 10px; font-size: 26px; text-transform: uppercase; text-align: center; font-weight: bold; color: rgb(39, 39, 39); font-family: sans-serif;"><p style="letter-spacing: 1px; padding: 10px 10px; margin: 0px; text-transform: uppercase; text-align: center; color: #00897b; font-weight: bold; font-size: 13px;">coupon code</p>[COUPON]<p style="letter-spacing: 1px; padding: 15px 10px; margin: 0px; text-transform: uppercase; text-align: center; color: #00897b; font-weight: bold; font-size: 13px;">ED:[EXPIRYDATE]</p></td></tr></tbody></table></td></tr><tr><td dir="ltr" style="padding-top: 12px; padding-bottom: 12px; background-color: #efefef;" align="center" valign="top" bgcolor="#fff" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 0px 25px; padding-right: 0;" valign="top"><p style="font-family: sans-serif; font-size: 25px; font-weight: bold; margin: 0px; padding: 5px; color: #272727; text-align: right;">[AMOUNT]</p></td></tr></tbody></table></td><td class="stack-column-center" style="vertical-align: top;" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff; padding: 0px 30px; text-align: left; margin-top: 15px;" class="center-on-narrow arrow-img" valign="top">[ARROWIMAGE]</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><table role="presentation" border="0" cellspacing="0" cellpadding="0" style="position:relative; z-index:999; background: rgb(0, 137, 123) none repeat scroll 0% 0%; color: rgb(255, 255, 255);" width="600" class="table-wrap footer-wrap"><tbody><tr><td class="mwb_disclaimer" style="padding: 10px; text-align: center; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly;"><p style="font-weight: bold; padding-top: 15px; padding-bottom: 15px; font-size: 16px;">[DISCLAIMER]</p></td></tr></tbody></table><style>.mwb_mid_table {position: relative;z-index: 999;}.back_bubble_img img {width: 100%;}.img-wrap img {width: 100%;}.mwb_coupon_div {position: relative;}.mwb_coupon_code {position: relative; z-index: 99;}.mwb_message {color: rgb(21, 21, 21);}.mwb_disclaimer {background: rgb(0, 137, 123) none repeat scroll 0% 0%;color: rgb(255, 255, 255);}.mwb_receiver { display: block;}.img-wrap > img{width:100%;}.back_bubble_img{bottom: 0;content: "";left: 0;margin: 0 auto;position: absolute;right: 0;}.back_bubble_img >img{width:100%;}@media screen and (max-width: 600px){.email-container{width: 100% !important;margin: auto !important;}/* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */.fluid{max-width: 90% !important;height: auto !important;margin-left: auto !important;margin-right: auto !important;}/* What it does: Forces table cells into full-width rows. */<br/>.stack-column,.stack-column-center{display: block !important;width: 100% !important;max-width: 100% !important;direction: ltr !important;}/* And center justify these ones. */.stack-column-center{text-align: center !important;}/* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */.center-on-narrow{text-align: center !important;display: block !important;margin-left: auto !important;margin-right: auto !important;float: none !important;}table.center-on-narrow{display: inline-block !important;}.footer-wrap{width:100%;}}@media screen and (max-width: 500px){.img-content-wrap .stack-column-center{display: block;width: 100%;}.table-wrap{width:100%;}.logo-content-wrap .content-wrap{width:70%;}.logo-content-wrap .logo-wrap{width:30%;}.center-on-narrow.arrow-img{padding: 0 !important;}}html,body{margin: 0 auto !important;padding: 0 !important;height: 100% !important;width: 100% !important;}/* What it does: Stops email clients resizing small text. */*{-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;}/* What is does: Centers email on Android 4.4 */div[style*="margin: 16px 0"]{margin:0 !important;}/* What it does: Stops Outlook from adding extra spacing to tables. */table,td{mso-table-lspace: 0pt !important;mso-table-rspace: 0pt !important;}/* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */table{border-spacing: 0 !important;border-collapse: collapse !important;table-layout: fixed !important;margin: 0 auto !important;}table table table{table-layout: auto;}/* What it does: Uses a better rendering method when resizing images in IE. */img{-ms-interpolation-mode:bicubic;}/* What it does: A work-around for iOS meddling in triggered links. */.mobile-link--footer a,a[x-apple-data-detectors]{color:inherit !important;text-decoration: underline !important;}/* What it does: Prevents underlining the button text in Windows 10 */.button-link{text-decoration: none !important;}.button-td,.button-a{transition: all 100ms ease-in;}.button-td:hover,.button-a:hover{background: #555555 !important;border-color: #555555 !important;}</style>';
+			$wps_wgm_new_mom_template = '<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">(Optional) This text will appear in the inbox preview, but not the email body.</div><table class="email-container table-wrap" style="margin: auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#efefef;"><tbody><tr><td dir="ltr" style="padding: 10px;" align="center" bgcolor="#efefef" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center" class="logo-content-wrap"><tbody><tr><td class="stack-column-center logo-wrap" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 0px 25px; padding-left: 0;" valign="top"></td></tr></tbody></table></td><td class="stack-column-center content-wrap" style="" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff; text-align: right !important; padding: 0px 10px;" valign="top"><span class="wps_receiver" style="color: #535151; font-size: 14px; line-height: 18px; display:block;">From- [FROM]</span><span style="color: #535151; font-size: 14px; line-height: 18px; display:block;">TO- [TO]</span></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><table class="email-container table-wrap" style="margin: auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding-top: 15px;" align="center" valign="top" bgcolor="#00897B" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center" class="img-content-wrap"><tbody><tr><td class="stack-column-center" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 0px 25px; padding-left: 0;" valign="top"><span class="img-wrap">[FEATUREDIMAGE]</span></td></tr></tbody></table></td><td class="stack-column-center" style="vertical-align: top;" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff; padding: 0px 30px; text-align: left; " valign="top"><p style="color: rgb(255, 255, 255); font-size: 46px; line-height: 60px; margin-top: 15px; margin-bottom: 15px;">I LOVE YOU MOM</p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td class="wps_coupon_div" dir="ltr" align="center" valign="top" bgcolor="#fff" width="100%" style="position: relative;"><span class="back_bubble_img">[BACK]</span><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" style="vertical-align: top;" width="50%"><table class="wps_mid_table" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center" style="position:relative; z-index:999;"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff; padding: 0px 30px; text-align: left; background-color: #efefef;" valign="top"><p class="wps_message" style="text-align: center; line-height: 25px;white-space: pre-line; font-size: 16px; padding: 20px;">[MESSAGE]</p></td></tr></tbody></table></td></tr><tr><td class="wps_coupon_code" style="padding: 15px 10px; font-size: 26px; text-transform: uppercase; text-align: center; font-weight: bold; color: rgb(39, 39, 39); font-family: sans-serif;"><p style="letter-spacing: 1px; padding: 10px 10px; margin: 0px; text-transform: uppercase; text-align: center; color: #00897b; font-weight: bold; font-size: 13px;">coupon code</p>[COUPON]<p style="letter-spacing: 1px; padding: 15px 10px; margin: 0px; text-transform: uppercase; text-align: center; color: #00897b; font-weight: bold; font-size: 13px;">ED:[EXPIRYDATE]</p></td></tr></tbody></table></td></tr><tr><td dir="ltr" style="padding-top: 12px; padding-bottom: 12px; background-color: #efefef;" align="center" valign="top" bgcolor="#fff" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 0px 25px; padding-right: 0;" valign="top"><p style="font-family: sans-serif; font-size: 25px; font-weight: bold; margin: 0px; padding: 5px; color: #272727; text-align: right;">[AMOUNT]</p></td></tr></tbody></table></td><td class="stack-column-center" style="vertical-align: top;" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff; padding: 0px 30px; text-align: left; margin-top: 15px;" class="center-on-narrow arrow-img" valign="top">[ARROWIMAGE]</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><table role="presentation" border="0" cellspacing="0" cellpadding="0" style="position:relative; z-index:999; background: rgb(0, 137, 123) none repeat scroll 0% 0%; color: rgb(255, 255, 255);" width="600" class="table-wrap footer-wrap"><tbody><tr><td class="wps_disclaimer" style="padding: 10px; text-align: center; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly;"><p style="font-weight: bold; padding-top: 15px; padding-bottom: 15px; font-size: 16px;">[DISCLAIMER]</p></td></tr></tbody></table><style>.wps_mid_table {position: relative;z-index: 999;}.back_bubble_img img {width: 100%;}.img-wrap img {width: 100%;}.wps_coupon_div {position: relative;}.wps_coupon_code {position: relative; z-index: 99;}.wps_message {color: rgb(21, 21, 21);}.wps_disclaimer {background: rgb(0, 137, 123) none repeat scroll 0% 0%;color: rgb(255, 255, 255);}.wps_receiver { display: block;}.img-wrap > img{width:100%;}.back_bubble_img{bottom: 0;content: "";left: 0;margin: 0 auto;position: absolute;right: 0;}.back_bubble_img >img{width:100%;}@media screen and (max-width: 600px){.email-container{width: 100% !important;margin: auto !important;}/* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */.fluid{max-width: 90% !important;height: auto !important;margin-left: auto !important;margin-right: auto !important;}/* What it does: Forces table cells into full-width rows. */<br/>.stack-column,.stack-column-center{display: block !important;width: 100% !important;max-width: 100% !important;direction: ltr !important;}/* And center justify these ones. */.stack-column-center{text-align: center !important;}/* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */.center-on-narrow{text-align: center !important;display: block !important;margin-left: auto !important;margin-right: auto !important;float: none !important;}table.center-on-narrow{display: inline-block !important;}.footer-wrap{width:100%;}}@media screen and (max-width: 500px){.img-content-wrap .stack-column-center{display: block;width: 100%;}.table-wrap{width:100%;}.logo-content-wrap .content-wrap{width:70%;}.logo-content-wrap .logo-wrap{width:30%;}.center-on-narrow.arrow-img{padding: 0 !important;}}html,body{margin: 0 auto !important;padding: 0 !important;height: 100% !important;width: 100% !important;}/* What it does: Stops email clients resizing small text. */*{-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;}/* What is does: Centers email on Android 4.4 */div[style*="margin: 16px 0"]{margin:0 !important;}/* What it does: Stops Outlook from adding extra spacing to tables. */table,td{mso-table-lspace: 0pt !important;mso-table-rspace: 0pt !important;}/* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */table{border-spacing: 0 !important;border-collapse: collapse !important;table-layout: fixed !important;margin: 0 auto !important;}table table table{table-layout: auto;}/* What it does: Uses a better rendering method when resizing images in IE. */img{-ms-interpolation-mode:bicubic;}/* What it does: A work-around for iOS meddling in triggered links. */.mobile-link--footer a,a[x-apple-data-detectors]{color:inherit !important;text-decoration: underline !important;}/* What it does: Prevents underlining the button text in Windows 10 */.button-link{text-decoration: none !important;}.button-td,.button-a{transition: all 100ms ease-in;}.button-td:hover,.button-a:hover{background: #555555 !important;border-color: #555555 !important;}</style>';
 
 			$gifttemplate_new = array(
 				'post_title' => __( 'Love You Mom', 'woo-gift-cards-lite' ),
-				'post_content' => $mwb_wgm_new_mom_template,
+				'post_content' => $wps_wgm_new_mom_template,
 				'post_status' => 'publish',
 				'post_author' => get_current_user_id(),
 				'post_type'     => 'giftcard',
@@ -851,19 +851,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Added New Template
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_new_template
+	 * @name wps_wgm_new_template
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_new_template() {
+	public function wps_wgm_new_template() {
 
-		$mwb_wgm_template = get_option( 'mwb_wgm_gift_for_you', '' );
-		if ( empty( $mwb_wgm_template ) ) {
-			update_option( 'mwb_wgm_gift_for_you', true );
-			$filename = array( MWB_WGC_URL . 'assets/images/giftcard.jpg' );
+		$wps_wgm_template = get_option( 'wps_wgm_gift_for_you', '' );
+		if ( empty( $wps_wgm_template ) ) {
+			update_option( 'wps_wgm_gift_for_you', true );
+			$filename = array( WPS_WGC_URL . 'assets/images/giftcard.jpg' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -897,11 +897,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				}
 			}
 
-			$mwb_wgm_gift_temp_for_you = '<style>/* What it does: Remove spaces around the email design added by some email clients. */ /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */ html, body{margin: 0 auto !important; padding: 0 !important; height: 100% !important; width: 100% !important;}body *{box-sizing: border-box;}/* What it does: Stops email clients resizing small text. */ *{-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;}/* What is does: Centers email on Android 4.4 */ div[style*="margin: 16px 0"]{margin:0 !important;}/* What it does: Stops Outlook from adding extra spacing to tables. */ table, td{mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;}/* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */ table{border-spacing: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; margin: 0 auto !important;}table table table{table-layout: auto;}/* What it does: Uses a better rendering method when resizing images in IE. */ img{-ms-interpolation-mode:bicubic; width: 100%;}/* What it does: A work-around for iOS meddling in triggered links. */ .mobile-link--footer a, a[x-apple-data-detectors]{color:inherit !important; text-decoration: underline !important;}/* What it does: Prevents underlining the button text in Windows 10 */ .button-link{text-decoration: none !important;}</style><style>/* What it does: Hover styles for buttons */ .button-td, .button-a{transition: all 100ms ease-in;}.button-td:hover, .button-a:hover{background: #555555 !important; border-color: #555555 !important;}/* Media Queries */ @media screen and (max-width: 599px){.email-container{width: 100% !important; margin: auto !important;}/* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */ .fluid{max-width: 100% !important; height: auto !important; margin-left: auto !important; margin-right: auto !important;}/* What it does: Forces table cells into full-width rows. */ .stack-column, .stack-column-center{display: block !important; width: 100% !important; max-width: 100% !important; direction: ltr !important;}/* And center justify these ones. */ .stack-column-center{text-align: center !important;}/* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */ .center-on-narrow{text-align: center !important; display: block !important; margin-left: auto !important; margin-right: auto !important; float: none !important;}table.center-on-narrow{display: inline-block !important;}}</style><center style="width: 100%; background: #222222;"></center><div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">(Optional) This text will appear in the inbox preview, but not the email body.</div><table class="email-container" style="margin: auto;" role="presentation" border="0" width="585" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td align="center" bgcolor="#ffffff">[FEATUREDIMAGE]</td></tr><tr><td dir="ltr" align="center" valign="top" bgcolor="#ffffff" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="line-height: 0; overflow: hidden; height: 30px;"></td></tr><tr><td class="stack-column-center" style="padding: 20px 0px; vertical-align: top; border-right: 1px solid #dddddd !important;" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #fff; padding: 0 20px 20px;" valign="top"><p style="margin: 10px 0 30px 0; text-align: left; font-weight: bold; font-size: 28px;"><span style="color: #333333; margin: 20px 0;">[AMOUNT]</span></p></td></tr><tr><td dir="ltr" style="padding: 30px 20px 0 20px;" valign="top"><p style="color: #333333; font-family: sans-serif; margin: 0px; font-size: 16px;"><span style="font-weight: bold; display: inline-block; text-align: left; font-size: 14px; width: 130px;">COUPON CODE:</span><span style="font-weight: bold; text-transform: uppercase; display: inline-block; text-align: left; font-size: 14px;">[COUPON]</span></p><p style="color: #333333; font-family: sans-serif; margin-bottom: 30px; font-size: 16px;"><span style="font-weight: bold; display: inline-block; text-align: left; font-size: 14px; width: 130px;">EXPIRY DATE:</span><span style="font-weight: bold; text-transform: uppercase; display: inline-block; text-align: left; font-size: 14px;">[EXPIRYDATE]</span></p></td></tr></tbody></table></td><td class="stack-column-center" style="padding: 20px 0px;" valign="top" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #fff; padding: 0px 30px 0 20px; min-height: 170px; height: auto;" valign="top"><p style="color: #333333; font-size: 15px;margin-bottom: 30px">[MESSAGE]</p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; padding: 0 0 0 20px; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #333333;" valign="top"><p style="margin-bottom: 0px; font-size: 16px; margin-top: 20px"><span style="font-weight: bold; display: inline-block; width: 20%; font-size: 15px;">From-</span><span style="display: inline-block; width: 75%; text-align: left; font-size: 14px;">[FROM]</span></p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; padding: 0 0 0 20px; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #333333;" valign="top"><p style="margin-top: 0px; font-size: 16px; line-height: 25px;"><span style="font-weight: bold; display: inline-block; width: 20%; font-size: 15px;">To-</span><span style="display: inline-block; width: 75%; text-align: left; font-size: 14px;">[TO]</span></p></td></tr></tbody></table></td></tr><tr><td style="line-height: 0; overflow: hidden; height: 30px;"></td></tr></tbody></table></td></tr><tr><td bgcolor="#ffffff"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="text-align: center; padding: 10px; border-top: 1px solid #dddddd !important; font-family: sans-serif; font-size: 16px; mso-height-rule: exactly; line-height: 20px; color: #333333;">[DISCLAIMER]</td></tr></tbody></table></td></tr></tbody></table>';
+			$wps_wgm_gift_temp_for_you = '<style>/* What it does: Remove spaces around the email design added by some email clients. */ /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */ html, body{margin: 0 auto !important; padding: 0 !important; height: 100% !important; width: 100% !important;}body *{box-sizing: border-box;}/* What it does: Stops email clients resizing small text. */ *{-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;}/* What is does: Centers email on Android 4.4 */ div[style*="margin: 16px 0"]{margin:0 !important;}/* What it does: Stops Outlook from adding extra spacing to tables. */ table, td{mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;}/* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */ table{border-spacing: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; margin: 0 auto !important;}table table table{table-layout: auto;}/* What it does: Uses a better rendering method when resizing images in IE. */ img{-ms-interpolation-mode:bicubic; width: 100%;}/* What it does: A work-around for iOS meddling in triggered links. */ .mobile-link--footer a, a[x-apple-data-detectors]{color:inherit !important; text-decoration: underline !important;}/* What it does: Prevents underlining the button text in Windows 10 */ .button-link{text-decoration: none !important;}</style><style>/* What it does: Hover styles for buttons */ .button-td, .button-a{transition: all 100ms ease-in;}.button-td:hover, .button-a:hover{background: #555555 !important; border-color: #555555 !important;}/* Media Queries */ @media screen and (max-width: 599px){.email-container{width: 100% !important; margin: auto !important;}/* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */ .fluid{max-width: 100% !important; height: auto !important; margin-left: auto !important; margin-right: auto !important;}/* What it does: Forces table cells into full-width rows. */ .stack-column, .stack-column-center{display: block !important; width: 100% !important; max-width: 100% !important; direction: ltr !important;}/* And center justify these ones. */ .stack-column-center{text-align: center !important;}/* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */ .center-on-narrow{text-align: center !important; display: block !important; margin-left: auto !important; margin-right: auto !important; float: none !important;}table.center-on-narrow{display: inline-block !important;}}</style><center style="width: 100%; background: #222222;"></center><div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">(Optional) This text will appear in the inbox preview, but not the email body.</div><table class="email-container" style="margin: auto;" role="presentation" border="0" width="585" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td align="center" bgcolor="#ffffff">[FEATUREDIMAGE]</td></tr><tr><td dir="ltr" align="center" valign="top" bgcolor="#ffffff" width="100%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="line-height: 0; overflow: hidden; height: 30px;"></td></tr><tr><td class="stack-column-center" style="padding: 20px 0px; vertical-align: top; border-right: 1px solid #dddddd !important;" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #fff; padding: 0 20px 20px;" valign="top"><p style="margin: 10px 0 30px 0; text-align: left; font-weight: bold; font-size: 28px;"><span style="color: #333333; margin: 20px 0;">[AMOUNT]</span></p></td></tr><tr><td dir="ltr" style="padding: 30px 20px 0 20px;" valign="top"><p style="color: #333333; font-family: sans-serif; margin: 0px; font-size: 16px;"><span style="font-weight: bold; display: inline-block; text-align: left; font-size: 14px; width: 130px;">COUPON CODE:</span><span style="font-weight: bold; text-transform: uppercase; display: inline-block; text-align: left; font-size: 14px;">[COUPON]</span></p><p style="color: #333333; font-family: sans-serif; margin-bottom: 30px; font-size: 16px;"><span style="font-weight: bold; display: inline-block; text-align: left; font-size: 14px; width: 130px;">EXPIRY DATE:</span><span style="font-weight: bold; text-transform: uppercase; display: inline-block; text-align: left; font-size: 14px;">[EXPIRYDATE]</span></p></td></tr></tbody></table></td><td class="stack-column-center" style="padding: 20px 0px;" valign="top" width="50%"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #fff; padding: 0px 30px 0 20px; min-height: 170px; height: auto;" valign="top"><p style="color: #333333; font-size: 15px;margin-bottom: 30px">[MESSAGE]</p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; padding: 0 0 0 20px; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #333333;" valign="top"><p style="margin-bottom: 0px; font-size: 16px; margin-top: 20px"><span style="font-weight: bold; display: inline-block; width: 20%; font-size: 15px;">From-</span><span style="display: inline-block; width: 75%; text-align: left; font-size: 14px;">[FROM]</span></p></td></tr><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; padding: 0 0 0 20px; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #333333;" valign="top"><p style="margin-top: 0px; font-size: 16px; line-height: 25px;"><span style="font-weight: bold; display: inline-block; width: 20%; font-size: 15px;">To-</span><span style="display: inline-block; width: 75%; text-align: left; font-size: 14px;">[TO]</span></p></td></tr></tbody></table></td></tr><tr><td style="line-height: 0; overflow: hidden; height: 30px;"></td></tr></tbody></table></td></tr><tr><td bgcolor="#ffffff"><table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="text-align: center; padding: 10px; border-top: 1px solid #dddddd !important; font-family: sans-serif; font-size: 16px; mso-height-rule: exactly; line-height: 20px; color: #333333;">[DISCLAIMER]</td></tr></tbody></table></td></tr></tbody></table>';
 
 			$gifttemplate_new = array(
 				'post_title' => __( 'Gift for You', 'woo-gift-cards-lite' ),
-				'post_content' => $mwb_wgm_gift_temp_for_you,
+				'post_content' => $wps_wgm_gift_temp_for_you,
 				'post_status' => 'publish',
 				'post_author' => get_current_user_id(),
 				'post_type'     => 'giftcard',
@@ -916,18 +916,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Added custom Template
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_insert_custom_template
+	 * @name wps_wgm_insert_custom_template
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_insert_custom_template() {
-		$mwb_wgm_template = get_option( 'mwb_wgm_insert_custom_template', '' );
-		if ( empty( $mwb_wgm_template ) ) {
-			update_option( 'mwb_wgm_insert_custom_template', true );
-			$filename = array( MWB_WGC_URL . 'assets/images/custom_template.png' );
+	public function wps_wgm_insert_custom_template() {
+		$wps_wgm_template = get_option( 'wps_wgm_insert_custom_template', '' );
+		if ( empty( $wps_wgm_template ) ) {
+			update_option( 'wps_wgm_insert_custom_template', true );
+			$filename = array( WPS_WGC_URL . 'assets/images/custom_template.png' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -961,16 +961,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				}
 			}
 
-			$mwb_wgm_custom_template_html = '<table class="email-container" style="margin: auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="text-align: center; background: #0e0149;"><p style="color: #0e0149; font-size: 25px; font-family: sans-serif; margin: 20px; text-align: left;"><strong>[LOGO]</strong></p></td></tr></tbody></table><table class="email-container" style="margin: auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="padding-bottom: 0px;" bgcolor="#f6f6f6"></td></tr><tr><td style="padding: 19px 30px; text-align: center; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; color: #555555;" bgcolor="#d6ccfd"></td></tr><tr style="background-color: #0e0149;"><td style="color: #fff; font-size: 20px; letter-spacing: 0px; margin: 0; text-transform: uppercase; background-color: #0e0149; padding: 20px 10px; line-height: 0;"><p style="border: 2px dashed #ffffff; color: #fff; font-size: 20px; letter-spacing: 0px; padding: 30px 10px; line-height: 30px; margin: 0; text-transform: uppercase; background-color: #0e0149; text-align: center;">Coupon Code<span style="display: block; font-size: 25px;">[COUPON]</span><span style="display: block;">Ed:[EXPIRYDATE]</span></p></td></tr><tr><td dir="ltr" style="padding-bottom: 34px;" align="center" valign="top" bgcolor="#d7ceff" width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" style="vertical-align: top;" width="50%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 15px 25px 0;" valign="top">[DEFAULTEVENT]</td></tr></tbody></table></td><td class="stack-column-center" style="vertical-align: top;" width="50%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff; padding: 15px; text-align: left;" valign="top"><p style="font-size: 15px; line-height: 24px; text-align: justify; color: #535151; min-height: 150px; white-space: pre-line;">[MESSAGE]</p></td></tr><tr><td class="mail-content" style="word-wrap: break-word; font-family: sans-serif; padding: 6px 15px;"><span style="color: #535151; font-size: 15px; float: left; vertical-align: top; display-inline: block;width: 60px;">From- </span> <span style="color: #535151; font-size: 14px; vertical-align: top; display: inline-block; float: left;">[FROM]</span></td></tr><tr><td style="word-wrap: break-word; font-family: sans-serif; padding: 6px 15px;"><span style="color: #535151; font-size: 15px; float: left;width: 60px; display: inline-block; vertical-align: top;">To- </span> <span style="color: #535151; font-size: 14px; float: left; vertical-align: top;">[TO]</span></td></tr><tr><td style="padding: 5px 15px; word-wrap: break-word;"><span style="color: #0e0149; font-size: 23.96px; vertical-align: top;"><strong>[AMOUNT]/-</strong> </span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td bgcolor="#0e0149"><table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding: 20px 30px; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff;"><p style="font-weight: bold; text-align: center;"></p></td></tr></tbody></table></td></tr></tbody></table>';
+			$wps_wgm_custom_template_html = '<table class="email-container" style="margin: auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="text-align: center; background: #0e0149;"><p style="color: #0e0149; font-size: 25px; font-family: sans-serif; margin: 20px; text-align: left;"><strong>[LOGO]</strong></p></td></tr></tbody></table><table class="email-container" style="margin: auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="padding-bottom: 0px;" bgcolor="#f6f6f6"></td></tr><tr><td style="padding: 19px 30px; text-align: center; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; color: #555555;" bgcolor="#d6ccfd"></td></tr><tr style="background-color: #0e0149;"><td style="color: #fff; font-size: 20px; letter-spacing: 0px; margin: 0; text-transform: uppercase; background-color: #0e0149; padding: 20px 10px; line-height: 0;"><p style="border: 2px dashed #ffffff; color: #fff; font-size: 20px; letter-spacing: 0px; padding: 30px 10px; line-height: 30px; margin: 0; text-transform: uppercase; background-color: #0e0149; text-align: center;">Coupon Code<span style="display: block; font-size: 25px;">[COUPON]</span><span style="display: block;">Ed:[EXPIRYDATE]</span></p></td></tr><tr><td dir="ltr" style="padding-bottom: 34px;" align="center" valign="top" bgcolor="#d7ceff" width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="stack-column-center" style="vertical-align: top;" width="50%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td dir="ltr" style="padding: 15px 25px 0;" valign="top">[DEFAULTEVENT]</td></tr></tbody></table></td><td class="stack-column-center" style="vertical-align: top;" width="50%"><table border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="center-on-narrow" dir="ltr" style="font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff; padding: 15px; text-align: left;" valign="top"><p style="font-size: 15px; line-height: 24px; text-align: justify; color: #535151; min-height: 150px; white-space: pre-line;">[MESSAGE]</p></td></tr><tr><td class="mail-content" style="word-wrap: break-word; font-family: sans-serif; padding: 6px 15px;"><span style="color: #535151; font-size: 15px; float: left; vertical-align: top; display-inline: block;width: 60px;">From- </span> <span style="color: #535151; font-size: 14px; vertical-align: top; display: inline-block; float: left;">[FROM]</span></td></tr><tr><td style="word-wrap: break-word; font-family: sans-serif; padding: 6px 15px;"><span style="color: #535151; font-size: 15px; float: left;width: 60px; display: inline-block; vertical-align: top;">To- </span> <span style="color: #535151; font-size: 14px; float: left; vertical-align: top;">[TO]</span></td></tr><tr><td style="padding: 5px 15px; word-wrap: break-word;"><span style="color: #0e0149; font-size: 23.96px; vertical-align: top;"><strong>[AMOUNT]/-</strong> </span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td bgcolor="#0e0149"><table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding: 20px 30px; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #ffffff;"><p style="font-weight: bold; text-align: center;"></p></td></tr></tbody></table></td></tr></tbody></table>';
 
-			$mwb_wgm_template = array(
+			$wps_wgm_template = array(
 				'post_title' => __( 'Custom Template', 'woo-gift-cards-lite' ),
-				'post_content' => $mwb_wgm_custom_template_html,
+				'post_content' => $wps_wgm_custom_template_html,
 				'post_status' => 'publish',
 				'post_author' => get_current_user_id(),
 				'post_type'     => 'giftcard',
 			);
-			$parent_post_id = wp_insert_post( $mwb_wgm_template );
+			$parent_post_id = wp_insert_post( $wps_wgm_template );
 			set_post_thumbnail( $parent_post_id, $arr[0] );
 		}
 	}
@@ -979,18 +979,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Added Christmas Template
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_insert_christmas_template
+	 * @name wps_wgm_insert_christmas_template
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_insert_christmas_template() {
-		$mwb_wgm_template = get_option( 'mwb_wgm_merry_christmas_template', '' );
-		if ( empty( $mwb_wgm_template ) ) {
-			update_option( 'mwb_wgm_merry_christmas_template', true );
-			$filename = array( MWB_WGC_URL . 'assets/images/merry_christmas.png' );
+	public function wps_wgm_insert_christmas_template() {
+		$wps_wgm_template = get_option( 'wps_wgm_merry_christmas_template', '' );
+		if ( empty( $wps_wgm_template ) ) {
+			update_option( 'wps_wgm_merry_christmas_template', true );
+			$filename = array( WPS_WGC_URL . 'assets/images/merry_christmas.png' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->mwb_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -1024,23 +1024,23 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				}
 			}
 
-			$mwb_wgm_merry_christmas_template = '<center style="width: 100%; text-align: left;"> <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;"> Christmas-gift-card </div><table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin: auto;" class="email-container"> <tr> <td aria-hidden="true" height="5" style="font-size: 0; line-height: 0;"> &nbsp; </td></tr></table> <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin: auto;" class="email-container"> <tr> <td bgcolor="#A10005" align="center"> [HEADER] </td></tr><!--===================================logo-section====================================--><tr> <td dir="ltr" style="padding-bottom: 10px; padding-top:0px;" width="100%" valign="top" align="center" bgcolor="#A10005"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="stack-column-center" width="100%"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td bgcolor="#A10005" align="center">[LOGO] </td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr><tr> <td bgcolor="#A10005" align="center"> [CHRISTMASTITLE] </td></tr><tr> <td bgcolor="#A10005" align="center" style="padding: 10px 20px 10px; text-align: center;"> <p style="text-align:center;margin: 0; font-family: sans-serif; font-size:18px; line-height: 125%; color: #fff; font-weight:normal;">[MESSAGE]</p> </td></tr><tr> <td bgcolor="#A10005" align="center" style="padding: 0px 20px 0px; text-align: center;"> <p style="margin: 0; font-family: sans-serif; font-size:26px; line-height: 125%; color: #fff; font-weight:600;display: inline-block;padding:8px 20px;">[AMOUNT]</p> </td></tr><!--=====================================================coupon-code and wishes section======================================================--><tr> <td dir="ltr" width="100%" valign="top" align="center" bgcolor="#a10005"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="stack-column-center" width="100%" style="background-color:#a10005; text-align: center;padding-bottom:10px;"> <table class="mwb-gc-coupon" role="presentation" width="40%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td dir="ltr" valign="top" align="center" style="padding:10px 0;"> <div style="border:2px dashed #fff;"> <p style="letter-spacing: 1px; margin: 15px 0px 10px; text-transform: uppercase;font-family: sans-serif; font-weight:600; font-size: 12px; color:#fff;">coupon code </p><span class="mwb_coupon_code" style="padding: 10px 10px; text-transform: uppercase; font-size:18px;font-family: sans-serif;font-weight:600;color: rgb(255, 255, 255); font-family: sans-serif;"> [COUPON] </span> <p style="letter-spacing: 1px; text-transform: uppercase;font-family: sans-serif; font-weight: bold; font-size: 12px; margin: 10px 0px 15px; color:#fff;">(Ed:[EXPIRYDATE]) </p></div></td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr><tr> <td bgcolor="#A10005" align="center"> [FOOTER] </td></tr><tr> <td dir="ltr" style="padding-bottom: 10px; padding-top:10px;" width="100%" valign="top" align="center" bgcolor="#E3F3FD"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="mwb-woo-email-left" width="50%"> <table role="presentation" width="100%" align="left" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="mwb-gc-to" dir="ltr" style="text-align:left;padding-left:10px;" valign="top"> <p style="font-weight:bold;color: #A10005; font-size: 16px; font-family: sans-serif; margin: 0px;">To:</p><p style="text-decoration:none;padding-top:5px;padding-bottom:5px;font-weight:bold;color: #000; font-size: 13px; font-family: sans-serif; margin: 0px;">[TO]</p></td></tr></tbody> </table> </td><td class="mwb-woo-email-right" style="vertical-align: top;" width="50%"> <table role="presentation" width="100%" align="right" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="mwb-gc-from" dir="ltr" style="text-align:right;padding-right:10px;" valign="top"> <p style="font-weight:bold;color: #A10005; font-size: 16px; font-family: sans-serif; margin: 0px;">From:</p><p style="text-decoration:none;padding-top:5px;padding-bottom:5px;font-weight:bold;color: #000; font-size: 13px; font-family: sans-serif; margin: 0px;">[FROM]</p></td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr></table></center><style>html, body{margin: 0 auto !important; padding: 0 !important; height: 100% !important; width: 100% !important;}*{-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; box-sizing:border-box;}div[style*="margin: 16px 0"]{margin: 0 !important;}table, td{mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;}table{border-spacing: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; margin: 0 auto !important;}table table table{table-layout: auto;}img{-ms-interpolation-mode:bicubic;}*[x-apple-data-detectors], .x-gmail-data-detectors, .x-gmail-data-detectors *, .aBn{border-bottom: 0 !important; cursor: default !important; color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important;}.a6S{display: none !important; opacity: 0.01 !important;}img.g-img + div{display: none !important;}.button-link{text-decoration: none !important;}@media only screen and (min-device-width: 501px) and (max-device-width: 599px){.mwb-woo-email-left{width:49.5% !important; display: inline-block !important; text-align: left !important;}.mwb-woo-email-right{width:49.5% !important; display: inline-block !important; text-align:right !important;}.mwb-gc-from{text-align: right !important; padding-left:10px; padding-top:5px;}}@media screen and (max-width: 500px){.mwb-woo-email-left{width:100% !important; display:block !important; text-align: left !important;}.mwb-woo-email-right{width:100% !important; display:block !important; text-align:left !important;}.mwb-gc-from{text-align: left !important; padding-left:10px; padding-top:5px;}.mwb-gc-from p{font-size:14px !important;}.mwb-gc-to{text-align: left !important; padding-left:10px; padding-top:5px;}.mwb-gc-to p{font-size:14px !important;}}@media only screen and (min-device-width: 375px) and (max-device-width: 413px){.email-container{min-width: 375px !important;}}@media screen and (max-width: 480px){u ~ div .email-container{min-width: 100vw; width: 100% !important;}.mwb-gc-coupon{width:80% !important;}}</style><style>.mwb_coupon_code {color: rgb(255, 255, 255);}.button-td, .button-a{transition: all 100ms ease-in;}.button-td:hover, .button-a:hover{background: #555555 !important; border-color: #555555 !important;}@media screen and (max-width: 600px){.email-container{width: 100% !important; margin: auto !important;}.fluid{max-width: 100% !important; height: auto !important; margin-left: auto !important; margin-right: auto !important;}.stack-column, .stack-column-center{display: block !important; width: 100% !important; max-width: 100% !important; direction: ltr !important;}.stack-column-center{text-align: center !important;}.center-on-narrow{text-align: center !important; display: block !important; margin-left: auto !important; margin-right: auto !important; float: none !important;}table.center-on-narrow{display: inline-block !important;}}</style>';
-				$header_image = MWB_WGC_URL . 'assets/images/header1.png';
+			$wps_wgm_merry_christmas_template = '<center style="width: 100%; text-align: left;"> <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;"> Christmas-gift-card </div><table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin: auto;" class="email-container"> <tr> <td aria-hidden="true" height="5" style="font-size: 0; line-height: 0;"> &nbsp; </td></tr></table> <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin: auto;" class="email-container"> <tr> <td bgcolor="#A10005" align="center"> [HEADER] </td></tr><!--===================================logo-section====================================--><tr> <td dir="ltr" style="padding-bottom: 10px; padding-top:0px;" width="100%" valign="top" align="center" bgcolor="#A10005"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="stack-column-center" width="100%"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td bgcolor="#A10005" align="center">[LOGO] </td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr><tr> <td bgcolor="#A10005" align="center"> [CHRISTMASTITLE] </td></tr><tr> <td bgcolor="#A10005" align="center" style="padding: 10px 20px 10px; text-align: center;"> <p style="text-align:center;margin: 0; font-family: sans-serif; font-size:18px; line-height: 125%; color: #fff; font-weight:normal;">[MESSAGE]</p> </td></tr><tr> <td bgcolor="#A10005" align="center" style="padding: 0px 20px 0px; text-align: center;"> <p style="margin: 0; font-family: sans-serif; font-size:26px; line-height: 125%; color: #fff; font-weight:600;display: inline-block;padding:8px 20px;">[AMOUNT]</p> </td></tr><!--=====================================================coupon-code and wishes section======================================================--><tr> <td dir="ltr" width="100%" valign="top" align="center" bgcolor="#a10005"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="stack-column-center" width="100%" style="background-color:#a10005; text-align: center;padding-bottom:10px;"> <table class="wps-gc-coupon" role="presentation" width="40%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td dir="ltr" valign="top" align="center" style="padding:10px 0;"> <div style="border:2px dashed #fff;"> <p style="letter-spacing: 1px; margin: 15px 0px 10px; text-transform: uppercase;font-family: sans-serif; font-weight:600; font-size: 12px; color:#fff;">coupon code </p><span class="wps_coupon_code" style="padding: 10px 10px; text-transform: uppercase; font-size:18px;font-family: sans-serif;font-weight:600;color: rgb(255, 255, 255); font-family: sans-serif;"> [COUPON] </span> <p style="letter-spacing: 1px; text-transform: uppercase;font-family: sans-serif; font-weight: bold; font-size: 12px; margin: 10px 0px 15px; color:#fff;">(Ed:[EXPIRYDATE]) </p></div></td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr><tr> <td bgcolor="#A10005" align="center"> [FOOTER] </td></tr><tr> <td dir="ltr" style="padding-bottom: 10px; padding-top:10px;" width="100%" valign="top" align="center" bgcolor="#E3F3FD"> <table role="presentation" width="100%" align="center" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="wps-woo-email-left" width="50%"> <table role="presentation" width="100%" align="left" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="wps-gc-to" dir="ltr" style="text-align:left;padding-left:10px;" valign="top"> <p style="font-weight:bold;color: #A10005; font-size: 16px; font-family: sans-serif; margin: 0px;">To:</p><p style="text-decoration:none;padding-top:5px;padding-bottom:5px;font-weight:bold;color: #000; font-size: 13px; font-family: sans-serif; margin: 0px;">[TO]</p></td></tr></tbody> </table> </td><td class="wps-woo-email-right" style="vertical-align: top;" width="50%"> <table role="presentation" width="100%" align="right" cellspacing="0" cellpadding="0" border="0"> <tbody> <tr> <td class="wps-gc-from" dir="ltr" style="text-align:right;padding-right:10px;" valign="top"> <p style="font-weight:bold;color: #A10005; font-size: 16px; font-family: sans-serif; margin: 0px;">From:</p><p style="text-decoration:none;padding-top:5px;padding-bottom:5px;font-weight:bold;color: #000; font-size: 13px; font-family: sans-serif; margin: 0px;">[FROM]</p></td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr></table></center><style>html, body{margin: 0 auto !important; padding: 0 !important; height: 100% !important; width: 100% !important;}*{-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; box-sizing:border-box;}div[style*="margin: 16px 0"]{margin: 0 !important;}table, td{mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;}table{border-spacing: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; margin: 0 auto !important;}table table table{table-layout: auto;}img{-ms-interpolation-mode:bicubic;}*[x-apple-data-detectors], .x-gmail-data-detectors, .x-gmail-data-detectors *, .aBn{border-bottom: 0 !important; cursor: default !important; color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important;}.a6S{display: none !important; opacity: 0.01 !important;}img.g-img + div{display: none !important;}.button-link{text-decoration: none !important;}@media only screen and (min-device-width: 501px) and (max-device-width: 599px){.wps-woo-email-left{width:49.5% !important; display: inline-block !important; text-align: left !important;}.wps-woo-email-right{width:49.5% !important; display: inline-block !important; text-align:right !important;}.wps-gc-from{text-align: right !important; padding-left:10px; padding-top:5px;}}@media screen and (max-width: 500px){.wps-woo-email-left{width:100% !important; display:block !important; text-align: left !important;}.wps-woo-email-right{width:100% !important; display:block !important; text-align:left !important;}.wps-gc-from{text-align: left !important; padding-left:10px; padding-top:5px;}.wps-gc-from p{font-size:14px !important;}.wps-gc-to{text-align: left !important; padding-left:10px; padding-top:5px;}.wps-gc-to p{font-size:14px !important;}}@media only screen and (min-device-width: 375px) and (max-device-width: 413px){.email-container{min-width: 375px !important;}}@media screen and (max-width: 480px){u ~ div .email-container{min-width: 100vw; width: 100% !important;}.wps-gc-coupon{width:80% !important;}}</style><style>.wps_coupon_code {color: rgb(255, 255, 255);}.button-td, .button-a{transition: all 100ms ease-in;}.button-td:hover, .button-a:hover{background: #555555 !important; border-color: #555555 !important;}@media screen and (max-width: 600px){.email-container{width: 100% !important; margin: auto !important;}.fluid{max-width: 100% !important; height: auto !important; margin-left: auto !important; margin-right: auto !important;}.stack-column, .stack-column-center{display: block !important; width: 100% !important; max-width: 100% !important; direction: ltr !important;}.stack-column-center{text-align: center !important;}.center-on-narrow{text-align: center !important; display: block !important; margin-left: auto !important; margin-right: auto !important; float: none !important;}table.center-on-narrow{display: inline-block !important;}}</style>';
+				$header_image = WPS_WGC_URL . 'assets/images/header1.png';
 				$header_image = "<img src='$header_image' width='600' height='' alt='alt_text' border='0' align='center' style='width: 100%; max-width: 600px; height: auto; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; margin: auto;' class='g-img'/>";
 
-				$christmas_title_image = MWB_WGC_URL . 'assets/images/christmas-title.png';
+				$christmas_title_image = WPS_WGC_URL . 'assets/images/christmas-title.png';
 				$christmas_title_image = "<img src='$christmas_title_image' width='250' height='' alt='alt_text' border='0' align='center' style='padding:0 10px;width: 100%; max-width: 500px; height: auto; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; margin: auto;' class='g-img'>";
 
-				$footer_image = MWB_WGC_URL . 'assets/images/footer1.png';
+				$footer_image = WPS_WGC_URL . 'assets/images/footer1.png';
 				$footer_image = "<img src='$footer_image' width='600' height='' alt='alt_text' border='0' align='center' style='width: 100%; max-width: 600px; height: auto; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; margin: auto;' class='g-img'>";
 				// Replced with images.
-				$mwb_wgm_merry_christmas_template = str_replace( '[HEADER]', $header_image, $mwb_wgm_merry_christmas_template );
-				$mwb_wgm_merry_christmas_template = str_replace( '[CHRISTMASTITLE]', $christmas_title_image, $mwb_wgm_merry_christmas_template );
-				$mwb_wgm_merry_christmas_template = str_replace( '[FOOTER]', $footer_image, $mwb_wgm_merry_christmas_template );
+				$wps_wgm_merry_christmas_template = str_replace( '[HEADER]', $header_image, $wps_wgm_merry_christmas_template );
+				$wps_wgm_merry_christmas_template = str_replace( '[CHRISTMASTITLE]', $christmas_title_image, $wps_wgm_merry_christmas_template );
+				$wps_wgm_merry_christmas_template = str_replace( '[FOOTER]', $footer_image, $wps_wgm_merry_christmas_template );
 
 			$gifttemplate_new = array(
 				'post_title' => __( 'Merry Christmas Template', 'woo-gift-cards-lite' ),
-				'post_content' => $mwb_wgm_merry_christmas_template,
+				'post_content' => $wps_wgm_merry_christmas_template,
 				'post_status' => 'publish',
 				'post_author' => get_current_user_id(),
 				'post_type'     => 'giftcard',
@@ -1053,7 +1053,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Add Preview button link in giftcard post
 	 *
-	 * @name mwb_wgm_preview_gift_template
+	 * @name wps_wgm_preview_gift_template
 	 * @param array  $actions actions.
 	 * @param object $post post.
 	 * @return $actions.
@@ -1061,9 +1061,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.makewebbetter.com/
 	 * @since 1.0.0
 	 */
-	public function mwb_wgm_preview_gift_template( $actions, $post ) {
+	public function wps_wgm_preview_gift_template( $actions, $post ) {
 		if ( 'giftcard' == $post->post_type ) {
-			$actions['mwb_wgm_quick_view'] = '<a href="' . admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID . '&mwb_wgm_template=giftcard&TB_iframe=true&width=600&height=500' ) . '" rel="permalink" class="thickbox">' . __( 'Preview', 'woo-gift-cards-lite' ) . '</a>';
+			$actions['wps_wgm_quick_view'] = '<a href="' . admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID . '&wps_wgm_template=giftcard&TB_iframe=true&width=600&height=500' ) . '" rel="permalink" class="thickbox">' . __( 'Preview', 'woo-gift-cards-lite' ) . '</a>';
 		}
 		return $actions;
 	}
@@ -1071,38 +1071,38 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Preview of email template
 	 *
-	 * @name mwb_wgm_preview_email_template
+	 * @name wps_wgm_preview_email_template
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @since 1.0.0
 	 */
-	public function mwb_wgm_preview_email_template() {
-		if ( isset( $_GET['mwb_wgm_template'] ) ) {
-			if ( isset( $_GET['mwb_wgm_template'] ) == 'giftcard' ) {
+	public function wps_wgm_preview_email_template() {
+		if ( isset( $_GET['wps_wgm_template'] ) ) {
+			if ( isset( $_GET['wps_wgm_template'] ) == 'giftcard' ) {
 				$post_id = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
 				$todaydate = date_i18n( 'Y-m-d' );
-				$mwb_wgm_general_settings = get_option( 'mwb_wgm_general_settings', false );
+				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
 
-				$expiry_date = $this->mwb_common_fun->mwb_wgm_get_template_data( $mwb_wgm_general_settings, 'mwb_wgm_general_setting_giftcard_expiry' );
+				$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
 
-				$expirydate_format = $this->mwb_common_fun->mwb_wgm_check_expiry_date( $expiry_date );
-				$mwb_wgm_coupon_length_display = $this->mwb_common_fun->mwb_wgm_get_template_data( $mwb_wgm_general_settings, 'mwb_wgm_general_setting_giftcard_coupon_length' );
+				$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
+				$wps_wgm_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_coupon_length' );
 
-				if ( '' == $mwb_wgm_coupon_length_display ) {
-					$mwb_wgm_coupon_length_display = 5;
+				if ( '' == $wps_wgm_coupon_length_display ) {
+					$wps_wgm_coupon_length_display = 5;
 				}
 				$password = '';
-				for ( $i = 0;$i < $mwb_wgm_coupon_length_display;$i++ ) {
+				for ( $i = 0;$i < $wps_wgm_coupon_length_display;$i++ ) {
 					$password .= 'x';
 				}
-				$giftcard_prefix = $this->mwb_common_fun->mwb_wgm_get_template_data( $mwb_wgm_general_settings, 'mwb_wgm_general_setting_giftcard_prefix' );
+				$giftcard_prefix = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_prefix' );
 				$coupon = $giftcard_prefix . $password;
 				$templateid = $post_id;
 
 				$args['from'] = esc_html__( 'from@example.com', 'woo-gift-cards-lite' );
 				$args['to'] = esc_html__( 'to@example.com', 'woo-gift-cards-lite' );
 				$args['message'] = esc_html__( 'Your gift message will appear here which you send to your receiver. ', 'woo-gift-cards-lite' );
-				$args['coupon'] = apply_filters( 'mwb_wgm_static_coupon_img', $coupon );
+				$args['coupon'] = apply_filters( 'wps_wgm_static_coupon_img', $coupon );
 				$args['expirydate'] = $expirydate_format;
 				$args['amount'] = wc_price( 100 );
 				$args['templateid'] = $templateid;
@@ -1113,17 +1113,17 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					table, th, tr, td {
 						border: 0px !important;
 					}
-						#mwb_gw_email {
+						#wps_gw_email {
 					width: 630px !important;
 				}
 				</style>';
-				$message = $this->mwb_common_fun->mwb_wgm_create_gift_template( $args );
+				$message = $this->wps_common_fun->wps_wgm_create_gift_template( $args );
 				$finalhtml = $style . $message;
 
-				if ( mwb_uwgc_pro_active() ) {
+				if ( wps_uwgc_pro_active() ) {
 					do_action( 'preview_email_template_for_pro', $finalhtml );
 				} else {
-					$allowed_tags = $this->mwb_common_fun->mwb_allowed_html_tags();
+					$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
 					// @codingStandardsIgnoreStart.
 					echo wp_kses( $finalhtml, $allowed_tags );
 					die();
@@ -1137,13 +1137,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This is used to add row meta on plugin activation.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_custom_plugin_row_meta
+	 * @name wps_custom_plugin_row_meta
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @param mixed $links Contains links.
 	 * @param mixed $file Contains main file.
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_custom_plugin_row_meta( $links, $file ) {
+	public function wps_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
 			$new_links = array(
 				'demo' => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
@@ -1160,18 +1160,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to get all the templates in giftcard lite plugin.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgm_get_all_lite_templates
+	 * @name wps_wgm_get_all_lite_templates
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_get_all_lite_templates() {
-		$mwb_lite_templates = array(
+	public function wps_wgm_get_all_lite_templates() {
+		$wps_lite_templates = array(
 			'Love You Mom',
 			'Gift for You',
 			'Custom Template',
 			'Merry Christmas Template',
 		);
-		return $mwb_lite_templates;
+		return $wps_lite_templates;
 	}
 
 
@@ -1179,18 +1179,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * Set Cron for plugin notification.
 	 *
 	 * @since    2.0.0
-	 * @name mwb_wgm_set_cron_for_plugin_notification
+	 * @name wps_wgm_set_cron_for_plugin_notification
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_set_cron_for_plugin_notification() {
+	public function wps_wgm_set_cron_for_plugin_notification() {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
 		// Already submitted the data.
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 			$offset = get_option( 'gmt_offset' );
 			$time = time() + $offset * 60 * 60;
-			if ( ! wp_next_scheduled( 'mwb_wgm_check_for_notification_update' ) ) {
-				wp_schedule_event( $time, 'daily', 'mwb_wgm_check_for_notification_update' );
+			if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
+				wp_schedule_event( $time, 'daily', 'wps_wgm_check_for_notification_update' );
 			}
 		}
 	}
@@ -1199,17 +1199,17 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to save notification message with notification id.
 	 *
 	 * @since    2.0.0
-	 * @name mwb_wgm_save_notice_message
+	 * @name wps_wgm_save_notice_message
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_save_notice_message() {
-		$mwb_notification_data = $this->mwb_get_update_notification_data();
-		if ( is_array( $mwb_notification_data ) && ! empty( $mwb_notification_data ) ) {
-			$notification_id = array_key_exists( 'notification_id', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_id'] : '';
-			$notification_message = array_key_exists( 'notification_message', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_message'] : '';
-			update_option( 'mwb_wgm_notify_new_msg_id', $notification_id );
-			update_option( 'mwb_wgm_notify_new_message', $notification_message );
+	public function wps_wgm_save_notice_message() {
+		$wps_notification_data = $this->wps_get_update_notification_data();
+		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
+			$notification_id = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_id'] : '';
+			$notification_message = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_message'] : '';
+			update_option( 'wps_wgm_notify_new_msg_id', $notification_id );
+			update_option( 'wps_wgm_notify_new_message', $notification_message );
 		}
 	}
 
@@ -1217,16 +1217,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to get notification data from server.
 	 *
 	 * @since    2.0.0
-	 * @name mwb_get_update_notification_data
+	 * @name wps_get_update_notification_data
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_get_update_notification_data() {
-		$mwb_notification_data = array();
-		$url = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/mwb-client-notify.php';
+	public function wps_get_update_notification_data() {
+		$wps_notification_data = array();
+		$url = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/wps-client-notify.php';
 		$attr = array(
-			'action' => 'mwb_notification_fetch',
-			'plugin_version' => MWB_WGC_VERSION,
+			'action' => 'wps_notification_fetch',
+			'plugin_version' => WPS_WGC_VERSION,
 		);
 		$query = esc_url_raw( add_query_arg( $attr, $url ) );
 		$response = wp_remote_get(
@@ -1240,36 +1240,36 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$error_message = $response->get_error_message();
 			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
 		} else {
-			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
+			$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
-		return $mwb_notification_data;
+		return $wps_notification_data;
 	}
 
 	/**
 	 * This function is used to display notoification bar at admin.
 	 *
 	 * @since    2.0.0
-	 * @name mwb_wgm_display_notification_bar
+	 * @name wps_wgm_display_notification_bar
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_display_notification_bar() {
+	public function wps_wgm_display_notification_bar() {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
-		if ( ( isset( $_GET['page'] ) && 'mwb-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
-			$notification_id = get_option( 'mwb_wgm_notify_new_msg_id', false );
+		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
+			$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
 			if ( isset( $notification_id ) && '' !== $notification_id ) {
-				$hidden_id = get_option( 'mwb_wgm_notify_hide_notification', false );
-				$notification_message = get_option( 'mwb_wgm_notify_new_message', '' );
+				$hidden_id = get_option( 'wps_wgm_notify_hide_notification', false );
+				$notification_message = get_option( 'wps_wgm_notify_new_message', '' );
 				if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
 					if ( '' !== $notification_message ) {
 						?>
 						<div class="notice is-dismissible notice-info" id="dismiss_notice">
 							<div class="notice-container">
 								<div class="notice-image">
-									<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/wpswings_logo.png' ); ?>" alt="MakeWebBetter">
+									<img src="<?php echo esc_url( WPS_WGC_URL . 'assets/images/wpswings_logo.png' ); ?>" alt="MakeWebBetter">
 								</div> 
 								<div class="notice-content">
 									<?php echo wp_kses_post( $notification_message ); ?>
@@ -1288,15 +1288,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to dismiss admin notices.
 	 *
 	 * @since    2.0.0
-	 * @name mwb_wgm_dismiss_notice
+	 * @name wps_wgm_dismiss_notice
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_dismiss_notice() {
-		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wgm-verify-notice-nonce' ) ) {
-			$notification_id = get_option( 'mwb_wgm_notify_new_msg_id', false );
+	public function wps_wgm_dismiss_notice() {
+		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wgm-verify-notice-nonce' ) ) {
+			$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
 			if ( isset( $notification_id ) && '' !== $notification_id ) {
-				update_option( 'mwb_wgm_notify_hide_notification', $notification_id );
+				update_option( 'wps_wgm_notify_hide_notification', $notification_id );
 			}
 			wp_send_json_success();
 		}
@@ -1306,26 +1306,26 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * The function displays a button to enable plugin after plugin activation.
 	 *
 	 * @since    2.0.0
-	 * @name mwb_wgm_setting_notice_on_activation
+	 * @name wps_wgm_setting_notice_on_activation
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wgm_setting_notice_on_activation() {
+	public function wps_wgm_setting_notice_on_activation() {
 		/* Check transient, if available display notice */
-		if ( get_transient( 'mwb-wgm-giftcard-setting-notice' ) ) {
+		if ( get_transient( 'wps-wgm-giftcard-setting-notice' ) ) {
 			?>
-			<div class="updated notice is-dismissible" class="mwb-wgm-is-dismissible">
-			<p class="mwb_wgm_plugin_active_para"><strong><?php esc_html_e( 'Welcome to Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( '– Create and sell multiple gift cards with ease.', 'woo-gift-cards-lite' ); ?>
+			<div class="updated notice is-dismissible" class="wps-wgm-is-dismissible">
+			<p class="wps_wgm_plugin_active_para"><strong><?php esc_html_e( 'Welcome to Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( '– Create and sell multiple gift cards with ease.', 'woo-gift-cards-lite' ); ?>
 			</p>
 			<?php
-			$general_settings = get_option( 'mwb_wgm_general_settings', array() );
-			require_once MWB_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
-			$mwb_obj = new Woocommerce_Gift_Cards_Common_Function();
-			$mwb_wgm_general_setting_enable = $mwb_obj->mwb_wgm_get_template_data( $general_settings, 'mwb_wgm_general_setting_enable' );
-			if ( 'on' !== $mwb_wgm_general_setting_enable ) {
+			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			require_once WPS_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
+			$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
+			$wps_wgm_general_setting_enable = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable' );
+			if ( 'on' !== $wps_wgm_general_setting_enable ) {
 				?>
-				<p class="mwb_show_setting_on_activation">
-					<a class="mwb_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=mwb-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Giftcards', 'woo-gift-cards-lite' ); ?></a>
+				<p class="wps_show_setting_on_activation">
+					<a class="wps_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Giftcards', 'woo-gift-cards-lite' ); ?></a>
 				</p>
 				<?php
 			}
@@ -1334,7 +1334,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			</div>
 			<?php
 			/* Delete transient, only display this notice once. */
-			delete_transient( 'mwb-wgm-giftcard-setting-notice' );
+			delete_transient( 'wps-wgm-giftcard-setting-notice' );
 		}
 	}
 
@@ -1343,16 +1343,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
-	 * @name add_mwb_frontend_screens
+	 * @name add_wps_frontend_screens
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function add_mwb_frontend_screens( $valid_screens = array() ) {
+	public function add_wps_frontend_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
 
 			// Push your screen here.
-			array_push( $valid_screens, 'giftcard_page_mwb-wgc-setting-lite' );
+			array_push( $valid_screens, 'giftcard_page_wps-wgc-setting-lite' );
 		}
 		return $valid_screens;  }
 
@@ -1361,11 +1361,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @param array $valid_screens valid screen.
 	 * @since    2.5.0
-	 * @name add_mwb_deactivation_screens
+	 * @name add_wps_deactivation_screens
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
+	public function add_wps_deactivation_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
 
@@ -1379,13 +1379,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Get the File Content
 	 *
-	 * @param string $mwb_file_path file path.
+	 * @param string $wps_file_path file path.
 	 * @return string $response['body'].
 	 */
-	public function mwb_wgm_get_file_content( $mwb_file_path ) {
+	public function wps_wgm_get_file_content( $wps_file_path ) {
 
 		$response = wp_remote_get(
-			$mwb_file_path,
+			$wps_file_path,
 			array(
 				'timeout'    => 20,
 				'sslverify'  => false,
@@ -1403,7 +1403,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param object $post post.
 	 * @return array $actions.
 	 */
-	public function mwb_wgm_remove_row_actions( $actions, $post ) {
+	public function wps_wgm_remove_row_actions( $actions, $post ) {
 		global $current_screen;
 		if ( 'giftcard' != $current_screen->post_type ) {
 			return $actions;
