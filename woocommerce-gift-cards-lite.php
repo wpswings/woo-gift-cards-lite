@@ -60,7 +60,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.3.1' );
+	define( 'WPS_WGC_VERSION', '2.3.2' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
