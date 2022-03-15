@@ -453,26 +453,107 @@ function wps_org_upgrade_wp_postmeta() {
 
 		$post_meta_keys = array(
 			'mwb_wgm_pricing',
+			'mwb_wgm_pricing_details',
+		);
+
+		$post_meta_keys1 = array(
 			'mwb_wgm_giftcard_coupon',
 			'mwb_wgm_giftcard_coupon_unique',
 			'mwb_wgm_giftcard_coupon_product_id',
 			'mwb_wgm_giftcard_coupon_mail_to',
 			'mwb_wgm_coupon_amount',
-			'mwb_wgm_order_giftcard',
+		);
 
+		$post_meta_keys2 = array(
+			'mwb_wgm_order_giftcard',
 		);
 
 		foreach ( $post_meta_keys as $key => $meta_keys ) {
-				$products = get_posts(
-					array(
-						'numberposts' => -1,
-						'post_status' => 'publish',
-						'fields'      => 'ids', // return only ids.
-						'meta_key'    => $meta_keys, //phpcs:ignore
-						'post_type'   => 'product',
-						'order'       => 'ASC',
-					)
-				);
+			$products = get_posts(
+				array(
+					'numberposts' => -1,
+					'post_status' => 'publish',
+					'fields'      => 'ids', // return only ids.
+					'meta_key'    => $meta_keys, //phpcs:ignore
+					'post_type'   => 'product',
+					'order'       => 'ASC',
+				)
+			);
+
+			if ( ! empty( $products ) && is_array( $products ) ) {
+				foreach ( $products as $k => $product_id ) {
+					$values   = get_post_meta( $product_id, $meta_keys, true );
+					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+	
+					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+						continue;
+					}
+	
+					$arr_val_post = array();
+					if ( is_array( $values ) ) {
+						foreach ( $values  as $key => $value ) {
+							$keys = str_replace( 'mwb_', 'wps_', $key );
+	
+							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+							$arr_val_post[ $key ] = $new_key1;
+						}
+						update_post_meta( $product_id, $new_key, $arr_val_post );
+					} else {
+						update_post_meta( $product_id, $new_key, $values );
+					}
+				}
+			}
+
+		}
+
+		foreach ( $post_meta_keys1 as $key => $meta_keys ) {
+			$products = get_posts(
+				array(
+					'numberposts' => -1,
+					'post_status' => 'publish',
+					'fields'      => 'ids', // return only ids.
+					'meta_key'    => $meta_keys, //phpcs:ignore
+					'post_type'   => 'shop_coupon',
+					'order'       => 'ASC',
+				)
+			);
+
+			if ( ! empty( $products ) && is_array( $products ) ) {
+				foreach ( $products as $k => $product_id ) {
+					$values   = get_post_meta( $product_id, $meta_keys, true );
+					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+	
+					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+						continue;
+					}
+	
+					$arr_val_post = array();
+					if ( is_array( $values ) ) {
+						foreach ( $values  as $key => $value ) {
+							$keys = str_replace( 'mwb_', 'wps_', $key );
+	
+							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+							$arr_val_post[ $key ] = $new_key1;
+						}
+						update_post_meta( $product_id, $new_key, $arr_val_post );
+					} else {
+						update_post_meta( $product_id, $new_key, $values );
+					}
+				}
+			}
+		}
+
+		foreach ( $post_meta_keys2 as $key => $meta_keys ) {
+			$products = get_posts(
+				array(
+					'numberposts' => -1,
+					'post_status' => array( 'wc-processing', 'wc-completed' ),
+					'fields'      => 'ids', // return only ids.
+					'meta_key'    => $meta_keys, //phpcs:ignore
+					'post_type'   => 'shop_order',
+					'order'       => 'ASC',
+				)
+			);
 
 			if ( ! empty( $products ) && is_array( $products ) ) {
 				foreach ( $products as $k => $product_id ) {
@@ -634,4 +715,3 @@ function wps_org_replace_mwb_to_wps_in_shortcodes() {
 		}
 	}
 }
-
