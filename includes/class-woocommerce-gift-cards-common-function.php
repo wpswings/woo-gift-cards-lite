@@ -713,5 +713,19 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				return $template_id;
 			}
 		}
+
+		/**
+		 * Get the templates selected in Giftcard lite plugin earlier.
+		 *
+		 * @since 1.0.0
+		 * @param array  $wps_wgm_settings wps_wgm_settings.
+		 * @param string $key databse key name.
+		 * @name wps_get_org_selected_template
+		 * @author WP Swings <webmaster@wpswings.com>
+		 * @link https://www.makewebbetter.com/
+		 */
+		public function mwb_wgm_get_template_data( $wps_wgm_settings, $key ) {
+			$this->wps_wgm_get_template_data( $wps_wgm_settings, $key );
+		}
 	}
 }
