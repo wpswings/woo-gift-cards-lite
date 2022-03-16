@@ -59,7 +59,7 @@ jQuery(document).ready( function($) {
 			} else {
 				// All orders imported!
 				Swal.fire({
-					title   : 'All Data are migrated successfully!',
+					title   : 'Data are migrated successfully!',
 				})
 			}
 		}, function(error) {

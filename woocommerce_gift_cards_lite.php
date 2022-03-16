@@ -313,7 +313,6 @@ if ( $activated ) {
 	 * @param string $status Status filter currently applied to the plugin list.
 	 */
 	function wps_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
-
 		?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
@@ -326,6 +325,16 @@ if ( $activated ) {
 						<p><?php esc_html_e( 'From update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
 						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?>
 					</div>
+				</div>
+				<div class="notice notice-warning inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin.', 'woo-gift-cards-lite' ) ?><strong><?php esc_html_e( ' Please Migrate Your data from ', 'woo-gift-cards-lite' ); ?></strong><a href="<?php admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ); ?>"><?php esc_html_e( 'Dashboard', 'woo-gift-cards-lite' ); ?></a><?php esc_html_e(' page then Click On Start Import Button.', 'woo-gift-cards-lite' ); ?>
+					</p>
+				</div>
+				<div class="notice notice-warning inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<?php esc_html_e( 'This version is compatible with ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 3.4.2', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards of GiftCard Pro.', 'woo-gift-cards-lite' ); ?>
+					</p>
 				</div>
 			</td>
 		</tr>
@@ -370,7 +379,7 @@ if ( $activated ) {
 					</p>
 					<p>
 						<?php
-							esc_html_e( 'GiftCard has been updated! To keep things running smoothly, we have to update your database to the newest version.', 'woo-gift-cards-lite' );
+							esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin.', 'woo-gift-cards-lite' ) ?><strong><?php esc_html_e( ' Please Migrate Your data by ', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e(' Click On Start Import Button.', 'woo-gift-cards-lite' );
 						?>
 					</p>
 					<p>
@@ -447,13 +456,25 @@ add_action( 'admin_init', 'wps_migration_func' );
  * Migration code function
  */
 function wps_migration_func() {
-	$migration_val_updated = get_option( 'wps_org_migration_value_updated', 'no' );
+	if ( is_plugin_active( 'giftware/giftware.php' ) ) {
+
+		$plug = get_plugins();
+		if ( isset( $plug['giftware/giftware.php'] ) ) {
+			if ( $plug['giftware/giftware.php']['Version'] < '3.4.2' ) {
+				unset( $_GET['activate'] );
+				deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
+				$general_settings_url = admin_url( 'plugins.php' );
+				header( 'Location: ' . $general_settings_url );
+			}
+		}
+	}
+	$migration_val_updated = get_option( 'wps_wgm_org_migration_value_updated', 'no' );
 
 	if ('no' == $migration_val_updated ) {
 		wps_org_upgrade_wp_options();
 		wps_update_terms();
 		wps_org_replace_mwb_to_wps_in_shortcodes();
-		update_option( 'wps_org_migration_value_updated', 'yes' );
+		update_option( 'wps_wgm_org_migration_value_updated', 'yes' );
 	}
 }
 /**
