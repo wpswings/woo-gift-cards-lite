@@ -106,6 +106,22 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
+
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wps-wgm-addon-admin.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
+			wp_localize_script(
+				$this->plugin_name,
+				'localised',
+				array(
+					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+					'nonce'            => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
+					'callback'         => 'ajax_callbacks',
+					'pending_count'    => $this->wps_wgm_get_count( 'pending' ),
+					'pending_orders'   => $this->wps_wgm_get_count( 'pending', 'orders' ),
+					'completed_orders' => $this->wps_wgm_get_count( 'done', 'orders' ),
+				)
+			);
+
 			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'gift-cards-for-woocommerce-pro/giftware.php' ) ) {
 				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, true );
 			}
@@ -1410,6 +1426,127 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 		unset( $actions['inline hide-if-no-js'] );
 		return $actions;
+	}
+
+	public function wps_wgm_get_count( $type = 'all', $action = 'count' ) {
+
+		switch ( $type ) {
+			case 'pending':
+				$sql = "SELECT (`post_id`)
+				FROM `wp_postmeta`
+				WHERE `meta_key` LIKE '%mwb_wgm%'";
+				break;
+
+			default:
+				$sql = false;
+				break;
+		}
+
+		$sql = apply_filters( 'wps_uwgc_get_count', $sql );
+
+		if ( empty( $sql ) ) {
+			return 0;
+		}
+
+		global $wpdb;
+		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+
+		if ( 'count' === $action ) {
+			$result = ! empty( $result ) ? count( $result ) : 0;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * This is a ajax callback function for migration.
+	 */
+	public function wps_wgm_ajax_callbacks() {
+
+		check_ajax_referer( 'wps_wgm_migrated_nonce', 'nonce' );
+		$event = ! empty( $_POST['event'] ) ? sanitize_text_field( wp_unslash( $_POST['event'] ) ) : '';
+		if ( method_exists( $this, $event ) ) {
+			$data = $this->$event( $_POST );
+		} else {
+			$data = esc_html__( 'method not found', 'woo-gift-cards-lite' );
+		}
+		echo wp_json_encode( $data );
+		wp_die();
+	}
+
+	/**
+	 * Import order callback.
+	 *
+	 * @param array $posted_data The $_POST data.
+	 */
+	public function import_single_order( $posted_data = array() ) {
+
+		$orders = ! empty( $posted_data['orders'] ) ? $posted_data['orders'] : array();
+
+		if ( empty( $orders ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $orders as $key => $order ) {
+			$order_id = ! empty( $order['post_id'] ) ? $order['post_id'] : false;
+			unset( $orders[ $key ] );
+			break;
+		}
+
+		// Attempt for one order.
+		if ( ! empty( $order_id ) ) {
+
+			try {
+
+				// code
+				$post_meta_keys = array(
+					'mwb_wgm_pricing',
+					'mwb_wgm_pricing_details',
+					'mwb_wgm_giftcard_coupon',
+					'mwb_wgm_giftcard_coupon_unique',
+					'mwb_wgm_giftcard_coupon_product_id',
+					'mwb_wgm_giftcard_coupon_mail_to',
+					'mwb_wgm_coupon_amount',
+					'mwb_wgm_order_giftcard',
+				);
+
+				$post_meta_keys = apply_filters( 'wps_uwgc_import_single_order', $post_meta_keys );
+
+				foreach ( $post_meta_keys as $key => $meta_keys ) {
+
+					if ( ! empty( $order_id ) ) {
+						$value   = get_post_meta( $order_id, $meta_keys, true );
+						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+
+						if ( ! empty( $value ) ) {
+							$arr_val_post = array();
+							if ( is_array( $value ) ) {
+								foreach ( $value as $key => $val ) {
+									$keys = str_replace( 'mwb_', 'wps_', $key );
+
+									$new_key1 = str_replace( 'mwb_', 'wps_', $val );
+									$arr_val_post[ $key ] = $new_key1;
+								}
+								update_post_meta( $order_id, $new_key, $arr_val_post );
+								// delete_post_meta( $order_id, $meta_keys );
+								// update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+							} else {
+								update_post_meta( $order_id, $new_key, $value );
+								// delete_post_meta( $order_id, $meta_keys );
+								// update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+							}
+						}
+					}
+				}
+				update_post_meta( $order_id, 'wps_wgm_migrated', 'true' );
+
+			} catch ( \Throwable $th ) {
+				wp_die( esc_html( $th->getMessage() ) );
+			}
+		}
+
+		return compact( 'orders' );
 	}
 }
 ?>

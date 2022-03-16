@@ -38,6 +38,8 @@ if ( is_plugin_active( 'giftware/giftware.php' ) ) {
 		if ( $plug['giftware/giftware.php']['Version'] < '3.4.2' ) {
 			unset( $_GET['activate'] );
 			deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
+			$general_settings_url = admin_url( 'plugins.php' );
+			header( 'Location: ' . $general_settings_url );
 		}
 	}
 }
@@ -362,10 +364,24 @@ if ( $activated ) {
 						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
 					</div>
 				</div>
+				<div id="message" class="updated woocommerce-message">
+					<p>
+						<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
+					</p>
+					<p>
+						<?php
+							esc_html_e( 'GiftCard has been updated! To keep things running smoothly, we have to update your database to the newest version.', 'woo-gift-cards-lite' );
+						?>
+					</p>
+					<p>
+						<a class="treat-button button-primary">
+							<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
+						</a>
+					</p>
+				</div>
 			</td>
 		</tr>
 		<style>
-		
 			.wps-notice-section > p:before {
 				content: none;
 			}
@@ -434,8 +450,6 @@ function wps_migration_func() {
 	$migration_val_updated = get_option( 'wps_org_migration_value_updated', 'no' );
 
 	if ('no' == $migration_val_updated ) {
-
-		wps_org_upgrade_wp_postmeta();
 		wps_org_upgrade_wp_options();
 		wps_update_terms();
 		wps_org_replace_mwb_to_wps_in_shortcodes();
@@ -443,248 +457,110 @@ function wps_migration_func() {
 	}
 }
 /**
- * Upgrade_wp_postmeta. (use period)
+ * Upgrade_wp_options. (use period)
  *
- * Upgrade_wp_postmeta.
+ * Upgrade_wp_options.
  *
  * @since    1.0.0
  */
-function wps_org_upgrade_wp_postmeta() {
-
-		$post_meta_keys = array(
-			'mwb_wgm_pricing',
-			'mwb_wgm_pricing_details',
-		);
-
-		$post_meta_keys1 = array(
-			'mwb_wgm_giftcard_coupon',
-			'mwb_wgm_giftcard_coupon_unique',
-			'mwb_wgm_giftcard_coupon_product_id',
-			'mwb_wgm_giftcard_coupon_mail_to',
-			'mwb_wgm_coupon_amount',
-		);
-
-		$post_meta_keys2 = array(
-			'mwb_wgm_order_giftcard',
-		);
-
-		foreach ( $post_meta_keys as $key => $meta_keys ) {
-			$products = get_posts(
-				array(
-					'numberposts' => -1,
-					'post_status' => 'publish',
-					'fields'      => 'ids', // return only ids.
-					'meta_key'    => $meta_keys, //phpcs:ignore
-					'post_type'   => 'product',
-					'order'       => 'ASC',
-				)
-			);
-
-			if ( ! empty( $products ) && is_array( $products ) ) {
-				foreach ( $products as $k => $product_id ) {
-					$values   = get_post_meta( $product_id, $meta_keys, true );
-					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
-	
-					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-						continue;
-					}
-	
-					$arr_val_post = array();
-					if ( is_array( $values ) ) {
-						foreach ( $values  as $key => $value ) {
-							$keys = str_replace( 'mwb_', 'wps_', $key );
-	
-							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
-							$arr_val_post[ $key ] = $new_key1;
-						}
-						update_post_meta( $product_id, $new_key, $arr_val_post );
-					} else {
-						update_post_meta( $product_id, $new_key, $values );
-					}
-				}
-			}
-
-		}
-
-		foreach ( $post_meta_keys1 as $key => $meta_keys ) {
-			$products = get_posts(
-				array(
-					'numberposts' => -1,
-					'post_status' => 'publish',
-					'fields'      => 'ids', // return only ids.
-					'meta_key'    => $meta_keys, //phpcs:ignore
-					'post_type'   => 'shop_coupon',
-					'order'       => 'ASC',
-				)
-			);
-
-			if ( ! empty( $products ) && is_array( $products ) ) {
-				foreach ( $products as $k => $product_id ) {
-					$values   = get_post_meta( $product_id, $meta_keys, true );
-					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
-	
-					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-						continue;
-					}
-	
-					$arr_val_post = array();
-					if ( is_array( $values ) ) {
-						foreach ( $values  as $key => $value ) {
-							$keys = str_replace( 'mwb_', 'wps_', $key );
-	
-							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
-							$arr_val_post[ $key ] = $new_key1;
-						}
-						update_post_meta( $product_id, $new_key, $arr_val_post );
-					} else {
-						update_post_meta( $product_id, $new_key, $values );
-					}
-				}
-			}
-		}
-
-		foreach ( $post_meta_keys2 as $key => $meta_keys ) {
-			$products = get_posts(
-				array(
-					'numberposts' => -1,
-					'post_status' => array( 'wc-processing', 'wc-completed' ),
-					'fields'      => 'ids', // return only ids.
-					'meta_key'    => $meta_keys, //phpcs:ignore
-					'post_type'   => 'shop_order',
-					'order'       => 'ASC',
-				)
-			);
-
-			if ( ! empty( $products ) && is_array( $products ) ) {
-				foreach ( $products as $k => $product_id ) {
-					$values   = get_post_meta( $product_id, $meta_keys, true );
-					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
-
-					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-						continue;
-					}
-
-					$arr_val_post = array();
-					if ( is_array( $values ) ) {
-						foreach ( $values  as $key => $value ) {
-							$keys = str_replace( 'mwb_', 'wps_', $key );
-
-							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
-							$arr_val_post[ $key ] = $new_key1;
-						}
-						update_post_meta( $product_id, $new_key, $arr_val_post );
-					} else {
-						update_post_meta( $product_id, $new_key, $values );
-					}
-				}
-			}
-		}
-}
-		/**
-		 * Upgrade_wp_options. (use period)
-		 *
-		 * Upgrade_wp_options.
-		 *
-		 * @since    1.0.0
-		 */
 function wps_org_upgrade_wp_options() {
 
-		$wp_options = array(
-			'mwb_wgm_general_settings' => '',
-			'mwb_wgc_create_gift_card_taxonomy'  => '',
-			'mwb_uwgc_templateid'  => '',
-			'mwb_wgm_new_mom_template'  => '',
-			'mwb_wgm_gift_for_you'  => '',
-			'mwb_wgm_insert_custom_template'  => '',
-			'mwb_wgm_merry_christmas_template'  => '',
-			'mwb_wgm_notify_new_msg_id'  => '',
-			'mwb_wgm_notify_hide_notification'  => '',
-			'mwb_wgm_notify_new_message'  => '',
-			'mwb_wgm_delivery_settings'  => '',
-			'mwb_wgm_email_to_recipient_setting_enable'  => '',
-			'mwb_wgm_downladable_setting_enable'  => '',
-			'mwb_wgm_mail_settings'  => '',
-			'mwb_wgm_other_settings'  => '',
-			'mwb_wgm_product_settings'  => '',
-			'mwb_wgm_additional_preview_disable'  => '',
-			'mwb_wgm_delivery_setting_method'  => '',
-			'mwb_wgm_additional_apply_coupon_disable'  => '',
-			'mwb_wgm_select_email_format'  => '',
-			'mwb_wgm_general_setting_select_template'  => '',
-			'mwb_wsfw_enable_email_notification_for_wallet_update'  => '',
-		);
+	$wp_options = array(
+		'mwb_wgm_general_settings' => '',
+		'mwb_wgc_create_gift_card_taxonomy'  => '',
+		'mwb_uwgc_templateid'  => '',
+		'mwb_wgm_new_mom_template'  => '',
+		'mwb_wgm_gift_for_you'  => '',
+		'mwb_wgm_insert_custom_template'  => '',
+		'mwb_wgm_merry_christmas_template'  => '',
+		'mwb_wgm_notify_new_msg_id'  => '',
+		'mwb_wgm_notify_hide_notification'  => '',
+		'mwb_wgm_notify_new_message'  => '',
+		'mwb_wgm_delivery_settings'  => '',
+		'mwb_wgm_email_to_recipient_setting_enable'  => '',
+		'mwb_wgm_downladable_setting_enable'  => '',
+		'mwb_wgm_mail_settings'  => '',
+		'mwb_wgm_other_settings'  => '',
+		'mwb_wgm_product_settings'  => '',
+		'mwb_wgm_additional_preview_disable'  => '',
+		'mwb_wgm_delivery_setting_method'  => '',
+		'mwb_wgm_additional_apply_coupon_disable'  => '',
+		'mwb_wgm_select_email_format'  => '',
+		'mwb_wgm_general_setting_select_template'  => '',
+		'mwb_wsfw_enable_email_notification_for_wallet_update'  => '',
+	);
 
-		foreach ( $wp_options as $key => $value ) {
+	foreach ( $wp_options as $key => $value ) {
 
-			$new_key = str_replace( 'mwb_', 'wps_', $key );
-			if ( ! empty( get_option( $new_key ) ) ) {
-				continue;
-			}
-			$new_value = get_option( $key, $value );
-
-			$arr_val = array();
-			if ( is_array( $new_value ) ) {
-				foreach ( $new_value as $key => $value ) {
-					$new_key2 = str_replace( 'mwb_', 'wps_', $key );
-					$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
-
-					$value_1 = str_replace( 'mwb_', 'wps_', $value );
-					$value_2 = str_replace( 'mwb-', 'wps-', $value_1 );
-
-					$arr_val[ $new_key1 ] = $value_2;
-				}
-				update_option( $new_key, $arr_val );
-			} else {
-				update_option( $new_key, $new_value );
-			}
+		$new_key = str_replace( 'mwb_', 'wps_', $key );
+		if ( ! empty( get_option( $new_key ) ) ) {
+			continue;
 		}
+		$new_value = get_option( $key, $value );
+
+		$arr_val = array();
+		if ( is_array( $new_value ) ) {
+			foreach ( $new_value as $key => $value ) {
+				$new_key2 = str_replace( 'mwb_', 'wps_', $key );
+				$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
+
+				$value_1 = str_replace( 'mwb_', 'wps_', $value );
+				$value_2 = str_replace( 'mwb-', 'wps-', $value_1 );
+
+				$arr_val[ $new_key1 ] = $value_2;
+			}
+			update_option( $new_key, $arr_val );
+		} else {
+			update_option( $new_key, $new_value );
+		}
+	}
 }
-		/**
-		 * Update terms data mwb keys
-		 */
+/**
+ * Update terms data mwb keys
+ */
 function wps_update_terms() {
 
 	global $wpdb;
 	$term_table = $wpdb->prefix . 'terms';
 	if ( $wpdb->query( $wpdb->prepare( "SELECT * FROM %1s WHERE  `name` = 'Gift Card'", $term_table ) ) ) {
-			$wpdb->query(
-				$wpdb->prepare(
-					"UPDATE %1s SET `slug`='wps_wgm_giftcard'
-					WHERE  `name` = 'Gift Card'",
-					$term_table
-				)
-			);
+		$wpdb->query(
+			$wpdb->prepare(
+				"UPDATE %1s SET `slug`='wps_wgm_giftcard'
+				WHERE  `name` = 'Gift Card'",
+				$term_table
+			)
+		);
 	}
 }
-		/**
-		 * Update terms data mwb keys
-		 */
+/**
+ * Update terms data mwb keys
+ */
 function wps_org_replace_mwb_to_wps_in_shortcodes() {
-		$all_product_ids = get_posts(
-			array(
-				'post_type' => 'product',
-				'posts_per_page' => -1,
-				'post_status' => 'publish',
-				'fields' => 'ids',
-			)
-		);
-		$all_post_ids = get_posts(
-			array(
-				'post_type' => 'post',
-				'posts_per_page' => -1,
-				'post_status' => 'publish',
-				'fields' => 'ids',
-			)
-		);
-		$all_page_ids = get_posts(
-			array(
-				'post_type' => 'page',
-				'posts_per_page' => -1,
-				'post_status' => 'publish',
-				'fields' => 'ids',
-			)
-		);
-		$result = array_merge( $all_product_ids, $all_post_ids, $all_page_ids );
+	$all_product_ids = get_posts(
+		array(
+			'post_type' => 'product',
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'fields' => 'ids',
+		)
+	);
+	$all_post_ids = get_posts(
+		array(
+			'post_type' => 'post',
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'fields' => 'ids',
+		)
+	);
+	$all_page_ids = get_posts(
+		array(
+			'post_type' => 'page',
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'fields' => 'ids',
+		)
+	);
+	$result = array_merge( $all_product_ids, $all_post_ids, $all_page_ids );
 	foreach ( $result as $id ) {
 				$post = get_post( $id );
 				$content = $post->post_content;

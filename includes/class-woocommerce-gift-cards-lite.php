@@ -193,6 +193,8 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'wps_deactivation_supported_slug', $plugin_admin, 'add_wps_deactivation_screens' );
 		// Disable Quick Edit option.
 		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'wps_wgm_remove_row_actions', 10, 2 );
+
+		$this->loader->add_action( 'wp_ajax_ajax_callbacks', $plugin_admin, 'wps_wgm_ajax_callbacks' );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
