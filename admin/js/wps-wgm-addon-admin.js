@@ -2,18 +2,18 @@ jQuery(document).ready( function($) {
 
 	const ajaxUrl  		 = localised.ajaxurl;
 	const nonce    		 = localised.nonce;
-	const action          = localised.callback;
-	const pending_count  = localised.pending_count;
+	const action         = localised.callback;
 	const pending_orders = localised.pending_orders;
-	const completed_orders = localised.completed_orders;
-	const searchHTML = '<style>input[type=number], select, numberarea{width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 6px; margin-bottom: 16px; resize: vertical;}input[type=submit]{background-color: #04AA6D; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer;}.container{border-radius: 5px; background-color: #f2f2f2; padding: 20px;}</style></head><div class="container"> <label for="ordername">Order Id</label> <input type="number" id="ordername" name="firstname" placeholder="Order ID to search.."></div>';
+	const pending_pages = localised.pending_pages;
+	const pending_pages_count  = 'undefined' != typeof pending_pages ? pending_pages.length : 0;
+	const pending_count  = 'undefined' != typeof pending_orders ? pending_orders.length : 0;
 
 	/* Close Button Click */
 	jQuery( document ).on( 'click','.treat-button',function(e){
 		e.preventDefault();
 		Swal.fire({
 			icon: 'warning',
-			title: 'We Have got ' + pending_count + ' Orders!',
+			title: 'We Have got ready to go!',
 			text: 'Click to start import',
 			footer: 'Please do not reload/close this page until prompted',
 			showCloseButton: true,
@@ -45,23 +45,90 @@ jQuery(document).ready( function($) {
 	});
 
 	const startImport = ( orders ) => {
-		var event   = 'import_single_order';
+		var event   = 'import_single_post_meta_table';
 		var request = { action, event, nonce, orders };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 			orders = JSON.parse( response );
 		}).then(
 		function( orders ) {
 			orders = JSON.parse( orders ).orders;
-			count = Object.keys(orders).length;
-			jQuery('.order-progress-report').text( count + ' are left to import' );
 			if( ! jQuery.isEmptyObject(orders) ) {
+				count = Object.keys(orders).length;
+				jQuery('.order-progress-report').text( count + ' are left to import' );
 				startImport(orders);
 			} else {
-				// All orders imported!
+				// All post_meta imported!
+
 				Swal.fire({
-					title   : 'Data are migrated successfully!',
-				})
+					icon   : 'success',
+					title   : 'Settings are been imported',
+					html    : 'Do not reload/close this tab.',
+				});
+		
+				startOptionsImport();
 			}
+		}, function(error) {
+			console.error(error);
+		});
+	}
+
+	const startOptionsImport = () => {
+		var event   = 'import_options_table';
+		var request = { action, event, nonce };
+		jQuery.post( ajaxUrl , request ).done(function( response ){
+		}).then(
+		function() {
+			// All options imported!
+			Swal.fire({
+				title   : 'Hold On Pages are been imported',
+				html    : 'Do not reload/close this tab.',
+				footer  : '<span class="order-progress-report">' + pending_pages_count + ' are left to import',
+				didOpen: () => {
+					Swal.showLoading()
+				}
+			});
+			startShortcodesImport( pending_pages );
+		}, function(error) {
+			console.error(error);
+		});
+	}
+
+	const startShortcodesImport = ( pages ) => {
+		var event   = 'import_shortcodes';
+		var request = { action, event, nonce, pages };
+		jQuery.post( ajaxUrl , request ).done(function( response ){
+			pages = JSON.parse( response );
+		}).then(
+		function( pages ) {
+			pages = JSON.parse( pages );
+			console.log( jQuery.isEmptyObject(pages) );
+			if( ! jQuery.isEmptyObject(pages) ) {
+				count = Object.keys(pages).length;
+				jQuery('.order-progress-report').text( count + ' are left to import' );
+				startShortcodesImport(pages);
+			} else {
+				Swal.fire({
+					title   : 'Hold On Terms are been imported',
+					html    : 'Do not reload/close this tab.',
+					didOpen: () => {
+						Swal.showLoading()
+					}
+				});
+				startTermsImport();
+			}
+		}, function(error) {
+			console.error(error);
+		});
+	}
+	
+	const startTermsImport = () => {
+		var event   = 'import_terms';
+		var request = { action, event, nonce };
+		jQuery.post( ajaxUrl , request ).done(function( response ){
+		}).then(
+		function() {
+			// All options imported!
+			window.location.reload();
 		}, function(error) {
 			console.error(error);
 		});

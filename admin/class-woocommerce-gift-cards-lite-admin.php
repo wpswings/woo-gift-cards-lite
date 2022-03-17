@@ -118,20 +118,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$this->plugin_name,
 				'localised',
 				array(
-					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
-					'nonce'            => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
-					'callback'         => 'ajax_callbacks',
-					'pending_count'    => $this->wps_wgm_get_count( 'pending' ),
-					'pending_orders'   => $this->wps_wgm_get_count( 'pending', 'orders' ),
-					'completed_orders' => $this->wps_wgm_get_count( 'done', 'orders' ),
+					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+					'nonce'         => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
+					'callback'      => 'ajax_callbacks',
+					'pending_count' => $this->wps_wgm_get_count( 'orders' ),
+					'pending_pages' => $this->wps_wgm_get_count( 'pages' ),
 				)
 			);
 
 			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'gift-cards-for-woocommerce-pro/gift-cards-for-woocommerce-pro.php' ) ) {
-				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, 'count' );
 			}
 
-			if ( 'product' == $pagescreen || 'shop_order' == $pagescreen || 'giftcard_page_wps-wgc-setting-lite' == $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' == $pagescreen || 'plugins' == $pagescreen ) {
+			if ( 'product' === $pagescreen || 'shop_order' === $pagescreen || 'giftcard_page_wps-wgc-setting-lite' === $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' === $pagescreen || 'plugins' === $pagescreen ) {
 
 				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
 				$giftcard_tax_cal_enable  = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_tax_cal_enable' );
@@ -1426,7 +1425,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_remove_row_actions( $actions, $post ) {
 		global $current_screen;
-		if ( 'giftcard' != $current_screen->post_type ) {
+		if ( 'giftcard' !== $current_screen->post_type ) {
 			return $actions;
 		}
 		unset( $actions['inline hide-if-no-js'] );
@@ -1440,13 +1439,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param string $action actions.
 	 * @return int $result result.
 	 */
-	public function wps_wgm_get_count( $type = 'all', $action = 'count' ) {
+	public function wps_wgm_get_count( $type = 'all' ) {
 
 		switch ( $type ) {
-			case 'pending':
+			case 'orders':
 				$sql = "SELECT (`post_id`)
 				FROM `wp_postmeta`
 				WHERE `meta_key` LIKE '%mwb_wgm%'";
+				break;
+
+			case 'pages':
+				$sql = "SELECT `ID`
+				FROM `wp_posts`
+				WHERE `post_content` LIKE '%mwb_%'";
 				break;
 
 			default:
@@ -1454,7 +1459,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				break;
 		}
 
-		$sql = apply_filters( 'wps_uwgc_get_count', $sql );
+		$sql = apply_filters( 'wps_uwgc_migration_sql', $sql );
 
 		if ( empty( $sql ) ) {
 			return 0;
@@ -1462,11 +1467,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		global $wpdb;
 		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
-
-		if ( 'count' === $action ) {
-			$result = ! empty( $result ) ? count( $result ) : 0;
-		}
-
 		return $result;
 	}
 
@@ -1491,7 +1491,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @param array $posted_data The $_POST data.
 	 */
-	public function import_single_order( $posted_data = array() ) {
+	public function import_single_post_meta_table( $posted_data = array() ) {
 
 		$orders = ! empty( $posted_data['orders'] ) ? $posted_data['orders'] : array();
 
@@ -1511,7 +1511,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 			try {
 
-				// code
+				// Code.
 				$post_meta_keys = array(
 					'mwb_wgm_pricing',
 					'mwb_wgm_pricing_details',
@@ -1542,17 +1542,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								}
 								update_post_meta( $order_id, $new_key, $arr_val_post );
 								// delete_post_meta( $order_id, $meta_keys );
-								// update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
 							} else {
 								update_post_meta( $order_id, $new_key, $value );
 								// delete_post_meta( $order_id, $meta_keys );
-								// update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
 							}
 						}
 					}
 				}
-				update_post_meta( $order_id, 'wps_wgm_migrated', 'true' );
-
 			} catch ( \Throwable $th ) {
 				wp_die( esc_html( $th->getMessage() ) );
 			}
@@ -1560,5 +1558,127 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		return compact( 'orders' );
 	}
+
+
+	/**
+	 * Upgrade_wp_options. (use period)
+	 *
+	 * Upgrade_wp_options.
+	 *
+	 * @since    1.0.0
+	 */
+	public function import_options_table( $posted_data = array() ) {
+
+		$wp_options = array(
+			'mwb_wgm_general_settings'                  => '',
+			'mwb_wgc_create_gift_card_taxonomy'         => '',
+			'mwb_uwgc_templateid'                       => '',
+			'mwb_wgm_new_mom_template'                  => '',
+			'mwb_wgm_gift_for_you'                      => '',
+			'mwb_wgm_insert_custom_template'            => '',
+			'mwb_wgm_merry_christmas_template'          => '',
+			'mwb_wgm_notify_new_msg_id'                 => '',
+			'mwb_wgm_notify_hide_notification'          => '',
+			'mwb_wgm_notify_new_message'                => '',
+			'mwb_wgm_delivery_settings'                 => '',
+			'mwb_wgm_email_to_recipient_setting_enable' => '',
+			'mwb_wgm_downladable_setting_enable'        => '',
+			'mwb_wgm_mail_settings'                     => '',
+			'mwb_wgm_other_settings'                    => '',
+			'mwb_wgm_product_settings'                  => '',
+			'mwb_wgm_additional_preview_disable'        => '',
+			'mwb_wgm_delivery_setting_method'           => '',
+			'mwb_wgm_additional_apply_coupon_disable'   => '',
+			'mwb_wgm_select_email_format'               => '',
+			'mwb_wgm_general_setting_select_template'   => '',
+			'mwb_wsfw_enable_email_notification_for_wallet_update' => '',
+		);
+
+		foreach ( $wp_options as $old_key => $value ) {
+
+			$new_key = str_replace( 'mwb_', 'wps_', $old_key );
+			if ( ! empty( get_option( $new_key ) ) ) {
+				continue;
+			}
+
+			$new_value = get_option( $old_key, $value );
+
+			$arr_val = array();
+			if ( is_array( $new_value ) ) {
+				foreach ( $new_value as $old_key => $value ) {
+					$new_key2 = str_replace( 'mwb_', 'wps_', $old_key );
+					$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
+
+					$value_1 = str_replace( 'mwb_', 'wps_', $value );
+					$value_2 = str_replace( 'mwb-', 'wps-', $value_1 );
+
+					$arr_val[ $new_key1 ] = $value_2;
+				}
+				update_option( $new_key, $arr_val );
+				update_option( 'copy_' . $old_key, $arr_val );
+				delete_option( $old_key );
+			} else {
+				update_option( 'copy_' . $old_key, $new_value );
+				update_option( $new_key, $new_value );
+				delete_option( $old_key );
+			}
+		}
+
+		return array();
+	}
+
+	/**
+	 * Update terms data mwb keys.
+	 */
+	public function import_shortcodes( $posted_data = array() ) {
+
+		$pages = ! empty( $posted_data['pages'] ) ? $posted_data['pages'] : array();
+
+		if ( empty( $pages ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $pages as $key => $order ) {
+			$post_id = ! empty( $order['ID'] ) ? $order['ID'] : false;
+			unset( $pages[ $key ] );
+			break;
+		}
+
+		try {
+			$post    = get_post( $post_id );
+			$content = $post->post_content;
+			$content = str_replace( 'mwb_', 'wps_', $content );
+			$my_post = array(
+				'ID'           => $post_id,
+				'post_content' => $content,
+			);
+			wp_update_post( $my_post );
+		} catch ( \Throwable $th ) {
+			wp_die( esc_html( $th->getMessage() ) );
+		}
+
+		return $pages;
+	}
+
+	/**
+	 * Update terms data mwb keys
+	 */
+	public function import_terms() {
+
+		global $wpdb;
+		$term_table = $wpdb->prefix . 'terms';
+		if ( $wpdb->query( $wpdb->prepare( "SELECT * FROM %1s WHERE  `name` = 'Gift Card'", $term_table ) ) ) {
+			$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE %1s SET `slug`='wps_wgm_giftcard'
+					WHERE  `name` = 'Gift Card'",
+					$term_table
+				)
+			);
+		}
+		return array();
+	}
+
 }
 ?>
