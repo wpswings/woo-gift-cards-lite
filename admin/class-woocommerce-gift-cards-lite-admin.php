@@ -1428,6 +1428,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		return $actions;
 	}
 
+	/**
+	 * This function is used to count pending post.
+	 *
+	 * @param string $type type.
+	 * @param string $action actions.
+	 * @return int $result result.
+	 */
 	public function wps_wgm_get_count( $type = 'all', $action = 'count' ) {
 
 		switch ( $type ) {

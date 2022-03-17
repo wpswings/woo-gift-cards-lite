@@ -15,7 +15,7 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-gift-cards&utm_medium=giftcards-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.3.2
+ * Version:           2.4.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
@@ -35,7 +35,7 @@ if ( is_plugin_active( 'giftware/giftware.php' ) ) {
 
 	$plug = get_plugins();
 	if ( isset( $plug['giftware/giftware.php'] ) ) {
-		if ( $plug['giftware/giftware.php']['Version'] < '3.4.2' ) {
+		if ( $plug['giftware/giftware.php']['Version'] < '3.5.0' ) {
 			unset( $_GET['activate'] );
 			deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 			$general_settings_url = admin_url( 'plugins.php' );
@@ -62,7 +62,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.3.2' );
+	define( 'WPS_WGC_VERSION', '2.4.0' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
@@ -328,12 +328,12 @@ if ( $activated ) {
 				</div>
 				<div class="notice notice-warning inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
-						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin.', 'woo-gift-cards-lite' ) ?><strong><?php esc_html_e( ' Please Migrate Your data from ', 'woo-gift-cards-lite' ); ?></strong><a href="<?php admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ); ?>"><?php esc_html_e( 'Dashboard', 'woo-gift-cards-lite' ); ?></a><?php esc_html_e(' page then Click On Start Import Button.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin.', 'woo-gift-cards-lite' ) ?><strong><?php esc_html_e( ' Please Migrate Your data from ', 'woo-gift-cards-lite' ); ?></strong><a href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ) ); ?>"><?php esc_html_e( 'Dashboard', 'woo-gift-cards-lite' ); ?></a><?php esc_html_e(' page then Click On Start Import Button.', 'woo-gift-cards-lite' ); ?>
 					</p>
 				</div>
 				<div class="notice notice-warning inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
-						<?php esc_html_e( 'This version is compatible with ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 3.4.2', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards of GiftCard Pro.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'This plugin needs minimum ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 3.5.0', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' of Gift Cards For WooCommerce Pro plugin. Please Update to the latest Pro Version.', 'woo-gift-cards-lite' ); ?>
 					</p>
 				</div>
 			</td>
@@ -460,7 +460,7 @@ function wps_migration_func() {
 
 		$plug = get_plugins();
 		if ( isset( $plug['giftware/giftware.php'] ) ) {
-			if ( $plug['giftware/giftware.php']['Version'] < '3.4.2' ) {
+			if ( $plug['giftware/giftware.php']['Version'] < '3.5.0' ) {
 				unset( $_GET['activate'] );
 				deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 				$general_settings_url = admin_url( 'plugins.php' );
