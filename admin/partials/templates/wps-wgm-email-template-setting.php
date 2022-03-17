@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 require_once WPS_WGC_DIRPATH . 'admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php';
-$flag = false;
+$flag        = false;
 $current_tab = 'wps_wgm_mail_setting';
 if ( isset( $_POST['wps_wgm_save_mail'] ) ) {
 	if ( isset( $_REQUEST['wps-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-wgc-nonce'] ) ), 'wps-wgc-nonce' ) ) {
 		unset( $_POST['wps_wgm_save_mail'] );
-		if ( in_array( 'gift-cards-for-woocommerce-pro/giftware.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || is_plugin_active( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
+		if ( in_array( 'gift-cards-for-woocommerce-pro/gift-cards-for-woocommerce-pro.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || is_plugin_active( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
 			$postdata = wp_unslash( $_POST );
 		} else {
 			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );

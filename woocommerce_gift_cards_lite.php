@@ -30,19 +30,16 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-include_once ABSPATH . 'wp-admin/includes/plugin.php';
-if ( is_plugin_active( 'giftware/giftware.php' ) ) {
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-	$plug = get_plugins();
-	if ( isset( $plug['giftware/giftware.php'] ) ) {
-		if ( $plug['giftware/giftware.php']['Version'] < '3.5.0' ) {
-			unset( $_GET['activate'] );
-			deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
-			$general_settings_url = admin_url( 'plugins.php' );
-			header( 'Location: ' . $general_settings_url );
-		}
+$old_pro_exists = false;
+$plug           = get_plugins();
+if ( isset( $plug['giftware/giftware.php'] ) ) {
+	if ( version_compare( $plug['giftware/giftware.php']['Version'], '3.5.0', '<' ) ) {
+		$old_pro_exists = true;
 	}
 }
+
 $activated = false;
 /**
  * Checking if WooCommerce is active.
@@ -53,7 +50,7 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		$activated = true;
 	}
 } else {
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 		$activated = true;
 	}
 }
@@ -76,7 +73,6 @@ if ( $activated ) {
 	 */
 	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-lite.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
-
 
 	/**
 	 *Add link for settings
@@ -101,7 +97,7 @@ if ( $activated ) {
 		if ( ! isset( $plugin ) ) {
 			$plugin = plugin_basename( __FILE__ );
 		}
-		if ( $plugin == $plugin_file ) {
+		if ( $plugin === $plugin_file ) {
 			$settings = array();
 			if ( ! wps_uwgc_pro_active() ) {
 				$settings['settings']         = '<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ) ) . '">' . esc_html__( 'Settings', 'woo-gift-cards-lite' ) . '</a>';
@@ -139,7 +135,7 @@ if ( $activated ) {
 			if ( ! empty( $giftcard_enable ) && array_key_exists( 'wps_wgm_general_setting_enable', $giftcard_enable ) ) {
 				$check_enable = $giftcard_enable['wps_wgm_general_setting_enable'];
 				if ( isset( $check_enable ) && ! empty( $check_enable ) ) {
-					if ( 'on' == $check_enable ) {
+					if ( 'on' === $check_enable ) {
 						return true;
 					} else {
 						return false;
@@ -149,6 +145,39 @@ if ( $activated ) {
 		}
 	}
 	register_activation_hook( __FILE__, 'wps_wgm_create_gift_card_taxonomy' );
+
+
+	/**
+	 * Create the Taxonomy for Gift Card Product at activation.
+	 *
+	 * @return void
+	 */
+	function wps_create_giftcard_page() {
+		$page_taxonomy_created = get_option( 'wps_wgc_create_gift_card_taxonomy', false );
+		if ( false == $page_taxonomy_created ) {
+			update_option( 'wps_wgc_create_gift_card_taxonomy', true );
+			$term       = esc_html__( 'Gift Card', 'woo-gift-cards-lite' );
+			$taxonomy   = 'product_cat';
+			$term_exist = term_exists( $term, $taxonomy );
+			if ( 0 == $term_exist || null == $term_exist ) {
+				$args['slug'] = 'wps_wgm_giftcard';
+				$term_exist   = wp_insert_term( $term, $taxonomy, $args );
+			}
+			$terms             = get_term( $term_exist['term_id'], $taxonomy, ARRAY_A );
+			$giftcard_category = $terms['slug'];
+			$giftcard_content  = "[product_category category='$giftcard_category']";
+			$customer_reports  = array(
+				'post_author'  => get_current_user_id(),
+				'post_name'    => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
+				'post_title'   => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
+				'post_content' => $giftcard_content,
+			);
+			$page_id           = wp_insert_post( $customer_reports );
+		}
+	}
+
 
 	/**
 	 * Create the Taxonomy for Gift Card Product at activation.
@@ -263,7 +292,6 @@ if ( $activated ) {
 
 	register_deactivation_hook( __FILE__, 'wps_uwgc_remove_cron_for_notification_update' );
 
-
 	/**
 	 * Clear the cron set for giftcard notification updates.
 	 *
@@ -305,6 +333,37 @@ if ( $activated ) {
 			restore_current_blog();
 		}
 	}
+
+	/**
+	 * Migration to ofl pro plugin.
+	 *
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status Status filter currently applied to the plugin list.
+	 */
+	function wps_wgm_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+		global $old_pro_exists;
+		?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'woo-gift-cards-lite' ); ?></strong><br>
+						<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'woo-gift-cards-lite' ); ?><br>
+						<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'woo-gift-cards-lite' ); ?>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+		<?php
+	}
+
 	/**
 	 * Migration to new domain notice.
 	 *
@@ -313,90 +372,69 @@ if ( $activated ) {
 	 * @param string $status Status filter currently applied to the plugin list.
 	 */
 	function wps_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+		global $old_pro_exists;
 		?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-success inline update-message notice-alt">
-					<div class='wps-notice-title wps-notice-section'>
-						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'woo-gift-cards-lite' ); ?></strong></p>
-					</div>
-					
-					<div class='wps-notice-content wps-notice-section'>
-						<p><?php esc_html_e( 'From update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
-						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?>
-					</div>
-				</div>
-				<div class="notice notice-warning inline update-message notice-alt">
+				<div class="notice notice-error inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
-						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin.', 'woo-gift-cards-lite' ) ?><strong><?php esc_html_e( ' Please Migrate Your data from ', 'woo-gift-cards-lite' ); ?></strong><a href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ) ); ?>"><?php esc_html_e( 'Dashboard', 'woo-gift-cards-lite' ); ?></a><?php esc_html_e(' page then Click On Start Import Button.', 'woo-gift-cards-lite' ); ?>
-					</p>
-				</div>
-				<div class="notice notice-warning inline update-message notice-alt">
-					<p class='wps-notice-title wps-notice-section'>
-						<?php esc_html_e( 'This plugin needs minimum ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 3.5.0', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' of Gift Cards For WooCommerce Pro plugin. Please Update to the latest Pro Version.', 'woo-gift-cards-lite' ); ?>
+						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. Hence, if you are not a new user then', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' please migrate your old data and settings from ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite' ) ); ?>"><?php esc_html_e( 'Dashboard', 'woo-gift-cards-lite' ); ?></strong></a><?php esc_html_e( ' page then Click On Start Import Button.', 'woo-gift-cards-lite' ); ?>
 					</p>
 				</div>
 			</td>
 		</tr>
 		<style>
-			
 			.wps-notice-section > p:before {
 				content: none;
 			}
 		</style>
 		<?php
-
 	}
 	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wgm_upgrade_notice', 0, 3 );
+	add_action( 'after_plugin_row_giftware/giftware.php', 'wps_wgm_old_upgrade_notice', 0, 3 );
 
-	add_action( 'admin_notices', 'wps_wgm_updgrade_notice' );
+	add_action( 'admin_notices', 'wps_wgm_migrate_notice' );
 
 	/**
-	 * Migration to new domain notice.
+	 * Migration to new domain notice on main dashboard notice.
 	 */
-	function wps_wgm_updgrade_notice() {
+	function wps_wgm_migrate_notice() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-		if ( 'wps-wgc-setting-lite' === $tab ) {
+		if ( 'wps-wgc-setting-lite' === $tab ) :
 			?>
-
-		<tr class="plugin-update-tr active notice-warning notice-alt">
-			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-success inline update-message notice-alt">
-					<div class='wps-notice-title wps-notice-section'>
-						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'woo-gift-cards-lite' ); ?></strong></p>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+				<td colspan="4" class="plugin-update colspanchange">
+					<div id="message" class="updated woocommerce-message">
+						<p>
+							<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
+						</p>
+						<p>
+							<?php
+								esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. So, if you are not a new user then,', 'woo-gift-cards-lite' )
+							?>
+								<strong><?php esc_html_e( ' Please Migrate Your data by ', 'woo-gift-cards-lite' ); ?></strong>
+								<?php
+								esc_html_e( ' Click On Start Import Button.', 'woo-gift-cards-lite' );
+								?>
+						</p>
+						<p>
+							<a class="treat-button button-primary">
+								<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
+							</a>
+						</p>
 					</div>
-					
-					<div class='wps-notice-content wps-notice-section'>
-						<p><?php esc_html_e( 'From this update', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' Version 2.3.1', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' WP Swings', 'woo-gift-cards-lite' ); ?></strong>.</p><p><strong><?php esc_html_e( 'WP Swings', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e( ' is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'woo-gift-cards-lite' ); ?>
-						<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'woo-gift-cards-lite' ); ?></p>
-					</div>
-				</div>
-				<div id="message" class="updated woocommerce-message">
-					<p>
-						<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
-					</p>
-					<p>
-						<?php
-							esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin.', 'woo-gift-cards-lite' ) ?><strong><?php esc_html_e( ' Please Migrate Your data by ', 'woo-gift-cards-lite' ); ?></strong><?php esc_html_e(' Click On Start Import Button.', 'woo-gift-cards-lite' );
-						?>
-					</p>
-					<p>
-						<a class="treat-button button-primary">
-							<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
-						</a>
-					</p>
-				</div>
-			</td>
-		</tr>
-		<style>
-			.wps-notice-section > p:before {
-				content: none;
-			}
-		</style>
+				</td>
+			</tr>
+			<style>
+				.wps-notice-section > p:before {
+					content: none;
+				}
+			</style>
+			<?php endif; ?>
 			<?php
-		}
 	}
 } else {
 	add_action( 'admin_init', 'wps_wgm_plugin_deactivate' );
@@ -418,197 +456,5 @@ if ( $activated ) {
 			<p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?></p>
 		</div>
 		<?php
-	}
-}
-
-/**
- * Create the Taxonomy for Gift Card Product at activation.
- *
- * @return void
- */
-function wps_create_giftcard_page() {
-	$page_taxonomy_created = get_option( 'wps_wgc_create_gift_card_taxonomy', false );
-	if ( false == $page_taxonomy_created ) {
-		update_option( 'wps_wgc_create_gift_card_taxonomy', true );
-		$term       = esc_html__( 'Gift Card', 'woo-gift-cards-lite' );
-		$taxonomy   = 'product_cat';
-		$term_exist = term_exists( $term, $taxonomy );
-		if ( 0 == $term_exist || null == $term_exist ) {
-			$args['slug'] = 'wps_wgm_giftcard';
-			$term_exist   = wp_insert_term( $term, $taxonomy, $args );
-		}
-		$terms             = get_term( $term_exist['term_id'], $taxonomy, ARRAY_A );
-		$giftcard_category = $terms['slug'];
-		$giftcard_content  = "[product_category category='$giftcard_category']";
-		$customer_reports  = array(
-			'post_author'  => get_current_user_id(),
-			'post_name'    => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
-			'post_title'   => esc_html__( 'Gift Card', 'woo-gift-cards-lite' ),
-			'post_type'    => 'page',
-			'post_status'  => 'publish',
-			'post_content' => $giftcard_content,
-		);
-		$page_id           = wp_insert_post( $customer_reports );
-	}
-}
-add_action( 'admin_init', 'wps_migration_func' );
-/**
- * Migration code function
- */
-function wps_migration_func() {
-	if ( is_plugin_active( 'giftware/giftware.php' ) ) {
-
-		$plug = get_plugins();
-		if ( isset( $plug['giftware/giftware.php'] ) ) {
-			if ( $plug['giftware/giftware.php']['Version'] < '3.5.0' ) {
-				unset( $_GET['activate'] );
-				deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
-				$general_settings_url = admin_url( 'plugins.php' );
-				header( 'Location: ' . $general_settings_url );
-			}
-		}
-	}
-	$migration_val_updated = get_option( 'wps_wgm_org_migration_value_updated', 'no' );
-
-	if ('no' == $migration_val_updated ) {
-		wps_org_upgrade_wp_options();
-		wps_update_terms();
-		wps_org_replace_mwb_to_wps_in_shortcodes();
-		update_option( 'wps_wgm_org_migration_value_updated', 'yes' );
-	}
-}
-/**
- * Upgrade_wp_options. (use period)
- *
- * Upgrade_wp_options.
- *
- * @since    1.0.0
- */
-function wps_org_upgrade_wp_options() {
-
-	$wp_options = array(
-		'mwb_wgm_general_settings' => '',
-		'mwb_wgc_create_gift_card_taxonomy'  => '',
-		'mwb_uwgc_templateid'  => '',
-		'mwb_wgm_new_mom_template'  => '',
-		'mwb_wgm_gift_for_you'  => '',
-		'mwb_wgm_insert_custom_template'  => '',
-		'mwb_wgm_merry_christmas_template'  => '',
-		'mwb_wgm_notify_new_msg_id'  => '',
-		'mwb_wgm_notify_hide_notification'  => '',
-		'mwb_wgm_notify_new_message'  => '',
-		'mwb_wgm_delivery_settings'  => '',
-		'mwb_wgm_email_to_recipient_setting_enable'  => '',
-		'mwb_wgm_downladable_setting_enable'  => '',
-		'mwb_wgm_mail_settings'  => '',
-		'mwb_wgm_other_settings'  => '',
-		'mwb_wgm_product_settings'  => '',
-		'mwb_wgm_additional_preview_disable'  => '',
-		'mwb_wgm_delivery_setting_method'  => '',
-		'mwb_wgm_additional_apply_coupon_disable'  => '',
-		'mwb_wgm_select_email_format'  => '',
-		'mwb_wgm_general_setting_select_template'  => '',
-		'mwb_wsfw_enable_email_notification_for_wallet_update'  => '',
-	);
-
-	foreach ( $wp_options as $key => $value ) {
-
-		$new_key = str_replace( 'mwb_', 'wps_', $key );
-		if ( ! empty( get_option( $new_key ) ) ) {
-			continue;
-		}
-		$new_value = get_option( $key, $value );
-
-		$arr_val = array();
-		if ( is_array( $new_value ) ) {
-			foreach ( $new_value as $key => $value ) {
-				$new_key2 = str_replace( 'mwb_', 'wps_', $key );
-				$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
-
-				$value_1 = str_replace( 'mwb_', 'wps_', $value );
-				$value_2 = str_replace( 'mwb-', 'wps-', $value_1 );
-
-				$arr_val[ $new_key1 ] = $value_2;
-			}
-			update_option( $new_key, $arr_val );
-		} else {
-			update_option( $new_key, $new_value );
-		}
-	}
-}
-/**
- * Update terms data mwb keys
- */
-function wps_update_terms() {
-
-	global $wpdb;
-	$term_table = $wpdb->prefix . 'terms';
-	if ( $wpdb->query( $wpdb->prepare( "SELECT * FROM %1s WHERE  `name` = 'Gift Card'", $term_table ) ) ) {
-		$wpdb->query(
-			$wpdb->prepare(
-				"UPDATE %1s SET `slug`='wps_wgm_giftcard'
-				WHERE  `name` = 'Gift Card'",
-				$term_table
-			)
-		);
-	}
-}
-/**
- * Update terms data mwb keys
- */
-function wps_org_replace_mwb_to_wps_in_shortcodes() {
-	$all_product_ids = get_posts(
-		array(
-			'post_type' => 'product',
-			'posts_per_page' => -1,
-			'post_status' => 'publish',
-			'fields' => 'ids',
-		)
-	);
-	$all_post_ids = get_posts(
-		array(
-			'post_type' => 'post',
-			'posts_per_page' => -1,
-			'post_status' => 'publish',
-			'fields' => 'ids',
-		)
-	);
-	$all_page_ids = get_posts(
-		array(
-			'post_type' => 'page',
-			'posts_per_page' => -1,
-			'post_status' => 'publish',
-			'fields' => 'ids',
-		)
-	);
-	$result = array_merge( $all_product_ids, $all_post_ids, $all_page_ids );
-	foreach ( $result as $id ) {
-				$post = get_post( $id );
-				$content = $post->post_content;
-
-				$array = explode( ' ', $content );
-
-		foreach ( $array as $key => $val ) {
-					$split_val = explode( '=', $val );
-			if ( count( $split_val ) > 1 ) {
-				if ( 'category' == $split_val[0] ) {
-
-					update_option( 'existing_gift_card_page', $id );
-					$html = str_replace( 'mwb_', 'wps_', $content );
-					$my_post = array(
-						'ID'           => $id,
-						'post_content' => $html,
-					);
-						wp_update_post( $my_post );
-				}
-			} else {
-						$html = str_replace( 'mwb_', 'wps_', $content );
-						$my_post = array(
-							'ID'           => $id,
-							'post_content' => $html,
-						);
-						wp_update_post( $my_post );
-			}
-		}
 	}
 }
