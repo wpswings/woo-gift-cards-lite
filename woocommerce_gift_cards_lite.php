@@ -30,6 +30,15 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
+$plug = get_plugins();
+if ( isset( $plug['gift-cards-for-woocommerce-pro/giftware.php'] ) ) {
+	if ( version_compare( $plug['gift-cards-for-woocommerce-pro/giftware.php']['Version'], '3.4.2', '==' ) ) {
+		unset( $_GET['activate'] );
+		deactivate_plugins( plugin_basename( 'gift-cards-for-woocommerce-pro/giftware.php' ) );
+	}
+}
+
 $activated = false;
 /**
  * Checking if WooCommerce is active.
@@ -315,6 +324,24 @@ if ( $activated ) {
 				</div>
 			</td>
 		</tr>
+		<?php 
+		$notice_show = get_option( 'wps_pro_migration_value_updated', 'no' );
+		if ( 'yes' === $notice_show ) {
+			?>
+		<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+
+						<?php esc_html_e( 'We highly recommend to update to latest', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( ' GiftCard Pro Version 3.4.3', 'woo-gift-cards-lite' ); ?></strong>
+						<?php esc_html_e( 'and If you are not getting automatic update now button then don\'t worry please visit to your account dashboard and install it manually or connect to our support.', 'woo-gift-cards-lite' ); ?>
+					</p>
+				</div>
+			</td>
+		</tr>
+			<?php
+		}
+		?>
 		<style>
 			.wps-notice-section > p:before {
 				content: none;
