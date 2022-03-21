@@ -3,10 +3,10 @@ Contributors: WP Swings
 Donate link:  https://wpswings.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
 Requires at least: 5.0
-Tested up to: 5.8.3
+Tested up to: 5.9.2
 WC requires at least: 4.0.0
-WC tested up to: 6.1.0
-Stable tag: 2.3.1
+WC tested up to: 6.3.1
+Stable tag: 2.3.3
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -194,7 +194,7 @@ The gift card is used to purchase products at the online or retail store. People
 We have provided this feature under the "Other Setting" tab. After enabling this setting, the "Apply Coupon" field will not get displayed on the cart/checkout page if only the gift card product is in the cart.
 
 = How would I allow customers to select gift card product prices on their own? = 
-You can do this by setting the Pricing Type of a gift card to "User Price". To set the gift card pricing type to User Price, go to Products > Add New and create a new gift card product by selecting the Gift Card option in the “Product Data” dropdown you get on the edit page. After selecting the Gift Card option, you get a “Pricing Type” dropdown. Select “User Price” from the dropdown which allows customers to enter a gift card price of their own.
+You can do this by setting the Pricing Type of a gift card to "User Price". To set the gift card pricing type to User Price, go to Products > Add New and create a new gift card product by selecting the Gift Card option in the ï¿½Product Dataï¿½ dropdown you get on the edit page. After selecting the Gift Card option, you get a ï¿½Pricing Typeï¿½ dropdown. Select ï¿½User Priceï¿½ from the dropdown which allows customers to enter a gift card price of their own.
 
 = Where do my customers gift cards get delivered? = 
 The gift card gets delivered to the email ID the buyer enters in the email field at the time of purchase.
