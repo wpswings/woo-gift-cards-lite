@@ -121,7 +121,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'nonce'         => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
 					'callback'      => 'ajax_callbacks',
-					'pending_count' => $this->wps_wgm_get_count( 'orders' ),
+					'pending_orders' => $this->wps_wgm_get_count( 'orders' ),
 					'pending_pages' => $this->wps_wgm_get_count( 'pages' ),
 				)
 			);
@@ -1440,17 +1440,21 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @return int $result result.
 	 */
 	public function wps_wgm_get_count( $type = 'all' ) {
+		global $wpdb;
 
 		switch ( $type ) {
 			case 'orders':
+				$table = $wpdb->prefix . 'postmeta';
 				$sql = "SELECT (`post_id`)
-				FROM `wp_postmeta`
+				FROM `$table`
 				WHERE `meta_key` LIKE '%mwb_wgm%'";
+				$sql = apply_filters( 'wps_uwgc_migration_sql', $sql );
 				break;
 
 			case 'pages':
+				$table = $wpdb->prefix . 'posts';
 				$sql = "SELECT `ID`
-				FROM `wp_posts`
+				FROM `$table`
 				WHERE `post_content` LIKE '%mwb_%'";
 				break;
 
@@ -1459,13 +1463,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				break;
 		}
 
-		$sql = apply_filters( 'wps_uwgc_migration_sql', $sql );
-
 		if ( empty( $sql ) ) {
 			return 0;
 		}
 
-		global $wpdb;
 		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
 		return $result;
 	}
@@ -1541,12 +1542,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 									$arr_val_post[ $key ] = $new_key1;
 								}
 								update_post_meta( $order_id, $new_key, $arr_val_post );
-								// delete_post_meta( $order_id, $meta_keys );
 								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+								delete_post_meta( $order_id, $meta_keys );
 							} else {
 								update_post_meta( $order_id, $new_key, $value );
-								// delete_post_meta( $order_id, $meta_keys );
 								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+								delete_post_meta( $order_id, $meta_keys );
 							}
 						}
 					}
@@ -1684,8 +1685,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 			$arr_val = array();
 			if ( is_array( $new_value ) ) {
-				foreach ( $new_value as $old_key => $value ) {
-					$new_key2 = str_replace( 'mwb_', 'wps_', $old_key );
+				foreach ( $new_value as $old_keys => $value ) {
+					$new_key2 = str_replace( 'mwb_', 'wps_', $old_keys );
 					$new_key1 = str_replace( 'mwb-', 'wps-', $new_key2 );
 
 					$value_1 = str_replace( 'mwb_', 'wps_', $value );

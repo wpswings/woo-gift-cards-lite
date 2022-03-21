@@ -407,7 +407,7 @@ if ( $activated ) {
 			?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 				<td colspan="4" class="plugin-update colspanchange">
-					<div id="message" class="updated woocommerce-message">
+					<div id="import_button" class="updated woocommerce-message">
 						<p>
 							<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
 						</p>

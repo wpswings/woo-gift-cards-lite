@@ -23,7 +23,7 @@ jQuery(document).ready( function($) {
 			  '<i class="fa fa-thumbs-up"></i> Start',
 			confirmButtonAriaLabel: 'Thumbs up',
 			cancelButtonText:
-			  '<i class="fa fa-thumbs-down">Cancel</i>',
+			  '<i class="fa fa-thumbs-down"></i> Cancel',
 			cancelButtonAriaLabel: 'Thumbs down'
 		}).then((result) => {
 			if (result.isConfirmed) {
