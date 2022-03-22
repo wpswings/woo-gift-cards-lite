@@ -215,7 +215,7 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
-= 2.3.3 - Released on 21  March 2022 =
+= 2.3.3 - Released on 22  March 2022 =
 * New :  Compatibility with latest WC 6.3.1 and WP 5.9.2
 * New : Fix update issue
 
@@ -329,7 +329,7 @@ New: Email Template for Mothers Day
 * First version
 
 == Upgrade Notice ==
-= 2.3.3 - Released on 21  March 2022 =
+= 2.3.3 - Released on 22 March 2022 =
 * New :  Compatibility with latest WC 6.3.1 and WP 5.9.2
 * New : Fix update issue
 
