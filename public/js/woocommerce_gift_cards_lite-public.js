@@ -11,78 +11,78 @@
 	jQuery( document ).ready(
 		function($){
 
-			$('#wps_wgm_price').keyup(function() {
+			$('#mwb_wgm_price').keyup(function() {
 				this.value = this.value.replace(/[^0-9]/g, '');
 			});
 
-			$("#wps_wgm_price").attr( "min", 1);
-			var check_elementor = $(document).find('.wps_wgm_added_wrapper').parents('.elementor-product-wgm_gift_card').length;
+			$("#mwb_wgm_price").attr( "min", 1);
+			var check_elementor = $(document).find('.mwb_wgm_added_wrapper').parents('.elementor-product-wgm_gift_card').length;
 			if (check_elementor != 0) {
-				if ($(document).find('.wps_wgm_added_wrapper').length) {
-					$(document).find('.wps_wgm_added_wrapper').siblings().wrapAll('<div class="wps_wgm_elementor"></div>');
-					var modified_div = $(document).find('.wps_wgm_elementor');
-					$(document).find('.wps_wgm_added_wrapper').append(modified_div);
+				if ($(document).find('.mwb_wgm_added_wrapper').length) {
+					$(document).find('.mwb_wgm_added_wrapper').siblings().wrapAll('<div class="mwb_wgm_elementor"></div>');
+					var modified_div = $(document).find('.mwb_wgm_elementor');
+					$(document).find('.mwb_wgm_added_wrapper').append(modified_div);
 				}
 			}
 
-			$('body').on('click', '#wps_gift_this_product', function() {
+			$('body').on('click', '#mwb_gift_this_product', function() {
 				$(document).ajaxComplete(function() {
-					var msg_length = $(document).find('#wps_wgm_message').val().length;
-					$('.wps_box_char').text(msg_length);
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					$('.mwb_box_char').text(msg_length);
 				});
 			});
 			
 			$(window).load( function() {
-					var msg_length = $(document).find('#wps_wgm_message').val().length;
-					$('.wps_box_char').text(msg_length);
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
+					$('.mwb_box_char').text(msg_length);
 				}
 			);
 
-			$("body").on( 'keyup', '#wps_wgm_message', 
+			$("body").on( 'keyup', '#mwb_wgm_message', 
 				function(){
-					var max_length = wps_wgm.msg_length;
-					var msg_length = $(document).find('#wps_wgm_message').val().length;
+					var max_length = mwb_wgm.msg_length;
+					var msg_length = $(document).find('#mwb_wgm_message').val().length;
 					var html = '<ul>';
 					var error = false;
 					if ( msg_length > max_length ) {
 						this.value = this.value.substring( 0, max_length );
 						error = true;
-						$("#wps_wgm_message").addClass("wps_gw_error");
+						$("#mwb_wgm_message").addClass("mwb_gw_error");
 						html+="<li><b>";
-						html+=wps_wgm.msg_length_err;
+						html+=mwb_wgm.msg_length_err;
 						html+="</li>";
 					}
 					if(msg_length == 0){
-						$('.wps_box_char').text(0);
+						$('.mwb_box_char').text(0);
 					}
 					else if( msg_length > max_length ){
-						$('.wps_box_char').text(max_length);
+						$('.mwb_box_char').text(max_length);
 					} else {
-						$('.wps_box_char').text(msg_length);
+						$('.mwb_box_char').text(msg_length);
 					}
 
 					html += "</ul>";
 					if(error)
 					{
-						$("#wps_wgm_error_notice").html(html);
-						$("#wps_wgm_error_notice").show();
+						$("#mwb_wgm_error_notice").html(html);
+						$("#mwb_wgm_error_notice").show();
 						jQuery('html, body').animate({
 							scrollTop: jQuery(".woocommerce-page").offset().top
 						}, 800);
 					} else {
-						$("#wps_wgm_error_notice").hide();
+						$("#mwb_wgm_error_notice").hide();
 					}
 				}
 			);
 
 
 			/*Js for select template on single product page*/
-			$( 'body' ).on( 'click', '.wps_wgm_featured_img',
+			$( 'body' ).on( 'click', '.mwb_wgm_featured_img',
 				function(){
-					$( '.wps_wgm_selected_template' ).find( '.wps_wgm_featured_img' ).removeClass( 'wps_wgm_pre_selected_temp' );
+					$( '.mwb_wgm_selected_template' ).find( '.mwb_wgm_featured_img' ).removeClass( 'mwb_wgm_pre_selected_temp' );
 					var img_id = $( this ).attr( 'id' );
-					$( '#' + img_id ).addClass( 'wps_wgm_pre_selected_temp' );
-					$( '#wps_wgm_selected_temp' ).val( img_id );
+					$( '#' + img_id ).addClass( 'mwb_wgm_pre_selected_temp' );
+					$( '#mwb_wgm_selected_temp' ).val( img_id );
 				}
 			);
 
@@ -91,70 +91,70 @@
 			*/
 			jQuery( "body" ).on( 'click', '.single_add_to_cart_button',
 				function(e){
-					if ( ( typeof wps_wgm.pricing_type.type != 'undefined' || $( '#wps_gift_this_product' ).prop("checked") == true ) ) {
+					if ( ( typeof mwb_wgm.pricing_type.type != 'undefined' || $( '#mwb_gift_this_product' ).prop("checked") == true ) ) {
 						e.preventDefault();
-						$( "#wps_wgm_error_notice" ).hide();
-						var from_mail = $( "#wps_wgm_from_name" ).val();
-						var message = $( "#wps_wgm_message" ).val();
+						$( "#mwb_wgm_error_notice" ).hide();
+						var from_mail = $( "#mwb_wgm_from_name" ).val();
+						var message = $( "#mwb_wgm_message" ).val();
 						message = message.trim();
-						var price = $( "#wps_wgm_price" ).val();
+						var price = $( "#mwb_wgm_price" ).val();
 						var error = false;
-						var product_type = wps_wgm.pricing_type.type;
+						var product_type = mwb_wgm.pricing_type.type;
 						var html = "";
 						var to_mail = '';
 						var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
 						html = "<ul>";
 
-						var delivery_method = jQuery( document ).find( 'input[name="wps_wgm_send_giftcard"]:checked' ).val();
+						var delivery_method = jQuery( document ).find( 'input[name="mwb_wgm_send_giftcard"]:checked' ).val();
 						// remove validation from to fields.
-						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_to() == 'on') {
+						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to() == 'on') {
 							if (delivery_method == 'Mail to recipient') {
-								to_mail = $( "#wps_wgm_to_email" ).val();
+								to_mail = $( "#mwb_wgm_to_email" ).val();
 								error = false;
 							}
 							if (delivery_method == 'Downloadable') {
-								to_mail = $( "#wps_wgm_to_download" ).val();
+								to_mail = $( "#mwb_wgm_to_download" ).val();
 								error = false;
 							}
 						} else {
 							if (delivery_method == 'Mail to recipient') {
-								to_mail = $( "#wps_wgm_to_email" ).val();
+								to_mail = $( "#mwb_wgm_to_email" ).val();
 								if (to_mail == null || to_mail == "") {
 									error = true;
-									$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
+									$( "#mwb_wgm_to_email" ).addClass( "mwb_wgm_error" );
 									html += "<li><b>";
-									html += wps_wgm.to_empty;
+									html += mwb_wgm.to_empty;
 									html += "</li>";
 								} else if ( ! to_mail.match( mailformat )) {
 									error = true;
-									$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
+									$( "#mwb_wgm_to_email" ).addClass( "mwb_wgm_error" );
 									html += "<li><b>";
-									html += wps_wgm.to_invalid;
+									html += mwb_wgm.to_invalid;
 									html += "</li>";
 								}
 							}
 						}
 
-						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_to_name() == 'on') {
+						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to_name() == 'on') {
 							
 						} else {
 							if (delivery_method == 'Downloadable') {
-								to_mail = $( "#wps_wgm_to_download" ).val();
+								to_mail = $( "#mwb_wgm_to_download" ).val();
 								if (to_mail == null || to_mail == "") {
 									error = true;
-									$( "#wps_wgm_to_download" ).addClass( "wps_wgm_error" );
+									$( "#mwb_wgm_to_download" ).addClass( "mwb_wgm_error" );
 									html += "<li><b>";
-									html += wps_wgm.to_empty_name;
+									html += mwb_wgm.to_empty_name;
 									html += "</li>";
 								}
 							}
 							if (delivery_method == 'shipping') {
-								to_mail = $( "#wps_wgm_to_ship" ).val();
+								to_mail = $( "#mwb_wgm_to_ship" ).val();
 								if (to_mail == null || to_mail == "") {
 									error = true;
-									$( "#wps_wgm_to_ship" ).addClass( "wps_wgm_error" );
+									$( "#mwb_wgm_to_ship" ).addClass( "mwb_wgm_error" );
 									html += "<li><b>";
-									html += wps_wgm.to_empty_name;
+									html += mwb_wgm.to_empty_name;
 									html += "</li>";
 								}
 							}
@@ -162,45 +162,45 @@
 
 						if (price == null || price == "") {
 							error = true;
-							$( "#wps_wgm_price" ).addClass( "wps_wgm_error" );
+							$( "#mwb_wgm_price" ).addClass( "mwb_wgm_error" );
 							html += "<li><b>";
-							html += wps_wgm.price_field;
+							html += mwb_wgm.price_field;
 							html += "</li>";
 						}
 						// Remove validation from field.
-						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_from() == 'on') {
+						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_from() == 'on') {
 							
 						} else {
 							if (from_mail == null || from_mail == "") {
 								error = true;
-								$( "#wps_wgm_from_name" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_from_name" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.from_empty;
+								html += mwb_wgm.from_empty;
 								html += "</li>";
 							}
 						}
 						// for validation from message field.
-						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_msg() == 'on') {
+						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_msg() == 'on') {
 							
 						} else {
 							if (message == null || message == "") {
 								error = true;
-								$( "#wps_wgm_message" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_message" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.msg_empty;
+								html += mwb_wgm.msg_empty;
 								html += "</li>";
-							} else if ( message.length > wps_wgm.msg_length ) {
+							} else if ( message.length > mwb_wgm.msg_length ) {
 								error = true;
-								$( "#wps_wgm_message" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_message" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.msg_length_err;
+								html += mwb_wgm.msg_length_err;
 								html += "</li>";
 							}
 						}
 
-						if (product_type == "wps_wgm_range_price") {
-							var from = parseInt( wps_wgm.pricing_type.from );
-							var to = parseInt( wps_wgm.pricing_type.to );
+						if (product_type == "mwb_wgm_range_price") {
+							var from = parseInt( mwb_wgm.pricing_type.from );
+							var to = parseInt( mwb_wgm.pricing_type.to );
 
 							to = parseFloat( to );
 							from = parseFloat( from );
@@ -208,23 +208,23 @@
 
 							if (price > to || price < from) {
 								error = true;
-								$( "#wps_wgm_price" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_price" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.price_range;
+								html += mwb_wgm.price_range;
 								html += "</li>";
 							}
 						}
 						// if pro is active.
-						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '') {
-							var response = wps_wgm_add_to_card_validation( html,error );
+						if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '') {
+							var response = mwb_wgm_add_to_card_validation( html,error );
 							error = response.error;
 							html += response.html;
 							to_mail = response.to_mail;
 						}
 						html += "</ul>";
 						if (error) {
-							$( "#wps_wgm_error_notice" ).html( html );
-							$( "#wps_wgm_error_notice" ).show();
+							$( "#mwb_wgm_error_notice" ).html( html );
+							$( "#mwb_wgm_error_notice" ).show();
 							jQuery( 'html, body' ).animate(
 								{
 									scrollTop: jQuery( ".woocommerce-page" ).offset().top
@@ -233,8 +233,8 @@
 							);
 							$( ".single_add_to_cart_button" ).removeClass( "loading" );
 						} else {
-							$( "#wps_wgm_error_notice" ).html( "" );
-							$( "#wps_wgm_error_notice" ).hide();
+							$( "#mwb_wgm_error_notice" ).html( "" );
+							$( "#mwb_wgm_error_notice" ).hide();
 							$( this ).closest( "form.cart" ).submit();
 							return true;
 						}
@@ -247,59 +247,59 @@
 			$( 'body' ).on('click', '#mwg_wgm_preview_email',
 				function() {
 					var form_Data = new FormData();
-					$( "#wps_wgm_error_notice" ).hide();
-					var from_mail = $( "#wps_wgm_from_name" ).val();
-					var message = $( "#wps_wgm_message" ).val();
+					$( "#mwb_wgm_error_notice" ).hide();
+					var from_mail = $( "#mwb_wgm_from_name" ).val();
+					var message = $( "#mwb_wgm_message" ).val();
 					message = message.trim();
 					var regex = /(<([^>]+)>)/ig;
 					var message = message.replace( regex,'' );
-					var price = $( "#wps_wgm_price" ).val();
+					var price = $( "#mwb_wgm_price" ).val();
 					var error = false;
-					var product_type = wps_wgm.pricing_type.type;
+					var product_type = mwb_wgm.pricing_type.type;
 					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
 					var to_mail = '';
 					var send_date = '';
 					var html = "<ul>";
-					var delivery_method = jQuery( document ).find( 'input[name="wps_wgm_send_giftcard"]:checked' ).val();
+					var delivery_method = jQuery( document ).find( 'input[name="mwb_wgm_send_giftcard"]:checked' ).val();
 					// remove validation from to fields.
-					if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_to() == 'on') {
+					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to() == 'on') {
 						if (delivery_method == 'Mail to recipient') {
-							to_mail = $( "#wps_wgm_to_email" ).val();
+							to_mail = $( "#mwb_wgm_to_email" ).val();
 							error = false;
 						}
 						if (delivery_method == 'Downloadable') {
-							to_mail = $( "#wps_wgm_to_download" ).val();
+							to_mail = $( "#mwb_wgm_to_download" ).val();
 							error = false;
 						}
 					} else {
 						if (delivery_method == 'Mail to recipient') {
-								to_mail = $( "#wps_wgm_to_email" ).val();
+								to_mail = $( "#mwb_wgm_to_email" ).val();
 							if (to_mail == null || to_mail == "") {
 								error = true;
-								$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_to_email" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.to_empty;
+								html += mwb_wgm.to_empty;
 								html += "</li>";
 							} else if ( ! to_mail.match( mailformat )) {
 								error = true;
-								$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_to_email" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.to_invalid;
+								html += mwb_wgm.to_invalid;
 								html += "</li>";
 							}
 						}
 					}
 
-					if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_to_name() == 'on') {
+					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_to_name() == 'on') {
 
 					} else {
 						if (delivery_method == 'Downloadable') {
-							to_mail = $( "#wps_wgm_to_download" ).val();
+							to_mail = $( "#mwb_wgm_to_download" ).val();
 							if (to_mail == null || to_mail == "") {
 								error = true;
-								$( "#wps_wgm_to_download" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_to_download" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.to_empty_name;
+								html += mwb_wgm.to_empty_name;
 								html += "</li>";
 							}
 						}
@@ -307,60 +307,60 @@
 					
 					if (price == null || price == "") {
 						error = true;
-						$( "#wps_wgm_price" ).addClass( "wps_wgm_error" );
+						$( "#mwb_wgm_price" ).addClass( "mwb_wgm_error" );
 						html += "<li><b>";
-						html += wps_wgm.price_field;
+						html += mwb_wgm.price_field;
 						html += "</li>";
 					}
 					// remove validation from field.
-					if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_from() == 'on') {
+					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_from() == 'on') {
 						
 					} else {
 						if (from_mail == null || from_mail == "") {
 								error = true;
-								$( "#wps_wgm_from_name" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_from_name" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.from_empty;
+								html += mwb_wgm.from_empty;
 								html += "</li>";
 						}
 					}
 					// for validation from message.
-					if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_msg() == 'on') {
+					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '' && mwb_wgm_remove_validation_msg() == 'on') {
 						
 					} else {
 						if (message == null || message == "") {
 								error = true;
-								$( "#wps_wgm_message" ).addClass( "wps_wgm_error" );
+								$( "#mwb_wgm_message" ).addClass( "mwb_wgm_error" );
 								html += "<li><b>";
-								html += wps_wgm.msg_empty;
+								html += mwb_wgm.msg_empty;
 								html += "</li>";
-						} else if ( message.length > wps_wgm.msg_length ) {
+						} else if ( message.length > mwb_wgm.msg_length ) {
 							error = true;
-							$( "#wps_wgm_message" ).addClass( "wps_wgm_error" );
+							$( "#mwb_wgm_message" ).addClass( "mwb_wgm_error" );
 							html += "<li><b>";
-							html += wps_wgm.msg_length_err;
+							html += mwb_wgm.msg_length_err;
 							html += "</li>";
 						}
 					}
 
-					if (product_type == "wps_wgm_range_price") {
-						var from = wps_wgm.pricing_type.from;
-						var to = wps_wgm.pricing_type.to;
+					if (product_type == "mwb_wgm_range_price") {
+						var from = mwb_wgm.pricing_type.from;
+						var to = mwb_wgm.pricing_type.to;
 						to = parseFloat( to );
 						from = parseFloat( from );
 						price = parseFloat( price );
 
 						if (price > to || price < from) {
 							error = true;
-							$( "#wps_wgm_price" ).addClass( "wps_wgm_error" );
+							$( "#mwb_wgm_price" ).addClass( "mwb_wgm_error" );
 							html += "<li><b>";
-							html += wps_wgm.price_range;
+							html += mwb_wgm.price_range;
 							html += "</li>";
 						}
 					}
 					// if pro is active.
-					if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '') {
-						var response = wps_wgm_preview_validation( html,error,form_Data );
+					if (mwb_wgm.is_pro_active != null && mwb_wgm.is_pro_active != '') {
+						var response = mwb_wgm_preview_validation( html,error,form_Data );
 						error = response.error;
 						html += response.html;
 						to_mail = response.to_mail;
@@ -369,11 +369,11 @@
 					}
 					html += "</ul>";
 					if (error) {
-						$( "#wps_wgm_error_notice" ).html( html );
-						$( "#wps_wgm_error_notice" ).show();
-						// WPS code for woodmart theme.
-						$( "#wps_wgm_error_notice" ).removeClass( 'hidden-notice' );
-						// WPS code for woodmart theme.
+						$( "#mwb_wgm_error_notice" ).html( html );
+						$( "#mwb_wgm_error_notice" ).show();
+						// MWB code for woodmart theme.
+						$( "#mwb_wgm_error_notice" ).removeClass( 'hidden-notice' );
+						// MWB code for woodmart theme.
 						jQuery( 'html, body' ).animate(
 							{
 								scrollTop: jQuery( ".woocommerce-page" ).offset().top
@@ -382,10 +382,10 @@
 						);
 					} else {
 
-						var product_id = wps_wgm.product_id;
-						var tempId = $( document ).find( '#wps_wgm_selected_temp' ).val();
-						form_Data.append( 'action', 'wps_wgc_preview_thickbox_rqst' );
-						form_Data.append( 'wps_nonce', wps_wgm.wps_wgm_nonce );
+						var product_id = mwb_wgm.product_id;
+						var tempId = $( document ).find( '#mwb_wgm_selected_temp' ).val();
+						form_Data.append( 'action', 'mwb_wgc_preview_thickbox_rqst' );
+						form_Data.append( 'mwb_nonce', mwb_wgm.mwb_wgm_nonce );
 						form_Data.append( 'price', price );
 						form_Data.append( 'from', from_mail );
 						form_Data.append( 'to', to_mail );
@@ -396,7 +396,7 @@
 
 						$.ajax(
 							{
-								url: wps_wgm.ajaxurl,
+								url: mwb_wgm.ajaxurl,
 								type: "POST",
 								data: form_Data,
 								processData: false,
@@ -412,20 +412,20 @@
 				}
 			);
 			
-			$( 'body' ).on( 'click', '#wps_recharge_wallet_giftcard',
+			$( 'body' ).on( 'click', '#mwb_recharge_wallet_giftcard',
 				function() {
 					$( '.error' ).hide();
-					var wps_gc_code = $( '#wps_giftcard_code' ).val();
-					var wps_wgm_nonce = wps_wgm.wps_wgm_nonce;
+					var mwb_gc_code = $( '#mwb_giftcard_code' ).val();
+					var mwb_wgm_nonce = mwb_wgm.mwb_wgm_nonce;
 					$.ajax({
-						url: wps_wgm.ajaxurl,
+						url: mwb_wgm.ajaxurl,
 						type: 'POST',
-						data: { wps_gc_code : wps_gc_code, wps_wgm_nonce: wps_wgm_nonce, action: 'wps_recharge_wallet_via_giftcard' },
+						data: { mwb_gc_code : mwb_gc_code, mwb_wgm_nonce: mwb_wgm_nonce, action: 'mwb_recharge_wallet_via_giftcard' },
 						dataType: 'json',
 						success: function( response ) {
 							if ( response['status'] == 'success' ){
 								$( '.success' ).css( 'color', 'green' );
-								$( '.success' ).html( 'Wallet Recharge with amount of ' + wps_wgm.wps_currency + response['message'] );
+								$( '.success' ).html( 'Wallet Recharge with amount of ' + mwb_wgm.mwb_currency + response['message'] );
 								setTimeout(location.reload.bind(location), 3000);
 							} else if( response['status'] == 'failed' ) {
 								$( '.error' ).show();
@@ -436,7 +436,7 @@
 				}
 			);
 
-			$( '#wps_giftcard_code' ).keyup(function() {
+			$( '#mwb_giftcard_code' ).keyup(function() {
 				$( '.error' ).hide();
 			});
 		}

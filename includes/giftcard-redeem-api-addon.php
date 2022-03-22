@@ -20,8 +20,8 @@ add_action(
 			array(
 
 				'methods'  => 'POST',
-				'callback' => 'wps_redeem_giftcard_offline',
-				'permission_callback' => 'wps_permission_check',
+				'callback' => 'mwb_redeem_giftcard_offline',
+				'permission_callback' => 'mwb_permission_check',
 
 			)
 		);
@@ -31,8 +31,8 @@ add_action(
 			array(
 
 				'methods'  => 'POST',
-				'callback' => 'wps_get_giftcard_details',
-				'permission_callback' => 'wps_permission_check',
+				'callback' => 'mwb_get_giftcard_details',
+				'permission_callback' => 'mwb_permission_check',
 
 			)
 		);
@@ -42,8 +42,8 @@ add_action(
 			array(
 
 				'methods'  => 'POST',
-				'callback' => 'wps_recharge_giftcard_offine',
-				'permission_callback' => 'wps_permission_check',
+				'callback' => 'mwb_recharge_giftcard_offine',
+				'permission_callback' => 'mwb_permission_check',
 
 			)
 		);
@@ -54,12 +54,12 @@ add_action(
  * Get_giftcard_details
  *
  * @since      1.0.0
- * @name wps_get_giftcard_details
+ * @name mwb_get_giftcard_details
  * @param mixed $request Request.
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function wps_get_giftcard_details( $request ) {
+function mwb_get_giftcard_details( $request ) {
 
 	global $woocommerce;
 	$request_params = $request->get_params();
@@ -117,12 +117,12 @@ function wps_get_giftcard_details( $request ) {
  * Redeem Giftcard Offline
  *
  * @since      1.0.0
- * @name wps_redeem_giftcard_offline
+ * @name mwb_redeem_giftcard_offline
  * @param mixed $request Request.
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function wps_redeem_giftcard_offline( $request ) {
+function mwb_redeem_giftcard_offline( $request ) {
 
 	global $woocommerce;
 
@@ -152,7 +152,7 @@ function wps_redeem_giftcard_offline( $request ) {
 				$coupon_expiry = get_post_meta( $coupon_id, 'date_expires', true );
 			}
 
-			$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+			$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 
 			if ( isset( $giftcardcoupon_order_id ) && '' !== $giftcardcoupon_order_id ) {
 
@@ -253,12 +253,12 @@ function wps_redeem_giftcard_offline( $request ) {
  * Recharge Giftcard Offline
  *
  * @since      1.0.0
- * @name wps_recharge_giftcard_offine
+ * @name mwb_recharge_giftcard_offine
  * @param mixed $request request.
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function wps_recharge_giftcard_offine( $request ) {
+function mwb_recharge_giftcard_offine( $request ) {
 	global $woocommerce;
 	$request_params = $request->get_params();
 	$coupon_code = $request_params['coupon_code'];
@@ -284,7 +284,7 @@ function wps_recharge_giftcard_offine( $request ) {
 			$coupon_expiry = get_post_meta( $coupon_id, 'date_expires', true );
 		}
 
-		$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+		$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'mwb_wgm_giftcard_coupon', true );
 
 		if ( isset( $giftcardcoupon_order_id ) && '' !== $giftcardcoupon_order_id ) {
 			if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
@@ -366,14 +366,14 @@ function wps_recharge_giftcard_offine( $request ) {
  * Check permission
  *
  * @since      1.0.0
- * @name wps_permission_check
+ * @name mwb_permission_check
  * @param mixed $request Request.
  * @author WP Swings <webmaster@wpswings.com>
  * @link https://www.makewebbetter.com/
  */
-function wps_permission_check( $request ) {
+function mwb_permission_check( $request ) {
 	$license             = $request->get_header( 'licensecode' );
-	$client_license_code = get_option( 'wps_gw_lcns_key', '' );
+	$client_license_code = get_option( 'mwb_gw_lcns_key', '' );
 	if ( '' == $license ) {
 		return true;
 	} elseif ( trim( $client_license_code ) === trim( $license ) ) {

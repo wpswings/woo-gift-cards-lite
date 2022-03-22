@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift card, gift certificates, woocommerce gift cards, gift voucher, gift cards, gift, certificate
 Requires at least: 5.0
-Tested up to: 5.9.1
+Tested up to: 5.9.2
 WC requires at least: 4.0.0
-WC tested up to: 6.2.1
-Stable tag: 2.3.2
+WC tested up to: 6.3.1
+Stable tag: 2.3.3
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -55,13 +55,12 @@ Ultimate Gift Cards for WooCommerce plugin allows merchants to create, sell, and
 **1)** **Flexible Delivery Options**
 Ultimate Gift Cards for WooCommerce provides you with two different methods - Email and Downloadable, to deliver gift cards. You can select either as per your convenience. If you select the email method, the customer will need to enter the email of the recipient while buying the gift card. The card will be sent to the recipient's email. Or you can choose the downloadable feature. In the downloadable delivery method gift card, an email will be sent to the buyer. 
 
-**2)** **Offering in Your Local Currency**
-Compatible with Price Based on Country for WooCommerce in Gift certificate plugin, enables customers to place an order in their currency. This eliminates the hesitation customers face while purchasing a product in a different currency.
 
-**3)** **WPML Multilingual Support**
+
+**2)** **WPML Multilingual Support**
 The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
-**4)** **Four Different Pricing Types**
+**3)** **Four Different Pricing Types**
 The WooCommerce Gift cards plugin lets you create gift cards with four different pricing options that are:
 
 *  **Default Price:** Fixed-price
@@ -69,22 +68,23 @@ The WooCommerce Gift cards plugin lets you create gift cards with four different
 *  **Selected Price:** Several different but fixed price options
 *  **User Price:** Any price entered by a customer
 
-**5)** **Tax Calculation**
+**4)** **Tax Calculation**
 This WooCommerce gift certificates plugin allows you to calculate the tax on gift card products. You can enable this feature to let customers pay tax on the purchase of gift card products. If you don't want them to pay tax, simply disable the feature.
 
-**6)** **Easy Online and Retail Redeeming**
+**5)** **Easy Online and Retail Redeeming**
 With WooCommerce gift vouchers, Customers can redeem gift cards at your online WooCommerce store or also through a Point of Sale(POS) system from a brick-and-mortar store. To enable this feature, you just need to generate a FREE Redeem link by providing your email and name. When you do that, you get the login credentials via email for logged in to the redeem/recharge portal, a redeem link, and an embed link. You can directly go to the redeem link to recharge or redeem gift cards. Or you can also add the embed code on your web page to create a portal for recharging/redeeming gift cards at your online store.
 
-**7)** **Coupon Codes and Customizable Email Templates**
+**6)** **Coupon Codes and Customizable Email Templates**
 Ultimate WooCommerce Gift Cards provide you with coupon codes. You can tweak the coupon code length, prefix, expiry date, number of usages, min, and max spending limit. Moreover, you can customize the email template that delivers the gift card to the recipient. You can upload and change the height and width of the logo, change gift card message length, disclaimer text, gift card email subject, etc.
 
-**8)** **Product and Category Exclusion Feature**
+**7)** **Product and Category Exclusion Feature**
 With WooCommerce ultimate gift card plugin, you can exclude specific categories, products, or sale items. If you do this, the customers won't be able to buy the excluded products through gift cards.
 
 Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-page&utm_campaign=giftcards-doc) and learn more about the features and working of the plugin. 
 
 
 Check out [**Gift Cards WooCommerce plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/gift-cards-for-woocommerce/?utm_source=wpswings-giftcards-kb&utm_medium=giftcards-org-page&utm_campaign=giftcards-kb)
+
 
 == LIVE DEMO OF WOOCOMMERCE GIFT CARDS PLUGIN ==
 
@@ -215,7 +215,12 @@ Yes, In the General settings, you can set the minimum and maximum spend for your
 
 == Changelog ==
 
-= 2.3.2 - Released on 14 March 2022 =
+= 2.3.3 - Released on 22  March 2022 =
+* New :  Compatibility with latest WC 6.3.1 and WP 5.9.2
+* New : Fix update issue
+
+
+= 2.3.2 - Released on 17  March 2022 =
 * New :  Some substantial changes across different areas of the plugin.
 * New : Minor Bug Fixes
 * New : Compatible with latest WP and WC
@@ -324,10 +329,10 @@ New: Email Template for Mothers Day
 * First version
 
 == Upgrade Notice ==
-= 2.3.2 - Released on 14 March 2022 =
-* New: Minor Bug fixes
-* New: Compatible with latest WP and WC
-* New :  Some substantial changes across different areas of the plugin.
+= 2.3.3 - Released on 22 March 2022 =
+* New :  Compatibility with latest WC 6.3.1 and WP 5.9.2
+* New : Fix update issue
+
 
 
 

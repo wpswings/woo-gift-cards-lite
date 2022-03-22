@@ -14,94 +14,94 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
+define( 'MWB_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
 
 }
 /*  create the settings tabs*/
-$wps_wgm_setting_tab = array(
+$mwb_wgm_setting_tab = array(
 	'overview_setting' => array(
 		'title' => esc_html__( 'OverView', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-overview-setting.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-overview-setting.php',
 	),
 	'general_setting' => array(
 		'title' => esc_html__( 'General', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-general-setting.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-general-setting.php',
 	),
 	'product_setting' => array(
 		'title' => esc_html__( 'Product', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-product-setting.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-product-setting.php',
 	),
 	'email_setting' => array(
 		'title' => esc_html__( 'Email Template', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-email-template-setting.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-email-template-setting.php',
 	),
 	'delivery_method' => array(
 		'title' => esc_html__( 'Delivery Method', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-delivery-setting.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-delivery-setting.php',
 	),
 	'other_setting' => array(
 		'title' => esc_html__( 'Other Settings', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-other-setting.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-other-setting.php',
 	),
 );
-$wps_wgm_setting_tab = apply_filters( 'wps_wgm_add_gift_card_setting_tab_before', $wps_wgm_setting_tab );
-$wps_wgm_setting_tab['redeem_tab'] = array(
+$mwb_wgm_setting_tab = apply_filters( 'mwb_wgm_add_gift_card_setting_tab_before', $mwb_wgm_setting_tab );
+$mwb_wgm_setting_tab['redeem_tab'] = array(
 	'title' => esc_html__( 'Gift Card Redeem', 'woo-gift-cards-lite' ),
-	'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/redeem-giftcard-settings.php',
+	'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/redeem-giftcard-settings.php',
 );
-if ( ! wps_uwgc_pro_active() ) {
-	$wps_wgm_setting_tab['premium_plugin'] = array(
+if ( ! mwb_uwgc_pro_active() ) {
+	$mwb_wgm_setting_tab['premium_plugin'] = array(
 		'title' => esc_html__( 'Premium Features', 'woo-gift-cards-lite' ),
-		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-premium-features.php',
+		'file_path' => MWB_WGC_DIRPATH . 'admin/partials/templates/mwb-wgm-premium-features.php',
 	);
 }
-$wps_wgm_setting_tab = apply_filters( 'wps_wgm_add_gift_card_setting_tab_after', $wps_wgm_setting_tab );
-do_action( 'wps_uwgc_show_notice' );
+$mwb_wgm_setting_tab = apply_filters( 'mwb_wgm_add_gift_card_setting_tab_after', $mwb_wgm_setting_tab );
+do_action( 'mwb_uwgc_show_notice' );
 ?>
-<div class="wrap woocommerce" id="wps_wgm_setting_wrapper">
-	<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader">
-		<img src="<?php echo esc_url( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>">
+<div class="wrap woocommerce" id="mwb_wgm_setting_wrapper">
+	<div style="display: none;" class="loading-style-bg" id="mwb_wgm_loader">
+		<img src="<?php echo esc_url( MWB_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
 	<form enctype="multipart/form-data" action="" id="mainform" method="post">
-		<div class="wps_wgm_header">
-			<div class="wps_wgm_header_content_left">
+		<div class="mwb_wgm_header">
+			<div class="mwb_wgm_header_content_left">
 				<div>
-					<h3 class="wps_wgm_setting_title"><?php esc_html_e( 'Gift Card Settings', 'woo-gift-cards-lite' ); ?></h3>
+					<h3 class="mwb_wgm_setting_title"><?php esc_html_e( 'Gift Card Settings', 'woo-gift-cards-lite' ); ?></h3>
 				</div>
 			</div>
-			<div class="wps_wgm_header_content_right">
+			<div class="mwb_wgm_header_content_right">
 				<ul>
 					<?php
-					if ( wps_uwgc_pro_active() ) {
+					if ( mwb_uwgc_pro_active() ) {
 						?>
-						<li class="wps_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-pro-backend&utm_campaign=giftcards-contact" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-pro-backend&utm_campaign=giftcards-contact" target="_blank">
 							<span class="dashicons dashicons-phone"></span>
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
+							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>
-						<li class="wps_wgm_header_menu_button"><a href="https://docs.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-pro-backend&utm_campaign=documentation" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-pro-backend&utm_campaign=documentation" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
+							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>	
 						<?php
 					} else {
 						?>
-						<li class="wps_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-org-backend&utm_campaign=contact" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-giftcards-contact&utm_medium=giftcards-org-backend&utm_campaign=contact" target="_blank">
 							<span class="dashicons dashicons-phone"></span>
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
+							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'CONTACT US', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>
-						<li class="wps_wgm_header_menu_button"><a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank">
+						<li class="mwb_wgm_header_menu_button"><a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
+							<span class="mwb-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>
-						<li class="wps_wgm_header_menu_button">
-							<a  href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="wps-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
+						<li class="mwb_wgm_header_menu_button">
+							<a  href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="mwb-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
 						</li>	
 						<?php
 					}
@@ -109,35 +109,35 @@ do_action( 'wps_uwgc_show_notice' );
 				</ul>
 			</div>
 		</div>
-		<?php wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' ); ?>
-		<div class="wps_wgm_main_template">
-			<div class="wps_wgm_body_template">
-				<div class="wps_wgm_mobile_nav">
+		<?php wp_nonce_field( 'mwb-wgc-nonce', 'mwb-wgc-nonce' ); ?>
+		<div class="mwb_wgm_main_template">
+			<div class="mwb_wgm_body_template">
+				<div class="mwb_wgm_mobile_nav">
 					<span class="dashicons dashicons-menu"></span>
 				</div>
-				<div class="wps_wgm_navigator_template">
-					<div class="wps_wgm-navigations">
+				<div class="mwb_wgm_navigator_template">
+					<div class="mwb_wgm-navigations">
 						<?php
-						if ( isset( $wps_wgm_setting_tab ) && ! empty( $wps_wgm_setting_tab ) && is_array( $wps_wgm_setting_tab ) ) {
-							foreach ( $wps_wgm_setting_tab as $key => $wps_tab ) {
+						if ( isset( $mwb_wgm_setting_tab ) && ! empty( $mwb_wgm_setting_tab ) && is_array( $mwb_wgm_setting_tab ) ) {
+							foreach ( $mwb_wgm_setting_tab as $key => $mwb_tab ) {
 								if ( isset( $_GET['tab'] ) && sanitize_key( wp_unslash( $_GET['tab'] ) ) == $key ) {
 									?>
-									<div class="wps_wgm_tabs">
-										<a class="wps_wgm_nav_tab nav-tab nav-tab-active" href="?post_type=giftcard&page=wps-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $wps_tab['title'] ); ?></a>
+									<div class="mwb_wgm_tabs">
+										<a class="mwb_wgm_nav_tab nav-tab nav-tab-active" href="?post_type=giftcard&page=mwb-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $mwb_tab['title'] ); ?></a>
 									</div>
 									<?php
 								} else {
 									if ( ! isset( $_GET['tab'] ) && 'overview_setting' == $key ) {
 										?>
-										<div class="wps_wgm_tabs">
-											<a class="wps_wgm_nav_tab nav-tab nav-tab-active" href="?post_type=giftcard&page=wps-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $wps_tab['title'] ); ?></a>
+										<div class="mwb_wgm_tabs">
+											<a class="mwb_wgm_nav_tab nav-tab nav-tab-active" href="?post_type=giftcard&page=mwb-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $mwb_tab['title'] ); ?></a>
 										</div>
 										<?php
 									} else {
 										?>
 													
-										<div class="wps_wgm_tabs">
-											<a class="wps_wgm_nav_tab nav-tab" href="?post_type=giftcard&page=wps-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $wps_tab['title'] ); ?></a>
+										<div class="mwb_wgm_tabs">
+											<a class="mwb_wgm_nav_tab nav-tab" href="?post_type=giftcard&page=mwb-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $mwb_tab['title'] ); ?></a>
 										</div>
 										<?php
 									}
@@ -149,19 +149,19 @@ do_action( 'wps_uwgc_show_notice' );
 					</div>
 				</div>
 				<?php
-				if ( isset( $wps_wgm_setting_tab ) && ! empty( $wps_wgm_setting_tab ) && is_array( $wps_wgm_setting_tab ) ) {
-					foreach ( $wps_wgm_setting_tab as $key => $wps_file ) {
+				if ( isset( $mwb_wgm_setting_tab ) && ! empty( $mwb_wgm_setting_tab ) && is_array( $mwb_wgm_setting_tab ) ) {
+					foreach ( $mwb_wgm_setting_tab as $key => $mwb_file ) {
 						if ( isset( $_GET['tab'] ) && sanitize_key( wp_unslash( $_GET['tab'] ) ) == $key ) {
-							$include_tab = isset( $wps_file['file_path'] ) ? $wps_file['file_path'] : '';
+							$include_tab = isset( $mwb_file['file_path'] ) ? $mwb_file['file_path'] : '';
 							?>
-							<div class="wps_wgm_content_template">
+							<div class="mwb_wgm_content_template">
 								<?php include_once $include_tab; ?>
 							</div>
 							<?php
 						} elseif ( ! isset( $_GET['tab'] ) && 'overview_setting' == $key ) {
-							$include_tab = isset( $wps_file['file_path'] ) ? $wps_file['file_path'] : '';
+							$include_tab = isset( $mwb_file['file_path'] ) ? $mwb_file['file_path'] : '';
 							?>
-							<div class="wps_wgm_content_template">
+							<div class="mwb_wgm_content_template">
 								<?php include_once $include_tab; ?>
 							</div>
 							<?php

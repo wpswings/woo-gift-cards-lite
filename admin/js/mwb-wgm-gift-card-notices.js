@@ -13,12 +13,12 @@ jQuery( document ).ready(
 			function(e){
 				e.preventDefault();
 				var data = {
-					action:'wps_wgm_dismiss_notice',
-					wps_nonce:wps_wgm_notice.wps_wgm_nonce
+					action:'mwb_wgm_dismiss_notice',
+					mwb_nonce:mwb_wgm_notice.mwb_wgm_nonce
 				};
 				$.ajax(
 					{
-						url: wps_wgm_notice.ajaxurl,
+						url: mwb_wgm_notice.ajaxurl,
 						type: "POST",
 						data: data,
 						success: function(response)
