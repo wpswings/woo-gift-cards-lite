@@ -126,7 +126,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				)
 			);
 
-			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'gift-cards-for-woocommerce-pro/gift-cards-for-woocommerce-pro.php' ) ) {
+			if ( 'giftcard' === $pagescreen && ! is_plugin_active( 'giftware/giftware.php' ) ) {
 				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, 'count' );
 			}
 
