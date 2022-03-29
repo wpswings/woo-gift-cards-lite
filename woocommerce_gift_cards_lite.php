@@ -344,7 +344,8 @@ if ( $activated ) {
 	function wps_wgm_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		global $old_pro_exists;
-		?>
+		if ( $old_pro_exists ) {
+			?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
@@ -361,7 +362,8 @@ if ( $activated ) {
 				content: none;
 			}
 		</style>
-		<?php
+			<?php
+		}
 	}
 
 	/**
