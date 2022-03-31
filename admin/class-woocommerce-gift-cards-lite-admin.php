@@ -112,17 +112,22 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				return;
 			}
 
+			$wps_wgm_migration_success = get_option( 'wps_wgm_code_migrated' );
+			$wps_wgm_pro_migration_success = get_option( 'wps_wgm_pro_code_migrated' );
+
 			wp_enqueue_script( $this->plugin_name . 'swal-addon-admin', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-addon-admin.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script(
-				$this->plugin_name,
+				$this->plugin_name . 'swal-addon-admin',
 				'localised',
 				array(
-					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'nonce'         => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
-					'callback'      => 'ajax_callbacks',
+					'ajaxurl'        => admin_url( 'admin-ajax.php' ),
+					'nonce'          => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
+					'callback'       => 'ajax_callbacks',
 					'pending_orders' => $this->wps_wgm_get_count( 'orders' ),
-					'pending_pages' => $this->wps_wgm_get_count( 'pages' ),
+					'pending_pages'  => $this->wps_wgm_get_count( 'pages' ),
+					'hide_import'    => $wps_wgm_migration_success,
+					'hide_import_pro' => $wps_wgm_pro_migration_success,
 				)
 			);
 
@@ -1542,12 +1547,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 									$arr_val_post[ $key ] = $new_key1;
 								}
 								update_post_meta( $order_id, $new_key, $arr_val_post );
-								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
-								delete_post_meta( $order_id, $meta_keys );
 							} else {
 								update_post_meta( $order_id, $new_key, $value );
-								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
-								delete_post_meta( $order_id, $meta_keys );
 							}
 						}
 					}
@@ -1695,12 +1696,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$arr_val[ $new_key1 ] = $value_2;
 				}
 				update_option( $new_key, $arr_val );
-				update_option( 'copy_' . $old_key, $arr_val );
-				delete_option( $old_key );
 			} else {
-				update_option( 'copy_' . $old_key, $new_value );
 				update_option( $new_key, $new_value );
-				delete_option( $old_key );
 			}
 		}
 
@@ -1756,6 +1753,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$term_table
 				)
 			);
+		}
+		update_option( 'wps_wgm_code_migrated', 'yes' );
+		if ( wps_uwgc_pro_active() ) {
+			update_option( 'wps_wgm_pro_code_migrated', 'yes' );
 		}
 		return array();
 	}

@@ -422,8 +422,8 @@ if ( $activated ) {
 								esc_html_e( ' Click On Start Import Button.', 'woo-gift-cards-lite' );
 								?>
 						</p>
-						<p>
-							<a class="treat-button button-primary">
+						<p id="migration_completed">
+							<a class="treat-button button-primary" id="hide_button">
 								<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
 							</a>
 						</p>
