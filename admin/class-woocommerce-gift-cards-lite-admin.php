@@ -1678,9 +1678,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		foreach ( $wp_options as $old_key => $value ) {
 
 			$new_key = str_replace( 'mwb_', 'wps_', $old_key );
-			if ( ! empty( get_option( $new_key ) ) ) {
-				continue;
-			}
 
 			$new_value = get_option( $old_key, $value );
 
