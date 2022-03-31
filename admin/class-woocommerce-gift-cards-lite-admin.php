@@ -112,8 +112,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				return;
 			}
 
-			$wps_wgm_migration_success = get_option( 'wps_wgm_code_migrated' );
-			$wps_wgm_pro_migration_success = get_option( 'wps_wgm_pro_code_migrated' );
+			$wps_wgm_migration_success = get_option( 'wps_wgm_code_migrate' );
+			$wps_wgm_pro_migration_success = get_option( 'wps_uwgc_code_migrated' );
 
 			wp_enqueue_script( $this->plugin_name . 'swal-addon-admin', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-addon-admin.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
@@ -1751,9 +1751,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				)
 			);
 		}
-		update_option( 'wps_wgm_code_migrated', 'yes' );
+		update_option( 'wps_wgm_code_migrate', 'yes' );
 		if ( wps_uwgc_pro_active() ) {
-			update_option( 'wps_wgm_pro_code_migrated', 'yes' );
+			update_option( 'wps_uwgc_code_migrated', 'yes' );
 		}
 		return array();
 	}
