@@ -584,6 +584,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			foreach ( $tabs as $key => $tab ) {
 				if ( 'general' != $key && 'advanced' != $key && 'shipping' != $key ) {
 					$tabs[ $key ]['class'][] = 'hide_if_wgm_gift_card';
+					if (isset($tabs[ $key ]['class']) and is_array($tabs[ $key ]['class'])) {
+						$tabs[ $key ]['class'][] = 'hide_if_wgm_gift_card';
+					}
 				}
 			}
 			$tabs = apply_filters( 'mwb_wgm_product_data_tabs', $tabs );
