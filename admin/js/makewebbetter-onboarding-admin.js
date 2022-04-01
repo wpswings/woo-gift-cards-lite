@@ -1,5 +1,7 @@
 jQuery(document).ready( function($) {
 
+	jQuery(jQuery('#activate-ultimate-woocommerce-gift-cards-pro').parent()).html('');
+
 	/*if device is mobile*/
 	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 	    jQuery('body').addClass( 'mobile-device' );

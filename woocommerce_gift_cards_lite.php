@@ -37,6 +37,8 @@ $plug           = get_plugins();
 if ( isset( $plug['giftware/giftware.php'] ) ) {
 	if ( version_compare( $plug['giftware/giftware.php']['Version'], '3.5.0', '<' ) ) {
 		$old_pro_exists = true;
+		unset( $_GET['activate'] );
+		deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 	}
 }
 
