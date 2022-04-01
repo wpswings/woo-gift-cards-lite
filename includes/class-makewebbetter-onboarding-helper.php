@@ -94,6 +94,14 @@ class Makewebbetter_Onboarding_Helper {
 	private static $store_url;
 
 	/**
+	 * Store version.
+	 *
+	 * @since 1.0.0
+	 * @var string store_url.
+	 */
+	private static $version;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -105,6 +113,11 @@ class Makewebbetter_Onboarding_Helper {
 
 		if ( defined( 'WPS_WGC_ONBOARD_PLUGIN_NAME' ) ) {
 			self::$plugin_name = WPS_WGC_ONBOARD_PLUGIN_NAME;
+		}
+		if ( defined( 'WPS_WGC_VERSION' ) ) {
+			self::$version = WPS_WGC_VERSION;
+		} else {
+			self::$version = '2.4.0';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -165,7 +178,7 @@ class Makewebbetter_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_WGC_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_WGC_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), self::$version, 'all' );
 		}
 	}
 
@@ -189,7 +202,7 @@ class Makewebbetter_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_WGC_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery' ), '1.0.0', true );
+			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_WGC_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery' ), self::$version, true );
 
 			global $pagenow;
 
