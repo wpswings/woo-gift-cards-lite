@@ -194,11 +194,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( '' === $wps_product ) {
 			global $product;
-			$product = $product;
+			$product_id = $product->get_id();
 		} else {
-			$product = $wps_product;
+			$product_id = $wps_product;
 		}
-		$product_id    = $product->get_id();
+
 		$product_types = wp_get_object_terms( $product_id, 'product_type' );
 		$product_type  = $product_types[0]->slug;
 		if ( 'wgm_gift_card' === $product_type ) {
