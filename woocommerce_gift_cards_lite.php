@@ -37,8 +37,6 @@ $plug           = get_plugins();
 if ( isset( $plug['giftware/giftware.php'] ) ) {
 	if ( version_compare( $plug['giftware/giftware.php']['Version'], '3.5.0', '<' ) ) {
 		$old_pro_exists = true;
-		unset( $_GET['activate'] );
-		deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 	}
 }
 
@@ -368,6 +366,33 @@ if ( $activated ) {
 		}
 	}
 
+	if ( true === $old_pro_exists ) {
+
+		add_action( 'admin_notices', 'wps_wgm_check_and_inform_update' );
+		/**
+		 * Check update if pro is old.
+		 */
+		function wps_wgm_check_and_inform_update() {
+			$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'giftware/class-mwb-uwgc-update.php';
+
+			// If present but not active.
+			if ( ! is_plugin_active( 'giftware/giftware.php' ) ) {
+				if ( file_exists( $update_file ) ) {
+					$wps_wgm_pro_license_key = get_option( 'mwb_gw_lcns_key', '' );
+					! defined( 'MWB_UWGC_LICENSE_KEY' ) && define( 'MWB_UWGC_LICENSE_KEY', $wps_wgm_pro_license_key );
+					! defined( 'MWB_UWGC_FILE' ) && define( 'MWB_UWGC_FILE', 'giftware/giftware.php' );
+					! defined( 'MWB_UWGC_PLUGIN_VERSION' ) && define( 'MWB_UWGC_PLUGIN_VERSION', '3.4.3' );
+				}
+				require_once $update_file;
+			}
+
+			if ( defined( 'MWB_UWGC_FILE' ) ) {
+				$wps_wgm_version_old_pro = new Mwb_Uwgc_Update();
+				$wps_wgm_version_old_pro->mwb_uwgc_check_update();
+			}
+		}
+	}
+
 	/**
 	 * Migration to new domain notice.
 	 *
@@ -439,6 +464,10 @@ if ( $activated ) {
 			</style>
 			<?php endif; ?>
 			<?php
+	}
+	if ( true === $old_pro_exists ) {
+		unset( $_GET['activate'] );
+		deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 	}
 } else {
 	add_action( 'admin_init', 'wps_wgm_plugin_deactivate' );
