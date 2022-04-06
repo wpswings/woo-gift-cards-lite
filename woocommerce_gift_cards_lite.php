@@ -433,9 +433,8 @@ if ( $activated ) {
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
-		if ( ! empty( $count ) ) {
-
-			if ( 'wps-wgc-setting-lite' === $tab ) {
+		if ( 'wps-wgc-setting-lite' === $tab ) {
+			if ( ! empty( $count ) ) {
 				?>
 				<tr class="plugin-update-tr active notice-warning notice-alt">
 					<td colspan="4" class="plugin-update colspanchange">
@@ -466,11 +465,11 @@ if ( $activated ) {
 					}
 				</style>
 				<?php
+			} else {
+				?>
+				<p><strong><?php esc_html_e( 'Database keys are migrated successfully.', 'woo-gift-cards-lite' ); ?></strong></p>
+				<?php
 			}
-		} else {
-			?>
-			<p><strong><?php esc_html_e( 'Database keys are migrated successfully.', 'woo-gift-cards-lite' ); ?></strong></p>
-			<?php
 		}
 	}
 	if ( true === $old_pro_exists ) {
