@@ -433,28 +433,15 @@ if ( $activated ) {
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
+		global $old_pro_exists;
 		if ( 'wps-wgc-setting-lite' === $tab ) {
-			if ( ! empty( $count ) ) {
+			if ( $old_pro_exists ) {
 				?>
-				<tr class="plugin-update-tr active notice-warning notice-alt">
+					<tr class="plugin-update-tr active notice-warning notice-alt">
 					<td colspan="4" class="plugin-update colspanchange">
-						<div id="import_button" class="updated woocommerce-message">
-							<p>
-								<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
-							</p>
-							<p>
-								<?php
-									esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. So, if you are not a new user then,', 'woo-gift-cards-lite' )
-								?>
-									<strong><?php esc_html_e( ' Please Migrate Your data by ', 'woo-gift-cards-lite' ); ?></strong>
-									<?php
-									esc_html_e( ' Click On Start Import Button.', 'woo-gift-cards-lite' );
-									?>
-							</p>
-							<p id="migration_completed">
-								<a class="treat-button button-primary" id="hide_button">
-									<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
-								</a>
+						<div class="notice notice-warning inline update-message notice-alt">
+							<p class='wps-notice-title wps-notice-section'>
+								<?php esc_html_e( 'If You are using Premium Version of Giftcard plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
 							</p>
 						</div>
 					</td>
@@ -465,7 +452,7 @@ if ( $activated ) {
 					}
 				</style>
 				<?php
-			} else {
+			} elseif ( empty( $count ) ) {
 				?>
 				<p><strong><?php esc_html_e( 'Database keys are migrated successfully.', 'woo-gift-cards-lite' ); ?></strong></p>
 				<?php
