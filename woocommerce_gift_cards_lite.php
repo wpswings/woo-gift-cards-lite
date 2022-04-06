@@ -431,39 +431,47 @@ if ( $activated ) {
 	function wps_wgm_migrate_notice() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
+		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
+		if ( ! empty( $count ) ) {
 
-		if ( 'wps-wgc-setting-lite' === $tab ) :
-			?>
-			<tr class="plugin-update-tr active notice-warning notice-alt">
-				<td colspan="4" class="plugin-update colspanchange">
-					<div id="import_button" class="updated woocommerce-message">
-						<p>
-							<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
-						</p>
-						<p>
-							<?php
-								esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. So, if you are not a new user then,', 'woo-gift-cards-lite' )
-							?>
-								<strong><?php esc_html_e( ' Please Migrate Your data by ', 'woo-gift-cards-lite' ); ?></strong>
+			if ( 'wps-wgc-setting-lite' === $tab ) {
+				?>
+				<tr class="plugin-update-tr active notice-warning notice-alt">
+					<td colspan="4" class="plugin-update colspanchange">
+						<div id="import_button" class="updated woocommerce-message">
+							<p>
+								<strong><?php esc_html_e( 'GiftCard Database Update Required', 'woo-gift-cards-lite' ); ?></strong>
+							</p>
+							<p>
 								<?php
-								esc_html_e( ' Click On Start Import Button.', 'woo-gift-cards-lite' );
+									esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. So, if you are not a new user then,', 'woo-gift-cards-lite' )
 								?>
-						</p>
-						<p id="migration_completed">
-							<a class="treat-button button-primary" id="hide_button">
-								<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
-							</a>
-						</p>
-					</div>
-				</td>
-			</tr>
-			<style>
-				.wps-notice-section > p:before {
-					content: none;
-				}
-			</style>
-			<?php endif; ?>
+									<strong><?php esc_html_e( ' Please Migrate Your data by ', 'woo-gift-cards-lite' ); ?></strong>
+									<?php
+									esc_html_e( ' Click On Start Import Button.', 'woo-gift-cards-lite' );
+									?>
+							</p>
+							<p id="migration_completed">
+								<a class="treat-button button-primary" id="hide_button">
+									<?php esc_html_e( 'Start Import!', 'woo-gift-cards-lite' ); ?>
+								</a>
+							</p>
+						</div>
+					</td>
+				</tr>
+				<style>
+					.wps-notice-section > p:before {
+						content: none;
+					}
+				</style>
+				<?php
+			}
+		} else {
+			?>
+			<p><strong><?php esc_html_e( 'Database keys are migrated successfully.', 'woo-gift-cards-lite' ); ?></strong></p>
 			<?php
+		}
 	}
 	if ( true === $old_pro_exists ) {
 		unset( $_GET['activate'] );

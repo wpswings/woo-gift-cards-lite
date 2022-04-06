@@ -7,15 +7,13 @@ jQuery(document).ready( function($) {
 	const pending_pages = localised.pending_pages;
 	const pending_pages_count  = 'undefined' != typeof pending_pages ? pending_pages.length : 0;
 	const pending_count  = 'undefined' != typeof pending_orders ? pending_orders.length : 0;
-	const hide_import     = localised.hide_import;
-	const hide_import_pro = localised.hide_import_pro;
 
 	/* Close Button Click */
 	jQuery( document ).on( 'click','.treat-button',function(e){
 		e.preventDefault();
 		Swal.fire({
 			icon: 'warning',
-			title: 'We Have got ready to go!',
+			title: 'We Have got ' + pending_count + ' Orders ready to go!',
 			text: 'Click to start import',
 			footer: 'Please do not reload/close this page until prompted',
 			showCloseButton: true,
@@ -72,11 +70,6 @@ jQuery(document).ready( function($) {
 		}, function(error) {
 			console.error(error);
 		});
-	}
-
-	if ( hide_import == 'yes' || hide_import_pro == 'yes' ) {
-		jQuery('#hide_button').hide();
-		jQuery('#migration_completed').html('<b>Database keys migrated successfully!!</b>');
 	}
 
 	const startOptionsImport = () => {

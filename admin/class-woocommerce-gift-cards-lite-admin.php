@@ -112,11 +112,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				return;
 			}
 
-			$wps_wgm_migration_success = get_option( 'wps_wgm_code_migrate' );
-			$wps_wgm_pro_migration_success = get_option( 'wps_uwgc_code_migrated' );
-
 			wp_enqueue_script( $this->plugin_name . 'swal-addon-admin', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-addon-admin.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->plugin_name . '_sweet_alert_js', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-swal.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script(
 				$this->plugin_name . 'swal-addon-admin',
 				'localised',
@@ -126,8 +124,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'callback'       => 'ajax_callbacks',
 					'pending_orders' => $this->wps_wgm_get_count( 'orders' ),
 					'pending_pages'  => $this->wps_wgm_get_count( 'pages' ),
-					'hide_import'    => $wps_wgm_migration_success,
-					'hide_import_pro' => $wps_wgm_pro_migration_success,
 				)
 			);
 
@@ -1452,8 +1448,52 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$table = $wpdb->prefix . 'postmeta';
 				$sql = "SELECT (`post_id`)
 				FROM `$table`
-				WHERE `meta_key` LIKE '%mwb_wgm%'";
-				$sql = apply_filters( 'wps_uwgc_migration_sql', $sql );
+				WHERE `meta_key` LIKE 'mwb_wgm_pricing' OR
+					`meta_key` LIKE 'mwb_wgm_pricing_details' OR
+					`meta_key` LIKE 'mwb_wgm_giftcard_coupon' OR
+					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_unique' OR
+					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_product_id' OR
+					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_mail_to' OR
+					`meta_key` LIKE 'mwb_wgm_coupon_amount' OR
+					`meta_key` LIKE 'mwb_wgm_order_giftcard' OR
+					`meta_key` LIKE 'mwb_css_field' OR
+					`meta_key` LIKE 'mwb_wgm_overwrite' OR
+					`meta_key` LIKE 'mwb_wgm_email_to_recipient' OR
+					`meta_key` LIKE 'mwb_wgm_download' OR
+					`meta_key` LIKE 'mwb_wgm_shipping' OR
+					`meta_key` LIKE 'mwb_wgm_discount' OR
+					`meta_key` LIKE 'mwb_wgm_exclude_per_product' OR
+					`meta_key` LIKE 'mwb_wgm_include_per_product' OR
+					`meta_key` LIKE 'mwb_wgm_exclude_per_category' OR
+					`meta_key` LIKE 'mwb_wgm_include_per_category' OR
+					`meta_key` LIKE 'mwb_uwgc_used_order_id' OR
+					`meta_key` LIKE 'mwb_wgm_expiry_date' OR
+					`meta_key` LIKE 'mwb_wgm_imported_coupon' OR
+					`meta_key` LIKE 'mwb_wgm_imported_offline' OR
+					`meta_key` LIKE 'mwb_uwgc_thankyou_coupon' OR
+					`meta_key` LIKE 'mwb_uwgc_thankyou_coupon_user' OR
+					`meta_key` LIKE 'mwb_wgm_thankyou_coupon_created' OR
+					`meta_key` LIKE 'mwb_wgm_pdf_name_prefix' OR
+					`meta_key` LIKE 'mwb_gw_order_giftcard' OR
+					`meta_key` LIKE 'mwb_gw_giftcard_coupon' OR
+					`meta_key` LIKE 'mwb_gw_giftcard_coupon_unique' OR
+					`meta_key` LIKE 'mwb_gw_giftcard_coupon_mail_to' OR
+					`meta_key` LIKE 'mwb_gw_giftcard_coupon_product_id' OR
+					`meta_key` LIKE 'mwb_gw_coupon_amount' OR
+					`meta_key` LIKE 'mwb_gw_imported_coupon' OR
+					`meta_key` LIKE 'mwb_gw_imported_offline' OR
+					`meta_key` LIKE 'mwb_gw_overwrite' OR
+					`meta_key` LIKE 'mwb_gw_discount' OR
+					`meta_key` LIKE 'mwb_gw_exclude_per_product' OR
+					`meta_key` LIKE 'mwb_gw_exclude_per_pro_format' OR
+					`meta_key` LIKE 'mwb_gw_include_per_pro_format' OR
+					`meta_key` LIKE 'mwb_gw_include_per_product' OR
+					`meta_key` LIKE 'mwb_gw_exclude_per_category' OR
+					`meta_key` LIKE 'mwb_gw_include_per_category' OR
+					`meta_key` LIKE 'mwb_gw_email_to_recipient' OR
+					`meta_key` LIKE 'mwb_gw_download' OR
+					`meta_key` LIKE 'mwb_gw_pricing' OR
+					`meta_key` LIKE 'mwb_gw_shipping'";
 				break;
 
 			case 'pages':
@@ -1527,9 +1567,45 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'mwb_wgm_giftcard_coupon_mail_to',
 					'mwb_wgm_coupon_amount',
 					'mwb_wgm_order_giftcard',
+					'mwb_css_field',
+					'mwb_wgm_overwrite',
+					'mwb_wgm_email_to_recipient',
+					'mwb_wgm_download',
+					'mwb_wgm_shipping',
+					'mwb_wgm_discount',
+					'mwb_wgm_exclude_per_product',
+					'mwb_wgm_include_per_product',
+					'mwb_wgm_exclude_per_category',
+					'mwb_wgm_include_per_category',
+					'mwb_uwgc_used_order_id',
+					'mwb_wgm_expiry_date',
+					'mwb_wgm_imported_coupon',
+					'mwb_wgm_imported_offline',
+					'mwb_uwgc_thankyou_coupon',
+					'mwb_uwgc_thankyou_coupon_user',
+					'mwb_wgm_thankyou_coupon_created',
+					'mwb_wgm_pdf_name_prefix',
+					'mwb_gw_order_giftcard',
+					'mwb_gw_giftcard_coupon',
+					'mwb_gw_giftcard_coupon_unique',
+					'mwb_gw_giftcard_coupon_mail_to',
+					'mwb_gw_giftcard_coupon_product_id',
+					'mwb_gw_coupon_amount',
+					'mwb_gw_imported_coupon',
+					'mwb_gw_imported_offline',
+					'mwb_gw_overwrite',
+					'mwb_gw_discount',
+					'mwb_gw_exclude_per_product',
+					'mwb_gw_exclude_per_pro_format',
+					'mwb_gw_include_per_pro_format',
+					'mwb_gw_include_per_product',
+					'mwb_gw_exclude_per_category',
+					'mwb_gw_include_per_category',
+					'mwb_gw_email_to_recipient',
+					'mwb_gw_download',
+					'mwb_gw_pricing',
+					'mwb_gw_shipping',
 				);
-
-				$post_meta_keys = apply_filters( 'wps_uwgc_import_single_order', $post_meta_keys );
 
 				foreach ( $post_meta_keys as $key => $meta_keys ) {
 
@@ -1537,7 +1613,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$value   = get_post_meta( $order_id, $meta_keys, true );
 						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
-						if ( ! empty( $value ) ) {
+						if ( ! empty( $value ) || '0' == $value ) {
 							$arr_val_post = array();
 							if ( is_array( $value ) ) {
 								foreach ( $value as $key => $val ) {
@@ -1547,9 +1623,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 									$arr_val_post[ $key ] = $new_key1;
 								}
 								update_post_meta( $order_id, $new_key, $arr_val_post );
+								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+								delete_post_meta( $order_id, $meta_keys );
 							} else {
 								update_post_meta( $order_id, $new_key, $value );
+								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
+								delete_post_meta( $order_id, $meta_keys );
 							}
+						} else {
+							delete_post_meta( $order_id, $meta_keys );
 						}
 					}
 				}
@@ -1583,12 +1665,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'mwb_wgm_notify_hide_notification'          => '',
 			'mwb_wgm_notify_new_message'                => '',
 			'mwb_wgm_delivery_settings'                 => '',
-			'mwb_wgm_email_to_recipient_setting_enable' => '',
-			'mwb_wgm_downladable_setting_enable'        => '',
 			'mwb_wgm_mail_settings'                     => '',
 			'mwb_wgm_other_settings'                    => '',
 			'mwb_wgm_product_settings'                  => '',
-			'mwb_wgm_additional_preview_disable'        => '',
 			'mwb_wgm_delivery_setting_method'           => '',
 			'mwb_wgm_additional_apply_coupon_disable'   => '',
 			'mwb_wgm_select_email_format'               => '',
@@ -1659,20 +1738,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'mwb_gw_customize_email_template_image'     => '',
 			'mwb_gw_customize_default_giftcard'         => '',
 			'mwb_gw_add_schedule'                       => '',
-			'mwb_wgm_shipping_setting_enable'           => '',
-			'mwb_wgm_customer_choose_setting_enable'    => '',
-			'mwb_wgm_customer_select_setting_enable'    => '',
-			'mwb_wgm_order_creation'                    => '',
-			'mwb_wgm_order_processing'                  => '',
-			'mwb_wgm_order_completed'                   => '',
-			'mwb_wgm_fixed_thankyou'                    => '',
-			'mwb_wgm_percentage_thankyou'               => '',
-			'mwb_wgm_qrcode_setting_enable'             => '',
-			'mwb_wgm_default_enable'                    => '',
-			'mwb_wgm_upload_enable'                     => '',
-			'mwb_wgm_default_and_upload_enable'         => '',
-			'mwb_wgm_customize_remove_giftcard_para'    => '',
-			'mwb_wgm_custom_giftcard'                   => '',
 		);
 
 		foreach ( $wp_options as $old_key => $value ) {
@@ -1750,10 +1815,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$term_table
 				)
 			);
-		}
-		update_option( 'wps_wgm_code_migrate', 'yes' );
-		if ( wps_uwgc_pro_active() ) {
-			update_option( 'wps_uwgc_code_migrated', 'yes' );
 		}
 		return array();
 	}

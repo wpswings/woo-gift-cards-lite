@@ -109,7 +109,27 @@ do_action( 'wps_uwgc_show_notice' );
 				</ul>
 			</div>
 		</div>
-		<?php wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' ); ?>
+		<?php wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' );
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
+		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
+		if ( ! empty( $count ) ) {
+			$global_custom_css = 'const triggerError = () => {
+				swal({
+					title: "Attention Required!",
+					text: "Please Migrate Your Database keys first by click on the below button then you can access the dashboard page.",
+					icon: "error",
+					button: "Click to Import",
+					closeOnClickOutside: false,
+				}).then(function() {
+					jQuery( ".treat-button" ).click();
+				});
+			}
+			triggerError();';
+			wp_register_script( 'wps_wgm_incompatible_css', false, array(), '', 'all' );
+			wp_enqueue_script( 'wps_wgm_incompatible_css' );
+			wp_add_inline_script( 'wps_wgm_incompatible_css', $global_custom_css );
+		}
+		?>
 		<div class="wps_wgm_main_template">
 			<div class="wps_wgm_body_template">
 				<div class="wps_wgm_mobile_nav">
