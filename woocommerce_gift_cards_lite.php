@@ -435,6 +435,9 @@ if ( $activated ) {
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
 		global $old_pro_exists;
 		if ( 'wps-wgc-setting-lite' === $tab ) {
+			?>
+			<input type="hidden" class="treat-button">
+			<?php
 			if ( $old_pro_exists ) {
 				?>
 					<tr class="plugin-update-tr active notice-warning notice-alt">
@@ -452,7 +455,8 @@ if ( $activated ) {
 					}
 				</style>
 				<?php
-			} elseif ( empty( $count ) ) {
+			}
+			if ( empty( $count ) ) {
 				?>
 				<p><strong><?php esc_html_e( 'Database keys are migrated successfully.', 'woo-gift-cards-lite' ); ?></strong></p>
 				<?php
