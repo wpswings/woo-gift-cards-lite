@@ -60,6 +60,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
 	define( 'WPS_WGC_VERSION', '2.4.0' );
+	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
@@ -402,7 +403,7 @@ if ( $activated ) {
 	 */
 	function wps_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
-		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
 		if ( ! empty( $count ) ) {
 			?>
@@ -434,7 +435,7 @@ if ( $activated ) {
 	function wps_wgm_migrate_notice() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
 		global $old_pro_exists;
 		if ( 'wps-wgc-setting-lite' === $tab ) {

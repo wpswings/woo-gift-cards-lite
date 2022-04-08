@@ -14,7 +14,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
@@ -110,7 +109,7 @@ do_action( 'wps_uwgc_show_notice' );
 			</div>
 		</div>
 		<?php wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' );
-		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
 		if ( ! empty( $count ) ) {
 			$global_custom_css = 'const triggerError = () => {
