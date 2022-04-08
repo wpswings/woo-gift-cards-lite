@@ -45,7 +45,7 @@ jQuery(document).ready( function($) {
 	});
 
 	const startImport = ( orders ) => {
-		var event   = 'import_single_post_meta_table';
+		var event   = 'wps_wgm_import_single_post_meta_table';
 		var request = { action, event, nonce, orders };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 			orders = JSON.parse( response );
@@ -73,7 +73,7 @@ jQuery(document).ready( function($) {
 	}
 
 	const startOptionsImport = () => {
-		var event   = 'import_options_table';
+		var event   = 'wps_wgm_import_options_table';
 		var request = { action, event, nonce };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 		}).then(
@@ -94,7 +94,7 @@ jQuery(document).ready( function($) {
 	}
 
 	const startShortcodesImport = ( pages ) => {
-		var event   = 'import_shortcodes';
+		var event   = 'wps_wgm_import_shortcodes';
 		var request = { action, event, nonce, pages };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 			pages = JSON.parse( response );
@@ -122,7 +122,7 @@ jQuery(document).ready( function($) {
 	}
 	
 	const startTermsImport = () => {
-		var event   = 'import_terms';
+		var event   = 'wps_wgm_import_terms';
 		var request = { action, event, nonce };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 		}).then(

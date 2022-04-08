@@ -121,7 +121,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				array(
 					'ajaxurl'        => admin_url( 'admin-ajax.php' ),
 					'nonce'          => wp_create_nonce( 'wps_wgm_migrated_nonce' ),
-					'callback'       => 'ajax_callbacks',
+					'callback'       => 'wgm_ajax_callbacks',
 					'pending_orders' => $this->wps_wgm_get_count( 'orders' ),
 					'pending_pages'  => $this->wps_wgm_get_count( 'pages' ),
 				)
@@ -1537,7 +1537,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @param array $posted_data The $_POST data.
 	 */
-	public function import_single_post_meta_table( $posted_data = array() ) {
+	public function wps_wgm_import_single_post_meta_table( $posted_data = array() ) {
 
 		$orders = ! empty( $posted_data['orders'] ) ? $posted_data['orders'] : array();
 
@@ -1651,7 +1651,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function import_options_table( $posted_data = array() ) {
+	public function wps_wgm_import_options_table( $posted_data = array() ) {
 
 		$wp_options = array(
 			'mwb_wgm_general_settings'                  => '',
@@ -1769,7 +1769,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Update terms data mwb keys.
 	 */
-	public function import_shortcodes( $posted_data = array() ) {
+	public function wps_wgm_import_shortcodes( $posted_data = array() ) {
 
 		$pages = ! empty( $posted_data['pages'] ) ? $posted_data['pages'] : array();
 
@@ -1803,7 +1803,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Update terms data mwb keys
 	 */
-	public function import_terms() {
+	public function wps_wgm_import_terms() {
 
 		global $wpdb;
 		$term_table = $wpdb->prefix . 'terms';
