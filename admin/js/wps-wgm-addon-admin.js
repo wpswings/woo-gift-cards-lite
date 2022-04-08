@@ -37,14 +37,14 @@ jQuery(document).ready( function($) {
 					}
 				});
 			
-				startImport( pending_orders );
+				wgmstartImport( pending_orders );
 			} else if (result.isDismissed) {
 			  Swal.fire('Import Stopped', '', 'info');
 			}
 		})
 	});
 
-	const startImport = ( orders ) => {
+	const wgmstartImport = ( orders ) => {
 		var event   = 'wps_wgm_import_single_post_meta_table';
 		var request = { action, event, nonce, orders };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
@@ -55,7 +55,7 @@ jQuery(document).ready( function($) {
 			if( ! jQuery.isEmptyObject(orders) ) {
 				count = Object.keys(orders).length;
 				jQuery('.order-progress-report').text( count + ' are left to import' );
-				startImport(orders);
+				wgmstartImport(orders);
 			} else {
 				// All post_meta imported!
 
@@ -65,14 +65,14 @@ jQuery(document).ready( function($) {
 					html    : 'Do not reload/close this tab.',
 				});
 		
-				startOptionsImport();
+				wgmstartOptionsImport();
 			}
 		}, function(error) {
 			console.error(error);
 		});
 	}
 
-	const startOptionsImport = () => {
+	const wgmstartOptionsImport = () => {
 		var event   = 'wps_wgm_import_options_table';
 		var request = { action, event, nonce };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
@@ -87,13 +87,13 @@ jQuery(document).ready( function($) {
 					Swal.showLoading()
 				}
 			});
-			startShortcodesImport( pending_pages );
+			wgmstartShortcodesImport( pending_pages );
 		}, function(error) {
 			console.error(error);
 		});
 	}
 
-	const startShortcodesImport = ( pages ) => {
+	const wgmstartShortcodesImport = ( pages ) => {
 		var event   = 'wps_wgm_import_shortcodes';
 		var request = { action, event, nonce, pages };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
@@ -105,7 +105,7 @@ jQuery(document).ready( function($) {
 			if( ! jQuery.isEmptyObject(pages) ) {
 				count = Object.keys(pages).length;
 				jQuery('.order-progress-report').text( count + ' are left to import' );
-				startShortcodesImport(pages);
+				wgmstartShortcodesImport(pages);
 			} else {
 				Swal.fire({
 					title   : 'Hold On Terms are been imported',
@@ -114,14 +114,14 @@ jQuery(document).ready( function($) {
 						Swal.showLoading()
 					}
 				});
-				startTermsImport();
+				wgmstartTermsImport();
 			}
 		}, function(error) {
 			console.error(error);
 		});
 	}
 	
-	const startTermsImport = () => {
+	const wgmstartTermsImport = () => {
 		var event   = 'wps_wgm_import_terms';
 		var request = { action, event, nonce };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
