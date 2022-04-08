@@ -32,11 +32,11 @@ if ( ! defined( 'WPINC' ) ) {
 }
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-$old_pro_exists = false;
+$wps_wgm_old_pro_exists = false;
 $plug           = get_plugins();
 if ( isset( $plug['giftware/giftware.php'] ) ) {
 	if ( version_compare( $plug['giftware/giftware.php']['Version'], '3.5.0', '<' ) ) {
-		$old_pro_exists = true;
+		$wps_wgm_old_pro_exists = true;
 	}
 }
 
@@ -344,8 +344,8 @@ if ( $activated ) {
 	 */
 	function wps_wgm_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
-		global $old_pro_exists;
-		if ( $old_pro_exists ) {
+		global $wps_wgm_old_pro_exists;
+		if ( $wps_wgm_old_pro_exists ) {
 			?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
@@ -367,7 +367,7 @@ if ( $activated ) {
 		}
 	}
 
-	if ( true === $old_pro_exists ) {
+	if ( true === $wps_wgm_old_pro_exists ) {
 
 		add_action( 'admin_notices', 'wps_wgm_check_and_inform_update' );
 		/**
@@ -437,12 +437,12 @@ if ( $activated ) {
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
-		global $old_pro_exists;
+		global $wps_wgm_old_pro_exists;
 		if ( 'wps-wgc-setting-lite' === $tab ) {
 			?>
 			<input type="hidden" class="treat-button">
 			<?php
-			if ( $old_pro_exists ) {
+			if ( $wps_wgm_old_pro_exists ) {
 				?>
 					<tr class="plugin-update-tr active notice-warning notice-alt">
 					<td colspan="4" class="plugin-update colspanchange">
@@ -467,7 +467,7 @@ if ( $activated ) {
 			}
 		}
 	}
-	if ( true === $old_pro_exists ) {
+	if ( true === $wps_wgm_old_pro_exists ) {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 	}
