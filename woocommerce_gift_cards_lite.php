@@ -402,8 +402,10 @@ if ( $activated ) {
 	 */
 	function wps_wgm_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
-		global $old_pro_exists;
-		?>
+		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( 'woo-gift-cards-lite', '2.4.0' );
+		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
+		if ( ! empty( $count ) ) {
+			?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
@@ -418,7 +420,8 @@ if ( $activated ) {
 				content: none;
 			}
 		</style>
-		<?php
+			<?php
+		}
 	}
 	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wgm_upgrade_notice', 0, 3 );
 	add_action( 'after_plugin_row_giftware/giftware.php', 'wps_wgm_old_upgrade_notice', 0, 3 );
