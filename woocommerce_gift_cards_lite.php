@@ -435,8 +435,6 @@ if ( $activated ) {
 	function wps_wgm_migrate_notice() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
-		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
 		global $wps_wgm_old_pro_exists;
 		if ( 'wps-wgc-setting-lite' === $tab ) {
 			?>
@@ -458,11 +456,6 @@ if ( $activated ) {
 						content: none;
 					}
 				</style>
-				<?php
-			}
-			if ( empty( $count ) ) {
-				?>
-				<p><strong><?php esc_html_e( 'Database keys are migrated successfully.', 'woo-gift-cards-lite' ); ?></strong></p>
 				<?php
 			}
 		}
