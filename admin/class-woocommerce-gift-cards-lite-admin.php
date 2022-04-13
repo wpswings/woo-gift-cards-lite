@@ -1437,7 +1437,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * This function is used to count pending post.
 	 *
 	 * @param string $type type.
-	 * @param string $action actions.
 	 * @return int $result result.
 	 */
 	public function wps_wgm_get_count( $type = 'all' ) {
@@ -1646,9 +1645,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * Upgrade_wp_options. (use period)
-	 *
 	 * Upgrade_wp_options.
 	 *
+	 * @param array $posted_data data.
 	 * @since    1.0.0
 	 */
 	public function wps_wgm_import_options_table( $posted_data = array() ) {
@@ -1768,6 +1767,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * Update terms data mwb keys.
+	 *
+	 * @param array $posted_data data.
 	 */
 	public function wps_wgm_import_shortcodes( $posted_data = array() ) {
 

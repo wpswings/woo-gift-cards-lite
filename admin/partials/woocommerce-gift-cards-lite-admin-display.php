@@ -108,7 +108,8 @@ do_action( 'wps_uwgc_show_notice' );
 				</ul>
 			</div>
 		</div>
-		<?php wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' );
+		<?php
+		wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' );
 		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
 		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
 		if ( ! empty( $count ) ) {
@@ -124,7 +125,7 @@ do_action( 'wps_uwgc_show_notice' );
 				});
 			}
 			triggerError();';
-			wp_register_script( 'wps_wgm_incompatible_css', false, array(), '', 'all' );
+			wp_register_script( 'wps_wgm_incompatible_css', false, array(), WPS_WGC_VERSION, 'all' );
 			wp_enqueue_script( 'wps_wgm_incompatible_css' );
 			wp_add_inline_script( 'wps_wgm_incompatible_css', $global_custom_css );
 		}
