@@ -32,7 +32,7 @@
 				});
 			});
 			
-			$(window).load( function() {
+			$(window).on( 'load', function() {
 					var msg_length = $(document).find('#wps_wgm_message').val().length;
 					$('.wps_box_char').text(msg_length);
 				}
