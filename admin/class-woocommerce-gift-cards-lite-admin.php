@@ -86,7 +86,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$pagescreen = $screen->id;
 		}
 
-		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
+		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && ( 'plugins' === $pagescreen || 'product' === $pagescreen ) ) ) {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'select2' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-admin.css', array(), $this->version, 'all' );
@@ -271,6 +271,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'wps_wgm_range_price'    => __( 'Price Range', 'woo-gift-cards-lite' ),
 			'wps_wgm_selected_price' => __( 'Selected Price', 'woo-gift-cards-lite' ),
 			'wps_wgm_user_price'     => __( 'User Price', 'woo-gift-cards-lite' ),
+			'wps_wgm_variable_price' => __( 'Variable Price', 'woo-gift-cards-lite' ),
 		);
 		return apply_filters( 'wps_wgm_pricing_type', $pricing_options );
 	}
@@ -384,6 +385,42 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'placeholder' => '10|20|30',
 				)
 			);
+			// variable price.
+			$variable_price_text = isset( $wps_wgm_pricing['wps_wgm_variation_text'] ) ? $wps_wgm_pricing['wps_wgm_variation_text'] : array();
+			$variable_price_amt = isset( $wps_wgm_pricing['wps_wgm_variation_price'] ) ? $wps_wgm_pricing['wps_wgm_variation_price'] : array();
+			?>
+			<div id="wps_variable_gift">
+				<div class="wps_variable_desc">
+					<span><?php esc_html_e( 'Description', 'woo-gift-cards-lite' ); ?></span>
+					<span><?php esc_html_e( 'Price', 'woo-gift-cards-lite' ); ?></span>
+				</div>
+				<?php
+				if ( is_array( $variable_price_amt ) && empty( $variable_price_amt ) && count( $variable_price_amt ) == 0 ) {
+					?>
+					<div class="wps_wgm_variation_giftcard">
+						<input type="text" name="wps_wgm_variation_text[]" placeholder="Enter Description" value="">
+						<input type="text" class="wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" placeholder="Enter Price" value="">
+					</div>
+					<?php
+				} else {
+					if ( is_array( $variable_price_amt ) && is_array( $variable_price_text ) && ! empty( $variable_price_amt ) && ! empty( $variable_price_text ) && count( $variable_price_amt ) >= 1 ) {
+						foreach ( $variable_price_amt as $key => $value ) {
+							?>
+							<div class="wps_wgm_variation_giftcard">
+								<input type="text" name="wps_wgm_variation_text[]" value="<?php echo $variable_price_text[ $key ]; ?>">
+								<input type="text" class=" wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" value="<?php echo $value; ?>">
+								<?php if ( $key > 0 ) { ?>
+								<a class="wps_remove_more_price button" href="javascript:void(0)"><?php esc_html_e( 'Remove', 'woo-gift-cards-lite' ); ?></a>
+							<?php } ?>
+							</div>
+							<?php
+						}
+					}
+				}
+				?>
+				<a href="#" class="wps_add_more_price button"><?php esc_html_e( 'Add', 'woo-gift-cards-lite' ); ?></a>
+			</div>
+			<?php
 			// Regular Price.
 			?>
 			<p class="form-field wps_wgm_default_price_field">
@@ -568,6 +605,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							case 'wps_wgm_user_price':
 								$wps_wgm_pricing['type'] = $selected_pricing;
 								break;
+
+							case 'wps_wgm_variable_price':
+								$wps_wgm_pricing['wps_wgm_variation_text']  = isset( $_POST['wps_wgm_variation_text'] ) ? map_deep( wp_unslash( $_POST['wps_wgm_variation_text'] ), 'sanitize_text_field' ) : array();
+								$wps_wgm_pricing['wps_wgm_variation_price'] = isset( $_POST['wps_wgm_variation_price'] ) ? map_deep( wp_unslash( $_POST['wps_wgm_variation_price'] ), 'sanitize_text_field' ) : array();
+								break;
+
 							default:
 								// nothing for default.
 						}

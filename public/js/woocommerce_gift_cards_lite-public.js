@@ -15,6 +15,80 @@
 				this.value = this.value.replace(/[^0-9]/g, '');
 			});
 
+			//variable price for giftcard.
+			wps_wgm_variable_price_change_page_load(jQuery('#wps_wgm_price').val());
+			jQuery('#wps_wgm_price').change(function(){
+
+				if (wps_wgm.pricing_type.type == 'wps_wgm_variable_price') {
+
+					var wps_wgm_price = jQuery(this).val();
+					wps_wgm_variable_price_change(wps_wgm_price);
+				}
+			});
+
+			function wps_wgm_variable_price_change(wps_wgm_price) {
+				if (wps_wgm.pricing_type.type == 'wps_wgm_variable_price') {
+					var product_id = wps_wgm.product_id;
+				
+					if ($('.summary.entry-summary').length > 0) {
+						
+						block($('.summary.entry-summary'));
+					}
+					
+					var data = {
+						action:'wps_wgm_append_variable_price',
+						wps_wgm_price:wps_wgm_price,
+						product_id:product_id,
+						wps_nonce:wps_wgm.wps_wgm_nonce
+					};
+					$.ajax({
+						url: wps_wgm.ajaxurl, 
+						type: "POST",  
+						data: data,
+						dataType: 'json',
+						success: function(response) 
+						{
+							if(response.result == true)
+							{
+								jQuery('#wps_wgm_text').html(response.new_price);
+							} 
+						},
+						complete: function() 
+						{
+							if ($('.summary.entry-summary').length > 0) {
+								
+							unblock( $( '.summary.entry-summary' ) );
+							}
+						}
+					});
+				}
+			}
+			function wps_wgm_variable_price_change_page_load(wps_wgm_price) {
+				if (wps_wgm.pricing_type.type == 'wps_wgm_variable_price') {
+					var product_id = wps_wgm.product_id;
+					var data = {
+						action:'wps_wgm_append_variable_price',
+						wps_wgm_price:wps_wgm_price,
+						product_id:product_id,
+						wps_nonce:wps_wgm.wps_wgm_nonce
+					};
+					$.ajax({
+						url: wps_wgm.ajaxurl, 
+						type: "POST",  
+						data: data,
+						dataType: 'json',
+						success: function(response) 
+						{
+							if(response.result == true)
+							{
+								jQuery('#wps_wgm_text').html(response.new_price);
+							} 
+						},
+						
+					});
+				}
+			}
+
 			$("#wps_wgm_price").attr( "min", 1);
 			var check_elementor = $(document).find('.wps_wgm_added_wrapper').parents('.elementor-product-wgm_gift_card').length;
 			if (check_elementor != 0) {
