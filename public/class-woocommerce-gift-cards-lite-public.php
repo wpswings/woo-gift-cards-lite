@@ -1696,7 +1696,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @return void
 	 */
 	public function wps_wgm_append_variable_price () {
-		check_ajax_referer( 'wps-wgm-verify-nonce', 'wps_nonce' );
+		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
 		$response['result'] = false;
 		$wps_wgm_price      = isset( $_POST['wps_wgm_price'] ) ? $_POST['wps_wgm_price'] : '';
 		$decimal_separator  = get_option( 'woocommerce_price_decimal_sep' );

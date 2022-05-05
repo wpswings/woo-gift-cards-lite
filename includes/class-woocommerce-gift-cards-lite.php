@@ -248,8 +248,8 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_recharge_wallet_via_giftcard', $plugin_public, 'wps_recharge_wallet_via_giftcard' );
 	
 		// Add variable pricing type.
-		$this->loader->add_action( 'wp_ajax_mwb_wgm_append_variable_price', $plugin_public, 'mwb_wgm_append_variable_price' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wgm_append_variable_price', $plugin_public, 'mwb_wgm_append_variable_price' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
 	}
 
 	/**
