@@ -1447,8 +1447,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				}
 				$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $amt );
 			} else {
-				$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
-				$args['amount'] = wc_price( $amt );
+				$amt               = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
+				$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
+				$amt               = floatval( str_replace( $decimal_separator, '.', $amt ) );
+				$args['amount']    = wc_price( $amt );
 			}
 			$args['templateid'] = isset( $wps_temp_id ) && ! empty( $wps_temp_id ) ? $wps_temp_id : $temp;
 			$args['product_id'] = $product_id;
