@@ -798,6 +798,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 								if ( 'wps_wgm_variable_price' === $product_pricing_type ) {
 									$wps_variation_price = $product_pricing['wps_wgm_variation_price'];
+									$decimal_separator   = get_option( 'woocommerce_price_decimal_sep' );
+									foreach ( $wps_variation_price as $key => $value ) {
+										$value                       = floatval( str_replace( $decimal_separator, '.', $value ) );
+										$wps_variation_price[ $key ] = $value;
+									}
 									if ( isset( $wps_variation_price ) && ! empty( $wps_variation_price ) && is_array( $wps_variation_price ) ) {
 										$start_price = min( $wps_variation_price );
 										$end_price   = ( max( $wps_variation_price ) == '' ) ? $start_price : max( $wps_variation_price );
@@ -807,10 +812,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$end_price   = wcpbc_the_zone()->get_exchange_rate_price( $end_price );
 											}
 										}
-										$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
-										$start_price       = floatval( str_replace( $decimal_separator, '.', $start_price ) );
-										$end_price         = floatval( str_replace( $decimal_separator, '.', $end_price ) );
-										$price_html        = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
+										$start_price = floatval( str_replace( $decimal_separator, '.', $start_price ) );
+										$end_price   = floatval( str_replace( $decimal_separator, '.', $end_price ) );
+										$price_html  = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
 									}
 								}
 							}
@@ -1270,9 +1274,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( apply_filters( 'wps_wgm_subscription_renewal_order_coupon', false, $order_id, $the_coupon ) ) {
 						return;
 					}
-					$wps_wgm_discount = $item->get_discount();
+					$wps_wgm_discount     = $item->get_discount();
 					$wps_wgm_discount_tax = $item->get_discount_tax();
-					$amount = get_post_meta( $coupon_id, 'coupon_amount', true );
+					$amount               = get_post_meta( $coupon_id, 'coupon_amount', true );
+					$decimal_separator    = get_option( 'woocommerce_price_decimal_sep' );
+					$amount               = floatval( str_replace( $decimal_separator, '.', $amount ) );
 
 					$total_discount = $this->wps_common_fun->wps_wgm_calculate_coupon_discount( $wps_wgm_discount, $wps_wgm_discount_tax );
 					$total_discount = $total_discount / $rate;
