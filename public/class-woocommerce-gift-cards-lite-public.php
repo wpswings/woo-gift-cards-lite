@@ -370,7 +370,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$varable_text     = $product_pricing['wps_wgm_variation_text'];
 
 									if ( isset( $variation_amount ) && is_array( $variation_amount ) && ! empty( $variation_amount ) ) {
-										$wps_price = ( $variation_amount[0] != '' ) ? $variation_amount[0] : 0;
+										$wps_price = ( '' != $variation_amount[0] ) ? $variation_amount[0] : 0;
 										if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 											if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 												$wps_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_price );
@@ -380,7 +380,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$wps_price         = floatval( str_replace( $decimal_separator, '.', $wps_price ) );
 										?>
 									<p class="wps_wgm_section">
-										<span id="wps_wgm_text" class="wps_variable_currency"><?php echo( wc_price( $wps_price ) ); ?></span>
+										<span id="wps_wgm_text" class="wps_variable_currency"><?php wc_price( $wps_price ); ?></span>
 									</p>
 									<p class="wps_wgm_section">
 										<select name="wps_wgm_price" class="wps_wgm_price" id="wps_wgm_price">
@@ -388,7 +388,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											foreach ( $variation_amount as $key => $value ) {
 												if ( isset( $value ) && ! empty( $value ) ) {
 													?>
-													<option value="<?php echo $value; ?>"><?php echo ( $varable_text[ $key ] ); ?></option>
+													<option value="<?php echo esc_html( $value ); ?>"><?php echo esc_html( $varable_text[ $key ] ); ?></option>
 													<?php
 												}
 											}
@@ -1699,14 +1699,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 
 	/**
-	 * this function is to append variable price in front end.
+	 * This function is to append variable price in front end.
 	 *
 	 * @return void
 	 */
-	public function wps_wgm_append_variable_price () {
+	public function wps_wgm_append_variable_price() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
 		$response['result'] = false;
-		$wps_wgm_price      = isset( $_POST['wps_wgm_price'] ) ? $_POST['wps_wgm_price'] : '';
+		$wps_wgm_price      = isset( $_POST['wps_wgm_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) : '';
 		$decimal_separator  = get_option( 'woocommerce_price_decimal_sep' );
 		$wps_wgm_price      = floatval( str_replace( $decimal_separator, '.', $wps_wgm_price ) );
 

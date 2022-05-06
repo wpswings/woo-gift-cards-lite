@@ -407,8 +407,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						foreach ( $variable_price_amt as $key => $value ) {
 							?>
 							<div class="wps_wgm_variation_giftcard">
-								<input type="text" name="wps_wgm_variation_text[]" value="<?php echo $variable_price_text[ $key ]; ?>">
-								<input type="text" class=" wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" value="<?php echo $value; ?>">
+								<input type="text" name="wps_wgm_variation_text[]" value="<?php echo esc_html( $variable_price_text[ $key ] ); ?>">
+								<input type="text" class=" wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" value="<?php echo esc_html( $value ); ?>">
 								<?php if ( $key > 0 ) { ?>
 								<a class="wps_remove_more_price button" href="javascript:void(0)"><?php esc_html_e( 'Remove', 'woo-gift-cards-lite' ); ?></a>
 							<?php } ?>
