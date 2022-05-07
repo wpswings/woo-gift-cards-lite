@@ -18,6 +18,15 @@
 			jQuery(document).on('click','.wps_add_more_price',function(e){
 				e.preventDefault();
 				var empty_warning = false;
+				jQuery( '.wps_wgm_variation_text' ).each( function() {
+					if(!jQuery(this).val()){				
+						jQuery(this).css("border-color", "red");
+						empty_warning = true;
+					}
+					else{				
+						jQuery(this).css("border-color", "");
+					}
+				});
 				jQuery('.wps_wgm_variation_price').each(function(){
 					console.log(jQuery(this).val());
 					if(!jQuery(this).val()){				
@@ -30,7 +39,7 @@
 				});
 				if (empty_warning == false) {
 					var shtml = '<div class="wps_wgm_variation_giftcard">\
-					<input type="text" name="wps_wgm_variation_text[]" value="" placeholder="Enter Description">\
+					<input type="text" class="wps_wgm_variation_text" name="wps_wgm_variation_text[]" value="" placeholder="Enter Description">\
 					<input type="text" class="wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" value="" placeholder="Enter Price">\
 					<a class="wps_remove_more_price button" href="javascript:void(0)">Remove</a>\
 					</div>\
