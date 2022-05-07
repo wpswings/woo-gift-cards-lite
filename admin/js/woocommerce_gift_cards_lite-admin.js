@@ -11,6 +11,10 @@
 	jQuery( document ).ready(
 		function(){
 
+			jQuery(document).on('keyup','.wps_wgm_variation_price', function() {
+				this.value = this.value.replace(/[^0-9,.]/g, '');
+			});
+
 			jQuery(document).on('click','.wps_add_more_price',function(e){
 				e.preventDefault();
 				var empty_warning = false;
