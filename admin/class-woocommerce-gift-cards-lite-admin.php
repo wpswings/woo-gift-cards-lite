@@ -1491,74 +1491,116 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		switch ( $type ) {
 			case 'orders':
-				$table = $wpdb->prefix . 'postmeta';
-				$sql = "SELECT (`post_id`)
-				FROM `$table`
-				WHERE `meta_key` LIKE 'mwb_wgm_pricing' OR
-					`meta_key` LIKE 'mwb_wgm_pricing_details' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_unique' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_product_id' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_mail_to' OR
-					`meta_key` LIKE 'mwb_wgm_coupon_amount' OR
-					`meta_key` LIKE 'mwb_wgm_order_giftcard' OR
-					`meta_key` LIKE 'mwb_css_field' OR
-					`meta_key` LIKE 'mwb_wgm_overwrite' OR
-					`meta_key` LIKE 'mwb_wgm_email_to_recipient' OR
-					`meta_key` LIKE 'mwb_wgm_download' OR
-					`meta_key` LIKE 'mwb_wgm_shipping' OR
-					`meta_key` LIKE 'mwb_wgm_discount' OR
-					`meta_key` LIKE 'mwb_wgm_exclude_per_product' OR
-					`meta_key` LIKE 'mwb_wgm_include_per_product' OR
-					`meta_key` LIKE 'mwb_wgm_exclude_per_category' OR
-					`meta_key` LIKE 'mwb_wgm_include_per_category' OR
-					`meta_key` LIKE 'mwb_uwgc_used_order_id' OR
-					`meta_key` LIKE 'mwb_wgm_expiry_date' OR
-					`meta_key` LIKE 'mwb_wgm_imported_coupon' OR
-					`meta_key` LIKE 'mwb_wgm_imported_offline' OR
-					`meta_key` LIKE 'mwb_uwgc_thankyou_coupon' OR
-					`meta_key` LIKE 'mwb_uwgc_thankyou_coupon_user' OR
-					`meta_key` LIKE 'mwb_wgm_thankyou_coupon_created' OR
-					`meta_key` LIKE 'mwb_wgm_pdf_name_prefix' OR
-					`meta_key` LIKE 'mwb_gw_order_giftcard' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon_unique' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon_mail_to' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon_product_id' OR
-					`meta_key` LIKE 'mwb_gw_coupon_amount' OR
-					`meta_key` LIKE 'mwb_gw_imported_coupon' OR
-					`meta_key` LIKE 'mwb_gw_imported_offline' OR
-					`meta_key` LIKE 'mwb_gw_overwrite' OR
-					`meta_key` LIKE 'mwb_gw_discount' OR
-					`meta_key` LIKE 'mwb_gw_exclude_per_product' OR
-					`meta_key` LIKE 'mwb_gw_exclude_per_pro_format' OR
-					`meta_key` LIKE 'mwb_gw_include_per_pro_format' OR
-					`meta_key` LIKE 'mwb_gw_include_per_product' OR
-					`meta_key` LIKE 'mwb_gw_exclude_per_category' OR
-					`meta_key` LIKE 'mwb_gw_include_per_category' OR
-					`meta_key` LIKE 'mwb_gw_email_to_recipient' OR
-					`meta_key` LIKE 'mwb_gw_download' OR
-					`meta_key` LIKE 'mwb_gw_pricing' OR
-					`meta_key` LIKE 'mwb_gw_shipping'";
+				$post_meta_keys = array(
+					'mwb_wgm_pricing',
+					'mwb_wgm_pricing_details',
+					'mwb_wgm_giftcard_coupon',
+					'mwb_wgm_giftcard_coupon_unique',
+					'mwb_wgm_giftcard_coupon_product_id',
+					'mwb_wgm_giftcard_coupon_mail_to',
+					'mwb_wgm_coupon_amount',
+					'mwb_wgm_order_giftcard',
+					'mwb_css_field',
+					'mwb_wgm_overwrite',
+					'mwb_wgm_email_to_recipient',
+					'mwb_wgm_download',
+					'mwb_wgm_shipping',
+					'mwb_wgm_discount',
+					'mwb_wgm_exclude_per_product',
+					'mwb_wgm_include_per_product',
+					'mwb_wgm_exclude_per_category',
+					'mwb_wgm_include_per_category',
+					'mwb_uwgc_used_order_id',
+					'mwb_wgm_expiry_date',
+					'mwb_wgm_imported_coupon',
+					'mwb_wgm_imported_offline',
+					'mwb_uwgc_thankyou_coupon',
+					'mwb_uwgc_thankyou_coupon_user',
+					'mwb_wgm_thankyou_coupon_created',
+					'mwb_wgm_pdf_name_prefix',
+					'mwb_gw_order_giftcard',
+					'mwb_gw_giftcard_coupon',
+					'mwb_gw_giftcard_coupon_unique',
+					'mwb_gw_giftcard_coupon_mail_to',
+					'mwb_gw_giftcard_coupon_product_id',
+					'mwb_gw_coupon_amount',
+					'mwb_gw_imported_coupon',
+					'mwb_gw_imported_offline',
+					'mwb_gw_overwrite',
+					'mwb_gw_discount',
+					'mwb_gw_exclude_per_product',
+					'mwb_gw_exclude_per_pro_format',
+					'mwb_gw_include_per_pro_format',
+					'mwb_gw_include_per_product',
+					'mwb_gw_exclude_per_category',
+					'mwb_gw_include_per_category',
+					'mwb_gw_email_to_recipient',
+					'mwb_gw_download',
+					'mwb_gw_pricing',
+					'mwb_gw_shipping',
+				);
+				$result1 = get_posts(
+					array(
+						'numberposts' => -1,
+						'meta_key'    => $post_meta_keys, // phpcs:ignore
+						'post_type'   => 'product',
+						'fields'      => 'ids',
+					)
+				);
+				$result2 = wc_get_orders(
+					array(
+						'numberposts' => -1,
+						'meta_key'    => $post_meta_keys, // phpcs:ignore
+						'type'        => 'shop_order',
+						'return'      => 'ids',
+					)
+				);
+				$result3 = get_posts(
+					array(
+						'numberposts' => -1,
+						'meta_key'    => $post_meta_keys, // phpcs:ignore
+						'post_type'   => 'shop_coupon',
+						'fields'      => 'ids',
+					)
+				);
+				if ( empty( $result1 ) ) {
+					$result1 = array();
+				}
+				if ( empty( $result2 ) ) {
+					$result2 = array();
+				}
+				if ( empty( $result3 ) ) {
+					$result3 = array();
+				}
+				if ( is_array( $result1 ) && is_array( $result2 ) && is_array( $result3 ) ) {
+
+					$result = array_merge( $result1, $result2, $result3 );
+				}
 				break;
 
 			case 'pages':
-				$table = $wpdb->prefix . 'posts';
-				$sql = "SELECT `ID`
-				FROM `$table`
-				WHERE `post_content` LIKE '%mwb_%'";
+				$results = get_pages(
+					array(
+						'number'    => '',
+						'post_type' => 'page',
+					)
+				);
+				$result  = array();
+				if ( isset( $results ) ) {
+					foreach ( $results as $res ) {
+						$content = $res->post_content;
+						if ( str_contains( $content, 'mwb_wgm_giftcard' ) || str_contains( $content, 'mwb_redeem_embed' ) || str_contains( $content, 'mwb_check_your_gift_card_balance' ) ) {
+							$result[] = $res->ID;
+						}
+					}
+				}
 				break;
 
 			default:
-				$sql = false;
+				$result = false;
 				break;
 		}
 
-		if ( empty( $sql ) ) {
-			return 0;
-		}
-
-		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
 		return $result;
 	}
 
@@ -1593,7 +1635,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		// Remove this order from request.
 		foreach ( $orders as $key => $order ) {
-			$order_id = ! empty( $order['post_id'] ) ? $order['post_id'] : false;
+			$order_id = ! empty( $order ) ? $order : false;
 			unset( $orders[ $key ] );
 			break;
 		}
@@ -1827,7 +1869,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		// Remove this order from request.
 		foreach ( $pages as $key => $order ) {
-			$post_id = ! empty( $order['ID'] ) ? $order['ID'] : false;
+			$post_id = ! empty( $order ) ? $order : false;
 			unset( $pages[ $key ] );
 			break;
 		}
