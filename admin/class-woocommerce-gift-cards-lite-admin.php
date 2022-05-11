@@ -436,6 +436,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			<?php
 			$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 			$wps_get_pro_templates  = get_option( 'wps_uwgc_templateid', array() );
+			if ( empty( $wps_get_pro_templates ) ) {
+				$wps_get_pro_templates = array();
+			}
 			$wps_get_lite_templates = $this->wps_wgm_get_all_lite_templates();
 			if ( empty( $is_customizable ) ) {
 				?>
@@ -471,6 +474,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							<?php
 						} else {
 							if ( in_array( $template_title, $wps_get_lite_templates ) ) {
+								$choosed_temp = '';
 								if ( is_array( $selectedtemplate ) && ! empty( $selectedtemplate ) ) {
 									if ( '1' < count( $selectedtemplate ) ) {
 										if ( ! empty( $wps_get_pro_templates ) ) {

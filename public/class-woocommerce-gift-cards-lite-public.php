@@ -860,8 +860,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( ! $is_gift_card ) {
 						return;
 					}
-					$mailalreadysend = get_post_meta( $order_id, 'wps_wgm_order_giftcard', true );
-					if ( 'send' == $mailalreadysend ) {
+					$mailalreadysend     = get_post_meta( $order_id, 'wps_wgm_order_giftcard', true );
+					$mailalreadysend_old = get_post_meta( $order_id, 'wps_gw_order_giftcard', true );
+					if ( 'send' == $mailalreadysend || 'send' == $mailalreadysend_old ) {
 						return;
 					} else {
 						$general_setting = get_option( 'wps_wgm_general_settings', array() );
