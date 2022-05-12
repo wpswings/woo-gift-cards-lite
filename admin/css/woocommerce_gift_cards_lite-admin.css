@@ -917,7 +917,7 @@ thead {
   margin: 0 auto;
 
   width: 100% !important;
-  height: 480px!important;
+  /* height: 480px!important; */
 }
 #wps_wgm_email_template + span{
   width: 50% !important;
