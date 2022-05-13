@@ -330,7 +330,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$args['amount'] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( $to_currency, $wps_wgm_common_arr['couponamont'] );
 					$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( $to_currency ) . $args['amount'];
 				} else {
-					$args['amount'] = wc_price( $wps_wgm_common_arr['couponamont'] );
+					$decimal_separator                 = get_option( 'woocommerce_price_decimal_sep' );
+					$wps_wgm_common_arr['couponamont'] = floatval( str_replace( $decimal_separator, '.', $wps_wgm_common_arr['couponamont'] ) );
+					$args['amount']                    = wc_price( $wps_wgm_common_arr['couponamont'] );
 				}
 				$args['templateid'] = isset( $wps_wgm_common_arr['selected_template'] ) && ! empty( $wps_wgm_common_arr['selected_template'] ) ? $wps_wgm_common_arr['selected_template'] : $temp;
 				$args['product_id'] = $product_id;

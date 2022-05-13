@@ -83,6 +83,27 @@
   border: 1px solid #bababa;
   width: 100%;
 }
+#wps_variable_gift {
+	margin-left: 10px;
+}
+.wps_variable_desc span {
+  width: 220px;
+  display: inline-block;
+}
+.wps_wgm_variation_giftcard {
+    overflow: hidden;
+    margin: 10px 0;
+}
+.wps_wgm_variation_giftcard input {
+    margin-right: 20px!important;
+    width: 200px !important;
+}
+.wps_add_more_price{
+	text-decoration: none;
+}
+.wps_remove_more_price{
+	text-decoration: none;
+}
 #wps_wgm_setting_wrapper .wps_wgc_pro_version_wrapper .wps_wgc_get_it_button,.wps_wgm_save_button,
 .wps_wgm_small_button,#wps_wgm_csv_offlinecoupon_import,#wps_wgm_import_button,
 #wps_wgm_add_new_card_button, .resend.column-resend .wps_wgm_offline_resend_mail,
@@ -896,7 +917,7 @@ thead {
   margin: 0 auto;
 
   width: 100% !important;
-  height: 480px!important;
+  /* height: 480px!important; */
 }
 #wps_wgm_email_template + span{
   width: 50% !important;

@@ -69,7 +69,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '2.4.0';
+			$this->version = '2.4.1';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -246,6 +246,10 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'wps_wsfw_add_wallet_tabs', $plugin_public, 'wps_wgm_add_wallet_tabs', 10, 1 );
 		$this->loader->add_action( 'wp_ajax_wps_recharge_wallet_via_giftcard', $plugin_public, 'wps_recharge_wallet_via_giftcard' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_recharge_wallet_via_giftcard', $plugin_public, 'wps_recharge_wallet_via_giftcard' );
+
+		// Add variable pricing type.
+		$this->loader->add_action( 'wp_ajax_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
 	}
 
 	/**

@@ -11,6 +11,50 @@
 	jQuery( document ).ready(
 		function(){
 
+			jQuery(document).on('keyup','.wps_wgm_variation_price', function() {
+				this.value = this.value.replace(/[^0-9,.]/g, '');
+			});
+
+			jQuery(document).on('click','.wps_add_more_price',function(e){
+				e.preventDefault();
+				var empty_warning = false;
+				jQuery( '.wps_wgm_variation_text' ).each( function() {
+					if(!jQuery(this).val()){				
+						jQuery(this).css("border-color", "red");
+						empty_warning = true;
+					}
+					else{				
+						jQuery(this).css("border-color", "");
+					}
+				});
+				jQuery('.wps_wgm_variation_price').each(function(){
+					console.log(jQuery(this).val());
+					if(!jQuery(this).val()){				
+						jQuery(this).css("border-color", "red");
+						empty_warning = true;
+					}
+					else{				
+						jQuery(this).css("border-color", "");
+					}		
+				});
+				if (empty_warning == false) {
+					var shtml = '<div class="wps_wgm_variation_giftcard">\
+					<input type="text" class="wps_wgm_variation_text" name="wps_wgm_variation_text[]" value="" placeholder="Enter Description">\
+					<input type="text" class="wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" value="" placeholder="Enter Price">\
+					<a class="wps_remove_more_price button" href="javascript:void(0)">Remove</a>\
+					</div>\
+					<a href="#" class="wps_add_more_price button">Add</a>';
+					jQuery('#wps_variable_gift').append(shtml);
+					jQuery(this).remove();
+				}
+			});
+
+			jQuery(document).on('click','.wps_remove_more_price',function(e){
+				e.preventDefault();
+				jQuery(this).parent().remove();
+		
+			});
+
 			$('.wps_wgm_gc_price_range').keyup( function() {
 				var minspend = parseInt( $('#wps_wgm_general_setting_giftcard_minspend').val() );
 				var maxspend = parseInt( $('#wps_wgm_general_setting_giftcard_maxspend').val() );
@@ -188,6 +232,7 @@
 				$( '.wps_wgm_selected_price_field' ).show();
 				$( '.wps_wgm_default_price_field' ).show();
 				$( '.wps_wgm_user_price_field' ).show();
+				$('#wps_variable_gift').hide();
 
 				if (pricing_option == 'wps_wgm_selected_price') {
 					$( '.wps_wgm_from_price_field' ).hide();
@@ -195,12 +240,14 @@
 					$( '.wps_wgm_default_price_field' ).hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().hide();
+					$('#wps_variable_gift').hide();
 				}
 				if (pricing_option == 'wps_wgm_range_price') {
 					$( '.wps_wgm_selected_price_field' ).hide();
 					$( '.wps_wgm_default_price_field' ).hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().show();
+					$('#wps_variable_gift').hide();
 				}
 				if (pricing_option == 'wps_wgm_default_price') {
 					$( '.wps_wgm_from_price_field' ).hide();
@@ -208,6 +255,7 @@
 					$( '.wps_wgm_selected_price_field' ).hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().show();
+					$('#wps_variable_gift').hide();
 				}
 				if (pricing_option == 'wps_wgm_user_price') {
 					$( '.wps_wgm_from_price_field' ).hide();
@@ -215,6 +263,16 @@
 					$( '.wps_wgm_default_price_field' ).hide();
 					$( '.wps_wgm_selected_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().show();
+					$('#wps_variable_gift').hide();
+				}
+				if (pricing_option == 'wps_wgm_variable_price') {
+					$( '.wps_wgm_from_price_field' ).hide(); 
+					$( '.wps_wgm_to_price_field' ).hide();  
+					$( '.wps_wgm_default_price_field' ).hide(); 
+					$( '.wps_wgm_selected_price_field' ).hide();
+					$('#wps_wgm_discount').parent().hide();
+					$( '.wps_wgm_user_price_field' ).hide();
+					$('#wps_variable_gift').show();
 				}
 			}
 

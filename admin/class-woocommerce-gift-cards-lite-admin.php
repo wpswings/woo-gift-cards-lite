@@ -86,7 +86,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$pagescreen = $screen->id;
 		}
 
-		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
+		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && ( 'plugins' === $pagescreen || 'product' === $pagescreen ) ) ) {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'select2' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-admin.css', array(), $this->version, 'all' );
@@ -271,6 +271,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'wps_wgm_range_price'    => __( 'Price Range', 'woo-gift-cards-lite' ),
 			'wps_wgm_selected_price' => __( 'Selected Price', 'woo-gift-cards-lite' ),
 			'wps_wgm_user_price'     => __( 'User Price', 'woo-gift-cards-lite' ),
+			'wps_wgm_variable_price' => __( 'Variable Price', 'woo-gift-cards-lite' ),
 		);
 		return apply_filters( 'wps_wgm_pricing_type', $pricing_options );
 	}
@@ -384,6 +385,42 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'placeholder' => '10|20|30',
 				)
 			);
+			// variable price.
+			$variable_price_text = isset( $wps_wgm_pricing['wps_wgm_variation_text'] ) ? $wps_wgm_pricing['wps_wgm_variation_text'] : array();
+			$variable_price_amt = isset( $wps_wgm_pricing['wps_wgm_variation_price'] ) ? $wps_wgm_pricing['wps_wgm_variation_price'] : array();
+			?>
+			<div id="wps_variable_gift">
+				<div class="wps_variable_desc">
+					<span><?php esc_html_e( 'Description', 'woo-gift-cards-lite' ); ?></span>
+					<span><?php esc_html_e( 'Price', 'woo-gift-cards-lite' ); ?></span>
+				</div>
+				<?php
+				if ( is_array( $variable_price_amt ) && empty( $variable_price_amt ) && count( $variable_price_amt ) == 0 ) {
+					?>
+					<div class="wps_wgm_variation_giftcard">
+						<input type="text" class="wps_wgm_variation_text" name="wps_wgm_variation_text[]" placeholder="Enter Description" value="">
+						<input type="text" class="wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" placeholder="Enter Price" value="">
+					</div>
+					<?php
+				} else {
+					if ( is_array( $variable_price_amt ) && is_array( $variable_price_text ) && ! empty( $variable_price_amt ) && ! empty( $variable_price_text ) && count( $variable_price_amt ) >= 1 ) {
+						foreach ( $variable_price_amt as $key => $value ) {
+							?>
+							<div class="wps_wgm_variation_giftcard">
+								<input type="text" class="wps_wgm_variation_text" name="wps_wgm_variation_text[]" value="<?php echo esc_html( $variable_price_text[ $key ] ); ?>">
+								<input type="text" class="wps_wgm_variation_price wc_input_price" name="wps_wgm_variation_price[]" value="<?php echo esc_html( $value ); ?>">
+								<?php if ( $key > 0 ) { ?>
+								<a class="wps_remove_more_price button" href="javascript:void(0)"><?php esc_html_e( 'Remove', 'woo-gift-cards-lite' ); ?></a>
+							<?php } ?>
+							</div>
+							<?php
+						}
+					}
+				}
+				?>
+				<a href="#" class="wps_add_more_price button"><?php esc_html_e( 'Add', 'woo-gift-cards-lite' ); ?></a>
+			</div>
+			<?php
 			// Regular Price.
 			?>
 			<p class="form-field wps_wgm_default_price_field">
@@ -399,6 +436,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			<?php
 			$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 			$wps_get_pro_templates  = get_option( 'wps_uwgc_templateid', array() );
+			if ( empty( $wps_get_pro_templates ) ) {
+				$wps_get_pro_templates = array();
+			}
 			$wps_get_lite_templates = $this->wps_wgm_get_all_lite_templates();
 			if ( empty( $is_customizable ) ) {
 				?>
@@ -434,6 +474,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							<?php
 						} else {
 							if ( in_array( $template_title, $wps_get_lite_templates ) ) {
+								$choosed_temp = '';
 								if ( is_array( $selectedtemplate ) && ! empty( $selectedtemplate ) ) {
 									if ( '1' < count( $selectedtemplate ) ) {
 										if ( ! empty( $wps_get_pro_templates ) ) {
@@ -568,6 +609,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							case 'wps_wgm_user_price':
 								$wps_wgm_pricing['type'] = $selected_pricing;
 								break;
+
+							case 'wps_wgm_variable_price':
+								$wps_wgm_pricing['wps_wgm_variation_text']  = isset( $_POST['wps_wgm_variation_text'] ) ? map_deep( wp_unslash( $_POST['wps_wgm_variation_text'] ), 'sanitize_text_field' ) : array();
+								$wps_wgm_pricing['wps_wgm_variation_price'] = isset( $_POST['wps_wgm_variation_price'] ) ? map_deep( wp_unslash( $_POST['wps_wgm_variation_price'] ), 'sanitize_text_field' ) : array();
+								break;
+
 							default:
 								// nothing for default.
 						}
@@ -1167,9 +1214,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function wps_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
 			$new_links = array(
-				'demo'    => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
-				'doc'     => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
-				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
+				'demo'    => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Demo.svg" class="wps-info-img" alt="Demo image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Demo', 'woo-gift-cards-lite' ) . '</a>',
+				'doc'     => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Documentation.svg" class="wps-info-img" alt="documentation image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Documentation', 'woo-gift-cards-lite' ) . '</a>',
+				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Support.svg" class="wps-info-img" alt="support image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Support', 'woo-gift-cards-lite' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -1444,74 +1491,116 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		switch ( $type ) {
 			case 'orders':
-				$table = $wpdb->prefix . 'postmeta';
-				$sql = "SELECT (`post_id`)
-				FROM `$table`
-				WHERE `meta_key` LIKE 'mwb_wgm_pricing' OR
-					`meta_key` LIKE 'mwb_wgm_pricing_details' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_unique' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_product_id' OR
-					`meta_key` LIKE 'mwb_wgm_giftcard_coupon_mail_to' OR
-					`meta_key` LIKE 'mwb_wgm_coupon_amount' OR
-					`meta_key` LIKE 'mwb_wgm_order_giftcard' OR
-					`meta_key` LIKE 'mwb_css_field' OR
-					`meta_key` LIKE 'mwb_wgm_overwrite' OR
-					`meta_key` LIKE 'mwb_wgm_email_to_recipient' OR
-					`meta_key` LIKE 'mwb_wgm_download' OR
-					`meta_key` LIKE 'mwb_wgm_shipping' OR
-					`meta_key` LIKE 'mwb_wgm_discount' OR
-					`meta_key` LIKE 'mwb_wgm_exclude_per_product' OR
-					`meta_key` LIKE 'mwb_wgm_include_per_product' OR
-					`meta_key` LIKE 'mwb_wgm_exclude_per_category' OR
-					`meta_key` LIKE 'mwb_wgm_include_per_category' OR
-					`meta_key` LIKE 'mwb_uwgc_used_order_id' OR
-					`meta_key` LIKE 'mwb_wgm_expiry_date' OR
-					`meta_key` LIKE 'mwb_wgm_imported_coupon' OR
-					`meta_key` LIKE 'mwb_wgm_imported_offline' OR
-					`meta_key` LIKE 'mwb_uwgc_thankyou_coupon' OR
-					`meta_key` LIKE 'mwb_uwgc_thankyou_coupon_user' OR
-					`meta_key` LIKE 'mwb_wgm_thankyou_coupon_created' OR
-					`meta_key` LIKE 'mwb_wgm_pdf_name_prefix' OR
-					`meta_key` LIKE 'mwb_gw_order_giftcard' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon_unique' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon_mail_to' OR
-					`meta_key` LIKE 'mwb_gw_giftcard_coupon_product_id' OR
-					`meta_key` LIKE 'mwb_gw_coupon_amount' OR
-					`meta_key` LIKE 'mwb_gw_imported_coupon' OR
-					`meta_key` LIKE 'mwb_gw_imported_offline' OR
-					`meta_key` LIKE 'mwb_gw_overwrite' OR
-					`meta_key` LIKE 'mwb_gw_discount' OR
-					`meta_key` LIKE 'mwb_gw_exclude_per_product' OR
-					`meta_key` LIKE 'mwb_gw_exclude_per_pro_format' OR
-					`meta_key` LIKE 'mwb_gw_include_per_pro_format' OR
-					`meta_key` LIKE 'mwb_gw_include_per_product' OR
-					`meta_key` LIKE 'mwb_gw_exclude_per_category' OR
-					`meta_key` LIKE 'mwb_gw_include_per_category' OR
-					`meta_key` LIKE 'mwb_gw_email_to_recipient' OR
-					`meta_key` LIKE 'mwb_gw_download' OR
-					`meta_key` LIKE 'mwb_gw_pricing' OR
-					`meta_key` LIKE 'mwb_gw_shipping'";
+				$post_meta_keys = array(
+					'mwb_wgm_pricing',
+					'mwb_wgm_pricing_details',
+					'mwb_wgm_giftcard_coupon',
+					'mwb_wgm_giftcard_coupon_unique',
+					'mwb_wgm_giftcard_coupon_product_id',
+					'mwb_wgm_giftcard_coupon_mail_to',
+					'mwb_wgm_coupon_amount',
+					'mwb_wgm_order_giftcard',
+					'mwb_css_field',
+					'mwb_wgm_overwrite',
+					'mwb_wgm_email_to_recipient',
+					'mwb_wgm_download',
+					'mwb_wgm_shipping',
+					'mwb_wgm_discount',
+					'mwb_wgm_exclude_per_product',
+					'mwb_wgm_include_per_product',
+					'mwb_wgm_exclude_per_category',
+					'mwb_wgm_include_per_category',
+					'mwb_uwgc_used_order_id',
+					'mwb_wgm_expiry_date',
+					'mwb_wgm_imported_coupon',
+					'mwb_wgm_imported_offline',
+					'mwb_uwgc_thankyou_coupon',
+					'mwb_uwgc_thankyou_coupon_user',
+					'mwb_wgm_thankyou_coupon_created',
+					'mwb_wgm_pdf_name_prefix',
+					'mwb_gw_order_giftcard',
+					'mwb_gw_giftcard_coupon',
+					'mwb_gw_giftcard_coupon_unique',
+					'mwb_gw_giftcard_coupon_mail_to',
+					'mwb_gw_giftcard_coupon_product_id',
+					'mwb_gw_coupon_amount',
+					'mwb_gw_imported_coupon',
+					'mwb_gw_imported_offline',
+					'mwb_gw_overwrite',
+					'mwb_gw_discount',
+					'mwb_gw_exclude_per_product',
+					'mwb_gw_exclude_per_pro_format',
+					'mwb_gw_include_per_pro_format',
+					'mwb_gw_include_per_product',
+					'mwb_gw_exclude_per_category',
+					'mwb_gw_include_per_category',
+					'mwb_gw_email_to_recipient',
+					'mwb_gw_download',
+					'mwb_gw_pricing',
+					'mwb_gw_shipping',
+				);
+				$result1 = get_posts(
+					array(
+						'numberposts' => -1,
+						'meta_key'    => $post_meta_keys, // phpcs:ignore
+						'post_type'   => 'product',
+						'fields'      => 'ids',
+					)
+				);
+				$result2 = wc_get_orders(
+					array(
+						'numberposts' => -1,
+						'meta_key'    => $post_meta_keys, // phpcs:ignore
+						'type'        => 'shop_order',
+						'return'      => 'ids',
+					)
+				);
+				$result3 = get_posts(
+					array(
+						'numberposts' => -1,
+						'meta_key'    => $post_meta_keys, // phpcs:ignore
+						'post_type'   => 'shop_coupon',
+						'fields'      => 'ids',
+					)
+				);
+				if ( empty( $result1 ) ) {
+					$result1 = array();
+				}
+				if ( empty( $result2 ) ) {
+					$result2 = array();
+				}
+				if ( empty( $result3 ) ) {
+					$result3 = array();
+				}
+				if ( is_array( $result1 ) && is_array( $result2 ) && is_array( $result3 ) ) {
+
+					$result = array_merge( $result1, $result2, $result3 );
+				}
 				break;
 
 			case 'pages':
-				$table = $wpdb->prefix . 'posts';
-				$sql = "SELECT `ID`
-				FROM `$table`
-				WHERE `post_content` LIKE '%mwb_%'";
+				$results = get_pages(
+					array(
+						'number'    => '',
+						'post_type' => 'page',
+					)
+				);
+				$result  = array();
+				if ( isset( $results ) ) {
+					foreach ( $results as $res ) {
+						$content = $res->post_content;
+						if ( str_contains( $content, 'mwb_wgm_giftcard' ) || str_contains( $content, 'mwb_redeem_embed' ) || str_contains( $content, 'mwb_check_your_gift_card_balance' ) ) {
+							$result[] = $res->ID;
+						}
+					}
+				}
 				break;
 
 			default:
-				$sql = false;
+				$result = false;
 				break;
 		}
 
-		if ( empty( $sql ) ) {
-			return 0;
-		}
-
-		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
 		return $result;
 	}
 
@@ -1546,7 +1635,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		// Remove this order from request.
 		foreach ( $orders as $key => $order ) {
-			$order_id = ! empty( $order['post_id'] ) ? $order['post_id'] : false;
+			$order_id = ! empty( $order ) ? $order : false;
 			unset( $orders[ $key ] );
 			break;
 		}
@@ -1780,7 +1869,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		// Remove this order from request.
 		foreach ( $pages as $key => $order ) {
-			$post_id = ! empty( $order['ID'] ) ? $order['ID'] : false;
+			$post_id = ! empty( $order ) ? $order : false;
 			unset( $pages[ $key ] );
 			break;
 		}
