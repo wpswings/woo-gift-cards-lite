@@ -1,5 +1,5 @@
 
-![Build Status](https://img.shields.io/travis/twbs/bootstrap/master.svg) ![Active installs](https://img.shields.io/badge/Active-3000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.9.3-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.4.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+![Build Status](https://img.shields.io/travis/twbs/bootstrap/master.svg) ![Active installs](https://img.shields.io/badge/Active-4000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.0-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.5.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Ultimate Gift Cards for WooCommerce - Create, Redeem and Manage Digital Gift Certificates with Personalized Templates
 ![Ultimate Gift Cards for WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.jpg?rev=2671960)
 * Contributors: WP Swings
@@ -49,13 +49,14 @@ Ultimate Gift Cards for WooCommerce provides you with two different methods - Em
 **2)** **WPML Multilingual Support**
 The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
-**3)** **Four Different Pricing Types**
+**3)** **Five Different Pricing Types**
 The WooCommerce Gift cards plugin lets you create gift cards with four different pricing options that are:
 
 *  **Default Price:** Fixed-price
 *  **Price Range:** Any price within a set range
 *  **Selected Price:** Several different but fixed price options
 *  **User Price:** Any price entered by a customer
+*  **Variable Price:** Different prices for different durations 
 
 **4)** **Tax Calculation**
 This WooCommerce gift certificates plugin allows you to calculate the tax on gift card products. You can enable this feature to let customers pay tax on the purchase of gift card products. If you don’t want them to pay tax, simply disable the feature.
@@ -74,8 +75,8 @@ Visit [**Ultimate Gift Cards for WooCommerce Documentation**](https://docs.wpswi
 
 Checkout [**Gift Cards WooCommerce Plugin Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/gift-cards-for-woocommerce/?utm_source=wpswings-giftcards-kb&utm_medium=giftcards-github-page&utm_campaign=kb)
 
-## LIVE DEMO OF WOOCOMMERCE GIFT CARDS PLUGIN
- 
+## LIVE DEMO OF WOOCOMMERCE  GIFT CARDS PLUGIN  
+
 * [ **Gift Cards  Frontend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-github-page&utm_campaign=frontend-demo)
 
 
@@ -93,7 +94,13 @@ Checkout [**Gift Cards WooCommerce Plugin Knowledge Base**](https://support.wpsw
 * Use gift cards on existing subscriptions for renewal orders based on coupon amount.
 * If the subscription is purchased using a gift card, the same gift card will be applicable for the renewals too.
 
-2) The Ultimate Gift Card for WooCommerce plugin is also compatible with the **WPML** and **Multisite**.
+2) Ultimate Gift Cards for WooCommerce Pro plugin is compatible with the [**RMA Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-pag&utm_campaign=giftcards-product)
+
+With this compatibility, the customers are able to file refunds and exchange requests for the gift card products they purchase. But customers must fulfill these two conditions: 
+a) The expiration period of the gift card shouldn’t be achieved
+b) Its usability should be equal to zero.
+
+3) The Ultimate Gift Card for WooCommerce plugin is also compatible with the **WPML** and **Multisite**.
 
 
 ## WHAT PREMIUM VERSION OF ULTIMATE WOOCOMMERCE GIFT CARDS OFFERS 
@@ -139,10 +146,5 @@ If you need support or have questions, kindly use our online chat window [**here
 - [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/wpswings/)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-
-
-
-
-
 
 
