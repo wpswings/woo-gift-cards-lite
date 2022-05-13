@@ -110,8 +110,10 @@ a.  You can allow your users to use Gift Card Coupons for subscription-related a
 b. Use gift cards on existing subscriptions for renewal orders based on coupon amount.
 c. If the subscription is purchased using a gift card, the same gift card will be applicable for the renewals too.
 
+3) Compatibility with Upsell Order Bump Offer for WooCommerce
+The Ultimate Gift Cards for WooCommerce plugin is compatible with [**Upsell Order Bump Offer for WooCommerce**](https://wordpress.org/plugins/upsell-order-bump-offer-for-woocommerce/) and [**Upsell Order Bump Offer For WooCommerce Pro**](https://wpswings.com/product/upsell-order-bump-offer-for-woocommerce-pro/?utm_source=wpswings-upsell-offer-pro&utm_medium=giftcards-org-page&utm_campaign=upsell-offer). Upsell bump offer plugin enables the merchants to display upsell and cross-sell offers for products on the checkout page to increase the average order value. With this compatibility, you can allow your customers to redeem their gift cards to get more discounts on your cart.
 
-3) The Ultimate Gift Card for WooCommerce plugin is also compatible with the **WPML** and **Multisite**.
+4) The Ultimate Gift Card for WooCommerce plugin is also compatible with the **WPML** and **Multisite**.
 
 
 == WHAT PREMIUM VERSION OF ULTIMATE WOOCOMMERCE GIFT CARDS OFFERS ==
@@ -344,6 +346,6 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-=2.4.1 - Released on 13 May  2022 =
+= 2.4.1 - Released on 13 May  2022 =
 * New: Add new price type [Variable pricing type]
 * New: Minor Bug Fixes
