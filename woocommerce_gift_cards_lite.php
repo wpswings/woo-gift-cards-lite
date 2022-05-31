@@ -436,28 +436,23 @@ if ( $activated ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		global $wps_wgm_old_pro_exists;
-		if ( 'wps-wgc-setting-lite' === $tab ) {
+		if ( 'wps-wgc-setting-lite' === $tab && $wps_wgm_old_pro_exists ) {
 			?>
-			<input type="hidden" class="treat-button">
+				<tr class="plugin-update-tr active notice-warning notice-alt">
+				<td colspan="4" class="plugin-update colspanchange">
+					<div class="notice notice-warning inline update-message notice-alt">
+						<p class='wps-notice-title wps-notice-section'>
+							<?php esc_html_e( 'If You are using Premium Version of Giftcard plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
+						</p>
+					</div>
+				</td>
+			</tr>
+			<style>
+				.wps-notice-section > p:before {
+					content: none;
+				}
+			</style>
 			<?php
-			if ( $wps_wgm_old_pro_exists ) {
-				?>
-					<tr class="plugin-update-tr active notice-warning notice-alt">
-					<td colspan="4" class="plugin-update colspanchange">
-						<div class="notice notice-warning inline update-message notice-alt">
-							<p class='wps-notice-title wps-notice-section'>
-								<?php esc_html_e( 'If You are using Premium Version of Giftcard plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
-							</p>
-						</div>
-					</td>
-				</tr>
-				<style>
-					.wps-notice-section > p:before {
-						content: none;
-					}
-				</style>
-				<?php
-			}
 		}
 	}
 	if ( true === $wps_wgm_old_pro_exists ) {

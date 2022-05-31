@@ -61,6 +61,7 @@ $wps_wgm_setting_tab = apply_filters( 'wps_wgm_add_gift_card_setting_tab_after',
 do_action( 'wps_uwgc_show_notice' );
 ?>
 <div class="wrap woocommerce" id="wps_wgm_setting_wrapper">
+	<input type="hidden" class="treat-button">
 	<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader">
 		<img src="<?php echo esc_url( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
