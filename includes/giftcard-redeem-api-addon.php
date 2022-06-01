@@ -154,50 +154,36 @@ function wps_redeem_giftcard_offline( $request ) {
 
 			$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 
-			if ( isset( $giftcardcoupon_order_id ) && '' !== $giftcardcoupon_order_id ) {
+			if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
-				if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
+				if ( $coupon_amount >= $redeem_amount ) {
 
-					if ( $coupon_amount >= $redeem_amount ) {
+					$remaining_amount = $coupon_amount - $redeem_amount;
 
-						$remaining_amount = $coupon_amount - $redeem_amount;
+					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+					$coupon_usage_count = ++$coupon_usage_count;
+					update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
 
-						update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
-						$coupon_usage_count = ++$coupon_usage_count;
-						update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
+					$response['code'] = 'success';
+					$response['message'] = 'Coupon is successfully Redeemed';
 
-						$response['code'] = 'success';
-						$response['message'] = 'Coupon is successfully Redeemed';
+					$data = array(
+						'status' => 200,
+						'remaining_amount' => $remaining_amount,
+						'discount_type' => $the_coupon->discount_type,
+						'usage_count' => $coupon_usage_count,
+						'usage_limit' => $the_coupon->usage_limit,
+						'description' => $the_coupon->description,
+						'coupon_expiry' => $coupon_expiry,
+					);
+					$response['data'] = $data;
 
-						$data = array(
-							'status' => 200,
-							'remaining_amount' => $remaining_amount,
-							'discount_type' => $the_coupon->discount_type,
-							'usage_count' => $coupon_usage_count,
-							'usage_limit' => $the_coupon->usage_limit,
-							'description' => $the_coupon->description,
-							'coupon_expiry' => $coupon_expiry,
-						);
-						$response['data'] = $data;
+					$response = new WP_REST_Response( $response );
 
-						$response = new WP_REST_Response( $response );
-
-					} else {
-
-						$response['code'] = 'error';
-						$response['message'] = 'Redeem amount is greater than Coupon amount';
-
-						$data = array(
-							'status' => 404,
-
-						);
-						$response['data'] = $data;
-						$response = new WP_REST_Response( $response );
-					}
 				} else {
 
 					$response['code'] = 'error';
-					$response['message'] = 'Coupon is expired';
+					$response['message'] = 'Redeem amount is greater than Coupon amount';
 
 					$data = array(
 						'status' => 404,
@@ -205,12 +191,11 @@ function wps_redeem_giftcard_offline( $request ) {
 					);
 					$response['data'] = $data;
 					$response = new WP_REST_Response( $response );
-
 				}
 			} else {
 
 				$response['code'] = 'error';
-				$response['message'] = 'Coupon is not valid Giftcard Coupon';
+				$response['message'] = 'Coupon is expired';
 
 				$data = array(
 					'status' => 404,
@@ -286,59 +271,46 @@ function wps_recharge_giftcard_offine( $request ) {
 
 		$giftcardcoupon_order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 
-		if ( isset( $giftcardcoupon_order_id ) && '' !== $giftcardcoupon_order_id ) {
-			if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
+		if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
-				$updated_amount = $coupon_amount + $recharge_amount;
+			$updated_amount = $coupon_amount + $recharge_amount;
 
-				update_post_meta( $coupon_id, 'coupon_amount', $updated_amount );
+			update_post_meta( $coupon_id, 'coupon_amount', $updated_amount );
 
-				update_post_meta( $coupon_id, 'usage_limit', $usage_limit );
-				update_post_meta( $coupon_id, 'usage_count', 0 );
+			update_post_meta( $coupon_id, 'usage_limit', $usage_limit );
+			update_post_meta( $coupon_id, 'usage_count', 0 );
 
-				if ( $woo_ver < '3.6.0' ) {
-					if ( $coupon_expirys > time() ) {
-						update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
-						$coupon_expiry = $coupon_expirys;
-					}
-				} else {
-					if ( $coupon_expirys > time() ) {
-						update_post_meta( $coupon_id, 'date_expires', $coupon_expirys );
-						$coupon_expiry = $coupon_expirys;
-					}
+			if ( $woo_ver < '3.6.0' ) {
+				if ( $coupon_expirys > time() ) {
+					update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
+					$coupon_expiry = $coupon_expirys;
 				}
-
-				$response['code'] = 'success';
-				$response['message'] = 'Coupon is successfully Recharged';
-
-				$data = array(
-					'status' => 200,
-					'remaining_amount' => $updated_amount,
-					'discount_type' => $the_coupon->discount_type,
-					'usage_count' => 0,
-					'usage_limit' => $usage_limit,
-					'description' => $the_coupon->description,
-					'coupon_expiry' => $coupon_expiry,
-				);
-				$response['data'] = $data;
-				$response = new WP_REST_Response( $response );
-
 			} else {
-
-				$response['code'] = 'error';
-				$response['message'] = 'Coupon is expired';
-
-				$data = array(
-					'status' => 404,
-
-				);
-				$response['data'] = $data;
-				$response = new WP_REST_Response( $response );
+				if ( $coupon_expirys > time() ) {
+					update_post_meta( $coupon_id, 'date_expires', $coupon_expirys );
+					$coupon_expiry = $coupon_expirys;
+				}
 			}
+
+			$response['code'] = 'success';
+			$response['message'] = 'Coupon is successfully Recharged';
+
+			$data = array(
+				'status' => 200,
+				'remaining_amount' => $updated_amount,
+				'discount_type' => $the_coupon->discount_type,
+				'usage_count' => 0,
+				'usage_limit' => $usage_limit,
+				'description' => $the_coupon->description,
+				'coupon_expiry' => $coupon_expiry,
+			);
+			$response['data'] = $data;
+			$response = new WP_REST_Response( $response );
+
 		} else {
 
 			$response['code'] = 'error';
-			$response['message'] = 'Coupon is not valid  Giftcard Coupon';
+			$response['message'] = 'Coupon is expired';
 
 			$data = array(
 				'status' => 404,
@@ -346,7 +318,6 @@ function wps_recharge_giftcard_offine( $request ) {
 			);
 			$response['data'] = $data;
 			$response = new WP_REST_Response( $response );
-
 		}
 	} else {
 		$response['code'] = 'error';
