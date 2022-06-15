@@ -22,7 +22,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
  * Tested up to:      6.0.0
- * WC tested up to:   6.5.1
+ * WC tested up to:   6.6.0
  * Domain Path:       /languages
  */
 
@@ -442,7 +442,7 @@ if ( $activated ) {
 				<td colspan="4" class="plugin-update colspanchange">
 					<div class="notice notice-warning inline update-message notice-alt">
 						<p class='wps-notice-title wps-notice-section'>
-							<?php esc_html_e( 'If You are using Premium Version of Giftcard plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
+							<?php esc_html_e( 'If You are using the Premium Version of the Gift Card plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
 						</p>
 					</div>
 				</td>

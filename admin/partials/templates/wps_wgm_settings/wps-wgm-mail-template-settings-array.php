@@ -83,7 +83,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 ),
 		 ),
 		 array(
-			 'title' => esc_html__( 'Giftcard Message Length', 'woo-gift-cards-lite' ),
+			 'title' => esc_html__( 'Gift Card Message Length', 'woo-gift-cards-lite' ),
 			 'id' => 'wps_wgm_mail_setting_giftcard_message_length',
 			 'type' => 'number',
 			 'default' => 300,
@@ -93,10 +93,10 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 
 		 ),
 		 array(
-			 'title'    => esc_html__( 'Default Giftcard Message', 'woo-gift-cards-lite' ),
+			 'title'    => esc_html__( 'Default Gift Card Message', 'woo-gift-cards-lite' ),
 			 'id'       => 'wps_wgm_mail_setting_default_message',
 			 'type'     => 'text',
-			 'desc_tip' => esc_html__( 'Set the Default Message for Giftcard.', 'woo-gift-cards-lite' ),
+			 'desc_tip' => esc_html__( 'Set the Default Message for Gift Card.', 'woo-gift-cards-lite' ),
 		 ),
 		 array(
 			 'title' => esc_html__( 'Disclaimer Text', 'woo-gift-cards-lite' ),
@@ -107,11 +107,11 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 	 ),
 	 'middle' => array(
 		 array(
-			 'title' => esc_html__( 'Giftcard Email Subject', 'woo-gift-cards-lite' ),
+			 'title' => esc_html__( 'Gift Card Email Subject', 'woo-gift-cards-lite' ),
 			 'id' => 'wps_wgm_mail_setting_giftcard_subject',
 			 'type' => 'textWithDesc',
 			 'class' => 'description',
-			 'desc_tip' => esc_html__( 'Email Subject for notifying receiver about Giftcard Mail send.', 'woo-gift-cards-lite' ),
+			 'desc_tip' => esc_html__( 'Email Subject for notifying receiver about Gift Card Mail send.', 'woo-gift-cards-lite' ),
 			 'bottom_desc' => esc_html__( 'Use [SITENAME] shortcode as the name of the site and [FROM] shortcode as buyer name to be placed dynamically.', 'woo-gift-cards-lite' ),
 		 ),
 	 ),

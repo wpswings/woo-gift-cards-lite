@@ -828,11 +828,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							</tr>
 							<tr>
 								<td>[AMOUNT]</td>
-								<td><?php esc_html_e( 'Replace with Giftcard Amount.', 'woo-gift-cards-lite' ); ?></td>
+								<td><?php esc_html_e( 'Replace with Gift Card Amount.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 							<tr>
 								<td>[COUPON]</td>
-								<td><?php esc_html_e( 'Replace with Giftcard Coupon Code.', 'woo-gift-cards-lite' ); ?></td>
+								<td><?php esc_html_e( 'Replace with Gift Card Coupon Code.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 							<tr>
 								<td>[DEFAULTEVENT]</td>
@@ -840,7 +840,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							</tr>
 							<tr>
 								<td>[EXPIRYDATE]</td>
-								<td><?php esc_html_e( 'Replace with Giftcard Expiry Date.', 'woo-gift-cards-lite' ); ?></td>
+								<td><?php esc_html_e( 'Replace with Gift Card Expiry Date.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 						<?php
 						do_action( 'wps_wgm_template_custom_shortcode' );
@@ -1395,7 +1395,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			if ( 'on' !== $wps_wgm_general_setting_enable ) {
 				?>
 				<p class="wps_show_setting_on_activation">
-					<a class="wps_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Giftcards', 'woo-gift-cards-lite' ); ?></a>
+					<a class="wps_wgm_plugin_activation_msg" href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=general_setting' ) ); ?>"><?php echo esc_html__( 'Enable Gift Cards', 'woo-gift-cards-lite' ); ?></a>
 				</p>
 				<?php
 			}
