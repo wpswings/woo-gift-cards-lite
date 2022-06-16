@@ -207,7 +207,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 					<tbody>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="wcgw_plugin_enable"><?php esc_html_e( 'Giftcard Redeem Link', 'woo-gift-cards-lite' ); ?></label>
+								<label for="wcgw_plugin_enable"><?php esc_html_e( 'Gift Card Redeem Link', 'woo-gift-cards-lite' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<?php

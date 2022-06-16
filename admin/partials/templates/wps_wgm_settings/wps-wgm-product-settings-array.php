@@ -39,7 +39,7 @@ $wps_wgm_product_settings = array(
 		'id' => 'wps_wgm_product_setting_exclude_category',
 		'type' => 'search&select',
 		'multiple' => 'multiple',
-		'desc_tip' => esc_html__( 'Product must not be in this category for the Giftcard coupon to remain valid or, for "Product Discounts", products in these categories will not be discounted.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Product must not be in this category for the Gift Card coupon to remain valid or, for "Product Discounts", products in these categories will not be discounted.', 'woo-gift-cards-lite' ),
 		'options' => $settings_obj->wps_wgm_get_category(),
 	),
 );

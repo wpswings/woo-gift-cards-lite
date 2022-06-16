@@ -15,14 +15,14 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.4.1
+ * Version:           2.4.2
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
  * Tested up to:      6.0.0
- * WC tested up to:   6.5.0
+ * WC tested up to:   6.6.0
  * Domain Path:       /languages
  */
 
@@ -59,7 +59,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.4.1' );
+	define( 'WPS_WGC_VERSION', '2.4.2' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
@@ -436,28 +436,23 @@ if ( $activated ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		global $wps_wgm_old_pro_exists;
-		if ( 'wps-wgc-setting-lite' === $tab ) {
+		if ( 'wps-wgc-setting-lite' === $tab && $wps_wgm_old_pro_exists ) {
 			?>
-			<input type="hidden" class="treat-button">
+				<tr class="plugin-update-tr active notice-warning notice-alt">
+				<td colspan="4" class="plugin-update colspanchange">
+					<div class="notice notice-warning inline update-message notice-alt">
+						<p class='wps-notice-title wps-notice-section'>
+							<?php esc_html_e( 'If You are using the Premium Version of the Gift Card plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
+						</p>
+					</div>
+				</td>
+			</tr>
+			<style>
+				.wps-notice-section > p:before {
+					content: none;
+				}
+			</style>
 			<?php
-			if ( $wps_wgm_old_pro_exists ) {
-				?>
-					<tr class="plugin-update-tr active notice-warning notice-alt">
-					<td colspan="4" class="plugin-update colspanchange">
-						<div class="notice notice-warning inline update-message notice-alt">
-							<p class='wps-notice-title wps-notice-section'>
-								<?php esc_html_e( 'If You are using Premium Version of Giftcard plugin then please update Pro plugin from plugin page by ', 'woo-gift-cards-lite' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Click Here', 'woo-gift-cards-lite' ); ?></strong></a>
-							</p>
-						</div>
-					</td>
-				</tr>
-				<style>
-					.wps-notice-section > p:before {
-						content: none;
-					}
-				</style>
-				<?php
-			}
 		}
 	}
 	if ( true === $wps_wgm_old_pro_exists ) {

@@ -34,15 +34,15 @@ $wps_wgm_general_setting = array(
 		'type' => 'checkbox',
 		'class' => 'input-text',
 		'desc_tip' => esc_html__( 'Check this box to enable gift card product listing on the shop page.', 'woo-gift-cards-lite' ),
-		'desc' => esc_html__( 'Enable Giftcard Product listing on shop page', 'woo-gift-cards-lite' ),
+		'desc' => esc_html__( 'Enable Gift Card Product listing on shop page', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Individual Use', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_individual_use',
 		'type' => 'checkbox',
 		'class' => 'input-text',
-		'desc_tip' => esc_html__( 'Check this box if the Giftcard Coupon cannot be used in conjunction with other Giftcards/Coupons.', 'woo-gift-cards-lite' ),
-		'desc' => esc_html__( 'Allow Giftcard to use Individually', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Check this box if the Gift Card Coupon cannot be used in conjunction with other Giftcards/Coupons.', 'woo-gift-cards-lite' ),
+		'desc' => esc_html__( 'Allow Gift Card to use Individually', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Free Shipping', 'woo-gift-cards-lite' ),
@@ -53,7 +53,7 @@ $wps_wgm_general_setting = array(
 		'desc' => esc_html__( 'Allow Giftcard on Free Shipping', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Giftcard Coupon Length', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift Card Coupon Length', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_coupon_length',
 		'type' => 'number',
 		'custom_attribute' => array(
@@ -65,7 +65,7 @@ $wps_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'Enter gift card coupon length excluding the prefix. (Minimum length is set to 5)', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Gift card Prefix', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift Card Prefix', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_prefix',
 		'type' => 'text',
 		'class' => 'input-text wps_wgm_new_woo_ver_style_text',
@@ -73,13 +73,13 @@ $wps_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'Enter Gift Card Prefix. Ex: PREFIX_CODE', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Gift card Expiry After Days', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift Card Expiry After Days', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_expiry',
 		'type' => 'number',
 		'custom_attribute' => array( 'min' => '0' ),
 		'default' => 0,
 		'class' => 'input-text wps_wgm_new_woo_ver_style_text',
-		'desc_tip' => esc_html__( 'Enter number of days after purchased Giftcard is expired. Keep value "1" for one-day expiry when order is completed. Keep value "0" for no expiry.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'Enter number of days after purchased Gift Card is expired. Keep value "1" for one-day expiry when order is completed. Keep value "0" for no expiry.', 'woo-gift-cards-lite' ),
 	),
 	array(
 		'title' => esc_html__( 'Minimum Spend', 'woo-gift-cards-lite' ),
@@ -103,16 +103,16 @@ $wps_wgm_general_setting = array(
 		),
 		'default' => '',
 		'class' => 'input-text wps_wgm_new_woo_ver_style_text wps_wgm_gc_price_range',
-		'desc_tip' => esc_html__( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Giftcard coupon.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Gift card coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(
-		'title' => esc_html__( 'Gift card No of time usage', 'woo-gift-cards-lite' ),
+		'title' => esc_html__( 'Gift Card No of time usage', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_use',
 		'type' => 'number',
 		'custom_attribute' => array( 'min' => '0' ),
 		'default' => 0,
 		'class' => 'input-text wps_gw_new_woo_ver_style_text',
-		'desc_tip' => esc_html__( 'How many times this coupon can be used before Giftcard is void. keep value "0" for unlimited use.', 'woo-gift-cards-lite' ),
+		'desc_tip' => esc_html__( 'How many times this coupon can be used before Gift card is void. keep value "0" for unlimited use.', 'woo-gift-cards-lite' ),
 	),
 );
  $wps_wgm_general_setting = apply_filters( 'wps_wgm_general_setting', $wps_wgm_general_setting );
