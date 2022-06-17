@@ -17,8 +17,7 @@
 
 You can provide two gift card delivery methods i.e. Email and Downloadable. Moreover, the gifting portal allows you to redeem, recharge, and fetch all types of gift cards created with our [**Gift Cards for WooCommerce**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-github-page&utm_campaign=giftcards-pro) plugin. 
 
-[**Gift Card Tutorial 2022: How To Create and Sell Gift Cards On WordPress Website
-**](https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0)
+[**Gift Card Tutorial 2022: How To Create and Sell Gift Cards On WordPress Website**](https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0)
 
 **WITH THE ULTIMATE GIFT CARDS FOR WOOCOMMERCE PLUGIN YOU CAN:**
 
