@@ -13,6 +13,12 @@
 
 			$('#wps_wgm_price').keyup(function() {
 				this.value = this.value.replace(/[^0-9]/g, '');
+				var price = parseInt(this.value);
+				if ( wps_wgm.pricing_type.type == 'wps_wgm_user_price' && price < wps_wgm.pricing_type.min_user_price ) {
+					jQuery('.wps_wgm_min_user_price').show();
+				} else {
+					jQuery('.wps_wgm_min_user_price').hide();
+				}
 			});
 
 			//variable price for giftcard.
@@ -288,6 +294,15 @@
 								html += "</li>";
 							}
 						}
+						if (product_type == 'wps_wgm_user_price' ) {
+							price = parseInt( price );
+							if ( price < wps_wgm.pricing_type.min_user_price ) {
+								error = true;
+								html += "<li><b>";
+								html += wps_wgm.min_user_price;
+								html += "</li>";
+							}
+						}
 						// if pro is active.
 						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '') {
 							var response = wps_wgm_add_to_card_validation( html,error );
@@ -429,6 +444,15 @@
 							$( "#wps_wgm_price" ).addClass( "wps_wgm_error" );
 							html += "<li><b>";
 							html += wps_wgm.price_range;
+							html += "</li>";
+						}
+					}
+					if (product_type == 'wps_wgm_user_price' ) {
+						price = parseInt( price );
+						if ( price < wps_wgm.pricing_type.min_user_price ) {
+							error = true;
+							html += "<li><b>";
+							html += wps_wgm.min_user_price;
 							html += "</li>";
 						}
 					}

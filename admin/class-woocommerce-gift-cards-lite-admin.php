@@ -296,10 +296,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$selected_pricing = isset( $wps_wgm_pricing['type'] ) ? $wps_wgm_pricing['type'] : false;
 		$giftcard_enable  = wps_wgm_giftcard_enable();
 
-		$default_price = '';
-		$from          = '';
-		$to            = '';
-		$price         = '';
+		$default_price  = '';
+		$from           = '';
+		$to             = '';
+		$price          = '';
+		$min_user_price = '';
 		$default_price = isset( $wps_wgm_pricing['default_price'] ) ? $wps_wgm_pricing['default_price'] : 0;
 		if ( is_array( $wps_wgm_pricing ) && ! empty( $wps_wgm_pricing ) ) {
 			if ( array_key_exists( 'template', $wps_wgm_pricing ) ) {
@@ -318,6 +319,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					break;
 				case 'wps_wgm_selected_price':
 					$price = isset( $wps_wgm_pricing['price'] ) ? $wps_wgm_pricing['price'] : 0;
+					break;
+				case 'wps_wgm_user_price':
+					$min_user_price = isset( $wps_wgm_pricing['min_user_price'] ) ? $wps_wgm_pricing['min_user_price'] : 0;
 					break;
 				default:
 					// Nothing for default.
@@ -349,8 +353,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'options' => $this->wps_wgm_get_pricing_type(),
 				)
 			);
-			 // Range Price.
-			 // StartFrom.
+			// Range Price.
+			// StartFrom.
 			woocommerce_wp_text_input(
 				array(
 					'id'          => 'wps_wgm_from_price',
@@ -362,7 +366,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'desc_tip'    => true,
 				)
 			);
-			 // EndTo.
+			// EndTo.
 			woocommerce_wp_text_input(
 				array(
 					'id'          => 'wps_wgm_to_price',
@@ -383,6 +387,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'desc_tip'    => 'true',
 					'description' => __( 'Enter price using separator |. Ex : (10 | 20)', 'woo-gift-cards-lite' ),
 					'placeholder' => '10|20|30',
+				)
+			);
+			// User Price set minimum amount.
+			woocommerce_wp_text_input(
+				array(
+					'id'          => 'wps_wgm_min_user_price',
+					'value'       => "$min_user_price",
+					'label'       => __( 'Set Minimum Price', 'woo-gift-cards-lite' ),
+					'placeholder' => wc_format_localized_price( 0 ),
+					'description' => __( 'Leave Empty for No Minimum Gift card price.', 'woo-gift-cards-lite' ),
+					'data_type'   => 'price',
+					'desc_tip'    => true,
 				)
 			);
 			// variable price.
@@ -607,7 +623,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								break;
 
 							case 'wps_wgm_user_price':
-								$wps_wgm_pricing['type'] = $selected_pricing;
+								$wps_wgm_pricing['type']           = $selected_pricing;
+								$wps_wgm_pricing['min_user_price'] = isset( $_POST['wps_wgm_min_user_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_min_user_price'] ) ) : 0;
 								break;
 
 							case 'wps_wgm_variable_price':

@@ -110,3 +110,7 @@
   width: unset !important; 
   color: #fff !important;
 }
+.wps_wgm_min_user_price{
+  display: none;
+  color: red;
+}

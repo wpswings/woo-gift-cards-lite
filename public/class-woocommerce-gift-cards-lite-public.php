@@ -127,6 +127,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'msg_length'     => $giftcard_message_length,
 			/* translators: %s: seconds */
 			'price_range'    => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woo-gift-cards-lite' ), '</b>' ),
+			'min_user_price' => sprintf( __( 'Below Minimum Price.', 'woo-gift-cards-lite' ), '</b>' ),
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
 		if ( is_product() ) {
@@ -336,7 +337,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									}
 								}
 								if ( 'wps_wgm_user_price' === $product_pricing_type ) {
-									$default_price = $product_pricing['default_price'];
+									$default_price  = $product_pricing['default_price'];
+									$min_user_price = $product_pricing['min_user_price'];
 										// hooks for discount features.
 									do_action( 'wps_wgm_user_price_discount', $product, $product_pricing );
 										// price based on country.
@@ -348,19 +350,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" min="1" value = ' . $default_price . '>
-											</p>';
+											<span class="wps_wgm_min_user_price">' . __( 'Minimum Price is : ', 'woo-gift-cards-lite' ) . $min_user_price . '</span></p>';
 									} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 										$default_price = $product_pricing['default_price'];
 										$default_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
 										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" min="1" value = ' . $default_price . '>
-											</p>';
+											<span class="wps_wgm_min_user_price">' . __( 'Minimum Price is : ', 'woo-gift-cards-lite' ) . $min_user_price . '</span></p>';
 									} else {
 										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price : ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" min="1" value = ' . $default_price . '>
-											</p>';
+											<span class="wps_wgm_min_user_price">' . __( 'Minimum Price is : ', 'woo-gift-cards-lite' ) . $min_user_price . '</span></p>';
 									}
 								}
 								if ( 'wps_wgm_variable_price' === $product_pricing_type ) {
