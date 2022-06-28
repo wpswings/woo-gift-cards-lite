@@ -365,6 +365,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$get_mail_status = true;
 				$get_mail_status = apply_filters( 'wps_send_mail_status', $get_mail_status );
 
+				if ( empty( $to ) ) {
+					if ( 'Mail to recipient' == $wps_wgm_common_arr['delivery_method'] ) {
+						$to = $order->get_billing_email();
+					} else {
+						$to = '';
+					}
+				}
+
 				if ( $get_mail_status ) {
 					$wps_wgm_mail_settings = get_option( 'wps_wgm_mail_settings', array() );
 
