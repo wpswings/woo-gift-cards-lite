@@ -224,6 +224,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 							$expirydate = '';
 						}
 					}
+					$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
+					if ( isset( $is_imported_product ) && 'yes' === $is_imported_product && isset( $wps_wgm_extra_data ) && '' === $wps_wgm_extra_data['expiry_date'] ) {
+						$expirydate = '';
+					}
 
 					// Add meta.
 					// price based on country.
