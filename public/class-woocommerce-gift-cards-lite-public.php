@@ -1404,6 +1404,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$giftcard_prefix = $general_setting['wps_wgm_general_setting_giftcard_prefix'];
 			$coupon = $giftcard_prefix . $password;
 			$expiry_date = $general_setting['wps_wgm_general_setting_giftcard_expiry'];
+
+			$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
+			if ( isset( $is_imported_product ) && 'yes' === $is_imported_product ) {
+				$expiry_date = get_post_meta( $product_id, 'expiry_after_days', true );
+			}
+		
 			$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 			$wps_temp_id = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
 			if ( array_key_exists( 'template', $product_pricing ) ) {
