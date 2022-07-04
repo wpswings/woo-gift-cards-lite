@@ -127,7 +127,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'msg_length'     => $giftcard_message_length,
 			/* translators: %s: seconds */
 			'price_range'    => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woo-gift-cards-lite' ), '</b>' ),
-			'min_user_price' => sprintf( __( 'Below Minimum Price.', 'woo-gift-cards-lite' ), '</b>' ),
+			'min_user_price' => sprintf( __( 'Gift Card price should not be less than the minimum amount.', 'woo-gift-cards-lite' ), '</b>' ),
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
 		if ( is_product() ) {
@@ -410,7 +410,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$mail_settings = get_option( 'wps_wgm_mail_settings', array() );
 							$default_giftcard_message = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_default_message' );
 							$cart_html .= '<p class="wps_wgm_section wps_message">
-							<label class="wps_wgc_label">' . __( 'Gift Message : ', 'woo-gift-cards-lite' ) . '</label>	
+							<label class="wps_wgc_label">' . __( 'Gift Message ', 'woo-gift-cards-lite' ) . '</label>	
 							<textarea name="wps_wgm_message" id="wps_wgm_message" class="wps_wgm_message">' . $default_giftcard_message . '</textarea>';
 							$giftcard_message_length = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_giftcard_message_length' );
 							if ( '' == $giftcard_message_length ) {
