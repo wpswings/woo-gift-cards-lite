@@ -123,7 +123,6 @@ jQuery(document).ready( function($) {
 			jQuery( document ).on( 'click', '#deactivate-' + all_slugs[i] ,function(e){
 
 				e.preventDefault();
-				console.log('psb');
 				deactivate_url = jQuery( this ).attr( 'href' );
 				plugin_name = jQuery( this ).attr( 'aria-label' );
 				jQuery( '#plugin-name' ).val( plugin_name.replace( 'Deactivate ', '' ) );
