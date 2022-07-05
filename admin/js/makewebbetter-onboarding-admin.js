@@ -8,9 +8,9 @@ jQuery(document).ready( function($) {
 	var deactivate_url = '';
 
 	// Add Select2.
-	jQuery( '.on-boarding-select2' ).select2({
-		placeholder : 'Select All Suitable Options...',
-	});
+	// jQuery( '.on-boarding-select2' ).select2({
+	// 	placeholder : 'Select All Suitable Options...',
+	// });
 
 	// Add Deactivation id to all deactivation links.
 	embed_id_to_deactivation_urls();
@@ -123,6 +123,7 @@ jQuery(document).ready( function($) {
 			jQuery( document ).on( 'click', '#deactivate-' + all_slugs[i] ,function(e){
 
 				e.preventDefault();
+				console.log('psb');
 				deactivate_url = jQuery( this ).attr( 'href' );
 				plugin_name = jQuery( this ).attr( 'aria-label' );
 				jQuery( '#plugin-name' ).val( plugin_name.replace( 'Deactivate ', '' ) );
