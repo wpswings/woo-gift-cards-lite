@@ -31,7 +31,7 @@ class Woocommerce_Gift_Cards_Lite_I18n {
 	 * @since    1.0.0
 	 * @name load_plugin_textdomain
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function load_plugin_textdomain() {
 

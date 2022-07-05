@@ -27,7 +27,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param array $args args.
 		 * @return $templatehtml.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_create_gift_template( $args ) {
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
@@ -139,7 +139,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param string $key databse key name.
 		 * @return $wps_wgm_data.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_get_template_data( $wps_wgm_settings, $key ) {
 			$wps_wgm_data = '';
@@ -164,7 +164,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int    $product_id product id.
 		 * @param int    $to email id or name to whome coupon send.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to ) {
 			$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -291,7 +291,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param array  $wps_wgm_common_arr email template data.
 		 * @param object $order order.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_common_functionality( $wps_wgm_common_arr, $order ) {
 
@@ -464,7 +464,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param string $expiry_date expiry date of giftcard coupon.
 		 * @return $expirydate_format.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_check_expiry_date( $expiry_date ) {
 			$todaydate = date_i18n( 'Y-m-d' );
@@ -494,7 +494,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param int $wps_wgm_discount_tax coupon discount tax.
 		 * @return $total_discount.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_calculate_coupon_discount( $wps_wgm_discount, $wps_wgm_discount_tax ) {
 			$price_in_ex_option = get_option( 'woocommerce_prices_include_tax' );
@@ -528,7 +528,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @name wps_allowed_html_tags
 		 * @return $allowed_tags.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_allowed_html_tags() {
 			$allowed_tags = array(
@@ -689,7 +689,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @since 1.0.0
 		 * @name wps_get_org_selected_template
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_get_org_selected_template() {
 			$wps_wgm_select_email_format = get_option( 'wps_wgm_select_email_format', 'normal' );
@@ -736,7 +736,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @param string $key databse key name.
 		 * @name wps_get_org_selected_template
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function mwb_wgm_get_template_data( $wps_wgm_settings, $key ) {
 			$this->wps_wgm_get_template_data( $wps_wgm_settings, $key );

@@ -200,7 +200,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 2.0.0
 	 * @name wps_wgm_admin_menu()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_admin_menu() {
 		add_submenu_page( 'edit.php?post_type=giftcard', __( 'Settings', 'woo-gift-cards-lite' ), __( 'Settings', 'woo-gift-cards-lite' ), 'manage_options', 'wps-wgc-setting-lite', array( $this, 'wps_wgm_admin_setting' ) );
@@ -217,7 +217,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_admin_setting()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_admin_setting() {
 		include_once WPS_WGC_DIRPATH . '/admin/partials/woocommerce-gift-cards-lite-admin-display.php';
@@ -229,7 +229,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 2.0.0
 	 * @name wps_wgm_premium_features()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_premium_features() {
 		if ( isset( $_GET['page'] ) && 'wps-wgc-premium-plugin' == $_GET['page'] ) {
@@ -247,7 +247,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array $types product types.
 	 * @return $types.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_gift_card_product( $types ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -263,7 +263,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_get_pricing_type()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_get_pricing_type() {
 		$pricing_options = array(
@@ -282,7 +282,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_woocommerce_product_options_general_product_data()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_product_options_general_product_data() {
 		global $post;
@@ -535,7 +535,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param int $post_id post id.
 	 * @name wps_wgm_save_post()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_save_post( $post_id ) {
 		global $post;
@@ -662,7 +662,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array $tabs product tabs.
 	 * @return $tabs.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_product_data_tabs( $tabs ) {
 		if ( isset( $tabs ) && ! empty( $tabs ) ) {
@@ -687,7 +687,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array $item item.
 	 * @param array $_product product.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ) {
 
@@ -745,7 +745,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param array $order_items order items.
 	 * @return $order_items.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_hidden_order_itemmeta( $order_items ) {
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
@@ -762,7 +762,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_giftcard_custompost
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_giftcard_custom_post() {
 		$labels           = array(
@@ -813,7 +813,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name wps_wgm_edit_form_after_title
 	 * @param object $post post.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_edit_form_after_title( $post ) {
 		$wps_wgm_post_type = get_post_type( $post );
@@ -875,7 +875,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_mothers_day_template
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_mothers_day_template() {
 
@@ -940,7 +940,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_new_template
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_new_template() {
 
@@ -1005,7 +1005,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_insert_custom_template
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_insert_custom_template() {
 		$wps_wgm_template = get_option( 'wps_wgm_insert_custom_template', '' );
@@ -1068,7 +1068,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_insert_christmas_template
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_insert_christmas_template() {
 		$wps_wgm_template = get_option( 'wps_wgm_merry_christmas_template', '' );
@@ -1145,7 +1145,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @param object $post post.
 	 * @return $actions.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 1.0.0
 	 */
 	public function wps_wgm_preview_gift_template( $actions, $post ) {
@@ -1160,7 +1160,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 *
 	 * @name wps_wgm_preview_email_template
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 1.0.0
 	 */
 	public function wps_wgm_preview_email_template() {
@@ -1228,7 +1228,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @param mixed $links Contains links.
 	 * @param mixed $file Contains main file.
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_custom_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) !== false ) {
@@ -1249,7 +1249,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 * @name wps_wgm_get_all_lite_templates
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_get_all_lite_templates() {
 		$wps_lite_templates = array(
@@ -1268,7 +1268,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.0.0
 	 * @name wps_wgm_set_cron_for_plugin_notification
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_set_cron_for_plugin_notification() {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
@@ -1288,7 +1288,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.0.0
 	 * @name wps_wgm_save_notice_message
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_save_notice_message() {
 		$wps_notification_data = $this->wps_get_update_notification_data();
@@ -1306,7 +1306,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.0.0
 	 * @name wps_get_update_notification_data
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_get_update_notification_data() {
 		$wps_notification_data = array();
@@ -1338,7 +1338,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.0.0
 	 * @name wps_wgm_display_notification_bar
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_display_notification_bar() {
 		$screen = get_current_screen();
@@ -1377,7 +1377,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.0.0
 	 * @name wps_wgm_dismiss_notice
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_dismiss_notice() {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wgm-verify-notice-nonce' ) ) {
@@ -1395,7 +1395,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.0.0
 	 * @name wps_wgm_setting_notice_on_activation
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_setting_notice_on_activation() {
 		/* Check transient, if available display notice */
@@ -1432,7 +1432,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.5.0
 	 * @name add_wps_frontend_screens
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_wps_frontend_screens( $valid_screens = array() ) {
 
@@ -1450,7 +1450,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since    2.5.0
 	 * @name add_wps_deactivation_screens
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_wps_deactivation_screens( $valid_screens = array() ) {
 

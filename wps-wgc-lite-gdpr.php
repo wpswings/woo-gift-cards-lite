@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string The default policy content.
  * @name wps_wgm_plugin_get_default_privacy_content
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_wgm_plugin_get_default_privacy_content() {
 	return '<h2>' . __( 'Stored Recipient Details for sending Gift Card', 'woo-gift-cards-lite' ) . '</h2>' .
@@ -30,7 +30,7 @@ function wps_wgm_plugin_get_default_privacy_content() {
  * @since             1.0.0
  * @name wps_wgm_plugin_add_suggested_privacy_content
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_wgm_plugin_add_suggested_privacy_content() {
 	$content = wps_wgm_plugin_get_default_privacy_content();
@@ -50,7 +50,7 @@ add_action( 'admin_init', 'wps_wgm_plugin_add_suggested_privacy_content', 20 );
  * @return array
  * @name wps_wgm_plugin_register_exporters
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_wgm_plugin_register_exporters( $exporters ) {
 	$exporters[] = array(
@@ -73,7 +73,7 @@ add_filter( 'wp_privacy_personal_data_exporters', 'wps_wgm_plugin_register_expor
  * @return array
  * @name wps_wgm_plugin_user_data_exporter
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 	$export_items = array();
@@ -175,7 +175,7 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
  * @return array
  * @name wps_wgm_plugin_register_erasers
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_wgm_plugin_register_erasers( $erasers = array() ) {
 	$erasers[] = array(
@@ -196,7 +196,7 @@ add_filter( 'wp_privacy_personal_data_erasers', 'wps_wgm_plugin_register_erasers
  * @return array
  * @name wps_wgm_plugin_user_data_eraser
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 	if ( empty( $email_address ) ) {

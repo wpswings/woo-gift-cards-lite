@@ -87,7 +87,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param      array $array The array of product type.
 	 * @return  $array
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_price_based_country_giftcard( $array ) {
 		$array[] = 'wgm_gift_card';
@@ -189,7 +189,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @name wps_wgm_woocommerce_before_add_to_cart_button().
 	 * @param object $wps_product Object of product.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_before_add_to_cart_button( $wps_product ) {
 
@@ -220,7 +220,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @name wps_wgm_before_cart_data().
 	 * @param object $wps_product Object of product.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_before_cart_data( $wps_product ) {
 		if ( '' === $wps_product ) {
@@ -532,7 +532,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param   array $variation_id  variation_id.
 	 * @return  $the_cart_data
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -648,7 +648,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param   array $existing_item_meta  existing_item_meta.
 	 * @return  $item_meta
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_get_item_data( $item_meta, $existing_item_meta ) {
 
@@ -688,7 +688,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @name wps_wgm_woocommerce_before_calculate_totals()
 	 * @param object $cart  Cart Data.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_before_calculate_totals( $cart ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -724,7 +724,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param object $product product.
 	 * @return $price_html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_get_price_html( $price_html, $product ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -838,7 +838,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param string $old_status old status.
 	 * @param string $new_status new status.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
 
@@ -1001,7 +1001,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param bool $enabled boolean return.
 	 * @return $enabled.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_hidding_coupon_field_on_cart( $enabled ) {
 		$bool = false;
@@ -1041,7 +1041,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param array $formatted_meta formatted_meta.
 	 * @return $temp_metas.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_hide_order_metafields( $formatted_meta ) {
 		$temp_metas = array();
@@ -1068,7 +1068,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param string $cart_key cart key.
 	 * @param array  $values cart values.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_checkout_create_order_line_item( $item, $cart_key, $values ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1111,7 +1111,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param object $product product.
 	 * @return $link.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_loop_add_to_cart_link( $link, $product ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1148,7 +1148,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param object $product product.
 	 * @return $taxable.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_product_is_taxable( $taxable, $product ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1178,7 +1178,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @since 1.0.0
 	 * @name wps_wgm_woocommerce_before_main_content()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_before_main_content() {
 		global $post;
@@ -1205,7 +1205,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param object $query query.
 	 * @param object $query_object query object.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_product_query( $query, $query_object ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1253,7 +1253,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param  object $item item.
 	 * @param  int    $order_id order_id.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_new_order_item( $item_id, $item, $order_id ) {
 		if ( get_class( $item ) == 'WC_Order_Item_Coupon' ) {
@@ -1315,7 +1315,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param bool $enable enable.
 	 * @return $enable.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_wc_shipping_enabled( $enable ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1362,7 +1362,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @since 1.0.0
 	 * @name wps_wgm_preview_thickbox_rqst
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_thickbox_rqst() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
@@ -1384,7 +1384,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @since 1.0.0
 	 * @name wps_wgc_preview_email
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_email_on_single_page() {
 
@@ -1482,7 +1482,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @since 1.0.0
 	 * @name wps_wgm_apply_already_created_giftcard_coupons
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_apply_already_created_giftcard_coupons() {
 		return false;
@@ -1497,7 +1497,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param string $cart_item_key cart_item_key.
 	 * @name wps_mini_cart_product_price
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_mini_cart_product_price( $html, $cart_item, $cart_item_key ) {
 		if ( isset( $cart_item['product_meta']['meta_data']['wps_wgm_price'] ) && ! empty( $cart_item['product_meta']['meta_data']['wps_wgm_price'] ) ) {

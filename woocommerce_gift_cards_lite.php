@@ -91,7 +91,7 @@ if ( $activated ) {
 	 * @param string $context context.
 	 * @return $actions
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgm_admin_settings( $actions, $plugin_file, $plugin_data, $context ) {
 		static $plugin;
@@ -116,7 +116,7 @@ if ( $activated ) {
 	 * @name wps_uwgc_pro_active
 	 * @return boolean
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_uwgc_pro_active() {
 		return apply_filters( 'wps_uwgc_pro_active', false );
@@ -129,7 +129,7 @@ if ( $activated ) {
 		 * @name wps_wgm_giftcard_enable
 		 * @return boolean
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		function wps_wgm_giftcard_enable() {
 			$giftcard_enable = get_option( 'wps_wgm_general_settings', array() );
@@ -187,7 +187,7 @@ if ( $activated ) {
 	 * @name wps_wgm_create_gift_card_taxonomy
 	 * @param boolean $network_wide for multisite.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgm_create_gift_card_taxonomy( $network_wide ) {
 		global $wpdb;
@@ -219,7 +219,7 @@ if ( $activated ) {
 	 * @since 1.0.0
 	 * @name wps_wgc_register_gift_card_product_type
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgc_register_gift_card_product_type() {
 		/**
@@ -227,7 +227,7 @@ if ( $activated ) {
 		 *
 		 * @since 1.0.0
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		class WC_Product_Wgm_Gift_Card extends WC_Product {
 			/**
@@ -252,7 +252,7 @@ if ( $activated ) {
 		 * @param int $length length of coupon code.
 		 * @return string $password.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		function wps_wgm_coupon_generator( $length = 5 ) {
 			$password    = '';
@@ -468,7 +468,7 @@ if ( $activated ) {
 	 * @since 1.0.0
 	 * @name wps_wgm_plugin_deactivate()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgm_plugin_deactivate() {
 		unset( $_GET['activate'] );
