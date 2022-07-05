@@ -114,3 +114,7 @@
   display: none;
   color: red;
 }
+.wps_wgm_section select, .wps_wgm_section input[type=text], .wps_wgm_section textarea {
+  min-height: 33px;
+  color: #333333;
+}
