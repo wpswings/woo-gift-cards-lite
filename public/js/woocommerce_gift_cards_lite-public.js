@@ -38,7 +38,6 @@
 				
 					if ($('.summary.entry-summary').length > 0) {
 						
-						// block($('.summary.entry-summary'));
 					}
 					
 					var data = {
@@ -63,7 +62,6 @@
 						{
 							if ($('.summary.entry-summary').length > 0) {
 								
-							// unblock( $( '.summary.entry-summary' ) );
 							}
 						}
 					});
