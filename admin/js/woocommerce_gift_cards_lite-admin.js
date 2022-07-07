@@ -232,7 +232,7 @@
 				$( '.wps_wgm_selected_price_field' ).show();
 				$( '.wps_wgm_default_price_field' ).show();
 				$( '.wps_wgm_user_price_field' ).show();
-				$('#wps_variable_gift').hide();
+				$( '#wps_variable_gift' ).hide();
 
 				if (pricing_option == 'wps_wgm_selected_price') {
 					$( '.wps_wgm_from_price_field' ).hide();
@@ -240,14 +240,16 @@
 					$( '.wps_wgm_default_price_field' ).hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().hide();
-					$('#wps_variable_gift').hide();
+					$( '#wps_variable_gift' ).hide();
+					$( '.wps_wgm_min_user_price_field' ).hide(); 
 				}
 				if (pricing_option == 'wps_wgm_range_price') {
 					$( '.wps_wgm_selected_price_field' ).hide();
 					$( '.wps_wgm_default_price_field' ).hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().show();
-					$('#wps_variable_gift').hide();
+					$( '#wps_variable_gift' ).hide();
+					$( '.wps_wgm_min_user_price_field').hide();
 				}
 				if (pricing_option == 'wps_wgm_default_price') {
 					$( '.wps_wgm_from_price_field' ).hide();
@@ -255,7 +257,8 @@
 					$( '.wps_wgm_selected_price_field' ).hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().show();
-					$('#wps_variable_gift').hide();
+					$( '#wps_variable_gift' ).hide();
+					$( '.wps_wgm_min_user_price_field').hide();
 				}
 				if (pricing_option == 'wps_wgm_user_price') {
 					$( '.wps_wgm_from_price_field' ).hide();
@@ -263,16 +266,18 @@
 					$( '.wps_wgm_default_price_field' ).hide();
 					$( '.wps_wgm_selected_price_field' ).hide();
 					$( '#wps_wgm_discount' ).parent().show();
-					$('#wps_variable_gift').hide();
+					$( '#wps_variable_gift' ).hide();
+					$( '.wps_wgm_min_user_price_field').show();
 				}
 				if (pricing_option == 'wps_wgm_variable_price') {
 					$( '.wps_wgm_from_price_field' ).hide(); 
 					$( '.wps_wgm_to_price_field' ).hide();  
 					$( '.wps_wgm_default_price_field' ).hide(); 
 					$( '.wps_wgm_selected_price_field' ).hide();
-					$('#wps_wgm_discount').parent().hide();
+					$( '#wps_wgm_discount' ).parent().hide();
 					$( '.wps_wgm_user_price_field' ).hide();
-					$('#wps_variable_gift').show();
+					$( '#wps_variable_gift' ).show();
+					$( '.wps_wgm_min_user_price_field').hide();
 				}
 			}
 

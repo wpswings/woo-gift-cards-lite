@@ -2,7 +2,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package    woo-gift-cards-lite
@@ -117,7 +117,7 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '2.4.2';
+			self::$version = '2.4.3';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -178,7 +178,7 @@ class Makewebbetter_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_WGC_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), self::$version, 'all' );
+			wp_enqueue_style( 'wpswings-onboarding-style', WPS_WGC_URL . 'admin/css/wpswings-onboarding-admin.css', array(), self::$version, 'all' );
 		}
 	}
 
@@ -202,14 +202,14 @@ class Makewebbetter_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_WGC_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery' ), self::$version, true );
+			wp_enqueue_script( 'wpswings-onboarding-scripts', WPS_WGC_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery' ), self::$version, true );
 
 			global $pagenow;
 
 			$current_slug = array_key_exists( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php', get_plugins() ) ? sanitize_title( get_plugins()['woo-gift-cards-lite/woocommerce_gift_cards_lite.php']['Name'] ) : '';
 
 			wp_localize_script(
-				'makewebbetter-onboarding-scripts',
+				'wpswings-onboarding-scripts',
 				'wps_onboarding',
 				array(
 					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
@@ -227,12 +227,12 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name add_onboarding_popup_screen
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_onboarding_popup_screen() {
 
 		if ( $this->is_valid_page_screen() && $this->can_show_onboarding_popup() ) {
-			require_once WPS_WGC_DIRPATH . 'includes/extra-templates/makewebbetter-onboarding-template-display.php';
+			require_once WPS_WGC_DIRPATH . 'includes/extra-templates/wpswings-onboarding-template-display.php';
 		}
 	}
 
@@ -243,13 +243,13 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name add_deactivation_popup_screen
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_deactivation_popup_screen() {
 
 		global $pagenow;
 		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
-			require_once WPS_WGC_DIRPATH . 'includes/extra-templates/makewebbetter-deactivation-template-display.php';
+			require_once WPS_WGC_DIRPATH . 'includes/extra-templates/wpswings-deactivation-template-display.php';
 		}
 	}
 
@@ -260,7 +260,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name is_valid_page_screen
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function is_valid_page_screen() {
 
@@ -287,7 +287,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name can_show_onboarding_popup
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function can_show_onboarding_popup() {
 
@@ -322,7 +322,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name add_on_boarding_form_fields
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_on_boarding_form_fields() {
 
@@ -476,7 +476,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name add_deactivation_form_fields
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_deactivation_form_fields() {
 
@@ -722,7 +722,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name send_onboarding_data
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function send_onboarding_data() {
 
@@ -813,7 +813,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since      2.0.0
 	 * @name    render_form_data_into_table
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function render_form_data_into_table( $formatted_data = array() ) {
 
@@ -849,7 +849,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since    2.0.0
 	 * @name    skip_onboarding_popup
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function skip_onboarding_popup() {
 
@@ -865,7 +865,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since      1.0.0
 	 * @name       add_wps_additional_validation
 	 * @author     WP Swings <webmaster@wpswings.com>
-	 * @link       https://www.makewebbetter.com/
+	 * @link       https://www.wpswings.com/
 	 */
 	public function add_wps_additional_validation( $result = true ) {
 

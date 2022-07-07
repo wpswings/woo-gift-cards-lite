@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    woo-gift-cards-lite
@@ -36,7 +36,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $general_settings contains the setting array.
 	 * @since 2.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_generate_checkbox_html( $value, $general_settings ) {
 		if ( ( isset( $general_settings [ $value ['id'] ] ) && ( 'on' == $general_settings [ $value ['id'] ] ) ) || ( isset( $general_settings [ $value ['id'] ] ) && ( 'yes' == $general_settings [ $value ['id'] ] ) ) ) {
@@ -58,7 +58,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contains array of html.
 	 * @param array $general_settings contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_radiobuttons_html( $value, $general_settings ) {
@@ -85,7 +85,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contains array of html.
 	 * @param array $general_settings contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_number_html( $value, $general_settings ) {
@@ -120,7 +120,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contains array of html.
 	 * @param array $notification_settings contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_wp_editor( $value, $notification_settings ) {
@@ -158,7 +158,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_generate_label
 	 * @param array $value contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_label( $value ) {
@@ -173,7 +173,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_generate_tool_tip
 	 * @param array $value contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_tool_tip( $value ) {
@@ -196,7 +196,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contains array of html.
 	 * @param array $general_settings contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_textarea_html( $value, $general_settings ) {
@@ -226,7 +226,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 *
 	 * @name wps_wgm_generate_textarea_html
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_settings_saved() {
@@ -247,7 +247,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_save_button_html()
 	 * @param string $name name of button.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_save_button_html( $name ) {
 		?>
@@ -264,7 +264,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contains array of settings.
 	 * @param array $general_settings contains array of settings.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_text_html( $value, $general_settings ) {
@@ -296,7 +296,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contains array of settings.
 	 * @param array $general_settings contains array of settings.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_generate_search_select_html( $value, $general_settings ) {
 		$selectedvalue = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : array();
@@ -335,7 +335,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @since 2.0.0
 	 * @name wps_wgm_get_category()
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_get_category() {
 		$args = array( 'taxonomy' => 'product_cat' );
@@ -351,7 +351,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_show_category()
 	 * @param array $categories contain array of categories.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_show_category( $categories ) {
 		if ( isset( $categories ) && ! empty( $categories ) ) {
@@ -374,7 +374,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param string $id contain id of tag.
 	 * @param string $tag contain tag.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_get_product( $id, $tag ) {
 		$wps_wgm_exclude_product = get_option( $tag, false );
@@ -404,7 +404,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $value contain array of html.
 	 * @param array $general_settings Contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_generate_input_text_with_button_html( $value, $general_settings ) {
 		if ( isset( $value['custom_attribute'] ) && ! empty( $value['custom_attribute'] ) && is_array( $value['custom_attribute'] ) ) {
@@ -428,7 +428,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_generate_input_text_with_button_html()
 	 * @param array $val Contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_generate_button_html( $val ) {
 		?>
@@ -443,7 +443,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_generate_showbox()
 	 * @param array $val Contains array of html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_generate_showbox( $val ) {
 		?>
@@ -463,7 +463,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $setting_html_array Contains array of settings.
 	 * @param array $saved_settings Contains array of saved settings.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_common_settings( $setting_html_array, $saved_settings ) {
@@ -513,7 +513,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $setting_html_array Contains array of settings.
 	 * @param array $saved_settings Contains array of saved settings.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_text_with_description( $setting_html_array, $saved_settings ) {
@@ -527,7 +527,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @name wps_wgm_generate_bottom_description_field
 	 * @param array $setting_html_array contains array of setting html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_generate_bottom_description_field( $setting_html_array ) {
@@ -543,7 +543,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $posted_data contains array of posted data.
 	 * @param array $setting_html_array contains array of setting html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_sanitize_email_settings_data( $posted_data, $setting_html_array ) {
@@ -596,7 +596,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @param array $posted_data contains array of posted data.
 	 * @param array $setting_html_array contains array of setting html.
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_sanitize_settings_data( $posted_data, $setting_html_array ) {
@@ -620,7 +620,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 *
 	 * @name wps_wgm_allowed_html
 	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_allowed_html_for_tool_tip() {

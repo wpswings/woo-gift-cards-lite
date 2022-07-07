@@ -24,7 +24,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @since 2.0.0
 		 * @name wps_wgm_restore_data_on_updation
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_restore_data_on_updation() {
 
@@ -72,7 +72,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @name restore_general_settings_data
 		 * @param boolean $general_process_completion_flag contains the flag value.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function restore_general_settings_data( $general_process_completion_flag ) {
 			$wps_general_settings = get_option( 'wps_wgm_general_settings', array() );
@@ -130,7 +130,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @name restore_product_settings_data
 		 * @param boolean $product_process_completion_flag contains the flag value.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function restore_product_settings_data( $product_process_completion_flag ) {
 			$product_setting_flag = false;
@@ -163,7 +163,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @name restore_mail_settings_data
 		 * @param boolean $mail_process_completion_flag contains the flag value.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function restore_mail_settings_data( $mail_process_completion_flag ) {
 
@@ -196,7 +196,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @name restore_delivery_settings_data
 		 * @param boolean $delivery_process_completion_flag contains the flag value.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function restore_delivery_settings_data( $delivery_process_completion_flag ) {
 			$delivery_setting_flag = false;
@@ -226,7 +226,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @name restore_other_settings_data
 		 * @param boolean $other_process_completion_flag contains the flag value.
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function restore_other_settings_data( $other_process_completion_flag ) {
 			$other_setting_flag = false;
@@ -252,7 +252,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 		 * @since 2.0.0
 		 * @name delete_additional_data
 		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		public function delete_additional_data() {
 			delete_option( 'wps_wgm_general_setting_giftcard_applybeforetx' );

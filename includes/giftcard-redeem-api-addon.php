@@ -57,7 +57,7 @@ add_action(
  * @name wps_get_giftcard_details
  * @param mixed $request Request.
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_get_giftcard_details( $request ) {
 
@@ -120,7 +120,7 @@ function wps_get_giftcard_details( $request ) {
  * @name wps_redeem_giftcard_offline
  * @param mixed $request Request.
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_redeem_giftcard_offline( $request ) {
 
@@ -241,7 +241,7 @@ function wps_redeem_giftcard_offline( $request ) {
  * @name wps_recharge_giftcard_offine
  * @param mixed $request request.
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_recharge_giftcard_offine( $request ) {
 	global $woocommerce;
@@ -340,7 +340,7 @@ function wps_recharge_giftcard_offine( $request ) {
  * @name wps_permission_check
  * @param mixed $request Request.
  * @author WP Swings <webmaster@wpswings.com>
- * @link https://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 function wps_permission_check( $request ) {
 	$license             = $request->get_header( 'licensecode' );
