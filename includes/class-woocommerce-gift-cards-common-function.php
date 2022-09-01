@@ -33,6 +33,23 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
 				$templateid = $args['templateid'];
 				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
+				
+				$wps_wgm_recommanded_per_product = get_post_meta( $product_id, 'wps_wgm_recommanded_per_product', true );
+				
+				$recommand_product = '';
+				foreach($wps_wgm_recommanded_per_product as $key => $val ) {
+					$recommand_prod = wc_get_product($val);
+					$recommand_product .='<style>.ugcfw__product_table_img img {width: 125px;height: 125px;}.ugcfw__product_table_name h2 {text-align:center; padding: 0;margin: 0;font-size: 24px;line-height: 28px;text-transform: capitalize;}</style><table class="ugcfw__product_table"><tr class="ugcfw__product_table_row"><td class="ugcfw__product_table_img" style="vertical-align: top;padding-bottom:15px;width:125px;">'.$recommand_prod->get_image().'</td><td class="ugcfw__product_table_name" style="padding: 0 0 15px 25px;width: 450px;text-align: center;"><h2 style="text-align:center;padding: 0;margin: 0;font-size: 24px!important;line-height: 28px;text-transform: capitalize;">'.$recommand_prod->get_name().'</h2><p class="ugcfw__product_table_price" style="padding: 10px 0;margin: 0;font-size: 20px;line-height: 28px;font-weight: bold;">'. get_woocommerce_currency_symbol().$recommand_prod->get_price().'</p><p class="ugcfw__product_table_link" style="margin: 0;padding: 0;line-height: 28px;color: #208fe9;text-align: center;"><a href='.$recommand_prod->get_permalink().'>'.$recommand_prod->get_name().'</a></p></td></tr></table>';
+				}
+	
+				// echo "<pre>";
+				// echo $recommand_prod->get_name();
+				// echo $recommand_prod->get_price();
+				// echo $recommand_prod->get_image();
+				// echo $recommand_prod->get_permalink();
+				// //print_r($recommand_prod);
+				// die;
+				
 				$template = get_post( $templateid, ARRAY_A );
 				$templatehtml = $template['post_content'];
 				$giftcard_logo_html = '';
@@ -121,6 +138,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$templatehtml = str_replace( '[COUPON]', $args['coupon'], $templatehtml );
 				$templatehtml = str_replace( '[EXPIRYDATE]', $args['expirydate'], $templatehtml );
 				$templatehtml = str_replace( '[DISCLAIMER]', $giftcard_disclaimer, $templatehtml );
+				$templatehtml = str_replace( '[RECOMMANDEDPRODUCT]', $recommand_product, $templatehtml );
 				$templatehtml = str_replace( '[DEFAULTEVENT]', $giftcard_event_html, $templatehtml );
 				$templatehtml = str_replace( '[FEATUREDIMAGE]', $giftcard_featured, $templatehtml );
 				$templatehtml = str_replace( '[BGIMAGE]', $bgimg, $templatehtml );
