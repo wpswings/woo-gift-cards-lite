@@ -861,6 +861,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<td>[EXPIRYDATE]</td>
 								<td><?php esc_html_e( 'Replace with Gift Card Expiry Date.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
+							
 						<?php
 						do_action( 'wps_wgm_template_custom_shortcode' );
 						?>
