@@ -855,7 +855,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 						$wps_gift_product = apply_filters( 'wps_wgm_update_item_meta_as_a_gift', $item, $item_id, $order_id );
 
-						if ( ( isset( $product ) && is_object( $product ) && $product->is_type( 'wgm_gift_card' ) ) || 'on' === $wps_gift_product ) {
+						if ( ( isset( $product ) && ! empty( $product ) && is_object( $product ) && $product->is_type( 'wgm_gift_card' ) ) || 'on' === $wps_gift_product ) {
 							$is_gift_card = true;
 						}
 					}
