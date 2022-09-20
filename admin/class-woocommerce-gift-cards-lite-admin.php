@@ -665,6 +665,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_product_data_tabs( $tabs ) {
+		
 		if ( isset( $tabs ) && ! empty( $tabs ) ) {
 			foreach ( $tabs as $key => $tab ) {
 				if ( 'general' != $key && 'advanced' != $key && 'shipping' != $key ) {
@@ -675,6 +676,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			}
 			$tabs = apply_filters( 'wps_wgm_product_data_tabs', $tabs );
 		}
+	
 		return $tabs;
 	}
 
@@ -859,6 +861,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<td>[EXPIRYDATE]</td>
 								<td><?php esc_html_e( 'Replace with Gift Card Expiry Date.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
+							
 						<?php
 						do_action( 'wps_wgm_template_custom_shortcode' );
 						?>
@@ -1236,6 +1239,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				'demo'    => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Demo.svg" class="wps-info-img" alt="Demo image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Demo', 'woo-gift-cards-lite' ) . '</a>',
 				'doc'     => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Documentation.svg" class="wps-info-img" alt="documentation image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Documentation', 'woo-gift-cards-lite' ) . '</a>',
 				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Support.svg" class="wps-info-img" alt="support image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Support', 'woo-gift-cards-lite' ) . '</a>',
+				'services' => '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Services.svg" class="wps-info-img" alt="services image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Services', 'woo-gift-cards-lite' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
