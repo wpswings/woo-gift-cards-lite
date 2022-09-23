@@ -372,6 +372,6 @@ New: Email Template for Mothers Day
 == Upgrade Notice ==
 
 = 2.4.5 - Released on 22 Sep 2022 =
-* Fix: Minor Bug Fixes (Fatal error when changing order statuses)
-* New: Compatibility with latest  WP (6.0.2)  and WC (6.9.3)
+* Fix: - ( FIX Query Monitor issue )
+* New: Compatibility with latest  WooCommerce (6.9.3)
 
