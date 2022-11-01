@@ -1047,7 +1047,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$temp_metas = array();
 		if ( isset( $formatted_meta ) && ! empty( $formatted_meta ) && is_array( $formatted_meta ) ) {
 			foreach ( $formatted_meta as $key => $meta ) {
-				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Delivery Method', 'Original Price', 'Selected Template' ) ) ) {
+				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Original Price', 'Selected Template' ) ) ) {
 
 					$temp_metas[ $key ] = $meta;
 				}
@@ -1076,6 +1076,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( isset( $values ['product_meta'] ) ) {
 				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ) {
 					$order_val = stripslashes( $val );
+					
 					if ( $val ) {
 						if ( 'wps_wgm_to_email' == $key ) {
 							$item->add_meta_data( 'To', $order_val );
@@ -1098,6 +1099,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $order_val );
 					}
 				}
+				
 			}
 		}
 	}

@@ -753,7 +753,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
 			return;
 		}
-		array_push( $order_items, 'Delivery Method', 'Original Price', 'Selected Template' );
+		array_push( $order_items, 'Original Price', 'Selected Template' );
 		$order_items = apply_filters( 'wps_wgm_giftcard_hidden_order_itemmeta', $order_items );
 		return $order_items;
 	}

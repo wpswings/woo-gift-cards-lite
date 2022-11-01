@@ -30,6 +30,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_create_gift_template( $args ) {
+			$this->wps_common_fun = new Woocommerce_Gift_Cards_Common_Function();
+			$delivery_settings = get_option( 'wps_wgm_delivery_settings', true );
+			$wps_wgm_delivery_setting_method = $this->wps_common_fun->wps_wgm_get_template_data( $delivery_settings, 'wps_wgm_send_giftcard' );
+							
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
 				$templateid = $args['templateid'];
 				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
@@ -131,6 +135,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$templatehtml = str_replace( '[COUPON]', $args['coupon'], $templatehtml );
 				$templatehtml = str_replace( '[EXPIRYDATE]', $args['expirydate'], $templatehtml );
 				$templatehtml = str_replace( '[DISCLAIMER]', $giftcard_disclaimer, $templatehtml );
+				$templatehtml = str_replace( '[DELIVERYMETHOD]', $wps_wgm_delivery_setting_method, $templatehtml );
 				$templatehtml = str_replace( '[RECOMMENDEDPRODUCT]', $recommand_product, $templatehtml );
 				$templatehtml = str_replace( '[DEFAULTEVENT]', $giftcard_event_html, $templatehtml );
 				$templatehtml = str_replace( '[FEATUREDIMAGE]', $giftcard_featured, $templatehtml );
