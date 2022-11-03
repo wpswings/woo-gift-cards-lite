@@ -492,7 +492,10 @@
 						form_Data.append( 'product_id', product_id );
 						form_Data.append( 'tempId', tempId );
 						form_Data.append( 'send_date', send_date );
-						form_Data.append( 'delivery_method', delivery_method );
+						if ( wps_wgm.is_pro_active ) {
+							form_Data.append( 'delivery_method', delivery_method );
+						}
+						
 						$.ajax(
 							{
 								url: wps_wgm.ajaxurl,

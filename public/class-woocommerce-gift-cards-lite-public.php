@@ -1090,9 +1090,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( 'wps_wgm_price' == $key ) {
 							$item->add_meta_data( 'Original Price', $order_val );
 						}
-						if ( 'delivery_method' == $key ) {
-							$item->add_meta_data( 'Delivery Method', $order_val );
-						}
+						
 						if ( 'wps_wgm_selected_temp' == $key ) {
 							$item->add_meta_data( 'Selected Template', $order_val );
 						}
