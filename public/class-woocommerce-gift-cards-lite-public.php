@@ -1076,7 +1076,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( isset( $values ['product_meta'] ) ) {
 				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ) {
 					$order_val = stripslashes( $val );
-					
+
 					if ( $val ) {
 						if ( 'wps_wgm_to_email' == $key ) {
 							$item->add_meta_data( 'To', $order_val );
@@ -1099,7 +1099,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $order_val );
 					}
 				}
-				
 			}
 		}
 	}
@@ -1411,7 +1410,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( isset( $is_imported_product ) && 'yes' === $is_imported_product ) {
 				$expiry_date = get_post_meta( $product_id, 'expiry_after_days', true );
 			}
-		
+
 			$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 			$wps_temp_id = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
 			if ( array_key_exists( 'template', $product_pricing ) ) {
@@ -1429,7 +1428,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$args['message'] = isset( $_GET['message'] ) ? sanitize_text_field( wp_unslash( $_GET['message'] ) ) : '';
 			$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $coupon );
 			$args['expirydate'] = $expirydate_format;
-
+			$args['delivery_method'] = isset( $_GET['delivery_method'] ) ? sanitize_text_field( wp_unslash( $_GET['delivery_method'] ) ) : '';
 			$args = apply_filters( 'wps_wgm_add_preview_template_fields', $args );
 
 			if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {  // Added for price based on country.
