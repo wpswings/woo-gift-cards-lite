@@ -113,7 +113,17 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( 'From:', '', $templatehtml );
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
-
+				$general_settings = get_option( 'wps_wgm_general_settings', array() );
+				
+				$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
+				$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+			
+				if ( empty($selected_date)) {
+					$selected_date ='Y-m-d';
+					
+				}
+				$args['expirydate'] = date($selected_date, strtotime('-1 day', strtotime($args['expirydate'])));
+				 
 				// Background Image for Mothers Day.
 				$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
 
