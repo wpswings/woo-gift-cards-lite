@@ -491,11 +491,22 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_check_expiry_date( $expiry_date ) {
+			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( 0 < $expiry_date || 0 === $expiry_date ) {
+					if ( isset( $_GET['send_date'] ) && $_GET['send_date'] != null && $_GET['send_date'] != '' ) {
+						$todaydate = $_GET['send_date'];
+						if ( is_string( $todaydate ) ) {
+							if ( isset( $selected_date ) && $selected_date != null && $selected_date != '' ) {
+								if ( $selected_date == 'd/m/Y' ) {
+									$todaydate = str_replace( '/', '-', $todaydate );
+								}
+							}
+						}
+					}
 					$general_settings = get_option( 'wps_wgm_general_settings', array() );
-					$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+				
 					if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date && wps_uwgc_pro_active() ) {
 						$selected_date = apply_filters( 'wps_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );
