@@ -114,16 +114,16 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
 				$general_settings = get_option( 'wps_wgm_general_settings', array() );
-				
+
 				$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
 				$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
-			
-				if ( empty($selected_date)) {
-					$selected_date ='Y-m-d';
-					
+
+				if ( empty( $selected_date ) ) {
+					$selected_date = 'Y-m-d';
+
 				}
-				$args['expirydate'] = date($selected_date, strtotime('-1 day', strtotime($args['expirydate'])));
-				 
+				$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+
 				// Background Image for Mothers Day.
 				$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
 
@@ -495,18 +495,18 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( 0 < $expiry_date || 0 === $expiry_date ) {
-					if ( isset( $_GET['send_date'] ) && $_GET['send_date'] != null && $_GET['send_date'] != '' ) {
-						$todaydate = $_GET['send_date'];
+					if ( isset( $_GET['send_date'] ) && null != $_GET['send_date'] && '' != $_GET['send_date'] ) {
+						$todaydate = sanitize_text_field( wp_unslash( $_GET['send_date'] ) );
 						if ( is_string( $todaydate ) ) {
-							if ( isset( $selected_date ) && $selected_date != null && $selected_date != '' ) {
-								if ( $selected_date == 'd/m/Y' ) {
+							if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date ) {
+								if ( 'd/m/Y' == $selected_date ) {
 									$todaydate = str_replace( '/', '-', $todaydate );
 								}
 							}
 						}
 					}
 					$general_settings = get_option( 'wps_wgm_general_settings', array() );
-				
+
 					if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date && wps_uwgc_pro_active() ) {
 						$selected_date = apply_filters( 'wps_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );
