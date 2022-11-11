@@ -184,6 +184,7 @@
 						html = "<ul>";
 
 						var delivery_method = jQuery( document ).find( 'input[name="wps_wgm_send_giftcard"]:checked' ).val();
+						
 						// remove validation from to fields.
 						if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_to() == 'on') {
 							if (delivery_method == 'Mail to recipient') {
@@ -334,6 +335,7 @@
 			$( 'body' ).on('click', '#mwg_wgm_preview_email',
 				function() {
 					var form_Data = new FormData();
+					
 					$( "#wps_wgm_error_notice" ).hide();
 					var from_mail = $( "#wps_wgm_from_name" ).val();
 					var message = $( "#wps_wgm_message" ).val();
@@ -462,6 +464,7 @@
 						to_mail = response.to_mail;
 						form_Data = response.form_Data;
 						send_date = response.send_date;
+					
 					}
 					html += "</ul>";
 					if (error) {
@@ -489,7 +492,10 @@
 						form_Data.append( 'product_id', product_id );
 						form_Data.append( 'tempId', tempId );
 						form_Data.append( 'send_date', send_date );
-
+						if ( wps_wgm.is_pro_active ) {
+							form_Data.append( 'delivery_method', delivery_method );
+						}
+						
 						$.ajax(
 							{
 								url: wps_wgm.ajaxurl,

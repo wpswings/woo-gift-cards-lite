@@ -117,7 +117,7 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '2.4.5';
+			self::$version = '2.4.6';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -663,7 +663,7 @@ class Makewebbetter_Onboarding_Helper {
 					<select class="on-boarding-select-field <?php echo esc_html( $select2 ); ?> <?php echo esc_html( $class ); ?>" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $name ); ?>[]" <?php echo esc_html( $required ); ?> <?php echo esc_html( $is_multiple ); ?>>
 
 						<?php if ( 'select' == $type ) : ?>	
-							<option class="on-boarding-options" value=""><?php esc_html( 'Select Any One Option...', 'woo-gift-cards-lite' ); ?></option>
+					
 						<?php endif; ?>
 
 						<?php foreach ( $options as $option_value => $option_label ) : ?>	

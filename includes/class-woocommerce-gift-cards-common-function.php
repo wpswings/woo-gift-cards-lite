@@ -30,6 +30,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_create_gift_template( $args ) {
+
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
 				$templateid = $args['templateid'];
 				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
@@ -40,7 +41,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 					foreach ( $wps_wgm_recommanded_per_product as $key => $val ) {
 						$recommand_prod = wc_get_product( $val );
-						$recommand_product .= '<style>.ugcfw__product_table_img img {width: 125px;height: 125px;}.ugcfw__product_table_name h2 {text-align:center; padding: 0;margin: 0;font-size: 24px;line-height: 28px;text-transform: capitalize;}</style><table class="ugcfw__product_table"><tr class="ugcfw__product_table_row"><td class="ugcfw__product_table_img" style="vertical-align: top;padding-bottom:15px;width:125px;">' . $recommand_prod->get_image() . '</td><td class="ugcfw__product_table_name" style="padding: 0 0 15px 25px;width: 450px;text-align: center;"><h2 style="text-align:center;padding: 0;margin: 0;font-size: 24px!important;line-height: 28px;text-transform: capitalize;">' . $recommand_prod->get_name() . '</h2><p class="ugcfw__product_table_price" style="padding: 10px 0;margin: 0;font-size: 20px;line-height: 28px;font-weight: bold;">' . get_woocommerce_currency_symbol() . $recommand_prod->get_price() . '</p><p class="ugcfw__product_table_link" style="margin: 0;padding: 0;line-height: 28px;color: #208fe9;text-align: center;"><a href=' . $recommand_prod->get_permalink() . '>' . $recommand_prod->get_name() . '</a></p></td></tr></table>';
+						$recommand_product .= '<style>.ugcfw__product_table_img img {width: 125px;height: 125px;}.ugcfw__product_table_name h2 {text-align:center; padding: 0;margin: 0;font-size: 24px;line-height: 28px;text-transform: capitalize;}</style><table class="ugcfw__product_table"><tr class="ugcfw__product_table_row"><td class="ugcfw__product_table_img" style="vertical-align: top;padding-bottom:15px;width:125px;">' . wp_kses_post( $recommand_prod->get_image() ) . '</td><td class="ugcfw__product_table_name" style="padding: 0 0 15px 25px;width: 450px;text-align: center;"><h2 style="text-align:center;padding: 0;margin: 0;font-size: 24px!important;line-height: 28px;text-transform: capitalize;">' . esc_html( $recommand_prod->get_name() ) . '</h2><p class="ugcfw__product_table_price" style="padding: 10px 0;margin: 0;font-size: 20px;line-height: 28px;font-weight: bold;">' . esc_html( get_woocommerce_currency_symbol() ) . esc_html( $recommand_prod->get_price() ) . '</p><p class="ugcfw__product_table_link" style="margin: 0;padding: 0;line-height: 28px;color: #208fe9;text-align: center;"><a href=' . esc_url( $recommand_prod->get_permalink() ) . '>' . esc_html( $recommand_prod->get_name() ) . '</a></p></td></tr></table>';
 					}
 				}
 				$template = get_post( $templateid, ARRAY_A );
@@ -112,6 +113,16 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( 'From:', '', $templatehtml );
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
+				$general_settings = get_option( 'wps_wgm_general_settings', array() );
+
+				$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
+				$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+
+				if ( empty( $selected_date ) ) {
+					$selected_date = 'Y-m-d';
+
+				}
+				$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 
 				// Background Image for Mothers Day.
 				$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
@@ -131,6 +142,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$templatehtml = str_replace( '[COUPON]', $args['coupon'], $templatehtml );
 				$templatehtml = str_replace( '[EXPIRYDATE]', $args['expirydate'], $templatehtml );
 				$templatehtml = str_replace( '[DISCLAIMER]', $giftcard_disclaimer, $templatehtml );
+				$templatehtml = str_replace( '[DELIVERYMETHOD]', $args['delivery_method'], $templatehtml );
 				$templatehtml = str_replace( '[RECOMMENDEDPRODUCT]', $recommand_product, $templatehtml );
 				$templatehtml = str_replace( '[DEFAULTEVENT]', $giftcard_event_html, $templatehtml );
 				$templatehtml = str_replace( '[FEATUREDIMAGE]', $giftcard_featured, $templatehtml );
@@ -328,6 +340,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$args['message'] = stripcslashes( $wps_wgm_common_arr['gift_msg'] );
 				$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $wps_wgm_common_arr['gift_couponnumber'] );
 				$args['expirydate'] = $wps_wgm_common_arr['expirydate_format'];
+				$args['delivery_method'] = $wps_wgm_common_arr['delivery_method'];
 				// price based on country.
 				if ( class_exists( 'WCPBC_Pricing_Zones' ) ) {
 
@@ -478,11 +491,22 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_check_expiry_date( $expiry_date ) {
+			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( 0 < $expiry_date || 0 === $expiry_date ) {
+					if ( isset( $_GET['send_date'] ) && null != $_GET['send_date'] && '' != $_GET['send_date'] && 'undefined' != $_GET['send_date'] ) {
+						$todaydate = sanitize_text_field( wp_unslash( $_GET['send_date'] ) );
+						if ( is_string( $todaydate ) ) {
+							if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date ) {
+								if ( 'd/m/Y' == $selected_date ) {
+									$todaydate = str_replace( '/', '-', $todaydate );
+								}
+							}
+						}
+					}
 					$general_settings = get_option( 'wps_wgm_general_settings', array() );
-					$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+
 					if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date && wps_uwgc_pro_active() ) {
 						$selected_date = apply_filters( 'wps_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );

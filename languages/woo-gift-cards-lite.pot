@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.5\n"
-"POT-Creation-Date: 2022-09-13 19:29+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.6\n"
+"POT-Creation-Date: 2022-11-09 10:04+0530\n"
 "PO-Revision-Date: 2022-06-16 11:18+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
-"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
 "esc_html;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;"
@@ -985,27 +985,23 @@ msgstr ""
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:666
-msgid "Select Any One Option..."
-msgstr ""
-
 #: includes/class-makewebbetter-onboarding-helper.php:935
 msgid "Unexpected Error Occured"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:403
+#: includes/class-woocommerce-gift-cards-common-function.php:418
 msgid " Hurry!  the gift card is Received"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:443
+#: includes/class-woocommerce-gift-cards-common-function.php:458
 msgid " Gift Card is Sent Successfully"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:450
+#: includes/class-woocommerce-gift-cards-common-function.php:465
 msgid " Gift Card is Sent Successfully to the Email Id: [TO]"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:492
+#: includes/class-woocommerce-gift-cards-common-function.php:518
 msgid "No Expiration"
 msgstr ""
 
@@ -1156,31 +1152,31 @@ msgstr ""
 msgid "Gift Message"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1131
+#: public/class-woocommerce-gift-cards-lite-public.php:1130
 msgid "VIEW CARD"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1632
+#: public/class-woocommerce-gift-cards-lite-public.php:1631
 msgid "Recharge via Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1673
+#: public/class-woocommerce-gift-cards-lite-public.php:1672
 msgid "Wallet credited by "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1673
+#: public/class-woocommerce-gift-cards-lite-public.php:1672
 msgid " through Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1676
+#: public/class-woocommerce-gift-cards-lite-public.php:1675
 msgid "Wallet updating notification"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1685
+#: public/class-woocommerce-gift-cards-lite-public.php:1684
 msgid "Wallet credited through Gift Card Code : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1703
+#: public/class-woocommerce-gift-cards-lite-public.php:1702
 msgid "Enter Valid Gift Card Code"
 msgstr ""
 
