@@ -2,11 +2,11 @@
 Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers, gift cards, gifts, certificate, gift cards woocommerce
-Requires at least: 5.0.2
-Tested up to: 6.0.2
-WC requires at least: 5.0.3
-WC tested up to: 6.9.3
-Stable tag: 2.4.5
+Requires at least: 5.1.0
+Tested up to: 6.1.0
+WC requires at least: 5.1.0
+WC tested up to: 7.0.1
+Stable tag: 2.4.6
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,7 +20,7 @@ Create, sell and manage WooCommerce gift cards to attract more sales and multipl
 
 Ultimate Gift Cards for WooCommerce plugin allows merchants to create, sell, and manage gift cards at their eCommerce store. Customers can purchase these gift cards and send them to anyone by email. The recipient can use this card to make purchases at your store and he/she can also recharge/redeem these cards at your online or retail store. They can also use gift cards as gift vouchers.
 
- Gift Card for WooCommerce provide two  gift card delivery methods i.e. Email and Downloadable. Moreover, the gifting portal allows you to redeem, recharge, and fetch all types of gift cards created with our [**Gift Cards for WooCommerce**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro) plugin.
+ Gift Card for WooCommerce provides two gift card delivery methods i.e. Email and Downloadable. Moreover, the gifting portal allows you to redeem, recharge, and fetch all types of gift cards created with our [**Gift Cards for WooCommerce**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro) plugin.
 
 [youtube https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0]
 
@@ -48,7 +48,7 @@ Ultimate Gift Cards for WooCommerce plugin allows merchants to create, sell, and
 You can implement a minimum limit on user pricing of WooCommerce gift cards. After the implementation, the customers can’t purchase a gift card product at a value lower than the minimum limit. 
 
 **2) Create Gift Cards With Duration-Based Costing**
-The admin can create gift cards with variable pricing to implement duration-based costing for services. They can add duration as the description and set the price according to each duration. This WordPress gift card feature will allow the admin to provide various time-based services such as counseling, physiotherapy, hardware, etc.
+The admin can create gift cards with variable pricing to implement duration-based costing for services. They can add duration as the description and set the price according to each duration. This  WordPress gift cards feature will allow the admin to provide various time-based services such as counseling, physiotherapy, hardware, etc.
 
 **3) Five Different Pricing Types**
 The WooCommerce Gift cards plugin lets you create gift cards with five  different pricing options that are:
@@ -60,7 +60,7 @@ The WooCommerce Gift cards plugin lets you create gift cards with five  differen
 * **Variable Price:** Different prices for different durations 
 
 **4) Flexible Delivery Options**
-The gift cards WooCommerce plugin provides you with two different methods - Email and Downloadable, to deliver gift cards. You can select either as per your convenience. If you select the email method, the customer will need to enter the email of the recipient while buying the gift card. The card will be sent to the recipient's email. Or you can choose the downloadable feature. In the downloadable delivery method gift card, an email will be sent to the buyer. 
+The gift cards WooCommerce plugin provides you with two different methods - Email and Downloadable, to deliver gift cards. You can select either as per your convenience. If you select the email method, the customer will need to enter the email of the recipient while buying the gift card. The card will be sent to the recipient's email. Or you can choose the downloadable feature. With this option you can download gift card. In the downloadable delivery method, users can purchase & download the gift voucher.
 
 **5) WPML Multilingual Support**
 The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
@@ -143,7 +143,7 @@ Gift cards for WooCommerce help merchants to create,  manage and sell digital gi
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-query&utm_medium=giftcards-org-page&utm_campaign=submit-query).
 
-Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-page&utm_campaign=woocommerce-services)
+> Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-page&utm_campaign=woocommerce-services)
 
 
 
@@ -221,7 +221,7 @@ Yes, the plugin supports multiple languages and is WPML compatible. You can also
 = Does the WordPress Gift card plugin support Price Based on Country for WooCommerce plugin? = 
 Yes. The Gift cards plugin is compatible with the Price with Price Based on Country for WooCommerce plugin which enables customers to place an order in their own currency.
 
-= Can I set the expiry for the WooCommerce gift card coupons? = 
+= Can I set the expiry days for the WooCommerce gift card coupons? = 
 Yes. In the General Settings of the plugin, you can set the number of days after which the gift card will expire.
 
 = Can we restrict the use of gift card coupons in maximum and minimum spend of order total? = 
@@ -233,9 +233,14 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 2.4.6 - Released on 10 Nov 2022 =
+* Fix: Coupon expires 24 hours too soon
+* New: Compatibility with latest  WooCommerce (7.0.1)
+
+
 = 2.4.5 - Released on 22 Sep 2022 =
-* Fix: Minor Bug Fixes (Fatal error when changing order statuses)
-* New: Compatibility with latest  WP (6.0.2)  and WC (6.9.3)
+* Fix: FIX Query Monitor issue
+* New: Compatibility with latest  WooCommerce (6.9.3)
 
 = 2.4.4 - Released on 14 Sep 2022 =
 * Fix: Minor Bug Fixes (Fatal error when changing order statuses)
@@ -371,7 +376,10 @@ New: Email Template for Mothers Day
 
 == Upgrade Notice ==
 
-= 2.4.5 - Released on 22 Sep 2022 =
-* Fix: - ( FIX Query Monitor issue )
-* New: Compatibility with latest  WooCommerce (6.9.3)
+= 2.4.6 - Released on 10 Nov 2022 =
+* Fix: Coupon expires 24 hours too soon
+* New: Compatibility with latest  WooCommerce (7.0.1)
+
+
+
 

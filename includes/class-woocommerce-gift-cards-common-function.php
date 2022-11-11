@@ -495,7 +495,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( 0 < $expiry_date || 0 === $expiry_date ) {
-					if ( isset( $_GET['send_date'] ) && null != $_GET['send_date'] && '' != $_GET['send_date'] ) {
+					if ( isset( $_GET['send_date'] ) && null != $_GET['send_date'] && '' != $_GET['send_date'] && 'undefined' != $_GET['send_date'] ) {
 						$todaydate = sanitize_text_field( wp_unslash( $_GET['send_date'] ) );
 						if ( is_string( $todaydate ) ) {
 							if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date ) {
