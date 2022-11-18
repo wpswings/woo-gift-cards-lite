@@ -122,8 +122,13 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$selected_date = 'Y-m-d';
 
 				}
-				$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+				if ( 'No Expiration' != $args['expirydate'] ) {
+					$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+				}
 
+				if ( ! isset( $args['delivery_method'] ) ) {
+					$args['delivery_method'] = '';
+				}
 				// Background Image for Mothers Day.
 				$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
 
@@ -491,6 +496,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_check_expiry_date( $expiry_date ) {
+			$general_settings = get_option( 'wps_wgm_general_settings', array() );
 			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
@@ -505,8 +511,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 							}
 						}
 					}
-					$general_settings = get_option( 'wps_wgm_general_settings', array() );
-
 					if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date && wps_uwgc_pro_active() ) {
 						$selected_date = apply_filters( 'wps_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );
