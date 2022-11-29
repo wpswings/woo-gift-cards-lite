@@ -117,14 +117,26 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
 				$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+				$giftcard_selected_date  = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
 
-				if ( empty( $selected_date ) ) {
-					$selected_date = 'Y-m-d';
-
+			
+				if ( 'on' == $giftcard_selected_date ) {
+					$selected_date = $selected_date;
+				} else {
+					
+						$selected_date = 'Y-m-d';
+					
 				}
+				
 				if ( 'No Expiration' != $args['expirydate'] ) {
-					$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+					 if ('d/m/Y' == $selected_date  || 'd/m/y' == $selected_date  || 'l, d F, Y' == $selected_date ) {
+						$args['expirydate'] = $args['expirydate'];
+					 }else {
+						$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+					 }
+					
 				}
+				
 
 				if ( ! isset( $args['delivery_method'] ) ) {
 					$args['delivery_method'] = '';
