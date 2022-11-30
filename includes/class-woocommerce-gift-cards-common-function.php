@@ -113,29 +113,30 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( 'From:', '', $templatehtml );
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
-				$general_settings = get_option( 'wps_wgm_general_settings', array() );
+				if ( wps_uwgc_pro_active() ) {
+					$general_settings = get_option( 'wps_wgm_general_settings', array() );
 
-				$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
-				$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
-				$giftcard_selected_date  = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
+					$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
+					$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+					$giftcard_selected_date  = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
 
-				if ( 'on' == $giftcard_selected_date ) {
-					$selected_date = $selected_date;
-				} else {
-						$selected_date = 'Y-m-d';
-				}
-
-				if ( 'No Expiration' != $args['expirydate'] ) {
-					if ( 'd/m/Y' == $selected_date || 'd/m/y' == $selected_date || 'l, d F, Y' == $selected_date ) {
-
-						$args['expirydate'] = $args['expirydate'];
-					} else {
-
-						$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
-
+					if ( isset( $giftcard_selected_date ) ) {
+						$selected_date = $selected_date;
 					}
-				}
 
+					if ( 'No Expiration' != $args['expirydate'] ) {
+						if ( 'd/m/Y' == $selected_date || 'd/m/y' == $selected_date || 'l, d F, Y' == $selected_date ) {
+
+							$args['expirydate'] = $args['expirydate'];
+						} else {
+
+							$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+
+						}
+					}
+				} else {
+					$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+				}
 				if ( ! isset( $args['delivery_method'] ) ) {
 					$args['delivery_method'] = '';
 				}
