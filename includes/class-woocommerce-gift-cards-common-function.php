@@ -125,9 +125,21 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					if ( 'No Expiration' != $args['expirydate'] ) {
-						if ( 'd/m/Y' == $selected_date || 'd/m/y' == $selected_date || 'l, d F, Y' == $selected_date ) {
+						if ( 'l, d F, Y' == $selected_date ) {
+							$new_for = gmdate( 'm/d/Y', strtotime( $args['expirydate'] ) );
 
-							$args['expirydate'] = $args['expirydate'];
+							$new_format = gmdate( 'm/d/Y', strtotime( '-1 day', strtotime( $new_for ) ) );
+
+							$args['expirydate'] = gmdate( $selected_date, strtotime( $new_format ) );
+
+						} else if ( 'd/m/Y' == $selected_date ) {
+							$date = $args['expirydate'];
+							$date = str_replace( '/', '-', $date );
+							$new_for = gmdate( 'Y-m-d', strtotime( $date ) );
+							 $new_format = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $new_for ) ) );
+							 $new_for12 = gmdate( 'd/m/Y', strtotime( $new_format ) );
+							  $args['expirydate'] = $new_for12;
+
 						} else {
 
 							$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
