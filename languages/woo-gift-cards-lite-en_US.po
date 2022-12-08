@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.7\n"
-"POT-Creation-Date: 2022-11-11 19:43+0530\n"
-"PO-Revision-Date: 2022-11-11 19:43+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.8\n"
+"POT-Creation-Date: 2022-12-06 15:56+0530\n"
+"PO-Revision-Date: 2022-12-06 15:57+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -939,6 +939,7 @@ msgstr ""
 
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:41
 #: public/class-woocommerce-gift-cards-lite-public.php:431
+#: public/class-woocommerce-gift-cards-lite-public.php:679
 msgid "Delivery Method"
 msgstr ""
 
@@ -988,19 +989,19 @@ msgstr ""
 msgid "Unexpected Error Occured"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:423
+#: includes/class-woocommerce-gift-cards-common-function.php:446
 msgid " Hurry!  the gift card is Received"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:463
+#: includes/class-woocommerce-gift-cards-common-function.php:486
 msgid " Gift Card is Sent Successfully"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:470
+#: includes/class-woocommerce-gift-cards-common-function.php:493
 msgid " Gift Card is Sent Successfully to the Email Id: [TO]"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:522
+#: includes/class-woocommerce-gift-cards-common-function.php:545
 msgid "No Expiration"
 msgstr ""
 
@@ -1151,31 +1152,31 @@ msgstr ""
 msgid "Gift Message"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1130
+#: public/class-woocommerce-gift-cards-lite-public.php:1138
 msgid "VIEW CARD"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1631
+#: public/class-woocommerce-gift-cards-lite-public.php:1639
 msgid "Recharge via Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1672
+#: public/class-woocommerce-gift-cards-lite-public.php:1680
 msgid "Wallet credited by "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1672
+#: public/class-woocommerce-gift-cards-lite-public.php:1680
 msgid " through Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1675
+#: public/class-woocommerce-gift-cards-lite-public.php:1683
 msgid "Wallet updating notification"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1684
+#: public/class-woocommerce-gift-cards-lite-public.php:1692
 msgid "Wallet credited through Gift Card Code : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1702
+#: public/class-woocommerce-gift-cards-lite-public.php:1710
 msgid "Enter Valid Gift Card Code"
 msgstr ""
 
