@@ -665,7 +665,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_product_data_tabs( $tabs ) {
-		
+
 		if ( isset( $tabs ) && ! empty( $tabs ) ) {
 			foreach ( $tabs as $key => $tab ) {
 				if ( 'general' != $key && 'advanced' != $key && 'shipping' != $key ) {
@@ -676,7 +676,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			}
 			$tabs = apply_filters( 'wps_wgm_product_data_tabs', $tabs );
 		}
-	
+
 		return $tabs;
 	}
 
