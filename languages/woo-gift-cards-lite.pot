@@ -1,9 +1,8 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.8\n"
-"POT-Creation-Date: 2022-12-06 15:56+0530\n"
-"PO-Revision-Date: 2022-06-16 11:18+0530\n"
+"POT-Creation-Date: 2023-01-09 11:42+0530\n"
+"PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -11,14 +10,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
 "esc_html;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;"
 "translate_nooped_plural\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: .\n"
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:161
 #, php-format
@@ -1238,7 +1236,7 @@ msgstr ""
 msgid "Click Here"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:496
+#: woocommerce_gift_cards_lite.php:523
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Ultimate Gift Cards For WooCommerce"
@@ -1258,6 +1256,14 @@ msgstr ""
 
 #: wps-wgc-lite-gdpr.php:37
 msgid "Ultimate Gift Cards For WooCommerce"
+msgstr ""
+
+#: wps-wgc-lite-gdpr.php:37
+msgid "Downloadable"
+msgstr ""
+
+#: wps-wgc-lite-gdpr.php:37
+msgid "Mail to recipient"
 msgstr ""
 
 #: wps-wgc-lite-gdpr.php:57 wps-wgc-lite-gdpr.php:182

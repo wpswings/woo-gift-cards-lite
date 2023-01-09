@@ -30,6 +30,6 @@ $wps_wgm = array(
 	'wps_wgm_nonce' => wp_create_nonce( 'wps-wgc-verify-nonce' ),
 	'wps_currency'  => get_woocommerce_currency_symbol(),
 );
-wp_enqueue_script( 'wps-wallet-giftcard', plugin_dir_url( __FILE__ ) . '../js/woocommerce_gift_cards_lite-public.js', array( 'jquery' ), $this->version, true );
+wp_enqueue_script( 'wps-wallet-giftcard', plugin_dir_url( __FILE__ ) . '../js/wps_wgm_wallet_system_for_woocommerce.js', array( 'jquery' ), $this->version, true );
 wp_localize_script( 'wps-wallet-giftcard', 'wps_wgm', $wps_wgm );
 ?>

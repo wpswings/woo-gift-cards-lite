@@ -628,7 +628,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( isset( $_POST['wps_wgm_selected_temp'] ) ) {
 									$item_meta['wps_wgm_selected_temp'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_temp'] ) );
 								}
-								$item_meta = apply_filters( 'wps_wgm_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
+								$item_meta = apply_filters( '/', $item_meta, $the_cart_data, $product_id, $variation_id );
 								$the_cart_data ['product_meta'] = array( 'meta_data' => $item_meta );
 							}
 						}
@@ -651,7 +651,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_get_item_data( $item_meta, $existing_item_meta ) {
-
+		$str1 = esc_html__('Downloadable','woo-gift-card-lite') ;
+		$str2 = esc_html__('Mail to recipient','woo-gift-card-lite');
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 		if ( $wps_wgc_enable ) {
 			if ( isset( $existing_item_meta ['product_meta']['meta_data'] ) ) {
@@ -677,7 +678,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'delivery_method' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'Delivery Method', 'woo-gift-cards-lite' ),
-							'value' => stripslashes( $val ),
+							'value' => esc_html__(stripslashes( $val ),'woo-gift-cards-lite') ,
 						);
 					}
 					$item_meta = apply_filters( 'wps_wgm_get_item_meta', $item_meta, $key, $val );
