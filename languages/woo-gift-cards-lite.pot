@@ -1,7 +1,8 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.8\n"
-"POT-Creation-Date: 2023-01-09 11:42+0530\n"
+"POT-Creation-Date: 2023-01-09 12:58+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -47,7 +48,7 @@ msgid "Export"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:206
-#: woocommerce_gift_cards_lite.php:106
+#: woocommerce_gift_cards_lite.php:107
 msgid "Settings"
 msgstr ""
 
@@ -59,8 +60,8 @@ msgstr ""
 #: admin/class-woocommerce-gift-cards-lite-admin.php:556
 #: admin/class-woocommerce-gift-cards-lite-admin.php:772
 #: admin/class-woocommerce-gift-cards-lite-admin.php:774
-#: woocommerce_gift_cards_lite.php:162 woocommerce_gift_cards_lite.php:174
-#: woocommerce_gift_cards_lite.php:175
+#: woocommerce_gift_cards_lite.php:163 woocommerce_gift_cards_lite.php:175
+#: woocommerce_gift_cards_lite.php:176
 msgid "Gift Card"
 msgstr ""
 
@@ -1187,56 +1188,64 @@ msgstr ""
 msgid "Proceed"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:107
+#: woocommerce_gift_cards_lite.php:36
+msgid "Downloadable"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:37
+msgid "Mail to recipient"
+msgstr ""
+
+#: woocommerce_gift_cards_lite.php:108
 msgid "GO PRO"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:356
+#: woocommerce_gift_cards_lite.php:357
 msgid "This plugin will not work anymore correctly."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:357
+#: woocommerce_gift_cards_lite.php:358
 msgid ""
 "We highly recommend to update to latest pro version and once installed "
 "please migrate the existing settings."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:358
+#: woocommerce_gift_cards_lite.php:359
 msgid ""
 "If you are not getting automatic update now button here, then don't worry "
 "you will get in within 24 hours. If you still not get it please visit to "
 "your account dashboard and install it manually or connect to our support."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:416
+#: woocommerce_gift_cards_lite.php:417
 msgid ""
 "The latest update includes some substantial changes across different areas "
 "of the plugin. Hence, if you are not a new user then"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:416
+#: woocommerce_gift_cards_lite.php:417
 msgid " please migrate your old data and settings from "
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:416
+#: woocommerce_gift_cards_lite.php:417
 msgid "Dashboard"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:416
+#: woocommerce_gift_cards_lite.php:417
 msgid " page then Click On Start Import Button."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:447
+#: woocommerce_gift_cards_lite.php:448
 msgid ""
 "If You are using the Premium Version of the Gift Card plugin then please "
 "update Pro plugin from plugin page by "
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:447
+#: woocommerce_gift_cards_lite.php:448
 msgid "Click Here"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:523
+#: woocommerce_gift_cards_lite.php:524
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Ultimate Gift Cards For WooCommerce"
@@ -1256,14 +1265,6 @@ msgstr ""
 
 #: wps-wgc-lite-gdpr.php:37
 msgid "Ultimate Gift Cards For WooCommerce"
-msgstr ""
-
-#: wps-wgc-lite-gdpr.php:37
-msgid "Downloadable"
-msgstr ""
-
-#: wps-wgc-lite-gdpr.php:37
-msgid "Mail to recipient"
 msgstr ""
 
 #: wps-wgc-lite-gdpr.php:57 wps-wgc-lite-gdpr.php:182
