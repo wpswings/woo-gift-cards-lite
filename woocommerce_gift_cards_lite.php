@@ -23,7 +23,7 @@
  * Text Domain:       woo-gift-cards-lite
  * WP Tested up to:   6.1.1
  * WP requires at least: 5.1.0
- * WC tested up to:   7.2.2
+ * WC tested up to:   7.2.3
  * WC requires at least: 5.1.0
  * Domain Path:       /languages
  */
@@ -41,7 +41,6 @@ if ( isset( $plug['giftware/giftware.php'] ) ) {
 		$wps_wgm_old_pro_exists = true;
 	}
 }
-
 
 $activated = false;
 /**
@@ -477,8 +476,6 @@ if ( $activated ) {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 	}
-
-	
 } else {
 	add_action( 'admin_init', 'wps_wgm_plugin_deactivate' );
 

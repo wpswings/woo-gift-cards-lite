@@ -628,7 +628,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( isset( $_POST['wps_wgm_selected_temp'] ) ) {
 									$item_meta['wps_wgm_selected_temp'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_temp'] ) );
 								}
-								$item_meta = apply_filters( '/', $item_meta, $the_cart_data, $product_id, $variation_id );
+								$item_meta = apply_filters( 'wps_wgm_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
 								$the_cart_data ['product_meta'] = array( 'meta_data' => $item_meta );
 							}
 						}
@@ -682,6 +682,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$val = __( 'Downloadable', 'woo-gift-cards-lite' );
 						} else if ( 'shipping' == $val ) {
 							$val = __( 'shipping', 'woo-gift-cards-lite' );
+				
 						} else {
 							$val = $val;
 						}
@@ -1690,7 +1691,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( $coupon->get_id() !== 0 ) {
 			$coupon_amount = $coupon->get_amount();
 
-			if ( ! empty( $coupon_amount ) ) {
+			if ( ! empty( $coupon_amount ) && $coupon->is_valid()) {
 				$coupon->set_amount( 0 );
 				$user_id = get_current_user_id();
 				$coupon->save();
@@ -1742,7 +1743,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			} else {
 				$response = array(
 					'status'  => 'failed',
-					'message' => __( 'Coupon Already used', 'woo-gift-cards-lite' ),
+					'message' => __( 'Coupon Already used or expired', 'woo-gift-cards-lite' ),
 				);
 			}
 		} else {
