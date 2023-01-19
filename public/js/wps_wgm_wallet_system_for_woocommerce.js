@@ -7,7 +7,6 @@
                 function() {
                     $( '.error' ).hide();
                     var wps_gc_code = $( '#wps_giftcard_code' ).val();
-                    console.log('psb');
                     var wps_wgm_nonce = wps_wgm.wps_wgm_nonce;
                     $.ajax({
                         url: wps_wgm.ajaxurl,
