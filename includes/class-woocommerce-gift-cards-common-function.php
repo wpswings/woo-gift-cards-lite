@@ -127,7 +127,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 							$selected_date = $selected_date;
 						}
 
-						if ( 'No Expiration' != $args['expirydate'] ) {
+						if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
 							if ( 'l, d F, Y' == $selected_date ) {
 								$new_for = gmdate( 'm/d/Y', strtotime( $args['expirydate'] ) );
 
@@ -153,7 +153,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					}
 				} else {
-					if ( 'No Expiration' != $args['expirydate'] ) {
+					if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
 						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					} else {
 						$args['expirydate'] = $args['expirydate'];

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.9\n"
-"POT-Creation-Date: 2023-01-16 11:10+0530\n"
+"POT-Creation-Date: 2023-01-19 23:07+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -48,7 +48,7 @@ msgid "Export"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:206
-#: woocommerce_gift_cards_lite.php:107
+#: woocommerce_gift_cards_lite.php:106
 msgid "Settings"
 msgstr ""
 
@@ -60,8 +60,8 @@ msgstr ""
 #: admin/class-woocommerce-gift-cards-lite-admin.php:556
 #: admin/class-woocommerce-gift-cards-lite-admin.php:772
 #: admin/class-woocommerce-gift-cards-lite-admin.php:774
-#: woocommerce_gift_cards_lite.php:163 woocommerce_gift_cards_lite.php:175
-#: woocommerce_gift_cards_lite.php:176
+#: woocommerce_gift_cards_lite.php:162 woocommerce_gift_cards_lite.php:174
+#: woocommerce_gift_cards_lite.php:175
 msgid "Gift Card"
 msgstr ""
 
@@ -939,7 +939,7 @@ msgstr ""
 
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:41
 #: public/class-woocommerce-gift-cards-lite-public.php:431
-#: public/class-woocommerce-gift-cards-lite-public.php:680
+#: public/class-woocommerce-gift-cards-lite-public.php:690
 msgid "Delivery Method"
 msgstr ""
 
@@ -989,20 +989,40 @@ msgstr ""
 msgid "Unexpected Error Occured"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:446
+#: includes/class-woocommerce-gift-cards-common-function.php:130
+#: includes/class-woocommerce-gift-cards-common-function.php:156
+#: includes/class-woocommerce-gift-cards-common-function.php:564
+msgid "No Expiration"
+msgstr ""
+
+#: includes/class-woocommerce-gift-cards-common-function.php:177
+#: public/class-woocommerce-gift-cards-lite-public.php:679
+#: public/class-woocommerce-gift-cards-lite-public.php:1446
+msgid "Mail to recipient"
+msgstr ""
+
+#: includes/class-woocommerce-gift-cards-common-function.php:179
+#: public/class-woocommerce-gift-cards-lite-public.php:682
+#: public/class-woocommerce-gift-cards-lite-public.php:1448
+msgid "Downloadable"
+msgstr ""
+
+#: includes/class-woocommerce-gift-cards-common-function.php:181
+#: public/class-woocommerce-gift-cards-lite-public.php:684
+#: public/class-woocommerce-gift-cards-lite-public.php:1450
+msgid "shipping"
+msgstr ""
+
+#: includes/class-woocommerce-gift-cards-common-function.php:465
 msgid " Hurry!  the gift card is Received"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:486
+#: includes/class-woocommerce-gift-cards-common-function.php:505
 msgid " Gift Card is Sent Successfully"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:493
+#: includes/class-woocommerce-gift-cards-common-function.php:512
 msgid " Gift Card is Sent Successfully to the Email Id: [TO]"
-msgstr ""
-
-#: includes/class-woocommerce-gift-cards-common-function.php:545
-msgid "No Expiration"
 msgstr ""
 
 #: includes/extra-templates/wpswings-deactivation-template-display.php:33
@@ -1094,7 +1114,7 @@ msgid "Minimum Price is : "
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:407
-#: public/class-woocommerce-gift-cards-lite-public.php:668
+#: public/class-woocommerce-gift-cards-lite-public.php:667
 msgid "From"
 msgstr ""
 
@@ -1143,48 +1163,44 @@ msgstr ""
 msgid "Sorry, your nonce did not verify."
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:654
-msgid "Downloadable"
-msgstr ""
-
-#: public/class-woocommerce-gift-cards-lite-public.php:655
-msgid "shipping"
-msgstr ""
-
-#: public/class-woocommerce-gift-cards-lite-public.php:662
+#: public/class-woocommerce-gift-cards-lite-public.php:661
 msgid "To"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:674
+#: public/class-woocommerce-gift-cards-lite-public.php:673
 #: wps-wgc-lite-gdpr.php:143
 msgid "Gift Message"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1139
+#: public/class-woocommerce-gift-cards-lite-public.php:1149
 msgid "VIEW CARD"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1640
+#: public/class-woocommerce-gift-cards-lite-public.php:1664
 msgid "Recharge via Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1681
+#: public/class-woocommerce-gift-cards-lite-public.php:1715
 msgid "Wallet credited by "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1681
+#: public/class-woocommerce-gift-cards-lite-public.php:1715
 msgid " through Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1684
+#: public/class-woocommerce-gift-cards-lite-public.php:1718
 msgid "Wallet updating notification"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1693
+#: public/class-woocommerce-gift-cards-lite-public.php:1728
 msgid "Wallet credited through Gift Card Code : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1711
+#: public/class-woocommerce-gift-cards-lite-public.php:1746
+msgid "Coupon Already used or expired"
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:1752
 msgid "Enter Valid Gift Card Code"
 msgstr ""
 
@@ -1196,56 +1212,56 @@ msgstr ""
 msgid "Proceed"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:108
+#: woocommerce_gift_cards_lite.php:107
 msgid "GO PRO"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:357
+#: woocommerce_gift_cards_lite.php:356
 msgid "This plugin will not work anymore correctly."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:358
+#: woocommerce_gift_cards_lite.php:357
 msgid ""
 "We highly recommend to update to latest pro version and once installed "
 "please migrate the existing settings."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:359
+#: woocommerce_gift_cards_lite.php:358
 msgid ""
 "If you are not getting automatic update now button here, then don't worry "
 "you will get in within 24 hours. If you still not get it please visit to "
 "your account dashboard and install it manually or connect to our support."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:417
+#: woocommerce_gift_cards_lite.php:416
 msgid ""
 "The latest update includes some substantial changes across different areas "
 "of the plugin. Hence, if you are not a new user then"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:417
+#: woocommerce_gift_cards_lite.php:416
 msgid " please migrate your old data and settings from "
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:417
+#: woocommerce_gift_cards_lite.php:416
 msgid "Dashboard"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:417
+#: woocommerce_gift_cards_lite.php:416
 msgid " page then Click On Start Import Button."
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:448
+#: woocommerce_gift_cards_lite.php:447
 msgid ""
 "If You are using the Premium Version of the Gift Card plugin then please "
 "update Pro plugin from plugin page by "
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:448
+#: woocommerce_gift_cards_lite.php:447
 msgid "Click Here"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:499
+#: woocommerce_gift_cards_lite.php:496
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Ultimate Gift Cards For WooCommerce"
