@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.9\n"
 "POT-Creation-Date: 2023-01-20 11:02+0530\n"
-"PO-Revision-Date: 2023-01-20 10:14+0000\n"
+"PO-Revision-Date: 2023-01-20 10:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -994,7 +994,7 @@ msgstr ""
 #: includes/class-woocommerce-gift-cards-common-function.php:156
 #: includes/class-woocommerce-gift-cards-common-function.php:564
 msgid "No Expiration"
-msgstr "No Expiration-translated"
+msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:177
 #: public/class-woocommerce-gift-cards-lite-public.php:679
@@ -1006,13 +1006,13 @@ msgstr "Mail to recipient-translated"
 #: public/class-woocommerce-gift-cards-lite-public.php:682
 #: public/class-woocommerce-gift-cards-lite-public.php:1448
 msgid "Downloadable"
-msgstr "Downloadable-translated"
+msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:181
 #: public/class-woocommerce-gift-cards-lite-public.php:684
 #: public/class-woocommerce-gift-cards-lite-public.php:1450
 msgid "shipping"
-msgstr "shipping-translated"
+msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:465
 msgid " Hurry!  the gift card is Received"

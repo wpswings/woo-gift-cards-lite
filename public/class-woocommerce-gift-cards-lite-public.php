@@ -675,6 +675,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						);
 					}
 					if ( 'delivery_method' == $key ) {
+						if ( 'Mail to recipient' == $val ) {
+							$val = __( 'Mail to recipient', 'woo-gift-cards-lite' );
+
+						} else if ( 'Downloadable' == $val ) {
+							$val = __( 'Downloadable', 'woo-gift-cards-lite' );
+						} else if ( 'shipping' == $val ) {
+							$val = __( 'shipping', 'woo-gift-cards-lite' );
+				
+						} else {
+							$val = $val;
+						}
 						$item_meta [] = array(
 							'name' => esc_html__( 'Delivery Method', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
@@ -1429,12 +1440,26 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			} else {
 				$temp = $templateid;
 			}
+
+			if ( isset( $_GET['delivery_method'] ) ) {
+				if ( 'Mail to recipient' == $_GET['delivery_method'] ) {
+					$h = __( 'Mail to recipient', 'woo-gift-cards-lite' );
+				} else if ( 'Downloadable' == $_GET['delivery_method'] ) {
+					$h = __( 'Downloadable', 'woo-gift-cards-lite' );
+				} else if ( 'shipping' == $_GET['delivery_method'] ) {
+					$h = __( 'shipping', 'woo-gift-cards-lite' );
+
+				} else {
+					$h = sanitize_text_field( wp_unslash( $_GET['delivery_method'] ) );
+
+				}
+			}
 			$args['to'] = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : '';
 			$args['from'] = isset( $_GET['from'] ) ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '';
 			$args['message'] = isset( $_GET['message'] ) ? sanitize_text_field( wp_unslash( $_GET['message'] ) ) : '';
 			$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $coupon );
 			$args['expirydate'] = $expirydate_format;
-			$args['delivery_method'] = isset( $_GET['delivery_method'] ) ? sanitize_text_field( wp_unslash( $_GET['delivery_method'] ) ) : '';
+			$args['delivery_method'] = isset( $_GET['delivery_method'] ) ? sanitize_text_field( wp_unslash( $h ) ) : '';
 			$args = apply_filters( 'wps_wgm_add_preview_template_fields', $args );
 
 			if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {  // Added for price based on country.
@@ -1660,50 +1685,76 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_wgm_nonce' );
 		$wps_giftcard_code      = ( ! empty( sanitize_text_field( wp_unslash( $_POST['wps_gc_code'] ) ) ) ? sanitize_text_field( wp_unslash( $_POST['wps_gc_code'] ) ) : '' );
 		$coupon                 = new WC_Coupon( $wps_giftcard_code );
+		$coupon_id              = $coupon->get_id();
 		$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+
 		if ( $coupon->get_id() !== 0 ) {
 			$coupon_amount = $coupon->get_amount();
-			$coupon->set_amount( 0 );
-			$user_id = get_current_user_id();
-			$coupon->save();
+			$expiry_date_timestamp = $coupon->get_date_expires();
 
-			$walletamount  = get_user_meta( $user_id, 'wps_wallet', true );
-			$walletamount  = empty( $walletamount ) ? 0 : $walletamount;
-			$walletamount += $coupon_amount;
-			update_user_meta( $user_id, 'wps_wallet', $walletamount );
-			$wallet_user       = get_user_by( 'id', $user_id );
-			$send_email_enable = get_option( 'wps_wsfw_enable_email_notification_for_wallet_update', '' );
-
-			if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
-				$user_name  = $wallet_user->first_name . ' ' . $wallet_user->last_name;
-				$mail_text  = sprintf( 'Hello %s,<br/>', $user_name );
-				$mail_text .= __( 'Wallet credited by ', 'woo-gift-cards-lite' ) . wc_price( $coupon_amount, array( 'currency' => get_woocommerce_currency() ) ) . __( ' through Gift Card', 'woo-gift-cards-lite' );
-				$to         = $wallet_user->user_email;
-				$from       = get_option( 'admin_email' );
-				$subject    = __( 'Wallet updating notification', 'woo-gift-cards-lite' );
-				$headers    = 'MIME-Version: 1.0' . "\r\n";
-				$headers   .= 'Content-Type: text/html;  charset=UTF-8' . "\r\n";
-				$headers   .= 'From: ' . $from . "\r\n" .
-					'Reply-To: ' . $to . "\r\n";
-				$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
-
+			if ( empty( $expiry_date_timestamp ) ) {
+				$expirydiff = 1;
+			} else {
+				$expiry_date_timestamp = strtotime( $expiry_date_timestamp );
+				$timestamp = strtotime( gmdate( 'Y-m-d' ) );
+				$expirydiff = $expiry_date_timestamp - $timestamp;
 			}
 
-			$transaction_type = __( 'Wallet credited through Gift Card Code : ', 'woo-gift-cards-lite' ) . $wps_giftcard_code;
-			$transaction_data = array(
-				'user_id'          => $user_id,
-				'amount'           => $coupon_amount,
-				'currency'         => get_woocommerce_currency(),
-				'payment_method'   => 'Gift Card Redeem',
-				'transaction_type' => htmlentities( $transaction_type ),
-			);
+			if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
+				$coupon->set_amount( 0 );
+				$user_id = get_current_user_id();
+				$coupon->save();
 
-			$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+				$walletamount  = get_user_meta( $user_id, 'wps_wallet', true );
+				$walletamount  = empty( $walletamount ) ? 0 : $walletamount;
+				$walletamount += $coupon_amount;
+				update_user_meta( $user_id, 'wps_wallet', $walletamount );
+				if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 
-			$response = array(
-				'status'  => 'success',
-				'message' => $coupon_amount,
-			);
+					$coupon_usage_count = get_post_meta( $coupon_id, 'usage_count', true );
+					$coupon_usage_count = ++$coupon_usage_count;
+					update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
+				}
+								$wallet_user       = get_user_by( 'id', $user_id );
+				$send_email_enable = get_option( 'wps_wsfw_enable_email_notification_for_wallet_update', '' );
+
+				if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
+					$user_name  = $wallet_user->first_name . ' ' . $wallet_user->last_name;
+					$mail_text  = sprintf( 'Hello %s,<br/>', $user_name );
+					$mail_text .= __( 'Wallet credited by ', 'woo-gift-cards-lite' ) . wc_price( $coupon_amount, array( 'currency' => get_woocommerce_currency() ) ) . __( ' through Gift Card', 'woo-gift-cards-lite' );
+					$to         = $wallet_user->user_email;
+					$from       = get_option( 'admin_email' );
+					$subject    = __( 'Wallet updating notification', 'woo-gift-cards-lite' );
+					$headers    = 'MIME-Version: 1.0' . "\r\n";
+					$headers   .= 'Content-Type: text/html;  charset=UTF-8' . "\r\n";
+					$headers   .= 'From: ' . $from . "\r\n" .
+						'Reply-To: ' . $to . "\r\n";
+
+					$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
+
+				}
+
+				$transaction_type = __( 'Wallet credited through Gift Card Code : ', 'woo-gift-cards-lite' ) . $wps_giftcard_code;
+				$transaction_data = array(
+					'user_id'          => $user_id,
+					'amount'           => $coupon_amount,
+					'currency'         => get_woocommerce_currency(),
+					'payment_method'   => 'Gift Card Redeem',
+					'transaction_type' => htmlentities( $transaction_type ),
+				);
+
+				$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+				$response = array(
+					'status'  => 'success',
+					'message' => $coupon_amount,
+				);
+			} else {
+				$response = array(
+					'status'  => 'failed',
+					'message' => __( 'Coupon Already used or expired', 'woo-gift-cards-lite' ),
+				);
+			}
 		} else {
 			$response = array(
 				'status'  => 'failed',

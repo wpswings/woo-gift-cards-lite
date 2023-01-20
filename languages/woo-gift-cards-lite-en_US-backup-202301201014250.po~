@@ -994,7 +994,7 @@ msgstr ""
 #: includes/class-woocommerce-gift-cards-common-function.php:156
 #: includes/class-woocommerce-gift-cards-common-function.php:564
 msgid "No Expiration"
-msgstr "No Expiration-translated"
+msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:177
 #: public/class-woocommerce-gift-cards-lite-public.php:679
@@ -1012,7 +1012,7 @@ msgstr "Downloadable-translated"
 #: public/class-woocommerce-gift-cards-lite-public.php:684
 #: public/class-woocommerce-gift-cards-lite-public.php:1450
 msgid "shipping"
-msgstr "shipping-translated"
+msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:465
 msgid " Hurry!  the gift card is Received"

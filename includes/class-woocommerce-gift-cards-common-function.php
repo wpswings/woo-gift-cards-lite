@@ -114,40 +114,50 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
 				if ( wps_uwgc_pro_active() ) {
+
 					$general_settings = get_option( 'wps_wgm_general_settings', array() );
 
 					$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
 					$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
-					$giftcard_selected_date  = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
 
-					if ( isset( $giftcard_selected_date ) ) {
-						$selected_date = $selected_date;
-					}
+					if ( '' != $selected_date || ! empty( $selected_date ) ) {
+							$giftcard_selected_date  = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
 
-					if ( 'No Expiration' != $args['expirydate'] ) {
-						if ( 'l, d F, Y' == $selected_date ) {
-							$new_for = gmdate( 'm/d/Y', strtotime( $args['expirydate'] ) );
-
-							$new_format = gmdate( 'm/d/Y', strtotime( '-1 day', strtotime( $new_for ) ) );
-
-							$args['expirydate'] = gmdate( $selected_date, strtotime( $new_format ) );
-
-						} else if ( 'd/m/Y' == $selected_date ) {
-							$date = $args['expirydate'];
-							$date = str_replace( '/', '-', $date );
-							$new_date = gmdate( 'Y-m-d', strtotime( $date ) );
-							 $new_format = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $new_date ) ) );
-							 $new_formatt = gmdate( 'd/m/Y', strtotime( $new_format ) );
-							  $args['expirydate'] = $new_formatt;
-
-						} else {
-
-							$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
-
+						if ( isset( $giftcard_selected_date ) ) {
+							$selected_date = $selected_date;
 						}
+
+						if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
+							if ( 'l, d F, Y' == $selected_date ) {
+								$new_for = gmdate( 'm/d/Y', strtotime( $args['expirydate'] ) );
+
+								$new_format = gmdate( 'm/d/Y', strtotime( '-1 day', strtotime( $new_for ) ) );
+
+								$args['expirydate'] = gmdate( $selected_date, strtotime( $new_format ) );
+
+							} else if ( 'd/m/Y' == $selected_date ) {
+								$date = $args['expirydate'];
+								$date = str_replace( '/', '-', $date );
+								$new_date = gmdate( 'Y-m-d', strtotime( $date ) );
+								$new_format = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $new_date ) ) );
+								$new_formatt = gmdate( 'd/m/Y', strtotime( $new_format ) );
+								$args['expirydate'] = $new_formatt;
+
+							} else {
+
+								$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+
+							}
+						}
+					} else {
+						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					}
 				} else {
-					$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+					if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
+						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
+					} else {
+						$args['expirydate'] = $args['expirydate'];
+					}
 				}
 				if ( ! isset( $args['delivery_method'] ) ) {
 					$args['delivery_method'] = '';
@@ -163,6 +173,15 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				$bgimg = "background='$featured_image'";
 
+				if ( 'Mail to recipient' == $args['delivery_method'] ) {
+					$args['delivery_method'] = __( 'Mail to recipient', 'woo-gift-cards-lite' );
+				} else if ( 'Downloadable' == $args['delivery_method'] ) {
+					$args['delivery_method'] = __( 'Downloadable', 'woo-gift-cards-lite' );
+				} else if ( 'shipping' == $args['delivery_method'] ) {
+					$args['delivery_method'] = __( 'shipping', 'woo-gift-cards-lite' );
+				} else {
+					$args['delivery_method'] = $args['delivery_method'];
+				}
 				$templatehtml = str_replace( '[ARROWIMAGE]', $arrow_img, $templatehtml );
 				$templatehtml = str_replace( '[BACK]', $mothers_day_backimg, $templatehtml );
 				$templatehtml = str_replace( '[LOGO]', $giftcard_logo_html, $templatehtml );
