@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.4.9\n"
-"POT-Creation-Date: 2023-01-19 23:07+0530\n"
+"POT-Creation-Date: 2023-01-20 11:02+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -1180,27 +1180,27 @@ msgstr ""
 msgid "Recharge via Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1715
+#: public/class-woocommerce-gift-cards-lite-public.php:1724
 msgid "Wallet credited by "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1715
+#: public/class-woocommerce-gift-cards-lite-public.php:1724
 msgid " through Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1718
+#: public/class-woocommerce-gift-cards-lite-public.php:1727
 msgid "Wallet updating notification"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1728
+#: public/class-woocommerce-gift-cards-lite-public.php:1737
 msgid "Wallet credited through Gift Card Code : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1746
+#: public/class-woocommerce-gift-cards-lite-public.php:1755
 msgid "Coupon Already used or expired"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1752
+#: public/class-woocommerce-gift-cards-lite-public.php:1761
 msgid "Enter Valid Gift Card Code"
 msgstr ""
 
