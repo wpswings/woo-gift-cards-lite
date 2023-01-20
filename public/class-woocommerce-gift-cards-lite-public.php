@@ -1690,8 +1690,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( $coupon->get_id() !== 0 ) {
 			$coupon_amount = $coupon->get_amount();
+			$expiry_date_timestamp = $coupon->get_date_expires();
 
-			if ( ! empty( $coupon_amount ) && $coupon->is_valid()) {
+			if ( empty( $expiry_date_timestamp ) ) {
+				$expirydiff = 1;
+			} else {
+				$expiry_date_timestamp = strtotime( $expiry_date_timestamp );
+				$timestamp = strtotime( gmdate( 'Y-m-d' ) );
+				$expirydiff = $expiry_date_timestamp - $timestamp;
+			}
+
+			if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
 				$coupon->set_amount( 0 );
 				$user_id = get_current_user_id();
 				$coupon->save();
