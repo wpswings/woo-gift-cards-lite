@@ -836,6 +836,25 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$price_html  = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
 									}
 								}
+								if ( 'wps_wgm_selected_with_price_range' === $product_pricing_type ) {
+									$price_html = '';
+									$from_price = $product_pricing['from'];
+									$to_price = $product_pricing['to'];
+									// price based on country.
+									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+											$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
+											$to_price = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
+										}
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+									} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
+									} else {
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+									}
+								}
 							}
 						}
 						$price_html = apply_filters( 'wps_wgm_pricing_html', $price_html, $product, $product_pricing );

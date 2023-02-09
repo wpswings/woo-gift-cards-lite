@@ -323,6 +323,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				case 'wps_wgm_user_price':
 					$min_user_price = isset( $wps_wgm_pricing['min_user_price'] ) ? $wps_wgm_pricing['min_user_price'] : 0;
 					break;
+				case 'wps_wgm_selected_with_price_range':
+					$from = isset( $wps_wgm_pricing['from'] ) ? $wps_wgm_pricing['from'] : 0;
+					$to = isset( $wps_wgm_pricing['to'] ) ? $wps_wgm_pricing['to'] : 0;
+					$price = isset( $wps_wgm_pricing['price'] ) ? $wps_wgm_pricing['price'] : 0;
+					break;
 				default:
 					// Nothing for default.
 			}
@@ -630,6 +635,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							case 'wps_wgm_variable_price':
 								$wps_wgm_pricing['wps_wgm_variation_text']  = isset( $_POST['wps_wgm_variation_text'] ) ? map_deep( wp_unslash( $_POST['wps_wgm_variation_text'] ), 'sanitize_text_field' ) : array();
 								$wps_wgm_pricing['wps_wgm_variation_price'] = isset( $_POST['wps_wgm_variation_price'] ) ? map_deep( wp_unslash( $_POST['wps_wgm_variation_price'] ), 'sanitize_text_field' ) : array();
+								break;
+
+							case 'wps_wgm_selected_with_price_range':
+								$from = isset( $_POST['wps_wgm_from_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_price'] ) ) : 0;
+								$to = isset( $_POST['wps_wgm_to_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_price'] ) ) : 0;
+								$price = isset( $_POST['wps_wgm_selected_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_price'] ) ) : 0;
+								$wps_wgm_pricing['type'] = $selected_pricing;
+								$wps_wgm_pricing['from'] = $from;
+								$wps_wgm_pricing['to'] = $to;
+								$wps_wgm_pricing['price'] = $price;
 								break;
 
 							default:

@@ -277,7 +277,7 @@
 							}
 						}
 
-						if (product_type == "wps_wgm_range_price") {
+						if (product_type == "wps_wgm_range_price" || product_type == "wps_wgm_selected_with_price_range") {
 							var from = parseInt( wps_wgm.pricing_type.from );
 							var to = parseInt( wps_wgm.pricing_type.to );
 
@@ -432,7 +432,7 @@
 						}
 					}
 
-					if (product_type == "wps_wgm_range_price") {
+					if (product_type == "wps_wgm_range_price" || product_type == "wps_wgm_selected_with_price_range") {
 						var from = wps_wgm.pricing_type.from;
 						var to = wps_wgm.pricing_type.to;
 						to = parseFloat( to );
