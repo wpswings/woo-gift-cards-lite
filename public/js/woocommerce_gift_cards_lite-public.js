@@ -19,6 +19,8 @@
 				} else {
 					jQuery('.wps_wgm_min_user_price').hide();
 				}
+				$( '.wps_uwgc_price_button').css( 'background-color','' );
+				$( '.wps_uwgc_price_button').css( 'color','' );
 			});
 
 			//variable price for giftcard.
