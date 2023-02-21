@@ -11,6 +11,44 @@
 	jQuery( document ).ready(
 		function($){
 
+			$('#wps_wgm_to_email').on('blur', function() {
+				if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm.enable_sent_multiple_gc == 'on' ) {
+					var recipients = $(this).val();
+					if (recipients) {
+						$(this).val(recipients.trim().split(/[ ,]+/).map(function (item) {
+							return item.trim();
+						}).join(', '));
+					}
+			
+					wps_wgm_toggle_quantity();
+				}
+			});
+
+			function wps_wgm_toggle_quantity() {
+				if ($('#wps_wgm_to_email').length) {
+					var recipients = $('#wps_wgm_to_email').val().split(/[ ,]+/);
+					if (recipients.length > 1) {
+						$('.wps_wgm_recipient_count').text(recipients.length);
+						$('.wps_wgm_quantity_one_per_recipient').show();
+						$('input.qty').val('1');
+						$('.quantity').hide();
+						$('.wps_wgm_msg_info_multiple_name').show();
+						$( '.wps_wgm_msg_info').hide();
+						$('.wps_wgm_msg_info_multiple_name').text( recipients.length + wps_wgm.recipient_name );
+					} else {
+						$('.wps_wgm_quantity_one_per_recipient').hide();
+						$('.wps_wgm_msg_info_multiple_name').hide();
+						$( '.wps_wgm_msg_info').show();
+						$('.quantity').show();
+					}
+				}
+			}
+
+			function wps_wgm_is_email(email) {
+				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				return regex.test(email);
+			}
+
 			$('#wps_wgm_price').keyup(function() {
 				this.value = this.value.replace(/[^0-9]/g, '');
 				var price = parseInt(this.value);
@@ -206,12 +244,27 @@
 									html += "<li><b>";
 									html += wps_wgm.to_empty;
 									html += "</li>";
-								} else if ( ! to_mail.match( mailformat )) {
+								} else if ( ( wps_wgm.is_pro_active == null || wps_wgm.is_pro_active == '' || wps_wgm.is_customizable == 'yes' || wps_wgm.enable_sent_multiple_gc != 'on' ) && ! to_mail.match( mailformat ) ) {
 									error = true;
 									$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
 									html += "<li><b>";
 									html += wps_wgm.to_invalid;
 									html += "</li>";
+								} else {
+									var recipients = $('#wps_wgm_to_email').val().split(/[ ,]+/);
+									var badRecipients = [];
+						
+									for (var i = 0; i < recipients.length; i++) {
+										if ( ! wps_wgm_is_email(recipients[i])) {
+											badRecipients.push(recipients[i]);
+										}
+									}
+						
+									if (badRecipients.length) {
+										alert(wps_wgm.to_invalid + '\n\n' + badRecipients.join('\n'));
+										e.preventDefault();
+										return false;
+									}
 								}
 							}
 						}
@@ -371,12 +424,27 @@
 								html += "<li><b>";
 								html += wps_wgm.to_empty;
 								html += "</li>";
-							} else if ( ! to_mail.match( mailformat )) {
+							} else if ( ( wps_wgm.is_pro_active == null || wps_wgm.is_pro_active == '' || wps_wgm.is_customizable == 'yes' || wps_wgm.enable_sent_multiple_gc != 'on' ) && ! to_mail.match( mailformat ) ) {
 								error = true;
 								$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
 								html += "<li><b>";
 								html += wps_wgm.to_invalid;
 								html += "</li>";
+							} else {
+								var recipients = $('#wps_wgm_to_email').val().split(/[ ,]+/);
+								var badRecipients = [];
+					
+								for (var i = 0; i < recipients.length; i++) {
+									if ( ! wps_wgm_is_email(recipients[i])) {
+										badRecipients.push(recipients[i]);
+									}
+								}
+					
+								if (badRecipients.length) {
+									alert(wps_wgm.to_invalid + '\n\n' + badRecipients.join('\n'));
+									e.preventDefault();
+									return false;
+								}
 							}
 						}
 					}
