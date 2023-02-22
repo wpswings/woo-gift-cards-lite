@@ -170,10 +170,10 @@ function wps_redeem_giftcard_offline( $request ) {
 					$data = array(
 						'status' => 200,
 						'remaining_amount' => $remaining_amount,
-						'discount_type' => $the_coupon->discount_type,
+						'discount_type' => $the_coupon->get_discount_type(),
 						'usage_count' => $coupon_usage_count,
-						'usage_limit' => $the_coupon->usage_limit,
-						'description' => $the_coupon->description,
+						'usage_limit' => $the_coupon->get_usage_limit(),
+						'description' => $the_coupon->get_description(),
 						'coupon_expiry' => $coupon_expiry,
 					);
 					$response['data'] = $data;
@@ -298,10 +298,10 @@ function wps_recharge_giftcard_offine( $request ) {
 			$data = array(
 				'status' => 200,
 				'remaining_amount' => $updated_amount,
-				'discount_type' => $the_coupon->discount_type,
+				'discount_type' => $the_coupon->get_discount_type(),
 				'usage_count' => 0,
 				'usage_limit' => $usage_limit,
-				'description' => $the_coupon->description,
+				'description' => $the_coupon->get_description(),
 				'coupon_expiry' => $coupon_expiry,
 			);
 			$response['data'] = $data;
