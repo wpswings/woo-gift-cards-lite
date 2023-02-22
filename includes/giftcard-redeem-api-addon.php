@@ -87,11 +87,11 @@ function wps_get_giftcard_details( $request ) {
 
 		$data = array(
 			'status' => 200,
-			'remaining_amount' => $coupon_details->amount,
-			'discount_type' => $coupon_details->discount_type,
-			'usage_count' => $coupon_details->usage_count,
-			'usage_limit' => $coupon_details->usage_limit,
-			'description' => $coupon_details->description,
+			'remaining_amount' => $coupon_details->get_amount(),
+			'discount_type' => $coupon_details->get_discount_type(),
+			'usage_count' => $coupon_details->get_usage_count(),
+			'usage_limit' => $coupon_details->get_usage_limit(),
+			'description' => $coupon_details->get_description(),
 			'coupon_expiry' => $coupon_expiry,
 
 		);
