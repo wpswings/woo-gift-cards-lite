@@ -554,8 +554,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! isset( $wps_field_nonce ) || ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
-						exit;
+						// echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
+						return $the_cart_data;
 					} else {
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
