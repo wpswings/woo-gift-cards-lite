@@ -20,7 +20,7 @@ $wps_wgm_delivery_settings = array(
 		'name'          => 'wps_wgm_send_giftcard',
 		'value'         => 'Mail to recipient',
 		'desc_tip'      => esc_html__( 'Check this box to enable normal functionality for sending mails to recipients on Gift Card Products.', 'woo-gift-cards-lite' ),
-		'desc'          => esc_html__( 'Enable Email To Recipient.', 'woo-gift-cards-lite' ),
+		'desc'          => esc_html__( 'Enable Email To Recipient', 'woo-gift-cards-lite' ),
 		'default_value' => 1,
 	),
 	array(

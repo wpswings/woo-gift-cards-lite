@@ -112,7 +112,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'type' => 'textWithDesc',
 			 'class' => 'description',
 			 'desc_tip' => esc_html__( 'Email Subject for notifying receiver about Gift Card Mail send.', 'woo-gift-cards-lite' ),
-			 'bottom_desc' => esc_html__( 'Use [SITENAME] shortcode as the name of the site and [FROM] shortcode as buyer name to be placed dynamically.', 'woo-gift-cards-lite' ),
+			 'bottom_desc' => esc_html__( 'Use [SITENAME] shortcode as the name of the site and [FROM] shortcode as buyer name to be placed dynamically', 'woo-gift-cards-lite' ),
 		 ),
 	 ),
  );

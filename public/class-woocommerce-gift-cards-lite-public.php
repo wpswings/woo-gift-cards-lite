@@ -128,7 +128,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			/* translators: %s: seconds */
 			'price_range'    => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woo-gift-cards-lite' ), '</b>' ),
 			'min_user_price' => sprintf( __( 'Gift Card price should not be less than the minimum amount.', 'woo-gift-cards-lite' ), '</b>' ),
-			'recipient_name' => sprintf( __( ' recipient names should be enter seperated by comma.', 'woo-gift-cards-lite' ), '</b>' ),
+			'recipient_name' => sprintf( __( ' recipient names should be enter seperated by comma', 'woo-gift-cards-lite' ), '</b>' ),
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
 		if ( is_product() ) {
@@ -438,7 +438,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$cart_html .= '<div class="wps_wgm_section wps_delivery_method">';
 									$cart_html .= '<label class = "wps_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $wps_wgm_delivery_setting_method ) && 'Mail to recipient' == $wps_wgm_delivery_setting_method ) || ( '' == $wps_wgm_delivery_setting_method ) ) {
-								$html = ( wps_uwgc_pro_active() && $enable_sent_multiple_gc == 'on' ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple email addresses with a comma.', 'woo-gift-cards-lite' ) . '</span>' : '';
+								$html = ( wps_uwgc_pro_active() && $enable_sent_multiple_gc == 'on' ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple email addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
 								$cart_html .= '<div class="wps_wgm_delivery_method">
 											<input type="radio" name="wps_wgm_send_giftcard" value="Mail to recipient" class="wps_wgm_send_giftcard" checked="checked" id="wps_wgm_to_email_send" >
 											<span class="wps_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>

@@ -181,7 +181,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 					<h3 class="text-left"><?php esc_html_e( 'Hello Dear', 'woo-gift-cards-lite' ); ?></h3>	
 					<p><?php esc_html_e( 'We are thrilled to announce that we have launched a FREE service to simplify the problem of redeeming gift cards at a retail store', 'woo-gift-cards-lite' ); ?></p>
 
-					<p><?php esc_html_e( 'We have made this just on your demand so we would love your suggestion to improve it.', 'woo-gift-cards-lite' ); ?></p>
+					<p><?php esc_html_e( 'We have made this just on your demand so we would love your suggestion to improve it', 'woo-gift-cards-lite' ); ?></p>
 				</div>
 
 				
