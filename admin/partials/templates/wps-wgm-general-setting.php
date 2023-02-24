@@ -23,7 +23,11 @@ if ( isset( $_POST ['wps_wgm_save_general'] ) ) {
 		if ( 'wps_wgm_general_setting' == $current_tab ) {
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
 				foreach ( $postdata as $key => $value ) {
-					$general_settings_array[ $key ] = $value;
+					if ( 'wps_wgm_general_setting_giftcard_expiry' == $key && empty( $value ) ) {
+						$general_settings_array[ $key ] = '0';
+					} else {
+						$general_settings_array[ $key ] = $value;
+					}
 				}
 			}
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {
