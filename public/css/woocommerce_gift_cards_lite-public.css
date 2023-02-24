@@ -67,6 +67,8 @@
   margin-right: 5px;
 }
 .wps_wgm_msg_info,.wps_wgm_msg_info_multiple_email {
+  margin-top: 5px;
+  margin-bottom: 3px;
  display: block;
  font-size: 13px;
 }
@@ -76,6 +78,7 @@
   display: none;
 }
 #wps_wgm_to_name_optional {
+  margin-top: 10px;
 	width: 99%;
 	display:none;
 }
