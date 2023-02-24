@@ -438,7 +438,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$cart_html .= '<div class="wps_wgm_section wps_delivery_method">';
 									$cart_html .= '<label class = "wps_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $wps_wgm_delivery_setting_method ) && 'Mail to recipient' == $wps_wgm_delivery_setting_method ) || ( '' == $wps_wgm_delivery_setting_method ) ) {
-								$html = ( wps_uwgc_pro_active() && $enable_sent_multiple_gc == 'on' ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple email addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
+								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple email addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
 								$cart_html .= '<div class="wps_wgm_delivery_method">
 											<input type="radio" name="wps_wgm_send_giftcard" value="Mail to recipient" class="wps_wgm_send_giftcard" checked="checked" id="wps_wgm_to_email_send" >
 											<span class="wps_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>
@@ -554,7 +554,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! isset( $wps_field_nonce ) || ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						// echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
+						// echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );.
 						return $the_cart_data;
 					} else {
 						// for price based on country.
