@@ -467,8 +467,8 @@ if ( $activated ) {
 		 * @param string $needle needle.
 		 * @return boolean
 		 */
-		function str_contains( string $haystack, string $needle ): bool {
-			return '' === $needle || false !== strpos( $haystack, $needle );
+		function str_contains( $haystack, $needle ) {
+			return $needle !== '' && mb_strpos($haystack, $needle) !== false;
 		}
 	}
 

@@ -25,7 +25,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
@@ -33,7 +32,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * The object of common class file.
 	 *
 	 * @since    1.0.0
-	 * @access   public
 	 * @var      string    $wps_common_fun    The current version of this plugin.
 	 */
 	public $wps_common_fun;
@@ -41,7 +39,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;

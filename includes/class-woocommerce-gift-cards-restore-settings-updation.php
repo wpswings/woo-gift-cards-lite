@@ -14,7 +14,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
 	 * This is class to restore the saved data on particular keys.
 	 *
 	 * @name    Woocommerce_Gift_Cards_Restore_Settings_Updation
-	 * @category Class
 	 * @author   WP Swings <webmaster@wpswings.com>
 	 */
 	class Woocommerce_Gift_Cards_Restore_Settings_Updation {

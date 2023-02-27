@@ -13,7 +13,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 	 * This is class to restore the saved data on particular keys.
 	 *
 	 * @name    Woocommerce_Gift_Cards_Activation
-	 * @category Class
 	 * @author   WP Swings <webmaster@wpswings.com>
 	 */
 	class Woocommerce_Gift_Cards_Activation {

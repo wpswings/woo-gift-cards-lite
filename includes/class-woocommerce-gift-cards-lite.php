@@ -33,7 +33,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      Woocommerce_Gift_Cards_Lite_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
@@ -42,7 +41,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -51,7 +49,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -94,7 +91,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function load_dependencies() {
 
@@ -138,7 +134,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function set_locale() {
 
@@ -153,7 +148,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function define_admin_hooks() {
 
@@ -201,7 +195,6 @@ class Woocommerce_Gift_Cards_Lite {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function define_public_hooks() {
 
