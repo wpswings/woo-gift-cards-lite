@@ -446,7 +446,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												<input type="text"  name="wps_wgm_to_email" id="wps_wgm_to_email" class="wps_wgm_to_email" placeholder="' . __( 'Enter the Recipient Email', 'woo-gift-cards-lite' ) . '">
 												' . $html . '
 												<input type="text"  name="wps_wgm_to_name_optional" id="wps_wgm_to_name_optional" class="wps_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woo-gift-cards-lite' ) . '">
-												<span class= "wps_wgm_msg_info">' . __( 'We will send it to the recipient\'s email address.', 'woo-gift-cards-lite' ) . '</span>
+												<span class= "wps_wgm_msg_info">' . __( 'We will send it to the recipient\'s email address', 'woo-gift-cards-lite' ) . '</span>
 												<span class= "wps_wgm_msg_info_multiple_name"></span>
 											</div>
 										</div>';
