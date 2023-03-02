@@ -468,7 +468,7 @@ if ( $activated ) {
 		 * @return boolean
 		 */
 		function str_contains( $haystack, $needle ) {
-			return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+			return '' !== $needle && false !== mb_strpos( $haystack, $needle );
 		}
 	}
 
