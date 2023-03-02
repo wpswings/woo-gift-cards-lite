@@ -281,7 +281,7 @@
 				}
 				if (pricing_option == 'wps_wgm_selected_with_price_range') {
 					$( '.wps_wgm_default_price_field' ).hide();
-					$( '#wps_wgm_discount' ).parent().show();
+					$( '#wps_wgm_discount' ).parent().hide();
 					$( '.wps_wgm_user_price_field' ).hide();
 					$( '#wps_variable_gift' ).hide();
 					$( '.wps_wgm_min_user_price_field').hide();
