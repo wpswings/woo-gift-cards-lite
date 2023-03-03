@@ -25,7 +25,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
@@ -34,7 +33,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
@@ -117,7 +115,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			/* translators: %s: seconds */
 			'to_empty_name'  => sprintf( __( 'To: Name Field is empty.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
-			'to_invalid'     => sprintf( __( 'Recipient Email: %sInvalid email format.', 'woo-gift-cards-lite' ), '</b>' ),
+			'to_invalid'     => sprintf( __( 'Recipient Email: Invalid email format.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
 			'from_empty'     => sprintf( __( 'From: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
 			/* translators: %s: seconds */
@@ -128,6 +126,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			/* translators: %s: seconds */
 			'price_range'    => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woo-gift-cards-lite' ), '</b>' ),
 			'min_user_price' => sprintf( __( 'Gift Card price should not be less than the minimum amount.', 'woo-gift-cards-lite' ), '</b>' ),
+			'recipient_name' => sprintf( __( ' recipient names should be entered seperated by comma', 'woo-gift-cards-lite' ), '</b>' ),
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
 		if ( is_product() ) {
@@ -169,10 +168,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						}
 					} else {
 						$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
+						$is_customizable = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+						$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
+						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
 					}
 
 					$wps_wgm['pricing_type'] = $wps_wgm_pricing;
 					$wps_wgm['product_id']   = $product_id;
+					$wps_wgm['is_customizable'] = $is_customizable;
+					$wps_wgm['enable_sent_multiple_gc'] = $enable_sent_multiple_gc;
 					wp_enqueue_script( 'thickbox' );
 					$wps_wgm['wps_wgm_nonce'] = wp_create_nonce( 'wps-wgc-verify-nonce' );
 					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-public.js', array( 'jquery' ), $this->version, true );
@@ -243,6 +247,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 							$cart_html .= '<div class="wps_wgm_added_wrapper">';
 							wp_nonce_field( 'wps_wgm_single_nonce', 'wps_wgm_single_nonce_field' );
+							$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
+							$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
 							if ( isset( $product_pricing['type'] ) ) {
 								$product_pricing_type = $product_pricing['type'];
 								if ( 'wps_wgm_range_price' === $product_pricing_type ) {
@@ -430,13 +436,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$cart_html .= '<div class="wps_wgm_section wps_delivery_method">';
 									$cart_html .= '<label class = "wps_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $wps_wgm_delivery_setting_method ) && 'Mail to recipient' == $wps_wgm_delivery_setting_method ) || ( '' == $wps_wgm_delivery_setting_method ) ) {
+								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
 								$cart_html .= '<div class="wps_wgm_delivery_method">
 											<input type="radio" name="wps_wgm_send_giftcard" value="Mail to recipient" class="wps_wgm_send_giftcard" checked="checked" id="wps_wgm_to_email_send" >
 											<span class="wps_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>
 											<div class="wps_wgm_delivery_via_email">
 												<input type="text"  name="wps_wgm_to_email" id="wps_wgm_to_email" class="wps_wgm_to_email" placeholder="' . __( 'Enter the Recipient Email', 'woo-gift-cards-lite' ) . '">
+												' . $html . '
 												<input type="text"  name="wps_wgm_to_name_optional" id="wps_wgm_to_name_optional" class="wps_wgm_to_email" placeholder="' . __( 'Enter the Recipient Name', 'woo-gift-cards-lite' ) . '">
-												<span class= "wps_wgm_msg_info">' . __( 'We will send it to the recipient\'s email address.', 'woo-gift-cards-lite' ) . '</span>
+												<span class= "wps_wgm_msg_info">' . __( 'We will send it to the recipient\'s email address', 'woo-gift-cards-lite' ) . '</span>
+												<span class= "wps_wgm_msg_info_multiple_name"></span>
 											</div>
 										</div>';
 							}
@@ -543,8 +552,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! isset( $wps_field_nonce ) || ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );
-						exit;
+						// echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );.
+						return $the_cart_data;
 					} else {
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
@@ -577,7 +586,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 								if ( isset( $_POST['wps_wgm_to_email'] ) && ! empty( $_POST['wps_wgm_to_email'] ) ) {
 
-									$item_meta['wps_wgm_to_email'] = sanitize_email( wp_unslash( $_POST['wps_wgm_to_email'] ) );
+									$item_meta['wps_wgm_to_email'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_email'] ) );
 								}
 								if ( isset( $_POST['wps_wgm_to_email_name'] ) && ! empty( $_POST['wps_wgm_to_email_name'] ) ) {
 
@@ -836,6 +845,25 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$price_html  = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
 									}
 								}
+								if ( 'wps_wgm_selected_with_price_range' === $product_pricing_type ) {
+									$price_html = '';
+									$from_price = $product_pricing['from'];
+									$to_price = $product_pricing['to'];
+									// price based on country.
+									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+											$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
+											$to_price = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
+										}
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+									} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
+									} else {
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+									}
+								}
 							}
 						}
 						$price_html = apply_filters( 'wps_wgm_pricing_html', $price_html, $product, $product_pricing );
@@ -977,7 +1005,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( '' == $giftcard_coupon_length ) {
 									$giftcard_coupon_length = 5;
 								}
+								if ( ! empty( $to ) ) {
+									$recipients = preg_split('/[\s,]+/', $to, -1, PREG_SPLIT_NO_EMPTY);
+								}
 								for ( $i = 1; $i <= $item_quantity; $i++ ) {
+									if ( isset( $recipients ) && ! empty( $recipients ) ) {
+										$to = trim( array_shift( $recipients ) );
+									}
 									$gift_couponnumber = wps_wgm_coupon_generator( $giftcard_coupon_length );
 									if ( $this->wps_common_fun->wps_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to ) ) {
 										$todaydate = date_i18n( 'Y-m-d' );

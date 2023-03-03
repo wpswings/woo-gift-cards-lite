@@ -51,7 +51,7 @@
 }
 #wps_wgm_to_email {
 	width: 99%;
-  margin-bottom: 10px  !important;
+  /* margin-bottom: 10px  !important; */
 }
 #wps_wgm_message {
 	width: 99%;
@@ -66,11 +66,19 @@
 .wps_wgm_send_giftcard {
   margin-right: 5px;
 }
-.wps_wgm_msg_info {
+.wps_wgm_msg_info,.wps_wgm_msg_info_multiple_email {
+  margin-top: 5px;
+  margin-bottom: 3px;
  display: block;
  font-size: 13px;
 }
+.wps_wgm_msg_info_multiple_name{
+  display: block;
+  font-size: 13px;
+  display: none;
+}
 #wps_wgm_to_name_optional {
+  margin-top: 10px;
 	width: 99%;
 	display:none;
 }
@@ -117,4 +125,8 @@
 .wps_wgm_section select, .wps_wgm_section input[type=text], .wps_wgm_section textarea {
   min-height: 33px;
   color: #333333;
+}
+
+.wps_wgm_quantity_one_per_recipient{
+  display: none;
 }
