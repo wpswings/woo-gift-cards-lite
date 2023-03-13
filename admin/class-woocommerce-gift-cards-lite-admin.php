@@ -1269,10 +1269,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_get_all_lite_templates() {
 		$wps_lite_templates = array(
-			'Love You Mom',
-			'Gift for You',
-			'Custom Template',
-			'Merry Christmas Template',
+			__( 'Love You Mom', 'woo-gift-cards-lite' ),
+			__( 'Gift for You', 'woo-gift-cards-lite' ),
+			__( 'Custom Template', 'woo-gift-cards-lite' ),
+			__( 'Merry Christmas Template', 'woo-gift-cards-lite' )
 		);
 		return $wps_lite_templates;
 	}
