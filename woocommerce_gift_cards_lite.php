@@ -23,7 +23,7 @@
  * Text Domain:       woo-gift-cards-lite
  * WP Tested up to:   6.1.1
  * WP requires at least: 5.5.0
- * WC tested up to:   7.4.1
+ * WC tested up to:   7.5.0
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
