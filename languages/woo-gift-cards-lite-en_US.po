@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.5.0\n"
-"POT-Creation-Date: 2023-03-02 19:45+0530\n"
-"PO-Revision-Date: 2023-03-02 19:46+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.5.1\n"
+"POT-Creation-Date: 2023-03-21 12:26+0530\n"
+"PO-Revision-Date: 2023-03-21 13:25+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -251,22 +251,6 @@ msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:874
 msgid "Replace with Gift Card Expiry Date."
-msgstr ""
-
-#: admin/class-woocommerce-gift-cards-lite-admin.php:941
-msgid "Love You Mom"
-msgstr ""
-
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1005
-msgid "Gift for You"
-msgstr ""
-
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1069
-msgid "Custom Template"
-msgstr ""
-
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1144
-msgid "Merry Christmas Template"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:1168

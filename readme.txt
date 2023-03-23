@@ -5,8 +5,8 @@ Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers,
 Requires at least: 5.1.0
 Tested up to: 6.1.1
 WC requires at least: 5.1.0
-WC tested up to: 7.4.1
-Stable tag:  2.5.0
+WC tested up to: 7.5.0
+Stable tag:  2.5.1
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -252,9 +252,13 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 2.5.1 - Released on 22 March 2023 = 
+* New: Compatibility with latest WP( 6.1.1 ) and WC(7.5.0 )
+* Fix: Translate Template Name
+
 = 2.5.0 - Released on 3 March 2023 = 
 * New: Compatibility with latest WP( 6.1.1 ) and WC( 7.4.1 )
-* New: Compatibilty with Return Refund and Exchange For WooCommerce and RMA Return Refund & Exchange For WooCommerce Pro plugin
+* New: Compatibilty with [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-org-page&utm_campaign=rma-pro)
 
 = 2.4.9 - Released on 20 Jan 2023 =
 
@@ -411,6 +415,6 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.5.0 - Released on 3 March 2023 = 
-* New: Compatibility with latest WP( 6.1.1 ) and WC( 7.4.1 )
-* New: Compatibilty with Return Refund and Exchange For WooCommerce and RMA Return Refund & Exchange For WooCommerce Pro plugin.
+= 2.5.1 - Released on 22 March 2023 = 
+* New: Compatibility with latest WP( 6.1.1 ) and WC( 7.5.0 )
+* Fix: Translate Template Name
