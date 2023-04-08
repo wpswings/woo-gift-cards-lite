@@ -330,10 +330,28 @@ class Woocommerce_Gift_Cards_Lite_Public {
 														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
 													}
 												} else {
+													$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
+													$prices = floatval( str_replace( $decimal_separator, '.', $price ) );
+													$prices = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+													wc_get_price_including_tax(
+														$product,
+														array(
+															'qty'   => 1,
+															'price' => $prices,
+														)
+													) :
+													wc_get_price_excluding_tax(
+														$product,
+														array(
+															'qty'   => 1,
+															'price' => $prices,
+														)
+													);
+
 													if ( $price == $default_price ) {
-														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
+														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
 													} else {
-														$cart_html .= '<option  value="' . $price . '">' . wc_price( $price ) . '</option>';
+														$cart_html .= '<option  value="' . $price . '">' . wc_price( $prices ) . '</option>';
 													}
 												}
 											}
@@ -769,6 +787,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 							if ( isset( $product_pricing['type'] ) ) {
 								$product_pricing_type = $product_pricing['type'];
+								$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
 								if ( 'wps_wgm_default_price' == $product_pricing_type ) {
 									$new_price = '';
 									$default_price = $product_pricing['default_price'];
@@ -782,7 +801,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( 'wps_wgm_range_price' == $product_pricing_type ) {
 									$price_html = '';
 									$from_price = $product_pricing['from'];
+									$from_price = floatval( str_replace( $decimal_separator, '.', $from_price ) );
 									$to_price = $product_pricing['to'];
+									$to_price = floatval( str_replace( $decimal_separator, '.', $to_price ) );
 									// price based on country.
 									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
@@ -802,6 +823,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$selected_price = $product_pricing['price'];
 									if ( ! empty( $selected_price ) ) {
 										$selected_prices = explode( '|', $selected_price );
+										$selected_prices = str_replace( $decimal_separator, '.' , $selected_prices );
 										if ( isset( $selected_prices ) && ! empty( $selected_prices ) ) {
 											$price_html = '';
 											$price_html .= '<ins><span class="woocommerce-Price-amount amount">';
@@ -819,6 +841,38 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$selected_prices[0] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $selected_prices[0] );
 												$price_html        .= wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $selected_prices[0] ) . '-' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 											} else {
+												$selected_prices[0] = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+												wc_get_price_including_tax(
+													$product,
+													array(
+														'qty'   => 1,
+														'price' => $selected_prices[0],
+													)
+												) :
+												wc_get_price_excluding_tax(
+													$product,
+													array(
+														'qty'   => 1,
+														'price' => $selected_prices[0],
+													)
+												);
+
+												$last_range = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+												wc_get_price_including_tax(
+													$product,
+													array(
+														'qty'   => 1,
+														'price' => $last_range,
+													)
+												) :
+												wc_get_price_excluding_tax(
+													$product,
+													array(
+														'qty'   => 1,
+														'price' => $last_range,
+													)
+												);
+
 												$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 											}
 											$price_html .= '</span></ins>';
@@ -846,6 +900,39 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										}
 										$start_price = floatval( str_replace( $decimal_separator, '.', $start_price ) );
 										$end_price   = floatval( str_replace( $decimal_separator, '.', $end_price ) );
+
+										$start_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+										wc_get_price_including_tax(
+											$product,
+											array(
+												'qty'   => 1,
+												'price' => $start_price,
+											)
+										) :
+										wc_get_price_excluding_tax(
+											$product,
+											array(
+												'qty'   => 1,
+												'price' => $start_price,
+											)
+										);
+
+										$end_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+										wc_get_price_including_tax(
+											$product,
+											array(
+												'qty'   => 1,
+												'price' => $end_price,
+											)
+										) :
+										wc_get_price_excluding_tax(
+											$product,
+											array(
+												'qty'   => 1,
+												'price' => $end_price,
+											)
+										);
+										
 										$price_html  = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
 									}
 								}
@@ -1822,6 +1909,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
 		$response['result'] = false;
 		$wps_wgm_price      = isset( $_POST['wps_wgm_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) : '';
+		$product_id         = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+		$product            = wc_get_product( $product_id );
 		$decimal_separator  = get_option( 'woocommerce_price_decimal_sep' );
 		$wps_wgm_price      = floatval( str_replace( $decimal_separator, '.', $wps_wgm_price ) );
 
@@ -1832,6 +1921,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$wps_wgm_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_wgm_price );
 				}
 			}
+			$wps_wgm_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+			wc_get_price_including_tax(
+				$product,
+				array(
+					'qty'   => 1,
+					'price' => $wps_wgm_price,
+				)
+			) :
+			wc_get_price_excluding_tax(
+				$product,
+				array(
+					'qty'   => 1,
+					'price' => $wps_wgm_price,
+				)
+			);
+
 			$response['result'] = true;
 			$response['new_price'] = wc_price( $wps_wgm_price );
 			echo json_encode( $response );
