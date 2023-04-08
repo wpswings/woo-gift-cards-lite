@@ -402,6 +402,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											}
 											?>
 										</select>
+										<input type="hidden" id="wps_wgm_variable_price_description" name="wps_wgm_variable_price_description" value="<?php echo isset( $varable_text[0] ) ? esc_html( $varable_text[0] ) : ''; ?>">
 									</p>
 										<?php
 									}
@@ -598,6 +599,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 								if ( isset( $_POST['wps_wgm_message'] ) && ! empty( $_POST['wps_wgm_message'] ) ) {
 									$item_meta['wps_wgm_message'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_message'] ) );
+								}
+								if ( isset( $_POST['wps_wgm_variable_price_description'] ) && ! empty( $_POST['wps_wgm_variable_price_description'] ) ) {
+									$item_meta['wps_wgm_variable_price_description'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_variable_price_description'] ) );
 								}
 								if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
 									$item_meta['delivery_method'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_send_giftcard'] ) );
@@ -963,6 +967,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$mailsend = true;
 								$selected_template = $value->value;
 							}
+							if ( isset( $value->key ) && 'Variable Price Description' == $value->key && ! empty( $value->value ) ) {
+								$mailsend = true;
+								$variable_price_description = $value->value;
+							}
 							if ( isset( $value->key ) && ! empty( $value->value ) ) {
 								do_action( 'wps_wgm_add_additional_meta', $key, $value );
 							}
@@ -979,6 +987,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'item_id'   => $item_id,
 							'item_quantity' => $item_quantity,
 							'datecheck' => $datecheck,
+							'variable_price_description' => $variable_price_description,
 						);
 						update_post_meta( $order_id, 'temp_item_id', $item_id );
 						$wps_wgm_mail_template_data = apply_filters( 'wps_wgm_mail_templates_data_set', $wps_wgm_mail_template_data, $order->get_items(), $order_id );
@@ -1027,6 +1036,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$wps_wgm_common_arr['couponamont'] = $couponamont;
 										$wps_wgm_common_arr['selected_template'] = isset( $selected_template ) ? $selected_template : '';
 										$wps_wgm_common_arr['delivery_method'] = $delivery_method;
+										$wps_wgm_common_arr['variable_price_description'] = $variable_price_description;
 										$wps_wgm_common_arr['item_id'] = $item_id;
 										$wps_wgm_common_arr = apply_filters( 'wps_wgm_common_arr_data', $wps_wgm_common_arr, $item, $order );
 										$wps_wgm_coupon_code = $this->wps_common_fun->wps_wgm_common_functionality( $wps_wgm_common_arr, $order );
@@ -1098,7 +1108,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$temp_metas = array();
 		if ( isset( $formatted_meta ) && ! empty( $formatted_meta ) && is_array( $formatted_meta ) ) {
 			foreach ( $formatted_meta as $key => $meta ) {
-				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Original Price', 'Selected Template' ) ) ) {
+				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Original Price', 'Selected Template', 'Variable Price Description' ) ) ) {
 
 					$temp_metas[ $key ] = $meta;
 				}
@@ -1146,6 +1156,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						}
 						if ( 'wps_wgm_selected_temp' == $key ) {
 							$item->add_meta_data( 'Selected Template', $order_val );
+						}
+						if ( 'wps_wgm_variable_price_description' == $key ) {
+							$item->add_meta_data( 'Variable Price Description', $order_val );
 						}
 						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $order_val );
 					}
@@ -1494,6 +1507,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $coupon );
 			$args['expirydate'] = $expirydate_format;
 			$args['delivery_method'] = isset( $_GET['delivery_method'] ) ? sanitize_text_field( wp_unslash( $h ) ) : '';
+			$args['variable_price_description'] = isset( $_GET['variable_price_desc'] ) ? sanitize_text_field( wp_unslash( $_GET['variable_price_desc'] ) ) : '';
 			$args = apply_filters( 'wps_wgm_add_preview_template_fields', $args );
 
 			if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {  // Added for price based on country.

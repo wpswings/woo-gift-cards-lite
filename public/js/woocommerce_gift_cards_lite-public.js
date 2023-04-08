@@ -68,6 +68,8 @@
 				if (wps_wgm.pricing_type.type == 'wps_wgm_variable_price') {
 
 					var wps_wgm_price = jQuery(this).val();
+					var wps_wgm_text = jQuery(this).find(':selected').text();
+					jQuery( '#wps_wgm_variable_price_description' ).val( wps_wgm_text );
 					wps_wgm_variable_price_change(wps_wgm_price);
 				}
 			});
@@ -405,6 +407,7 @@
 					var send_date = '';
 					var html = "<ul>";
 					var delivery_method = jQuery( document ).find( 'input[name="wps_wgm_send_giftcard"]:checked' ).val();
+					var variable_price_desc = $( '#wps_wgm_variable_price_description' ).val();
 					// remove validation from to fields.
 					if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm_remove_validation_to() == 'on') {
 						if (delivery_method == 'Mail to recipient') {
@@ -562,6 +565,7 @@
 						form_Data.append( 'product_id', product_id );
 						form_Data.append( 'tempId', tempId );
 						form_Data.append( 'send_date', send_date );
+						form_Data.append( 'variable_price_desc', variable_price_desc );
 						if ( wps_wgm.is_pro_active ) {
 							form_Data.append( 'delivery_method', delivery_method );
 						}
