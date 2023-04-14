@@ -190,6 +190,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$templatehtml = str_replace( '[EXPIRYDATE]', $args['expirydate'], $templatehtml );
 				$templatehtml = str_replace( '[DISCLAIMER]', $giftcard_disclaimer, $templatehtml );
 				$templatehtml = str_replace( '[DELIVERYMETHOD]', $args['delivery_method'], $templatehtml );
+				$templatehtml = str_replace( '[VARIABLEDESCRIPTION]', $args['variable_price_description'], $templatehtml );
 				$templatehtml = str_replace( '[RECOMMENDEDPRODUCT]', $recommand_product, $templatehtml );
 				$templatehtml = str_replace( '[DEFAULTEVENT]', $giftcard_event_html, $templatehtml );
 				$templatehtml = str_replace( '[FEATUREDIMAGE]', $giftcard_featured, $templatehtml );
@@ -388,6 +389,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $wps_wgm_common_arr['gift_couponnumber'] );
 				$args['expirydate'] = $wps_wgm_common_arr['expirydate_format'];
 				$args['delivery_method'] = $wps_wgm_common_arr['delivery_method'];
+				$args['variable_price_description'] = $wps_wgm_common_arr['variable_price_description'];
 				// price based on country.
 				if ( class_exists( 'WCPBC_Pricing_Zones' ) ) {
 
