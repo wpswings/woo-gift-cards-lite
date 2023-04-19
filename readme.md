@@ -18,7 +18,7 @@ Moreover, the gifting portal allows you to scan, redeem, recharge, and fetch all
 
 You can offer two digital gift card delivery methods to users: Email and Downloadable PDFs.
 
-**Video** - [**How to Sell Gift Cards in Your WooCommerce Store?**](https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0)
+**Video** - [**WooCommerce Gift Card: How to Sell Gift Cards And Boost Revenue On WordPress Website ?**](https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0)
 
 **WITH THE ULTIMATE GIFT CARDS FOR WOOCOMMERCE PLUGIN YOU CAN:**
 
