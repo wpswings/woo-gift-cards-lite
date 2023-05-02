@@ -252,12 +252,18 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 2.5.1 - Released on 22 March 2023 = 
-* New: Compatibility with latest WP( 6.1.1 ) and WC(7.5.0 )
-* Fix: Translate Template Name
+= 2.5.2 - Released on 13 April 2023 = 
+* New : Compatibility with latest WP( 6.2.0) and WC(7.5.1)
+* New : New shortcode added [VARIABLEDESCRIPTION]
+* New : Add tax display in default price, selected price, variable price type
+
+
+= 2.5.1 - Released on 21 March 2023 = 
+* New: Compatibility with latest WP( 6.1.1) and WC(7.5.0)
+* Fix: Translate Template Name In Org
 
 = 2.5.0 - Released on 3 March 2023 = 
-* New: Compatibility with latest WP( 6.1.1 ) and WC( 7.4.1 )
+* New: Compatibility with latest WP( 6.1.1) and WC(7.4.1)
 * New: Compatibilty with [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-org-page&utm_campaign=rma-pro)
 
 = 2.4.9 - Released on 20 Jan 2023 =
@@ -415,6 +421,12 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.5.1 - Released on 22 March 2023 = 
-* New: Compatibility with latest WP( 6.1.1 ) and WC( 7.5.0 )
-* Fix: Translate Template Name
+= 2.5.1 - Released on 13 April 2023 = 
+* New : Compatibility with latest WP( 6.2.0) and WC(7.5.1)
+* New : New shortcode added [VARIABLEDESCRIPTION]
+* New : Add tax display in default price, selected price, variable price type
+
+
+
+
+

@@ -1188,9 +1188,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$post_id                  = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
 				$todaydate                = date_i18n( 'Y-m-d' );
 				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
-
-				$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
-
+			/////////////////////////////////////
+				$local_expiry_day = get_post_meta($post_id  ,'wps_wgm_local_setting_giftcard_expiry',true);
+				if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
+					$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
+				}else {
+					$expiry_date = $local_expiry_day;
+				}
+				
+/////////////////////////////////////////////////////////
 				$expirydate_format             = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 				$wps_wgm_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_coupon_length' );
 

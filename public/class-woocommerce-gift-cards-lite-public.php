@@ -129,9 +129,21 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'recipient_name' => sprintf( __( ' recipient names should be entered seperated by comma', 'woo-gift-cards-lite' ), '</b>' ),
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
-		if ( is_product() ) {
-			global $post;
-			$product_id    = $post->ID;
+		global $post;	
+		$post_id = isset( $post->ID ) ? $post->ID : '';
+		$page_content = '';
+		if ( ! empty( $post_id ) ) {
+			$page         = get_post( $post->ID );
+			$page_content = ! empty( $page->post_content ) ? $page->post_content : '';
+		}
+		if ( is_product() || str_contains( $page_content, 'product_page id' ) ) {
+			if (str_contains( $page_content, 'product_page id' )){
+				$content = $post->post_content;		
+				$array = (explode('=',explode( ']', $content )[0]))[1];
+				$product_id = intval($array);	
+			}else{
+				$product_id    = $post->ID;			
+			}
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type       = $product_types[0]->slug;
@@ -1015,6 +1027,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$gift_order = false;
 					$selected_template = '';
 					$original_price = 0;
+					$variable_price_description = 0;
 					$delivery_method = '';
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
@@ -1111,7 +1124,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$gift_couponnumber = wps_wgm_coupon_generator( $giftcard_coupon_length );
 									if ( $this->wps_common_fun->wps_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to ) ) {
 										$todaydate = date_i18n( 'Y-m-d' );
-										$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_giftcard_expiry' );
+										
+										//////////////////////////////////////////////////
+										$local_expiry_day = get_post_meta($pro_id  ,'wps_wgm_local_setting_giftcard_expiry',true);
+										if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
+											$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_giftcard_expiry' );
+										}else {
+											$expiry_date = $local_expiry_day;
+										}
+										/////////////////////////////////////////////////
+										
 										$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 										$wps_wgm_common_arr['order_id'] = $order_id;
 										$wps_wgm_common_arr['product_id'] = $pro_id;
@@ -1132,6 +1154,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 						}
 					}
+					
 					if ( $gift_order && isset( $wps_wgm_mail_template_data['datecheck'] ) && $wps_wgm_mail_template_data['datecheck'] ) {
 						update_post_meta( $order_id, 'wps_wgm_order_giftcard', 'send' );
 					}
@@ -1555,7 +1578,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 			$giftcard_prefix = $general_setting['wps_wgm_general_setting_giftcard_prefix'];
 			$coupon = $giftcard_prefix . $password;
-			$expiry_date = $general_setting['wps_wgm_general_setting_giftcard_expiry'];
+			////////////////////////////////////
+
+			$local_expiry_day = get_post_meta($product_id    ,'wps_wgm_local_setting_giftcard_expiry',true);
+			if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
+				$expiry_date = $general_setting['wps_wgm_general_setting_giftcard_expiry'];
+			}else {
+				$expiry_date = $local_expiry_day;
+			}
+
+			/////////////////////////////////////
+			
 
 			$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
 			if ( isset( $is_imported_product ) && 'yes' === $is_imported_product ) {

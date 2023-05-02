@@ -266,7 +266,16 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 					$usage_limit = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' );
 					$usage_limit = ( '' != $usage_limit ) ? $usage_limit : 0;
-					$expiry_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
+					
+					//////////////////////////////////////////////////
+					$local_expiry_day = get_post_meta($product_id  ,'wps_wgm_local_setting_giftcard_expiry',true);
+					if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
+						$expiry_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
+					}else {
+						$expiry_date = $local_expiry_day;
+					}
+					/////////////////////////////////////////////////
+					
 					$expiry_date = ( '' != $expiry_date ) ? $expiry_date : 0;
 
 					$free_shipping = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' );
@@ -290,7 +299,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					} else {
 						$todaydate = date_i18n( 'Y-m-d' );
 						if ( 0 < $expiry_date || 0 === $expiry_date ) {
-							$expirydate = date_i18n( 'Y-m-d', strtotime( "$todaydate +$expiry_date day" ) );
+							$expirydate = date_i18n( 'Y-m-d', strtotime( '-1 day' ,strtotime( "$todaydate +$expiry_date day" ) ) );
 						} else {
 							$expirydate = '';
 						}
