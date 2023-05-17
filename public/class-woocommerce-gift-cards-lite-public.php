@@ -137,17 +137,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$page_content = ! empty( $page->post_content ) ? $page->post_content : '';
 		}
 		if ( is_product() || str_contains( $page_content, 'product_page id' ) ) {
-			// if (str_contains( $page_content, 'product_page id' )){
-			// 	$content = $post->post_content;		
-			// 	$array = (explode('=',explode( ']', $content )[0]))[1];
-			// 	$product_id = intval($array);	
-			// }else{
-			// 	$product_id    = $post->ID;			
-			// }
+			
 			if (str_contains( $page_content, 'product_page id' )){
 				$content = $post->post_content;
 				$array = (explode('=',explode( ']', $content )[0]))[1];
-              
 				$product_id = intval(explode('"',$array)[1]);		
 			}else{
 				$product_id    = $post->ID;	
@@ -1136,8 +1129,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$to = trim( array_shift( $recipients ) );
 									}
 									$gift_couponnumber = wps_wgm_coupon_generator( $giftcard_coupon_length );
-									// print_r($gift_couponnumber);
-									// die;
+								
 									if ( $this->wps_common_fun->wps_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to ) ) {
 										$todaydate = date_i18n( 'Y-m-d' );
 										
