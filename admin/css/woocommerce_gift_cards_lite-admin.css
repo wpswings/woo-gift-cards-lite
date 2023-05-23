@@ -511,7 +511,7 @@
  }
  
  table.wps_redeem_details thead {
-	 background-color: #ef5350;
+	 background-color: #2196f3;
 	 color: #ffffff;
  }
  
@@ -620,6 +620,7 @@
 	 font-size: 16px;
 	 cursor: pointer;
 	 line-height: 1.4;
+	 border: 1px solid #2196f3;
  }
  
  .wps_redeem_details .remove_giftcard_redeem_details,
@@ -673,7 +674,8 @@
  
  a.wps_gw_open_redeem_link {
 	 background-color: #ffffff;
-	 color: #ef5350;
+	 color: #2196f3;
+	 border: 1px solid #2196f3;
  }
  
  input#wcgm_generate_offine_redeem_url:hover,
@@ -683,18 +685,18 @@
  .update_giftcard_redeem_details:hover,
  .update_giftcard_redeem_details:focus {
 	 background-color: #ffffff;
-	 color: #333333;
+	 color: #2196f3;
 	 outline: 0;
 	 box-shadow: none;
  }
  
  .wps_gw_open_redeem_link:hover,
  .wps_gw_open_redeem_link:focus {
-	 background-color: #4F3154;
+	 background-color: #2196f3;
 	 color: #ffffff;
 	 box-shadow: none;
 	 outline: 0;
-	 border-color: #4F3154;
+	 border-color: #2196f3;
  }
  
  .wps_redeem_registraion_div .wps_gw_general_setting {
