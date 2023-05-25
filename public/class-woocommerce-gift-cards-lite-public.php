@@ -140,8 +140,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			
 			if (str_contains( $page_content, 'product_page id' )){
 				$content = $post->post_content;
-				$array = (explode('=',explode( ']', $content )[0]))[1];
-				$product_id = intval(explode('"',$array)[1]);		
+				if ( isset((explode('=',explode( ']', $content )[0]))[1])) {
+					$array = (explode('=',explode( ']', $content )[0]))[1];
+					$product_id = intval(explode('"',$array)[1]);	
+				}	else {
+					$product_id    = $post->ID;
+				}	
 			}else{
 				$product_id    = $post->ID;	
 			}
