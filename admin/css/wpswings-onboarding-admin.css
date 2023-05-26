@@ -2,6 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
  #error {display: none;}
  /* Button used to open the contact form - fixed at the bottom of the page */
  .wps-on-boarding-form-submit {

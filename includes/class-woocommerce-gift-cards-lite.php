@@ -66,7 +66,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '2.5.2';
+			$this->version = '2.5.3';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -212,7 +212,7 @@ class Woocommerce_Gift_Cards_Lite {
 		add_action( 'woocommerce_wgm_gift_card_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
 		$this->loader->add_filter( 'woocommerce_loop_add_to_cart_link', $plugin_public, 'wps_wgm_woocommerce_loop_add_to_cart_link', 10, 2 );
 		$this->loader->add_filter( 'woocommerce_product_is_taxable', $plugin_public, 'wps_wgm_woocommerce_product_is_taxable', 10, 2 );
-		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'wps_wgm_woocommerce_before_main_content' );
+		$this->loader->add_action( 'woocommerce_before_single_product', $plugin_public, 'wps_wgm_woocommerce_before_main_content' );
 		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'wps_wgm_woocommerce_product_query', 10, 2 );
 		$this->loader->add_action( 'woocommerce_new_order_item', $plugin_public, 'wps_wgm_woocommerce_new_order_item', 10, 3 );
 		$this->loader->add_filter( 'wc_shipping_enabled', $plugin_public, 'wps_wgm_wc_shipping_enabled' );

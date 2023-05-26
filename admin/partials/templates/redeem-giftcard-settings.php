@@ -267,9 +267,12 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 										echo esc_attr( $offine_giftcard_redeem_link['shop_url'] );  }
 									?>
 										" class= "wps_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woo-gift-cards-lite' ); ?></a>
-									<?php if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) { ?>
-										<input type="submit" name="update_giftcard_redeem_details" class="update_giftcard_redeem_details"  class="input-text" value ='Update Authorization' >
-									<?php } ?>
+									<?php if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) { 
+										include_once ABSPATH . 'wp-admin/includes/plugin.php';
+										if ( is_plugin_active( 'giftware/giftware.php' ) ) {	
+										?>					
+										<input type="submit" name="update_giftcard_redeem_details" class="update_giftcard_redeem_details"  class="input-text" value ='Update Authorization' >	
+									<?php } } ?>
 								</td>
 							</tr>
 								<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && '' == $offine_giftcard_redeem_link['license'] ) { ?>

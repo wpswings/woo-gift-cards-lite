@@ -1188,9 +1188,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$post_id                  = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
 				$todaydate                = date_i18n( 'Y-m-d' );
 				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
-
-				$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
-
+			/////////////////////////////////////
+				$local_expiry_day = get_post_meta($post_id  ,'wps_wgm_local_setting_giftcard_expiry',true);
+				if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
+					$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
+				}else {
+					$expiry_date = $local_expiry_day;
+				}
+				
+/////////////////////////////////////////////////////////
 				$expirydate_format             = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 				$wps_wgm_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_coupon_length' );
 
@@ -1254,6 +1260,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$new_links = array(
 				'demo'    => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Demo.svg" class="wps-info-img" alt="Demo image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Demo', 'woo-gift-cards-lite' ) . '</a>',
 				'doc'     => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Documentation.svg" class="wps-info-img" alt="documentation image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Documentation', 'woo-gift-cards-lite' ) . '</a>',
+				'Video'     => '<a href="https://www.youtube.com/watch?v=YgPLO8HDGtc" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/YouTube32px.svg" class="wps-info-img" alt="Vedio image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Video', 'woo-gift-cards-lite' ) . '</a>',
 				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Support.svg" class="wps-info-img" alt="support image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Support', 'woo-gift-cards-lite' ) . '</a>',
 				'services' => '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Services.svg" class="wps-info-img" alt="services image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Services', 'woo-gift-cards-lite' ) . '</a>',
 			);
