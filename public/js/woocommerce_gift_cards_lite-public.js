@@ -12,7 +12,7 @@
 		function($){
 
 			$('#wps_wgm_to_email').on('blur', function() {
-				if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm.enable_sent_multiple_gc == 'on' ) {
+				if (wps_wgm.is_pro_active != null && wps_wgm.is_pro_active != '' && wps_wgm.enable_sent_multiple_gc == 'on' && wps_wgm.is_imported != 'yes' ) {
 					var recipients = $(this).val();
 					if (recipients) {
 						$(this).val(recipients.trim().split(/[ ,]+/).map(function (item) {
@@ -187,7 +187,7 @@
 						$("#wps_wgm_error_notice").html(html);
 						$("#wps_wgm_error_notice").show();
 						jQuery('html, body').animate({
-							scrollTop: jQuery(".woocommerce-page").offset().top
+							scrollTop: jQuery(".woocommerce-js").offset().top
 						}, 800);
 					} else {
 						$("#wps_wgm_error_notice").hide();
@@ -246,7 +246,7 @@
 									html += "<li><b>";
 									html += wps_wgm.to_empty;
 									html += "</li>";
-								} else if ( ( wps_wgm.is_pro_active == null || wps_wgm.is_pro_active == '' || wps_wgm.is_customizable == 'yes' || wps_wgm.enable_sent_multiple_gc != 'on' ) && ! to_mail.match( mailformat ) ) {
+								} else if ( ( wps_wgm.is_pro_active == null || wps_wgm.is_pro_active == '' || wps_wgm.is_customizable == 'yes' || wps_wgm.is_imported == 'yes' || wps_wgm.enable_sent_multiple_gc != 'on' ) && ! to_mail.match( mailformat ) ) {
 									error = true;
 									$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
 									html += "<li><b>";
@@ -372,7 +372,7 @@
 							$( "#wps_wgm_error_notice" ).show();
 							jQuery( 'html, body' ).animate(
 								{
-									scrollTop: jQuery( ".woocommerce-page" ).offset().top
+									scrollTop: jQuery( ".woocommerce-js" ).offset().top
 								},
 								800
 							);
@@ -427,7 +427,7 @@
 								html += "<li><b>";
 								html += wps_wgm.to_empty;
 								html += "</li>";
-							} else if ( ( wps_wgm.is_pro_active == null || wps_wgm.is_pro_active == '' || wps_wgm.is_customizable == 'yes' || wps_wgm.enable_sent_multiple_gc != 'on' ) && ! to_mail.match( mailformat ) ) {
+							} else if ( ( wps_wgm.is_pro_active == null || wps_wgm.is_pro_active == '' || wps_wgm.is_customizable == 'yes' || wps_wgm.is_imported == 'yes' || wps_wgm.enable_sent_multiple_gc != 'on' ) && ! to_mail.match( mailformat ) ) {
 								error = true;
 								$( "#wps_wgm_to_email" ).addClass( "wps_wgm_error" );
 								html += "<li><b>";
@@ -548,7 +548,7 @@
 						// WPS code for woodmart theme.
 						jQuery( 'html, body' ).animate(
 							{
-								scrollTop: jQuery( ".woocommerce-page" ).offset().top
+								scrollTop: jQuery( ".woocommerce-js" ).offset().top
 							   },
 							800
 						);

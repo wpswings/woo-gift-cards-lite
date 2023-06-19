@@ -188,12 +188,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$is_customizable = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 						$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
 						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
+						$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
 					}
 
 					$wps_wgm['pricing_type'] = $wps_wgm_pricing;
 					$wps_wgm['product_id']   = $product_id;
 					$wps_wgm['is_customizable'] = $is_customizable;
 					$wps_wgm['enable_sent_multiple_gc'] = $enable_sent_multiple_gc;
+					$wps_wgm['is_imported'] = $is_imported_product;
 					wp_enqueue_script( 'thickbox' );
 					$wps_wgm['wps_wgm_nonce'] = wp_create_nonce( 'wps-wgc-verify-nonce' );
 					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-public.js', array( 'jquery' ), $this->version, true );
@@ -266,6 +268,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							wp_nonce_field( 'wps_wgm_single_nonce', 'wps_wgm_single_nonce_field' );
 							$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
 							$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
+							$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
 							if ( isset( $product_pricing['type'] ) ) {
 								$product_pricing_type = $product_pricing['type'];
 								if ( 'wps_wgm_range_price' === $product_pricing_type ) {
@@ -472,7 +475,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$cart_html .= '<div class="wps_wgm_section wps_delivery_method">';
 									$cart_html .= '<label class = "wps_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $wps_wgm_delivery_setting_method ) && 'Mail to recipient' == $wps_wgm_delivery_setting_method ) || ( '' == $wps_wgm_delivery_setting_method ) ) {
-								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
+								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc && 'yes' !== $is_imported_product ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
 								$cart_html .= '<div class="wps_wgm_delivery_method">
 											<input type="radio" name="wps_wgm_send_giftcard" value="Mail to recipient" class="wps_wgm_send_giftcard" checked="checked" id="wps_wgm_to_email_send" >
 											<span class="wps_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>
@@ -647,6 +650,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 									if ( isset( $product_pricing['type'] ) && 'wps_wgm_default_price' == $product_pricing['type'] ) {
 										if ( isset( $product_pricing['default_price'] ) && $product_pricing['default_price'] == $wps_wgm_price ) {
+											$item_meta['wps_wgm_price'] = $wps_wgm_price;
+										} elseif ( isset( $product_type ) && 'variable' == $product_type ) {
 											$item_meta['wps_wgm_price'] = $wps_wgm_price;
 										} else {
 											$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
@@ -1148,7 +1153,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										
 										$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 										$wps_wgm_common_arr['order_id'] = $order_id;
-										$wps_wgm_common_arr['product_id'] = $pro_id;
+										$wps_wgm_common_arr['product_id'] = $item['product_id'];
 										$wps_wgm_common_arr['to'] = $to;
 										$wps_wgm_common_arr['from'] = $from;
 										$wps_wgm_common_arr['gift_couponnumber'] = $gift_couponnumber;
@@ -1592,7 +1597,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$coupon = $giftcard_prefix . $password;
 			////////////////////////////////////
 
-			$local_expiry_day = get_post_meta($product_id    ,'wps_wgm_local_setting_giftcard_expiry',true);
+			$local_expiry_day = get_post_meta($product_id,'wps_wgm_local_setting_giftcard_expiry',true);
 			if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
 				$expiry_date = $general_setting['wps_wgm_general_setting_giftcard_expiry'];
 			}else {
