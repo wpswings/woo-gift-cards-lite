@@ -523,6 +523,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$receive_message = stripcslashes( $receive_message );
 					$receive_message = str_replace( '[TO]', $to, $receive_message );
 					$receive_subject = stripcslashes( $receive_subject );
+					$receive_subject = str_replace( '[TO]', $to, $receive_subject );
 
 					if ( 'off' == $disable_buyer_notice && 'Mail to recipient' == $wps_wgm_common_arr['delivery_method'] ) {
 						wc_mail( $from, $receive_subject, $receive_message );
