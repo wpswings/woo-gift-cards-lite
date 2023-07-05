@@ -1089,10 +1089,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								do_action( 'wps_wgm_add_additional_meta', $key, $value );
 							}
 						}
-						if ( empty($variable_price_description) ){
-							$variable_price_description = '';
-						}
-
 						$wps_wgm_mail_template_data = array(
 							'to' => $to,
 							'from' => $from,
