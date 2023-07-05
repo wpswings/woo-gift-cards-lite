@@ -1089,7 +1089,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								do_action( 'wps_wgm_add_additional_meta', $key, $value );
 							}
 						}
-
+						if ( empty($variable_price_description) ){
+							$variable_price_description = '';
+						}
 
 						$wps_wgm_mail_template_data = array(
 							'to' => $to,
@@ -1137,6 +1139,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									if ( isset( $recipients ) && ! empty( $recipients ) ) {
 										$to = trim( array_shift( $recipients ) );
 									}
+									
 									$gift_couponnumber = wps_wgm_coupon_generator( $giftcard_coupon_length );
 								
 									if ( $this->wps_common_fun->wps_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $item['product_id'], $to ) ) {
@@ -1165,9 +1168,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$wps_wgm_common_arr['variable_price_description'] = $variable_price_description;
 										$wps_wgm_common_arr['item_id'] = $item_id;
 										$wps_wgm_common_arr = apply_filters( 'wps_wgm_common_arr_data', $wps_wgm_common_arr, $item, $order );
+										
 										$wps_wgm_coupon_code = $this->wps_common_fun->wps_wgm_common_functionality( $wps_wgm_common_arr, $order );
 									}
 								}
+								
 							}
 						}
 					}

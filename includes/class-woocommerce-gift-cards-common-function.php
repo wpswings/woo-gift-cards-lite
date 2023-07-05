@@ -572,6 +572,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			} else {
 				$expirydate_format = __( 'No Expiration', 'woo-gift-cards-lite' );
 			}
+			
 			return $expirydate_format;
 		}
 
