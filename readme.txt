@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers, gift cards, gifts, certificate, gift cards woocommerce
 Requires at least: 5.1.0
-Tested up to: 6.2.0
+Tested up to: 6.2.2
 WC requires at least: 5.1.0
-WC tested up to: 7.7.0
-Stable tag:  2.5.3
+WC tested up to: 7.8.2
+Stable tag:  2.5.4
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,13 +16,13 @@ Create, sell and manage WooCommerce gift cards to attract more sales and multipl
 
 == Description ==
 
-**SELL GIFT CARDS ON THE WORDPRESS WEBSITE WITH ONE OF THE HIGHEST-RATED PLUGINS. GET WOOCOMMERCE GIFT CARDS SOLUTION TO CREATE, REDEEM AND MANAGE DIGITAL GIFT COUPONS. CUSTOMIZE CARDS, USE PREDEFINED TEMPLATES, AND SHARE GIFT VOUCHERS VIA EMAIL, OR DOWNLOADABLE PDF.**
+**SELL GIFT CARDS ON THE WORDPRESS WEBSITE WITH ONE OF THE HIGHEST-RATED PLUGINS. GET WOOCOMMERCE GIFT CARDS SOLUTION TO CREATE, REDEEM AND MANAGE DIGITAL GIFT COUPONS. CUSTOMIZE CARDS, USE PREDEFINED TEMPLATES, AND SHARE GIFT VOUCHERS VIA EMAIL..**
 
 Ultimate Gift Cards for WooCommerce plugin allows you to create, sell, and manage digital & physical gift cards at your eCommerce store. Customers can purchase these cards and send them to anyone by email or shipping. The recipients can redeem the gift coupons to shop at your store. They can also use cards as gift vouchers. 
  
 Moreover, the gifting portal allows you to scan, redeem, recharge, and fetch all types of gift cards created with our [**Gift Cards for WooCommerce**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro) plugin.
 
-You can offer two digital gift card delivery methods to users: Email and Downloadable PDFs.
+You can offer an email-to-the-recipient option as the digital gift card delivery method.
 
 [youtube https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0]
 
@@ -64,7 +64,7 @@ The WooCommerce Gift cards plugin lets you create cards with five different pric
 * **Variable Price:** Different prices for different durations 
 
 **4) Flexible Delivery Options**
-Ultimate Gift Cards for WooCommerce delivers digital gift coupons using emails and Downloadable PDFs. You can select either at your convenience. If you choose the email method, the customer has to enter the recipient’s email while buying the WooCommerce gift cards. Afterward, the card is sent to the recipient’s email. Or you can choose the downloadable delivery method in which users can purchase & download the gift voucher.
+Ultimate Gift Cards for WooCommerce delivers digital gift coupons using emails. If you choose the email method, the customer has to enter the recipient’s email while buying the WooCommerce gift cards. Afterward, the card is sent to the recipient’s email. From the received email, they can download the gift vouchers.
 
 **5) WPML Multilingual Support**
 The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
@@ -252,6 +252,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 2.5.4 - Released on 7 July 2023 = 
+* New: Lastest WP[6.2.2] and WC[7.8.2]
+
 = 2.5.3 - Released on 25 May 2023 =
 * New : Compatibility with latest WP( 6.2.0) and WC(7.7.0)
 
@@ -424,8 +427,8 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.5.3 - Released on 25 May 2023 =
-* New : Compatibility with latest WP( 6.2.0) and WC(7.7.0)
+= 2.5.4 - Released on 7 July 2023 = 
+* New: Lastest WP[6.2.2] and WC[7.8.2]
 
 
 

@@ -583,6 +583,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
+	
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 		if ( $wps_wgc_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
@@ -689,9 +690,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				}
 			}
 		}
+		if ( get_option( 'wps_gccoupon_rechargeable_product_id' ) == $product_id ) {
+			$recharge_code = WC()->session->get( 'recharge_code' );
+			$item_meta['recharge_coupon_key_field'] = $recharge_code;
+			$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
+		}		
+		
 		return $the_cart_data;
 	}
-
+	
+ 
 	/**
 	 * List out the Meta Data into the Cart Items.
 	 *
@@ -709,6 +717,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( $wps_wgc_enable ) {
 			if ( isset( $existing_item_meta ['product_meta']['meta_data'] ) ) {
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
+					
 					if ( 'wps_wgm_to_email' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'To', 'woo-gift-cards-lite' ),
@@ -744,13 +753,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'value' => stripslashes( $val ),
 						);
 					}
+					if ( 'recharge_coupon_key_field' == $key ) {
+						$item_meta[] = array(
+							'key' => __('Coupon code', 'woo-gift-cards-lite'),
+							'value' => stripslashes($val),
+						);
+					}
 					$item_meta = apply_filters( 'wps_wgm_get_item_meta', $item_meta, $key, $val );
 				}
+				
 			}
 		}
+	
+		
 		return $item_meta;
 	}
-
+	
 	/**
 	 * Set the Gift Card Price into Cart.
 	 *
@@ -783,6 +801,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				}
 			}
 		}
+
+		
 	}
 
 	/**
@@ -999,7 +1019,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
-
+		$this->wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status);
+		
 		
 		$wps_wgm_mail_template_data = array();
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1009,6 +1030,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$is_gift_card = false;
 					$datecheck = true;
 					$order = wc_get_order( $order_id );
+					
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
 
@@ -1179,9 +1201,50 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					do_action( 'wps_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status, $wps_wgm_mail_template_data );
 				}
 			}
+
+
+			
+		}
+		
+	}
+	/**
+	 * Adding fund to copon 
+	 * 
+	 */
+	public function wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status){
+	
+		 if ( $old_status != $new_status ) {
+			
+			 if ( 'completed' == $new_status || 'processing' == $new_status ) {
+				$order = wc_get_order( $order_id );
+				// print_r($order);
+				// die;
+				foreach( $order->get_items() as $item => $value ){
+					foreach($value->get_meta_data() as $key => $data){
+						$coupon_code = $data->value; // Replace 'your_coupon_code' with the actual coupon code you want to check.
+
+						// Get the coupon object
+						$coupon = new WC_Coupon($coupon_code);
+						
+						
+						// Check if the coupon exists
+						if ($coupon->is_valid()) {
+							
+							$total =  $order->get_total()+$coupon->get_amount();
+							$coupon->set_amount($total);
+							// Save the changes
+							$coupon->save();
+						} else {
+							echo "Coupon '{$coupon_code}' is not available.";
+						}
+				
+					}
+				}
+				
+				
+			 }
 		}
 	}
-
 	/**
 	 * Hide coupon feilds from cart page if only giftcard products are there
 	 *
@@ -1260,7 +1323,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_checkout_create_order_line_item( $item, $cart_key, $values ) {
+	
+	
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		
+		
+		// if ( $values['product_id'] == get_option( 'wps_gccoupon_rechargeable_product_id' ) ){
+		// 	$item->add_meta_data( 'Coupon code', $values['recharge_coupon_key_field']);
+		// }
+
 		if ( $wps_wgc_enable ) {
 			if ( isset( $values ['product_meta'] ) ) {
 				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ) {
@@ -1287,6 +1358,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						}
 						if ( 'wps_wgm_variable_price_description' == $key ) {
 							$item->add_meta_data( 'Variable Price Description', $order_val );
+						}
+						if ( 'recharge_coupon_key_field' == $key ) {
+							$item->add_meta_data( 'Coupon code', $order_val );
 						}
 						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $order_val );
 					}

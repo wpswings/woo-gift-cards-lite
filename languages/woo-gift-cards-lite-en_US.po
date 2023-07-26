@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.5.3\n"
-"POT-Creation-Date: 2023-05-24 14:49+0530\n"
-"PO-Revision-Date: 2023-05-24 14:49+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.5.4\n"
+"POT-Creation-Date: 2023-07-06 18:21+0530\n"
+"PO-Revision-Date: 2023-07-06 18:23+0530\n"
 "Language-Team: WP Swings\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -926,8 +926,8 @@ msgid "Product"
 msgstr ""
 
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:41
-#: public/class-woocommerce-gift-cards-lite-public.php:469
-#: public/class-woocommerce-gift-cards-lite-public.php:734
+#: public/class-woocommerce-gift-cards-lite-public.php:476
+#: public/class-woocommerce-gift-cards-lite-public.php:743
 msgid "Delivery Method"
 msgstr ""
 
@@ -978,38 +978,38 @@ msgid "Unexpected Error Occured"
 msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:130
-#: includes/class-woocommerce-gift-cards-common-function.php:156
-#: includes/class-woocommerce-gift-cards-common-function.php:575
+#: includes/class-woocommerce-gift-cards-common-function.php:149
+#: includes/class-woocommerce-gift-cards-common-function.php:573
 msgid "No Expiration"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:177
-#: public/class-woocommerce-gift-cards-lite-public.php:723
-#: public/class-woocommerce-gift-cards-lite-public.php:1621
+#: includes/class-woocommerce-gift-cards-common-function.php:170
+#: public/class-woocommerce-gift-cards-lite-public.php:732
+#: public/class-woocommerce-gift-cards-lite-public.php:1631
 msgid "Mail to recipient"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:179
-#: public/class-woocommerce-gift-cards-lite-public.php:726
-#: public/class-woocommerce-gift-cards-lite-public.php:1623
+#: includes/class-woocommerce-gift-cards-common-function.php:172
+#: public/class-woocommerce-gift-cards-lite-public.php:735
+#: public/class-woocommerce-gift-cards-lite-public.php:1633
 msgid "Downloadable"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:181
-#: public/class-woocommerce-gift-cards-lite-public.php:728
-#: public/class-woocommerce-gift-cards-lite-public.php:1625
+#: includes/class-woocommerce-gift-cards-common-function.php:174
+#: public/class-woocommerce-gift-cards-lite-public.php:737
+#: public/class-woocommerce-gift-cards-lite-public.php:1635
 msgid "shipping"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:476
+#: includes/class-woocommerce-gift-cards-common-function.php:473
 msgid " Hurry!  the gift card is Received"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:516
+#: includes/class-woocommerce-gift-cards-common-function.php:513
 msgid " Gift Card is Sent Successfully"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:523
+#: includes/class-woocommerce-gift-cards-common-function.php:520
 msgid " Gift Card is Sent Successfully to the Email Id: [TO]"
 msgstr ""
 
@@ -1082,116 +1082,116 @@ msgstr ""
 msgid " recipient names should be entered seperated by comma"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:283
-#: public/class-woocommerce-gift-cards-lite-public.php:292
-#: public/class-woocommerce-gift-cards-lite-public.php:298
+#: public/class-woocommerce-gift-cards-lite-public.php:290
+#: public/class-woocommerce-gift-cards-lite-public.php:299
+#: public/class-woocommerce-gift-cards-lite-public.php:305
 msgid "Enter Price Within Above Range"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:313
+#: public/class-woocommerce-gift-cards-lite-public.php:320
 msgid "Choose Gift Card Selected Price "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:388
 #: public/class-woocommerce-gift-cards-lite-public.php:395
-#: public/class-woocommerce-gift-cards-lite-public.php:400
+#: public/class-woocommerce-gift-cards-lite-public.php:402
+#: public/class-woocommerce-gift-cards-lite-public.php:407
 msgid "Enter Gift Card Price "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:390
 #: public/class-woocommerce-gift-cards-lite-public.php:397
-#: public/class-woocommerce-gift-cards-lite-public.php:402
+#: public/class-woocommerce-gift-cards-lite-public.php:404
+#: public/class-woocommerce-gift-cards-lite-public.php:409
 msgid "Minimum Price is : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:445
-#: public/class-woocommerce-gift-cards-lite-public.php:711
+#: public/class-woocommerce-gift-cards-lite-public.php:452
+#: public/class-woocommerce-gift-cards-lite-public.php:720
 msgid "From"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:446
+#: public/class-woocommerce-gift-cards-lite-public.php:453
 msgid "Enter the sender name"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:451
+#: public/class-woocommerce-gift-cards-lite-public.php:458
 msgid "Gift Message "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:458
+#: public/class-woocommerce-gift-cards-lite-public.php:465
 msgid "Characters: ( "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:471
+#: public/class-woocommerce-gift-cards-lite-public.php:478
 msgid "Separate multiple addresses with a comma"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:474
+#: public/class-woocommerce-gift-cards-lite-public.php:481
 msgid "Mail To Recipient"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:476
+#: public/class-woocommerce-gift-cards-lite-public.php:483
 msgid "Enter the Recipient Email"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:478
-#: public/class-woocommerce-gift-cards-lite-public.php:489
+#: public/class-woocommerce-gift-cards-lite-public.php:485
+#: public/class-woocommerce-gift-cards-lite-public.php:496
 msgid "Enter the Recipient Name"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:479
+#: public/class-woocommerce-gift-cards-lite-public.php:486
 msgid "We will send it to the recipient's email address"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:487
+#: public/class-woocommerce-gift-cards-lite-public.php:494
 msgid "You Print & Give To Recipient"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:490
+#: public/class-woocommerce-gift-cards-lite-public.php:497
 msgid "After Checkout, you can print your gift card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:554
+#: public/class-woocommerce-gift-cards-lite-public.php:561
 msgid "PREVIEW"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:705
+#: public/class-woocommerce-gift-cards-lite-public.php:714
 msgid "To"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:717
+#: public/class-woocommerce-gift-cards-lite-public.php:726
 #: wps-wgc-lite-gdpr.php:143
 msgid "Gift Message"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1314
+#: public/class-woocommerce-gift-cards-lite-public.php:1324
 msgid "VIEW CARD"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1840
+#: public/class-woocommerce-gift-cards-lite-public.php:1850
 msgid "Recharge via Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1900
+#: public/class-woocommerce-gift-cards-lite-public.php:1910
 msgid "Wallet credited by "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1900
+#: public/class-woocommerce-gift-cards-lite-public.php:1910
 msgid " through Gift Card"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1903
+#: public/class-woocommerce-gift-cards-lite-public.php:1913
 msgid "Wallet updating notification"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1913
+#: public/class-woocommerce-gift-cards-lite-public.php:1923
 msgid "Wallet credited through Gift Card Code : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1931
+#: public/class-woocommerce-gift-cards-lite-public.php:1941
 msgid "Coupon Already used or expired"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:1937
+#: public/class-woocommerce-gift-cards-lite-public.php:1947
 msgid "Enter Valid Gift Card Code"
 msgstr ""
 
