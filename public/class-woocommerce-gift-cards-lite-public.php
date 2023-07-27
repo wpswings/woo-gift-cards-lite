@@ -691,7 +691,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 		if ( get_option( 'wps_gccoupon_rechargeable_product_id' ) == $product_id ) {
-			$recharge_code = WC()->session->get( 'recharge_code' );
+			$recharge_code = WC()->session->get( 'gc_recharge_code' );
 			$item_meta['recharge_coupon_key_field'] = $recharge_code;
 			$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
 		}		
@@ -1222,16 +1222,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * 
 	 */
 	public function wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status){
-	die('fddsg');
+	
 		 if ( $old_status != $new_status ) {
 			
 			 if ( 'completed' == $new_status || 'processing' == $new_status ) {
 				$order = wc_get_order( $order_id );
-				// print_r($order);
-				// die;
+				
 				foreach( $order->get_items() as $item => $value ){
 					foreach($value->get_meta_data() as $key => $data){
-						$coupon_code = $data->value; // Replace 'your_coupon_code' with the actual coupon code you want to check.
+						$coupon_code = $data->value; 
 
 						// Get the coupon object
 						$coupon = new WC_Coupon($coupon_code);
