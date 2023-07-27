@@ -1019,8 +1019,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
-		$this->wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status);
 		
+		$order = new WC_Order( $order_id );
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			
+			$product_id = $item['product_id'];
+	
+			if ($product_id  == get_option( 'wps_gccoupon_rechargeable_product_id') ){
+				$this->wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status);
+			}
+			
+		}
 		
 		$wps_wgm_mail_template_data = array();
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
@@ -1212,7 +1222,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * 
 	 */
 	public function wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status){
-	
+	die('fddsg');
 		 if ( $old_status != $new_status ) {
 			
 			 if ( 'completed' == $new_status || 'processing' == $new_status ) {
@@ -1656,6 +1666,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	public function wps_wgm_preview_email_on_single_page() {
 
 		if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
+		
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
 			$product_pricing                = ! empty( get_post_meta( $product_id, 'wps_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'wps_wgm_pricing', true ) : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
 			$product_pricing_type           = $product_pricing['type'];
@@ -1713,6 +1724,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 				}
 			}
+			
 			$args['to'] = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : '';
 			$args['from'] = isset( $_GET['from'] ) ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '';
 			$args['message'] = isset( $_GET['message'] ) ? sanitize_text_field( wp_unslash( $_GET['message'] ) ) : '';
