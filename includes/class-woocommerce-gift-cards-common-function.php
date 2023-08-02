@@ -128,14 +128,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						}
 
 						if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
-							if ( 'l, d F, Y' == $selected_date ) {
-								$new_for = gmdate( 'm/d/Y', strtotime( $args['expirydate'] ) );
-
-								$new_format = gmdate( 'm/d/Y', strtotime( '-1 day', strtotime( $new_for ) ) );
-
-								$args['expirydate'] = gmdate( $selected_date, strtotime( $new_format ) );
-
-							} else if ( 'd/m/Y' == $selected_date ) {
+							if ( 'd/m/Y' == $selected_date ) {
 								$date = $args['expirydate'];
 								$date = str_replace( '/', '-', $date );
 								$new_date = gmdate( 'Y-m-d', strtotime( $date ) );
@@ -182,6 +175,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				} else {
 					$args['delivery_method'] = $args['delivery_method'];
 				}
+
+				$args['variable_price_description'] = isset( $args['variable_price_description'] ) ? $args['variable_price_description']: '';
+
 				$templatehtml = str_replace( '[ARROWIMAGE]', $arrow_img, $templatehtml );
 				$templatehtml = str_replace( '[BACK]', $mothers_day_backimg, $templatehtml );
 				$templatehtml = str_replace( '[LOGO]', $giftcard_logo_html, $templatehtml );
@@ -527,6 +523,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$receive_message = stripcslashes( $receive_message );
 					$receive_message = str_replace( '[TO]', $to, $receive_message );
 					$receive_subject = stripcslashes( $receive_subject );
+					$receive_subject = str_replace( '[TO]', $to, $receive_subject );
 
 					if ( 'off' == $disable_buyer_notice && 'Mail to recipient' == $wps_wgm_common_arr['delivery_method'] ) {
 						wc_mail( $from, $receive_subject, $receive_message );
@@ -575,6 +572,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			} else {
 				$expirydate_format = __( 'No Expiration', 'woo-gift-cards-lite' );
 			}
+			
 			return $expirydate_format;
 		}
 
