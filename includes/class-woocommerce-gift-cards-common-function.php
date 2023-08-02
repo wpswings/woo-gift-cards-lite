@@ -197,9 +197,17 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						
 					} 
 				}else {
-					$formatted_purchase_date = gmdate($selected_date);
+					if ( $args['purchase_date'] ){
+						$formatted_purchase_date =  $args['purchase_date'];
+					}else {
+						$formatted_purchase_date = gmdate($selected_date);
+					}
+					
 				}
-
+				
+				if (isset($args['created_date'])){
+					$formatted_purchase_date = $args['created_date'];
+				}
 				$args['variable_price_description'] = isset( $args['variable_price_description'] ) ? $args['variable_price_description']: '';
 
 				$templatehtml = str_replace( '[ARROWIMAGE]', $arrow_img, $templatehtml );
