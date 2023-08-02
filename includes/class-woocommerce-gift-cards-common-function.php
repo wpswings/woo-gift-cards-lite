@@ -197,12 +197,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						
 					} 
 				}else {
-					if ( $args['purchase_date'] ){
-						$formatted_purchase_date =  $args['purchase_date'];
-					}else {
 						$formatted_purchase_date = gmdate($selected_date);
-					}
-					
 				}
 				
 				if (isset($args['created_date'])){
