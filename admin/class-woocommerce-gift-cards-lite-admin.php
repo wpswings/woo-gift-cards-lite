@@ -879,7 +879,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							</tr>
 							<tr>
 								<td>[VARIABLEDESCRIPTION]</td>
-								<td><?php esc_html_e( 'Replaced with Variable Product Description.', 'giftware' ); ?></td>
+								<td><?php esc_html_e( 'Replaced with Variable Product Description.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 							
 						<?php
