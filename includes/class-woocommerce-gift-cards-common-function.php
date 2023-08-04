@@ -187,12 +187,12 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				
 				if ($order) {
 					
-					// The order object has been retrieved successfully
+					// The order object has been retrieved successfully.
 					$purchase_date = $order->get_date_created();
 					
-					// Check if the purchase date exists before using it
+					// Check if the purchase date exists before using it.
 					if ($purchase_date) {
-						// Format the purchase date as needed
+						// Format the purchase date as needed.
 						$formatted_purchase_date = $purchase_date->date_i18n($selected_date);
 						
 					} 

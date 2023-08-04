@@ -1026,7 +1026,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			
 			$product_id = $item['product_id'];
 	
-			if ($product_id  == get_option( 'wps_gccoupon_rechargeable_product_id') ){
+			if ( get_option( 'wps_gccoupon_rechargeable_product_id') == $product_id ){
 				$this->wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status);
 			}
 			
@@ -1218,7 +1218,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		
 	}
 	/**
-	 * Adding fund to copon 
+	 * Adding fund to copon .
+	 * 
+	 * @param int    $order_id order Id.
+	 * @param string $old_status old status.
+	 * @param string $new_status new status.
 	 * 
 	 */
 	public function wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status){
@@ -1232,19 +1236,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					foreach($value->get_meta_data() as $key => $data){
 						$coupon_code = $data->value; 
 
-						// Get the coupon object
+						// Get the coupon object.
 						$coupon = new WC_Coupon($coupon_code);
 						
 						
-						// Check if the coupon exists
+						// Check if the coupon exists.
 						if ($coupon->is_valid()) {
 							
 							$total =  $order->get_total()+$coupon->get_amount();
 							$coupon->set_amount($total);
-							// Save the changes
+							// Save the changes.
 							$coupon->save();
 						} else {
-							echo "Coupon '{$coupon_code}' is not available.";
+							echo esc_html__("Coupon '{$coupon_code}' is not available.", "woo-gift-cards-lite");
 						}
 				
 					}
