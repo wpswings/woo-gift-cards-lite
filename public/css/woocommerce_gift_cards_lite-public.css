@@ -130,3 +130,35 @@
 .wps_wgm_quantity_one_per_recipient{
   display: none;
 }
+/* / My Account start / */
+
+.woocommerce-MyAccount-content .wps-wallet-field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.wps-wallet-field-container >label{
+  text-align: left;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.woocommerce-MyAccount-content .wps-wallet-field-container input[type=number],
+.woocommerce-MyAccount-content .wps-wallet-field-container input[type=text],
+.woocommerce-MyAccount-content .wps-wallet-field-container input[type=submit] {
+    min-height: 30px;
+    padding: 5px 10px;
+    line-height: 1.5;
+    max-width: 350px;
+    margin: 0;
+   
+}
+
+
+
+.woocommerce-MyAccount-content .wps-wallet-field-container input[type=submit] {
+    max-width: fit-content;
+    cursor: pointer;
+}
+
+/* / My Account end / */

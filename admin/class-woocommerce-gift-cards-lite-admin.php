@@ -874,8 +874,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<td><?php esc_html_e( 'Replace with Gift Card Expiry Date.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 							<tr>
+								<td>[PURCHASEDATE]</td>
+								<td><?php esc_html_e( 'Replace with Gift Card Purchase Date.', 'woo-gift-cards-lite' ); ?></td>
+							</tr>
+							<tr>
 								<td>[VARIABLEDESCRIPTION]</td>
-								<td><?php esc_html_e( 'Replaced with Variable Product Description.', 'giftware' ); ?></td>
+								<td><?php esc_html_e( 'Replaced with Variable Product Description.', 'woo-gift-cards-lite' ); ?></td>
 							</tr>
 							
 						<?php

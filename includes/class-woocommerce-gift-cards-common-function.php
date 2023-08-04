@@ -30,7 +30,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_create_gift_template( $args ) {
-
+			
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
 				$templateid = $args['templateid'];
 				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
@@ -113,6 +113,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( 'From:', '', $templatehtml );
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
+				
 				if ( wps_uwgc_pro_active() ) {
 
 					$general_settings = get_option( 'wps_wgm_general_settings', array() );
@@ -146,6 +147,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					}
 				} else {
+					$selected_date = 'Y-m-d';
 					if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
 						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					} else {
@@ -176,6 +178,31 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$args['delivery_method'] = $args['delivery_method'];
 				}
 
+				if ( isset( $args['order_id']) && !empty($args['order_id'])){
+					$order_id  =  $args['order_id'];
+					$order = wc_get_order($order_id);
+				}else{
+					$order = '';
+				}
+				
+				if ($order) {
+					
+					// The order object has been retrieved successfully.
+					$purchase_date = $order->get_date_created();
+					
+					// Check if the purchase date exists before using it.
+					if ($purchase_date) {
+						// Format the purchase date as needed.
+						$formatted_purchase_date = $purchase_date->date_i18n($selected_date);
+						
+					} 
+				}else {
+						$formatted_purchase_date = gmdate($selected_date);
+				}
+				
+				if (isset($args['created_date'])){
+					$formatted_purchase_date = $args['created_date'];
+				}
 				$args['variable_price_description'] = isset( $args['variable_price_description'] ) ? $args['variable_price_description']: '';
 
 				$templatehtml = str_replace( '[ARROWIMAGE]', $arrow_img, $templatehtml );
@@ -184,6 +211,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$templatehtml = str_replace( '[AMOUNT]', $args['amount'], $templatehtml );
 				$templatehtml = str_replace( '[COUPON]', $args['coupon'], $templatehtml );
 				$templatehtml = str_replace( '[EXPIRYDATE]', $args['expirydate'], $templatehtml );
+				$templatehtml = str_replace( '[PURCHASEDATE]', $formatted_purchase_date, $templatehtml );
 				$templatehtml = str_replace( '[DISCLAIMER]', $giftcard_disclaimer, $templatehtml );
 				$templatehtml = str_replace( '[DELIVERYMETHOD]', $args['delivery_method'], $templatehtml );
 				$templatehtml = str_replace( '[VARIABLEDESCRIPTION]', $args['variable_price_description'], $templatehtml );
