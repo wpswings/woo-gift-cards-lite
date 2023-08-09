@@ -1248,7 +1248,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							// Save the changes.
 							$coupon->save();
 						} else {
-							echo esc_html__("Coupon '{$coupon_code}' is not available.", "woo-gift-cards-lite");
+							/* translators: %s: coupon_code */
+							echo esc_html( sprintf( __( "Coupon %s is not available.", "woo-gift-cards-lite" ), $coupon_code ) );
 						}
 				
 					}
@@ -1339,11 +1340,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	
 	
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
-		
-		
-		// if ( $values['product_id'] == get_option( 'wps_gccoupon_rechargeable_product_id' ) ){
-		// 	$item->add_meta_data( 'Coupon code', $values['recharge_coupon_key_field']);
-		// }
 
 		if ( $wps_wgc_enable ) {
 			if ( isset( $values ['product_meta'] ) ) {
