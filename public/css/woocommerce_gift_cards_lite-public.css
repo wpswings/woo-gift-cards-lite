@@ -137,7 +137,12 @@
     flex-direction: column;
     gap: 12px;
 }
-
+.wps-wallet-field-container >label{
+  text-align: left;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.5;
+}
 .woocommerce-MyAccount-content .wps-wallet-field-container input[type=number],
 .woocommerce-MyAccount-content .wps-wallet-field-container input[type=text],
 .woocommerce-MyAccount-content .wps-wallet-field-container input[type=submit] {
@@ -146,12 +151,10 @@
     line-height: 1.5;
     max-width: 350px;
     margin: 0;
+   
 }
 
-.woocommerce-MyAccount-content .wps-wallet-field-container input[type=number],
-.woocommerce-MyAccount-content .wps-wallet-field-container input[type=text] {
-    border: 1px solid;
-}
+
 
 .woocommerce-MyAccount-content .wps-wallet-field-container input[type=submit] {
     max-width: fit-content;

@@ -1243,7 +1243,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						// Check if the coupon exists.
 						if ($coupon->is_valid()) {
 							
-							$total =  $order->get_total()+$coupon->get_amount();
+							$total =  $order->get_subtotal()+$coupon->get_amount();
 							$coupon->set_amount($total);
 							// Save the changes.
 							$coupon->save();
