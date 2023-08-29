@@ -267,7 +267,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$cart_html .= '<div class="wps_wgm_added_wrapper">';
 							wp_nonce_field( 'wps_wgm_single_nonce', 'wps_wgm_single_nonce_field' );
 							$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
+							$is_group_product = get_post_meta($product_id, 'wps_wgm_is_group_gift', true );
 							$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
+							
 							$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
 							if ( isset( $product_pricing['type'] ) ) {
 								$product_pricing_type = $product_pricing['type'];
@@ -475,7 +477,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$cart_html .= '<div class="wps_wgm_section wps_delivery_method">';
 									$cart_html .= '<label class = "wps_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $wps_wgm_delivery_setting_method ) && 'Mail to recipient' == $wps_wgm_delivery_setting_method ) || ( '' == $wps_wgm_delivery_setting_method ) ) {
-								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc && 'yes' !== $is_imported_product ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
+								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc && 'yes' !== $is_group_product && 'yes' !== $is_imported_product ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
 								$cart_html .= '<div class="wps_wgm_delivery_method">
 											<input type="radio" name="wps_wgm_send_giftcard" value="Mail to recipient" class="wps_wgm_send_giftcard" checked="checked" id="wps_wgm_to_email_send" >
 											<span class="wps_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>
@@ -695,7 +697,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$item_meta['recharge_coupon_key_field'] = $recharge_code;
 			$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
 		}		
-		
+		if ( get_option( 'contributor_product_id' ) == $product_id ) {
+			$recharge_code = WC()->session->get( 'gc_recharge_code' );
+			$item_meta['wps_main_order_id'] = $_POST['wps_main_order_id'];
+			$item_meta['wps_main_prod_id'] = $_POST['wps_main_prod_id'];
+			$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
+		}
 		return $the_cart_data;
 	}
 	
@@ -756,6 +763,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'recharge_coupon_key_field' == $key ) {
 						$item_meta[] = array(
 							'key' => __('Coupon code', 'woo-gift-cards-lite'),
+							'value' => stripslashes($val),
+						);
+					}
+					if ( 'wps_main_order_id' == $key ) {
+						$item_meta[] = array(
+							'key' => __('origional order', 'woo-gift-cards-lite'),
+							'value' => stripslashes($val),
+						);
+					}
+					if ( 'wps_main_prod_id' == $key ) {
+						$item_meta[] = array(
+							'key' => __('origional product', 'woo-gift-cards-lite'),
 							'value' => stripslashes($val),
 						);
 					}
@@ -1004,6 +1023,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				}
 			}
 		}
+		$product_id_to_hide = get_option( 'contributor_product_id' ); // Replace with your actual product ID
+		
+		////////// Group Gifting contri product price hide ///////.
+		if ($product->get_id() == $product_id_to_hide) {
+
+			$price = ''; // Empty string will hide the price
+			return $price;
+		}
 		return $price_html;
 	}
 
@@ -1043,7 +1070,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
-
+						// for contribution product
+						$ord_product_id = $item->get_product_id();
+						$conti_prod_id  = get_option( 'contributor_product_id' );
+						if ($ord_product_id == $conti_prod_id ) {
+							$this->wps_wgm_gc_send_payment_link_to_contributors($order_id, $old_status, $new_status );	
+						}
+						//////////////////////////////////////////
 						$wps_gift_product = apply_filters( 'wps_wgm_update_item_meta_as_a_gift', $item, $item_id, $order_id );
 
 						if ( ( isset( $product ) && ! empty( $product ) && is_object( $product ) && $product->is_type( 'wgm_gift_card' ) ) || 'on' === $wps_gift_product ) {
@@ -1119,6 +1152,29 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							if ( isset( $value->key ) && ! empty( $value->value ) ) {
 								do_action( 'wps_wgm_add_additional_meta', $key, $value );
+							}
+							if ( isset( $value->key ) && 'Contributor' == $value->key && ! empty( $value->value ) ) {
+							
+								$pro_id = $item->get_id();
+								update_post_meta($order_id,'gifting#order',$order_id);
+								$group_gift_amt = intval(get_post_meta($order_id, '_order_total', true));
+								$values = explode(',', $value->value);
+				
+								foreach( $values  as $value->value) {
+											$conti_prod_id = get_option( 'contributor_product_id' );
+											$conti_prod_link = $url = get_permalink( $conti_prod_id );
+									
+											$subject = 'Product Notification';
+											$message = "Hello,\n\n";
+											$message .= "You are receiving this email because of the product with ID: $product_id.\n";
+											$message .= "Product: $product_title\n\n";
+											$message .= $conti_prod_link .'?order_id='.$order_id.'&prod_id='.$pro_id ;
+											
+											
+											wc_mail($value->value, $subject, $message);
+								
+								}
+								update_post_meta($order_id,'suborder#amttotal',$group_gift_amt);
 							}
 						}
 						$wps_wgm_mail_template_data = array(
@@ -1217,6 +1273,75 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 		
 	}
+	/**
+	 * 
+	 */
+	public function wps_wgm_gc_send_payment_link_to_contributors($order_id, $old_status, $new_status ){
+	
+		$order = wc_get_order( $order_id );
+		
+		foreach( $order->get_items() as $items => $item_key ){
+			
+				foreach ( $item_key->get_meta_data() as $item_id => $item ) {
+					
+				if ($item->key == 'Main Product id'){
+					$main_prod_id  = $item->value;
+				}
+				if($item->key == 'Main order id'){
+					$main_ord_id  = $item->value;
+					$m_key = 'suborder#'.$main_ord_id ;
+					
+					update_post_meta($order_id,$m_key,$main_ord_id );
+					////////////////////////////////////////////////////////////////////////////////////////////////////
+					// Get the order object
+					$current_ord = wc_get_order($main_ord_id );
+					$order = wc_get_order();
+					
+					$meta_key = 'suborder#'.$main_ord_id;
+					//$meta_value = get_post_meta($order_id, $meta_key, true);
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => 'any',
+						'posts_per_page' => -1,
+						'meta_query'     => array(
+							array(
+								'key'     => $meta_key,
+								
+							),
+						),
+					);
+					$main_prod_amt = intval(get_post_meta($main_ord_id, '_order_total', true));
+				   
+					$query = new WP_Query($args);
+					$orders = $query->get_posts();
+				 
+					$total_suborder_amout = 0;
+					 // Loop through the orders and display relevant data
+				
+					 foreach ($orders as $order) {
+						 $order_sub_id = $order->ID;
+						 $ord = wc_get_order( $order_sub_id );
+						 $product_amount = get_post_meta($order_sub_id, '_order_total', true);
+						 if ($product_amount) {
+	
+							 $total_suborder_amout = $total_suborder_amout+$product_amount;
+						 }
+						
+					 }
+					 update_post_meta($main_ord_id,'suborder#amttotal',intval($total_suborder_amout)+ intval($main_prod_amt));
+	
+					///////////////////////////////////////////////////////////////////////////////////////////////////////
+				}
+				
+				
+				
+				
+			 }
+			
+		}
+		
+	}
+	
 	/**
 	 * Adding fund to copon .
 	 * 
@@ -1370,6 +1495,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						}
 						if ( 'recharge_coupon_key_field' == $key ) {
 							$item->add_meta_data( 'Coupon code', $order_val );
+						}
+						if ( 'wps_main_order_id' == $key ) {
+							$item->add_meta_data( 'Main order id', $order_val );
+						}
+						if ( 'wps_main_prod_id' == $key ) {
+							$item->add_meta_data( 'Main Product id', $order_val );
 						}
 						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $order_val );
 					}
