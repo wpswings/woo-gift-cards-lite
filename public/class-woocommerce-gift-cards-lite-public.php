@@ -1157,7 +1157,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							
 								$pro_id = $item->get_id();
 								update_post_meta($order_id,'gifting#order',$order_id);
-								$group_gift_amt = intval(get_post_meta($order_id, '_order_total', true));
+
+								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts
+							
+								$group_gift_amt = intval($order_subtotal);
 								$values = explode(',', $value->value);
 				
 								foreach( $values  as $value->value) {
@@ -1310,7 +1313,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							),
 						),
 					);
-					$main_prod_amt = intval(get_post_meta($main_ord_id, '_order_total', true));
+					$main_pord_ord = wc_get_order($main_ord_id );
+					$main_prod_amt = intval($main_pord_ord->get_subtotal());
 				   
 					$query = new WP_Query($args);
 					$orders = $query->get_posts();
@@ -1321,7 +1325,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					 foreach ($orders as $order) {
 						 $order_sub_id = $order->ID;
 						 $ord = wc_get_order( $order_sub_id );
-						 $product_amount = get_post_meta($order_sub_id, '_order_total', true);
+						 $product_amount =  $ord->get_subtotal();
 						 if ($product_amount) {
 	
 							 $total_suborder_amout = $total_suborder_amout+$product_amount;
