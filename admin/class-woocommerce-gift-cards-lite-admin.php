@@ -1302,15 +1302,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_set_cron_for_plugin_notification() {
-		$is_already_sent = get_option( 'onboarding-data-sent', false );
+		// $is_already_sent = get_option( 'onboarding-data-sent', false );
 		// Already submitted the data.
-		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
+		// if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 			$offset = get_option( 'gmt_offset' );
 			$time   = time() + $offset * 60 * 60;
 			if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
 				wp_schedule_event( $time, 'daily', 'wps_wgm_check_for_notification_update' );
 			}
-		}
+		// }
 	}
 
 	/**
@@ -1393,7 +1393,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 									<?php echo wp_kses_post( $notification_message ); ?>
 								</div>				
 							</div>
-							<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							<button type="button" class="notice-dismiss dismiss_notice"><span class="screen-reader-text">Dismiss this notice.</span></button>
 						</div>
 						<?php
 					}
