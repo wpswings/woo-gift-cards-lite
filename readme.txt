@@ -6,7 +6,7 @@ Requires at least: 5.5.0
 Tested up to: 6.3.1
 WC requires at least: 5.5.0
 WC tested up to: 8.0.3
-Stable tag:  2.5.7
+Stable tag:  2.5.6
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -228,7 +228,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 2.5.7 - Released on 04 September 2023 = 
+= 2.5.6 - Released on 04 September 2023 = 
 * New: Compatibility with latest WP( 6.3.1 ) and WC( 8.0.3 )
 
 = 2.5.5 - Released on 4 August 2023 = 
@@ -409,5 +409,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.5.7 - Released on 04 September 2023 = 
+= 2.5.6 - Released on 04 September 2023 = 
 * New: Compatibility with latest WP( 6.3.1 ) and WC( 8.0.3 )
