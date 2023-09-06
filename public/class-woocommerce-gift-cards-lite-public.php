@@ -1162,7 +1162,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							
 								$group_gift_amt = intval($order_subtotal);
 								$values = explode(',', $value->value);
-				
+								
 								foreach( $values  as $value->value) {
 											$conti_prod_id = get_option( 'contributor_product_id' );
 											$conti_prod_link = $url = get_permalink( $conti_prod_id );
@@ -1170,7 +1170,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$subject = 'Product Notification';
 											$message = "Hello,\n\n";
 											$message .= "You are receiving this email because of the product with ID: $product_id.\n";
-											$message .= "Product: $product_title\n\n";
+											
 											$message .= $conti_prod_link .'?order_id='.$order_id.'&prod_id='.$pro_id ;
 											
 											
