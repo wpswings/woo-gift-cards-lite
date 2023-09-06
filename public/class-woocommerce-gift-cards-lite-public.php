@@ -1167,9 +1167,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$conti_prod_id = get_option( 'contributor_product_id' );
 											$conti_prod_link = $url = get_permalink( $conti_prod_id );
 									
-											$subject = 'Product Notification';
+											$subject = 'Contribute your share';
 											$message = "Hello,\n\n";
-											$message .= "You are receiving this email because of the product with ID: $product_id.\n";
+											$message .= "You are receiving this email to contribute for group gift products: $product_id.\n";
 											
 											$message .= $conti_prod_link .'?order_id='.$order_id.'&prod_id='.$pro_id ;
 											
