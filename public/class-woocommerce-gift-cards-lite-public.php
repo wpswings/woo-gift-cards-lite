@@ -1050,9 +1050,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$order = new WC_Order( $order_id );
 		$items = $order->get_items();
 		foreach ( $items as $item ) {
-			
+
 			$product_id = $item['product_id'];
-	
+
+			$prod_name  = $item['name'];
 			if ( get_option( 'wps_gccoupon_rechargeable_product_id') == $product_id ){
 				$this->wps_add_fund_to_existing_coupon($order_id, $old_status, $new_status);
 			}
@@ -1169,7 +1170,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									
 											$subject = 'Contribute your share';
 											$message = "Hello,\n\n";
-											$message .= "You are receiving this email to contribute for group gift products: $product_id.\n";
+											$message .= "You are receiving this email to contribute for this  group gift product: : $prod_name.\n";
 											
 											$message .= $conti_prod_link .'?order_id='.$order_id.'&prod_id='.$pro_id ;
 											
