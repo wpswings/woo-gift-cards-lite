@@ -1173,8 +1173,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$message .= "You are receiving this email to contribute for this  group gift product: : $prod_name.\n";
 											
 											$message .= $conti_prod_link .'?order_id='.$order_id.'&prod_id='.$pro_id ;
-											
-											
+											$whatsapp_url = 'https://api.whatsapp.com/send?';
+											$whatsapp_url .= 'text=' . urlencode(   $message );
+											update_post_meta($order_id,'share#link',$whatsapp_url);
+													
 											wc_mail($value->value, $subject, $message);
 								
 								}

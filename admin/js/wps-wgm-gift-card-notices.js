@@ -9,7 +9,7 @@ jQuery( document ).ready(
 	function($){
 		$( document ).on(
 			'click',
-			'#dismiss_notice',
+			'.dismiss_notice',
 			function(e){
 				e.preventDefault();
 				var data = {
