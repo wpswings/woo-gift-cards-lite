@@ -719,14 +719,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
 							$product_types    = wp_get_object_terms( $product_id, 'product_type' );
-							$wps_gift_product = get_post_meta( $order_id, 'sell_as_a_gc' . $item_id, true );
+							$wps_gift_product = wps_wgm_hpos_get_meta_data( $order_id, 'sell_as_a_gc' . $item_id, true );
 							if ( isset( $product_types[0] ) || 'on' === $wps_gift_product ) {
 								$product_type = isset( $product_types[0] ) ? $product_types[0]->slug : '';
 								if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $wps_gift_product ) {
-									$giftcoupon = get_post_meta( $order_id, "$order_id#$item_id", true );
+									$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
 
 									if ( empty( $giftcoupon ) ) {
-										$giftcoupon = get_post_meta( $order_id, "$order_id#$product_id", true );
+										$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$product_id", true );
 									}
 									if ( is_array( $giftcoupon ) && ! empty( $giftcoupon ) ) {
 										?>
@@ -1748,7 +1748,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				foreach ( $post_meta_keys as $key => $meta_keys ) {
 
 					if ( ! empty( $order_id ) ) {
-						$value   = get_post_meta( $order_id, $meta_keys, true );
+						$value   = wps_wgm_hpos_get_meta_data( $order_id, $meta_keys, true );
 						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
 						if ( ! empty( $value ) || '0' == $value ) {
@@ -1760,16 +1760,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 									$new_key1             = str_replace( 'mwb_', 'wps_', $val );
 									$arr_val_post[ $key ] = $new_key1;
 								}
-								update_post_meta( $order_id, $new_key, $arr_val_post );
-								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
-								delete_post_meta( $order_id, $meta_keys );
+								wps_wgm_hpos_update_meta_data( $order_id, $new_key, $arr_val_post );
+								wps_wgm_hpos_update_meta_data( $order_id, 'copy_' . $meta_keys, $value );
+								wps_wgm_hpos_delete_meta_data( $order_id, $meta_keys );
 							} else {
-								update_post_meta( $order_id, $new_key, $value );
-								update_post_meta( $order_id, 'copy_' . $meta_keys, $value );
-								delete_post_meta( $order_id, $meta_keys );
+								wps_wgm_hpos_update_meta_data( $order_id, $new_key, $value );
+								wps_wgm_hpos_update_meta_data( $order_id, 'copy_' . $meta_keys, $value );
+								wps_wgm_hpos_delete_meta_data( $order_id, $meta_keys );
 							}
 						} else {
-							delete_post_meta( $order_id, $meta_keys );
+							wps_wgm_hpos_delete_meta_data( $order_id, $meta_keys );
 						}
 					}
 				}

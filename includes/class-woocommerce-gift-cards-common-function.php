@@ -264,7 +264,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		public function wps_wgm_create_gift_coupon( $gift_couponnumber, $couponamont, $order_id, $product_id, $to ) {
 			$wps_wgc_enable = wps_wgm_giftcard_enable();
 			if ( $wps_wgc_enable ) {
-				$alreadycreated = get_post_meta( $order_id, 'wps_wgm_order_giftcard', true );
+				$alreadycreated = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
 				if ( 'send' != $alreadycreated ) {
 					$coupon_code = $gift_couponnumber; // Code.
 					$amount = $couponamont; // Amount.
@@ -378,7 +378,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					// purchase as a product.
-					$item_id = get_post_meta( $order_id, 'temp_item_id', true );
+					$item_id = wps_wgm_hpos_get_meta_data( $order_id, 'temp_item_id', true );
 					do_action( 'wps_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
 
 					return true;
@@ -437,7 +437,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$args['amount'] = wc_price( $wps_wgm_common_arr['couponamont'] );
 					}
 				} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
-					$to_currency    = get_post_meta( $order->get_id(), '_order_currency', true );
+					$to_currency    = wps_wgm_hpos_get_meta_data( $order->get_id(), '_order_currency', true );
 					$args['amount'] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( $to_currency, $wps_wgm_common_arr['couponamont'] );
 					$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( $to_currency ) . $args['amount'];
 				} else {
@@ -453,15 +453,15 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$message = apply_filters( 'wps_wgm_customizable_email_template', $this->wps_wgm_create_gift_template( $args ), $args );
 
 				$order_id = $wps_wgm_common_arr['order_id'];
-				$wps_wgm_pre_gift_num = get_post_meta( $order_id, "$order_id#$item_id", true );
+				$wps_wgm_pre_gift_num = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
 
 				if ( is_array( $wps_wgm_pre_gift_num ) && ! empty( $wps_wgm_pre_gift_num ) ) {
 					$wps_wgm_pre_gift_num[] = $wps_wgm_common_arr['gift_couponnumber'];
-					update_post_meta( $order_id, "$order_id#$item_id", $wps_wgm_pre_gift_num );
+					wps_wgm_hpos_update_meta_data( $order_id, "$order_id#$item_id", $wps_wgm_pre_gift_num );
 				} else {
 					$wps_wgm_code_arr = array();
 					$wps_wgm_code_arr[] = $wps_wgm_common_arr['gift_couponnumber'];
-					update_post_meta( $order_id, "$order_id#$item_id", $wps_wgm_code_arr );
+					wps_wgm_hpos_update_meta_data( $order_id, "$order_id#$item_id", $wps_wgm_code_arr );
 				}
 
 				$headers = array( 'Content-Type: text/html; charset=UTF-8' );

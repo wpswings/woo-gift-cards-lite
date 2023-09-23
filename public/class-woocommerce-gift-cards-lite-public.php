@@ -1088,15 +1088,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						return;
 					}
 
-					$mailalreadysend     = get_post_meta( $order_id, 'wps_wgm_order_giftcard', true );
-					$mailalreadysend_old = get_post_meta( $order_id, 'wps_gw_order_giftcard', true );
+					$mailalreadysend     = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
+					$mailalreadysend_old = wps_wgm_hpos_get_meta_data( $order_id, 'wps_gw_order_giftcard', true );
 					if ( 'send' == $mailalreadysend || 'send' == $mailalreadysend_old ) {
 						return;
 					} else {
 						$general_setting = get_option( 'wps_wgm_general_settings', array() );
 						$giftcard_selected_date = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_enable_selected_date' );
 						if ( 'on' == $giftcard_selected_date ) {
-							update_post_meta( $order_id, 'wps_wgm_order_giftcard', 'notsend' );
+							wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'notsend' );
 						}
 					}
 
@@ -1157,7 +1157,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							if ( isset( $value->key ) && 'Contributor' == $value->key && ! empty( $value->value ) ) {
 
 								$pro_id = $item->get_id();
-								update_post_meta( $order_id, 'gifting#order', $order_id );
+								wps_wgm_hpos_update_meta_data( $order_id, 'gifting#order', $order_id );
 
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
 
@@ -1176,12 +1176,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$copy_link = $conti_prod_link . '?order_id=' . $order_id . '&prod_id=' . $pro_id;
 											$whatsapp_url = 'https://api.whatsapp.com/send?';
 											$whatsapp_url .= 'text=' . urlencode( $copy_link );
-											update_post_meta( $order_id, 'share#link', $whatsapp_url );
-											update_post_meta( $order_id, 'copy#link', $copy_link );
+											wps_wgm_hpos_update_meta_data( $order_id, 'share#link', $whatsapp_url );
+											wps_wgm_hpos_update_meta_data( $order_id, 'copy#link', $copy_link );
 											wc_mail( $value->value, $subject, $message );
 
 								}
-								update_post_meta( $order_id, 'suborder#amttotal', $group_gift_amt );
+								wps_wgm_hpos_update_meta_data( $order_id, 'suborder#amttotal', $group_gift_amt );
 							}
 						}
 						$wps_wgm_mail_template_data = array(
@@ -1198,7 +1198,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'datecheck' => $datecheck,
 							'variable_price_description' => $variable_price_description,
 						);
-						update_post_meta( $order_id, 'temp_item_id', $item_id );
+						wps_wgm_hpos_update_meta_data( $order_id, 'temp_item_id', $item_id );
 						$wps_wgm_mail_template_data = apply_filters( 'wps_wgm_mail_templates_data_set', $wps_wgm_mail_template_data, $order->get_items(), $order_id );
 
 						if ( isset( $wps_wgm_mail_template_data['datecheck'] ) && ! $wps_wgm_mail_template_data['datecheck'] ) {
@@ -1266,7 +1266,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					}
 
 					if ( $gift_order && isset( $wps_wgm_mail_template_data['datecheck'] ) && $wps_wgm_mail_template_data['datecheck'] ) {
-						update_post_meta( $order_id, 'wps_wgm_order_giftcard', 'send' );
+						wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'send' );
 					}
 					do_action( 'wps_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status, $wps_wgm_mail_template_data );
 				}
@@ -1296,14 +1296,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$main_ord_id  = $item->value;
 					$m_key = 'suborder#' . $main_ord_id;
 
-					update_post_meta( $order_id, $m_key, $main_ord_id );
+					wps_wgm_hpos_update_meta_data( $order_id, $m_key, $main_ord_id );
 					//
 					// Get the order object.
 					$current_ord = wc_get_order( $main_ord_id );
 					$order = wc_get_order();
 
 					$meta_key = 'suborder#' . $main_ord_id;
-					// $meta_value = get_post_meta($order_id, $meta_key, true);
 					$args = array(
 						'post_type'      => 'shop_order',
 						'post_status'    => 'any',
@@ -1333,7 +1332,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$total_suborder_amout = $total_suborder_amout + $product_amount;
 						}
 					}
-					 update_post_meta( $main_ord_id, 'suborder#amttotal', intval( $total_suborder_amout ) + intval( $main_prod_amt ) );
+					wps_wgm_hpos_update_meta_data( $main_ord_id, 'suborder#amttotal', intval( $total_suborder_amout ) + intval( $main_prod_amt ) );
 
 				}
 			}
@@ -1687,7 +1686,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$total_discount = $total_discount / $rate;
 
 					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
-						$from_currency  = get_post_meta( $order_id, '_order_currency', true );
+						$from_currency  = wps_wgm_hpos_get_meta_data( $order_id, '_order_currency', true );
 						$total_discount = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
 					}
 
@@ -1981,42 +1980,42 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$coupon_id  = $the_coupon->get_id();
 			$orderid    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 			if ( isset( $orderid ) && ! empty( $orderid ) ) {
-				if ( ! metadata_exists( 'post', $order_id, 'coupon_used' ) ) {
-					$coupon_used = 1;
-					update_post_meta( $order_id, 'coupon_used', $coupon_used );
+				if ( ! wps_wgm_hpos_get_meta_data( $order_id, 'coupon_used', true ) ) {
+					$coupon_used = 'yes';
+					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
 
 				} else {
-					$coupon_used = get_post_meta( $order_id, 'coupon_used' )[0];
+					$coupon_used = wps_wgm_hpos_get_meta_data( $order_id, 'coupon_used', true );
 				}
 
-				if ( ( 'cancelled' == $new_status || 'failed' == $new_status ) && 1 == $coupon_used ) {
+				if ( ( 'cancelled' == $new_status || 'failed' == $new_status ) && 'yes' == $coupon_used ) {
 
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
-					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
+					$total_discount = wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount', true );
 					if ( wc_prices_include_tax() ) {
-						$total_discount = $total_discount + get_post_meta( $order_id, '_cart_discount_tax', true );
+						$total_discount = $total_discount + wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount_tax', true );
 					}
 
 					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
-						$from_currency  = get_post_meta( $order_id, '_order_currency', true );
+						$from_currency  = wps_wgm_hpos_get_meta_data( $order_id, '_order_currency', true );
 						$total_discount = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
 					}
 
 					$remaining_amount = $amount + $total_discount;
 					$remaining_amount = round( $remaining_amount, 2 );
 					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
-					$coupon_used = 0;
-					update_post_meta( $order_id, 'coupon_used', $coupon_used );
+					$coupon_used = 'no';
+					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
 
-				} elseif ( ( 'pending' == $new_status || 'processing' == $new_status || 'on-hold' == $new_status || 'completed' == $new_status ) && 0 == $coupon_used ) {
+				} elseif ( ( 'pending' == $new_status || 'processing' == $new_status || 'on-hold' == $new_status || 'completed' == $new_status ) && 'no' == $coupon_used ) {
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
-					$total_discount = get_post_meta( $order_id, '_cart_discount', true );
+					$total_discount = wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount', true );
 					if ( wc_prices_include_tax() ) {
-						$total_discount = $total_discount + get_post_meta( $order_id, '_cart_discount_tax', true );
+						$total_discount = $total_discount + wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount_tax', true );
 					}
 
 					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
-						$from_currency  = get_post_meta( $order_id, '_order_currency', true );
+						$from_currency  = wps_wgm_hpos_get_meta_data( $order_id, '_order_currency', true );
 						$total_discount = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
 					}
 
@@ -2027,8 +2026,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$remaining_amount = round( $remaining_amount, 2 );
 					}
 					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
-					$coupon_used = 1;
-					update_post_meta( $order_id, 'coupon_used', $coupon_used );
+					$coupon_used = 'yes';
+					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
 				}
 			}
 		}
