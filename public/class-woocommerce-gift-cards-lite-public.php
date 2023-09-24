@@ -1330,7 +1330,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					 // Loop through the orders and display relevant data.
 
 					foreach ( $orders as $order ) {
-						$order_sub_id = $order->ID;
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							$order_sub_id = $order->get_id();
+						} else {
+							$order_sub_id = $order->ID;
+						}
 						$ord = wc_get_order( $order_sub_id );
 						$product_amount = $ord->get_subtotal();
 						if ( $product_amount ) {

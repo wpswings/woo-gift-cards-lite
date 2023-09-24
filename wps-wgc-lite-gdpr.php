@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 /**
  * Return the default suggested privacy policy content.
  *
