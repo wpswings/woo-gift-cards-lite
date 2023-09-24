@@ -19,6 +19,7 @@
  * @subpackage woo-gift-cards-lite/public
  * @author     WP Swings <webmaster@wpswings.com>
  */
+use Automattic\WooCommerce\Utilities\OrderUtil;
 class Woocommerce_Gift_Cards_Lite_Public {
 
 	/**
@@ -773,13 +774,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					}
 					if ( 'wps_main_order_id' == $key ) {
 						$item_meta[] = array(
-							'key' => __( 'origional order', 'woo-gift-cards-lite' ),
+							'key' => __( 'Original order', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_main_prod_id' == $key ) {
 						$item_meta[] = array(
-							'key' => __( 'origional product', 'woo-gift-cards-lite' ),
+							'key' => __( 'Original product', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
@@ -1303,22 +1304,27 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$order = wc_get_order();
 
 					$meta_key = 'suborder#' . $main_ord_id;
-					$args = array(
-						'post_type'      => 'shop_order',
-						'post_status'    => 'any',
-						'posts_per_page' => -1,
-						'meta_query'     => array(
+					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+						// HPOS Enabled.
+						$orders = wc_get_orders( 
 							array(
-								'key'     => $meta_key,
-
-							),
-						),
-					);
+								'limit'       => -1,
+								'status'      => array_keys( wc_get_order_statuses() ),
+								'meta_key'    => $meta_key, // Replace with your custom field key 
+								'type'        => wc_get_order_types(),
+							)
+						);
+					} else {
+						$args = array(
+							'post_type'      => 'shop_order',
+							'post_status'    => 'any',
+							'posts_per_page' => -1,
+							'meta_key'       => $meta_key, // Replace with your custom field key
+						);
+						$orders = get_posts( $args );
+					}
 					$main_pord_ord = wc_get_order( $main_ord_id );
 					$main_prod_amt = intval( $main_pord_ord->get_subtotal() );
-
-					$query = new WP_Query( $args );
-					$orders = $query->get_posts();
 
 					$total_suborder_amout = 0;
 					 // Loop through the orders and display relevant data.

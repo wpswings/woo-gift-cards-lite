@@ -19,6 +19,7 @@
  * @subpackage woo-gift-cards-lite/admin
  * @author     WP Swings <webmaster@wpswings.com>
  */
+use Automattic\WooCommerce\Utilities\OrderUtil;
 class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
@@ -128,7 +129,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, 'count' );
 			}
 
-			if ( 'product' === $pagescreen || 'shop_order' === $pagescreen || 'giftcard_page_wps-wgc-setting-lite' === $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' === $pagescreen || 'plugins' === $pagescreen ) {
+			if ( 'product' === $pagescreen || 'shop_order' === $pagescreen || 'woocommerce_page_wc-orders' ==  $pagescreen || 'giftcard_page_wps-wgc-setting-lite' === $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' === $pagescreen || 'plugins' === $pagescreen ) {
 
 				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
 				$giftcard_tax_cal_enable  = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_tax_cal_enable' );
@@ -710,39 +711,43 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 		if ( $wps_wgc_enable ) {
-			if ( isset( $_GET['post'] ) ) {
-				$order_id     = sanitize_text_field( wp_unslash( $_GET['post'] ) );
-				$order        = new WC_Order( $order_id );
-				$order_status = $order->get_status();
-				if ( 'completed' == $order_status || 'processing' == $order_status ) {
-					if ( null != $_product ) {
-						$product_id = $_product->get_id();
-						if ( isset( $product_id ) && ! empty( $product_id ) ) {
-							$product_types    = wp_get_object_terms( $product_id, 'product_type' );
-							$wps_gift_product = wps_wgm_hpos_get_meta_data( $order_id, 'sell_as_a_gc' . $item_id, true );
-							if ( isset( $product_types[0] ) || 'on' === $wps_gift_product ) {
-								$product_type = isset( $product_types[0] ) ? $product_types[0]->slug : '';
-								if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $wps_gift_product ) {
-									$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
+			if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+				// HPOS Enabled.
+				$post_id = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : '';
+			} else {
+				$post_id = isset( $_GET['post'] ) ? sanitize_text_field( wp_unslash( $_GET['post'] ) ) : '';
+			}
+			$order_id     = $post_id;
+			$order        = new WC_Order( $order_id );
+			$order_status = $order->get_status();
+			if ( 'completed' == $order_status || 'processing' == $order_status ) {
+				if ( null != $_product ) {
+					$product_id = $_product->get_id();
+					if ( isset( $product_id ) && ! empty( $product_id ) ) {
+						$product_types    = wp_get_object_terms( $product_id, 'product_type' );
+						$wps_gift_product = wps_wgm_hpos_get_meta_data( $order_id, 'sell_as_a_gc' . $item_id, true );
+						if ( isset( $product_types[0] ) || 'on' === $wps_gift_product ) {
+							$product_type = isset( $product_types[0] ) ? $product_types[0]->slug : '';
+							if ( 'wgm_gift_card' === $product_type || 'gw_gift_card' === $product_type || 'on' === $wps_gift_product ) {
+								$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
 
-									if ( empty( $giftcoupon ) ) {
-										$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$product_id", true );
-									}
-									if ( is_array( $giftcoupon ) && ! empty( $giftcoupon ) ) {
-										?>
-										<p style="margin:0;"><b><?php esc_html_e( 'Gift Coupon', 'woo-gift-cards-lite' ); ?> :</b>
-											<?php
-											foreach ( $giftcoupon as $key => $value ) {
-												?>
-												<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $value ); ?></span>
-												<?php
-											}
-											?>
-										</p>
-										<?php
-									}
-									do_action( 'wps_wgm_after_order_itemmeta', $item_id, $item, $_product );
+								if ( empty( $giftcoupon ) ) {
+									$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$product_id", true );
 								}
+								if ( is_array( $giftcoupon ) && ! empty( $giftcoupon ) ) {
+									?>
+									<p style="margin:0;"><b><?php esc_html_e( 'Gift Coupon', 'woo-gift-cards-lite' ); ?> :</b>
+										<?php
+										foreach ( $giftcoupon as $key => $value ) {
+											?>
+											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $value ); ?></span>
+											<?php
+										}
+										?>
+									</p>
+									<?php
+								}
+								do_action( 'wps_wgm_after_order_itemmeta', $item_id, $item, $_product );
 							}
 						}
 					}
@@ -1597,14 +1602,26 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						'fields'      => 'ids',
 					)
 				);
-				$result2 = wc_get_orders(
-					array(
-						'numberposts' => -1,
-						'meta_key'    => $post_meta_keys, // phpcs:ignore
-						'type'        => 'shop_order',
-						'return'      => 'ids',
-					)
-				);
+				if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+					//HPOS enabled.
+					$result2 = wc_get_orders(
+						array(
+							'limit'      => -1,
+							'meta_key'    => $post_meta_keys, // phpcs:ignore
+							'type'        => wc_get_order_types(),
+							'return'      => 'ids',
+						)
+					);
+				} else {
+					$result2 = wc_get_orders(
+						array(
+							'numberposts' => -1,
+							'meta_key'    => $post_meta_keys, // phpcs:ignore
+							'type'        => 'shop_order',
+							'return'      => 'ids',
+						)
+					);
+				}
 				$result3 = get_posts(
 					array(
 						'numberposts' => -1,
