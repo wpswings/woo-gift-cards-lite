@@ -336,7 +336,38 @@ if ( $activated ) {
 			restore_current_blog();
 		}
 	}
+	add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
 
+	/**
+	 * Function to create giftcard template.
+	 */
+	function wps_uwgc_create_giftcard_template_org() {
+	
+
+		/* ===== ====== Create the Check Gift Card Page ====== ======*/
+		if ( ! get_option( 'check_balance_page_created', false ) ) {
+
+			$balance_content = '[wps_check_your_gift_card_balance]';
+
+			$check_balance = array(
+				'post_author'  => get_current_user_id(),
+				'post_name'    => __( 'Gift Card Balance', 'giftware' ),
+				'post_title'   => __( 'Gift Card Balance', 'giftware' ),
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
+				'post_content' => $balance_content,
+			);
+			$page_id       = wp_insert_post( $check_balance );
+			update_option( 'check_balance_page_created', true );
+			/* ===== ====== End of Create the Gift Card Page ====== ======*/
+		}
+		if ( ! get_option( 'giftcard_balance' ) ) {
+			$mypost = get_page_by_path( 'gift-card-balance', '', 'page' );
+			if ( isset( $mypost ) ) {
+				update_option( 'giftcard_balance', $mypost->ID );
+			}
+		}
+	}
 	/**
 	 * Migration to ofl pro plugin.
 	 *
