@@ -302,6 +302,8 @@
 
 .wps_wgm_overview_content {
     box-shadow: 2px 3px 20px rgba(0, 0, 0, .2);
+    max-width: calc(100% - 30px);
+    margin-bottom: 40px;
 }
 
 .wps_wgm_overview_heading,
@@ -1485,4 +1487,97 @@ span.wps-wgn-icon-text {
 .wps_wgm_content_template table.form-table textarea {
     width: 100%;
     max-width: 25em;
+}
+.wps-gc-overview__keywords {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    marging-right: -15px;
+}
+.wps-gc-overview__keywords-item{
+    padding: 0px 15px;
+    max-width: 33.333%;
+    flex: 0 0 100%;
+    margin-bottom: 30px;
+}
+.wps-gc-overview__keywords-card {
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    height: 100%;
+}
+.wps-gc-overview__keywords-image {
+    max-width: 120px;
+    margin: 0 auto;
+}
+.wps-gc-overview__keywords-image img{
+    width: 100%;
+}
+.wps-gc-overview__keywords-text{
+    text-align: center;
+}
+.wps-gc-overview__wrapper img {
+    width: 100%;
+    height: auto;
+}
+#wps-gc_rwpr_setting_wrapper * {
+    box-sizing: border-box;
+}
+#wps-gc_rwpr_setting_wrapper h3 {
+    line-height: 28px;
+    margin: 0;
+}
+#wps-gc_rwpr_setting_wrapper * {
+    box-sizing: border-box;
+}
+#wps-gc_rwpr_setting_wrapper * {
+    box-sizing: border-box;
+}
+.wps-gift-card-pro-tmplt .table.wps-table-wrapper {
+    width: 100%;
+}
+.wps-gift-card-pro-tmplt .table.wps-table-wrapper td {
+    padding: 8px 15px;
+}
+.wps-gift-card-pro-tmplt .table.wps-table-wrapper th {
+    background-color: #5244f9;
+    text-align: left;
+    padding: 7px 15px;
+    color: #fff;
+    font-weight: 600;
+}
+.wps-gift-card-pro-tmplt {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+    width: 100%;
+}
+.wps-gift-card-pro-tmplt .column {
+    width: 25%;
+    box-sizing: border-box;
+    padding: 0px 15px;
+}
+.wps-gift-card-pro-tmplt .column .card {
+    padding: 10px;
+    margin-top: 0px;
+    min-width: 100%;
+}
+.wps-gift-card-pro-tmplt .column img {
+    width: 100%;
+    display: block;
+}
+.wps-gift-card-pro-tmplt-inner {
+    padding: 0px 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+.wps_wgm_overview_content .wps-gc-banner-image img {
+    width: 100%;
+}
+.wps-gc-demo-image img {
+    filter: invert(1);
+    vertical-align: middle;
+    margin: 0 3px 0 0;
+    height: 18px;
 }

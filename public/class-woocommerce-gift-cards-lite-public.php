@@ -205,6 +205,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				}
 			}
 		}
+
+		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || is_page('my-account') ){
+			$wps_wgm_check_balance = array(
+				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
+
+			);
+
+					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
+					wp_localize_script( $this->plugin_name, 'wps_wgm_check_balance', $wps_wgm_check_balance );
+					wp_enqueue_script( $this->plugin_name );
+		} 
 	}
 	/**
 	 * Function to display the cart html.
@@ -2210,5 +2222,119 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			echo json_encode( $response );
 			wp_die();
 		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+	/**
+	 * This is function is used to create shortcode to check giftcard balance.
+	 *
+	 * @name wps_uwgc_add_short_code_giftcard_balance
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_uwgc_add_short_code_giftcard_balance_org() {
+		add_shortcode( 'wps_check_your_gift_card_balance', array( $this, 'wps_uwgc_gift_card_balance_org' ) );
+	}
+
+	/**
+	 * This is function is used to display giftcard remaining balance.
+	 *
+	 * @name wps_uwgc_gift_card_balance
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_uwgc_gift_card_balance_org() {
+		$html = '<div class="wps_gift_card_balance_wrapper">';
+		//$html .= '<div><h4>Recharge Coupon Code</h4>';
+		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'giftware' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'giftware' ) . '" required="required"></div>';
+		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'giftware' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'giftware' ) . '" required="required"></div>';
+		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'giftware' ) . '"><span id="wps_notification"></span></p></div>';
+		$html .= '<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader"><img src="' . WPS_WGC_URL . 'assets/images/loading.gif"></div></div>';
+		return $html;
+	}
+
+	/**
+	 * This is function is used to check giftcard balance on Ajax Call.
+	 *
+	 * @name wps_uwgc_check_gift_balance
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_uwgc_check_gift_balance_org() {
+
+		check_ajax_referer( 'wps-wgc-verify-nonce-check', 'wps_wgm_nonce_check' );
+		$response['result'] = false;
+		$response['message'] = __( 'Balance cannot be checked yet, Please Try again later!', 'giftware' );
+		$wps_check_email = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
+		$coupon = isset( $_POST['coupon'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon'] ) ) : '';
+		if ( isset( $coupon ) && ! empty( $coupon ) && isset( $wps_check_email ) && ! empty( $wps_check_email ) ) {
+			$the_coupon = new WC_Coupon( $coupon );
+			if ( isset( $the_coupon ) && ! empty( $coupon ) ) {
+				$coupon_id = $the_coupon->get_id();
+				if ( isset( $coupon_id ) && ! empty( $coupon_id ) && 0 != $coupon_id ) {
+					$left_amount = $the_coupon->get_amount();
+					$coupon_type = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_unique', true );
+					$user_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+					if ( 'offline' === $coupon_type ) {
+						if ( isset( $user_email ) && ! empty( $user_email ) ) {
+							if ( $user_email == $wps_check_email ) {
+								$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+								$response['result'] = true;
+								$response['html'] = $html;
+								$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+							} else {
+								$response['result'] = false;
+								$response['message'] = __( 'Recipient Email should be correct!!', 'giftware' );
+							}
+						}
+					} elseif ( 'online' === $coupon_type ) {
+						$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+						if ( isset( $order_id ) && ! empty( $order_id ) ) {
+							$order = wc_get_order( $order_id );
+							$sender_email = $order->get_billing_email();
+							$user_id = $order->get_user_id();
+							$wps_user_name = get_userdata( $user_id );
+							$wps_sender_name = $wps_user_name->first_name . ' ' . $wps_user_name->last_name;
+							if ( ( isset( $user_email ) && ! empty( $user_email ) ) || ( isset( $sender_email ) && ! empty( $sender_email ) ) ) {
+								if ( $user_email == $wps_check_email ) {
+									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+									$response['result'] = true;
+									$response['html'] = $html;
+									$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+								} elseif ( $sender_email == $wps_check_email ) {
+									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+									$response['result'] = true;
+									$response['html'] = $html;
+									$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+								} elseif ( $wps_sender_name == $wps_check_email ) {
+									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+									$response['result'] = true;
+									$response['html'] = $html;
+									$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+								} else {
+									$response['result'] = false;
+									$response['message'] = __( 'Recipient Email or Sender Email|Name should be correct!!', 'giftware' );
+								}
+							}
+						}
+					} else {
+						$response['result'] = false;
+						$response['message'] = __( 'Balance cannot be checked for this coupon.', 'giftware' );
+					}
+				} else {
+					$response['result'] = false;
+					$response['message'] = __( 'Coupon is Invalid!', 'giftware' );
+				}
+			}
+		} else {
+			$response['result'] = false;
+			$response['message'] = __( 'Fields cannot be empty!', 'giftware' );
+		}
+		echo json_encode( $response );
+		wp_die();
+
 	}
 }
