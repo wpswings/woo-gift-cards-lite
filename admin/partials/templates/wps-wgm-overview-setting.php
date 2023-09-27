@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <h3 class="wps_wgm_overview_heading">
             <?php esc_html_e( 'Connect With Us and Explore More About Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?>
         </h3>
-        <div class="wps-gc-banner-image"><img src="<?php echo WPS_WGC_URL; ?>assets/images/giftcard-banner-image.png" alt=""></div>
+        <div class="wps-gc-banner-image"><img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/giftcard-banner-image.png" alt=""></div>
         <p><?php esc_html_e( 'Ultimate Gift Cards For WooCommerce is the plugin that allows merchants (admin) to manage store with digital gifting solutions like this. Here the merchant can create gifts cards according to his desires and wishes after selection of the price selection. This digital certificate e-solution comes with ample number benefits like capable to increase sales, encourage an easy and desire gifting solution for your customers, initiate e-gifting via emails. ', 'woo-gift-cards-lite' ); ?>
         </p>
     </div>
@@ -27,22 +27,22 @@ if ( ! defined( 'ABSPATH' ) ) {
       
         <div class="column">
             <div class="card">
-                <img src="<?php echo WPS_WGC_URL; ?>assets/images/halloween1.png" alt="">
+                <img src="<?php echo esc_url(WPS_WGC_URL); ?>assets/images/halloween1.png" alt="">
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="<?php echo WPS_WGC_URL; ?>assets/images/christmas2.png" alt="">
+                <img src="<?php echo esc_url(WPS_WGC_URL); ?>assets/images/christmas2.png" alt="">
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="<?php echo WPS_WGC_URL; ?>assets/images/labor-day2.png" alt="">
+                <img src="<?php echo esc_url(WPS_WGC_URL); ?>assets/images/labor-day2.png" alt="">
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="<?php echo WPS_WGC_URL; ?>assets/images/black-friday.png" alt="">
+                <img src="<?php echo esc_url(WPS_WGC_URL); ?>assets/images/black-friday.png" alt="">
             </div>
         </div>
     </div>
@@ -381,7 +381,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps-gc-overview__keywords-text">
 						<h3 class="wps-gc-overview__keywords-heading"> Customizable Gift Cards </h3>
 						<p class="wps-gc-overview__keywords-description">
-                        With The WooCommerce GiftCard Plugin Customers can fully personalize their gift cards to meet their specific requirements. Customers have the freedom to choose or upload images, include heartfelt messages, set delivery options, and truly make these gift cards their own.
+                        With The WooCommerce Gift Cards Plugin Customers can fully personalize their gift cards to meet their specific requirements. Customers have the freedom to choose or upload images, include heartfelt messages, set delivery options, and truly make these gift cards their own.
 
 							 						</p>
 					</div>
@@ -407,7 +407,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<img src="<?php echo WPS_WGC_URL; ?>assets/images/wps-feature2.png" alt="Variable product image">
 					</div>
 					<div class="wps-gc-overview__keywords-text">
-						<h3 class="wps-gc-overview__keywords-heading"> Redeem and Recharge GiftCards </h3>
+						<h3 class="wps-gc-overview__keywords-heading"> Redeem and Recharge Gift Cards </h3>
 						<p class="wps-gc-overview__keywords-description">
                         With our gifting portal, customers can conveniently recharge and redeem their WooCommerce gift cards. You can easily sell digital and physical gift cards online or in-store by scanning the card's QR code or barcode to securely obtain the card details.
 
@@ -435,9 +435,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<img src="<?php echo WPS_WGC_URL; ?>assets/images/20-Predefined-Gift-Card-Templates.webp" alt="Variable product image">
 					</div>
 					<div class="wps-gc-overview__keywords-text">
-						<h3 class="wps-gc-overview__keywords-heading"> 20+ Predefined GiftCards Templates </h3>
+						<h3 class="wps-gc-overview__keywords-heading"> 20+ Predefined Gift Cards Templates </h3>
 						<p class="wps-gc-overview__keywords-description">
-						The WooCommerce GiftCards Plugin presents an array of over 20+ pre-designed gift card templates, all specially crafted for the joyous festive and holiday seasons. Furthermore, you can import custom templates to sell cards for any celebration.
+						The WooCommerce Gift Cards Plugin presents an array of over 20+ pre-designed gift card templates, all specially crafted for the joyous festive and holiday seasons. Furthermore, you can import custom templates to sell cards for any celebration.
 
 						</p>
 					</div>

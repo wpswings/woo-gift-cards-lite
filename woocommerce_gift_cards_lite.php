@@ -359,7 +359,7 @@ if ( $activated ) {
 
 
 				/* ===== ====== Create the Check Gift Card Page ====== ======*/
-				if ( ! get_option( 'check_balance_page_created_org', false ) ) {
+				if ( ! get_option( 'check_balance_page_created_org', false ) && ! get_option( 'check_balance_page_created', false )) {
 
 					$balance_content = '[wps_check_your_gift_card_balance]';
 
