@@ -1418,8 +1418,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
 				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
 				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
-				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
-					
 					if ( '' !== $banner_image && '' !== $banner_url ) {
 						
 						?>
@@ -1429,7 +1427,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							
 						<?php
 					}
-				}
+				
 			}
 		}
 	}
@@ -1454,26 +1452,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_send_json_success();
 		}
 	}
-/**
-	 * This function is used to dismiss admin notices.
-	 *
-	 * @since    2.0.0
-	 * @name wps_wgm_dismiss_notice
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 */
-	public function wps_wgm_dismiss_notice_banner() {
-		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wgm-verify-notice-nonce' ) ) {
-			
-			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-		
-			if (isset( $banner_id ) && ''!= $banner_id){
-				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
-			}
-		
-			wp_send_json_success();
-		}
-	}
+
 	/**
 	 * The function displays a button to enable plugin after plugin activation.
 	 *
