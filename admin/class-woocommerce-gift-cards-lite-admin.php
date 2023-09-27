@@ -1331,8 +1331,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
 			$notification_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_id'] : '';
 			$notification_message = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_message'] : '';
+			$banner_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
+			$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
+			$banner_url = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_url'] : '';
 			update_option( 'wps_wgm_notify_new_msg_id', $notification_id );
 			update_option( 'wps_wgm_notify_new_message', $notification_message );
+			update_option( 'wps_wgm_notify_new_banner_id', $banner_id );
+			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
+			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
+			
 		}
 	}
 
@@ -1359,6 +1366,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				'sslverify' => false,
 			)
 		);
+		
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
 			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
@@ -1404,6 +1412,25 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					}
 				}
 			}
+
+			$banner_id = get_option('wps_wgm_notify_new_banner_id', false );
+			if ( isset( $banner_id ) && '' !== $banner_id ) {
+				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+					
+					if ( '' !== $banner_image && '' !== $banner_url ) {
+						
+						?>
+							<div class="wps-offer-notice notice notice-warning is-dismissible" id="dismiss-banner">
+							<a href="<?php echo esc_url($banner_url); ?>"><img src="<?php echo esc_url($banner_image); ?>" alt="Gift cards"/></a>
+							</div>
+							
+						<?php
+					}
+				}
+			}
 		}
 	}
 
@@ -1418,13 +1445,35 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function wps_wgm_dismiss_notice() {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wgm-verify-notice-nonce' ) ) {
 			$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
+			
 			if ( isset( $notification_id ) && '' !== $notification_id ) {
 				update_option( 'wps_wgm_notify_hide_notification', $notification_id );
+			
 			}
+		
 			wp_send_json_success();
 		}
 	}
-
+/**
+	 * This function is used to dismiss admin notices.
+	 *
+	 * @since    2.0.0
+	 * @name wps_wgm_dismiss_notice
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_dismiss_notice_banner() {
+		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wgm-verify-notice-nonce' ) ) {
+			
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+		
+			if (isset( $banner_id ) && ''!= $banner_id){
+				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
+			}
+		
+			wp_send_json_success();
+		}
+	}
 	/**
 	 * The function displays a button to enable plugin after plugin activation.
 	 *

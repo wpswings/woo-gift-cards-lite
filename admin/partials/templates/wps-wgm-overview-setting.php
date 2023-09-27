@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-  <h1 style="margin:0;padding:0;line-height:0;"></h1>
+
 <div class="wps_wgm_table_wrapper wps_wgm_overview-wrapper">
     
 	<div class="wps_wgm_overview_content">
@@ -22,8 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p><?php esc_html_e( 'Ultimate Gift Cards For WooCommerce is the plugin that allows merchants (admin) to manage store with digital gifting solutions like this. Here the merchant can create gifts cards according to his desires and wishes after selection of the price selection. This digital certificate e-solution comes with ample number benefits like capable to increase sales, encourage an easy and desire gifting solution for your customers, initiate e-gifting via emails. ', 'woo-gift-cards-lite' ); ?>
         </p>
     </div>
-    <div class="wps-gift-card-pro-tmplt-outer"> <h1><?php  esc_html_e('Gift Cards For WooCommerce Pro Templates','woo-gift-cards-lite'); ?> </h1></div>
+    <span>Gift Cards For WooCommerce Pro Templates</span>
 	<div class="wps-gift-card-pro-tmplt">
+      
         <div class="column">
             <div class="card">
                 <img src="<?php echo WPS_WGC_URL; ?>assets/images/halloween1.png" alt="">
@@ -48,9 +49,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <div class="wps-gift-card-pro-tmplt">
         <div class="wps-gift-card-pro-tmplt-inner">
-            <h1>Pro vs free feature </h1>
+            <span>Pro vs Free plugin benefits</span>
             <table class="table wps-table-wrapper" style="border: 1px solid #e5e4e3; height: 884px;" width="">
                 <thead>
+                  
                     <tr>
                         <th>Features</th>
                         <th>Free Version</th>
@@ -368,7 +370,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </table>
         </div>
     </div>
-    <h3> The Free Plugin Benefits</h3>
+    <span> The Pro Plugin Benefits</span>
 	<div class="wps-gc-overview__keywords">
 			
 			<div class="wps-gc-overview__keywords-item">

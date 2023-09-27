@@ -181,6 +181,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wgm_save_notice_message' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wgm_display_notification_bar' );
 		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice', $plugin_admin, 'wps_wgm_dismiss_notice' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice_banner', $plugin_admin, 'wps_wgm_dismiss_notice_banner' );
 		// Add your screen.
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
 		// Add Deactivation screen.
