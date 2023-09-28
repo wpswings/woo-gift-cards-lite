@@ -1301,6 +1301,7 @@
  
  .wps_wgm__content {
      width: 100%;
+     text-align: center;
  }
  
  .wps_wgm_upgrade {
@@ -1603,4 +1604,10 @@
  }
  .wps_wgm_video_wrapper {
     max-width: calc(100% - 30px);
+}
+.wps_wgm__content img {
+    max-width: 160px;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
 }

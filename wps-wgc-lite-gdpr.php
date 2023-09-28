@@ -101,7 +101,7 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 					'customer'    => $user->ID,
 					'status'      => array_keys( wc_get_order_statuses() ),
 					'type'        => wc_get_order_types(),
-					'limit'       => -1,    // To retrieve all customer orders
+					'limit'       => -1,    // To retrieve all customer orders.
 				)
 			);
 		} else {
@@ -235,7 +235,7 @@ function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 					'customer'    => $user->ID,
 					'status'      => array_keys( wc_get_order_statuses() ),
 					'type'        => wc_get_order_types(),
-					'limit'       => -1,    // To retrieve all customer orders
+					'limit'       => -1,    // To retrieve all customer orders.
 				)
 			);
 		} else {
