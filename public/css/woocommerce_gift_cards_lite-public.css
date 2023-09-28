@@ -209,3 +209,8 @@ input#gift_card_balance_email {
 }
 
 /* check balance section end */
+.gift_card_balance_email input#gift_card_balance_email:focus,
+.gift_card_code input#gift_card_code:focus {
+    border: solid 2px #000000;
+    outline: none;
+}

@@ -30,7 +30,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_create_gift_template( $args ) {
-			
+
 			if ( isset( $args ) && is_array( $args ) && ! empty( $args ) ) {
 				$templateid = $args['templateid'];
 				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
@@ -113,7 +113,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$templatehtml = str_replace( 'From:', '', $templatehtml );
 					$templatehtml = str_replace( '[FROM]', '', $templatehtml );
 				}
-				
+
 				if ( wps_uwgc_pro_active() ) {
 
 					$general_settings = get_option( 'wps_wgm_general_settings', array() );
@@ -178,32 +178,32 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$args['delivery_method'] = $args['delivery_method'];
 				}
 
-				if ( isset( $args['order_id']) && !empty($args['order_id'])){
-					$order_id  =  $args['order_id'];
-					$order = wc_get_order($order_id);
-				}else{
+				if ( isset( $args['order_id'] ) && ! empty( $args['order_id'] ) ) {
+					$order_id  = $args['order_id'];
+					$order = wc_get_order( $order_id );
+				} else {
 					$order = '';
 				}
-				
-				if ($order) {
-					
+
+				if ( $order ) {
+
 					// The order object has been retrieved successfully.
 					$purchase_date = $order->get_date_created();
-					
+
 					// Check if the purchase date exists before using it.
-					if ($purchase_date) {
+					if ( $purchase_date ) {
 						// Format the purchase date as needed.
-						$formatted_purchase_date = $purchase_date->date_i18n($selected_date);
-						
-					} 
-				}else {
-						$formatted_purchase_date = gmdate($selected_date);
+						$formatted_purchase_date = $purchase_date->date_i18n( $selected_date );
+
+					}
+				} else {
+						$formatted_purchase_date = gmdate( $selected_date );
 				}
-				
-				if (isset($args['created_date'])){
+
+				if ( isset( $args['created_date'] ) ) {
 					$formatted_purchase_date = $args['created_date'];
 				}
-				$args['variable_price_description'] = isset( $args['variable_price_description'] ) ? $args['variable_price_description']: '';
+				$args['variable_price_description'] = isset( $args['variable_price_description'] ) ? $args['variable_price_description'] : '';
 
 				$templatehtml = str_replace( '[ARROWIMAGE]', $arrow_img, $templatehtml );
 				$templatehtml = str_replace( '[BACK]', $mothers_day_backimg, $templatehtml );
@@ -290,16 +290,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 					$usage_limit = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' );
 					$usage_limit = ( '' != $usage_limit ) ? $usage_limit : 0;
-					
-					//////////////////////////////////////////////////
-					$local_expiry_day = get_post_meta($product_id  ,'wps_wgm_local_setting_giftcard_expiry',true);
-					if ( empty($local_expiry_day) || 0 == $local_expiry_day ){
+
+										$local_expiry_day = get_post_meta( $product_id, 'wps_wgm_local_setting_giftcard_expiry', true );
+					if ( empty( $local_expiry_day ) || 0 == $local_expiry_day ) {
 						$expiry_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
-					}else {
+					} else {
 						$expiry_date = $local_expiry_day;
 					}
-					/////////////////////////////////////////////////
-					
+
 					$expiry_date = ( '' != $expiry_date ) ? $expiry_date : 0;
 
 					$free_shipping = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' );
@@ -324,7 +322,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$todaydate = date_i18n( 'Y-m-d' );
 						if ( 0 < $expiry_date || 0 === $expiry_date ) {
 							$expirydate = date_i18n( 'Y-m-d', strtotime( "$todaydate +$expiry_date day" ) );
-							//$expirydate = date_i18n( 'Y-m-d', strtotime( '-1 day' ,strtotime( "$todaydate +$expiry_date day" ) ) );
+							// $expirydate = date_i18n( 'Y-m-d', strtotime( '-1 day' ,strtotime( "$todaydate +$expiry_date day" ) ) );
 						} else {
 							$expirydate = '';
 						}
@@ -600,7 +598,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			} else {
 				$expirydate_format = __( 'No Expiration', 'woo-gift-cards-lite' );
 			}
-			
+
 			return $expirydate_format;
 		}
 

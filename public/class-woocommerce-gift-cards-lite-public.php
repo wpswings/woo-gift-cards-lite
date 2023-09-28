@@ -20,6 +20,9 @@
  * @author     WP Swings <webmaster@wpswings.com>
  */
 use Automattic\WooCommerce\Utilities\OrderUtil;
+/**
+ * Public class .
+ */
 class Woocommerce_Gift_Cards_Lite_Public {
 
 	/**
@@ -206,7 +209,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 
-		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || is_page('my-account') ){
+		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || is_page( 'my-account' ) ) {
 			$wps_wgm_check_balance = array(
 				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
@@ -216,7 +219,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
 					wp_localize_script( $this->plugin_name, 'wps_wgm_check_balance', $wps_wgm_check_balance );
 					wp_enqueue_script( $this->plugin_name );
-		} 
+		}
 	}
 	/**
 	 * Function to display the cart html.
@@ -1318,11 +1321,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$meta_key = 'suborder#' . $main_ord_id;
 					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 						// HPOS Enabled.
-						$orders = wc_get_orders( 
+						$orders = wc_get_orders(
 							array(
 								'limit'       => -1,
 								'status'      => array_keys( wc_get_order_statuses() ),
-								'meta_key'    => $meta_key, // Replace with your custom field key 
+								'meta_key'    => $meta_key, // Replace with your custom field key.
 								'type'        => wc_get_order_types(),
 							)
 						);
@@ -1331,7 +1334,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'post_type'      => 'shop_order',
 							'post_status'    => 'any',
 							'posts_per_page' => -1,
-							'meta_key'       => $meta_key, // Replace with your custom field key
+							'meta_key'       => $meta_key, // Replace with your custom field key.
 						);
 						$orders = get_posts( $args );
 					}
@@ -2224,7 +2227,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -2248,7 +2250,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_uwgc_gift_card_balance_org() {
 		$html = '<div class="wps_gift_card_balance_wrapper">';
-		//$html .= '<div><h4>Recharge Coupon Code</h4>';
+		// $html .= '<div><h4>Recharge Coupon Code</h4>';
 		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'giftware' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'giftware' ) . '" required="required"></div>';
 		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'giftware' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'giftware' ) . '" required="required"></div>';
 		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'giftware' ) . '"><span id="wps_notification"></span></p></div>';

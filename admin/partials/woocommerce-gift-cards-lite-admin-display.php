@@ -101,19 +101,14 @@ do_action( 'wps_uwgc_show_notice' );
 						</a>
 						</li>
 						<li class="wps_wgm_header_menu_button wps-gc-demo-image"><a  href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" class="wps-wgn-icon-text" title="" target="_blank">  
-						<img src="<?php echo WPS_WGC_URL; ?>assets/images/Demo.svg" class="wps-info-img" alt="Demo image" >
+						<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/Demo.svg" class="wps-info-img" alt="Demo image" >
 							<span class="wps-wgn-icon-text"><?php esc_html_e( 'Demo', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 						</li>
 						<li class="wps_wgm_header_menu_button">
 							<a  href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="wps-wgn-icon-text" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'woo-gift-cards-lite' ); ?></a>
 						</li>	
-						<?php /////////////////////////////////////////////// changes on dashboard /////////////////////////////////////////?>
-						<li class="wps_wgm_header_menu_button"><a  href="https://www.youtube.com/embed/YgPLO8HDGtc" class="wps-wgn-icon-text" title="" target="_blank">  
-							<span class="dashicons dashicons-youtube"></span>
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'Video', 'woo-gift-cards-lite' ); ?></span>
-						</a>
-						</li>	
+						
 						<?php
 					}
 					?>

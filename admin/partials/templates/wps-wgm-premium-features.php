@@ -61,24 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					
 				</div>
 			</div>
-			<div class="wps_wgm__row">
-				<div class="wps_wgm__column">
-					<div class="wps_wgm__content">
-						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Discounts On Gift Cards', 'woo-gift-cards-lite' ); ?></h3>
-						<p class="wps_wgm__text"><?php esc_html_e( 'Provide additional discount offers on the purchase of gift cards.', 'woo-gift-cards-lite' ); ?></p>
-						
-					</div>
-					
-				</div>
-				<div class="wps_wgm__column">
-					<div class="wps_wgm__content">
-						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Automated Balance Updates', 'woo-gift-cards-lite' ); ?></h3>
-						<p class="wps_wgm__text"><?php esc_html_e( 'Notify your customers for the remaining balance in their gift card.', 'woo-gift-cards-lite' ); ?></p>
-						
-					</div>
-					
-				</div>
-			</div>
+			
 			<div class="wps_wgm__row">
 				<div class="wps_wgm__column">
 					<div class="wps_wgm__content">
@@ -100,29 +83,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="wps_wgm__row">
 				<div class="wps_wgm__column">
 					<div class="wps_wgm__content">
-						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Create Image Gallery for Gift Cards', 'woo-gift-cards-lite' ); ?></h3>
-						<p class="wps_wgm__text"><?php esc_html_e( 'Allow your customers to create attractive gift cards with the image gallery feature.', 'woo-gift-cards-lite' ); ?></p>
+						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Redeem & Recharge Gift Cards WooCommerce', 'woo-gift-cards-lite' ); ?></h3>
+						<p class="wps_wgm__text"><?php esc_html_e( 'Our gifting portal lets you recharge and redeem customers’ WooCommerce gift cards.', 'woo-gift-cards-lite' ); ?></p>
 						
 					</div>
 					
 				</div>
 				<div class="wps_wgm__column">
 					<div class="wps_wgm__content">
-						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Offline Gift Card', 'woo-gift-cards-lite' ); ?></h3>
-						<p class="wps_wgm__text"><?php esc_html_e( 'Create and send gift cards on the request of customers.', 'woo-gift-cards-lite' ); ?></p>
-					</div>
-				</div>
-			</div>
-			<div class="wps_wgm__row">
-				<div class="wps_wgm__column wps_center_div">
-					<div class="wps_wgm__content">
-						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Refund or Cancel Gift Card Product', 'woo-gift-cards-lite' ); ?></h3>
-						<p class="wps_wgm__text"><?php esc_html_e( 'Just like any other product, you can now refund or cancel your Gift Card product if customers don’t want them.', 'woo-gift-cards-lite' ); ?></p>
+						<h3 class="wps_wgm__heading"><?php esc_html_e( 'Sell Group Gift Cards', 'woo-gift-cards-lite' ); ?></h3>
+						<p class="wps_wgm__text"><?php esc_html_e( 'Create a collective gift card product, letting organizers send contribution emails to contributors (friends & family).', 'woo-gift-cards-lite' ); ?></p>
 						
 					</div>
 					
 				</div>
 			</div>
+			
 			<!--=====================================
 			=            UPGRADE SECTION            =
 			======================================-->
