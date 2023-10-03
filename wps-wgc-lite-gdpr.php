@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 /**
  * Return the default suggested privacy policy content.
  *
@@ -92,15 +94,27 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 		// Add the user's recipient's details, and along with user itself.
 
 		// Get all customer orders.
-		$customer_orders = get_posts(
-			array(
-				'numberposts' => -1,
-				'meta_key'    => '_customer_user',
-				'meta_value'  => $user->ID,
-				'post_type'   => wc_get_order_types(),
-				'post_status' => array_keys( wc_get_order_statuses() ),
-			)
-		);
+		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS Enabled.
+			$customer_orders = wc_get_orders(
+				array(
+					'customer'    => $user->ID,
+					'status'      => array_keys( wc_get_order_statuses() ),
+					'type'        => wc_get_order_types(),
+					'limit'       => -1,    // To retrieve all customer orders.
+				)
+			);
+		} else {
+			$customer_orders = get_posts(
+				array(
+					'numberposts' => -1,
+					'meta_key'    => '_customer_user',
+					'meta_value'  => $user->ID,
+					'post_type'   => wc_get_order_types(),
+					'post_status' => array_keys( wc_get_order_statuses() ),
+				)
+			);
+		}
 		if ( isset( $customer_orders ) && ! empty( $customer_orders ) ) {
 			foreach ( $customer_orders as $order_key => $orders ) {
 				$order_id = $orders->ID;
@@ -214,15 +228,27 @@ function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 	if ( $user && $user->ID ) {
 		// Delete their order meta keys.
 
-		$customer_orders = get_posts(
-			array(
-				'numberposts' => -1,
-				'meta_key'    => '_customer_user',
-				'meta_value'  => $user->ID,
-				'post_type'   => wc_get_order_types(),
-				'post_status' => array_keys( wc_get_order_statuses() ),
-			)
-		);
+		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS Enabled.
+			$customer_orders = wc_get_orders(
+				array(
+					'customer'    => $user->ID,
+					'status'      => array_keys( wc_get_order_statuses() ),
+					'type'        => wc_get_order_types(),
+					'limit'       => -1,    // To retrieve all customer orders.
+				)
+			);
+		} else {
+			$customer_orders = get_posts(
+				array(
+					'numberposts' => -1,
+					'meta_key'    => '_customer_user',
+					'meta_value'  => $user->ID,
+					'post_type'   => wc_get_order_types(),
+					'post_status' => array_keys( wc_get_order_statuses() ),
+				)
+			);
+		}
 		if ( isset( $customer_orders ) && ! empty( $customer_orders ) ) {
 			foreach ( $customer_orders as $order_key => $orders ) {
 				$order_id = $orders->ID;

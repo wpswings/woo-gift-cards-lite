@@ -66,7 +66,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '2.5.7';
+			$this->version = '2.6.0';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -181,6 +181,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wgm_save_notice_message' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wgm_display_notification_bar' );
 		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice', $plugin_admin, 'wps_wgm_dismiss_notice' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice_banner', $plugin_admin, 'wps_wgm_dismiss_notice_banner' );
 		// Add your screen.
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
 		// Add Deactivation screen.
@@ -219,7 +220,11 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'wp_ajax_wps_wgc_preview_thickbox_rqst', $plugin_public, 'wps_wgm_preview_thickbox_rqst' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgc_preview_thickbox_rqst', $plugin_public, 'wps_wgm_preview_thickbox_rqst' );
 		$this->loader->add_action( 'init', $plugin_public, 'wps_wgm_preview_email_on_single_page' );
-		$other_setting = get_option( 'wps_wgm_other_settings', array() );
+		// shortcode for check balance .
+		$this->loader->add_action( 'init', $plugin_public, 'wps_uwgc_add_short_code_giftcard_balance_org' );
+		$this->loader->add_action( 'wp_ajax_wps_uwgc_check_gift_balance_org', $plugin_public, 'wps_uwgc_check_gift_balance_org' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_check_gift_balance_org', $plugin_public, 'wps_uwgc_check_gift_balance_org' );
+				$other_setting = get_option( 'wps_wgm_other_settings', array() );
 		if ( is_array( $other_setting ) && ! empty( $other_setting ) && array_key_exists( 'wps_wgm_additional_apply_coupon_disable', $other_setting ) ) {
 			$wps_wgm_apply_coupon_disable = $other_setting['wps_wgm_additional_apply_coupon_disable'];
 			if ( 'on' == $wps_wgm_apply_coupon_disable ) {
@@ -243,8 +248,7 @@ class Woocommerce_Gift_Cards_Lite {
 		// Add variable pricing type.
 		$this->loader->add_action( 'wp_ajax_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
-		
-		
+
 	}
 
 	/**

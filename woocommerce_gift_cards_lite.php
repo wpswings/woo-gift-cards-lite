@@ -15,7 +15,7 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.5.7
+ * Version:           2.6.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
@@ -23,7 +23,7 @@
  * Text Domain:       woo-gift-cards-lite
  * WP Tested up to:   6.3.1
  * WP requires at least: 5.5.0
- * WC tested up to:   8.1.0
+ * WC tested up to:   8.1.1
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -32,6 +32,9 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 $wps_wgm_old_pro_exists = false;
@@ -58,10 +61,21 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 }
 
 if ( $activated ) {
+
+	add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
+	/**
+	 * Hpos compatibility.
+	 */
+	function wps_wgm_declare_hpos_compatibility() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.5.7' );
+	define( 'WPS_WGC_VERSION', '2.6.0' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
@@ -337,13 +351,44 @@ if ( $activated ) {
 		}
 	}
 
-	/**
-	 * Migration to ofl pro plugin.
-	 *
-	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
-	 * @param array  $plugin_data An array of plugin data.
-	 * @param string $status Status filter currently applied to the plugin list.
-	 */
+		add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
+
+			/**
+			 * Function to create giftcard template.
+			 */
+	function wps_uwgc_create_giftcard_template_org() {
+
+		/* ===== ====== Create the Check Gift Card Page ====== ======*/
+		if ( ! get_option( 'check_balance_page_created_org', false ) && ! get_option( 'check_balance_page_created', false ) ) {
+
+			$balance_content = '[wps_check_your_gift_card_balance]';
+
+			$check_balance = array(
+				'post_author'  => get_current_user_id(),
+				'post_name'    => __( 'Gift Card Balance', 'giftware' ),
+				'post_title'   => __( 'Gift Card Balance', 'giftware' ),
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
+				'post_content' => $balance_content,
+			);
+			$page_id       = wp_insert_post( $check_balance );
+			update_option( 'check_balance_page_created_org', true );
+			/* ===== ====== End of Create the Gift Card Page ====== ======*/
+		}
+		if ( ! get_option( 'giftcard_balance' ) ) {
+			$mypost = get_page_by_path( 'gift-card-balance', '', 'page' );
+			if ( isset( $mypost ) ) {
+				update_option( 'giftcard_balance', $mypost->ID );
+			}
+		}
+	}
+		/**
+		 * Migration to ofl pro plugin.
+		 *
+		 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+		 * @param array  $plugin_data An array of plugin data.
+		 * @param string $status Status filter currently applied to the plugin list.
+		 */
 	function wps_wgm_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		global $wps_wgm_old_pro_exists;
@@ -476,6 +521,86 @@ if ( $activated ) {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( 'giftware/giftware.php' ) );
 	}
+
+	// HPOS - High Performance Order System.
+
+	/**
+	 * This function is used to check hpos enable.
+	 *
+	 * @return boolean
+	 */
+	function wps_wgm_is_hpos_enabled() {
+
+		$is_hpos_enable = false;
+		if ( class_exists( 'Automattic\WooCommerce\Utilities\OrderUtil' ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+
+			$is_hpos_enable = true;
+		}
+		return $is_hpos_enable;
+	}
+
+	/**
+	 * This function is used to get post meta data.
+	 *
+	 * @param  string $id        id.
+	 * @param  string $meta_key  meta key.
+	 * @param  bool   $bool meta bool.
+	 * @return string
+	 */
+	function wps_wgm_hpos_get_meta_data( $id, $meta_key, $bool ) {
+
+		$meta_value = '';
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && wps_wgm_is_hpos_enabled() ) {
+
+			$order      = wc_get_order( $id );
+			$meta_value = $order->get_meta( $meta_key, $bool );
+		} else {
+
+			$meta_value = get_post_meta( $id, $meta_key, $bool );
+		}
+		return $meta_value;
+	}
+
+	/**
+	 * This function is used to update meta data.
+	 *
+	 * @param string $id id.
+	 * @param string $meta_key meta_key.
+	 * @param string $meta_value meta_value.
+	 * @return void
+	 */
+	function wps_wgm_hpos_update_meta_data( $id, $meta_key, $meta_value ) {
+
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && wps_wgm_is_hpos_enabled() ) {
+
+			$order = wc_get_order( $id );
+			$order->update_meta_data( $meta_key, $meta_value );
+			$order->save();
+		} else {
+
+			update_post_meta( $id, $meta_key, $meta_value );
+		}
+	}
+
+	/**
+	 * This function is used delete meta data.
+	 *
+	 * @param string $id       id.
+	 * @param string $meta_key meta_key.
+	 * @return void
+	 */
+	function wps_wgm_hpos_delete_meta_data( $id, $meta_key ) {
+
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && wps_wgm_is_hpos_enabled() ) {
+
+			$order = wc_get_order( $id );
+			$order->delete_meta_data( $meta_key );
+			$order->save();
+		} else {
+
+			delete_post_meta( $id, $meta_key );
+		}
+	}
 } else {
 	add_action( 'admin_init', 'wps_wgm_plugin_deactivate' );
 
@@ -497,4 +622,78 @@ if ( $activated ) {
 		</div>
 		<?php
 	}
+}
+add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
+
+if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
+	/**
+	 * Notification.
+	 */
+	function wps_banner_notification_plugin_html() {
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+		}
+		if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) ) {
+			$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+			if ( isset( $banner_id ) && '' !== $banner_id ) {
+				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+
+					if ( '' !== $banner_image && '' !== $banner_url ) {
+
+						?>
+							<div class="wps-offer-notice notice notice-warning is-dismissible">
+								<div class="notice-container">
+									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Gift cards"/></a>
+								</div>
+								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							</div>
+							
+						<?php
+					}
+				}
+			}
+		}
+	}
+}
+
+add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
+/**
+ * Notification html.
+ */
+function wps_giftcard_notification_plugin_html() {
+
+	$screen = get_current_screen();
+	if ( isset( $screen->id ) ) {
+		$pagescreen = $screen->id;
+	}
+	if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) ) {
+		$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
+		$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+		if ( isset( $banner_id ) && '' !== $banner_id ) {
+			$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+			$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+			$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+			if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+
+				if ( '' !== $banner_image && '' !== $banner_url ) {
+
+					?>
+							<div class="wps-offer-notice notice notice-warning is-dismissible">
+								<div class="notice-container">
+									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Gift cards"/></a>
+								</div>
+								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							</div>
+							
+						<?php
+				}
+			}
+		}
+	}
+
 }

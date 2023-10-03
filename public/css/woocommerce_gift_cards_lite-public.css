@@ -162,3 +162,55 @@
 }
 
 /* / My Account end / */
+
+/* check balance section start */
+
+.wps_check_balance .button,
+.wps-wallet-field-container .button {
+	padding: 10px 20px;
+	min-height: 40px;
+	line-height: 1.5;
+	font-size: 14px;
+}
+.wps_gift_card_balance_heading {
+	margin: 0;
+    /* margin-top: 30px; */
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+	line-height: 1.25;
+}
+.wps_gift_card_balance_wrapper {
+    max-width: 680px;
+	margin-top: 30px;
+}
+.wps_gift_card_balance_wrapper .gift_card_code input, .wps_gift_card_balance_wrapper .gift_card_balance_email input {
+	width: 100% !important;
+	border-radius: 5px;
+	height: auto;
+	padding: 10px 12px;
+	border: solid 1px #ccc;
+}
+.gift_card_balance_email, .gift_card_code {
+	margin-bottom: 15px;
+}
+.gift_card_balance_email label, .gift_card_code label {
+	color: #4e4e4e;
+	font-size: 14px;
+}
+input#gift_card_code ,
+input#gift_card_balance_email {
+    width: 100%;
+		border: solid 1px #ccc;
+		padding: 10px 15px;
+    border-radius: 5px;
+}
+
+/* check balance section end */
+.gift_card_balance_email input#gift_card_balance_email:focus,
+.gift_card_code input#gift_card_code:focus {
+    border: solid 2px #000000;
+    outline: none;
+}
