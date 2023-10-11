@@ -77,6 +77,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
 	define( 'WPS_WGC_VERSION', '2.6.0' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
+	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
 	* Check whether the WordPress version is greater than 4.9.6
 	*/

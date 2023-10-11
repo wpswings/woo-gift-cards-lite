@@ -190,6 +190,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'wps_wgm_remove_row_actions', 10, 2 );
 
 		$this->loader->add_action( 'wp_ajax_wgm_ajax_callbacks', $plugin_admin, 'wps_wgm_ajax_callbacks' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_wgm_import_template_org', 5, 2 );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
