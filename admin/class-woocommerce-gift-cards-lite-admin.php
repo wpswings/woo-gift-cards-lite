@@ -2067,10 +2067,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					</div>
 					<div class="wps-gc__popup-for-pro">
 						<span class="wps-gc__popup-for-pro-close">+</span>
-						<h2 class="wps-gc__popup-for-pro-title">Want More ? <b>Go Pro !</b></h2>
-						<p class="wps-gc__popup-for-pro-content"><i>The Pro Version will unlock all of the feature<br>This will easily process event tickets, allow sharing of tickets, resend tickets, and QRCode generation, twilio integration, and email notifications feature making it the perfect event management system</i></p>
+						<h2 class="wps-gc__popup-for-pro-title">Unlock This Premium Template with a Pro Upgrade!  </h2>
+						<p class="wps-gc__popup-for-pro-content">Congratulations on discovering our premium  Templates! This stunning template is reserved for our Pro members, offering you a world of creative possibilities. Upgrade today to unlock it and access a wealth of exclusive features.</p>
 							<div class="wps-gc__popup-for-pro-link-wrap">
-								<a target="_blank" href="https://wpswings.com/product/gc-generator-for-wp-pro/?utm_source=wpswings-gc-pro&utm_medium=gc-org-backend&utm_campaign=go-pro" class="wps-gc__popup-for-pro-link">Go pro now</a>
+								<a target="_blank" href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="wps-gc__popup-for-pro-link">Go pro now</a>
 							</div>
 					</div>
 			</div>
