@@ -2027,7 +2027,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_import_template_org() {
 		if ( ! wps_uwgc_pro_active() ) {
-			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Import Templates', 'giftware' ), __( 'Import Templates', 'giftware' ), 'manage_options', 'giftcard-import-giftcard-templates', array( $this, 'wps_wgm_import_giftcard_template_org' ) );
+			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Import Templates', 'giftware' ), __( 'Import Templates <span style="color:#00FF00;">Pro</span>', 'giftware' ), 'manage_options', 'giftcard-import-giftcard-templates', array( $this, 'wps_wgm_import_giftcard_template_org' ) );
 		}
 	}
 	/**
@@ -2090,12 +2090,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			<h2><?php esc_html_e( 'Filter Gift Card Templates', 'giftware' ); ?></h2>
 			<?php
 			$check_if_all_template_imported = get_option( 'wps_uwgc_all_templates_imported', false );
-			if ( isset( $check_if_all_template_imported ) && false == $check_if_all_template_imported ) {
-				?>
-			<a href="#" name="import_all_gift_card" class="wps_import_all_giftcard_templates button"><?php esc_html_e( 'Import All Gift Card Templates At Once', 'giftware' ); ?></a>
-				<?php
-			}
 			?>
+			<a href="#" name="import_all_gift_card" class="wps_import_all_giftcard_templates button"><?php esc_html_e( 'Import All Gift Card Templates At Once', 'giftware' ); ?></a>
+				
 		</div>
 		<div class="wps_uwgc_wrapper">
 			<div id="filters" class="button-group wps_template_filter"> 

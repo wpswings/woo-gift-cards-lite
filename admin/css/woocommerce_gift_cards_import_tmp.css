@@ -220,18 +220,18 @@
       display: none;
   }
   .wps-popup {
-      background-color: #fff;
-      width: 390px !important;
-      height:auto;
-      padding: 20px;
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 999;
-      opacity: 1;
-      left:0;
-      right:0;
-      margin:0 auto;
+    background-color: #fff;
+    width: 90% !important;
+    max-width: 500px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    opacity: 1;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
   }
   .wps-popup-img{
       position: relative;

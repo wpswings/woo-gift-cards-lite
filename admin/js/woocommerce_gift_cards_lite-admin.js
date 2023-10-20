@@ -40,7 +40,12 @@
 				jQuery('.wps-gc__popup-for-pro-shadow').show();
 				jQuery('.wps-gc__popup-for-pro').addClass('active-pro');
 			})
-	
+			jQuery(document).on('click', '.wps_import_all_giftcard_templates', function(e) {
+				e.preventDefault();
+				
+				jQuery('.wps-gc__popup-for-pro-shadow').show();
+				jQuery('.wps-gc__popup-for-pro').addClass('active-pro');
+			})
 			$(document).on('click', '.wps-gc__popup-for-pro-close', function() {
 				$('.wps-gc__popup-for-pro-shadow').hide();
 				$('.wps-gc__popup-for-pro').removeClass('active-pro');
@@ -50,7 +55,7 @@
 				$(this).hide();
 				$('.wps-gc__popup-for-pro').removeClass('active-pro');
 			})
-		
+			
 			
 			//////////////////
 			jQuery(document).on('keyup','.wps_wgm_variation_price', function() {
