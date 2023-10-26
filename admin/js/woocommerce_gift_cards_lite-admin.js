@@ -10,7 +10,54 @@
 
 	jQuery( document ).ready(
 		function(){
-
+		
+			jQuery( '.cancel_notice' ).on(
+				'click',
+				function() {
+					jQuery( this ).parent().hide();
+				}
+			);
+			jQuery( document ).on(
+				'click',
+				'.wps_preview_links a',
+				function( e ) {
+					e.preventDefault();
+					jQuery( this ).parent().parent( ".wps_event_template_preview" ).siblings( '.wps-popup-wrapper' ).fadeIn( "slow" );
+				}
+			);
+			jQuery( document ).on(
+				'click',
+				'.wps-popup-img span',
+				function( e ) {
+					e.preventDefault();
+					jQuery( this ).parent().parent().parent( '.wps-popup-wrapper' ).fadeOut( "slow" );
+				}
+			)
+			
+			jQuery(document).on('click', '.wps_download_template', function(e) {
+				e.preventDefault();
+				
+				jQuery('.wps-gc__popup-for-pro-shadow').show();
+				jQuery('.wps-gc__popup-for-pro').addClass('active-pro');
+			})
+			jQuery(document).on('click', '.wps_import_all_giftcard_templates', function(e) {
+				e.preventDefault();
+				
+				jQuery('.wps-gc__popup-for-pro-shadow').show();
+				jQuery('.wps-gc__popup-for-pro').addClass('active-pro');
+			})
+			$(document).on('click', '.wps-gc__popup-for-pro-close', function() {
+				$('.wps-gc__popup-for-pro-shadow').hide();
+				$('.wps-gc__popup-for-pro').removeClass('active-pro');
+			})
+		
+			$(document).on('click', '.wps-gc__popup-for-pro-shadow', function() {
+				$(this).hide();
+				$('.wps-gc__popup-for-pro').removeClass('active-pro');
+			})
+			
+			
+			//////////////////
 			jQuery(document).on('keyup','.wps_wgm_variation_price', function() {
 				this.value = this.value.replace(/[^0-9,.]/g, '');
 			});

@@ -95,7 +95,13 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), $this->version );
 			wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 			wp_enqueue_style( 'woocommerce_admin_styles' );
+			if ( ! wps_uwgc_pro_active() ) {
+				
+				wp_enqueue_style( $this->plugin_name.'tmp', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_import_tmp.css', array(), time(), 'all' );
+				
+			}
 		}
+		
 	}
 
 	/**
@@ -139,7 +145,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( $this->plugin_name . 'wps_wgm_uneditable_template_name', plugin_dir_url( __FILE__ ) . 'js/wps_wgm_uneditable_template_name.js', array( 'jquery' ), $this->version, 'count' );
 			}
 
-			if ( 'product' === $pagescreen || 'shop_order' === $pagescreen || 'woocommerce_page_wc-orders' == $pagescreen || 'giftcard_page_wps-wgc-setting-lite' === $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' === $pagescreen || 'plugins' === $pagescreen ) {
+			if ( 'product' === $pagescreen || 'shop_order' === $pagescreen || 'woocommerce_page_wc-orders' == $pagescreen || 'giftcard_page_wps-wgc-setting-lite' === $pagescreen || 'giftcard_page_uwgc-import-giftcard-templates' === $pagescreen || 'plugins' === $pagescreen || 'giftcard_page_giftcard-import-giftcard-templates' === $pagescreen ) {
 
 				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
 				$giftcard_tax_cal_enable  = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_tax_cal_enable' );
@@ -2011,6 +2017,166 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 		return array();
 	}
-
+/**
+	 * Function is used to add a sub menu for import template section.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_import_template().
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_import_template_org() {
+		if ( ! wps_uwgc_pro_active() ) {
+			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Import Templates', 'giftware' ), __( 'Import Templates <span style="color:#00FF00;">Pro</span>', 'giftware' ), 'manage_options', 'giftcard-import-giftcard-templates', array( $this, 'wps_wgm_import_giftcard_template_org' ) );
+		}
+	}
+	/**
+	 * Function is used to import giftcard template.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_import_giftcard_template().
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_import_giftcard_template_org() {
+		$url  = WPS_GIFT_TEMPLATE_URL . 'ultimate-woocommerce-gift-card/wps-get-gc-template.php';
+		$attr = array(
+			'action' => 'wps_fetch_gc_template',
+		);
+		$query = esc_url_raw( add_query_arg( $attr, $url ) );
+		$wps_response = wp_remote_get(
+			$query,
+			array(
+				'timeout' => 20,
+				'sslverify' => false,
+			)
+		);
+		
+		if ( is_wp_error( $wps_response ) ) {
+			$error_message = $wps_response->get_error_message();
+			echo '<p><strong> Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$wps_response = wp_remote_retrieve_body( $wps_response );
+			$template_json_data = json_decode( $wps_response, true );
+		}
+		?>
+		<div id="wps_wgm_setting_wrapper">
+			<div class="wps-gc__popup-for-pro-wrap">
+					<div class="wps-gc__popup-for-pro-shadow">
+						
+					</div>
+					<div class="wps-gc__popup-for-pro">
+						<span class="wps-gc__popup-for-pro-close">+</span>
+						<h2 class="wps-gc__popup-for-pro-title">Unlock This Premium Template with a Pro Upgrade!  </h2>
+						<p class="wps-gc__popup-for-pro-content">Congratulations on discovering our premium  Templates! This stunning template is reserved for our Pro members, offering you a world of creative possibilities. Upgrade today to unlock it and access a wealth of exclusive features.</p>
+							<div class="wps-gc__popup-for-pro-link-wrap">
+								<a target="_blank" href="https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-backend&utm_campaign=go-pro" class="wps-gc__popup-for-pro-link">Go pro now</a>
+							</div>
+					</div>
+			</div>
+		</div>
+		<div id="wps_wgm_loader" style="display: none;">
+			<img src="<?php echo esc_url( WPS_GIFT_TEMPLATE_URL ); ?>assets/images/loading.gif">
+		</div>
+		<div class="wps_notice_temp" style="display:none;"> 
+			<span id="wps_import_notice"></span>
+			<i class="fas fa-times cancel_notice"></i>
+		</div>
+		<h1 id="wps-gc-import-template-title"><?php esc_html_e( 'Import Gift Card Templates', 'giftware' ); ?></h1>
+		<?php
+		if ( isset( $template_json_data ) && is_array( $template_json_data ) && ! empty( $template_json_data ) ) {
+			?>
+		<div class="wps_uwgc_filter_wrap">
+			<h2><?php esc_html_e( 'Filter Gift Card Templates', 'giftware' ); ?></h2>
+			<?php
+			$check_if_all_template_imported = get_option( 'wps_uwgc_all_templates_imported', false );
+			?>
+			<a href="#" name="import_all_gift_card" class="wps_import_all_giftcard_templates button"><?php esc_html_e( 'Import All Gift Card Templates At Once', 'giftware' ); ?></a>
+				
+		</div>
+		<div class="wps_uwgc_wrapper">
+			<div id="filters" class="button-group wps_template_filter"> 
+				 <button class="button wps_gc_events is-checked" data-filter="*">show all</button>
+			<?php
+			foreach ( $template_json_data as $rs ) {
+				?>
+			  <button class="button wps_gc_events" data-filter=".<?php echo esc_attr( stripslashes( $rs['occassion_id'] ) ); ?>"><?php echo esc_html( stripslashes( $rs['occassion_name'] ) ); ?></button>
+				<?php
+			}
+		}
+		?>
+			</div>
+			<?php
+			if ( isset( $template_json_data ) && is_array( $template_json_data ) && ! empty( $template_json_data ) ) {
+				?>
+			<div id="filters_on_mobile" class="wps_template_filter"> 
+			<select class="select-group wps_select_template_filter">
+				<option class="wps_gc_events is-checked" value="*">show all</option>
+				<?php
+				foreach ( $template_json_data as $rs ) {
+					?>
+				<option class="wps_gc_events" value =".<?php echo esc_attr( stripslashes( $rs['occassion_id'] ) ); ?>"><?php echo esc_html( stripslashes( $rs['occassion_name'] ) ); ?></option>
+					<?php
+				}
+				?>
+			</select>
+			</div>
+				<?php
+			}
+			?>
+			<div class="grid wps_template_display">
+				<?php
+				if ( isset( $template_json_data ) && is_array( $template_json_data ) && ! empty( $template_json_data ) ) {
+					foreach ( $template_json_data as $rs ) {
+						if ( array_key_exists( 'templates', $rs ) ) {
+							foreach ( $rs['templates'] as $temp_data ) {
+								?>
+								<div class="element-item template_block <?php echo esc_attr( stripslashes( $rs['occassion_id'] ) ); ?>" data-category="template">
+									<h3 class="name"><?php echo esc_html( stripslashes( $temp_data['template_name'] ) ); ?></h3>
+									<div class="event_template">
+										<img src="
+										<?php
+										 echo esc_url( WPS_GIFT_TEMPLATE_URL . 'ultimate-woocommerce-gift-card/giftcard-templates/' . $temp_data['template_image'] );
+										?>
+										  ">
+									</div>
+									<div class="wps_event_template_preview">
+										<div class="wps_preview_links">
+											<a href="">
+												<i class="fas fa-eye wps_preview_template"></i>
+											</a>
+											<?php
+											?>
+											<i class="fas fa-download wps_download_template" data-id="<?php echo esc_attr( stripslashes( $temp_data['template_id'] ) ); ?>"></i>
+											<div class="wps_template_import_note">
+												<p class="wps_note"><?php esc_html_e( 'Import this template.', 'giftware' ); ?></p>
+											</div>
+											
+																						
+										</div>
+									</div>
+									<div class="wps-popup-wrapper">
+										  <div class="wps-popup">
+											  <div class="wps-popup-img">
+												<span><i class="far fa-times-circle"></i></span>
+												<img src="
+												<?php
+												echo esc_url( WPS_GIFT_TEMPLATE_URL . 'ultimate-woocommerce-gift-card/giftcard-templates/' . $temp_data['template_image'] );
+												?>
+												  ">
+											  </div>
+										  </div>
+									</div>
+								</div>
+								<?php
+							}
+						}
+					}
+				}
+				?>
+			</div>
+		 </div>
+		<?php
+	}
 }
 ?>

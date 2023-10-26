@@ -1,0 +1,526 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+ @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+ @import url('https://use.fontawesome.com/releases/v5.6.3/css/all.css');
+ 
+/*import template*/
+.wps_uwgc_wrapper:after {
+    display: block;
+    clear:both;
+    content:'';
+  }
+  .button.wps_gc_events {
+      display: block;
+      margin: 10px;
+  }
+  .element-item.template_block {
+    text-align: center;
+    border: 1px solid #bcbcbc;
+    position: relative;
+  
+  }
+  .wps_notice_temp {
+      padding: 10px;
+      margin: 10px 10px 0px 0px;
+      border-left: 4px solid black;
+      background: azure;
+      font-weight: bold;
+  }
+  .fas.fa-times.cancel_notice {
+      float: right;
+      margin-right: 5px;
+      font-size: large;
+      color: #ba2424;
+  }
+  
+  /*==================================
+  =            Layout-css            =
+  ==================================*/
+  #filters.wps_template_filter {
+      width: 20%;
+      float:left;
+      vertical-align: top;
+      white-space: normal;
+      font-size: 14px;
+      background: #fff;
+      box-sizing: border-box;
+  }
+  #filters .button.wps_gc_events {
+      display: block;
+      padding: 1px 15px;
+      border: none;
+      width: 100%;
+      border-radius: 0;
+      text-transform: capitalize;
+      transition: transform ease-in 0.1s,
+      box-shadow ease-in 0.25s;
+      text-align: left;
+      cursor: pointer;
+      background-color: #6ba8a9;
+      color: #fff;
+      border-bottom: 1px solid #569e9f;
+      font-size: 16px;
+      margin: 0;
+  }
+  #filters .button.wps_gc_events.is-checked
+  {
+      background: #fff;
+      color: #333;
+      font-weight: 600;
+      outline: 0;
+      border-left: 5px solid #357376;
+  }
+  .wps_template_display h3 {
+      margin: 0;
+      padding: 10px 0;
+      background: #000;
+      color: #fff;
+  }
+  #filters .button.wps_gc_events.is-checked:focus
+  {
+      outline:0;
+      box-shadow:none;
+  }
+  .grid.wps_template_display
+  {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 0;
+    padding-left: 10px;
+  }
+  .wps_template_display .event_template img{
+      width:100%;
+      display: block;
+  }
+  .giftcard_page_uwgc-import-giftcard-templates #wpcontent #wpbody h1 {
+      font-size: 24px;
+      border-top: 5px solid #357376;
+      padding-bottom: 30px;
+      padding-top: 30px;
+      color: #ffffff;
+      background: #6ba8a9;
+      text-align: center;
+      margin-bottom: 0;
+  }
+  .wps_uwgc_wrapper {
+      background: #fff;
+      border-left: 1px solid #cac7c7;
+      border-right: 1px solid #cac7c7;
+  }
+  .wps_uwgc_filter_wrap {
+      padding: 10px 10px;
+      border-bottom: 1px solid #cac7c7;
+      background: #fafafa;
+      border-left: 1px solid #cac7c7;
+      border-right: 1px solid #cac7c7;
+  }
+  .wps_uwgc_filter_wrap:after {
+    display: block;
+    clear:both;
+    content:'';
+  }
+  .wps_uwgc_filter_wrap h2 {
+      float: left;
+      margin: 0;
+      line-height: 1.9;
+      color: #222;
+      font-size: 16px;
+  
+  }
+  a.wps_import_all_giftcard_templates.button {
+      float: right;
+      vertical-align: middle;
+      font-weight: 400;
+      text-align: center;
+      border: 1px solid transparent;
+      padding: 5px 12px;
+      font-size: 14px;
+      line-height: 1.8;
+      border-radius: 5px;
+      transition: color 0.15s ease-in-out,
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+      background: #357376!important;
+      border-color: #357376;
+      color: #fff;
+  }
+  a.wps_import_all_giftcard_templates.button:hover {
+      background: #6ba8a9 !important;
+      color: #fff;
+      border-color: #6ba8a9;
+  }
+  .event_template {
+      position: relative;
+  }
+  .event_template:after {
+      position: absolute;
+      content: "";
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(251, 227, 185, 0.8);
+      opacity: 0;
+      transition: 0.3s linear all;
+  }
+  .wps_event_template_preview {
+      opacity: 0;
+      transition: 0.3s linear all;
+  }
+  .element-item.template_block:hover .event_template:after, .element-item.template_block:hover .wps_event_template_preview {
+      opacity: 1;
+      transition: 0.3s linear all;
+  }
+  .wps_preview_links {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      z-index: 1;
+      text-align: center;
+      width: 110px;
+      background-color: #fff;
+      padding: 8px;
+      transform: translateY(-50%);
+      cursor: pointer;
+  }
+  .wps_preview_links a {
+      text-decoration: none;
+      display: inline-block;
+      padding: 5px 10px;
+      width: 45px;
+      color: #000;
+  }
+  .wps_preview_links a:focus {
+      outline: none;
+  }
+  .wps_preview_links a:nth-of-type(1) {
+      border-right: 1px solid #888;
+  }
+  .wps_preview_links a i {
+      font-size: 16px;
+  }
+  /*=====  End of Layout-css  ======*/
+  .wps-popup-wrapper {
+      background-color: rgba(0, 0, 0, 0.7);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+  }
+  .wps-popup-wrapper
+  {
+      display: none;
+  }
+  .wps-popup {
+    background-color: #fff;
+    width: 90% !important;
+    max-width: 500px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    opacity: 1;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .wps-popup-img{
+      position: relative;
+  }
+  .wps-popup-img img{
+      width:100%;
+  }
+  .wps-popup-img span {
+      position: absolute;
+      right: -20px;
+      top: -18px;
+      font-size: 20px;
+      color: #000;
+      cursor:pointer;
+  }
+  .wps_download_template {
+      display: inline-block;
+      padding: 5px 10px;
+      width: 45px;
+      color: #000;
+  }
+  .giftcard_page_uwgc-import-giftcard-templates #wpcontent, .giftcard_page_uwgc-import-giftcard-templates #wpfooter
+  {
+      margin-right:18px;
+  }
+  .wps_select_template_filter
+  {
+      display: none;
+  }
+  .wps_update_template {
+      display: inline-block;
+      padding: 5px 10px;
+      width: 45px;
+      color: #000;
+  }
+  .wps_update_template:hover ~ .wps_template_update_note {
+      display: block;
+  }
+  .wps_template_update_note {
+      display: none;
+      position: absolute;
+      color: #fff;
+      top: -125px;
+      left: -70px;
+      right: -70px;
+      margin: 0 auto;
+      background-color: #6ba8a9;
+      border-radius: 6px;
+      padding: 5px 10px;
+      text-align: center;
+  }
+  .wps_note {
+      margin: 4px 0px;
+  }
+  .wps_template_update_note::after {
+      content: "";
+      position: absolute;
+      top: 99%;
+      left: 50%;
+      margin-left: 11px;
+      border-width: 12px;
+      border-style: solid;
+      border-color: #6ba8a9 transparent transparent transparent;
+  }
+  .wps_template_import_note{
+      display: none;
+      position: absolute;
+      color: #fff;
+      top: -34px;
+      left: -23px;
+      right: -37px;
+      margin: 0 auto;
+      background-color: #6ba8a9;
+      border-radius: 6px;
+      padding: 5px 10px;
+      text-align: center;
+  }
+  .wps_template_import_note::after{
+      content: "";
+      position: absolute;
+      top: 99%;
+      left: 50%;
+      margin-left: 10px;
+      border-width: 8px;
+      border-style: solid;
+      border-color: #6ba8a9 transparent transparent transparent;
+  
+  }
+  .wps_download_template:hover ~ .wps_template_import_note {
+      display: block;
+  }
+  #wps_caution {
+  
+      background: #ef5350;
+      padding: 5px;
+      border-radius: 6px;
+  
+  }
+  #wps_wgm_terms_condition_content {
+      display: inline-block;
+  }
+  #wps_wgm_whatsapp_message {
+      display: inline-block;
+  }
+  /*===================================
+  =            Media Query            =
+  ===================================*/
+  @media screen and (max-width:840px) and (min-width: 768px)
+  {
+      .element-item.template_block {
+          max-width: 265px;
+      }
+  }
+  @media only screen and (max-width: 767px){
+      .giftcard_page_uwgc-import-giftcard-templates #wpcontent, .giftcard_page_uwgc-import-giftcard-templates #wpfooter
+      {
+          margin-right:0;
+      }
+      #filters.wps_template_filter
+      {
+          display: none;
+      }
+      .grid.wps_template_display
+      {
+        width: 100%;
+        padding: 0;
+        grid-template-columns: 1fr 1fr;
+      }
+      .element-item.template_block
+      {
+          max-width: 100%;
+          margin: 10px auto;
+          padding-left:10px;
+          padding-right: 10px;
+          border:0;
+      }
+      .wps-popup
+      {
+          width:100%;
+      }
+      .wps_select_template_filter
+      {
+          display: block;
+      }
+      #filters_on_mobile.wps_template_filter {
+          padding: 20px 10px 0 10px;
+      }
+      .select-group.wps_select_template_filter {
+          width: 100%;
+          text-transform: capitalize;
+          color:#000;
+          border-radius: 0;
+      }
+      .select-group.wps_select_template_filter:focus {
+          outline: none;
+          border: 1px solid #357376;
+          box-shadow: none;
+          color:#357376;
+      }
+      .wps_uwgc_filter_wrap h2
+      {
+          width:100%;
+      }
+      a.wps_import_all_giftcard_templates.button
+      {
+          float:left;
+      }
+  }
+  @media screen and (max-width:767px) and (min-width: 601px)
+  {
+      .element-item.template_block {
+          max-width: 33%;
+      }
+      .wps_template_display h3
+      {
+          font-size:14px;
+      }
+      .wps_template_update_note {
+          top: -126px;
+          left: -38px;
+          right: -38px;
+          padding: 5px
+      }
+      .wps_note {
+          font-size: 12px;
+      }
+  }
+  @media screen and (max-width:600px) and (min-width: 380px)
+  {
+
+      .wps_template_update_note {
+          top: -126px;
+          left: -38px;
+          right: -38px;
+          padding: 5px
+      }
+      .wps_note {
+          font-size: 12px;
+      }
+  }
+  /*Pop Up For Pro Tag start */
+.wps-gc__popup-for-pro-shadow {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99998;
+    display: none;
+}
+
+span.wps-gc__popup-for-pro-close {
+    display: inline-block;
+    line-height: 14px;
+    font-size: 24px;
+    font-weight: 400;
+    transform: rotate(45deg);
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.wps-gc__popup-for-pro {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 99999;
+    transform: translate(-50%, -50%) scale(0);
+    width: 90%;
+    max-width: 600px;
+    opacity: 0;
+    transition: transform 0.8s ease;
+}
+
+.wps-gc__popup-for-pro.active-pro {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+h2.wps-gc__popup-for-pro-title {
+    font-size: 32px;
+    line-height: 1.25;
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+p.wps-gc__popup-for-pro-content {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 50px;
+    text-align: center;
+}
+
+.wps-gc__popup-for-pro-link-wrap {
+    text-align: center;
+}
+
+a.wps-gc__popup-for-pro-link {
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    background: #2196f3;
+    border: 1px solid #2196f3;
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
+    transition: all 0.4s;
+}
+
+a.wps-gc__popup-for-pro-link:hover {
+    color: #2196f3;
+    background: transparent;
+}
+#wps-gc-import-template-title{
+    font-size: 2em;
+    margin: 0.67em 0;
+    text-align: center;
+    background: #569e9f;
+    color: white;
+    padding: 20px;
+    line-height: 1.25;
+}
+
+/* Pro Tag end */
