@@ -610,7 +610,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! isset( $wps_field_nonce ) || ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						// echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );.
+				
 						return $the_cart_data;
 					} else {
 						// for price based on country.
@@ -2250,7 +2250,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_uwgc_gift_card_balance_org() {
 		$html = '<div class="wps_gift_card_balance_wrapper">';
-		// $html .= '<div><h4>Recharge Coupon Code</h4>';
+	
 		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'woo-gift-cards-lite' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'woo-gift-cards-lite' ) . '"><span id="wps_notification"></span></p></div>';

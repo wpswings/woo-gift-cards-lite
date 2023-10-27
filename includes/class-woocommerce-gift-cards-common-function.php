@@ -322,7 +322,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$todaydate = date_i18n( 'Y-m-d' );
 						if ( 0 < $expiry_date || 0 === $expiry_date ) {
 							$expirydate = date_i18n( 'Y-m-d', strtotime( "$todaydate +$expiry_date day" ) );
-							// $expirydate = date_i18n( 'Y-m-d', strtotime( '-1 day' ,strtotime( "$todaydate +$expiry_date day" ) ) );
+					
 						} else {
 							$expirydate = '';
 						}
