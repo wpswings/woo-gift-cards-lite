@@ -654,6 +654,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'href'  => array(),
 					'rel'   => array(),
 					'title' => array(),
+					'id'    => array(),
 				),
 				'abbr' => array(
 					'title' => array(),
@@ -792,9 +793,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'name'         => array(),
 					'placeholder'         => array(),
 				),
-				'a'      => array(
-					'id'         => array(),
-				),
+				'a'      => array(),
 
 			);
 			return apply_filters( 'wps_allowed_html_for_preview', $allowed_tags );
