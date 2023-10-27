@@ -366,8 +366,8 @@ if ( $activated ) {
 
 			$check_balance = array(
 				'post_author'  => get_current_user_id(),
-				'post_name'    => __( 'Gift Card Balance', 'giftware' ),
-				'post_title'   => __( 'Gift Card Balance', 'giftware' ),
+				'post_name'    => __( 'Gift Card Balance', 'woo-gift-cards-lite' ),
+				'post_title'   => __( 'Gift Card Balance', 'woo-gift-cards-lite' ),
 				'post_type'    => 'page',
 				'post_status'  => 'publish',
 				'post_content' => $balance_content,

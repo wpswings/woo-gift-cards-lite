@@ -2027,7 +2027,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_import_template_org() {
 		if ( ! wps_uwgc_pro_active() ) {
-			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Import Templates', 'giftware' ), __( 'Import Templates <span style="color:#00FF00;">Pro</span>', 'giftware' ), 'manage_options', 'giftcard-import-giftcard-templates', array( $this, 'wps_wgm_import_giftcard_template_org' ) );
+			add_submenu_page( 'edit.php?post_type=giftcard', __( 'Import Templates', 'woo-gift-cards-lite' ), __( 'Import Templates <span style="color:#00FF00;">Pro</span>', 'woo-gift-cards-lite' ), 'manage_options', 'giftcard-import-giftcard-templates', array( $this, 'wps_wgm_import_giftcard_template_org' ) );
 		}
 	}
 	/**
@@ -2082,16 +2082,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			<span id="wps_import_notice"></span>
 			<i class="fas fa-times cancel_notice"></i>
 		</div>
-		<h1 id="wps-gc-import-template-title"><?php esc_html_e( 'Import Gift Card Templates', 'giftware' ); ?></h1>
+		<h1 id="wps-gc-import-template-title"><?php esc_html_e( 'Import Gift Card Templates', 'woo-gift-cards-lite' ); ?></h1>
 		<?php
 		if ( isset( $template_json_data ) && is_array( $template_json_data ) && ! empty( $template_json_data ) ) {
 			?>
 		<div class="wps_uwgc_filter_wrap">
-			<h2><?php esc_html_e( 'Filter Gift Card Templates', 'giftware' ); ?></h2>
+			<h2><?php esc_html_e( 'Filter Gift Card Templates', 'woo-gift-cards-lite' ); ?></h2>
 			<?php
 			$check_if_all_template_imported = get_option( 'wps_uwgc_all_templates_imported', false );
 			?>
-			<a href="#" name="import_all_gift_card" class="wps_import_all_giftcard_templates button"><?php esc_html_e( 'Import All Gift Card Templates At Once', 'giftware' ); ?></a>
+			<a href="#" name="import_all_gift_card" class="wps_import_all_giftcard_templates button"><?php esc_html_e( 'Import All Gift Card Templates At Once', 'woo-gift-cards-lite' ); ?></a>
 				
 		</div>
 		<div class="wps_uwgc_wrapper">
@@ -2149,7 +2149,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 											?>
 											<i class="fas fa-download wps_download_template" data-id="<?php echo esc_attr( stripslashes( $temp_data['template_id'] ) ); ?>"></i>
 											<div class="wps_template_import_note">
-												<p class="wps_note"><?php esc_html_e( 'Import this template.', 'giftware' ); ?></p>
+												<p class="wps_note"><?php esc_html_e( 'Import this template.', 'woo-gift-cards-lite' ); ?></p>
 											</div>
 											
 																						
