@@ -110,8 +110,8 @@ if ( ! wps_uwgc_pro_active() ) {
     <div class="wps-gc__popup-for-pro">
         <span class="wps-gc__popup-for-pro-close">+</span>
         <h2 class="wps-gc__popup-for-pro-title">Unlock More Featutres with Pro Upgrade! </h2>
-        <p class="wps-gc__popup-for-pro-content">Congratulations on discovering our premium Templates! This stunning
-            template is reserved for our Pro members, offering you a world of creative possibilities. Upgrade today to
+        <p class="wps-gc__popup-for-pro-content">Congratulations on discovering our premium Features! This stunning
+            features is reserved for our Pro members, offering you a world of creative possibilities. Upgrade today to
             unlock it and access a wealth of exclusive features.</p>
         <div class="wps-gc__popup-for-pro-link-wrap">
             <a target="_blank"
@@ -240,7 +240,7 @@ if ( ! wps_uwgc_pro_active() ) {
 							foreach ( $wps_wgm_setting_tab as $key => $wps_tab ) {
 								if ( isset( $_GET['tab'] ) && sanitize_key( wp_unslash( $_GET['tab'] ) ) == $key ) {
 									
-									if (  'overview_setting' !== $key &&'general_setting' !== $key && 'product_setting' !== $key && 'product_setting' !== $key && 'email_setting' !== $key && 'delivery_method' !== $key && 'other_setting' !== $key ) {
+									if (  'premium_plugin' !== $key &&  'redeem_tab' !== $key && 'overview_setting' !== $key &&'general_setting' !== $key && 'product_setting' !== $key && 'product_setting' !== $key && 'email_setting' !== $key && 'delivery_method' !== $key && 'other_setting' !== $key ) {
 
 						?>
                         <div class="wps_wgm_tabs">
@@ -271,7 +271,7 @@ if ( ! wps_uwgc_pro_active() ) {
                         <?php
 									} else {
 
-										if ( 'overview_setting' !== $key && 'general_setting' !== $key && 'product_setting' !== $key && 'product_setting' !== $key && 'email_setting' !== $key && 'delivery_method' !== $key && 'other_setting' !== $key ) {
+										if (  'premium_plugin' !== $key &&  'redeem_tab' !== $key && 'overview_setting' !== $key && 'general_setting' !== $key && 'product_setting' !== $key && 'product_setting' !== $key && 'email_setting' !== $key && 'delivery_method' !== $key && 'other_setting' !== $key ) {
 
 											?>
                         <div class="wps_wgm_tabs">

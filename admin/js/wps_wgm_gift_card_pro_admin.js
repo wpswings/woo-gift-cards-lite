@@ -10,7 +10,7 @@
 
 	jQuery( document ).ready(
 		function(){
-            // $(".wps_wgm_nav_tab").removeClass("wps-gift-cards-pro-tag");
+            $(".wps_wgm_nav_tab").removeClass("wps-gift-cards-pro-tag");
             // $('.wps-gc__popup-for-pro-wrap').html('')
 		}
 	);
