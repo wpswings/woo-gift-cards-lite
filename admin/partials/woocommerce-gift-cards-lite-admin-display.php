@@ -246,7 +246,10 @@ if ( ! wps_uwgc_pro_active() ) {
                         <div class="wps_wgm_tabs">
                             <a class="wps_wgm_nav_tab nav-tab nav-tab-active wps-gift-cards-pro-tag"
                                 href="?post_type=giftcard&page=wps-wgc-setting-lite&tab=<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $wps_tab['title'] ); ?>
-                                <span><?php esc_html_e( 'Pro', 'woo-gift-cards-lite' ); ?></span></a>
+								<?php if (  ! wps_uwgc_pro_active() ) { ?>
+								<span><?php esc_html_e( 'Pro', 'woo-gift-cards-lite' ); ?></span>
+							<?php } ?>
+								</a>
                         </div>
                         <?php
 						} else {
