@@ -46,6 +46,13 @@
 				jQuery('.wps-gc__popup-for-pro-shadow').show();
 				jQuery('.wps-gc__popup-for-pro').addClass('active-pro');
 			})
+
+			jQuery(document).on('click', '.wps_wgm_content_template_pro_tag', function(e) {
+				e.preventDefault();
+				jQuery('.wps-gc__popup-for-pro-wrap').css('display','block')
+				jQuery('.wps-gc__popup-for-pro-shadow').show();
+				jQuery('.wps-gc__popup-for-pro').addClass('active-pro');
+			})
 			$(document).on('click', '.wps-gc__popup-for-pro-close', function() {
 				$('.wps-gc__popup-for-pro-shadow').hide();
 				$('.wps-gc__popup-for-pro').removeClass('active-pro');

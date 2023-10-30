@@ -6,7 +6,7 @@ Requires at least: 5.1.0
 Tested up to: 6.3.2
 WC requires at least: 5.5.0
 WC tested up to: 8.2.1
-Stable tag:  2.6.1
+Stable tag:  2.6.2
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -146,12 +146,13 @@ Gift cards for WooCommerce help merchants to create, manage and sell digital gif
 * [**WooCommerce Group Gift Cards Documentation**](https://docs.wpswings.com/woocommerce-group-gifting?utm_source=wpswings-groupgifting-doc&utm_medium=giftcards-org-page&utm_campaign=group-gifting-documentation)
 
 == SUPPORT ==
-If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-query&utm_medium=giftcards-org-page&utm_campaign=submit-query).
+If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-page&utm_campaign=official) and discover all types of [**WooCommerce Extensions**](https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-page&utm_campaign=woocommerce-plugins) for your eCommerce store.
 
-> If our documentation doesn’t contain the solution to your problem, you can visit the [ **WP Swings Forum Community**](https://forums.wpswings.com/?utm_source=wpswings-giftcards-forums&utm_medium=giftcards-org-page&utm_campaign=forum)
+> If our documentation doesn’t contain the solution to your problem, you can visit the [ **WP Swings Forum Community**](https://forums.wpswings.com/?utm_source=wpswings-giftcards-forums&utm_medium=giftcards-org-page&utm_campaign=forum) or or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-query&utm_medium=giftcards-org-page&utm_campaign=submit-query).
 
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-page&utm_campaign=woocommerce-services)
 
+> Get Huge Discounts on WooCommerce Gift Cards plugin during BFCM Sales 2023 - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-giftcards-offers&utm_medium=giftcards-org-page&utm_campaign=offers)
 
 
 == Installation ==
@@ -238,6 +239,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 2.6.2 - Released on 27 October 2023 = 
+* Fix: Fixed string translation issue
 
 = 2.6.1 - Released on 23 October 2023 = 
 * New: Compatibility with latest WP(6.3.2) and WC(8.2.1)
@@ -433,6 +437,6 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.6.1 - Released on 23 October 2023 = 
-* New: Compatibility with latest WP(6.3.2) and WC(8.2.1)
-* New: Added import template 
+= 2.6.2 - Released on 27 October 2023 = 
+* Fix: Fixed string translation issue
+

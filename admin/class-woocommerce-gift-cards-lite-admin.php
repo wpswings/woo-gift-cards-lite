@@ -111,8 +111,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_enqueue_scripts() {
 		$screen = get_current_screen();
+
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
+			if (  wps_uwgc_pro_active() ) {
+				wp_enqueue_script( 'pro_tag_remove_class', plugin_dir_url( __FILE__ ) . '/js/wps_wgm_gift_card_pro_admin.js',array( 'jquery' ), time(), true );
+			}
 			$pagescreen = $screen->id;
 
 			$wps_wgm_notice = array(
@@ -196,6 +200,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), $this->version, true );
 
 			}
+		
 		}
 	}
 

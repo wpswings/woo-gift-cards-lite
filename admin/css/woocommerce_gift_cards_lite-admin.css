@@ -1613,3 +1613,165 @@
 }
 
 
+#wps_uwgc_save_qrcode_org{
+    margin-right: 10px;
+}
+#wps_wgm_thankyou_message_org{
+    display: inline-block;
+}
+#wps_wgm_add_new_card_button.wps_wgm_add_new_card_button_org {
+    float: right;
+    margin: 13px 0 0;
+}
+.wps_sample_export_org img{
+    height: 15px;
+    
+}
+/* Pro tag styling Start */
+
+.wps_wgm_content_template_pro_tag .wps_wgm_heading{
+    position: relative;
+    overflow: hidden;
+    padding-left: 25px;
+    padding-bottom: 15px;
+}
+
+.wps_wgm_content_template_pro_tag .wps_wgm_table_wrapper {
+    pointer-events: none;
+}
+
+.wps_wgm_content_template_pro_tag .wps_wgm_heading:before {
+    align-items: center;
+    background: #fff;
+    top: 50%;
+    color: #00b301;
+    content: "PRO";
+    display: inline-flex;
+    font-size: 16px;
+    justify-content: center;
+    right: 10px;
+    padding: 5px;
+    position: absolute;
+    transform: translate(0, -50%);
+    width: 60px;
+    border-radius: 5px;
+}
+
+.wps_wgm_content_template_pro_tag .wps_wgm_heading:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wps-gift-cards-pro-tag span {
+    color: #00b301;
+    font-size: 14px;
+    display: inline-block;
+    padding: 2px 5px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.wps_wgm_tabs a.nav-tab.wps-gift-cards-pro-tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Pro tag styling end */
+
+ /*Pop Up For Pro Tag start */
+ .wps-gc__popup-for-pro-shadow {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99998;
+    display: none;
+}
+
+span.wps-gc__popup-for-pro-close {
+    display: inline-block;
+    line-height: 14px;
+    font-size: 24px;
+    font-weight: 400;
+    transform: rotate(45deg);
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.wps-gc__popup-for-pro {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 99999;
+    transform: translate(-50%, -50%) scale(0);
+    width: 90%;
+    max-width: 600px;
+    opacity: 0;
+    transition: transform 0.8s ease;
+}
+
+.wps-gc__popup-for-pro.active-pro {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+h2.wps-gc__popup-for-pro-title {
+    font-size: 32px;
+    line-height: 1.25;
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+p.wps-gc__popup-for-pro-content {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 50px;
+    text-align: center;
+}
+
+.wps-gc__popup-for-pro-link-wrap {
+    text-align: center;
+}
+
+a.wps-gc__popup-for-pro-link {
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    background: #2196f3;
+    border: 1px solid #2196f3;
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
+    transition: all 0.4s;
+}
+
+a.wps-gc__popup-for-pro-link:hover {
+    color: #2196f3;
+    background: transparent;
+}
+#wps-gc-import-template-title{
+    font-size: 2em;
+    margin: 0.67em 0;
+    text-align: center;
+    background: #569e9f;
+    color: white;
+    padding: 20px;
+    line-height: 1.25;
+}
+
+/* Pro Tag end */
