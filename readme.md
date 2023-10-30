@@ -83,25 +83,21 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 ##  WOOCOMMERCE GIFT CARD PLUGIN COMPATIBILITIES
 
-* Compatibility With Wallet System for WooCommerce
-The Gift Cards for WooCommerce Free & Pro plugins are compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and  [**Wallet System for WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=wallet-pro) 
+* **Compatibility With Wallet System for WooCommerce**: The Gift Cards for WooCommerce Free & Pro plugins are compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and  [**Wallet System for WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=wallet-pro) 
 
 It allows users to redeem their WooCommerce gift card coupons to recharge their wallets and use that balance to purchase products & services.  It is crucial for repurposing the remaining gift coupon value. 
 
-* Compatibility with the Price Based on Country for WooCommerce Plugin
-Our Gift Card Plugin provides compatibility with the [**Price Based On Country for WooCommerce**](https://wordpress.org/plugins/woocommerce-product-price-based-on-countries/)plugin.
+* **Compatibility with the Price Based on Country for WooCommerce Plugin**: Our Gift Card Plugin provides compatibility with the [**Price Based On Country for WooCommerce**](https://wordpress.org/plugins/woocommerce-product-price-based-on-countries/) plugin.
 
 Set country-based prices for WooCommerce gift cards using geolocation tracking. The store will display gift coupon prices in the user's relevant currency, with the option to manually set the price or auto-apply exchange rates.
 
-* Compatibility with RMA Return Refund & Exchange For WooCommerce
-The [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=rma-pro) are compatible with our gift voucher plugin.
+* **Compatibility with RMA Return Refund & Exchange For WooCommerce:** The [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=rma-pro) are compatible with our gift voucher plugin.
 
 Customers can request refunds and exchanges for purchased WooCommerce gift card products, provided the gift vouchers have not expired and have not been used. Additionally, you can refund the coupon value to the RMA wallet instead of the original payment method used.
 
-* Compatibility With WooCommerce HPOS: ** Gift Cards for WooCommerce are fully compatible with WooCommerce High-Performance Order Storage (HPOS). Previously known as “Custom Order Table” allows you to use an alternate storage mechanism for your WooCommerce Store. Simply put, it allows you to store order data in custom tables so your WooCommerce store keeps running smoothly during festive seasons when the order volume of gift cards and other products is high.
+* **Compatibility With WooCommerce HPOS:** Gift Cards for WooCommerce are fully compatible with WooCommerce High-Performance Order Storage (HPOS). Previously known as “Custom Order Table” allows you to use an alternate storage mechanism for your WooCommerce Store. Simply put, it allows you to store order data in custom tables so your WooCommerce store keeps running smoothly during festive seasons when the order volume of gift cards and other products is high.
 
-* Compatibility With Subscription for WooCommerce Pro
-The WooCommerce gift card plugin is compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=subs-pro) offering the following benefits:
+* **Compatibility With Subscription for WooCommerce Pro:** The WooCommerce gift card plugin is compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=subs-pro) offering the following benefits:
 
 a) Let users use gift coupons to avail of the first signup fee, percentage, and recurring discounts.
 
@@ -109,8 +105,7 @@ b) Use gift cards on existing subscriptions for renewal orders based on the coup
 
 c) If a subscription is bought with a gift card, the same card applies to renewals too.
 
-* WPML Multilingual Support
-The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
+* **WPML Multilingual Support**: The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
 * The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
 
@@ -134,7 +129,6 @@ The WooCommerce plugin gift card has WPML support, which means it can work in yo
 * Disable Form Fields From the Gift Card WooCommerce Page
 * Create Group Gift Cards to enable collective gifting
 
-
 ### Take Advantage of the Exclusive Features of the WooCommerce Gift Card Pro Plugin
 
 Gift cards for WooCommerce help merchants to create, manage, and sell digital gift cards on their online store. With our plugin, you can customize gift card templates, send coupon codes as QR codes or barcodes, create reusable gift coupons, and send card usage notifications to customers.
@@ -155,7 +149,6 @@ If you need support or have questions, kindly use our online chat window [**here
 
 > If our documentation doesn’t contain the solution to your problem, you can visit the
 [**WP Swings Forum Community**](https://forums.wpswings.com/?utm_source=wpswings-giftcards-forums&utm_medium=giftcards-github-page&utm_campaign=forum) or [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-query&utm_medium=giftcards-github-page&utm_campaign=submit-query). 
-
 
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-github-page&utm_campaign=woocommerce-services)
 
