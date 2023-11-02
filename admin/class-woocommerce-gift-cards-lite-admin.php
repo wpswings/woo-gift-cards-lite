@@ -1204,7 +1204,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_wgm_preview_email_template() {
+	
 		if ( isset( $_GET['wps_wgm_template'] ) ) {
+			
 			if ( isset( $_GET['wps_wgm_template'] ) == 'giftcard' ) {
 				$post_id                  = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
 				$todaydate                = date_i18n( 'Y-m-d' );

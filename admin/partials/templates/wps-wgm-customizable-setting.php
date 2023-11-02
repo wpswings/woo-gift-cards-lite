@@ -74,8 +74,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <td class="forminp forminp-text">
                             <div id="browse_img_section">
                                 <div class="wps_upload_email_template_div">
-                                    <span class="woocommerce-help-tip"></span> <label for="
-		wps_wgm_customize_default_giftcard">
+                                    <span class="woocommerce-help-tip"></span> <label for="wps_wgm_customize_default_giftcard">
                                     </label>
                                     <input type="button" class="wps_wgm_customize_email_template_image button"
                                         value="Upload">
@@ -92,8 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="">Upload Default Gift Card image</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="
-		wps_wgm_customize_default_giftcard">
+                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_customize_default_giftcard">
                             </label>
                             <input class="wps_wgm_customize_default_giftcard button" type="button"
                                 value="Upload Default Image">
@@ -124,8 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <span class="woocommerce-help-tip"></span>
                             <div class="wp-picker-container"><button type="button" class="button wp-color-result"
                                     aria-expanded="false"><span class="wp-color-result-text">Select
-                                        Color</span></button><span class="wp-picker-input-wrap hidden"><label for="
-		wps_wgm_custom_giftcard_bg_color">
+                                        Color</span></button><span class="wp-picker-input-wrap hidden"><label for="wps_wgm_custom_giftcard_bg_color">
                                         <input type="text" style="" value="" name="wps_wgm_custom_giftcard_bg_color"
                                             id="wps_wgm_custom_giftcard_bg_color"
                                             class="my-color-field wp-color-picker"> </label><input type="button"
@@ -188,8 +185,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <span class="woocommerce-help-tip"></span>
                             <div class="wp-picker-container"><button type="button" class="button wp-color-result"
                                     aria-expanded="false"><span class="wp-color-result-text">Select
-                                        Color</span></button><span class="wp-picker-input-wrap hidden"><label for="
-		wps_wgm_custom_giftcard_middle_color">
+                                        Color</span></button><span class="wp-picker-input-wrap hidden"><label for="wps_wgm_custom_giftcard_middle_color">
                                         <input type="text" style="" value="" name="wps_wgm_custom_giftcard_middle_color"
                                             id="wps_wgm_custom_giftcard_middle_color"
                                             class="my-color-field wp-color-picker"> </label><input type="button"
@@ -252,8 +248,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <span class="woocommerce-help-tip"></span>
                             <div class="wp-picker-container"><button type="button" class="button wp-color-result"
                                     aria-expanded="false"><span class="wp-color-result-text">Select
-                                        Color</span></button><span class="wp-picker-input-wrap hidden"><label for="
-		wps_wgm_custom_giftcard_desclaimer_color">
+                                        Color</span></button><span class="wp-picker-input-wrap hidden"><label for="wps_wgm_custom_giftcard_desclaimer_color">
                                         <input type="text" style="" value=""
                                             name="wps_wgm_custom_giftcard_desclaimer_color"
                                             id="wps_wgm_custom_giftcard_desclaimer_color"

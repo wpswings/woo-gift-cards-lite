@@ -390,7 +390,8 @@
 			/* Adds the Preview Validtion Here*/
 
 			$( 'body' ).on('click', '#mwg_wgm_preview_email',
-				function() {
+				function(e) {
+					e.preventDefault()
 					var form_Data = new FormData();
 					
 					$( "#wps_wgm_error_notice" ).hide();
