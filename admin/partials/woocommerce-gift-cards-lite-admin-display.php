@@ -109,7 +109,7 @@ if ( ! wps_uwgc_pro_active() ) {
     </div>
     <div class="wps-gc__popup-for-pro">
         <span class="wps-gc__popup-for-pro-close">+</span>
-        <h2 class="wps-gc__popup-for-pro-title">Unlock More Featutres with Pro Upgrade! </h2>
+        <h2 class="wps-gc__popup-for-pro-title">Unlock More Features with Pro Upgrade! </h2>
         <p class="wps-gc__popup-for-pro-content">Congratulations on discovering our premium Features! This stunning
             features is reserved for our Pro members, offering you a world of creative possibilities. Upgrade today to
             unlock it and access a wealth of exclusive features.</p>
