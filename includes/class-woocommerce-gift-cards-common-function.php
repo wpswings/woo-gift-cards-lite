@@ -322,7 +322,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$todaydate = date_i18n( 'Y-m-d' );
 						if ( 0 < $expiry_date || 0 === $expiry_date ) {
 							$expirydate = date_i18n( 'Y-m-d', strtotime( "$todaydate +$expiry_date day" ) );
-							// $expirydate = date_i18n( 'Y-m-d', strtotime( '-1 day' ,strtotime( "$todaydate +$expiry_date day" ) ) );
+					
 						} else {
 							$expirydate = '';
 						}
@@ -654,6 +654,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'href'  => array(),
 					'rel'   => array(),
 					'title' => array(),
+					'id'    => array(),
 				),
 				'abbr' => array(
 					'title' => array(),
@@ -792,9 +793,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'name'         => array(),
 					'placeholder'         => array(),
 				),
-				'a'      => array(
-					'id'         => array(),
-				),
+				
 
 			);
 			return apply_filters( 'wps_allowed_html_for_preview', $allowed_tags );

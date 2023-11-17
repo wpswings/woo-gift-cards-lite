@@ -32,30 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 		?>
-	<span class="h4"><?php esc_html_e( 'Gift Cards For WooCommerce Pro Templates', 'woo-gift-cards-lite' ); ?></span>
-	<div class="wps-gift-card-pro-tmplt">
-	  
-		<div class="column">
-			<div class="card">
-				<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/halloween1.png" alt="">
-			</div>
-		</div>
-		<div class="column">
-			<div class="card">
-				<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/christmas2.png" alt="">
-			</div>
-		</div>
-		<div class="column">
-			<div class="card">
-				<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/labor-day2.png" alt="">
-			</div>
-		</div>
-		<div class="column">
-			<div class="card">
-				<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/black-friday.png" alt="">
-			</div>
-		</div>
-	</div>
+
 
 	<div class="wps-gift-card-pro-tmplt">
 		<div class="wps-gift-card-pro-tmplt-inner">

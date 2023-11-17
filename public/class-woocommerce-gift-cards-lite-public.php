@@ -610,7 +610,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! isset( $wps_field_nonce ) || ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						// echo esc_html__( 'Sorry, your nonce did not verify.', 'woo-gift-cards-lite' );.
+				
 						return $the_cart_data;
 					} else {
 						// for price based on country.
@@ -2250,10 +2250,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_uwgc_gift_card_balance_org() {
 		$html = '<div class="wps_gift_card_balance_wrapper">';
-		// $html .= '<div><h4>Recharge Coupon Code</h4>';
-		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'giftware' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'giftware' ) . '" required="required"></div>';
-		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'giftware' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'giftware' ) . '" required="required"></div>';
-		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'giftware' ) . '"><span id="wps_notification"></span></p></div>';
+	
+		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'woo-gift-cards-lite' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'woo-gift-cards-lite' ) . '" required="required"></div>';
+		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '" required="required"></div>';
+		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'woo-gift-cards-lite' ) . '"><span id="wps_notification"></span></p></div>';
 		$html .= '<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader"><img src="' . WPS_WGC_URL . 'assets/images/loading.gif"></div></div>';
 		return $html;
 	}
@@ -2269,7 +2269,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		check_ajax_referer( 'wps-wgc-verify-nonce-check', 'wps_wgm_nonce_check' );
 		$response['result'] = false;
-		$response['message'] = __( 'Balance cannot be checked yet, Please Try again later!', 'giftware' );
+		$response['message'] = __( 'Balance cannot be checked yet, Please Try again later!', 'woo-gift-cards-lite' );
 		$wps_check_email = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
 		$coupon = isset( $_POST['coupon'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon'] ) ) : '';
 		if ( isset( $coupon ) && ! empty( $coupon ) && isset( $wps_check_email ) && ! empty( $wps_check_email ) ) {
@@ -2283,13 +2283,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'offline' === $coupon_type ) {
 						if ( isset( $user_email ) && ! empty( $user_email ) ) {
 							if ( $user_email == $wps_check_email ) {
-								$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+								$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
 								$response['result'] = true;
 								$response['html'] = $html;
-								$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+								$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 							} else {
 								$response['result'] = false;
-								$response['message'] = __( 'Recipient Email should be correct!!', 'giftware' );
+								$response['message'] = __( 'Recipient Email should be correct!!', 'woo-gift-cards-lite' );
 							}
 						}
 					} elseif ( 'online' === $coupon_type ) {
@@ -2302,38 +2302,38 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$wps_sender_name = $wps_user_name->first_name . ' ' . $wps_user_name->last_name;
 							if ( ( isset( $user_email ) && ! empty( $user_email ) ) || ( isset( $sender_email ) && ! empty( $sender_email ) ) ) {
 								if ( $user_email == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
 									$response['result'] = true;
 									$response['html'] = $html;
-									$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $sender_email == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
 									$response['result'] = true;
 									$response['html'] = $html;
-									$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $wps_sender_name == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'giftware' ) . wc_price( $left_amount ) . '</div>';
+									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
 									$response['result'] = true;
 									$response['html'] = $html;
-									$response['message'] = __( 'Data Match Successfully!!', 'giftware' );
+									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} else {
 									$response['result'] = false;
-									$response['message'] = __( 'Recipient Email or Sender Email|Name should be correct!!', 'giftware' );
+									$response['message'] = __( 'Recipient Email or Sender Email|Name should be correct!!', 'woo-gift-cards-lite' );
 								}
 							}
 						}
 					} else {
 						$response['result'] = false;
-						$response['message'] = __( 'Balance cannot be checked for this coupon.', 'giftware' );
+						$response['message'] = __( 'Balance cannot be checked for this coupon.', 'woo-gift-cards-lite' );
 					}
 				} else {
 					$response['result'] = false;
-					$response['message'] = __( 'Coupon is Invalid!', 'giftware' );
+					$response['message'] = __( 'Coupon is Invalid!', 'woo-gift-cards-lite' );
 				}
 			}
 		} else {
 			$response['result'] = false;
-			$response['message'] = __( 'Fields cannot be empty!', 'giftware' );
+			$response['message'] = __( 'Fields cannot be empty!', 'woo-gift-cards-lite' );
 		}
 		echo json_encode( $response );
 		wp_die();
