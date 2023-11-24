@@ -60,17 +60,20 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	}
 }
 
-if ( $activated ) {
-
-	add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
-	/**
-	 * Hpos compatibility.
-	 */
-	function wps_wgm_declare_hpos_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-		}
+add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
+/**
+ * Hpos and cart/checkout block compatibility.
+ */
+function wps_wgm_declare_hpos_compatibility() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 	}
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+	}
+}
+
+if ( $activated ) {
 
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
