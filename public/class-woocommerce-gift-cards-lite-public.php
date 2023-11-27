@@ -1068,9 +1068,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$order = new WC_Order( $order_id );
 		$items = $order->get_items();
 		$coupon_amount_deducted = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', true );
-		if ( 'deduct' == $coupon_amount_deducted ) {
-
-		} else {
+		if ( 'deduct' !== $coupon_amount_deducted ) {
 			foreach ( $order->get_items('coupon') as $item_id => $item ) {
 				$this->wps_wgm_woocommerce_new_order_item( $item_id, $item, $order_id );
 				wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', 'deduct' );
