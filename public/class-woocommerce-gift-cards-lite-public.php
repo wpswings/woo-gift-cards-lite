@@ -1067,6 +1067,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		$order = new WC_Order( $order_id );
 		$items = $order->get_items();
+		$coupon_amount_deducted = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', true );
+		if ( 'deduct' !== $coupon_amount_deducted ) {
+			foreach ( $order->get_items('coupon') as $item_id => $item ) {
+				$this->wps_wgm_woocommerce_new_order_item( $item_id, $item, $order_id );
+				wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', 'deduct' );
+			}
+		}
+
 		foreach ( $items as $item ) {
 
 			$product_id = $item['product_id'];
@@ -1680,6 +1688,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_new_order_item( $item_id, $item, $order_id ) {
+
 		if ( get_class( $item ) == 'WC_Order_Item_Coupon' ) {
 
 			$coupon_code = $item->get_code();
@@ -1743,7 +1752,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_wgm_wc_shipping_enabled( $enable ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
-		if ( ( is_checkout() || is_cart() ) && $wps_wgc_enable ) {
+		if ( ( true ) && $wps_wgc_enable ) {
 			global $woocommerce;
 			$gift_bool = false;
 			$other_bool = false;
@@ -2016,9 +2025,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( ( 'cancelled' == $new_status || 'failed' == $new_status ) && 'yes' == $coupon_used ) {
 
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
-					$total_discount = wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount', true );
+					$total_discount = $order->get_discount_total();
 					if ( wc_prices_include_tax() ) {
-						$total_discount = $total_discount + wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount_tax', true );
+						$total_discount = $total_discount + $order->get_discount_tax();
 					}
 
 					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
@@ -2034,9 +2043,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 				} elseif ( ( 'pending' == $new_status || 'processing' == $new_status || 'on-hold' == $new_status || 'completed' == $new_status ) && 'no' == $coupon_used ) {
 					$amount         = get_post_meta( $coupon_id, 'coupon_amount', true );
-					$total_discount = wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount', true );
+					$total_discount = $order->get_discount_total();
 					if ( wc_prices_include_tax() ) {
-						$total_discount = $total_discount + wps_wgm_hpos_get_meta_data( $order_id, '_cart_discount_tax', true );
+						$total_discount = $total_discount + $order->get_discount_tax();
 					}
 
 					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {

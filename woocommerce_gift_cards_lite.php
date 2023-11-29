@@ -15,15 +15,15 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.6.3
+ * Version:           2.6.4
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * WP Tested up to:   6.3.2
+ * WP Tested up to:   6.4.1
  * WP requires at least: 5.5.0
- * WC tested up to:   8.2.1
+ * WC tested up to:   8.3.1
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -60,22 +60,25 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	}
 }
 
-if ( $activated ) {
-
-	add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
-	/**
-	 * Hpos compatibility.
-	 */
-	function wps_wgm_declare_hpos_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-		}
+add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
+/**
+ * Hpos and cart/checkout block compatibility.
+ */
+function wps_wgm_declare_hpos_compatibility() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 	}
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+	}
+}
+
+if ( $activated ) {
 
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.6.3' );
+	define( 'WPS_WGC_VERSION', '2.6.4' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**

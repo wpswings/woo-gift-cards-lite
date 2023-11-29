@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers, gift cards, gifts, certificate, gift cards woocommerce
 Requires at least: 5.1.0
-Tested up to: 6.3.2
+Tested up to: 6.4.1
 WC requires at least: 5.5.0
-WC tested up to: 8.2.1
-Stable tag:  2.6.3
+WC tested up to: 8.3.1
+Stable tag:  2.6.4
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,8 +20,6 @@ Create, sell and manage WooCommerce gift cards to attract more sales and multipl
 Create, sell, and manage digital & physical gift cards at your eCommerce store with one tool —  the WP Swings WooCommerce Gift cards plugin. Offering the ultimate convenience, customers can effortlessly purchase and send these cards to anyone via email or shipping. The recipients are then able to redeem their gift coupons for a delightful shopping experience at your store or utilize them as convenient gift vouchers.
  
 Render seamless gifting for both online and offline stores with our versatile gifting portal! Utilizing our [**Gift Cards for WooCommerce**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro) plugin, you can scan, redeem, recharge, & manage all card types, ensuring a comprehensive gifting solution for your business. You can offer an email-to-the-recipient option as the digital gift card delivery method.
-
-**Note:** Our [**Gift Cards Pro Plugin**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=giftcards-org-page&utm_campaign=giftcards-pro) has launched a brand new **Halloween Template** for creating gift certificates to celebrate the Halloween this festive.
 
 [**WordPress Gift Cards Demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=demo) | [**Gift Cards Documentation**](https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-page&utm_campaign=giftcards-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-giftcards&utm_medium=giftcards-org-page&utm_campaign=contact-us)
 
@@ -186,8 +184,7 @@ The manual installation method involves downloading our Ultimate Gift Cards for 
 14. **Recharge Via Gift Card** - You can recharge your gift card through your wallet.
 15. **Merry Christmas Gift Card** - The email template for Christmas will contain this gift card. 
 16. **Mother's Day Gift Card** - The email template for Mother's Day will contain this gift card. 
-17. **Gift Card for You** - The gift card email template for any event. 
-
+17. **Gift Card for You** - The gift card email template for any event.
 
 
 == Frequently Asked Questions ==
@@ -239,6 +236,10 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 2.6.4 - Released on 28 November 2023 =
+* New : Compatibility with latest WP(6.4.1) and WC(8.3.1)
+* New : Compatibilty with WooCommerce Block.
 
 = 2.6.3 - Released on 08 November 2023 = 
 * New : Add pro tag in org
@@ -441,7 +442,6 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.6.3 - Released on 08 November 2023 = 
-* New : Add pro tag in org
-* New : Compatibility with latest WP(6.3.2) and WC(8.2.1)
-
+= 2.6.4 - Released on 28 November 2023 =
+* New : Compatibility with latest WP(6.4.1) and WC(8.3.1)
+* New : Compatibilty with WooCommerce Block.
