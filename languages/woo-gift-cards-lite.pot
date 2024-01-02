@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.6.4\n"
-"POT-Creation-Date: 2023-11-27 18:12+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.6.5\n"
+"POT-Creation-Date: 2023-12-19 18:51+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
