@@ -80,6 +80,10 @@ if ( ! wps_uwgc_pro_active() ) {
 			'title' => esc_html__( 'Import/ Export', 'woo-gift-cards-lite' ),
 			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-im-export-setting.php',
 		),
+		'group_gifting_setting' => array(
+			'title' => esc_html__( 'Group Gifting', 'woo-gift-cards-lite' ),
+			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-group-gifting-setting.php',
+		),
 		'discount_setting' => array(
 			'title' => esc_html__( 'Discount', 'woo-gift-cards-lite' ),
 			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-discount-setting.php',

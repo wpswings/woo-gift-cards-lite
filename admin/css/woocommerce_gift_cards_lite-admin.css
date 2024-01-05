@@ -1775,3 +1775,21 @@ a.wps-gc__popup-for-pro-link:hover {
 }
 
 /* Pro Tag end */
+
+/* Group Gifting tab Added */
+.wps_wgm_gifting {
+	display: flex !important;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.wps_wgm_gifting .button{
+	display: inline-flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.wps_gifting_main_content {
+    margin-bottom: 15px;
+}
+/* Group Gifting tab Added */
