@@ -80,6 +80,10 @@ if ( ! wps_uwgc_pro_active() ) {
 			'title' => esc_html__( 'Import/ Export', 'woo-gift-cards-lite' ),
 			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-im-export-setting.php',
 		),
+		'group_gifting_setting' => array(
+			'title' => esc_html__( 'Group Gifting', 'woo-gift-cards-lite' ),
+			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-group-gifting-setting.php',
+		),
 		'discount_setting' => array(
 			'title' => esc_html__( 'Discount', 'woo-gift-cards-lite' ),
 			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-discount-setting.php',
@@ -208,25 +212,6 @@ if ( ! wps_uwgc_pro_active() ) {
         </div>
         <?php
 		wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' );
-		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( WPS_WGC_ONBOARD_PLUGIN_NAME, WPS_WGC_VERSION );
-		$count        = $plugin_admin->wps_wgm_get_count( 'orders' );
-		if ( ! empty( $count ) ) {
-			$global_custom_css = 'const triggerError = () => {
-				swal({
-					title: "Attention Required!",
-					text: "Please Migrate Your Database keys first by click on the below button then you can access the dashboard page.",
-					icon: "error",
-					button: "Click to Import",
-					closeOnClickOutside: false,
-				}).then(function() {
-					jQuery( ".treat-button" ).click();
-				});
-			}
-			triggerError();';
-			wp_register_script( 'wps_wgm_incompatible_css', false, array(), WPS_WGC_VERSION, 'all' );
-			wp_enqueue_script( 'wps_wgm_incompatible_css' );
-			wp_add_inline_script( 'wps_wgm_incompatible_css', $global_custom_css );
-		}
 		?>
         <div class="wps_wgm_main_template">
             <div class="wps_wgm_body_template">
