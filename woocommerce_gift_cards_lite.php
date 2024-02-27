@@ -482,6 +482,7 @@ if ( $activated ) {
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgm_plugin_deactivate() {
+		
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		?>
@@ -566,3 +567,5 @@ function wps_giftcard_notification_plugin_html() {
 	}
 
 }
+// add_action('woocommerce_product_thumbnails','wps_wgm_preview_below_thumbnail');
+
