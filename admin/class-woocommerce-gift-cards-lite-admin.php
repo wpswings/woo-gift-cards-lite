@@ -1189,7 +1189,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_wgm_preview_email_template() {
-	
+		if(current_user_can( 'edit_others_posts' )){
 		if ( isset( $_GET['wps_wgm_template'] ) ) {
 			
 			if ( isset( $_GET['wps_wgm_template'] ) == 'giftcard' ) {
@@ -1249,6 +1249,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				}
 			}
 		}
+	}
 	}
 
 	/**

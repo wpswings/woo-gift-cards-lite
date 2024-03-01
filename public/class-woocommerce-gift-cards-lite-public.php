@@ -281,7 +281,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$wps_additional_section = '';
 						$product_pricing        = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
-							$cart_html .= '<div class="wps_wgm_added_wrapper">';
+
+							$other_settings = get_option( 'wps_wgm_other_settings', array() );
+
+							$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
+							$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+							if ( 'on' == $use_new_page_layout ){
+								$cart_html .= '<div class="wps_wgm_added_wrapper wps-gc_lay-2">';
+							}else{
+								$cart_html .= '<div class="wps_wgm_added_wrapper">';
+							}
+							
 							wp_nonce_field( 'wps_wgm_single_nonce', 'wps_wgm_single_nonce_field' );
 							$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
 							$is_group_product = get_post_meta( $product_id, 'wps_wgm_is_group_gift', true );
