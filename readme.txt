@@ -6,7 +6,7 @@ Requires at least: 5.1.0
 Tested up to: 6.4.2
 WC requires at least: 5.5.0
 WC tested up to: 8.4.0
-Stable tag:  2.6.6
+Stable tag:  2.6.8
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -238,7 +238,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 2.6.6 - Released on 09 January 2024 = 
+= 2.6.8 - Released on 09 January 2024 = 
 * New: Add Class ".wps_check_balance .button", for Customised Balance Check button
 * Fix: Removed Migration Code.
 
@@ -452,6 +452,6 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 2.6.6 - Released on 09 January 2024 = 
+= 2.6.8 - Released on 09 January 2024 = 
 * New: Add Class "wps_check_balance button", for Customised Balance Check button
 * Fix: Removed Migration Code.

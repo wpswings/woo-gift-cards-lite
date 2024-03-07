@@ -241,7 +241,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 
 		$product_types = wp_get_object_terms( $product_id, 'product_type' );
-		$product_type  = $product_types[0]->slug;
+		if ( !empty($product_types)){
+			$product_type  = $product_types[0]->slug;
+		}else{
+			$product_type = '';
+		}
+	
 		if ( 'wgm_gift_card' === $product_type ) {
 			$wps_cart_html = $this->wps_wgm_before_cart_data( $wps_product );
 		} else {

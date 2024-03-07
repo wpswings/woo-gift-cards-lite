@@ -15,15 +15,15 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.6.6
+ * Version:           2.6.8
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * WP Tested up to:   6.4.2
+ * WP Tested up to:   6.4.3
  * WP requires at least: 5.5.0
- * WC tested up to:   8.4.0
+ * WC tested up to:   8.6.1
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -68,7 +68,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.6.6' );
+	define( 'WPS_WGC_VERSION', '2.6.8' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -569,3 +569,18 @@ function wps_giftcard_notification_plugin_html() {
 }
 // add_action('woocommerce_product_thumbnails','wps_wgm_preview_below_thumbnail');
 
+// Hide specific product from product listing page in WooCommerce backend
+add_action('pre_get_posts', 'hide_specific_product_from_backend');
+/**
+ * 
+ */
+function hide_specific_product_from_backend($query) {
+    // Check if we are in admin and on the products page
+    if (is_admin() && $query->is_main_query() && $query->get('post_type') === 'product') {
+       
+        $excluded_product_id =  get_option( 'contributor_product_id' );
+		$excluded_product_id1 = get_option( 'wps_gccoupon_rechargeable_product_id' );
+        // Exclude the specific product from the query
+        $query->set('post__not_in', array($excluded_product_id,$excluded_product_id1));
+    }
+}
