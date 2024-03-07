@@ -567,20 +567,3 @@ function wps_giftcard_notification_plugin_html() {
 	}
 
 }
-// add_action('woocommerce_product_thumbnails','wps_wgm_preview_below_thumbnail');
-
-// Hide specific product from product listing page in WooCommerce backend
-add_action('pre_get_posts', 'hide_specific_product_from_backend');
-/**
- * 
- */
-function hide_specific_product_from_backend($query) {
-    // Check if we are in admin and on the products page
-    if (is_admin() && $query->is_main_query() && $query->get('post_type') === 'product') {
-       
-        $excluded_product_id =  get_option( 'contributor_product_id' );
-		$excluded_product_id1 = get_option( 'wps_gccoupon_rechargeable_product_id' );
-        // Exclude the specific product from the query
-        $query->set('post__not_in', array($excluded_product_id,$excluded_product_id1));
-    }
-}
