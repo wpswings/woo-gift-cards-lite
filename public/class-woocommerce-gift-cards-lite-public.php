@@ -35,6 +35,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	private $plugin_name;
 
 	/**
+	 * The common function array.
+	 *
+	 * @since    1.0.0
+	 * @var      string    $wps_common_fun    wps_common_fun.
+	 */
+	public $wps_common_fun;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0

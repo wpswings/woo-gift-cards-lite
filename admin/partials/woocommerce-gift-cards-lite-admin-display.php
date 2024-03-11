@@ -15,7 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
+	
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
 
 }

@@ -39,6 +39,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @var      string    $wps_common_fun    The current version of this plugin.
 	 */
 	public $wps_common_fun;
+	
+	/**
+	 * The onboard form data .
+	 * 
+	 * @since    1.0.0
+	 * @var      string    $onboard    onboard form data.
+	 */
+
+	 private $onboard;
 	/**
 	 * The version of this plugin.
 	 *

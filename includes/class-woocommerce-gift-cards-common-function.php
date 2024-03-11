@@ -83,7 +83,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 				$giftcard_event_html = apply_filters( 'wps_wgm_default_events_html', $giftcard_event_html, $args );
 				if ( isset( $featured_image ) && ! empty( $featured_image ) ) {
-					$giftcard_featured = "<img src='$featured_image'/>";
+					$giftcard_featured = "<img src='$featured_image' alt='featured image' />";
 				}
 				$template_css = '';
 				$template_css = apply_filters( 'wps_wgm_template_custom_css', $template_css, $templateid );

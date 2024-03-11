@@ -241,6 +241,10 @@ if ( $activated ) {
 		 */
 		class WC_Product_Wgm_Gift_Card extends WC_Product {
 			/**
+			 * 
+			 */
+			public $product_type;
+			/**
 			 * Initialize simple product.
 			 *
 			 * @param mixed $product product.

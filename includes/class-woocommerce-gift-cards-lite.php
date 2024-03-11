@@ -36,7 +36,13 @@ class Woocommerce_Gift_Cards_Lite {
 	 * @var      Woocommerce_Gift_Cards_Lite_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
-
+	/**
+	 * The onboard form data .
+	 * 
+	 * @since    1.0.0
+	 * @var      string    $onboard    onboard form data.
+	 */
+	protected $onboard;
 	/**
 	 * The unique identifier of this plugin.
 	 *
@@ -124,7 +130,7 @@ class Woocommerce_Gift_Cards_Lite {
 		 * in the admin side of the site.
 		 */
 		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
-		$this->onboard = new Makewebbetter_Onboarding_Helper();
+			$this->onboard = new Makewebbetter_Onboarding_Helper();
 	}
 
 	/**
