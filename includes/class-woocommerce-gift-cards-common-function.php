@@ -529,7 +529,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					wc_mail( $to, $send_subject, $message, $headers, $attachments );
 					do_action( 'wps_wgm_send_mail_to_others', $send_subject, $message, $attachments );
 					if ( isset( $attachments ) && is_array( $attachments ) && ! empty( $attachments ) ) {
-						unlink( $attachments[0] );
+						wp_delete_file( $attachments[0] );
 					}
 
 					if ( isset( $wps_wgm_common_arr['receive_subject'] ) && ! empty( $wps_wgm_common_arr['receive_subject'] ) ) {
@@ -573,6 +573,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_check_expiry_date( $expiry_date ) {
+			$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+			$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+			if ( ! $id_nonce_verified ) {
+					wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+			}
 			$general_settings = get_option( 'wps_wgm_general_settings', array() );
 			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 			$todaydate = date_i18n( 'Y-m-d' );

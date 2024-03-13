@@ -197,7 +197,7 @@ if ( ! wps_uwgc_pro_active() ) {
                             class="wps-wgn-icon-text" title="" target="_blank">
                             <img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/Demo.svg" class="wps-info-img"
                                 alt="Demo image">
-                            <span class="wps-wgn-icon-text"><?php esc_html_e( 'Demo', 'woo-gift-cards-lite' ); ?></span>
+                            <span class="wps-wgn-icon-text"><?php esc_html_e( 'Demo', 'woo-giftwps-wgc-nonce-cards-lite' ); ?></span>
                         </a>
                     </li>
                     <li class="wps_wgm_header_menu_button">
@@ -213,7 +213,13 @@ if ( ! wps_uwgc_pro_active() ) {
             </div>
         </div>
         <?php
+$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+if ( ! $id_nonce_verified ) {
+		wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+}
 		wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' );
+		
 		?>
         <div class="wps_wgm_main_template">
             <div class="wps_wgm_body_template">
@@ -223,8 +229,10 @@ if ( ! wps_uwgc_pro_active() ) {
                 <div class="wps_wgm_navigator_template">
                     <div class="wps_wgm-navigations">
                         <?php
+						
 						if ( isset( $wps_wgm_setting_tab ) && ! empty( $wps_wgm_setting_tab ) && is_array( $wps_wgm_setting_tab ) ) {
 							foreach ( $wps_wgm_setting_tab as $key => $wps_tab ) {
+								
 								if ( isset( $_GET['tab'] ) && sanitize_key( wp_unslash( $_GET['tab'] ) ) == $key ) {
 									
 									if (  'premium_plugin' !== $key &&  'redeem_tab' !== $key && 'overview_setting' !== $key &&'general_setting' !== $key && 'product_setting' !== $key && 'product_setting' !== $key && 'email_setting' !== $key && 'delivery_method' !== $key && 'other_setting' !== $key ) {

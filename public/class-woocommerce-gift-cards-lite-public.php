@@ -1161,9 +1161,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$ord_product_id = $item->get_product_id();
 						$conti_prod_id  = get_option( 'contributor_product_id' );
 						if ( $ord_product_id == $conti_prod_id ) {
-							$this->wps_wgm_gc_send_payment_link_to_contributors( $order_id, $old_status, $new_status );
+							$alredaygenerated     = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
+							$alreadygenrated_old = wps_wgm_hpos_get_meta_data( $order_id, 'wps_gw_order_giftcard', true );
+							if ( 'send' !== $alredaygenerated  || 'send' !== $alreadygenrated_old ) {
+								$this->wps_wgm_gc_send_payment_link_to_contributors( $order_id, $old_status, $new_status );
+							}
+							
 						}
-												$wps_gift_product = apply_filters( 'wps_wgm_update_item_meta_as_a_gift', $item, $item_id, $order_id );
+						$wps_gift_product = apply_filters( 'wps_wgm_update_item_meta_as_a_gift', $item, $item_id, $order_id );
 
 						if ( ( isset( $product ) && ! empty( $product ) && is_object( $product ) && $product->is_type( 'wgm_gift_card' ) ) || 'on' === $wps_gift_product ) {
 							$is_gift_card = true;
@@ -1931,8 +1936,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_email_on_single_page() {
-
-		if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
+		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
+			if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
 
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
 			$product_pricing                = ! empty( get_post_meta( $product_id, 'wps_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'wps_wgm_pricing', true ) : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
@@ -2041,6 +2050,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				// @codingStandardsIgnoreEnd.
 			}
 		}
+	
 	}
 
 	/**
@@ -2296,7 +2306,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				'message' => __( 'Enter Valid Gift Card Code', 'woo-gift-cards-lite' ),
 			);
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -2339,10 +2349,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 			$response['result'] = true;
 			$response['new_price'] = wc_price( $wps_wgm_price );
-			echo json_encode( $response );
+			echo wp_json_encode( $response );
 			wp_die();
 		} else {
-			echo json_encode( $response );
+			echo wp_json_encode( $response );
 			wp_die();
 		}
 	}
@@ -2455,7 +2465,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$response['result'] = false;
 			$response['message'] = __( 'Fields cannot be empty!', 'woo-gift-cards-lite' );
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 
 	}
