@@ -38,7 +38,7 @@ class Woocommerce_Gift_Cards_Lite {
 	protected $loader;
 	/**
 	 * The onboard form data .
-	 * 
+	 *
 	 * @since    1.0.0
 	 * @var      string    $onboard    onboard form data.
 	 */
