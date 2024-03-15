@@ -1201,10 +1201,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_preview_gift_template( $actions, $post ) {
 		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		// $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
-		// if ( ! $id_nonce_verified ) {
-		// 		wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		// }
+		
 		if ( 'giftcard' == $post->post_type ) {
 			$actions['wps_wgm_quick_view'] = '<a href="' . admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID . '&wps_wgm_template=giftcard&wps_nonce='.$secure_nonce.'&TB_iframe=true&width=600&height=500' ) . '" rel="permalink" class="thickbox">' . __( 'Preview', 'woo-gift-cards-lite' ) . '</a>';
 		}

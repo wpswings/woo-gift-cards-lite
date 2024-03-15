@@ -227,7 +227,7 @@ if ( $activated ) {
 	 * Saving the Product Type by creating the Instance of this.
 	 *
 	 * @since 1.0.0
-	 * @name wps_wgc_register_gift_card_product_type
+	 * @name wps_wgc_register_gift_card_product_type.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
