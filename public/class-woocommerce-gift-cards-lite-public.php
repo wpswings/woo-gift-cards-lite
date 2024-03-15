@@ -489,7 +489,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 								$cart_html .= apply_filters( 'wps_wgm_add_price_types', $wps_additional_section, $product, $product_pricing );
 							}
-							//////////////////////////// new layout setting ///////////////////////////////
+							//////////////////////////// new layout setting ///////////////////////////////.
 							$other_settings = get_option( 'wps_wgm_other_settings', array() );
 							$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
 							$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
@@ -500,7 +500,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$choosed_temp = apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id )['choosen_temp_id'];
 								}
 							}
-							//////////////////////////// new layout setting ///////////////////////////////
+							//////////////////////////// new layout setting ///////////////////////////////.
 							$other_settings = get_option( 'wps_wgm_other_settings', array() );
 							$wps_wgm_preview_disable = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_additional_preview_disable' );
 
@@ -615,7 +615,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$choosed_temp = $templateid[0];
 								}
 							}
-							/////////////////////////////////////////////////// old layout setting //////////////////////////////////////
+							/////////////////////////////////////////////////// old layout setting //////////////////////////////////////.
 							
 							if ( '' == $use_new_page_layout ){
 								if ( '' !== apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id ) ) {
@@ -623,7 +623,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$choosed_temp = apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id )['choosen_temp_id'];
 								}
 							}
-							/////////////////////////////////////////////////// old layout setting //////////////////////////////////////
+							/////////////////////////////////////////////////// old layout setting //////////////////////////////////////.
 							$cart_html .= '<input name="add-to-cart" value="' . $product_id . '" type="hidden" class="wps_wgm_hidden_pro_id">';
 							if ( is_array( $templateid ) && ! empty( $templateid ) ) {
 								$cart_html .= '<input name="wps_wgm_selected_temp" id="wps_wgm_selected_temp" value="' . $choosed_temp . '" type="hidden">';
