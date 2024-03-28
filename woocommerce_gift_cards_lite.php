@@ -15,15 +15,15 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.6.6
+ * Version:           2.6.8
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * WP Tested up to:   6.4.2
+ * WP Tested up to:   6.4.3
  * WP requires at least: 5.5.0
- * WC tested up to:   8.4.0
+ * WC tested up to:   8.6.1
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -68,7 +68,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.6.6' );
+	define( 'WPS_WGC_VERSION', '2.6.8' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -227,7 +227,7 @@ if ( $activated ) {
 	 * Saving the Product Type by creating the Instance of this.
 	 *
 	 * @since 1.0.0
-	 * @name wps_wgc_register_gift_card_product_type
+	 * @name wps_wgc_register_gift_card_product_type.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
@@ -240,6 +240,12 @@ if ( $activated ) {
 		 * @link https://www.wpswings.com/
 		 */
 		class WC_Product_Wgm_Gift_Card extends WC_Product {
+			/**
+			 * Simple product.
+			 *
+			 * @var product_type product_type.
+			 */
+			public $product_type;
 			/**
 			 * Initialize simple product.
 			 *
@@ -482,6 +488,7 @@ if ( $activated ) {
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgm_plugin_deactivate() {
+
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		?>
@@ -499,6 +506,11 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 	 * Notification.
 	 */
 	function wps_banner_notification_plugin_html() {
+		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
@@ -535,6 +547,12 @@ add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
  * Notification html.
  */
 function wps_giftcard_notification_plugin_html() {
+
+	$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+	$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+	if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+	}
 
 	$screen = get_current_screen();
 	if ( isset( $screen->id ) ) {

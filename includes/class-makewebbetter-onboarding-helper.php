@@ -117,7 +117,7 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '2.6.6';
+			self::$version = '2.6.8';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -353,7 +353,7 @@ class Makewebbetter_Onboarding_Helper {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'monthly-revenue',
 				'label' => esc_html__( 'What is your monthly revenue?', 'woo-gift-cards-lite' ),
 				'type' => 'radio',
@@ -370,7 +370,7 @@ class Makewebbetter_Onboarding_Helper {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'industry_type',
 				'label' => esc_html__( 'What industry defines your business?', 'woo-gift-cards-lite' ),
 				'type' => 'select',
@@ -405,7 +405,7 @@ class Makewebbetter_Onboarding_Helper {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'onboard-email',
 				'label' => esc_html__( 'What is the best email address to contact you?', 'woo-gift-cards-lite' ),
 				'type' => 'email',
@@ -415,7 +415,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'onboard-number',
 				'label' => esc_html__( 'What is your contact number?', 'woo-gift-cards-lite' ),
 				'type' => 'text',
@@ -425,7 +425,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'store-name',
 				'label' => '',
 				'type' => 'hidden',
@@ -435,7 +435,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'store-url',
 				'label' => '',
 				'type' => 'hidden',
@@ -445,7 +445,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'plugin-name',
 				'label' => '',
 				'type' => 'hidden',
@@ -455,7 +455,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'show-counter',
 				'label' => '',
 				'type' => 'hidden',
@@ -506,7 +506,7 @@ class Makewebbetter_Onboarding_Helper {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			rand() => array(
+			 wp_rand() => array(
 				'id' => 'deactivation-reason',
 				'label' => '',
 				'type' => 'radio',
@@ -525,7 +525,7 @@ class Makewebbetter_Onboarding_Helper {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'deactivation-reason-text',
 				'label' => 'Let us know why you are deactivating {plugin-name} so we can improve the plugin',
 				'type' => 'textarea',
@@ -535,7 +535,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => 'wps-keep-hidden',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'admin-email',
 				'label' => '',
 				'type' => 'hidden',
@@ -545,7 +545,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'store-name',
 				'label' => '',
 				'type' => 'hidden',
@@ -555,7 +555,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'store-url',
 				'label' => '',
 				'type' => 'hidden',
@@ -565,7 +565,7 @@ class Makewebbetter_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'plugin-name',
 				'label' => '',
 				'type' => 'hidden',
@@ -793,7 +793,7 @@ class Makewebbetter_Onboarding_Helper {
 			}
 		} catch ( Exception $e ) {
 
-			echo json_encode( $e->getMessage() );
+			echo wp_json_encode( $e->getMessage() );
 			wp_die();
 		}
 
@@ -801,7 +801,7 @@ class Makewebbetter_Onboarding_Helper {
 			$get_skipped_timstamp = update_option( 'onboarding-data-sent', 'sent' );
 		}
 
-		echo json_encode( $formatted_data );
+		echo wp_json_encode( $formatted_data );
 		wp_die();
 	}
 
@@ -854,7 +854,7 @@ class Makewebbetter_Onboarding_Helper {
 	public function skip_onboarding_popup() {
 
 		$get_skipped_timstamp = update_option( 'onboarding-data-skipped', time() );
-		echo json_encode( 'true' );
+		echo wp_json_encode( 'true' );
 		wp_die();
 	}
 
@@ -868,7 +868,11 @@ class Makewebbetter_Onboarding_Helper {
 	 * @link       https://www.wpswings.com/
 	 */
 	public function add_wps_additional_validation( $result = true ) {
-
+		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 		if ( ! empty( $_GET['tab'] ) && 'general_setting' !== $_GET['tab'] ) {
 			$result = false;
 		}
@@ -968,7 +972,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		$headers = 'Content-Type: application/json';
 
-		$form_data = json_encode(
+		$form_data = wp_json_encode(
 			array(
 				'fields' => $form_data,
 				'context'  => array(

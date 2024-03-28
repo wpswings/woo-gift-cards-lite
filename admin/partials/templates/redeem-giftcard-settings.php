@@ -96,47 +96,50 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 		}
 	}
 } else if ( isset( $_POST['update_giftcard_redeem_details'] ) ) {
-	$offine_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
-	$offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings' );
-	$userid = $offine_giftcard_redeem_details['user_id'];
-	$client_domain = home_url();
-	$url = 'https://gifting.wpswings.com/api/generate/update';
-	$client_license_code = get_option( 'wps_gw_lcns_key', '' );
-	if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) && ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
-		$request_type = 'both';
-	} elseif ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) {
-		$request_type = 'domainupdate';
-	} elseif ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) {
-		$request_type = 'licenseupdate';
-	}
 
-	if ( '' !== $client_license_code ) {
-		$curl_data = array(
-			'user_id' => $userid,
-			'domain' => $client_domain,
-			'license' => $client_license_code,
-			'request_type' => $request_type,
-		);
+	if ( isset( $_REQUEST['wps-update-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-update-nonce'] ) ), 'wps-update-nonce' ) ) {
+		$offine_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
+		$offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings' );
+		$userid = $offine_giftcard_redeem_details['user_id'];
+		$client_domain = home_url();
+		$url = 'https://gifting.wpswings.com/api/generate/update';
+		$client_license_code = get_option( 'wps_gw_lcns_key', '' );
+		if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) && ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
+			$request_type = 'both';
+		} elseif ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) {
+			$request_type = 'domainupdate';
+		} elseif ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) {
+			$request_type = 'licenseupdate';
+		}
 
-		$response = wp_remote_post(
-			$url,
-			array(
-				'timeout' => 50,
-				'user-agent' => '',
-				'sslverify' => false,
-				'body' => $curl_data,
-			)
-		);
-		if ( is_array( $response ) && ! empty( $response ) ) {
-			$response = $response['body'];
-			$response = json_decode( $response );
-			if ( 'error' == $response->status ) {
-				$wps_wgm_error_message = $response->message;
-			} else {
-				if ( isset( $response->status ) && 'success' == $response->status ) {
-					$offine_giftcard_redeem_settings['license'] = $client_license_code;
-					$offine_giftcard_redeem_settings['domain']  = $client_domain;
-					update_option( 'giftcard_offline_redeem_settings', $offine_giftcard_redeem_settings );
+		if ( '' !== $client_license_code ) {
+			$curl_data = array(
+				'user_id' => $userid,
+				'domain' => $client_domain,
+				'license' => $client_license_code,
+				'request_type' => $request_type,
+			);
+
+			$response = wp_remote_post(
+				$url,
+				array(
+					'timeout' => 50,
+					'user-agent' => '',
+					'sslverify' => false,
+					'body' => $curl_data,
+				)
+			);
+			if ( is_array( $response ) && ! empty( $response ) ) {
+				$response = $response['body'];
+				$response = json_decode( $response );
+				if ( 'error' == $response->status ) {
+					$wps_wgm_error_message = $response->message;
+				} else {
+					if ( isset( $response->status ) && 'success' == $response->status ) {
+						$offine_giftcard_redeem_settings['license'] = $client_license_code;
+						$offine_giftcard_redeem_settings['domain']  = $client_domain;
+						update_option( 'giftcard_offline_redeem_settings', $offine_giftcard_redeem_settings );
+					}
 				}
 			}
 		}
@@ -267,12 +270,18 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 										echo esc_attr( $offine_giftcard_redeem_link['shop_url'] );  }
 									?>
 										" class= "wps_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woo-gift-cards-lite' ); ?></a>
-									<?php if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) { 
+									<?php
+									if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
 										include_once ABSPATH . 'wp-admin/includes/plugin.php';
-										if ( is_plugin_active( 'giftware/giftware.php' ) ) {	
-										?>					
+										if ( is_plugin_active( 'giftware/giftware.php' ) ) {
+											?>
+															
 										<input type="submit" name="update_giftcard_redeem_details" class="update_giftcard_redeem_details"  class="input-text" value ='Update Authorization' >	
-									<?php } } ?>
+											<?php wp_nonce_field( 'wps-update-nonce', 'wps-update-nonce' ); ?>
+											<?php
+										}
+									}
+									?>
 								</td>
 							</tr>
 								<?php if ( isset( $offine_giftcard_redeem_link['license'] ) && '' == $offine_giftcard_redeem_link['license'] ) { ?>

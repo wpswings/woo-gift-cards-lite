@@ -201,6 +201,10 @@
 				function(){
 					$( '.wps_wgm_selected_template' ).find( '.wps_wgm_featured_img' ).removeClass( 'wps_wgm_pre_selected_temp' );
 					var img_id = $( this ).attr( 'id' );
+					var img_url = $(this).attr('src');
+					$('.woocommerce-product-gallery__wrapper').find('.woocommerce-product-gallery__image a img').attr('srcset',img_url)
+					$('.woocommerce-product-gallery__wrapper').find('.woocommerce-product-gallery__image a').attr('href',img_url)
+					$('.woocommerce-product-gallery__wrapper').find('img').attr('src',img_url)
 					$( '#' + img_id ).addClass( 'wps_wgm_pre_selected_temp' );
 					$( '#wps_wgm_selected_temp' ).val( img_id );
 				}
@@ -389,7 +393,7 @@
 
 			/* Adds the Preview Validtion Here*/
 
-			$( 'body' ).on('click', '#mwg_wgm_preview_email',
+			$( 'body' ).on('click', '.mwg_wgm_preview_email',
 				function(e) {
 					e.preventDefault()
 					var form_Data = new FormData();
