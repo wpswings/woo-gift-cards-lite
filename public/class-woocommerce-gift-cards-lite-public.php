@@ -87,7 +87,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'thickbox' );
+		$other_settings = get_option( 'wps_wgm_other_settings', array() );
+		$wps_new_layout = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 
+		if ( 'on' == $wps_new_layout  && !wps_uwgc_pro_active()){
+			
+			wp_enqueue_style( $this->plugin_name.'single-page', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-single-page.css', array(), $this->version, 'all' );
+		}
 	}
 
 	/**
@@ -2468,5 +2474,38 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		echo wp_json_encode( $response );
 		wp_die();
 
+	}
+
+	/**
+	 * 
+	 */
+	public function wps_wgm_preview_below_thumbnail(){
+
+		global $product;
+		$other_settings = get_option( 'wps_wgm_other_settings', array() );
+		$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
+		$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+
+		if ( 'on' == $use_new_page_layout ){
+			$prod_id = wc_get_product($product->get_id());
+	
+			$prod_type = $prod_id->get_type();
+			$prod_title = $prod_id->get_title();
+	
+			$html = '';
+		
+			if ( 'wgm_gift_card' == $prod_type ){
+		
+				$html .= '<div class="wps_wgm_wrapper_for_preview"> 
+					  <h2>'.$prod_title .'<span>'.get_woocommerce_currency_symbol().'<span id="wps_wgm_price_preview"></span></span></h2>			
+					  <p > From : <span class="wps_text_style" id="wps_from_preview"> xyz test</span> </p>
+					  <p > To : <span class="wps_text_style" id="wps_to_preview">xyz@gmail.com</span></p> 
+					  <p > Message : <span class="wps_text_style" id="wps_message_preview">Write your message gift card receiver</span></p>
+				</div>';
+		
+			}
+			echo $html;
+		}
+		
 	}
 }

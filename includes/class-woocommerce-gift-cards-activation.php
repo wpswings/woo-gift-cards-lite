@@ -67,6 +67,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				$giftcard_minspend = get_option( 'wps_wgm_general_setting_giftcard_minspend', false );
 				$giftcard_maxspend = get_option( 'wps_wgm_general_setting_giftcard_maxspend', false );
 				$giftcard_use = get_option( 'wps_wgm_general_setting_giftcard_use', 0 );
+				$wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
 				$wps_wgm_general_settings = array(
 					'wps_wgm_general_setting_enable' => $giftcard_enable,
 					'wps_wgm_general_setting_tax_cal_enable' => $giftcard_tax_cal_enable,
@@ -79,6 +80,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 					'wps_wgm_general_setting_giftcard_minspend' => $giftcard_minspend,
 					'wps_wgm_general_setting_giftcard_maxspend' => $giftcard_maxspend,
 					'wps_wgm_general_setting_giftcard_use' => $giftcard_use,
+					'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
+					
 				);
 				update_option( 'wps_wgm_general_settings', $wps_wgm_general_settings );
 				$general_setting_flag = true;

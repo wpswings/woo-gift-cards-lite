@@ -255,7 +255,8 @@ class Woocommerce_Gift_Cards_Lite {
 		// Add variable pricing type.
 		$this->loader->add_action( 'wp_ajax_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
-
+		// for the new layout 
+		$this->loader->add_action('woocommerce_product_thumbnails',$plugin_public,'wps_wgm_preview_below_thumbnail',10,1);
 	}
 
 	/**

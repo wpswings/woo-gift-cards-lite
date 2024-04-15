@@ -1,0 +1,45 @@
+.wps_wgm_section select, .wps_wgm_section input[type=text], .wps_wgm_section textarea {
+    min-height: 33px;
+    color: #333333;
+    box-sizing: border-box;
+    width: 100% !important;
+    background: transparent;
+    border: 1px solid #d3d3d3;
+    box-shadow: none;
+    border-radius: 5px;
+    color: #1e1e1e;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 33px;
+}
+
+.wps_wgm_added_wrapper input:focus,.wps_wgm_added_wrapper textarea:focus {
+    outline: none;
+    background: transparent !important;
+}
+
+.wps_wgm_added_wrapper .wps_wgm_section .wps_wgc_label {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #1e1e1e;
+    line-height: 1.25;
+    display: inline-block;
+    margin: 0 0 10px;
+}
+
+a#mwg_wgm_preview_email {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 14px;
+    background: var(--wp--preset--color--vivid-green-cyan);
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+a#mwg_wgm_preview_email:focus {
+    outline: none;
+}
