@@ -2477,7 +2477,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 
 	/**
-	 * 
+	 * Preview thumbnail forlayout 2 function.
 	 */
 	public function wps_wgm_preview_below_thumbnail(){
 
