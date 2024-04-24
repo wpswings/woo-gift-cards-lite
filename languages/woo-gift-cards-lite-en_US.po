@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.6.8\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 2.6.9\n"
 "POT-Creation-Date: 2024-01-08 15:19+0530\n"
 "PO-Revision-Date: 2024-01-08 15:19+0530\n"
 "Last-Translator: \n"
