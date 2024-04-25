@@ -541,7 +541,34 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 		}
 	}
 }
+add_action('admin_notices', 'wps_wgm_new_layout_notice');
+/**
+ * 
+ */
+	function wps_wgm_new_layout_notice() {
+		global $pagenow;
+		$screen = get_current_screen();
+		$other_settings = get_option( 'wps_wgm_other_settings', array() );
+		$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
+		
+		$wps_new_layout = $wps_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+		
+	
+    if ($pagenow == 'plugins.php' || ($screen->id === 'giftcard_page_wps-wgc-setting-lite')) {
 
+		if ('on' != $wps_new_layout ){
+			echo '<div  class="notice notice-success is-dismissible wps-gc-activate_notice wps-new-setting-notice update-nag">
+            
+			Check out our new gift card page layout setting in <strong> Gift Cards For WooCommerce Pro plugin</strong>. Enable it now and see the difference.
+				<a href="'. admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ).'">check </a>
+				
+			
+        </div>';
+		}
+		
+		
+	}
+	}
 add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
 /**
  * Notification html.
