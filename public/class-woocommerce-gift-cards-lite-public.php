@@ -2504,7 +2504,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				</div>';
 		
 			}
-			echo $html;
+			echo wp_kses_post($html);
 		}
 		
 	}
