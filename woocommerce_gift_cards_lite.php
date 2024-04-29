@@ -350,7 +350,7 @@ if ( $activated ) {
 			restore_current_blog();
 		}
 	}
-
+	add_action('admin_notices', 'wps_wgm_new_layout_notice');
 		add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
 
 			/**
@@ -541,7 +541,8 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 		}
 	}
 }
-add_action('admin_notices', 'wps_wgm_new_layout_notice');
+
+
 /**
  * 
  */

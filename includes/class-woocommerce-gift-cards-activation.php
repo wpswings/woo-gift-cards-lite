@@ -98,6 +98,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				delete_option( 'wps_wgm_general_setting_giftcard_minspend' );
 				delete_option( 'wps_wgm_general_setting_giftcard_maxspend' );
 				delete_option( 'wps_wgm_general_setting_giftcard_use' );
+				delete_option( 'wps_wgm_new_gift_card_page_layout' );
 				$general_process_completion_flag = true;
 			}
 			return $general_process_completion_flag;
