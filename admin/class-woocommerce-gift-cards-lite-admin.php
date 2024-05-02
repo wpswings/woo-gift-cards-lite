@@ -478,7 +478,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$wps_get_pro_templates = array();
 			}
 			$wps_get_lite_templates = $this->wps_wgm_get_all_lite_templates();
-			if ( empty( $is_customizable ) ) {
+			//if ( empty( $is_customizable ) ) {
 				?>
 				<p class="form-field wps_wgm_email_template">
 					<label class ="wps_wgm_email_template" for="wps_wgm_email_template"><?php esc_html_e( 'Email Template', 'woo-gift-cards-lite' ); ?></label>
@@ -543,7 +543,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					</select>
 				</p>
 				<?php
-			}
+			//}
 			wp_nonce_field( 'wps_wgm_lite_nonce', 'wps_wgm_product_nonce_field' );
 			do_action( 'wps_wgm_giftcard_product_type_field', $product_id );
 			echo '</div>';

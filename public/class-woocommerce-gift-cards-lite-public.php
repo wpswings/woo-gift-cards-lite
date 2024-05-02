@@ -674,7 +674,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
 						
-					
 					} else {
 							
 						// for price based on country.
@@ -791,16 +790,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		return $the_cart_data;
 	}
 	/**
-	 * Nonce verify function.
+	 * Nonce verified fucntion.
 	 */
-
 	public function wps_nonce_not_verify_add_to_cart(){
 		$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
-					if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						throw new Exception( esc_html__( 'Sorry, your nonce not verify.', 'woo-gift-cards-lite' ) );
+		if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+			throw new Exception( esc_html__( 'Sorry, your nonce not verify.', 'woo-gift-cards-lite' ) );
 						
-					}
+		}
 	}
+
 	/**
 	 * List out the Meta Data into the Cart Items.
 	 *

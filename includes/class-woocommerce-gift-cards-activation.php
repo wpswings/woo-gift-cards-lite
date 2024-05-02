@@ -37,18 +37,16 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 					restore_current_blog();
 				}
 			} else {
-			
 				$wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
-				$wps_gw_new_gift_card_page_layout_first = get_option( 'wps_gw_new_gift_card_page_layout_yes', '' );
-				if (empty($wps_gw_new_gift_card_page_layout_first)) {
-					$wps_wgm_other_settings = array(
-						'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
-					);
-				
+                $wps_gw_new_gift_card_page_layout_first = get_option( 'wps_gw_new_gift_card_page_layout_yes', '' );
+                 if (empty($wps_gw_new_gift_card_page_layout_first)) {
+                    $wps_wgm_other_settings = array(
+                         'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
+                     );
 					update_option( 'wps_wgm_other_settings', $wps_wgm_other_settings );
 					update_option( 'wps_gw_new_gift_card_page_layout_yes', 'yes' );
-				}
-				
+            	}
+
 				// activated on a single site, in a multi-site or on a single site.
 				$this->on_activation();
 			}
@@ -217,7 +215,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function restore_other_settings_data( $other_process_completion_flag ) {
-			
 			$other_setting_flag = false;
 			$wps_other_settings = get_option( 'wps_wgm_other_settings', array() );
 			if ( empty( $wps_other_settings ) ) {
@@ -228,7 +225,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 					'wps_wgm_additional_apply_coupon_disable' => $wps_wgm_apply_coupon_disable,
 					'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
 				);
-			
+				
 				update_option( 'wps_wgm_other_settings', $wps_wgm_other_settings );
 				$other_setting_flag = true;
 			}
