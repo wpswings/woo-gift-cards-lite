@@ -665,16 +665,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	public function wps_wgm_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
 
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		
 		if ( $wps_wgc_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
-					if ( ! isset( $wps_field_nonce ) || ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-				
-						return $the_cart_data;
+					if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+						
+					
 					} else {
+							
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 							if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
@@ -788,8 +790,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 		return $the_cart_data;
 	}
+	/**
+	 * Nonce verify function.
+	 */
 
-
+	public function wps_nonce_not_verify_add_to_cart(){
+		$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
+					if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+						throw new Exception( esc_html__( 'Sorry, your nonce not verify.', 'woo-gift-cards-lite' ) );
+						
+					}
+	}
 	/**
 	 * List out the Meta Data into the Cart Items.
 	 *
