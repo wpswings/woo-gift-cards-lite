@@ -21,9 +21,9 @@
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * WP Tested up to:   6.4.3
+ * WP Tested up to:   6.5.2
  * WP requires at least: 5.5.0
- * WC tested up to:   8.8.2
+ * WC tested up to:   8.8.3
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -561,7 +561,7 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 			echo '<div  class="notice notice-success is-dismissible wps-gc-activate_notice wps-new-setting-notice update-nag">
             
 			Check out our new gift card page layout setting in <strong> Gift Cards For WooCommerce Pro plugin</strong>. Enable it now and see the difference.
-				<a href="'. admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ).'">check </a>
+				<a href="'. esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ) ).'">check </a>
 				
 			
         </div>';
