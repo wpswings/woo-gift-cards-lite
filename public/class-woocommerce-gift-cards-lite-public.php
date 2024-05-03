@@ -672,7 +672,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
 					if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-
+						echo '';
 					} else {
 
 						// for price based on country.
@@ -790,6 +790,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 	/**
 	 * Nonce verified fucntion.
+	 *
+	 *  @throws Exception If order is invalid.
 	 */
 	public function wps_nonce_not_verify_add_to_cart() {
 		$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
