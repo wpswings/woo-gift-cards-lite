@@ -30,12 +30,12 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 	 ),
 	 // new layout setting for org ///////////////////////////////.
 	 array(
-		 'title' => __( 'Enable New Layout', 'giftware' ),
+		 'title' => __( 'Enable New Layout', 'woo-gift-cards-lite' ),
 		 'id' => 'wps_wgm_new_gift_card_page_layout',
 		 'type' => 'checkbox',
 		 'class' => 'input-text',
-		 'desc_tip' => __( 'Check this if you want to enable the new structure of the gift card product page', 'giftware' ),
-		 'desc' => __( 'Enable this if you want to use New Product Page Layout', 'giftware' ),
+		 'desc_tip' => __( 'Check this if you want to enable the new structure of the gift card product page', 'woo-gift-cards-lite' ),
+		 'desc' => __( 'Enable this if you want to use New Product Page Layout', 'woo-gift-cards-lite' ),
 	 ),
  );
  $wps_wgm_other_setting = apply_filters( 'wps_wgm_other_setting', $wps_wgm_other_setting );
