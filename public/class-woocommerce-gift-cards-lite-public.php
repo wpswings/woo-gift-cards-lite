@@ -90,9 +90,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
 		$wps_new_layout = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 
-		if ( 'on' == $wps_new_layout  && !wps_uwgc_pro_active()){
-			
-			wp_enqueue_style( $this->plugin_name.'single-page', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-single-page.css', array(), $this->version, 'all' );
+		if ( 'on' == $wps_new_layout && ! wps_uwgc_pro_active() ) {
+
+			wp_enqueue_style( $this->plugin_name . 'single-page', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-single-page.css', array(), $this->version, 'all' );
 		}
 	}
 
@@ -255,12 +255,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 
 		$product_types = wp_get_object_terms( $product_id, 'product_type' );
-		if ( !empty($product_types)){
+		if ( ! empty( $product_types ) ) {
 			$product_type  = $product_types[0]->slug;
-		}else{
+		} else {
 			$product_type = '';
 		}
-	
+
 		if ( 'wgm_gift_card' === $product_type ) {
 			$wps_cart_html = $this->wps_wgm_before_cart_data( $wps_product );
 		} else {
@@ -305,12 +305,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 							$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
 							$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
-							if ( 'on' == $use_new_page_layout ){
+							if ( 'on' == $use_new_page_layout ) {
 								$cart_html .= '<div class="wps_wgm_added_wrapper wps-gc_lay-2">';
-							}else{
+							} else {
 								$cart_html .= '<div class="wps_wgm_added_wrapper">';
 							}
-							
+
 							wp_nonce_field( 'wps_wgm_single_nonce', 'wps_wgm_single_nonce_field' );
 							$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
 							$is_group_product = get_post_meta( $product_id, 'wps_wgm_is_group_gift', true );
@@ -495,37 +495,36 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 								$cart_html .= apply_filters( 'wps_wgm_add_price_types', $wps_additional_section, $product, $product_pricing );
 							}
-							//////////////////////////// new layout setting ///////////////////////////////.
+							// new layout setting ///////////////////////////////.
 							$other_settings = get_option( 'wps_wgm_other_settings', array() );
 							$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
 							$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
-						
-							if ( 'on' == $use_new_page_layout ){
+
+							if ( 'on' == $use_new_page_layout ) {
 								if ( '' !== apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id ) ) {
 									$cart_html .= apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id )['html'];
 									$choosed_temp = apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id )['choosen_temp_id'];
 								}
 							}
-							//////////////////////////// new layout setting ///////////////////////////////.
+							// new layout setting ///////////////////////////////.
 							$other_settings = get_option( 'wps_wgm_other_settings', array() );
 							$wps_wgm_preview_disable = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_additional_preview_disable' );
 
-							
-							if ( '' == $use_new_page_layout ){
+							if ( '' == $use_new_page_layout ) {
 								$cart_html .= apply_filters( 'wps_wgm_select_date', $wps_additional_section, $product_id );
 								$cart_html .= '<p class="wps_wgm_section wps_from">
 									<label class="wps_wgc_label">' . __( 'From', 'woo-gift-cards-lite' ) . '</label>	
 									<input type="text"  name="wps_wgm_from_name" id="wps_wgm_from_name" class="wps_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woo-gift-cards-lite' ) . '" required="required">
 									</p>';
 							}
-							if ( 'on' == $use_new_page_layout ){
+							if ( 'on' == $use_new_page_layout ) {
 								$cart_html .= "<div class='wps_wgm_new_layout_for_from_select' >";
 								$cart_html .= apply_filters( 'wps_wgm_select_date', $wps_additional_section, $product_id );
 								$cart_html .= '<p class="wps_wgm_section wps_from">
 									<label class="wps_wgc_label">' . __( 'From', 'woo-gift-cards-lite' ) . '</label>	
 									<input type="text"  name="wps_wgm_from_name" id="wps_wgm_from_name" class="wps_wgm_from_name" placeholder="' . __( 'Enter the sender name', 'woo-gift-cards-lite' ) . '" required="required">
 									</p>';
-								$cart_html .= "</div>";
+								$cart_html .= '</div>';
 
 							}
 							$mail_settings = get_option( 'wps_wgm_mail_settings', array() );
@@ -621,15 +620,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$choosed_temp = $templateid[0];
 								}
 							}
-							/////////////////////////////////////////////////// old layout setting //////////////////////////////////////.
-							
-							if ( '' == $use_new_page_layout ){
+							// old layout setting //////////////////////////////////////.
+
+							if ( '' == $use_new_page_layout ) {
 								if ( '' !== apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id ) ) {
 									$cart_html .= apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id )['html'];
 									$choosed_temp = apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id )['choosen_temp_id'];
 								}
 							}
-							/////////////////////////////////////////////////// old layout setting //////////////////////////////////////.
+							// old layout setting //////////////////////////////////////.
 							$cart_html .= '<input name="add-to-cart" value="' . $product_id . '" type="hidden" class="wps_wgm_hidden_pro_id">';
 							if ( is_array( $templateid ) && ! empty( $templateid ) ) {
 								$cart_html .= '<input name="wps_wgm_selected_temp" id="wps_wgm_selected_temp" value="' . $choosed_temp . '" type="hidden">';
@@ -665,17 +664,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	public function wps_wgm_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
 
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
-		
+
 		if ( $wps_wgc_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
-					if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						
+					if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+
 					} else {
-							
+
 						// for price based on country.
 						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 							if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
@@ -792,11 +791,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	/**
 	 * Nonce verified fucntion.
 	 */
-	public function wps_nonce_not_verify_add_to_cart(){
+	public function wps_nonce_not_verify_add_to_cart() {
 		$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
-		if (  ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+		if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
 			throw new Exception( esc_html__( 'Sorry, your nonce not verify.', 'woo-gift-cards-lite' ) );
-						
+
 		}
 	}
 
@@ -955,10 +954,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$from_price = floatval( str_replace( $decimal_separator, '.', $from_price ) );
 									$to_price = $product_pricing['to'];
 									$to_price = floatval( str_replace( $decimal_separator, '.', $to_price ) );
-									
-									
-
-
 
 									// price based on country.
 									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
@@ -1146,7 +1141,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$items = $order->get_items();
 		$coupon_amount_deducted = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', true );
 		if ( 'deduct' !== $coupon_amount_deducted ) {
-			foreach ( $order->get_items('coupon') as $item_id => $item ) {
+			foreach ( $order->get_items( 'coupon' ) as $item_id => $item ) {
 				$this->wps_wgm_woocommerce_new_order_item( $item_id, $item, $order_id );
 				wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', 'deduct' );
 			}
@@ -1179,10 +1174,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( $ord_product_id == $conti_prod_id ) {
 							$alredaygenerated     = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
 							$alreadygenrated_old = wps_wgm_hpos_get_meta_data( $order_id, 'wps_gw_order_giftcard', true );
-							if ( 'send' !== $alredaygenerated  || 'send' !== $alreadygenrated_old ) {
+							if ( 'send' !== $alredaygenerated || 'send' !== $alreadygenrated_old ) {
 								$this->wps_wgm_gc_send_payment_link_to_contributors( $order_id, $old_status, $new_status );
 							}
-							
 						}
 						$wps_gift_product = apply_filters( 'wps_wgm_update_item_meta_as_a_gift', $item, $item_id, $order_id );
 
@@ -1833,93 +1827,84 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_wc_shipping_enabled( $enable ) {
-        $wps_wgc_enable = wps_wgm_giftcard_enable();
+		$wps_wgc_enable = wps_wgm_giftcard_enable();
 
-        if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {
-            if ( ( true ) && $wps_wgc_enable ) {
-                global $woocommerce;
-                $gift_bool = false;
-                $other_bool = false;
-                $gift_bool_ship = false;
-                if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
-					
+		if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {
+			if ( ( true ) && $wps_wgc_enable ) {
+				global $woocommerce;
+				$gift_bool = false;
+				$other_bool = false;
+				$gift_bool_ship = false;
+				if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
 
-					
-							
-                    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
-					
-					
-					
-                        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-                        $product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-                        $product_types = wp_get_object_terms( $product_id, 'product_type' );
-                        if ( isset( $product_types[0] ) ) {
-                            $product_type = $product_types[0]->slug;
-                            if ( isset( $cart_item['product_meta'] ) ) {
-                                if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
-                                    if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-                                        $gift_bool = true;
-                                    } elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-                                        $gift_bool_ship = true;
-                                    }
-                                } else if ( ! $cart_item['data']->is_virtual() ) {
-                                    $other_bool = true;
-                                }
-                            } else if ( ! $cart_item['data']->is_virtual() ) {
-                                $other_bool = true;
-                            }
-                        }
-                    }
-					
-                    if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
-                        $enable = false;
-                    } else {
-                        $enable = true;
-                    }
-				
+						$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+						$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+						$product_types = wp_get_object_terms( $product_id, 'product_type' );
+						if ( isset( $product_types[0] ) ) {
+							$product_type = $product_types[0]->slug;
+							if ( isset( $cart_item['product_meta'] ) ) {
+								if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
+									if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+										$gift_bool = true;
+									} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+										$gift_bool_ship = true;
+									}
+								} else if ( ! $cart_item['data']->is_virtual() ) {
+									$other_bool = true;
+								}
+							} else if ( ! $cart_item['data']->is_virtual() ) {
+								$other_bool = true;
+							}
+						}
+					}
 
-                }
-				
-            }
-        } else {
-            if ( ( is_cart() || is_checkout() ) && $wps_wgc_enable ) {
-                global $woocommerce;
-                $gift_bool = false;
-                $other_bool = false;
-                $gift_bool_ship = false;
-                if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
-                    foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-                        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-                        $product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-                        $product_types = wp_get_object_terms( $product_id, 'product_type' );
-                        if ( isset( $product_types[0] ) ) {
-                            $product_type = $product_types[0]->slug;
-                            if ( isset( $cart_item['product_meta'] ) ) {
-                                if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
-                                    if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-                                        $gift_bool = true;
-                                    } elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-                                        $gift_bool_ship = true;
-                                    }
-                                } else if ( ! $cart_item['data']->is_virtual() ) {
-                                    $other_bool = true;
-                                }
-                            } else if ( ! $cart_item['data']->is_virtual() ) {
-                                $other_bool = true;
-                            }
-                        }
-                    }
-                    if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
-                        $enable = false;
-                    } else {
-                        $enable = true;
-                    }
-                }
-            }
-        }
-        return $enable;
-    }
+					if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
+						$enable = false;
+					} else {
+						$enable = true;
+					}
+				}
+			}
+		} else {
+			if ( ( is_cart() || is_checkout() ) && $wps_wgc_enable ) {
+				global $woocommerce;
+				$gift_bool = false;
+				$other_bool = false;
+				$gift_bool_ship = false;
+				if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+						$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+						$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+						$product_types = wp_get_object_terms( $product_id, 'product_type' );
+						if ( isset( $product_types[0] ) ) {
+							$product_type = $product_types[0]->slug;
+							if ( isset( $cart_item['product_meta'] ) ) {
+								if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
+									if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+										$gift_bool = true;
+									} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+										$gift_bool_ship = true;
+									}
+								} else if ( ! $cart_item['data']->is_virtual() ) {
+									$other_bool = true;
+								}
+							} else if ( ! $cart_item['data']->is_virtual() ) {
+								$other_bool = true;
+							}
+						}
+					}
+					if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
+						$enable = false;
+					} else {
+						$enable = true;
+					}
+				}
+			}
+		}
+		return $enable;
+	}
 
 	/**
 	 * Create the Thickbox Query
@@ -1957,7 +1942,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
-			if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
+		if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
 
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
 			$product_pricing                = ! empty( get_post_meta( $product_id, 'wps_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'wps_wgm_pricing', true ) : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
@@ -2066,7 +2051,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				// @codingStandardsIgnoreEnd.
 			}
 		}
-	
+
 	}
 
 	/**
@@ -2396,7 +2381,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_uwgc_gift_card_balance_org() {
 		$html = '<div class="wps_gift_card_balance_wrapper">';
-	
+
 		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'woo-gift-cards-lite' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'woo-gift-cards-lite' ) . '"><span id="wps_notification"></span></p></div>';
@@ -2489,33 +2474,33 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	/**
 	 * Preview thumbnail forlayout 2 function.
 	 */
-	public function wps_wgm_preview_below_thumbnail(){
+	public function wps_wgm_preview_below_thumbnail() {
 
 		global $product;
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
 		$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
 		$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 
-		if ( 'on' == $use_new_page_layout ){
-			$prod_id = wc_get_product($product->get_id());
-	
+		if ( 'on' == $use_new_page_layout ) {
+			$prod_id = wc_get_product( $product->get_id() );
+
 			$prod_type = $prod_id->get_type();
 			$prod_title = $prod_id->get_title();
-	
+
 			$html = '';
-		
-			if ( 'wgm_gift_card' == $prod_type ){
-		
+
+			if ( 'wgm_gift_card' == $prod_type ) {
+
 				$html .= '<div class="wps_wgm_wrapper_for_preview"> 
-					  <h2>'.$prod_title .'<span>'.get_woocommerce_currency_symbol().'<span id="wps_wgm_price_preview"></span></span></h2>			
+					  <h2>' . $prod_title . '<span>' . get_woocommerce_currency_symbol() . '<span id="wps_wgm_price_preview"></span></span></h2>			
 					  <p > From : <span class="wps_text_style" id="wps_from_preview"> xyz test</span> </p>
 					  <p > To : <span class="wps_text_style" id="wps_to_preview">xyz@gmail.com</span></p> 
 					  <p > Message : <span class="wps_text_style" id="wps_message_preview">Write your message gift card receiver</span></p>
 				</div>';
-		
+
 			}
-			echo wp_kses_post($html);
+			echo wp_kses_post( $html );
 		}
-		
+
 	}
 }

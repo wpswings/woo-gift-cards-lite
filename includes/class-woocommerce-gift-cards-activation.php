@@ -38,14 +38,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				}
 			} else {
 				$wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
-                $wps_gw_new_gift_card_page_layout_first = get_option( 'wps_gw_new_gift_card_page_layout_yes', '' );
-                 if (empty($wps_gw_new_gift_card_page_layout_first)) {
-                    $wps_wgm_other_settings = array(
-                         'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
-                     );
+				$wps_gw_new_gift_card_page_layout_first = get_option( 'wps_gw_new_gift_card_page_layout_yes', '' );
+				if ( empty( $wps_gw_new_gift_card_page_layout_first ) ) {
+					$wps_wgm_other_settings = array(
+						'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
+					);
 					update_option( 'wps_wgm_other_settings', $wps_wgm_other_settings );
 					update_option( 'wps_gw_new_gift_card_page_layout_yes', 'yes' );
-            	}
+				}
 
 				// activated on a single site, in a multi-site or on a single site.
 				$this->on_activation();
@@ -77,7 +77,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				$giftcard_minspend = get_option( 'wps_wgm_general_setting_giftcard_minspend', false );
 				$giftcard_maxspend = get_option( 'wps_wgm_general_setting_giftcard_maxspend', false );
 				$giftcard_use = get_option( 'wps_wgm_general_setting_giftcard_use', 0 );
-				// $wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
 				$wps_wgm_general_settings = array(
 					'wps_wgm_general_setting_enable' => $giftcard_enable,
 					'wps_wgm_general_setting_tax_cal_enable' => $giftcard_tax_cal_enable,
@@ -90,8 +89,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 					'wps_wgm_general_setting_giftcard_minspend' => $giftcard_minspend,
 					'wps_wgm_general_setting_giftcard_maxspend' => $giftcard_maxspend,
 					'wps_wgm_general_setting_giftcard_use' => $giftcard_use,
-					// 'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
-					
+
 				);
 				update_option( 'wps_wgm_general_settings', $wps_wgm_general_settings );
 				$general_setting_flag = true;
@@ -108,7 +106,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 				delete_option( 'wps_wgm_general_setting_giftcard_minspend' );
 				delete_option( 'wps_wgm_general_setting_giftcard_maxspend' );
 				delete_option( 'wps_wgm_general_setting_giftcard_use' );
-				// delete_option( 'wps_wgm_new_gift_card_page_layout' );
+
 				$general_process_completion_flag = true;
 			}
 			return $general_process_completion_flag;
@@ -218,14 +216,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 			$other_setting_flag = false;
 			$wps_other_settings = get_option( 'wps_wgm_other_settings', array() );
 			if ( empty( $wps_other_settings ) ) {
-				
+
 				$wps_wgm_apply_coupon_disable = get_option( 'wps_wgm_additional_apply_coupon_disable', false );
 				$wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
 				$wps_wgm_other_settings = array(
 					'wps_wgm_additional_apply_coupon_disable' => $wps_wgm_apply_coupon_disable,
 					'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
 				);
-				
+
 				update_option( 'wps_wgm_other_settings', $wps_wgm_other_settings );
 				$other_setting_flag = true;
 			}

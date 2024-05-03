@@ -255,10 +255,10 @@ class Woocommerce_Gift_Cards_Lite {
 		// Add variable pricing type.
 		$this->loader->add_action( 'wp_ajax_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wgm_append_variable_price', $plugin_public, 'wps_wgm_append_variable_price' );
-		// for the new layout 
-		$this->loader->add_action('woocommerce_product_thumbnails',$plugin_public,'wps_wgm_preview_below_thumbnail',10,1);
+		// for the new layout.
+		$this->loader->add_action( 'woocommerce_product_thumbnails', $plugin_public, 'wps_wgm_preview_below_thumbnail', 10, 1 );
 
-		$this->loader->add_action('woocommerce_add_to_cart',$plugin_public , 'wps_nonce_not_verify_add_to_cart');
+		$this->loader->add_action( 'woocommerce_add_to_cart', $plugin_public, 'wps_nonce_not_verify_add_to_cart' );
 	}
 
 	/**
