@@ -793,11 +793,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 *
 	 *  @throws Exception If order is invalid.
 	 */
-	public function wps_nonce_not_verify_add_to_cart() {
-		$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
-		if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-			throw new Exception( esc_html__( 'Sorry, your nonce not verify.', 'woo-gift-cards-lite' ) );
+	public function wps_nonce_not_verify_add_to_cart($prod,$productId) {
 
+		$product_types = wp_get_object_terms( $productId, 'product_type' );
+		
+		if ( isset( $product_types[0] ) ) {
+			$product_type = $product_types[0]->slug;
+				if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
+					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
+					if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+						throw new Exception( esc_html__( 'Sorry, your nonce not verify.', 'woo-gift-cards-lite' ) );
+
+					}
+				}
 		}
 	}
 
