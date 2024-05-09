@@ -231,6 +231,7 @@
 					is_wps_wgm_gift = true;
 				}
 				if (is_wps_wgm_gift) {
+					
 					// Hide/Show all with rules.
 					var hide_classes = '.hide_if_wps_wgm_gift, .hide_if_wps_wgm_gift';
 					var show_classes = '.show_if_wps_wgm_gift, .show_if_wps_wgm_gift';

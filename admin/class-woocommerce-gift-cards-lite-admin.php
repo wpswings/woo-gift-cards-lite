@@ -39,10 +39,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @var      string    $wps_common_fun    The current version of this plugin.
 	 */
 	public $wps_common_fun;
-	
+
 	/**
 	 * The onboard form data .
-	 * 
+	 *
 	 * @since    1.0.0
 	 * @var      string    $onboard    onboard form data.
 	 */
@@ -111,12 +111,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 			wp_enqueue_style( 'woocommerce_admin_styles' );
 			if ( ! wps_uwgc_pro_active() ) {
-				
-				wp_enqueue_style( $this->plugin_name.'tmp', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_import_tmp.css', array(), time(), 'all' );
-				
+
+				wp_enqueue_style( $this->plugin_name . 'tmp', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_import_tmp.css', array(), time(), 'all' );
+
 			}
 		}
-		
+
 	}
 
 	/**
@@ -129,8 +129,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
-			if (  wps_uwgc_pro_active() ) {
-				wp_enqueue_script( 'pro_tag_remove_class', plugin_dir_url( __FILE__ ) . '/js/wps_wgm_gift_card_pro_admin.js',array( 'jquery' ), time(), true );
+			if ( wps_uwgc_pro_active() ) {
+				wp_enqueue_script( 'pro_tag_remove_class', plugin_dir_url( __FILE__ ) . '/js/wps_wgm_gift_card_pro_admin.js', array( 'jquery' ), time(), true );
 			}
 			$pagescreen = $screen->id;
 
@@ -161,7 +161,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				);
 				$url     = plugins_url();
 				wp_enqueue_script( 'wps_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), $this->version, true );
-				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version,true );
+				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version, true );
 
 				wp_enqueue_script( $this->plugin_name . 'clipboard' );
 				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'wps_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), $this->version, true );
@@ -200,7 +200,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), $this->version, true );
 
 			}
-		
 		}
 	}
 
@@ -231,7 +230,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_admin_setting() {
-		
+
 		include_once WPS_WGC_DIRPATH . '/admin/partials/woocommerce-gift-cards-lite-admin-display.php';
 	}
 
@@ -478,8 +477,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$wps_get_pro_templates = array();
 			}
 			$wps_get_lite_templates = $this->wps_wgm_get_all_lite_templates();
-			if ( empty( $is_customizable ) ) {
-				?>
+			?>
 				<p class="form-field wps_wgm_email_template">
 					<label class ="wps_wgm_email_template" for="wps_wgm_email_template"><?php esc_html_e( 'Email Template', 'woo-gift-cards-lite' ); ?></label>
 					<?php
@@ -543,10 +541,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					</select>
 				</p>
 				<?php
-			}
-			wp_nonce_field( 'wps_wgm_lite_nonce', 'wps_wgm_product_nonce_field' );
-			do_action( 'wps_wgm_giftcard_product_type_field', $product_id );
-			echo '</div>';
+				wp_nonce_field( 'wps_wgm_lite_nonce', 'wps_wgm_product_nonce_field' );
+				do_action( 'wps_wgm_giftcard_product_type_field', $product_id );
+				echo '</div>';
 		}
 	}
 
@@ -1201,9 +1198,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_preview_gift_template( $actions, $post ) {
 		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		
+
 		if ( 'giftcard' == $post->post_type ) {
-			$actions['wps_wgm_quick_view'] = '<a href="' . admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID . '&wps_wgm_template=giftcard&wps_nonce='.$secure_nonce.'&TB_iframe=true&width=600&height=500' ) . '" rel="permalink" class="thickbox">' . __( 'Preview', 'woo-gift-cards-lite' ) . '</a>';
+			$actions['wps_wgm_quick_view'] = '<a href="' . admin_url( 'edit.php?post_type=giftcardpost&post_id=' . $post->ID . '&wps_wgm_template=giftcard&wps_nonce=' . $secure_nonce . '&TB_iframe=true&width=600&height=500' ) . '" rel="permalink" class="thickbox">' . __( 'Preview', 'woo-gift-cards-lite' ) . '</a>';
 		}
 		return $actions;
 	}
@@ -1217,48 +1214,48 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_wgm_preview_email_template() {
-		
-		if( current_user_can( 'edit_others_posts' ) ){
 
-if ( isset($_GET['wps_nonce']) &&  wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['wps_nonce'] ) ), 'wps-gc-auth-nonce' )){
-	if ( isset( $_GET['wps_wgm_template'] ) ) {
-				
-		if ( isset( $_GET['wps_wgm_template'] ) == 'giftcard' ) {
-			$post_id                  = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
+		if ( current_user_can( 'edit_others_posts' ) ) {
 
-			$wps_post_type =  get_post_type($post_id);
-			if( 'giftcard' == $wps_post_type ) {
-				$todaydate                = date_i18n( 'Y-m-d' );
-				$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
+			if ( isset( $_GET['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['wps_nonce'] ) ), 'wps-gc-auth-nonce' ) ) {
+				if ( isset( $_GET['wps_wgm_template'] ) ) {
+
+					if ( isset( $_GET['wps_wgm_template'] ) == 'giftcard' ) {
+						$post_id                  = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
+
+						$wps_post_type = get_post_type( $post_id );
+						if ( 'giftcard' == $wps_post_type ) {
+							$todaydate                = date_i18n( 'Y-m-d' );
+							$wps_wgm_general_settings = get_option( 'wps_wgm_general_settings', false );
 								$local_expiry_day = get_post_meta( $post_id, 'wps_wgm_local_setting_giftcard_expiry', true );
-				if ( empty( $local_expiry_day ) || 0 == $local_expiry_day ) {
-					$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
-				} else {
-					$expiry_date = $local_expiry_day;
-				}
+							if ( empty( $local_expiry_day ) || 0 == $local_expiry_day ) {
+								$expiry_date = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
+							} else {
+								$expiry_date = $local_expiry_day;
+							}
 
-				$expirydate_format             = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
-				$wps_wgm_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_coupon_length' );
+							$expirydate_format             = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
+							$wps_wgm_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_coupon_length' );
 
-				if ( '' == $wps_wgm_coupon_length_display ) {
-					$wps_wgm_coupon_length_display = 5;
-				}
-				$password = '';
-				for ( $i = 0;$i < $wps_wgm_coupon_length_display;$i++ ) {
-					$password .= 'x';
-				}
-				$giftcard_prefix = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_prefix' );
-				$coupon          = $giftcard_prefix . $password;
-				$templateid      = $post_id;
+							if ( '' == $wps_wgm_coupon_length_display ) {
+								$wps_wgm_coupon_length_display = 5;
+							}
+							$password = '';
+							for ( $i = 0;$i < $wps_wgm_coupon_length_display;$i++ ) {
+								$password .= 'x';
+							}
+							$giftcard_prefix = $this->wps_common_fun->wps_wgm_get_template_data( $wps_wgm_general_settings, 'wps_wgm_general_setting_giftcard_prefix' );
+							$coupon          = $giftcard_prefix . $password;
+							$templateid      = $post_id;
 
-				$args['from']       = esc_html__( 'from@example.com', 'woo-gift-cards-lite' );
-				$args['to']         = esc_html__( 'to@example.com', 'woo-gift-cards-lite' );
-				$args['message']    = esc_html__( 'Your gift message will appear here which you send to your receiver. ', 'woo-gift-cards-lite' );
-				$args['coupon']     = apply_filters( 'wps_wgm_static_coupon_img', $coupon );
-				$args['expirydate'] = $expirydate_format;
-				$args['amount']     = wc_price( 100 );
-				$args['templateid'] = $templateid;
-				$style              = '<style>
+							$args['from']       = esc_html__( 'from@example.com', 'woo-gift-cards-lite' );
+							$args['to']         = esc_html__( 'to@example.com', 'woo-gift-cards-lite' );
+							$args['message']    = esc_html__( 'Your gift message will appear here which you send to your receiver. ', 'woo-gift-cards-lite' );
+							$args['coupon']     = apply_filters( 'wps_wgm_static_coupon_img', $coupon );
+							$args['expirydate'] = $expirydate_format;
+							$args['amount']     = wc_price( 100 );
+							$args['templateid'] = $templateid;
+							$style              = '<style>
 					table, th, tr, td {
 						border: medium none;
 					}
@@ -1269,24 +1266,22 @@ if ( isset($_GET['wps_nonce']) &&  wp_verify_nonce( sanitize_text_field( wp_unsl
 					width: 630px !important;
 				}
 				</style>';
-				$message            = $this->wps_common_fun->wps_wgm_create_gift_template( $args );
-				$finalhtml          = $style . $message;
+							$message            = $this->wps_common_fun->wps_wgm_create_gift_template( $args );
+							$finalhtml          = $style . $message;
 
-				if ( wps_uwgc_pro_active() ) {
-					do_action( 'preview_email_template_for_pro', $finalhtml );
-				} else {
-					$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
-					// @codingStandardsIgnoreStart.
-					echo wp_kses( $finalhtml, $allowed_tags );
-					die();
-					// @codingStandardsIgnoreEnd.
+							if ( wps_uwgc_pro_active() ) {
+								do_action( 'preview_email_template_for_pro', $finalhtml );
+							} else {
+								$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
+								// @codingStandardsIgnoreStart.
+								echo wp_kses( $finalhtml, $allowed_tags );
+								die();
+								// @codingStandardsIgnoreEnd.
+							}
+						}
+					}
 				}
 			}
-			
-		}
-	}
-}
-			
 		}
 	}
 
@@ -1343,7 +1338,7 @@ if ( isset($_GET['wps_nonce']) &&  wp_verify_nonce( sanitize_text_field( wp_unsl
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_set_cron_for_plugin_notification() {
-		
+
 			$offset = get_option( 'gmt_offset' );
 			$time   = time() + $offset * 60 * 60;
 		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
@@ -1351,7 +1346,7 @@ if ( isset($_GET['wps_nonce']) &&  wp_verify_nonce( sanitize_text_field( wp_unsl
 			wp_schedule_event( $time, 'daily', 'wps_wgm_check_for_notification_update' );
 
 		}
-	
+
 	}
 
 	/**
@@ -1646,7 +1641,7 @@ if ( isset($_GET['wps_nonce']) &&  wp_verify_nonce( sanitize_text_field( wp_unsl
 				'sslverify' => false,
 			)
 		);
-		
+
 		if ( is_wp_error( $wps_response ) ) {
 			$error_message = $wps_response->get_error_message();
 			echo '<p><strong> Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
@@ -1740,9 +1735,7 @@ if ( isset($_GET['wps_nonce']) &&  wp_verify_nonce( sanitize_text_field( wp_unsl
 											<a href="">
 												<i class="fas fa-eye wps_preview_template"></i>
 											</a>
-											<?php
-											?>
-											<i class="fas fa-download wps_download_template" data-id="<?php echo esc_attr( stripslashes( $temp_data['template_id'] ) ); ?>"></i>
+																						<i class="fas fa-download wps_download_template" data-id="<?php echo esc_attr( stripslashes( $temp_data['template_id'] ) ); ?>"></i>
 											<div class="wps_template_import_note">
 												<p class="wps_note"><?php esc_html_e( 'Import this template.', 'woo-gift-cards-lite' ); ?></p>
 											</div>

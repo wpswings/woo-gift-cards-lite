@@ -36,8 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<span class="woocommerce-help-tip"></span> <label for="wps_wgm_default_enable">
-								<input value="default_img" type="radio" name="wps_wgm_image_enable" checked="checked"
-									id="wps_wgm_default_enable" class="input-text"> Check this box to allow default
+								<input value="default_img" type="radio" name="wps_wgm_image_enable_test" checked="checked"
+									id="wps_wgm_default_enable_test" class="input-text"> Check this box to allow default
 								template images </label>
 
 						</td>

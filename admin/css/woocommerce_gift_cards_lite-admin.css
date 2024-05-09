@@ -1793,3 +1793,33 @@ a.wps-gc__popup-for-pro-link:hover {
     margin-bottom: 15px;
 }
 /* Group Gifting tab Added */
+
+@keyframes blink_text {
+	0%{
+		transform: rotate(-45deg) scale(1);
+	}
+
+	50%{
+		transform: rotate(-45deg) scale(1.3);
+	}
+
+	100%{
+		transform: rotate(-45deg) scale(1);
+	}
+}
+th label[for=wps_wgm_new_gift_card_page_layout] {
+    position:relative
+}
+
+th label[for=wps_wgm_new_gift_card_page_layout]:before {
+    vertical-align: middle;
+    content: "New!";
+   transform: rotate(-45deg);
+    color: var(--wc-green);
+    font-size: 14px;
+    font-weight: 900;
+	position: absolute;
+	left: -25px;
+	top: -10px;
+	animation: blink_text 1.2s infinite forwards linear;
+}

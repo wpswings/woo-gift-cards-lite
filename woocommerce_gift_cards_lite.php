@@ -15,15 +15,15 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           2.6.8
+ * Version:           2.6.10
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
- * WP Tested up to:   6.4.3
+ * WP Tested up to:   6.5.2
  * WP requires at least: 5.5.0
- * WC tested up to:   8.6.1
+ * WC tested up to:   8.8.3
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -68,7 +68,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '2.6.8' );
+	define( 'WPS_WGC_VERSION', '2.6.10' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -350,7 +350,7 @@ if ( $activated ) {
 			restore_current_blog();
 		}
 	}
-
+	add_action( 'admin_notices', 'wps_wgm_new_layout_notice' );
 		add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
 
 			/**
@@ -542,6 +542,31 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 	}
 }
 
+
+/**
+ * Layout setting .
+ */
+function wps_wgm_new_layout_notice() {
+	global $pagenow;
+	$screen = get_current_screen();
+	$other_settings = get_option( 'wps_wgm_other_settings', array() );
+	$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
+
+	$wps_new_layout = $wps_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+
+	if ( 'plugins.php' == $pagenow || ( 'giftcard_page_wps-wgc-setting-lite' === $screen->id ) ) {
+
+		if ( 'on' != $wps_new_layout ) {
+			echo '<div  class="notice notice-success is-dismissible wps-gc-activate_notice wps-new-setting-notice update-nag">
+            
+			Check out our new gift card page layout setting in <strong> Gift Cards For WooCommerce Pro plugin</strong>. Enable it now and see the difference.
+				<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ) ) . '">check </a>
+				
+			
+        </div>';
+		}
+	}
+}
 add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
 /**
  * Notification html.

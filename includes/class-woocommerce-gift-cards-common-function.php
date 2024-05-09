@@ -291,23 +291,19 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$usage_limit = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' );
 					$usage_limit = ( '' != $usage_limit ) ? $usage_limit : 0;
 
-										$local_expiry_day = get_post_meta( $product_id, 'wps_wgm_local_setting_giftcard_expiry', true );
+					$local_expiry_day = get_post_meta( $product_id, 'wps_wgm_local_setting_giftcard_expiry', true );
 					if ( empty( $local_expiry_day ) || 0 == $local_expiry_day ) {
 						$expiry_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_expiry' );
 					} else {
 						$expiry_date = $local_expiry_day;
 					}
-
 					$expiry_date = ( '' != $expiry_date ) ? $expiry_date : 0;
-
 					$free_shipping = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' );
 					$free_shipping = ( 'on' == $free_shipping ) ? 'yes' : 'no';
-
 					$minimum_amount = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_minspend' );
 					$maximum_amount = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_maxspend' );
 					$exclude_sale_items = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_giftcard_ex_sale' );
 					$exclude_sale_items = ( 'on' == $exclude_sale_items ) ? 'yes' : 'no';
-
 					$exclude_products = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_exclude_product' );
 					$exclude_products = ( is_array( $exclude_products ) && ! empty( $exclude_products ) ) ? implode( ',', $exclude_products ) : '';
 					$exclude_category = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_exclude_category' );

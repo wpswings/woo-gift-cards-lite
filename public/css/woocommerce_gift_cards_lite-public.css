@@ -214,3 +214,37 @@ input#gift_card_balance_email {
     border: solid 2px #000000;
     outline: none;
 }
+/* previw content css */
+
+.wps_wgm_wrapper_for_preview {
+  margin: 15px 0;
+  width: 100%;
+  position: unset !important;
+}
+
+.wps_wgm_wrapper_for_preview h2 {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.25;
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  color: #1e1e1e;
+  text-align: left;
+}
+
+.wps_wgm_wrapper_for_preview p {
+  margin: 0 0 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  line-height: 1.5;
+  text-align: left;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.wps_wgm_wrapper_for_preview h2 span {
+  font-weight: 600;
+}

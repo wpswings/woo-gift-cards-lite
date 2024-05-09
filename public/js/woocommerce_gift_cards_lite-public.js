@@ -596,3 +596,54 @@
 	);
 
 })( jQuery );
+
+//////////////////
+
+jQuery(document).ready(function () {
+
+	jQuery('#wps_wgm_send_giftcard1').prop('checked', true)
+	
+	jQuery('#wps_wgm_price_preview').append(jQuery('#wps_wgm_price').val());
+
+	jQuery("#wps_wgm_price").keyup(function () {
+		jQuery('#wps_wgm_price_preview').html(jQuery('#wps_wgm_price').val());
+	});
+
+	jQuery(document).on('click','.wps_uwgc_price_button', function(){
+		jQuery('#wps_wgm_price_preview').html(jQuery('.wps_wgm_price').val());
+	})
+	jQuery(document).on('change', '#wps_wgm_price', function () {
+		jQuery('#wps_wgm_price_preview').html(jQuery('#wps_wgm_price').val());
+	});
+	jQuery("#wps_wgm_from_name").keyup(function () {
+		jQuery("#wps_from_preview").html( jQuery('#wps_wgm_from_name').val());
+	});
+
+	jQuery("#wps_wgm_message").keyup(function () {
+		jQuery("#wps_message_preview").html( jQuery('#wps_wgm_message').val());
+	});
+
+	jQuery("#wps_wgm_to_email").keyup(function () {
+
+		jQuery("#wps_wgm_to_download").val('');
+		jQuery("#wps_wgm_to_ship").val('');
+		jQuery("#wps_to_preview").html( jQuery('#wps_wgm_to_email').val());
+	});
+	jQuery("#wps_wgm_to_download").keyup(function () {
+		jQuery("#wps_wgm_to_email").val('');
+		jQuery("#wps_wgm_to_ship").val('');
+		jQuery("#wps_to_preview").html( jQuery('#wps_wgm_to_download').val());
+	});
+	jQuery("#wps_wgm_to_ship").keyup(function () {
+		jQuery("#wps_wgm_to_email").val('');
+		jQuery("#wps_wgm_to_email").val('');
+		jQuery("#wps_to_preview").html(  jQuery('#wps_wgm_to_ship').val());
+	});
+
+	setTimeout(function (e) {
+		var product_preview = jQuery('.theme-flatsome.single-product .wps_wgm_wrapper_for_preview , .theme-oceanwp.single-product .wps_wgm_wrapper_for_preview').detach();
+		jQuery(product_preview).insertAfter('.theme-flatsome.single-product .woocommerce-product-gallery');
+		jQuery(product_preview).appendTo('.theme-oceanwp.single-product .woocommerce-product-gallery');
+	}, 100)
+
+});
