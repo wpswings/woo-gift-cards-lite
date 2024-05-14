@@ -2148,6 +2148,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$coupon_id  = $the_coupon->get_id();
 			$orderid    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 			if ( isset( $orderid ) && ! empty( $orderid ) ) {
+				if ( apply_filters( 'wps_wgm_subscription_renewal_order_coupon', false, $order_id, $the_coupon ) ) {
+					return;
+				}
 				if ( ! wps_wgm_hpos_get_meta_data( $order_id, 'coupon_used', true ) ) {
 					$coupon_used = 'yes';
 					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
