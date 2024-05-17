@@ -350,12 +350,41 @@ if ( $activated ) {
 			restore_current_blog();
 		}
 	}
+	
 	add_action( 'admin_notices', 'wps_wgm_new_layout_notice' );
-		add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
+	
+	/**
+	 * Layout setting .
+	 */
+	if ( ! function_exists( 'wps_wgm_new_layout_notice' ) ) {
+		function wps_wgm_new_layout_notice() {
+			global $pagenow;
+			$screen = get_current_screen();
+			$other_settings = get_option( 'wps_wgm_other_settings', array() );
+			$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
 
-			/**
-			 * Function to create giftcard template.
-			 */
+			$wps_new_layout = $wps_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+
+			if ( 'plugins.php' == $pagenow || ( 'giftcard_page_wps-wgc-setting-lite' === $screen->id ) ) {
+
+				if ( 'on' != $wps_new_layout ) {
+					echo '<div  class="notice notice-success is-dismissible wps-gc-activate_notice wps-new-setting-notice update-nag">
+					
+					Check out our new gift card page layout setting in <strong> Gift Cards For WooCommerce Pro plugin</strong>. Enable it now and see the difference.
+						<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ) ) . '">check </a>
+						
+					
+				</div>';
+				}
+			}
+		}
+	}
+
+	add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
+
+	/**
+	 * Function to create giftcard template.
+	 */
 	function wps_uwgc_create_giftcard_template_org() {
 
 		/* ===== ====== Create the Check Gift Card Page ====== ======*/
@@ -542,70 +571,47 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 	}
 }
 
-
-/**
- * Layout setting .
- */
-function wps_wgm_new_layout_notice() {
-	global $pagenow;
-	$screen = get_current_screen();
-	$other_settings = get_option( 'wps_wgm_other_settings', array() );
-	$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
-
-	$wps_new_layout = $wps_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
-
-	if ( 'plugins.php' == $pagenow || ( 'giftcard_page_wps-wgc-setting-lite' === $screen->id ) ) {
-
-		if ( 'on' != $wps_new_layout ) {
-			echo '<div  class="notice notice-success is-dismissible wps-gc-activate_notice wps-new-setting-notice update-nag">
-            
-			Check out our new gift card page layout setting in <strong> Gift Cards For WooCommerce Pro plugin</strong>. Enable it now and see the difference.
-				<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ) ) . '">check </a>
-				
-			
-        </div>';
-		}
-	}
-}
 add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
 /**
  * Notification html.
  */
-function wps_giftcard_notification_plugin_html() {
+if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
+	function wps_giftcard_notification_plugin_html() {
 
-	$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-	$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
-	if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-	}
+		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 
-	$screen = get_current_screen();
-	if ( isset( $screen->id ) ) {
-		$pagescreen = $screen->id;
-	}
-	if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) ) {
-		$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
-		$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-		if ( isset( $banner_id ) && '' !== $banner_id ) {
-			$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
-			$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
-			$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
-			if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+		}
+		if ( ( isset( $_GET['page'] ) && 'wps-wgc-setting-lite' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) ) {
+			$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+			if ( isset( $banner_id ) && '' !== $banner_id ) {
+				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
-				if ( '' !== $banner_image && '' !== $banner_url ) {
+					if ( '' !== $banner_image && '' !== $banner_url ) {
 
-					?>
-							<div class="wps-offer-notice notice notice-warning is-dismissible">
-								<div class="notice-container">
-									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Gift cards"/></a>
+						?>
+								<div class="wps-offer-notice notice notice-warning is-dismissible">
+									<div class="notice-container">
+										<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Gift cards"/></a>
+									</div>
+									<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
 								</div>
-								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
-							</div>
-							
-						<?php
+								
+							<?php
+					}
 				}
 			}
 		}
-	}
 
+	}
 }
