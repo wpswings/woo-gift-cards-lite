@@ -1823,3 +1823,28 @@ th label[for=wps_wgm_new_gift_card_page_layout]:before {
 	top: -10px;
 	animation: blink_text 1.2s infinite forwards linear;
 }
+
+/* PAR Compatibility */
+
+.wps_wgm_par_parent_wrapper {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.wps_table .forminp .wps_wgm_par_parent_wrapper label input[type=number] {
+    max-width: 120px;
+    width: 100%;
+    margin: 0 10px 0 0;
+}
+
+.forminp .wps_wgm_par_parent_wrapper label {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .wps_table .forminp .wps_wgm_par_parent_wrapper label input[type=number] {
+        max-width: 80px;
+    }
+}

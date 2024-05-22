@@ -495,6 +495,21 @@ class Woocommerce_Giftcard_Admin_Settings {
 							$this->wps_wgm_generate_text_with_description( $value, $saved_settings );
 						} elseif ( 'textarea' == $value['type'] ) {
 							$this->wps_wgm_generate_textarea_html( $value, $saved_settings );
+							// PAR compatibility.
+						} elseif ( 'number_text' == $value['type'] ) {
+							?>
+							<div class="wps_wgm_par_parent_wrapper">
+								<?php
+								foreach ( $value['number_text'] as $k => $val ) {
+									if ( 'number' == $val['type'] ) {
+
+										$this->wps_wgm_generate_number_html( $val, $saved_settings );
+										echo isset( $val['curr'] ) ? esc_html( $val['curr'] . ' = ' ) : '';
+									}
+								}
+								?>
+							</div>
+							<?php
 						}
 						do_action( 'wps_wgm_admin_setting_fields_html', $value, $saved_settings );
 						?>

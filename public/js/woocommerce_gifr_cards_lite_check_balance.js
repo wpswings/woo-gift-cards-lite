@@ -45,6 +45,47 @@
                     );
                 }
             );
+
+            // PAR compatibility.
+            jQuery(document).on('click', '#wps_wgm_redeem_coupon', function(){
+                
+                jQuery(this).prop('disabled', true);
+                jQuery('#wps_wgm_coupon_redeem_notify').html('');
+                jQuery('.wps_wgm_coupon_redeem_loader').css( 'display', 'inline-block' );
+                var coupon_code = jQuery('#wps_wgm_coupon_redeem_value').val().trim();
+                if ( '' == coupon_code ) {
+
+                    jQuery('#wps_wgm_coupon_redeem_notify').show();
+                    jQuery('#wps_wgm_coupon_redeem_notify').html('<b style="color:red;">' + wps_wgm_check_balance.empty_msg + '</b>');
+                    jQuery(this).prop('disabled', false);
+                    jQuery('.wps_wgm_coupon_redeem_loader').hide();
+                } else {
+
+                    var data = {
+                        'action'              : 'redeem_gift_card_coupon',
+                        'wps_wgm_nonce_check' :wps_wgm_check_balance.wps_nonce_check,
+                        'coupon_code'         : coupon_code,
+                    };
+
+                    jQuery.ajax({
+                        'method' : 'POST',
+                        'url'    : wps_wgm_check_balance.ajaxurl,
+                        'data'   : data,
+                        success  : function(response) {
+                            jQuery('#wps_wgm_coupon_redeem_notify').show();
+                            jQuery('#wps_wgm_redeem_coupon').prop('disabled', false);
+                            jQuery('.wps_wgm_coupon_redeem_loader').hide();
+                            if ( true == response.result ) {
+
+                                jQuery('#wps_wgm_coupon_redeem_notify').html('<b style="color:green;">' + response.msg + '</b>');
+                            } else {
+
+                                jQuery('#wps_wgm_coupon_redeem_notify').html('<b style="color:red;">' + response.msg + '</b>');
+                            }
+                        }
+                    });
+                }
+            });
         }
     );
 

@@ -197,6 +197,12 @@ class Woocommerce_Gift_Cards_Lite {
 
 		$this->loader->add_action( 'wp_ajax_wgm_ajax_callbacks', $plugin_admin, 'wps_wgm_ajax_callbacks' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_wgm_import_template_org', 5, 2 );
+		// PAR compatibility.
+		if ( $this->wps_wgm_is_par_active() && $this->wps_wgm_is_par_enable() ) {
+
+			$this->loader->add_filter( 'wps_wgm_other_setting', $plugin_admin, 'wps_wgm_par_compatibility_settings', 10, 1 );
+			$this->loader->add_action( 'wps_points_admin_table_log', $plugin_admin, 'wps_wgm_admin_end_points_log', 10, 1 );
+		}
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -259,6 +265,14 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'woocommerce_product_thumbnails', $plugin_public, 'wps_wgm_preview_below_thumbnail', 10, 1 );
 
 		$this->loader->add_action( 'woocommerce_add_to_cart', $plugin_public, 'wps_nonce_not_verify_add_to_cart',10,2 );
+
+		// PAR compatibility.
+		if ( $this->wps_wgm_is_par_active() && $this->wps_wgm_is_par_enable() ) {
+
+			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wgm_coupon_redeem_option', 10, 1 );
+			$this->loader->add_action( 'wp_ajax_redeem_gift_card_coupon', $plugin_public, 'wps_wgm_redeem_gift_card_coupon' );
+			$this->loader->add_action( 'wps_points_on_first_order', $plugin_public, 'wps_wgm_user_end_points_log', 10, 1 );
+		}
 	}
 
 	/**
@@ -301,6 +315,40 @@ class Woocommerce_Gift_Cards_Lite {
 		return $this->version;
 	}
 
+	// PAR compatibility.
 
+	/**
+	 * Check whether points and rewards is active.
+	 *
+	 * @return bool
+	 */
+	public function wps_wgm_is_par_active() {
+
+		$flag           = false;
+		$active_plugins = (array) get_option( 'active_plugins', array() );
+		if ( in_array( 'points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php', $active_plugins ) ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
+
+	/**
+	 * Check whether par plugin is enable.
+	 *
+	 * @return bool
+	 */
+	public function wps_wgm_is_par_enable() {
+
+		$flag             = false;
+		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
+		$general_settings = ! empty( $general_settings ) && is_array( $general_settings ) ? $general_settings : array();
+		$wps_wpr_enable   = ! empty( $general_settings['wps_wpr_general_setting_enable'] ) ? $general_settings['wps_wpr_general_setting_enable'] : 0;
+		if ( '1' == $wps_wpr_enable ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
 
 }
