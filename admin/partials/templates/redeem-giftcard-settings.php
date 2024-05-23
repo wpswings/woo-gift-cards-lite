@@ -108,7 +108,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			$request_type = 'both';
 		} elseif ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) {
 			$request_type = 'domainupdate';
-		} elseif ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) {
+		} elseif ( isset( $offine_giftcard_redeem_settings['license'] ) && ( '' === $offine_giftcard_redeem_settings['license'] || $client_license_code != $offine_giftcard_redeem_settings['license'] ) ) {
 			$request_type = 'licenseupdate';
 		}
 
@@ -145,6 +145,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 		}
 	}
 }
+$client_license_code = get_option( 'wps_gw_lcns_key', '' );
 $wps_current_user = wp_get_current_user();
 $offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true );
 $offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings', true );
@@ -271,7 +272,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 									?>
 										" class= "wps_gw_open_redeem_link"><?php esc_html_e( 'Open Shop', 'woo-gift-cards-lite' ); ?></a>
 									<?php
-									if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
+									if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && ( '' === $offine_giftcard_redeem_settings['license'] || $client_license_code != $offine_giftcard_redeem_settings['license'] ) ) || ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
 										include_once ABSPATH . 'wp-admin/includes/plugin.php';
 										if ( is_plugin_active( 'giftware/giftware.php' ) ) {
 											?>
