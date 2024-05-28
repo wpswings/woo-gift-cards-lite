@@ -2588,6 +2588,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
 							$coupon->set_amount( 0 );
 							$coupon->save();
+							do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, 0 );
 							$response['result'] = true;
 							$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
 						} else {
