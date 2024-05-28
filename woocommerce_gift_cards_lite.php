@@ -232,30 +232,33 @@ if ( $activated ) {
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wgc_register_gift_card_product_type() {
-		/**
-		 * Set the giftcard product type.
-		 *
-		 * @since 1.0.0
-		 * @author WP Swings <webmaster@wpswings.com>
-		 * @link https://www.wpswings.com/
-		 */
-		class WC_Product_Wgm_Gift_Card extends WC_Product {
-			/**
-			 * Simple product.
-			 *
-			 * @var product_type product_type.
-			 */
-			public $product_type;
-			/**
-			 * Initialize simple product.
-			 *
-			 * @param mixed $product product.
-			 */
-			public function __construct( $product ) {
-				$this->product_type = 'wgm_gift_card';
-				parent::__construct( $product );
-			}
 
+		if ( ! class_exists( 'WC_Product_Wgm_Gift_Card' ) ) {
+			/**
+			 * Set the giftcard product type.
+			 *
+			 * @since 1.0.0
+			 * @author WP Swings <webmaster@wpswings.com>
+			 * @link https://www.wpswings.com/
+			 */
+			class WC_Product_Wgm_Gift_Card extends WC_Product {
+				/**
+				 * Simple product.
+				 *
+				 * @var product_type product_type.
+				 */
+				public $product_type;
+				/**
+				 * Initialize simple product.
+				 *
+				 * @param mixed $product product.
+				 */
+				public function __construct( $product ) {
+					$this->product_type = 'wgm_gift_card';
+					parent::__construct( $product );
+				}
+
+			}
 		}
 	}
 

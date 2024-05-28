@@ -2540,17 +2540,17 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				<p class="wps_wpr_heading"><?php echo esc_html__( 'Redeem coupon and convert it into Points.', 'woo-gift-cards-lite' ); ?></p>
 				<fieldset class="wps_wpr_each_section">
 					<p>
-						<?php echo esc_html__( 'Coupon Redeem rate: ', 'woo-gift-cards-lite' ); ?>
-						<?php echo wp_kses( wc_price( $wps_wgm_enter_price_rate ), $this->wps_common_fun->wps_allowed_html_tags() ) . ' = ' . esc_html( $wps_wgm_enter_points_rate ) . esc_html__( 'Points', 'woo-gift-cards-lite' ); ?>
+						<?php echo esc_html__( 'Coupon Redeem rate : ', 'woo-gift-cards-lite' ); ?>
+						<?php echo wp_kses( wc_price( $wps_wgm_enter_price_rate ), $this->wps_common_fun->wps_allowed_html_tags() ) . ' = ' . esc_html( $wps_wgm_enter_points_rate ) . esc_html__( ' Points', 'woo-gift-cards-lite' ); ?>
 					</p>
 					<form id="points_wallet" enctype="multipart/form-data" action="" method="post">
 						<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
 							<label for="wps_custom_wallet_text">
-								<?php esc_html_e( 'Enter your Coupon:', 'woo-gift-cards-lite' ); ?>
+								<?php esc_html_e( 'Enter your Coupon :', 'woo-gift-cards-lite' ); ?>
 							</label>
 						</p>
 						<p class="wps-wpr_enter-points-wrap">
-							<input type="text" placeholder="<?php esc_html_e( 'enter coupon', 'woo-gift-cards-lite' ); ?>" class="woocommerce-Input woocommerce-Input--number input-number" id="wps_wgm_coupon_redeem_value" style="width: 160px;">
+							<input type="text" placeholder="<?php esc_html_e( 'Enter Coupon', 'woo-gift-cards-lite' ); ?>" class="woocommerce-Input woocommerce-Input--number input-number" id="wps_wgm_coupon_redeem_value" style="width: 160px;">
 							<input type="button" id= "wps_wgm_redeem_coupon" class="button" value="<?php esc_html_e( 'Redeem Coupon', 'woo-gift-cards-lite' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
 							<img class="wps_wgm_coupon_redeem_loader" src="<?php echo esc_html( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>" width="30">
 						</p>
@@ -2582,17 +2582,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( ! empty( $coupon_id ) ) {
 
 					$coupon_amount = $coupon->get_amount();
-					if ( $coupon_amount > 0 ) {
+					if ( $coupon->is_valid() ) {
+						if ( $coupon_amount > 0 ) {
 
-						$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
-						$coupon->set_amount( 0 );
-						$coupon->save();
-						$response['result'] = true;
-						$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
+							$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
+							$coupon->set_amount( 0 );
+							$coupon->save();
+							$response['result'] = true;
+							$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
+						} else {
+
+							$response['result'] = false;
+							$response['msg']    = esc_html__( 'The coupon has already been redeemed', 'woo-gift-cards-lite' );
+						}
 					} else {
-
 						$response['result'] = false;
-						$response['msg']    = esc_html__( 'The coupon has already been redeemed', 'woo-gift-cards-lite' );
+						$response['msg']    = esc_html__( 'Expired Coupon', 'woo-gift-cards-lite' );
 					}
 				} else {
 

@@ -197,7 +197,7 @@ if ( ! wps_uwgc_pro_active() ) {
 							class="wps-wgn-icon-text" title="" target="_blank">
 							<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/Demo.svg" class="wps-info-img"
 								alt="Demo image">
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'Demo', 'woo-giftwps-wgc-nonce-cards-lite' ); ?></span>
+							<span class="wps-wgn-icon-text"><?php esc_html_e( 'DEMO', 'woo-giftwps-wgc-nonce-cards-lite' ); ?></span>
 						</a>
 					</li>
 					<li class="wps_wgm_header_menu_button">
