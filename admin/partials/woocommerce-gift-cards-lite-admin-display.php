@@ -106,6 +106,10 @@ if ( ! wps_uwgc_pro_active() ) {
 			'title' => esc_html__( 'Notification', 'woo-gift-cards-lite' ),
 			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-notification-setting.php',
 		),
+		'rest_api_setting' => array(
+			'title' => esc_html__( 'REST API', 'woo-gift-cards-lite' ),
+			'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-rest-api-setting.php',
+		),
 	);
 }
 ?>
