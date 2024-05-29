@@ -1647,7 +1647,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$link = sprintf(
 								'<a rel="nofollow" href="%s" class="%s">%s</a>',
 								esc_url( get_the_permalink() ),
-								esc_attr( isset( $class ) ? $class : 'button' ),
+								esc_attr( isset( $class ) ? $class : 'button wps_gc_button' ),
 								esc_html( apply_filters( 'wps_wgm_view_card_text', __( 'VIEW CARD', 'woo-gift-cards-lite' ) ) )
 							);
 						}
