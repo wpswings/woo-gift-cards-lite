@@ -1767,6 +1767,21 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		<?php
 	}
 
+	/**
+	 * Hide specific products.
+	 */
+	public function wps_wgm_hide_specific_product_from_backend($query) {
+		// Check if we are in admin and on the products page
+		if (is_admin() && $query->is_main_query() && $query->get('post_type') === 'product') {
+		
+			$excluded_product_id =  get_option( 'contributor_product_id' );
+			$excluded_product_id1 = get_option( 'wps_gccoupon_rechargeable_product_id' );
+
+			// Exclude the specific product from the query
+			$query->set('post__not_in', array($excluded_product_id,$excluded_product_id1));
+		}
+	}
+
 	// PAR compatibility.
 
 	/**
