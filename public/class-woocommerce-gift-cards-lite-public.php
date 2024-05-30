@@ -2664,6 +2664,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		// updating values.
 		update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 		update_user_meta( $user_id, 'points_details', $coupon_redeem_details );
+
+		$wps_wpr_notificatin_array      = get_option( 'wps_wpr_notificatin_array', true );
+        $wps_wpr_notificatin_enable     = isset( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) ? intval( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) : 0;
+
+		if ( 1 == $wps_wpr_notificatin_enable ) {
+			$user = get_user_by( 'id', $user_id );
+			$subject = 'Updated Points Notification';
+			$message = 'Your coupon has been successfully redeemed, ' . $calculated_points . ' points are successfully added to your account. Your Points are updated to ' . $updated_points;
+			
+			wc_mail( $user->user_email, $subject, $message );
+		}
+		
 	}
 
 	/**
