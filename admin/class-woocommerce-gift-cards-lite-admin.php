@@ -1798,8 +1798,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				'id'       => 'wps_wgm_enable_coupon_conversion_settings',
 				'type'     => 'checkbox',
 				'class'    => 'input-text',
-				'desc_tip' => __( 'Enable this setting to convert coupons into points.', 'woo-gift-cards-lite' ),
-				'desc'     => __( 'By enabling this setting, users have the ability to redeem their coupons and convert them into points.', 'woo-gift-cards-lite' ),
+				'desc_tip' => __( 'By enabling this setting, users have the ability to redeem their coupons and convert them into points.', 'woo-gift-cards-lite' ),
+				'desc'     => __( 'Enable this to convert coupons amount into points.', 'woo-gift-cards-lite' ),
 			),
 			array(
 				'title'       => __( 'Enter Coupon redeem conversion rate', 'woo-gift-cards-lite' ),
