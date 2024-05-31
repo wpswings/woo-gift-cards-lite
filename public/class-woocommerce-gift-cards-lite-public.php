@@ -2537,7 +2537,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( 'on' === $wps_wgm_enable_coupon_conversion_settings ) {
 			?>
 			<div class="wps_wpr_wallet_conversion_wrap wps_wpr_main_section_all_wrap">
-				<p class="wps_wpr_heading"><?php echo esc_html__( 'Redeem coupon and convert it into Points.', 'woo-gift-cards-lite' ); ?></p>
+				<p class="wps_wpr_heading"><?php echo esc_html__( 'Convert gift coupons into points.', 'woo-gift-cards-lite' ); ?></p>
 				<fieldset class="wps_wpr_each_section">
 					<p>
 						<?php echo esc_html__( 'Coupon Redeem rate : ', 'woo-gift-cards-lite' ); ?>
