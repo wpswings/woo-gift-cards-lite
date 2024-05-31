@@ -198,7 +198,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'wp_ajax_wgm_ajax_callbacks', $plugin_admin, 'wps_wgm_ajax_callbacks' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_wgm_import_template_org', 5, 2 );
 
-		// Hide specific product from product listing page in WooCommerce backend
+		// Hide specific product from product listing page in WooCommerce backend.
 		$this->loader->add_action('pre_get_posts', $plugin_admin, 'wps_wgm_hide_specific_product_from_backend');
 
 		// PAR compatibility.

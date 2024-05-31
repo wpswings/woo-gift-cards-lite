@@ -24,7 +24,7 @@
  * Requires Plugins:  woocommerce
  * WP Tested up to:   6.5.3
  * WP requires at least: 5.5.0
- * WC tested up to:   8.8.3
+ * WC tested up to:   8.9.1
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -357,10 +357,12 @@ if ( $activated ) {
 	
 	add_action( 'admin_notices', 'wps_wgm_new_layout_notice' );
 	
-	/**
-	 * Layout setting .
-	 */
 	if ( ! function_exists( 'wps_wgm_new_layout_notice' ) ) {
+		/**
+		 * Layout setting .
+		 * 
+		 * @since    2.7.0
+		 */
 		function wps_wgm_new_layout_notice() {
 			global $pagenow;
 			$screen = get_current_screen();
@@ -576,10 +578,14 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 }
 
 add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
-/**
- * Notification html.
- */
+
+
 if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
+	/**
+	 * Notification html.
+	 * 
+	 * @since 2.7.0
+	 */
 	function wps_giftcard_notification_plugin_html() {
 
 		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );

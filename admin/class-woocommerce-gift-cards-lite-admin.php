@@ -1769,15 +1769,17 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 	/**
 	 * Hide specific products.
+	 * 
+	 * @param  array $query query variable.
 	 */
 	public function wps_wgm_hide_specific_product_from_backend($query) {
-		// Check if we are in admin and on the products page
+		// Check if we are in admin and on the products page.
 		if (is_admin() && $query->is_main_query() && $query->get('post_type') === 'product') {
 		
 			$excluded_product_id =  get_option( 'contributor_product_id' );
 			$excluded_product_id1 = get_option( 'wps_gccoupon_rechargeable_product_id' );
 
-			// Exclude the specific product from the query
+			// Exclude the specific product from the query.
 			$query->set('post__not_in', array($excluded_product_id,$excluded_product_id1));
 		}
 	}
@@ -1808,12 +1810,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					array(
 						'id'    => 'wps_wgm_enter_price_rate',
 						'type'  => 'number',
+						'custom_attribute' => array(
+							'min' => '"1"',
+						),
 						'class' => 'input-text',
 						'curr'  => get_woocommerce_currency_symbol(),
 					),
 					array(
 						'id'    => 'wps_wgm_enter_points_rate',
 						'type'  => 'number',
+						'custom_attribute' => array(
+							'min' => '"1"',
+						),
 						'class' => 'input-text',
 						'desc'  => __( ' Points ', 'woo-gift-cards-lite' ),
 					),
