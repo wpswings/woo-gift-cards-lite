@@ -6,7 +6,7 @@ Requires at least: 5.1.0
 Tested up to: 6.5.3
 WC requires at least: 5.5.0
 WC tested up to: 8.9.1
-Stable tag:  2.7.0
+Stable tag:  3.0.0
 Requires PHP: 5.6
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -237,6 +237,14 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 2.6.10 - Released on 09 January 2024 = 
+* New: Compatibility with latest WP(6.5.3) and WC(8.9.1)
+* New: Compatibility with Subscription For WooCommerce.
+* New: Compatibility with Subscription For WooCommerce Pro.
+* New: Compatibility with Points and Rewards for WooCommerce.
+* New: Compatibility with Points and Rewards for WooCommerce Pro.
+* Fix: New Layout Notice Issue Fix.
 
 = 2.6.10 - Released on 09 January 2024 = 
 * New: Add Class ".wps_check_balance .button", for Customised Balance Check button
