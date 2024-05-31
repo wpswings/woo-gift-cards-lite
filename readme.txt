@@ -238,7 +238,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 2.6.10 - Released on 09 January 2024 = 
+= 3.0.0 - Released on 31 May 2024 = 
 * New: Compatibility with latest WP(6.5.3) and WC(8.9.1)
 * New: Compatibility with Subscription For WooCommerce.
 * New: Compatibility with Subscription For WooCommerce Pro.
