@@ -228,12 +228,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$wps_wgm_check_balance = array(
 				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
-
+				'empty_msg'       => esc_html__( 'Fields cannot be empty!', 'woo-gift-cards-lite' ), // PAR Compatibility.
 			);
 
-					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
-					wp_localize_script( $this->plugin_name, 'wps_wgm_check_balance', $wps_wgm_check_balance );
-					wp_enqueue_script( $this->plugin_name );
+			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
+			wp_localize_script( $this->plugin_name, 'wps_wgm_check_balance', $wps_wgm_check_balance );
+			wp_enqueue_script( $this->plugin_name );
 		}
 	}
 	/**
@@ -1647,7 +1647,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$link = sprintf(
 								'<a rel="nofollow" href="%s" class="%s">%s</a>',
 								esc_url( get_the_permalink() ),
-								esc_attr( isset( $class ) ? $class : 'button' ),
+								esc_attr( isset( $class ) ? $class : 'button wps_gc_button' ),
 								esc_html( apply_filters( 'wps_wgm_view_card_text', __( 'VIEW CARD', 'woo-gift-cards-lite' ) ) )
 							);
 						}
@@ -2148,6 +2148,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$coupon_id  = $the_coupon->get_id();
 			$orderid    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 			if ( isset( $orderid ) && ! empty( $orderid ) ) {
+				if ( apply_filters( 'wps_wgm_subscription_renewal_order_coupon', false, $order_id, $the_coupon ) ) {
+					return;
+				}
 				if ( ! wps_wgm_hpos_get_meta_data( $order_id, 'coupon_used', true ) ) {
 					$coupon_used = 'yes';
 					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
@@ -2515,4 +2518,209 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 
 	}
+
+	// PAR Compatibility.
+
+	/**
+	 * This function is used to display coupon redeem option on My Account page.
+	 *
+	 * @param  int $user_id user_id.
+	 * @return void
+	 */
+	public function wps_wgm_coupon_redeem_option( $user_id ) {
+
+		$wps_wgm_other_settings                    = get_option( 'wps_wgm_other_settings', array() );
+		$wps_wgm_other_settings                    = ! empty( $wps_wgm_other_settings ) && is_array( $wps_wgm_other_settings ) ? $wps_wgm_other_settings : array();
+		$wps_wgm_enable_coupon_conversion_settings = ! empty( $wps_wgm_other_settings['wps_wgm_enable_coupon_conversion_settings'] ) ? $wps_wgm_other_settings['wps_wgm_enable_coupon_conversion_settings'] : 'off';
+		$wps_wgm_enter_points_rate                 = ! empty( $wps_wgm_other_settings['wps_wgm_enter_points_rate'] ) ? $wps_wgm_other_settings['wps_wgm_enter_points_rate'] : 1;
+		$wps_wgm_enter_price_rate                  = ! empty( $wps_wgm_other_settings['wps_wgm_enter_price_rate'] ) ? $wps_wgm_other_settings['wps_wgm_enter_price_rate'] : 1;
+		if ( 'on' === $wps_wgm_enable_coupon_conversion_settings ) {
+			?>
+			<div class="wps_wpr_wallet_conversion_wrap wps_wpr_main_section_all_wrap">
+				<p class="wps_wpr_heading"><?php echo esc_html__( 'Convert gift coupons into points.', 'woo-gift-cards-lite' ); ?></p>
+				<fieldset class="wps_wpr_each_section">
+					<p>
+						<?php echo esc_html__( 'Coupon Redeem rate : ', 'woo-gift-cards-lite' ); ?>
+						<?php echo wp_kses( wc_price( $wps_wgm_enter_price_rate ), $this->wps_common_fun->wps_allowed_html_tags() ) . ' = ' . esc_html( $wps_wgm_enter_points_rate ) . esc_html__( ' Points', 'woo-gift-cards-lite' ); ?>
+					</p>
+					<form id="points_wallet" enctype="multipart/form-data" action="" method="post">
+						<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+							<label for="wps_custom_wallet_text">
+								<?php esc_html_e( 'Enter your Coupon :', 'woo-gift-cards-lite' ); ?>
+							</label>
+						</p>
+						<p class="wps-wpr_enter-points-wrap">
+							<input type="text" placeholder="<?php esc_html_e( 'Enter Coupon', 'woo-gift-cards-lite' ); ?>" class="woocommerce-Input woocommerce-Input--number input-number" id="wps_wgm_coupon_redeem_value" style="width: 160px;">
+							<input type="button" id= "wps_wgm_redeem_coupon" class="button" value="<?php esc_html_e( 'Redeem Coupon', 'woo-gift-cards-lite' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
+							<img class="wps_wgm_coupon_redeem_loader" src="<?php echo esc_html( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>" width="30">
+						</p>
+						<div id="wps_wgm_coupon_redeem_notify"></div>
+					</form>
+				</fieldset>
+			</div>
+			<?php
+		}
+	}
+
+	/**
+	 * This function is used to redeem coupon amount.
+	 *
+	 * @return void
+	 */
+	public function wps_wgm_redeem_gift_card_coupon() {
+		check_ajax_referer( 'wps-wgc-verify-nonce-check', 'wps_wgm_nonce_check' );
+
+		$user_id     = get_current_user_id();
+		$coupon_code = ! empty( $_POST['coupon_code'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) ) : '';
+		$response    = array();
+		if ( ! empty( $coupon_code ) && ! empty( $user_id ) ) {
+
+			$coupon = new WC_Coupon( $coupon_code );
+			if ( ! empty( $coupon ) && is_object( $coupon ) ) {
+
+				$coupon_id = $coupon->get_id();
+				if ( ! empty( $coupon_id ) ) {
+
+					$coupon_amount = $coupon->get_amount();
+					if ( $coupon->is_valid() ) {
+						if ( $coupon_amount > 0 ) {
+
+							$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
+							$coupon->set_amount( 0 );
+							$coupon->save();
+							do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, 0 );
+							$response['result'] = true;
+							$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
+						} else {
+
+							$response['result'] = false;
+							$response['msg']    = esc_html__( 'The coupon has already been redeemed', 'woo-gift-cards-lite' );
+						}
+					} else {
+						$response['result'] = false;
+						$response['msg']    = esc_html__( 'Expired Coupon', 'woo-gift-cards-lite' );
+					}
+				} else {
+
+					$response['result'] = false;
+					$response['msg']    = esc_html__( 'Invalid Coupon', 'woo-gift-cards-lite' );
+				}
+			} else {
+
+				$response['result'] = false;
+				$response['msg']    = esc_html__( 'Invalid Coupon', 'woo-gift-cards-lite' );
+			}
+		} else {
+
+			$response['result'] = false;
+			$response['msg']    = esc_html__( 'Please enter values', 'woo-gift-cards-lite' );
+		}
+		wp_send_json( $response );
+		wp_die();
+	}
+
+	/**
+	 * This function is used to rewards points to user.
+	 *
+	 * @param int    $user_id       user_id.
+	 * @param int    $coupon_amount coupon_amount.
+	 * @param object $coupon        coupon.
+	 * @return void
+	 */
+	public function wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon ) {
+
+		// get conversion rate.
+		$wps_wgm_other_settings    = get_option( 'wps_wgm_other_settings', array() );
+		$wps_wgm_other_settings    = ! empty( $wps_wgm_other_settings ) && is_array( $wps_wgm_other_settings ) ? $wps_wgm_other_settings : array();
+		$wps_wgm_enter_points_rate = ! empty( $wps_wgm_other_settings['wps_wgm_enter_points_rate'] ) ? $wps_wgm_other_settings['wps_wgm_enter_points_rate'] : 1;
+		$wps_wgm_enter_price_rate  = ! empty( $wps_wgm_other_settings['wps_wgm_enter_price_rate'] ) ? $wps_wgm_other_settings['wps_wgm_enter_price_rate'] : 1;
+
+		// get points and details.
+		$get_points            = get_user_meta( $user_id, 'wps_wpr_points', true );
+		$get_points            = ! empty( $get_points ) ? $get_points : 0;
+		$coupon_redeem_details = get_user_meta( $user_id, 'points_details', true );
+		$coupon_redeem_details = ! empty( $coupon_redeem_details ) && is_array( $coupon_redeem_details ) ? $coupon_redeem_details : array();
+		$calculated_points     = (int) ( $coupon_amount * $wps_wgm_enter_points_rate / $wps_wgm_enter_price_rate );
+		$updated_points        = (int) $get_points + $calculated_points;
+
+		if ( isset( $coupon_redeem_details['gift_coupon_redeem_details'] ) && ! empty( $coupon_redeem_details['gift_coupon_redeem_details'] ) ) {
+
+			$arr = array(
+				'date'                       => date_i18n( 'Y-m-d h:i:sa' ),
+				'gift_coupon_redeem_details' => $calculated_points,
+				'coupon_name'                => $coupon->get_code(),
+			);
+			$coupon_redeem_details['gift_coupon_redeem_details'][] = $arr;
+		} else {
+
+			$arr = array(
+				'date'                       => date_i18n( 'Y-m-d h:i:sa' ),
+				'gift_coupon_redeem_details' => $calculated_points,
+				'coupon_name'                => $coupon->get_code(),
+			);
+			$coupon_redeem_details['gift_coupon_redeem_details'][] = $arr;
+		}
+
+		// updating values.
+		update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+		update_user_meta( $user_id, 'points_details', $coupon_redeem_details );
+
+		$wps_wpr_notificatin_array      = get_option( 'wps_wpr_notificatin_array', true );
+        $wps_wpr_notificatin_enable     = isset( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) ? intval( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) : 0;
+
+		if ( 1 == $wps_wpr_notificatin_enable ) {
+			$user = get_user_by( 'id', $user_id );
+			$subject = 'Updated Points Notification';
+			$message = 'Your coupon has been successfully redeemed, ' . $calculated_points . ' points are successfully added to your account. Your Points are updated to ' . $updated_points;
+			
+			wc_mail( $user->user_email, $subject, $message );
+		}
+		
+	}
+
+	/**
+	 * This function is used to create coupon redeem log on user end.
+	 *
+	 * @param  array $point_log point_log.
+	 * @return void
+	 */
+	public function wps_wgm_user_end_points_log( $point_log ) {
+
+		if ( array_key_exists( 'gift_coupon_redeem_details', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Gift Coupon Redeem Points', 'woo-gift-cards-lite' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<div class="wps_wpr_points_view">
+					<table class="wps_wpr_common_table">
+						<thead>
+							<tr>
+								<th class="wps-wpr-view-log-Date">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'woo-gift-cards-lite' ); ?></span>
+								</th>
+								<th class="wps-wpr-view-log-Status">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'woo-gift-cards-lite' ); ?></span>
+								</th>
+								<th class="wps-wpr-view-log-Status">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Coupon Name', 'woo-gift-cards-lite' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php
+						foreach ( $point_log['gift_coupon_redeem_details'] as $key => $value ) {
+							?>
+							<tr>
+								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+								<td><?php echo '+' . esc_html( $value['gift_coupon_redeem_details'] ); ?></td>
+								<td><?php echo esc_html( $value['coupon_name'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table>
+				</div>
+			</div>
+			<?php
+		}
+	}
+
 }

@@ -1766,5 +1766,116 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		 </div>
 		<?php
 	}
+
+	/**
+	 * Hide specific products.
+	 * 
+	 * @param  array $query query variable.
+	 */
+	public function wps_wgm_hide_specific_product_from_backend($query) {
+		// Check if we are in admin and on the products page.
+		if (is_admin() && $query->is_main_query() && $query->get('post_type') === 'product') {
+		
+			$excluded_product_id =  get_option( 'contributor_product_id' );
+			$excluded_product_id1 = get_option( 'wps_gccoupon_rechargeable_product_id' );
+
+			// Exclude the specific product from the query.
+			$query->set('post__not_in', array($excluded_product_id,$excluded_product_id1));
+		}
+	}
+
+	// PAR compatibility.
+
+	/**
+	 * This function is used create setting for coupon redeem in PAR.
+	 *
+	 * @param  array $other_settings other_settings.
+	 * @return array
+	 */
+	public function wps_wgm_par_compatibility_settings( $other_settings ) {
+
+		$add_settings   = array(
+			array(
+				'title'    => __( 'Convert Coupon into Points', 'woo-gift-cards-lite' ),
+				'id'       => 'wps_wgm_enable_coupon_conversion_settings',
+				'type'     => 'checkbox',
+				'class'    => 'input-text',
+				'desc_tip' => __( 'By enabling this setting, users have the ability to redeem their coupons and convert them into points.', 'woo-gift-cards-lite' ),
+				'desc'     => __( 'Enable this to convert coupons amount into points.', 'woo-gift-cards-lite' ),
+			),
+			array(
+				'title'       => __( 'Enter Coupon redeem conversion rate', 'woo-gift-cards-lite' ),
+				'type'        => 'number_text',
+				'number_text' => array(
+					array(
+						'id'    => 'wps_wgm_enter_price_rate',
+						'type'  => 'number',
+						'custom_attribute' => array(
+							'min' => '"1"',
+						),
+						'class' => 'input-text',
+						'curr'  => get_woocommerce_currency_symbol(),
+					),
+					array(
+						'id'    => 'wps_wgm_enter_points_rate',
+						'type'  => 'number',
+						'custom_attribute' => array(
+							'min' => '"1"',
+						),
+						'class' => 'input-text',
+						'desc'  => __( ' Points ', 'woo-gift-cards-lite' ),
+					),
+				),
+			),
+		);
+		$other_settings = array_merge( $other_settings, $add_settings );
+		return $other_settings;
+	}
+
+	/**
+	 * This function is used to create coupon redeem log on admin end.
+	 *
+	 * @param  array $point_log point_log.
+	 * @return void
+	 */
+	public function wps_wgm_admin_end_points_log( $point_log ) {
+
+		if ( array_key_exists( 'gift_coupon_redeem_details', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Gift Coupon Redeem Points', 'woo-gift-cards-lite' ); ?>
+					<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+				</p>
+				<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+						<thead>
+							<tr valign="top">
+								<th scope="row" class="wps_wpr_head_titledesc">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'woo-gift-cards-lite' ); ?></span>
+								</th>
+								<th scope="row" class="wps_wpr_head_titledesc">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'woo-gift-cards-lite' ); ?></span>
+								</th>
+								<th scope="row" class="wps_wpr_head_titledesc">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Coupon Name.', 'woo-gift-cards-lite' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php
+						foreach ( $point_log['gift_coupon_redeem_details'] as $key => $value ) {
+							?>
+							<tr valign="top">
+								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+								<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['gift_coupon_redeem_details'] ); ?> </td>
+								<td class="forminp forminp-text"><?php echo esc_html( $value['coupon_name'] ); ?> </td>
+							</tr>
+							<?php
+						}
+						?>
+				</table>
+			</div>
+			<?php
+		}
+	}
+
 }
 ?>

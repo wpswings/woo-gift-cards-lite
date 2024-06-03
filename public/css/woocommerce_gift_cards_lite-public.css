@@ -248,3 +248,14 @@ input#gift_card_balance_email {
 .wps_wgm_wrapper_for_preview h2 span {
   font-weight: 600;
 }
+
+/* PAR Compatibility. */
+
+.wps_wgm_coupon_redeem_loader {
+  display: none;
+  vertical-align: middle;
+}
+
+#wps_wgm_coupon_redeem_notify {
+  display: none;
+}

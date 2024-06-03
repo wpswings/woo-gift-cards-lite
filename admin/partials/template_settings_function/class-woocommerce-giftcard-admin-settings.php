@@ -495,6 +495,21 @@ class Woocommerce_Giftcard_Admin_Settings {
 							$this->wps_wgm_generate_text_with_description( $value, $saved_settings );
 						} elseif ( 'textarea' == $value['type'] ) {
 							$this->wps_wgm_generate_textarea_html( $value, $saved_settings );
+							// PAR compatibility.
+						} elseif ( 'number_text' == $value['type'] ) {
+							?>
+							<div class="wps_wgm_par_parent_wrapper">
+								<?php
+								foreach ( $value['number_text'] as $k => $val ) {
+									if ( 'number' == $val['type'] ) {
+
+										$this->wps_wgm_generate_number_html( $val, $saved_settings );
+										echo isset( $val['curr'] ) ? esc_html( $val['curr'] . ' = ' ) : '';
+									}
+								}
+								?>
+							</div>
+							<?php
 						}
 						do_action( 'wps_wgm_admin_setting_fields_html', $value, $saved_settings );
 						?>
@@ -638,5 +653,41 @@ class Woocommerce_Giftcard_Admin_Settings {
 			'<br>'  => array(),
 		);
 		return $allowed_tags;
+	}
+
+	/**
+	 * Show admin notices.
+	 *
+	 * @param  string $uwgc_message    Message to display.
+	 * @param  string $type       notice type, accepted values - error/update/update-nag.
+	 * @since  1.0.0
+	 */
+	public function wps_uwgc_plug_admin_notice( $uwgc_message, $type = 'error' ) {
+
+		$uwgc_classes = 'notice ';
+
+		switch ( $type ) {
+
+			case 'update':
+				$uwgc_classes .= 'updated is-dismissible';
+				break;
+
+			case 'update-nag':
+				$uwgc_classes .= 'update-nag is-dismissible';
+				break;
+
+			case 'success':
+				$uwgc_classes .= 'notice-success is-dismissible';
+				break;
+
+			default:
+				$uwgc_classes .= 'notice-error is-dismissible';
+		}
+
+		$uwgc_notice  = '<div class="' . esc_attr( $uwgc_classes ) . ' wps-errorr-8">';
+		$uwgc_notice .= '<p>' . esc_html( $uwgc_message ) . '</p>';
+		$uwgc_notice .= '</div>';
+
+		echo wp_kses_post( $uwgc_notice );
 	}
 }
