@@ -2508,9 +2508,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 				$html .= '<div class="wps_wgm_wrapper_for_preview"> 
 					  <h2>' . $prod_title . '<span>' . get_woocommerce_currency_symbol() . '<span id="wps_wgm_price_preview"></span></span></h2>			
-					  <p > From : <span class="wps_text_style" id="wps_from_preview"> xyz test</span> </p>
-					  <p > To : <span class="wps_text_style" id="wps_to_preview">xyz@gmail.com</span></p> 
-					  <p > Message : <span class="wps_text_style" id="wps_message_preview">Write your message gift card receiver</span></p>
+					  <p >' . __( 'From', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_from_preview"> ' . __( 'xyz test', 'woo-gift-cards-lite' ) . '</span> </p>
+					  <p >' . __( 'To', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_to_preview">' . __( 'xyz@gmail.com', 'woo-gift-cards-lite' ) . '</span></p> 
+					  <p >' . __( 'Message', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_message_preview">' . __( 'Write your message gift card receiver', 'woo-gift-cards-lite' ) . '</span></p>
 				</div>';
 
 			}
