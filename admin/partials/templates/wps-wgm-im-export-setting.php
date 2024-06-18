@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-							$attribute_description = __( 'You can export CSV report of all the generated coupons from the orders.', 'giftware' );
+							$attribute_description = __( 'You can export CSV report of all the generated coupons from the orders.', 'woo-gift-cards-lite' );
 							echo wp_kses_post( wc_help_tip( $attribute_description ) );
 						?>
 						<a href="admin.php?page=wps-wgc-setting-lite&amp;wps_wugc_export_csv=wps_woo_gift_card_report"
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-							$attribute_description = __( 'You can export all the offline generated coupons from the orders.', 'giftware' );
+							$attribute_description = __( 'You can export all the offline generated coupons from the orders.', 'woo-gift-cards-lite' );
 							echo wp_kses_post( wc_help_tip( $attribute_description ) );
 						?> <a
 							href="admin.php?page=wps-wgc-setting-lite&amp;wps_wugc_export_csv=wps_woo_offline_gift_card_report"

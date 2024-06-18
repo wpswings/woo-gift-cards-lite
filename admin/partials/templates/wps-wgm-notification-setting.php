@@ -20,7 +20,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_share_pdf_link">Enable PDF Link</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_share_pdf_link">
+                            <?php
+                                $attribute_description = __( 'Check this box to enable pdf link sharing', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_share_pdf_link">
                                 <input type="checkbox" name="wps_wgm_share_pdf_link" id="wps_wgm_share_pdf_link"
                                     class="input-text"> Enable PDF Link Sharing ( First you have to enable pdf feature
                                 in other setting tab ) </label>
@@ -32,7 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_share_on_whatsapp">Enable Whatsapp Sharing</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_share_on_whatsapp">
+                            <?php
+                                $attribute_description = __( 'Check this box to enable WhatsApp sharing', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_share_on_whatsapp">
                                 <input type="checkbox" name="wps_wgm_share_on_whatsapp" id="wps_wgm_share_on_whatsapp"
                                     class="input-text"> Enable Whatsapp Sharing Notification </label>
 
@@ -43,7 +49,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_whatsapp_message">Message Content</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <span class="description"></span>
+                            <?php
+                                $attribute_description = __( 'Write the message you want to send to the user', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <span class="description"></span>
                             <label for="wps_wgm_general_text_points" class="wps_wgm_label">
                                 <textarea rows="7" name="wps_wgm_whatsapp_message" id="wps_wgm_whatsapp_message"
                                     class="input-text">Hello [TO],
@@ -63,7 +72,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_enable_sms_notification">Enable SMS Notification</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_enable_sms_notification">
+                            <?php
+                                $attribute_description = __( 'Check this box to enable SMS Notification', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_enable_sms_notification">
                                 <input type="checkbox" name="wps_wgm_enable_sms_notification"
                                     id="wps_wgm_enable_sms_notification" class="input-text"> Enable SMS Notification on
                                 Phone </label>

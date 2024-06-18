@@ -79,7 +79,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</th>
 								<td class="forminp forminp-text">
 										<?php
-											$attribute_description = __( 'Select the Gift card product.', 'giftware' );
+											$attribute_description = __( 'Select the Gift card product.', 'woo-gift-cards-lite' );
 											echo wp_kses_post( wc_help_tip( $attribute_description ) );
 										?><label
 										for="wps_wgm_offline_gift_template">

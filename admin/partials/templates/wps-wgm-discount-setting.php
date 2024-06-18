@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wps_wgm_content_template_pro_tag">
     <h3 class="wps_wgm_overview_heading wps_wgm_heading">Discount Settings</h3>
-    <div class="wps_wgm_table_wrapper">
+    <!-- <div class="wps_wgm_table_wrapper"> -->
         <div class="wps_table">
             <table class="form-table wps_wgm_general_setting">
                 <tbody>
@@ -20,7 +20,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_discount_enable">Enable Discount on Gift Card Products</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_discount_enable">
+                            <?php
+                                $attribute_description = __( 'Check this box to enable Discount for Gift card Products', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_discount_enable">
                                 <input type="checkbox" name="wps_wgm_discount_enable" id="wps_wgm_discount_enable"
                                     class="input-text"> Enable Discount on Gift card Products </label>
 
@@ -31,7 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_discount_type">Select Discount Type</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <select name="wps_wgm_discount_type"
+                            <?php
+                                $attribute_description = __( 'Choose the Discount Type for Gift Card Products', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <select name="wps_wgm_discount_type"
                                 class="wps_wgm_new_woo_ver_style_select">
                                 <option value="Fixed" selected="selected">Fixed</option>
                                 <option value="Percentage">Percentage</option>
@@ -65,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </tbody>
             </table>
         </div>
-    </div>
+    <!-- </div> -->
     <p class="submit">
         <input type="submit" value="Save changes" class="wps_wgm_save_button" name="wps_uwgc_save_discount"
             id="wps_uwgc_save_discount">
