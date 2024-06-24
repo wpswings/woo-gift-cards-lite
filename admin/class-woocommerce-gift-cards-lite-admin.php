@@ -1811,7 +1811,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						'id'    => 'wps_wgm_enter_price_rate',
 						'type'  => 'number',
 						'custom_attribute' => array(
-							'min' => '"1"',
+							'min' => '"0"',
 						),
 						'class' => 'input-text',
 						'curr'  => get_woocommerce_currency_symbol(),
@@ -1820,7 +1820,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						'id'    => 'wps_wgm_enter_points_rate',
 						'type'  => 'number',
 						'custom_attribute' => array(
-							'min' => '"1"',
+							'min' => '"0"',
 						),
 						'class' => 'input-text',
 						'desc'  => __( ' Points ', 'woo-gift-cards-lite' ),
