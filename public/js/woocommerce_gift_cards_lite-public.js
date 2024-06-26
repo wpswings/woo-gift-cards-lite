@@ -50,7 +50,12 @@
 			}
 
 			$('#wps_wgm_price').keyup(function() {
-				this.value = this.value.replace(/[^0-9]/g, '');
+				if ( ',' == wps_wgm.decimal_separator ) {
+					this.value = this.value.replace(/[^0-9,]/g, '');
+				} else {
+					this.value = this.value.replace(/[^0-9.]/g, '');
+				}
+
 				var price = parseInt(this.value);
 				if ( wps_wgm.pricing_type.type == 'wps_wgm_user_price' && price < wps_wgm.pricing_type.min_user_price ) {
 					jQuery('.wps_wgm_min_user_price').show();
@@ -339,11 +344,12 @@
 						}
 
 						if (product_type == "wps_wgm_range_price" || product_type == "wps_wgm_selected_with_price_range") {
-							var from = parseInt( wps_wgm.pricing_type.from );
-							var to = parseInt( wps_wgm.pricing_type.to );
+							var from = wps_wgm.pricing_type.from.replace(',', '.');
+							var to = wps_wgm.pricing_type.to .replace( ',','.');
+							var from = parseFloat( from );
+							var to = parseFloat( to );
 
-							to = parseFloat( to );
-							from = parseFloat( from );
+							var price = price.replace(',','.');
 							price = parseFloat( price );
 
 							if (price > to || price < from) {
@@ -511,10 +517,12 @@
 					}
 
 					if (product_type == "wps_wgm_range_price" || product_type == "wps_wgm_selected_with_price_range") {
-						var from = wps_wgm.pricing_type.from;
-						var to = wps_wgm.pricing_type.to;
-						to = parseFloat( to );
-						from = parseFloat( from );
+						var from = wps_wgm.pricing_type.from.replace(',', '.');
+						var to = wps_wgm.pricing_type.to .replace( ',','.');
+						var from = parseFloat( from );
+						var to = parseFloat( to );
+
+						var price = price.replace(',','.');
 						price = parseFloat( price );
 
 						if (price > to || price < from) {

@@ -158,6 +158,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
 					'is_tax_enable_for_gift' => $giftcard_tax_cal_enable,
 					'wps_wgm_nonce'          => wp_create_nonce( 'wps-wgm-verify-nonce' ),
+					'decimal_separator'      => get_option( 'woocommerce_price_decimal_sep' ),
 				);
 				$url     = plugins_url();
 				wp_enqueue_script( 'wps_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), $this->version, true );
@@ -361,7 +362,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'value'       => "$default_price",
 					'label'       => __( 'Default Price', 'woo-gift-cards-lite' ),
 					'placeholder' => wc_format_localized_price( 0 ),
-					'description' => __( 'Gift card default price.', 'woo-gift-cards-lite' ),
+					'description' => __( 'Gift card default price. if you are using Price range pricing type then try to add default price in between from and to range', 'woo-gift-cards-lite' ),
 					'data_type'   => 'price',
 					'desc_tip'    => true,
 				)

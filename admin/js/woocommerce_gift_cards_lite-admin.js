@@ -451,6 +451,37 @@
 			);
 
 			/*=====  End of Sticky-Sidebar  ======*/
+
+			// selected price validation.
+
+			// Regex pattern to allow only numbers and |
+			if ( ',' == wps_wgc.decimal_separator ) {
+				var regexPattern = /^[0-9,|]*$/;
+			} else {
+				var regexPattern = /^[0-9.|]*$/;
+			}
+
+			$('#wps_wgm_selected_price').on('input', function() {
+				var value = $(this).val();
+				if (!regexPattern.test(value)) {
+					alert('Please enter only numbers and |');
+					// Remove the last entered character
+					$(this).val(value.slice(0, -1));
+				}
+			});
+
+			// validation for from price and to price.
+			$('#wps_wgm_from_price, #wps_wgm_to_price').on('change', function() {
+                var fromPrice = parseFloat($('#wps_wgm_from_price').val());
+                var toPrice = parseFloat($('#wps_wgm_to_price').val());
+
+                if (fromPrice > toPrice) {
+                    alert('The "From Price" should be lower than the "To Price". Please correct the values.');
+                    // Clear the input fields or set default values
+                    $('#wps_wgm_from_price').val('');
+                    $('#wps_wgm_to_price').val('');
+                }
+            });
 		}
 	);
 })( jQuery );
