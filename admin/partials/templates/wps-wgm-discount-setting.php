@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wps_wgm_content_template_pro_tag">
     <h3 class="wps_wgm_overview_heading wps_wgm_heading">Discount Settings</h3>
-    <!-- <div class="wps_wgm_table_wrapper"> -->
         <div class="wps_table">
             <table class="form-table wps_wgm_general_setting">
                 <tbody>
@@ -71,7 +70,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </tbody>
             </table>
         </div>
-    <!-- </div> -->
     <p class="submit">
         <input type="submit" value="Save changes" class="wps_wgm_save_button" name="wps_uwgc_save_discount"
             id="wps_uwgc_save_discount">
