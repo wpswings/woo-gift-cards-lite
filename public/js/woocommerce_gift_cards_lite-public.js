@@ -45,7 +45,7 @@
 			}
 
 			function wps_wgm_is_email(email) {
-				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				var regex = /^[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 				return regex.test(email);
 			}
 
@@ -231,7 +231,7 @@
 						var product_type = wps_wgm.pricing_type.type;
 						var html = "";
 						var to_mail = '';
-						var mailformat = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+						var mailformat = /^[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 						html = "<ul>";
 
 						var delivery_method = jQuery( document ).find( 'input[name="wps_wgm_send_giftcard"]:checked' ).val();
@@ -413,7 +413,7 @@
 					var price = $( "#wps_wgm_price" ).val();
 					var error = false;
 					var product_type = wps_wgm.pricing_type.type;
-					var mailformat = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+					var mailformat = /^[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 					var to_mail = '';
 					var send_date = '';
 					var html = "<ul>";
