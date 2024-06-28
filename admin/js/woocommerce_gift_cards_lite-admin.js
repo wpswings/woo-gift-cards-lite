@@ -482,6 +482,15 @@
                     $('#wps_wgm_to_price').val('');
                 }
             });
+
+			$('#wps_wgm_min_user_price').on('change', function() {
+				var default_price = parseFloat( $('#wps_wgm_default').val() );
+				var min_user_price = parseFloat( $('#wps_wgm_min_user_price').val() );
+				if ( default_price < min_user_price ) {
+					alert('Please enter Minimum price smaller than Default price so that default price will be considered.');
+					$('#wps_wgm_min_user_price').val('');
+				}
+			});
 		}
 	);
 })( jQuery );
