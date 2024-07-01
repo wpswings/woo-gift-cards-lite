@@ -25,7 +25,7 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 [**WordPress Gift Cards Demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-page&utm_campaign=demo) | [**Gift Cards Documentation**](https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-page&utm_campaign=giftcards-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-giftcards&utm_medium=giftcards-org-page&utm_campaign=contact-us)
 
-[youtube https://www.youtube.com/watch?v=YgPLO8HDGtc&w=560&h=315&rel=0]
+[youtube https://youtu.be/g6JLA3ewph8]
 
 == KEY FEATURES OF FREE GIFT CARDS FOR WOOCOMMERCE PLUGIN ==
 
@@ -96,9 +96,9 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 **7)** Compatibility with [**Points and Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) and [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-giftcards-product&utm_medium=giftcard-org-page&utm_campaign=par-pro) to Convert your coupon amount into points
 
-**7)** WPML Multilingual Support: The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
+**8)** WPML Multilingual Support: The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
-**8)** The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
+**9)** The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
 
 
 == WHAT PREMIUM VERSION VERSION OF WOOCOMMERCE GIFT CARDS OFFERS ==
@@ -222,6 +222,10 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.0.1 - Released on 01 July 2024 = 
+* New : Latest compatible with WP(6.5.5) and WC(9.0.2) 
+* New : Minor Bug Fixes
 
 = 3.0.0 - Released on 31 May 2024 =
 * New : Compatibility with [**Subscription For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**Subscription For WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcard-org-changelog&utm_campaign=subs-pro)
@@ -459,8 +463,6 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.0.0 - Released on 31 May 2024 =
-* New : Compatibility with [**Subscription For WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**Subscription For WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcard-org-changelog&utm_campaign=subs-pro)
-* New : Compatibility with [**Points and Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) and [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-giftcards-product&utm_medium=giftcard-org-changelog&utm_campaign=par-pro)
-* New : Compatible with latest WP(6.5.3) and WC(8.9.1)
-* Fix : Layout Notice Issue Fix.
+= 3.0.1 - Released on 01 July 2024 = 
+* New : Latest compatible with WP(6.5.5) and WC(9.0.2) 
+* New : Minor Bug Fixes
