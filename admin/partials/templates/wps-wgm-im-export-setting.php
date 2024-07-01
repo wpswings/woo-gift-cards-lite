@@ -19,8 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<label for="wps_wugc_export_coupon">Export Online Coupons Details</label>
 					</th>
 					<td class="forminp forminp-text">
-						<span class="woocommerce-help-tip"
-							aria-label="You can export CSV report of all the generated coupons from the orders."></span>
+						<?php
+							$attribute_description = __( 'You can export CSV report of all the generated coupons from the orders.', 'woo-gift-cards-lite' );
+							echo wp_kses_post( wc_help_tip( $attribute_description ) );
+						?>
 						<a href="admin.php?page=wps-wgc-setting-lite&amp;wps_wugc_export_csv=wps_woo_gift_card_report"
 							class="wps_wgm_small_button" target="_blank">Export CSV </a>
 					</td>
@@ -30,8 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<label for="wps_wugc_export_coupon">Export Offline Coupons Details</label>
 					</th>
 					<td class="forminp forminp-text">
-						<span class="woocommerce-help-tip"
-							aria-label="You can export all the offline generated coupons from the orders."></span> <a
+						<?php
+							$attribute_description = __( 'You can export all the offline generated coupons from the orders.', 'woo-gift-cards-lite' );
+							echo wp_kses_post( wc_help_tip( $attribute_description ) );
+						?> <a
 							href="admin.php?page=wps-wgc-setting-lite&amp;wps_wugc_export_csv=wps_woo_offline_gift_card_report"
 							class="wps_wgm_small_button" target="_blank">Export CSV </a>
 					</td>

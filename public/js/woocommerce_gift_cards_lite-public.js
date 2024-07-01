@@ -45,12 +45,17 @@
 			}
 
 			function wps_wgm_is_email(email) {
-				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				var regex = /^[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 				return regex.test(email);
 			}
 
 			$('#wps_wgm_price').keyup(function() {
-				this.value = this.value.replace(/[^0-9]/g, '');
+				if ( ',' == wps_wgm.decimal_separator ) {
+					this.value = this.value.replace(/[^0-9,]/g, '');
+				} else {
+					this.value = this.value.replace(/[^0-9.]/g, '');
+				}
+
 				var price = parseInt(this.value);
 				if ( wps_wgm.pricing_type.type == 'wps_wgm_user_price' && price < wps_wgm.pricing_type.min_user_price ) {
 					jQuery('.wps_wgm_min_user_price').show();
@@ -226,7 +231,7 @@
 						var product_type = wps_wgm.pricing_type.type;
 						var html = "";
 						var to_mail = '';
-						var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
+						var mailformat = /^[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 						html = "<ul>";
 
 						var delivery_method = jQuery( document ).find( 'input[name="wps_wgm_send_giftcard"]:checked' ).val();
@@ -339,11 +344,12 @@
 						}
 
 						if (product_type == "wps_wgm_range_price" || product_type == "wps_wgm_selected_with_price_range") {
-							var from = parseInt( wps_wgm.pricing_type.from );
-							var to = parseInt( wps_wgm.pricing_type.to );
+							var from = wps_wgm.pricing_type.from.replace(',', '.');
+							var to = wps_wgm.pricing_type.to .replace( ',','.');
+							var from = parseFloat( from );
+							var to = parseFloat( to );
 
-							to = parseFloat( to );
-							from = parseFloat( from );
+							var price = price.replace(',','.');
 							price = parseFloat( price );
 
 							if (price > to || price < from) {
@@ -407,7 +413,7 @@
 					var price = $( "#wps_wgm_price" ).val();
 					var error = false;
 					var product_type = wps_wgm.pricing_type.type;
-					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
+					var mailformat = /^[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 					var to_mail = '';
 					var send_date = '';
 					var html = "<ul>";
@@ -511,10 +517,12 @@
 					}
 
 					if (product_type == "wps_wgm_range_price" || product_type == "wps_wgm_selected_with_price_range") {
-						var from = wps_wgm.pricing_type.from;
-						var to = wps_wgm.pricing_type.to;
-						to = parseFloat( to );
-						from = parseFloat( from );
+						var from = wps_wgm.pricing_type.from.replace(',', '.');
+						var to = wps_wgm.pricing_type.to .replace( ',','.');
+						var from = parseFloat( from );
+						var to = parseFloat( to );
+
+						var price = price.replace(',','.');
 						price = parseFloat( price );
 
 						if (price > to || price < from) {

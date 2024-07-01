@@ -158,6 +158,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
 					'is_tax_enable_for_gift' => $giftcard_tax_cal_enable,
 					'wps_wgm_nonce'          => wp_create_nonce( 'wps-wgm-verify-nonce' ),
+					'decimal_separator'      => get_option( 'woocommerce_price_decimal_sep' ),
 				);
 				$url     = plugins_url();
 				wp_enqueue_script( 'wps_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), $this->version, true );
@@ -361,7 +362,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'value'       => "$default_price",
 					'label'       => __( 'Default Price', 'woo-gift-cards-lite' ),
 					'placeholder' => wc_format_localized_price( 0 ),
-					'description' => __( 'Gift card default price.', 'woo-gift-cards-lite' ),
+					'description' => __( 'Gift card default price. if you are using Price range pricing type then try to add default price in between from and to range', 'woo-gift-cards-lite' ),
 					'data_type'   => 'price',
 					'desc_tip'    => true,
 				)
@@ -1300,7 +1301,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$new_links = array(
 				'demo'    => '<a href="https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Demo.svg" class="wps-info-img" alt="Demo image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Demo', 'woo-gift-cards-lite' ) . '</a>',
 				'doc'     => '<a href="https://docs.wpswings.com/woo-gift-cards-lite/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Documentation.svg" class="wps-info-img" alt="documentation image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Documentation', 'woo-gift-cards-lite' ) . '</a>',
-				'Video'     => '<a href="https://www.youtube.com/watch?v=YgPLO8HDGtc" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/YouTube32px.svg" class="wps-info-img" alt="Vedio image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Video', 'woo-gift-cards-lite' ) . '</a>',
+				'Video'     => '<a href="https://www.youtube.com/watch?v=g6JLA3ewph8" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/YouTube32px.svg" class="wps-info-img" alt="Vedio image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Video', 'woo-gift-cards-lite' ) . '</a>',
 				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Support.svg" class="wps-info-img" alt="support image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Support', 'woo-gift-cards-lite' ) . '</a>',
 				'services' => '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . esc_html( WPS_WGC_URL ) . 'assets/images/Services.svg" class="wps-info-img" alt="services image" style="margin-right: 5px;vertical-align: middle;max-width: 15px;">' . __( 'Services', 'woo-gift-cards-lite' ) . '</a>',
 			);
@@ -1811,7 +1812,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						'id'    => 'wps_wgm_enter_price_rate',
 						'type'  => 'number',
 						'custom_attribute' => array(
-							'min' => '"1"',
+							'min' => '"0"',
 						),
 						'class' => 'input-text',
 						'curr'  => get_woocommerce_currency_symbol(),
@@ -1820,7 +1821,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						'id'    => 'wps_wgm_enter_points_rate',
 						'type'  => 'number',
 						'custom_attribute' => array(
-							'min' => '"1"',
+							'min' => '"0"',
 						),
 						'class' => 'input-text',
 						'desc'  => __( ' Points ', 'woo-gift-cards-lite' ),

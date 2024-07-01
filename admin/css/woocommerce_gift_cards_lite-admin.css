@@ -1636,9 +1636,9 @@
     padding-bottom: 15px;
 }
 
-.wps_wgm_content_template_pro_tag .wps_wgm_table_wrapper {
+/* .wps_wgm_content_template_pro_tag .wps_wgm_table_wrapper {
     pointer-events: none;
-}
+} */
 
 .wps_wgm_content_template_pro_tag .wps_wgm_heading:before {
     align-items: center;

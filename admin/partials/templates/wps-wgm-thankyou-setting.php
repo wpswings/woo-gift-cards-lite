@@ -21,7 +21,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 customers ?</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_thankyouorder_enable">
+                            <?php
+                                $attribute_description = __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_thankyouorder_enable">
                                 <input type="checkbox" name="wps_wgm_thankyouorder_enable"
                                     id="wps_wgm_thankyouorder_enable" class="input-text"> Enable ThankYou Gift Coupon to
                                 Customers </label>
@@ -33,7 +36,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_thankyouorder_time">Select the Order Status</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <select name="wps_wgm_thankyouorder_time"
+                            <?php
+                                $attribute_description = __( 'Select the status when the ThankYou Gift Coupon would be send', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <select name="wps_wgm_thankyouorder_time"
                                 class="wps_wgm_new_woo_ver_style_select">
                                 <option value="wps_wgm_order_creation">Order Creation</option>
                                 <option value="wps_wgm_order_processing">Order is in Processing</option>
@@ -50,7 +56,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 card would be sent</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_thankyouorder_number">
+                            <?php
+                                $attribute_description = __( 'Enter the number of orders, after that, you want to give a thank you Gift Card to your customers', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_thankyouorder_number">
                                 <input type="number" min="1" value="1" name="wps_wgm_thankyouorder_number"
                                     id="wps_wgm_thankyouorder_number" class="input-text wps_wgm_new_woo_ver_style_text">
                             </label>
@@ -62,7 +71,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_thnku_giftcard_expiry">ThankYou Coupon Expiry</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <label for="wps_wgm_thnku_giftcard_expiry">
+                            <?php
+                                $attribute_description = __(
+                                    'Enter number of days for Coupon Expiry,  Keep value "1" for one-day expiry 
+                        after generating coupon, Keep value "0" for no expiry.',
+                                    'woo-gift-cards-lite'
+                                );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <label for="wps_wgm_thnku_giftcard_expiry">
                                 <input type="number" min="0" value="0" name="wps_wgm_thnku_giftcard_expiry"
                                     id="wps_wgm_thnku_giftcard_expiry"
                                     class="input-text wps_wgm_new_woo_ver_style_text"> </label>
@@ -74,7 +90,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <label for="wps_wgm_thankyouorder_type">Select ThankYou Gift Coupon Type</label>
                         </th>
                         <td class="forminp forminp-text">
-                            <span class="woocommerce-help-tip"></span> <select name="wps_wgm_thankyouorder_type"
+                            <?php
+                                $attribute_description = __( 'Choose the ThankYou Gift Coupon Type for Customers', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <select name="wps_wgm_thankyouorder_type"
                                 class="wps_wgm_new_woo_ver_style_select">
                                 <option value="wps_wgm_fixed_thankyou" selected="selected">Fixed</option>
                                 <option value="wps_wgm_percentage_thankyou">Percentage</option>
@@ -90,7 +109,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <td class="forminp forminp-text">
 
                             <label for="wps_wgm_general_text_points" class="wps_wgm_label">
-                                <span class="woocommerce-help-tip"></span> <span class="description"></span>
+                            <?php
+                                $attribute_description = __( 'This message will print inside the Thankyou Gift coupon Template', 'woo-gift-cards-lite' );
+                                echo wp_kses_post( wc_help_tip( $attribute_description ) );
+                            ?> <span class="description"></span>
                                 <span class="description"></span>
                                 <textarea rows="3" name="wps_wgm_thankyou_message" id="wps_wgm_thankyou_message_org"
                                     class="input-text">You have received a coupon [COUPONCODE], having amount of [COUPONAMOUNT] with the expiration date of [COUPONEXPIRY]		</textarea>
