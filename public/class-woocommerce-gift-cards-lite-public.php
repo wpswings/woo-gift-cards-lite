@@ -202,6 +202,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$wps_wgm_pricing['to']   = $to_price;
 							}
 						}
+					} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+						$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
+						$wps_wgm_pricing = apply_filters( 'wps_wgm_pricing_wcml', $wps_wgm_pricing );
+						$is_customizable = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+						$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
+						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
+						$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
 					} else {
 						$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 						$is_customizable = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
@@ -348,6 +355,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="input-text wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $wps_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										$cart_html    .= apply_filters( 'wps_wgm_cart_html_wcml', $cart_html, $default_price, $to_price, $from_price );
 									} else {
 										$wps_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html    .= '<p class="wps_wgm_section selected_price_type">
@@ -358,6 +367,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 								if ( 'wps_wgm_default_price' === $product_pricing_type ) {
 									$default_price = $product_pricing['default_price'];
+									if ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										$default_price = apply_filters( 'wps_wgm_price_conversion_wcml', $default_price );
+									}
 									$cart_html    .= '<input type="hidden" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $default_price . '">';
 										// hooks for discount features.
 									do_action( 'wps_wgm_default_price_discount', $product, $product_pricing );
@@ -398,6 +410,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 													} else {
 														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
 													}
+												} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+													$cart_html = apply_filters( 'wps_wgm_cart_html_selected_wcml', $cart_html, $default_price, $price );
 												} else {
 													$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
 													$prices = floatval( str_replace( $decimal_separator, '.', $price ) );
@@ -451,6 +465,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" min="1" value = ' . $default_price . '>
 											<span class="wps_wgm_min_user_price">' . __( 'Minimum Price is : ', 'woo-gift-cards-lite' ) . $min_user_price . '</span></p>';
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										$cart_html .= apply_filters( 'wps_wgm_cart_html_user_wcml', $cart_html, $default_price, $min_user_price );
 									} else {
 										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price ', 'woo-gift-cards-lite' ) . '</label>	
@@ -470,6 +486,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 												$wps_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_price );
 											}
+										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										    $wps_price = apply_filters( 'wps_wgm_price_conversion_wcml', $wps_price );
 										}
 										$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
 										$wps_price         = floatval( str_replace( $decimal_separator, '.', $wps_price ) );
@@ -482,6 +500,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<?php
 											foreach ( $variation_amount as $key => $value ) {
 												if ( isset( $value ) && ! empty( $value ) ) {
+													if ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+														$value = apply_filters( 'wps_wgm_price_conversion_wcml', $value );
+													}
 													?>
 													<option value="<?php echo esc_html( $value ); ?>"><?php echo esc_html( $varable_text[ $key ] ); ?></option>
 													<?php
@@ -700,6 +721,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$_POST['wps_wgm_price'] = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
 								}
 							}
+						} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+							$_POST['wps_wgm_price'] = apply_filters( 'wps_wgm_cart_price_wcml', $_POST['wps_wgm_price'], $product_id );
+							$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 						}
 						if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
 							$product_pricing = ! empty( get_post_meta( $product_id, 'wps_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'wps_wgm_pricing', true ) : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
@@ -915,6 +939,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 									$gift_price = wcpbc_the_zone()->get_exchange_rate_price( $gift_price );
 								}
+							} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+								$gift_price = apply_filters( 'wps_wgm_price_conversion_wcml', $gift_price );
 							}
 							$gift_price = apply_filters( 'wps_wgm_before_calculate_totals', $gift_price, $value );
 							$value['data']->set_price( $gift_price );
@@ -979,6 +1005,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
 										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										$price_html .= apply_filters( 'wps_wgm_price_html_wcml', $price_html, $from_price, $to_price );
 									} else {
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
 									}
@@ -1004,6 +1032,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$last_range         = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $last_range );
 												$selected_prices[0] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $selected_prices[0] );
 												$price_html        .= wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $selected_prices[0] ) . '-' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+											} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+												$price_html .= apply_filters( 'wps_wgm_price_html_selected', $price_html, $last_range, $selected_prices[0] );
 											} else {
 												$selected_prices[0] = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
 												wc_get_price_including_tax(
@@ -1061,6 +1091,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$start_price = wcpbc_the_zone()->get_exchange_rate_price( $start_price );
 												$end_price   = wcpbc_the_zone()->get_exchange_rate_price( $end_price );
 											}
+										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+											$start_price = apply_filters( 'wps_wgm_price_conversion_wcml', $start_price );
+											$end_price   = apply_filters( 'wps_wgm_price_conversion_wcml', $end_price );
 										}
 										$start_price = floatval( str_replace( $decimal_separator, '.', $start_price ) );
 										$end_price   = floatval( str_replace( $decimal_separator, '.', $end_price ) );
@@ -1115,6 +1148,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
 										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										$price_html .= apply_filters( 'wps_wgm_price_html_price_range', $price_html, $from_price, $to_price );
 									} else {
 										$decimal_separator   = get_option( 'woocommerce_price_decimal_sep' );
 										$from_price = floatval( str_replace( $decimal_separator, '.', $from_price ) );
@@ -2104,6 +2139,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					}
 				} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 					$html = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $html );
+				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+					$html = apply_filters( 'wps_wgm_price_conversion_wcml', $html );
 				}
 				$html = str_replace( ',', '.', $html );
 				$html = wc_price( $html );
