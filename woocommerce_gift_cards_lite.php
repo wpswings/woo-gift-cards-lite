@@ -37,16 +37,19 @@ if ( ! defined( 'WPINC' ) ) {
 use Automattic\WooCommerce\Utilities\OrderUtil;
 
 $activated = false;
+
+$wps_woo_plugin = 'woocommerce/woocommerce.php';
+
 /**
  * Checking if WooCommerce is active.
  */
 if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
-	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$activated = true;
 	}
 } else {
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 		$activated = true;
 	}
 }
@@ -352,37 +355,6 @@ if ( $activated ) {
 			$restore_data->on_activation();
 			do_action( 'wps_wgm_standard_plugin_on_create_blog', $wps_lcns_status, $wps_license_key, $timestamp );
 			restore_current_blog();
-		}
-	}
-	
-	add_action( 'admin_notices', 'wps_wgm_new_layout_notice' );
-	
-	if ( ! function_exists( 'wps_wgm_new_layout_notice' ) ) {
-		/**
-		 * Layout setting .
-		 * 
-		 * @since    3.0.0
-		 */
-		function wps_wgm_new_layout_notice() {
-			global $pagenow;
-			$screen = get_current_screen();
-			$other_settings = get_option( 'wps_wgm_other_settings', array() );
-			$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
-
-			$wps_new_layout = $wps_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
-
-			if ( 'plugins.php' == $pagenow || ( 'giftcard_page_wps-wgc-setting-lite' === $screen->id ) ) {
-
-				if ( 'on' != $wps_new_layout ) {
-					echo '<div  class="notice notice-success is-dismissible wps-gc-activate_notice wps-new-setting-notice update-nag">
-					
-					Check out our new gift card page layout setting in <strong> Gift Cards For WooCommerce Pro plugin</strong>. Enable it now and see the difference.
-						<a href="' . esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=other_setting' ) ) . '">check </a>
-						
-					
-				</div>';
-				}
-			}
 		}
 	}
 
