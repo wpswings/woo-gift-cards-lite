@@ -77,10 +77,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$featured_image = wp_get_attachment_url( get_post_thumbnail_id( $templateid ) );
 
 				$other_settings              = get_option( 'wps_wgm_other_settings', array() );
-				$wps_wgm_enable_mpdf_library = $this->wps_wgm_get_template_data( $other_settings, 'wps_wgm_enable_mpdf_library' );
+				$wps_wgm_select_library = $this->wps_wgm_get_template_data( $other_settings, 'wps_wgm_select_library' );
 
 				if ( isset( $background_image ) && ! empty( $background_image ) ) {
-					if ( 'on' == $wps_wgm_enable_mpdf_library ) {
+					if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
 						$giftcard_event_html = $background_image;
 					} else {
 						$giftcard_event_html = "<img src='$background_image' 
@@ -89,7 +89,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 				$giftcard_event_html = apply_filters( 'wps_wgm_default_events_html', $giftcard_event_html, $args );
 				if ( isset( $featured_image ) && ! empty( $featured_image ) ) {
-					if ( 'on' == $wps_wgm_enable_mpdf_library ) {
+					if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
 						$giftcard_featured = $featured_image;
 					} else {
 						$giftcard_featured = "<img src='$featured_image' alt='thumbnail image' />";
@@ -168,7 +168,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$args['delivery_method'] = '';
 				}
 				// Background Image for Mothers Day && Arrow Image for Mothers Day.
-				if ( 'on' == $wps_wgm_enable_mpdf_library ) {
+				if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
 					$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
 					$arrow_img = WPS_WGC_URL . 'assets/images/arrow.png';
 				} else {
