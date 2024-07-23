@@ -45,7 +45,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 				}
 				$template = get_post( $templateid, ARRAY_A );
-				$templatehtml = $template['post_content'];
+				$templatehtml = isset( $template['post_content'] ) ? $template['post_content'] : '';
 				$giftcard_logo_html = '';
 				$giftcard_featured = '';
 				$giftcard_event_html = '';
@@ -163,6 +163,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					} else {
 						$args['expirydate'] = $args['expirydate'];
 					}
+					$args['expirydate'] = apply_filters( 'wps_wgm_expiry_date_gc_addon', $args['expirydate'] );
 				}
 				if ( ! isset( $args['delivery_method'] ) ) {
 					$args['delivery_method'] = '';
