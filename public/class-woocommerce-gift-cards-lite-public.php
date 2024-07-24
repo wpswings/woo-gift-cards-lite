@@ -1886,35 +1886,37 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$gift_bool = false;
 				$other_bool = false;
 				$gift_bool_ship = false;
-				if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
+				if ( $enable ) {
+					if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
 
-					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-
-						$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-						$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-						$product_types = wp_get_object_terms( $product_id, 'product_type' );
-						if ( isset( $product_types[0] ) ) {
-							$product_type = $product_types[0]->slug;
-							if ( isset( $cart_item['product_meta'] ) ) {
-								if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
-									if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-										$gift_bool = true;
-									} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-										$gift_bool_ship = true;
+						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+	
+							$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+							$product_types = wp_get_object_terms( $product_id, 'product_type' );
+							if ( isset( $product_types[0] ) ) {
+								$product_type = $product_types[0]->slug;
+								if ( isset( $cart_item['product_meta'] ) ) {
+									if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
+										if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+											$gift_bool = true;
+										} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+											$gift_bool_ship = true;
+										}
+									} else if ( ! $cart_item['data']->is_virtual() ) {
+										$other_bool = true;
 									}
 								} else if ( ! $cart_item['data']->is_virtual() ) {
 									$other_bool = true;
 								}
-							} else if ( ! $cart_item['data']->is_virtual() ) {
-								$other_bool = true;
 							}
 						}
-					}
-
-					if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
-						$enable = false;
-					} else {
-						$enable = true;
+	
+						if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
+							$enable = false;
+						} else {
+							$enable = true;
+						}
 					}
 				}
 			}
@@ -1924,32 +1926,34 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$gift_bool = false;
 				$other_bool = false;
 				$gift_bool_ship = false;
-				if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
-					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-						$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-						$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-						$product_types = wp_get_object_terms( $product_id, 'product_type' );
-						if ( isset( $product_types[0] ) ) {
-							$product_type = $product_types[0]->slug;
-							if ( isset( $cart_item['product_meta'] ) ) {
-								if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
-									if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-										$gift_bool = true;
-									} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-										$gift_bool_ship = true;
+				if ( $enable ) {
+					if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
+						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+							$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+							$product_types = wp_get_object_terms( $product_id, 'product_type' );
+							if ( isset( $product_types[0] ) ) {
+								$product_type = $product_types[0]->slug;
+								if ( isset( $cart_item['product_meta'] ) ) {
+									if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
+										if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+											$gift_bool = true;
+										} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+											$gift_bool_ship = true;
+										}
+									} else if ( ! $cart_item['data']->is_virtual() ) {
+										$other_bool = true;
 									}
 								} else if ( ! $cart_item['data']->is_virtual() ) {
 									$other_bool = true;
 								}
-							} else if ( ! $cart_item['data']->is_virtual() ) {
-								$other_bool = true;
 							}
 						}
-					}
-					if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
-						$enable = false;
-					} else {
-						$enable = true;
+						if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
+							$enable = false;
+						} else {
+							$enable = true;
+						}
 					}
 				}
 			}
