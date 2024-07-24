@@ -493,7 +493,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$wps_price         = floatval( str_replace( $decimal_separator, '.', $wps_price ) );
 										?>
 									<p class="wps_wgm_section">
-										<span id="wps_wgm_text" class="wps_variable_currency"><?php echo wc_price( $wps_price ); ?></span>
+										<span id="wps_wgm_text" class="wps_variable_currency"><?php echo wp_kses( wc_price( $wps_price ), $this->wps_common_fun->wps_allowed_html_tags() ); ?></span>
 									</p>
 									<p class="wps_wgm_section">
 										<select name="wps_wgm_price" class="wps_wgm_price" id="wps_wgm_price">
