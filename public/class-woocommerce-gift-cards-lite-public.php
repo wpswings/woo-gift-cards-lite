@@ -20,6 +20,7 @@
  * @author     WP Swings <webmaster@wpswings.com>
  */
 use Automattic\WooCommerce\Utilities\OrderUtil;
+use function WCML\functions\getClientCurrency;
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 /**
  * Public class .
@@ -2346,7 +2347,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$transaction_data = array(
 							'user_id'          => $user_id,
 							'amount'           => $coupon_amount,
-							'currency'         => get_woocommerce_currency(),
+							'currency'         => ( class_exists( 'WCML_Multi_Currency_Prices' ) ) ? getClientCurrency() : get_woocommerce_currency(),
 							'payment_method'   => 'Gift Card Redeem',
 							'transaction_type' => htmlentities( $transaction_type ),
 						);
@@ -2355,7 +2356,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	
 						$response = array(
 							'status'  => 'success',
-							'message' => $coupon_amount,
+							'message' => apply_filters( 'wps_wgm_price_conversion_wcml', $coupon_amount ),
 						);
 					} else {
 						$response = array(
@@ -2372,7 +2373,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			} else {
 				$response = array(
 					'status'  => 'failed',
-					'message' => __( 'Enter Valid Gift Card type', 'woo-gift-cards-lite' ),
+					'message' => __( 'Enter Valid Gift Card coupon', 'woo-gift-cards-lite' ),
 				);
 			}
 		} else {

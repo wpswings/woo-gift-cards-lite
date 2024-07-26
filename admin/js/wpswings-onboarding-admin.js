@@ -8,9 +8,9 @@ jQuery(document).ready( function($) {
 	var deactivate_url = '';
 
 	// Add Select2.
-	// jQuery( '.on-boarding-select2' ).select2({
-	// 	placeholder : 'Select All Suitable Options...',
-	// });
+	jQuery( '.on-boarding-select2' ).select2({
+		placeholder : 'Select All Suitable Options...',
+	});
 
 	// Add Deactivation id to all deactivation links.
 	embed_id_to_deactivation_urls();
