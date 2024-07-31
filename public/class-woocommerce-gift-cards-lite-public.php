@@ -723,7 +723,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 							}
 						} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
-							$_POST['wps_wgm_price'] = apply_filters( 'wps_wgm_cart_price_wcml', $_POST['wps_wgm_price'], $product_id );
+							$_POST['wps_wgm_price'] = apply_filters( 'wps_wgm_cart_price_wcml', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ), $product_id );
 							$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 						}
 						if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
