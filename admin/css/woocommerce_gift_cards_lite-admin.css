@@ -1807,11 +1807,11 @@ a.wps-gc__popup-for-pro-link:hover {
 		transform: rotate(-45deg) scale(1);
 	}
 }
-th label[for=wps_wgm_new_gift_card_page_layout] {
+th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_library] {
     position:relative
 }
 
-th label[for=wps_wgm_new_gift_card_page_layout]:before {
+th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_select_library]:before {
     vertical-align: middle;
     content: "New!";
    transform: rotate(-45deg);

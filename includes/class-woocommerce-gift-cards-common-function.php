@@ -45,7 +45,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 				}
 				$template = get_post( $templateid, ARRAY_A );
-				$templatehtml = $template['post_content'];
+				$templatehtml = isset( $template['post_content'] ) ? $template['post_content'] : '';
 				$giftcard_logo_html = '';
 				$giftcard_featured = '';
 				$giftcard_event_html = '';
@@ -76,14 +76,24 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 				$featured_image = wp_get_attachment_url( get_post_thumbnail_id( $templateid ) );
 
-				if ( isset( $background_image ) && ! empty( $background_image ) ) {
+				$other_settings              = get_option( 'wps_wgm_other_settings', array() );
+				$wps_wgm_select_library = $this->wps_wgm_get_template_data( $other_settings, 'wps_wgm_select_library' );
 
-					$giftcard_event_html = "<img src='$background_image' 
-					width='100%' />";
+				if ( isset( $background_image ) && ! empty( $background_image ) ) {
+					if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
+						$giftcard_event_html = $background_image;
+					} else {
+						$giftcard_event_html = "<img src='$background_image' 
+						width='100%' />"; 
+					}
 				}
 				$giftcard_event_html = apply_filters( 'wps_wgm_default_events_html', $giftcard_event_html, $args );
 				if ( isset( $featured_image ) && ! empty( $featured_image ) ) {
-					$giftcard_featured = "<img src='$featured_image' alt='thumbnail image' />";
+					if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
+						$giftcard_featured = $featured_image;
+					} else {
+						$giftcard_featured = "<img src='$featured_image' alt='thumbnail image' />";
+					}
 				}
 				$template_css = '';
 				$template_css = apply_filters( 'wps_wgm_template_custom_css', $template_css, $templateid );
@@ -153,18 +163,22 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					} else {
 						$args['expirydate'] = $args['expirydate'];
 					}
+					$args['expirydate'] = apply_filters( 'wps_wgm_expiry_date_gc_addon', $args['expirydate'] );
 				}
 				if ( ! isset( $args['delivery_method'] ) ) {
 					$args['delivery_method'] = '';
 				}
-				// Background Image for Mothers Day.
-				$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
+				// Background Image for Mothers Day && Arrow Image for Mothers Day.
+				if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
+					$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
+					$arrow_img = WPS_WGC_URL . 'assets/images/arrow.png';
+				} else {
+					$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
+					$mothers_day_backimg = "<span class='back_bubble_img'><img src='$mothers_day_backimg'/></span>";
 
-				$mothers_day_backimg = "<span class='back_bubble_img'><img src='$mothers_day_backimg'/></span>";
-
-				// Arrow Image for Mothers Day.
-				$arrow_img = WPS_WGC_URL . 'assets/images/arrow.png';
-				$arrow_img = "<img src='$arrow_img'  class='center-on-narrow' style='height: auto;font-family: sans-serif; font-size: 15px; line-height: 20px; color: rgb(85, 85, 85); border-radius: 5px;' width='135' height='170' border='0'>";
+					$arrow_img = WPS_WGC_URL . 'assets/images/arrow.png';
+					$arrow_img = "<img src='$arrow_img'  class='center-on-narrow' style='height: auto;font-family: sans-serif; font-size: 15px; line-height: 20px; color: rgb(85, 85, 85); border-radius: 5px;' width='135' height='170' border='0'>";
+				}
 
 				$bgimg = "background='$featured_image'";
 
@@ -434,6 +448,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$to_currency    = wps_wgm_hpos_get_meta_data( $order->get_id(), '_order_currency', true );
 					$args['amount'] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( $to_currency, $wps_wgm_common_arr['couponamont'] );
 					$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( $to_currency ) . $args['amount'];
+				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+					$args['amount'] = apply_filters( 'wps_wgm_amount_conversion_wcml', $wps_wgm_common_arr['couponamont'] );
 				} else {
 					$decimal_separator                 = get_option( 'woocommerce_price_decimal_sep' );
 					$wps_wgm_common_arr['couponamont'] = floatval( str_replace( $decimal_separator, '.', $wps_wgm_common_arr['couponamont'] ) );
@@ -857,6 +873,26 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 */
 		public function mwb_wgm_get_template_data( $wps_wgm_settings, $key ) {
 			$this->wps_wgm_get_template_data( $wps_wgm_settings, $key );
+		}
+
+		/**
+		 * Get the File Content
+		 *
+		 * @param string $wps_file_path file path.
+		 * @return string $response['body'].
+		 */
+		public function wps_wgm_get_file_content( $wps_file_path ) {
+
+			$response = wp_remote_get(
+				$wps_file_path,
+				array(
+					'timeout'    => 20,
+					'sslverify'  => false,
+					'user-agent' => 'Ultimate Woocommerce Gift Cards/' . WPS_WGC_VERSION,
+				)
+			);
+
+			return $response['body'];
 		}
 	}
 }
