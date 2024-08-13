@@ -201,6 +201,18 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( 'sticky_js', plugin_dir_url( __FILE__ ) . '/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), $this->version, true );
 
 			}
+
+			// giftcard reporting js.
+			if ( isset( $_GET['tab'] ) && 'giftcard_report' == $_GET['tab'] ) {
+				$wps_uwgc_report_array = array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'wps_uwgc_report_nonce' => wp_create_nonce( 'wps-uwgc-giftcard-report-nonce' ),
+				);
+				wp_enqueue_script( 'wps_uwgc_report_js', plugin_dir_url( __FILE__ ) . 'js/ultimate-woocommerce-giftcard-report.js', array( 'jquery' ), $this->version, false );
+				wp_localize_script( 'wps_uwgc_report_js', 'ajax_object', $wps_uwgc_report_array );
+				wp_enqueue_script( 'thickbox' );
+				wp_enqueue_style( 'thickbox' );
+			}
 		}
 	}
 
@@ -1854,6 +1866,358 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				</table>
 			</div>
 			<?php
+		}
+	}
+
+	/**
+	 * Function is used to add admin toolbar for giftcard reporting.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_admin_toolbar()
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_admin_toolbar() {
+		global $wp_admin_bar;
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$args = array(
+			'id'     => 'gift-cards',
+			'title'  => __( 'GC Reports', 'woo-gift-cards-lite' ),
+			'href'   => admin_url( 'admin.php?page=wc-reports&tab=giftcard_report' ),
+		);
+
+		$wp_admin_bar->add_menu( $args );
+	}
+
+	/**
+	 * Function is used to add Gift Card Report Section.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_report().
+	 * @param array $reports Array of Reports.
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_report( $reports ) {
+		$reports['giftcard_report'] = array(
+			'title'   => __( 'Gift Cards', 'woo-gift-cards-lite' ),
+			'reports' => array(
+				'giftcard_report' => array(
+					'title'       => __( 'Gift Cards', 'woo-gift-cards-lite' ),
+					'description' => '',
+					'hide_title'  => true,
+					'callback'    => array( __CLASS__, 'wps_wgm_giftcard_report' ),
+				),
+			),
+		);
+		return $reports;
+	}
+
+	/**
+	 * Function is used to include report template.
+	 *
+	 * @since 1.0.0
+	 * @name wps_uwgc_giftcard_report()
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public static function wps_wgm_giftcard_report() {
+		include_once WPS_WGC_DIRPATH . '/admin/partials/class-wps-wgm-giftcard-report-list.php';
+	}
+
+	/**
+	 * Function to show giftcard details on ajax call.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_gift_card_details()
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_gift_card_details() {
+		check_ajax_referer( 'wps-uwgc-giftcard-report-nonce', 'wps_uwgc_nonce' );
+		$_POST['wps_uwgc_report_details'] = 'wps_uwgc_report_details';
+		$_POST['width'] = '650';
+		$_POST['height'] = '480';
+		$_POST['TB_iframe'] = true;
+		$query = http_build_query( $_POST );
+		$ajax_url = home_url( "?$query" );
+		echo wp_kses_post( $ajax_url );
+		wp_die();
+	}
+
+	/**
+	 * Function is used to preview report deatils.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_preview_report_details()
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_preview_report_details() {
+		if ( isset( $_GET['wps_uwgc_report_details'] ) && 'wps_uwgc_report_details' == $_GET['wps_uwgc_report_details'] ) {
+			$order_id = isset( $_GET['order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : '';
+			$coupon_id = isset( $_GET['coupon_id'] ) ? sanitize_text_field( wp_unslash( $_GET['coupon_id'] ) ) : '';
+
+			if ( '' !== $order_id && '' !== $coupon_id ) {
+				$order_date = '';
+				$remaining_amt = '';
+				$to = '';
+				$from = '';
+				$msg = '';
+				$gift_date = '';
+				$productname = '';
+				$pro_permalink = '';
+				$giftcard_amount = get_post_meta( $coupon_id, 'wps_wgm_coupon_amount', true );
+				$remaining_amt = get_post_meta( $coupon_id, 'coupon_amount', true );
+				$order = wc_get_order( $order_id );
+
+				global $wpdb;
+				$table_name = $wpdb->prefix . 'offline_giftcard';
+				$query = "SELECT * FROM $table_name WHERE `id`=$order_id";
+				$giftresults = $wpdb->get_results( $query, ARRAY_A );
+				if ( isset( $giftresults[0] ) ) {
+					$giftresult = $giftresults[0];
+					$order_date = $giftresult['date'];
+					$product_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_product_id', true );
+					if ( '' !== $product_id ) {
+						$product = wc_get_product( $product_id );
+						if ( isset( $product ) && ! empty( $product ) ) {
+							$pro_permalink = $product->get_permalink();
+							$productname = get_the_title( $product_id );
+						}
+					}
+					$to = $giftresult['to'];
+					$from = $giftresult['from'];
+					$msg = $giftresult['message'];
+					$gift_date = $giftresult['schedule'];
+				} else {
+					$order_date = $order->get_date_created()->date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) );
+					$product_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_product_id', true );
+					if ( '' !== $product_id ) {
+						$product = wc_get_product( $product_id );
+						if ( isset( $product ) && ! empty( $product ) ) {
+							$pro_permalink = $product->get_permalink();
+							$productname = get_the_title( $product_id );
+						}
+					}
+					foreach ( $order->get_items() as $item ) {
+						$item_meta_data = $item->get_meta_data();
+						foreach ( $item_meta_data as $key => $value ) {
+							if ( isset( $value->key ) && 'To' == $value->key && ! empty( $value->value ) ) {
+								$to = $value->value;
+							}
+							if ( isset( $value->key ) && 'From' == $value->key && ! empty( $value->value ) ) {
+								$from = $value->value;
+							}
+							if ( isset( $value->key ) && 'Message' == $value->key && ! empty( $value->value ) ) {
+								$msg = $value->value;
+							}
+							if ( isset( $value->key ) && 'Send Date' == $value->key && ! empty( $value->value ) ) {
+								$gift_date = $value->value;
+							}
+						}
+					}
+					///////////////////////////////////////////////////////////////////////////////////////////////////
+						
+					$meta_key = 'suborder#'.$order_id;
+					
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => 'any',
+						'posts_per_page' => -1,
+						'meta_key'       => $meta_key, // Replace with your custom field key.
+					);
+					$suborders = wc_get_orders( $args );
+	
+					/////////////////////////////////////////////////////////////////////////////////////////////////////
+				}
+				?>
+				
+					<div class="wps_uwgc_report_preview">
+						<h3 style="text-align:;"><?php esc_html_e( 'Gift Card Details', 'woo-gift-cards-lite' ); ?></h3>
+
+						<table>
+							<tr>
+								<td><b><?php esc_html_e( 'Purchased Date :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo esc_html( $order_date ); ?></td>
+							</tr>
+							<tr>
+								<?php
+								if ( isset( $giftcard_amount ) && ! empty( $giftcard_amount ) ) {
+									?>
+								<td><b><?php esc_html_e( 'Gift Card Amount :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo wp_kses_post( wc_price( $giftcard_amount ) ); ?></td>
+								<?php } ?>
+							</tr>
+							
+							<tr>
+								<td><b><?php esc_html_e( 'Remaining Amount :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo wp_kses_post( wc_price( $remaining_amt ) ); ?></td>
+							</tr>
+							<tr>
+								<td><b><?php esc_html_e( ' To :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo esc_html( $to ); ?></td>
+							</tr>
+							<tr>
+								<td><b><?php esc_html_e( 'From :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo esc_html( $from ); ?></td>
+							</tr>
+							<tr>
+								<td><b><?php esc_html_e( 'Message :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo esc_html( $msg ); ?></td>
+							</tr>
+							<tr>
+								<td><b><?php esc_html_e( 'Scheduled Date :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><?php echo esc_html( ( '' !== $gift_date ) ? $gift_date : $order_date ); ?></td>
+							</tr>
+							<tr>
+								<td><b><?php esc_html_e( 'Product :', 'woo-gift-cards-lite' ); ?></b></td>
+								<td><a target="_blank" href="<?php echo esc_attr( $pro_permalink ); ?>"><?php echo esc_html( $productname ); ?></a></td>
+							</tr>
+						</table>
+						<?php
+						if (isset( $suborders ) && is_array($suborders) && !empty($suborders)){
+							?>
+								<table  class="wps_uwgc_suborer">
+								<h3 style="text-align:center;"><?php esc_html_e( 'Suborder Transactions', 'woo-gift-cards-lite' ); ?></h3>
+									<tr style="text-align:center;">
+										<th><?php esc_html_e( 'Contributor Email :', 'woo-gift-cards-lite' ); ?></th>
+										<th><?php esc_html_e( 'Contribution Amount :', 'woo-gift-cards-lite' ); ?></th>
+									</tr>
+								<?php
+									foreach ($suborders as $orde) {
+										$order_sub_id = $orde->get_id();
+										$sub_order = wc_get_order( $order_sub_id);
+									
+										$billing_email  = $sub_order->get_billing_email();
+										$product_amount = $sub_order->get_subtotal();
+										?>
+										<tr style="text-align:center;">
+											<td><?php echo esc_attr( $billing_email ); ?></td>
+											<td><?php echo wp_kses_post( wc_price( $product_amount) ); ?></td>
+										</tr>
+										<?php		
+									}
+								}
+							?>
+						<table class="wps_uwgc_transaction">
+							<h3 style="text-align:;"><?php esc_html_e( 'Gift Card Transactions', 'woo-gift-cards-lite' ); ?></h3>
+							<?php
+							$wps_gw_used_coupon_details = get_post_meta( $coupon_id, 'wps_uwgc_used_order_id', true );
+							if ( isset( $wps_gw_used_coupon_details ) && is_array( $wps_gw_used_coupon_details ) && ! empty( $wps_gw_used_coupon_details ) ) {
+								?>
+							<tr>
+								<th><?php esc_html_e( 'Order Id', 'woo-gift-cards-lite' ); ?></th>
+								<th><?php esc_html_e( 'Used Amount', 'woo-gift-cards-lite' ); ?></th>
+							</tr>
+								<?php
+
+								foreach ( $wps_gw_used_coupon_details as $key => $value ) {
+									?>
+								<tr>
+									<td>
+										<a target ="_blank" href="
+										<?php
+											echo esc_url( admin_url( 'post.php?post=' . absint( $value['order_id'] ) . '&action=edit' ) );
+										?>
+										">#<?php echo esc_html( $value['order_id'] ); ?></a>
+									</td>
+									<td> <?php echo wp_kses_post( wc_price( $value['used_amount'] ) ); ?></td>
+								</tr>
+									<?php
+								}
+							} else {
+								?>
+								<tr>
+									<td><?php esc_html_e( 'Gift Cards Not Used ', 'woo-gift-cards-lite' ); ?></td>
+								</tr>
+								<?php
+							}
+							?>
+						</table>
+					</div>
+
+					<style type="text/css">
+						.wps_uwgc_report_preview {
+						font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+						}
+						.wps_uwgc_report_preview table {
+						width: 100%;
+						border-collapse: collapse;
+						border: 1px solid #efefef;
+						}
+						.wps_uwgc_report_preview h3 {
+						text-align: center;
+						font-size: 24px;
+						margin: 0 0 20px;
+						}
+						.wps_uwgc_report_preview .wps_uwgc_transaction {
+						text-align: center;
+						border: 1px solid #efefef;
+						}
+						.wps_uwgc_report_preview .wps_uwgc_transaction td, .wps_uwgc_report_preview .wps_uwgc_transaction th {
+						border-bottom: 1px solid #efefef;
+						padding: 10px;
+						}
+						.wps_uwgc_report_preview table ~ h3 {
+						margin-top: 25px;
+						}
+						.wps_uwgc_report_preview .wps_uwgc_transaction {
+						text-align: center;
+						}
+						.wps_uwgc_report_preview .wps_uwgc_transaction th {
+						background-color: #efefef;
+						}
+						.wps_uwgc_report_preview table td {
+							padding: 10px;
+							border-bottom: 1px solid #efefef;
+						}
+					</style>
+				<?php
+				$message = ob_get_clean();
+				$wps_admin_obj = new Woocommerce_Gift_Cards_Common_Function();
+				$allowed_tags = $wps_admin_obj->wps_allowed_html_tags();
+				echo wp_kses( $message, $allowed_tags );
+				die();
+			}
+		}
+	}
+
+	/**
+	 * Function is used to display show coupons datils with order id.
+	 *
+	 * @since 1.0.0
+	 * @name wps_uwgc_coupon_reporting_with_order_id().
+	 * @param int   $coupon_id Coupon id.
+	 * @param array $item Item array.
+	 * @param mixed $total_discount Total Discount.
+	 * @param mixed $remaining_amount Remaining Coupon Amount.
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_coupon_reporting_with_order_id( $coupon_id, $item, $total_discount, $remaining_amount ) {
+		$if_gc_coupon = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_unique', true );
+		if ( 'online' === $if_gc_coupon ) {
+			$wps_uwgc_order = get_post_meta( $coupon_id, 'wps_uwgc_used_order_id', true );
+			if ( is_array( $wps_uwgc_order ) && ! empty( $wps_uwgc_order ) ) {
+				$wps_uwgc_used_order_id = $item->get_order_id();
+				$wps_uwgc_order[] = array(
+					'order_id' => $wps_uwgc_used_order_id,
+					'used_amount' => $total_discount,
+				);
+			} else {
+				$wps_uwgc_order = array();
+				$wps_uwgc_used_order_id = $item->get_order_id();
+				$wps_uwgc_order[] = array(
+					'order_id' => $wps_uwgc_used_order_id,
+					'used_amount' => $total_discount,
+				);
+			}
+			update_post_meta( $coupon_id, 'wps_uwgc_used_order_id', $wps_uwgc_order );
+			update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
 		}
 	}
 

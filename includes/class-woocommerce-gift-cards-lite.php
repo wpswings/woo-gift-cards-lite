@@ -207,6 +207,14 @@ class Woocommerce_Gift_Cards_Lite {
 			$this->loader->add_filter( 'wps_wgm_other_setting', $plugin_admin, 'wps_wgm_par_compatibility_settings', 10, 1 );
 			$this->loader->add_action( 'wps_points_admin_table_log', $plugin_admin, 'wps_wgm_admin_end_points_log', 10, 1 );
 		}
+
+		// Reporting.
+		$this->loader->add_action( 'wp_before_admin_bar_render', $plugin_admin, 'wps_wgm_admin_toolbar' );
+		$this->loader->add_action( 'woocommerce_admin_reports', $plugin_admin, 'wps_wgm_report' );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_preview_report_details' );
+		$this->loader->add_action( 'wp_ajax_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
+		$this->loader->add_action( 'wps_wgm_coupon_reporting_with_order', $plugin_admin, 'wps_wgm_coupon_reporting_with_order_id', 10, 4 );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
