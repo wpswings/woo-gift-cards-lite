@@ -208,7 +208,9 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
 	}
 
 	public function extra_tablenav( $which ) {
-        do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
+		if ( $which === 'top' ) {
+        	do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
+		}
     }
 }
 
