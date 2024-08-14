@@ -206,7 +206,12 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
 		$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
 		return ( 'asc' === $order ) ? $result : -$result;
 	}
+
+	public function extra_tablenav( $which ) {
+        do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
+    }
 }
+
 ?>
 <form method="post">
 	<input type="hidden" name="page" value="<?php echo esc_attr( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' ); ?>">
@@ -225,12 +230,26 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
  */
 function wps_uwgc_giftcard_report_data() {
 
-	$args = array(
-		'posts_per_page'   => -1,
-		'post_type'        => 'shop_coupon',
-		'post_status'      => 'publish',
-	);
-	$coupons = get_posts( $args );
+	$gc_date_1 = isset( $_POST['wps_gc_date_filter_1'] ) ? sanitize_text_field( $_POST['wps_gc_date_filter_1'] ) : '';
+    $gc_date_2 = isset( $_POST['wps_gc_date_filter_2'] ) ? sanitize_text_field( $_POST['wps_gc_date_filter_2'] ) : '';
+
+    $args = array(
+        'posts_per_page'   => -1,
+        'post_type'        => 'shop_coupon',
+        'post_status'      => 'publish',
+    );
+
+    if ( $gc_date_1 && $gc_date_2 ) {
+        $args['date_query'] = array(
+            array(
+                'after'     => $gc_date_1,
+                'before'    => $gc_date_2,
+                'inclusive' => true,
+            ),
+        );
+    }
+
+    $coupons = get_posts( $args );
 
 	$coupon_codes = array();
 	if ( isset( $coupons ) && is_array( $coupons ) && ! empty( $coupons ) ) {
