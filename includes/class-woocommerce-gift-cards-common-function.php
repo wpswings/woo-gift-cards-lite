@@ -448,7 +448,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$to_currency    = wps_wgm_hpos_get_meta_data( $order->get_id(), '_order_currency', true );
 					$args['amount'] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( $to_currency, $wps_wgm_common_arr['couponamont'] );
 					$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( $to_currency ) . $args['amount'];
-				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 					$args['amount'] = apply_filters( 'wps_wgm_amount_conversion_wcml', $wps_wgm_common_arr['couponamont'] );
 				} else {
 					$decimal_separator                 = get_option( 'woocommerce_price_decimal_sep' );
