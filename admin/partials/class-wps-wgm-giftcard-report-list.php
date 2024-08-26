@@ -275,9 +275,14 @@ function wps_uwgc_giftcard_report_data() {
 				$order = wc_get_order( $order_id );
 
 				global $wpdb;
-				$table_name = $wpdb->prefix . 'offline_giftcard';
-				$query = "SELECT * FROM $table_name WHERE `id`=$order_id";
-				$giftresults = $wpdb->get_results( $query, ARRAY_A );
+
+				$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
+
+				if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
+					$table_name = $wpdb->prefix . 'offline_giftcard';
+					$query = "SELECT * FROM $table_name WHERE `id`=$order_id";
+					$giftresults = $wpdb->get_results( $query, ARRAY_A );
+				}
 
 				if ( ! empty( $order ) ) {
 					$user_email = $order->get_billing_email();
