@@ -42,7 +42,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @package    Ultimate Woocommerce Gift Cards
  * @version    2.2.1
  */
-class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
+class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	/**
 	 * Eample_data
 	 *
@@ -77,7 +77,7 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
 				return $html;
 
 			default:
-				// Apply custom filter for other columns
+				// Apply custom filter for other columns.
 				$html = apply_filters( 'wps_wgm_add_analytics_coupons', false, $column_name, $item );
 				return $html;
 		}
@@ -207,8 +207,13 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
 		return ( 'asc' === $order ) ? $result : -$result;
 	}
 
+	/**
+	 * Extra box for date filter and Export Report.
+	 *
+	 * @param  array $which location.
+	 */
 	public function extra_tablenav( $which ) {
-		if ( $which === 'top' ) {
+		if ( 'top' === $which ) {
         	do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
 		}
     }
@@ -218,7 +223,7 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
 <form method="post">
 	<input type="hidden" name="page" value="<?php echo esc_attr( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' ); ?>">
 	<?php
-	$wps_report_list = new Wps_UWGC_Giftcard_Report_List();
+	$wps_report_list = new Wps_WGM_Giftcard_Report_List();
 	$wps_report_list->prepare_items();
 	$wps_report_list->search_box( __( 'Search Gift Cards', 'woo-gift-cards-lite' ), 'giftcard_code' );
 	$wps_report_list->display();
@@ -232,24 +237,28 @@ class Wps_UWGC_Giftcard_Report_List extends WP_List_Table {
  */
 function wps_uwgc_giftcard_report_data() {
 
-	$gc_date_1 = isset( $_POST['wps_gc_date_filter_1'] ) ? sanitize_text_field( $_POST['wps_gc_date_filter_1'] ) : '';
-    $gc_date_2 = isset( $_POST['wps_gc_date_filter_2'] ) ? sanitize_text_field( $_POST['wps_gc_date_filter_2'] ) : '';
-
-    $args = array(
+	$args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'shop_coupon',
         'post_status'      => 'publish',
     );
 
-    if ( $gc_date_1 && $gc_date_2 ) {
-        $args['date_query'] = array(
+	if ( isset( $_POST['wps_gc_date_filter_1'] ) && isset( $_POST['wps_gc_date_filter_2'] ) ) {
+		$nonce = ( isset( $_POST['wps_wgm_report_nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce ) ) {
+			return false;
+		}
+		$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
+    	$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
+
+		$args['date_query'] = array(
             array(
                 'after'     => $gc_date_1,
                 'before'    => $gc_date_2,
                 'inclusive' => true,
             ),
         );
-    }
+	}
 
     $coupons = get_posts( $args );
 
@@ -280,7 +289,10 @@ function wps_uwgc_giftcard_report_data() {
 
 				if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
 					$table_name = $wpdb->prefix . 'offline_giftcard';
-					$query = "SELECT * FROM $table_name WHERE `id`=$order_id";
+					$query      = $wpdb->prepare(
+						"SELECT * FROM $table_name WHERE `id` = %d",
+						$order_id
+					);
 					$giftresults = $wpdb->get_results( $query, ARRAY_A );
 				}
 
@@ -288,7 +300,7 @@ function wps_uwgc_giftcard_report_data() {
 					$user_email = $order->get_billing_email();
 					$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
 					$expiry_date = $coupon_obj->get_date_expires();
-					$expiry_date = 	isset( $expiry_date ) ? date('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
+					$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
 					$wps_uwgc_data[] = array(
 						'coupon_id' => $coupon_obj->get_id(),
 						'giftcard_code' => $value,
@@ -302,7 +314,7 @@ function wps_uwgc_giftcard_report_data() {
 					$user_email = $giftresult['from'];
 					$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
 					$expiry_date = $coupon_obj->get_date_expires();
-					$expiry_date = 	isset( $expiry_date ) ? date('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
+					$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
 					$wps_uwgc_data[] = array(
 						'coupon_id' => $coupon_obj->get_id(),
 						'giftcard_code' => $value,

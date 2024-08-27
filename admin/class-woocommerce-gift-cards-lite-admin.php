@@ -1976,7 +1976,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 				global $wpdb;
 				$table_name = $wpdb->prefix . 'offline_giftcard';
-				$query = "SELECT * FROM $table_name WHERE `id`=$order_id";
+				$query      = $wpdb->prepare(
+					"SELECT * FROM $table_name WHERE `id` = %d",
+					$order_id
+				);
 				$giftresults = $wpdb->get_results( $query, ARRAY_A );
 				if ( isset( $giftresults[0] ) ) {
 					$giftresult = $giftresults[0];
