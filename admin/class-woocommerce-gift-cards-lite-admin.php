@@ -1975,12 +1975,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$order = wc_get_order( $order_id );
 
 				global $wpdb;
-				$table_name = $wpdb->prefix . 'offline_giftcard';
-				$query      = $wpdb->prepare(
-					"SELECT * FROM $table_name WHERE `id` = %d",
-					$order_id
-				);
-				$giftresults = $wpdb->get_results( $query, ARRAY_A );
+
+				$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
+
+				if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
+					$giftresults = $wpdb->get_results(
+						$wpdb->prepare(
+						"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
+						$order_id
+						),
+						ARRAY_A
+					);
+				}
+				
 				if ( isset( $giftresults[0] ) ) {
 					$giftresult = $giftresults[0];
 					$order_date = $giftresult['date'];

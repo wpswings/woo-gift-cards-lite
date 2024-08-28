@@ -12,7 +12,9 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 ?>
-	<?php $wps_total_balance = wps_uwgc_total_balance();
+	<?php 
+	$wps_wgm_giftcard_report = new Wps_WGM_Giftcard_Report_List();
+	$wps_total_balance       = $wps_wgm_giftcard_report->wps_uwgc_total_balance();
 	?>
 	<div class="wps-uwgc-balance-summary">
 		<table>
@@ -131,6 +133,11 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * Process bulk actions.
 	 */
 	public function process_bulk_action() {
+		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 		if ( 'bulk-delete' === $this->current_action() ) {
 			if ( isset( $_POST['wps_coupon_ids'] ) && ! empty( $_POST['wps_coupon_ids'] ) ) {
 				$coupon_ids = map_deep( wp_unslash( $_POST['wps_coupon_ids'] ), 'sanitize_text_field' );
@@ -177,7 +184,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->process_bulk_action();
-		$this->example_data = wps_uwgc_giftcard_report_data();
+		$this->example_data = $this->wps_uwgc_giftcard_report_data();
 		$data = $this->example_data;
 		usort( $data, array( $this, 'wps_uwgc_usort_reorder_report' ) );
 		$current_page = $this->get_pagenum();
@@ -217,6 +224,198 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
         	do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
 		}
     }
+
+	/**
+	 * Function is used to show giftcard coupons.
+	 */
+	public function wps_uwgc_giftcard_report_data() {
+
+		$args = array(
+			'posts_per_page'   => -1,
+			'post_type'        => 'shop_coupon',
+			'post_status'      => 'publish',
+		);
+
+		if ( isset( $_POST['wps_gc_date_filter_1'] ) && isset( $_POST['wps_gc_date_filter_2'] ) ) {
+			$nonce = ( isset( $_POST['wps_wgm_report_nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
+			if ( ! wp_verify_nonce( $nonce ) ) {
+				return false;
+			}
+			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
+			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
+
+			$args['date_query'] = array(
+				array(
+					'after'     => $gc_date_1,
+					'before'    => $gc_date_2,
+					'inclusive' => true,
+				),
+			);
+		}
+
+		$coupons = get_posts( $args );
+
+		$coupon_codes = array();
+		if ( isset( $coupons ) && is_array( $coupons ) && ! empty( $coupons ) ) {
+			foreach ( $coupons as $coupon ) {
+				$couponcontent = $coupon->post_content;
+				if ( strpos( $couponcontent, 'GIFTCARD ORDER #' ) !== false || ( strpos( $couponcontent, 'Imported Coupon' ) !== false && 'purchased' === get_post_meta( $coupon->ID, 'wps_wgm_imported_coupon', true ) ) ) {
+					$coupon_name = strtolower( $coupon->post_title );
+					array_push( $coupon_codes, $coupon_name );
+				}
+			}
+		}
+
+		$wps_uwgc_data = array();
+
+		if ( is_array( $coupon_codes ) && ! empty( $coupon_codes ) && count( $coupon_codes ) ) {
+
+			foreach ( $coupon_codes as $key => $value ) {
+				$coupon_obj = new WC_Coupon( $value );
+				$order_id = get_post_meta( $coupon_obj->get_id(), 'wps_wgm_giftcard_coupon', true );
+				if ( isset( $order_id ) && ! empty( $order_id ) ) {
+					$order = wc_get_order( $order_id );
+
+					global $wpdb;
+
+					$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
+
+					if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
+						$giftresults = $wpdb->get_results( 
+							$wpdb->prepare(
+							"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
+							$order_id
+							),
+							ARRAY_A
+						);
+					}
+
+					if ( ! empty( $order ) ) {
+						$user_email = $order->get_billing_email();
+						$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
+						$expiry_date = $coupon_obj->get_date_expires();
+						$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
+						$wps_uwgc_data[] = array(
+							'coupon_id' => $coupon_obj->get_id(),
+							'giftcard_code' => $value,
+							'order_id'  => $order_id,
+							'coupon_amount' => $coupon_amount,
+							'expiry_date' => $expiry_date,
+							'buyer_email' => $user_email,
+						);
+					} else if ( isset( $giftresults[0] ) ) {
+						$giftresult = $giftresults[0];
+						$user_email = $giftresult['from'];
+						$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
+						$expiry_date = $coupon_obj->get_date_expires();
+						$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
+						$wps_uwgc_data[] = array(
+							'coupon_id' => $coupon_obj->get_id(),
+							'giftcard_code' => $value,
+							'order_id'  => $order_id,
+							'coupon_amount' => $coupon_amount,
+							'expiry_date' => $expiry_date,
+							'buyer_email' => $user_email,
+						);
+					}
+				}
+			}
+
+			$wps_uwgc_data = $this->wps_uwgc_search_option( $wps_uwgc_data );
+		}
+		return $wps_uwgc_data;
+	}
+
+	/**
+	 * Function is used to search gift cards.
+	 *
+	 * @param array $wps_uwgc_data Array of data.
+	 */
+	public function wps_uwgc_search_option( $wps_uwgc_data ) {
+		$wps_uwgc_search_arr = array();
+		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
+			$search_coupon = strtolower( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) );
+
+			if ( isset( $wps_uwgc_data ) && ! empty( $wps_uwgc_data ) && is_array( $wps_uwgc_data ) ) {
+				foreach ( $wps_uwgc_data as $key => $value ) {
+					if ( in_array( $search_coupon, $value ) ) {
+						array_push( $wps_uwgc_search_arr, $value );
+					}
+				}
+			}
+			return $wps_uwgc_search_arr;
+		} else {
+			return $wps_uwgc_data;
+		}
+	}
+
+	/**
+	 * This function is used to get total balance.
+	 */
+	public function wps_uwgc_total_balance() {
+		$total_balance = 0;
+		$expire_giftcard = 0;
+		$args = array(
+			'posts_per_page'   => -1,
+			'post_type'        => 'shop_coupon',
+			'post_status'      => 'publish',
+		);
+		$coupons = get_posts( $args );
+		if ( isset( $coupons ) && is_array( $coupons ) && ! empty( $coupons ) ) {
+			foreach ( $coupons as $coupon ) {
+				$couponcontent = $coupon->post_content;
+				if ( strpos( $couponcontent, 'GIFTCARD ORDER #' ) !== false || ( strpos( $couponcontent, 'Imported Coupon' ) !== false && 'purchased' === get_post_meta( $coupon->ID, 'wps_wgm_imported_coupon', true ) ) ) {
+
+					$coupon_id = $coupon->ID;
+					$coupon_obj = new WC_Coupon( $coupon_id );
+
+					if ( $coupon_obj->get_usage_limit() == 0 && $this->wps_uwgc_validate_expiry( $coupon_obj ) ) {
+						$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
+						$total_balance = $total_balance + $coupon_amount;
+
+					} else if ( $coupon_obj->get_usage_limit() > 0 && $coupon_obj->get_usage_limit() > $coupon_obj->get_usage_count() && $this->wps_uwgc_validate_expiry( $coupon_obj ) ) {
+						$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
+						$total_balance = $total_balance + $coupon_amount;
+					} else {
+							$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+						if ( isset( $order_id ) && ! empty( $order_id ) ) {
+							$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
+							$expiry_date = get_post_meta( $coupon_id, 'date_expires', true );
+
+							if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
+
+								$now_date = current_time( 'timestamp' );
+								$diff = $expiry_date - $now_date;
+								if ( $diff < 0 ) {
+									$expire_giftcard = $expire_giftcard + $coupon_amount;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$wps_common_array = array(
+			'total_balance' => $total_balance,
+			'expire_giftcard' => $expire_giftcard,
+		);
+		return $wps_common_array;
+	}
+
+	/**
+	 * Function is used to check expiry date of coupon.
+	 *
+	 * @param array $coupon_obj Object of coupon.
+	 */
+	public function wps_uwgc_validate_expiry( $coupon_obj ) {
+
+		if ( $coupon_obj->get_date_expires() && time() > $coupon_obj->get_date_expires()->getTimestamp() ) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
 
 ?>
@@ -231,194 +430,3 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	?>
 </form>
 <?php
-
-/**
- * Function is used to show giftcard coupons.
- */
-function wps_uwgc_giftcard_report_data() {
-
-	$args = array(
-        'posts_per_page'   => -1,
-        'post_type'        => 'shop_coupon',
-        'post_status'      => 'publish',
-    );
-
-	if ( isset( $_POST['wps_gc_date_filter_1'] ) && isset( $_POST['wps_gc_date_filter_2'] ) ) {
-		$nonce = ( isset( $_POST['wps_wgm_report_nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce ) ) {
-			return false;
-		}
-		$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
-    	$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
-
-		$args['date_query'] = array(
-            array(
-                'after'     => $gc_date_1,
-                'before'    => $gc_date_2,
-                'inclusive' => true,
-            ),
-        );
-	}
-
-    $coupons = get_posts( $args );
-
-	$coupon_codes = array();
-	if ( isset( $coupons ) && is_array( $coupons ) && ! empty( $coupons ) ) {
-		foreach ( $coupons as $coupon ) {
-			$couponcontent = $coupon->post_content;
-			if ( strpos( $couponcontent, 'GIFTCARD ORDER #' ) !== false || ( strpos( $couponcontent, 'Imported Coupon' ) !== false && 'purchased' === get_post_meta( $coupon->ID, 'wps_wgm_imported_coupon', true ) ) ) {
-				$coupon_name = strtolower( $coupon->post_title );
-				array_push( $coupon_codes, $coupon_name );
-			}
-		}
-	}
-
-	$wps_uwgc_data = array();
-
-	if ( is_array( $coupon_codes ) && ! empty( $coupon_codes ) && count( $coupon_codes ) ) {
-
-		foreach ( $coupon_codes as $key => $value ) {
-			$coupon_obj = new WC_Coupon( $value );
-			$order_id = get_post_meta( $coupon_obj->get_id(), 'wps_wgm_giftcard_coupon', true );
-			if ( isset( $order_id ) && ! empty( $order_id ) ) {
-				$order = wc_get_order( $order_id );
-
-				global $wpdb;
-
-				$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
-
-				if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
-					$table_name = $wpdb->prefix . 'offline_giftcard';
-					$query      = $wpdb->prepare(
-						"SELECT * FROM $table_name WHERE `id` = %d",
-						$order_id
-					);
-					$giftresults = $wpdb->get_results( $query, ARRAY_A );
-				}
-
-				if ( ! empty( $order ) ) {
-					$user_email = $order->get_billing_email();
-					$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
-					$expiry_date = $coupon_obj->get_date_expires();
-					$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
-					$wps_uwgc_data[] = array(
-						'coupon_id' => $coupon_obj->get_id(),
-						'giftcard_code' => $value,
-						'order_id'  => $order_id,
-						'coupon_amount' => $coupon_amount,
-						'expiry_date' => $expiry_date,
-						'buyer_email' => $user_email,
-					);
-				} else if ( isset( $giftresults[0] ) ) {
-					$giftresult = $giftresults[0];
-					$user_email = $giftresult['from'];
-					$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
-					$expiry_date = $coupon_obj->get_date_expires();
-					$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
-					$wps_uwgc_data[] = array(
-						'coupon_id' => $coupon_obj->get_id(),
-						'giftcard_code' => $value,
-						'order_id'  => $order_id,
-						'coupon_amount' => $coupon_amount,
-						'expiry_date' => $expiry_date,
-						'buyer_email' => $user_email,
-					);
-				}
-			}
-		}
-
-		$wps_uwgc_data = wps_uwgc_search_option( $wps_uwgc_data );
-	}
-	return $wps_uwgc_data;
-}
-
-/**
- * Function is used to search gift cards.
- *
- * @param array $wps_uwgc_data Array of data.
- */
-function wps_uwgc_search_option( $wps_uwgc_data ) {
-	$wps_uwgc_search_arr = array();
-	if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
-		$search_coupon = strtolower( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) );
-
-		if ( isset( $wps_uwgc_data ) && ! empty( $wps_uwgc_data ) && is_array( $wps_uwgc_data ) ) {
-			foreach ( $wps_uwgc_data as $key => $value ) {
-				if ( in_array( $search_coupon, $value ) ) {
-					array_push( $wps_uwgc_search_arr, $value );
-				}
-			}
-		}
-		return $wps_uwgc_search_arr;
-	} else {
-		return $wps_uwgc_data;
-	}
-}
-
-/**
- * Function is used to check expiry date of coupon.
- *
- * @param array $coupon_obj Object of coupon.
- */
-function wps_uwgc_validate_expiry( $coupon_obj ) {
-
-	if ( $coupon_obj->get_date_expires() && time() > $coupon_obj->get_date_expires()->getTimestamp() ) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
-/**
- * This function is used to get total balance.
- */
-function wps_uwgc_total_balance() {
-	$total_balance = 0;
-	$expire_giftcard = 0;
-	$args = array(
-		'posts_per_page'   => -1,
-		'post_type'        => 'shop_coupon',
-		'post_status'      => 'publish',
-	);
-	$coupons = get_posts( $args );
-	if ( isset( $coupons ) && is_array( $coupons ) && ! empty( $coupons ) ) {
-		foreach ( $coupons as $coupon ) {
-			$couponcontent = $coupon->post_content;
-			if ( strpos( $couponcontent, 'GIFTCARD ORDER #' ) !== false || ( strpos( $couponcontent, 'Imported Coupon' ) !== false && 'purchased' === get_post_meta( $coupon->ID, 'wps_wgm_imported_coupon', true ) ) ) {
-
-				$coupon_id = $coupon->ID;
-				$coupon_obj = new WC_Coupon( $coupon_id );
-
-				if ( $coupon_obj->get_usage_limit() == 0 && wps_uwgc_validate_expiry( $coupon_obj ) ) {
-					$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
-					$total_balance = $total_balance + $coupon_amount;
-
-				} else if ( $coupon_obj->get_usage_limit() > 0 && $coupon_obj->get_usage_limit() > $coupon_obj->get_usage_count() && wps_uwgc_validate_expiry( $coupon_obj ) ) {
-					$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
-					$total_balance = $total_balance + $coupon_amount;
-				} else {
-						$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
-					if ( isset( $order_id ) && ! empty( $order_id ) ) {
-						$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
-						$expiry_date = get_post_meta( $coupon_id, 'date_expires', true );
-
-						if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
-
-							$now_date = current_time( 'timestamp' );
-							$diff = $expiry_date - $now_date;
-							if ( $diff < 0 ) {
-								$expire_giftcard = $expire_giftcard + $coupon_amount;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	$wps_common_array = array(
-		'total_balance' => $total_balance,
-		'expire_giftcard' => $expire_giftcard,
-	);
-	return $wps_common_array;
-}
