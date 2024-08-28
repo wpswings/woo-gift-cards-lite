@@ -1308,7 +1308,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							if ( isset( $value->key ) && 'Contributor' == $value->key && ! empty( $value->value ) ) {
 
-								$pro_id = $item->get_id();
+								$pro_id = $product->get_id();
 								wps_wgm_hpos_update_meta_data( $order_id, 'gifting#order', $order_id );
 
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
