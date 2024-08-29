@@ -93,7 +93,7 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 **4)** Compatibility with the [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=rma-pro) are compatible with our gift voucher plugin. Customers can request refunds and exchanges for purchased WooCommerce gift card products, provided the gift vouchers have not expired and have not been used. Additionally, you can refund the coupon value to the RMA wallet instead of the original payment method used.
 
-**5)** Compatibility With [**WooCommerce HPOS**](https://woo.com/document/high-performance-order-storage/) to Easily Handle Bulk Order Volume
+**5)** Compatibility With [**WooCommerce HPOS**](https://woocommerce.com/document/high-performance-order-storage/) to Easily Handle Bulk Order Volume
 
 **6)** Compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=subs-pro) to Leverage the benefits of Recurring Revenue with a subscription program.
 
