@@ -203,7 +203,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$wps_wgm_pricing['to']   = $to_price;
 							}
 						}
-					} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+					} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 						$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 						$wps_wgm_pricing = apply_filters( 'wps_wgm_pricing_wcml', $wps_wgm_pricing );
 						$is_customizable = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
@@ -356,7 +356,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<label>' . __( 'Enter Price Within Above Range', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="input-text wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $wps_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
-									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										$cart_html    .= apply_filters( 'wps_wgm_cart_html_wcml', $cart_html, $default_price, $to_price, $from_price );
 									} else {
 										$wps_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
@@ -368,7 +368,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								}
 								if ( 'wps_wgm_default_price' === $product_pricing_type ) {
 									$default_price = $product_pricing['default_price'];
-									if ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+									if ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										$default_price = apply_filters( 'wps_wgm_price_conversion_wcml', $default_price );
 									}
 									$cart_html    .= '<input type="hidden" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $default_price . '">';
@@ -411,7 +411,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 													} else {
 														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
 													}
-												} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+												} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 													$cart_html = apply_filters( 'wps_wgm_cart_html_selected_wcml', $cart_html, $default_price, $price );
 												} else {
 													$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
@@ -466,7 +466,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" min="1" value = ' . $default_price . '>
 											<span class="wps_wgm_min_user_price">' . __( 'Minimum Price is : ', 'woo-gift-cards-lite' ) . $min_user_price . '</span></p>';
-									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										$cart_html .= apply_filters( 'wps_wgm_cart_html_user_wcml', $cart_html, $default_price, $min_user_price );
 									} else {
 										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
@@ -487,7 +487,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 												$wps_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_price );
 											}
-										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										    $wps_price = apply_filters( 'wps_wgm_price_conversion_wcml', $wps_price );
 										}
 										$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
@@ -501,7 +501,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											<?php
 											foreach ( $variation_amount as $key => $value ) {
 												if ( isset( $value ) && ! empty( $value ) ) {
-													if ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+													if ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 														$value = apply_filters( 'wps_wgm_price_conversion_wcml', $value );
 													}
 													?>
@@ -722,7 +722,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$_POST['wps_wgm_price'] = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
 								}
 							}
-						} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+						} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 							$_POST['wps_wgm_price'] = apply_filters( 'wps_wgm_cart_price_wcml', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ), $product_id );
 							$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 						}
@@ -940,7 +940,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 									$gift_price = wcpbc_the_zone()->get_exchange_rate_price( $gift_price );
 								}
-							} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+							} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 								$gift_price = apply_filters( 'wps_wgm_price_conversion_wcml', $gift_price );
 							}
 							$gift_price = apply_filters( 'wps_wgm_before_calculate_totals', $gift_price, $value );
@@ -1006,7 +1006,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
 										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
-									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										$price_html .= apply_filters( 'wps_wgm_price_html_wcml', $price_html, $from_price, $to_price );
 									} else {
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
@@ -1033,7 +1033,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$last_range         = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $last_range );
 												$selected_prices[0] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $selected_prices[0] );
 												$price_html        .= wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $selected_prices[0] ) . '-' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-											} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+											} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 												$price_html .= apply_filters( 'wps_wgm_price_html_selected', $price_html, $last_range, $selected_prices[0] );
 											} else {
 												$selected_prices[0] = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
@@ -1092,7 +1092,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 												$start_price = wcpbc_the_zone()->get_exchange_rate_price( $start_price );
 												$end_price   = wcpbc_the_zone()->get_exchange_rate_price( $end_price );
 											}
-										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 											$start_price = apply_filters( 'wps_wgm_price_conversion_wcml', $start_price );
 											$end_price   = apply_filters( 'wps_wgm_price_conversion_wcml', $end_price );
 										}
@@ -1149,7 +1149,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
 										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
 										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
-									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										$price_html .= apply_filters( 'wps_wgm_price_html_price_range', $price_html, $from_price, $to_price );
 									} else {
 										$decimal_separator   = get_option( 'woocommerce_price_decimal_sep' );
@@ -1308,7 +1308,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							if ( isset( $value->key ) && 'Contributor' == $value->key && ! empty( $value->value ) ) {
 
-								$pro_id = $item->get_id();
+								$pro_id = $product->get_id();
 								wps_wgm_hpos_update_meta_data( $order_id, 'gifting#order', $order_id );
 
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
@@ -2144,7 +2144,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					}
 				} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 					$html = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $html );
-				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) ) {
+				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 					$html = apply_filters( 'wps_wgm_price_conversion_wcml', $html );
 				}
 				$html = str_replace( ',', '.', $html );
@@ -2347,7 +2347,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$transaction_data = array(
 							'user_id'          => $user_id,
 							'amount'           => $coupon_amount,
-							'currency'         => ( class_exists( 'WCML_Multi_Currency_Prices' ) ) ? getClientCurrency() : get_woocommerce_currency(),
+							'currency'         => ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) ? getClientCurrency() : get_woocommerce_currency(),
 							'payment_method'   => 'Gift Card Redeem',
 							'transaction_type' => htmlentities( $transaction_type ),
 						);
