@@ -1421,7 +1421,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'send' );
 						$other_settings                               = get_option( 'wps_wgm_other_settings', array() );
 						$wps_wgm_enable_auto_complete_gift_card_order = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_enable_auto_complete_gift_card_order' );
-						if ( 'on' === $wps_wgm_enable_auto_complete_gift_card_order && $this->is_order_gift_card_only( $order_id ) ) {
+						if ( 'on' === $wps_wgm_enable_auto_complete_gift_card_order && $this->wps_common_fun->is_order_gift_card_only( $order_id ) ) {
 							$order_detail = new WC_Order( $order_id );
 							$order_detail->update_status( 'wc-completed', 'Auto Completed via Gift Card.' );
 						}
@@ -2798,21 +2798,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			</div>
 			<?php
 		}
-	}
-
-	public function is_order_gift_card_only( $order_id ) {
-		$order = wc_get_order( $order_id );
-		$gift_card_only = true;
-
-		foreach ( $order->get_items() as $item_id => $item ) {
-			$product = $item->get_product();
-			if ( 'wgm_gift_card' !== $product->get_type() ) {
-				$gift_card_only = false;
-				break;
-			}
-		}
-
-		return $gift_card_only;
 	}
 
 }
