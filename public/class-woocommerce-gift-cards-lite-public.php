@@ -1421,7 +1421,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'send' );
 						$other_settings                               = get_option( 'wps_wgm_other_settings', array() );
 						$wps_wgm_enable_auto_complete_gift_card_order = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_enable_auto_complete_gift_card_order' );
-						if ( 'on' === $wps_wgm_enable_auto_complete_gift_card_order && $this->wps_common_fun->is_order_gift_card_only( $order_id ) ) {
+						if ( 'on' === $wps_wgm_enable_auto_complete_gift_card_order && $this->wps_common_fun->is_order_gift_card_only( $order_id ) && empty( $order->get_shipping_method() ) ) {
 							$order_detail = new WC_Order( $order_id );
 							$order_detail->update_status( 'wc-completed', 'Auto Completed via Gift Card.' );
 						}
