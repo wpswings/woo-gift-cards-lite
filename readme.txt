@@ -1,7 +1,7 @@
-=== Ultimate Gift Cards for WooCommerce – Create WooCommerce Vouchers, Redeem & Manage Digital Gift Coupons with Personalized Templates ===
+=== Ultimate Gift Cards for WooCommerce – Ultimate Gift Cards for Woocommerce – Create Vouchers, Redeem & Manage Digital Gift Coupons. Offer Gift Certificates, Schedule Gift Cards, and Use Advance Coupons With Personalized Templates ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
-Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers, gift cards, gifts, certificate, gift cards woocommerce
+Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 5.1.0
 Tested up to: 6.6.2
 WC requires at least: 5.5.0
@@ -15,7 +15,7 @@ Create, sell and manage WooCommerce gift cards to attract more sales and multipl
 
 == Description ==
 
-**INTRODUCE DIGITAL GIFT CARDS ON YOUR WORDPRESS WEBSITE! EMBRACE THE EFFORTLESS WOOCOMMERCE GIFT CARDS SOLUTION - EASY CREATION, REDEMPTION & MANAGEMENT. PERSONALIZE CARDS, SET BEAUTIFUL FESTIVE TEMPLATES, AND SHARE GIFT VOUCHERS VIA EMAIL!**
+**INTRODUCE DIGITAL GIFT CARDS ON YOUR WORDPRESS WEBSITE! EMBRACE THE EFFORTLESS WOOCOMMERCE GIFT CERTIFICATES SOLUTION - EASY CREATION, REDEMPTION & MANAGEMENT. PERSONALIZE CARDS, SET BEAUTIFUL FESTIVE GIFT CERTIFICATES TEMPLATES, AND SHARE GIFT VOUCHERS VIA EMAIL!**
 
 Create, sell, and manage digital & physical gift cards at your eCommerce store with one tool —  the Ultimate Gift Cards for WooCommerce plugin.
 
@@ -42,9 +42,9 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 **6) Set Expiry Date:** WooCommerce Ultimate Gift Card plugin you can define the expiry date for your gift vouchers, which will be in effect from the date of purchase or from the scheduled date of delivery for scheduled cards.
 
-**7) Cards With Duration-Based Costing:** Create variable-priced WooCommerce gift cards for time-based services like grooming, decors, etc. Set durations as descriptions & prices accordingly.
+**7) Ultimate Cards with Duration Based Costing:** Create variable-priced WooCommerce gift cards for time-based services like grooming, decors, etc. Set durations as descriptions & prices accordingly.
 
-**8) Five Pricing Types:** Create WooCommerce Gift Cards for your products & services using these pricing types: default price, price range, selected price, user price, and variable prices.
+**8) Gift Cards Pricing type:** Create WooCommerce Gift Cards for your products & services using these pricing types: default price, price range, selected price, user price, and variable prices.
 
 **9) Flexible Delivery Options:** With WooCommerce gift certificate plugin you can choose the email method to send the gift card directly to the recipient. The downloadable option allows customers to receive the card & deliver it to others.
 
@@ -225,6 +225,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.0.4 - Released on 26 September 2024 = 
+* New : Latest compatible with WP(6.6.2) and WC(9.3.3)
 
 = 3.0.3 - Released on 29 August 2024 = 
 * New : Gift Cards Report Feature is added
@@ -474,6 +477,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.0.3 - Released on 29 August 2024 = 
-* New : Gift Cards Report Feature is added
-* New : Latest compatible with WP(6.6.1) and WC(9.2.3)
+= 3.0.4 - Released on 26 September 2024 = 
+* New : Latest compatible with WP(6.6.2) and WC(9.3.3)
