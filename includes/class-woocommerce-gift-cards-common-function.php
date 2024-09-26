@@ -894,5 +894,26 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 			return $response['body'];
 		}
+
+		/**
+		 * To find the order is only gift card order.
+		 *
+		 * @param string $order_id order id.
+		 * @return string $gift_card_only.
+		 */
+		public function is_order_gift_card_only( $order_id ) {
+			$order = wc_get_order( $order_id );
+			$gift_card_only = true;
+	
+			foreach ( $order->get_items() as $item_id => $item ) {
+				$product = $item->get_product();
+				if ( 'wgm_gift_card' !== $product->get_type() ) {
+					$gift_card_only = false;
+					break;
+				}
+			}
+	
+			return $gift_card_only;
+		}
 	}
 }

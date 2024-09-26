@@ -1419,6 +1419,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					if ( $gift_order && isset( $wps_wgm_mail_template_data['datecheck'] ) && $wps_wgm_mail_template_data['datecheck'] ) {
 						wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'send' );
+						$other_settings                               = get_option( 'wps_wgm_other_settings', array() );
+						$wps_wgm_enable_auto_complete_gift_card_order = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_enable_auto_complete_gift_card_order' );
+						if ( wps_uwgc_pro_active() && 'on' === $wps_wgm_enable_auto_complete_gift_card_order && $this->wps_common_fun->is_order_gift_card_only( $order_id ) && empty( $order->get_shipping_method() ) ) {
+							$order_detail = new WC_Order( $order_id );
+							$order_detail->update_status( 'wc-completed', 'Auto Completed via Gift Card.' );
+						}
 					}
 					do_action( 'wps_wgm_action_on_order_status_changed', $order_id, $old_status, $new_status, $wps_wgm_mail_template_data );
 				}
