@@ -1168,7 +1168,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$product_id_to_hide = get_option( 'contributor_product_id' ); // Replace with your actual product ID.
 
 		// Group Gifting contri product price hide ///////.
-		if ( $product->get_id() == $product_id_to_hide ) {
+		if ( $product->get_id() == $product_id_to_hide || get_option( 'gc_expiry_extension_product_id' ) == $product_id ) {
 
 			$price = ''; // Empty string will hide the price.
 			return $price;
@@ -1206,6 +1206,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$prod_name  = $item['name'];
 			if ( get_option( 'wps_gccoupon_rechargeable_product_id' ) == $product_id ) {
 				$this->wps_add_fund_to_existing_coupon( $order_id, $old_status, $new_status );
+			}
+			if ( get_option( 'gc_expiry_extension_product_id' ) == $product_id ) {
+				do_action( 'wps_wgm_expiry_extend_to_existing_coupon', $order_id, $old_status, $new_status );
 			}
 		}
 

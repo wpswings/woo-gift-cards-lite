@@ -23,6 +23,21 @@ if ( isset( $_POST['wps_wgm_save_product'] ) ) {
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
 				foreach ( $postdata as $key => $value ) {
 					$product_settings_array[ $key ] = $value;
+					if ( 'wps_wgm_product_setting_expiry_extension' == $key && 'on' == $value ) {
+						$product_id = get_option( 'gc_expiry_extension_product_id' );
+						if ( $product_id ) {
+							$productdata = wc_get_product( $product_id );
+							$productdata->set_catalog_visibility( 'visible' );
+							$productdata->save();
+						}
+					} else {
+						$product_id = get_option( 'gc_expiry_extension_product_id' );
+						if ( $product_id ) {
+							$productdata = wc_get_product( $product_id );
+							$productdata->set_catalog_visibility( 'hidden' );
+							$productdata->save();
+						}
+					}
 				}
 			}
 			if ( is_array( $product_settings_array ) && ! empty( $product_settings_array ) ) {
