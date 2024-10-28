@@ -579,9 +579,7 @@
 						form_Data.append( 'tempId', tempId );
 						form_Data.append( 'send_date', send_date );
 						form_Data.append( 'variable_price_desc', variable_price_desc );
-						if ( wps_wgm.is_pro_active ) {
-							form_Data.append( 'delivery_method', delivery_method );
-						}
+						form_Data.append( 'delivery_method', delivery_method );
 						
 						$.ajax(
 							{

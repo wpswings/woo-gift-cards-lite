@@ -1208,7 +1208,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$this->wps_add_fund_to_existing_coupon( $order_id, $old_status, $new_status );
 			}
 			if ( get_option( 'gc_expiry_extension_product_id' ) == $product_id ) {
-				do_action( 'wps_wgm_expiry_extend_to_existing_coupon', $order_id, $old_status, $new_status );
+				$gc_expiry_extension_already = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_expiry_extension_already', true );
+				if ( 'send' == $gc_expiry_extension_already ) {
+
+				} else {
+					do_action( 'wps_wgm_expiry_extend_to_existing_coupon', $order_id, $old_status, $new_status );
+				}
 			}
 		}
 
@@ -1701,6 +1706,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							);
 						}
 						$link = apply_filters( 'wps_wgm_loop_add_to_cart_link', $link, $product );
+					} elseif ( get_option( 'gc_expiry_extension_product_id' ) == $product_id ) {
+						$link = sprintf(
+							'<a rel="nofollow" href="%s" class="%s">%s</a>',
+							esc_url( get_the_permalink() ),
+							esc_attr( isset( $class ) ? $class : 'button wps_gc_button' ),
+							esc_html( apply_filters( 'wps_wgm_view_card_text', __( 'VIEW CARD', 'woo-gift-cards-lite' ) ) )
+						);
 					}
 				}
 			}
