@@ -1168,7 +1168,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$product_id_to_hide = get_option( 'contributor_product_id' ); // Replace with your actual product ID.
 
 		// Group Gifting contri product price hide ///////.
-		if ( $product->get_id() == $product_id_to_hide || get_option( 'gc_expiry_extension_product_id' ) == $product_id ) {
+		if ( $product->get_id() == $product_id_to_hide || get_option( 'gc_expiry_extension_product_id' ) == $product->get_id() ) {
 
 			$price = ''; // Empty string will hide the price.
 			return $price;
