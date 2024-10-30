@@ -1,4 +1,4 @@
-=== Ultimate Gift Cards for WooCommerce – Ultimate Gift Cards for Woocommerce – Create Vouchers, Redeem & Manage Digital Gift Coupons. Offer Gift Certificates, Schedule Gift Cards, and Use Advance Coupons With Personalized Templates ===
+=== Ultimate Gift Cards for WooCommerce – Create WooCommerce Gift Cards, Gift Vouchers, Redeem & Manage Digital Gift Coupons. Offer Gift Certificates, Schedule Gift Cards, and Use Advance Coupons With Personalized Templates ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
@@ -6,7 +6,7 @@ Requires at least: 5.1.0
 Tested up to: 6.6.2
 WC requires at least: 5.5.0
 WC tested up to: 9.3.3
-Stable tag:  3.0.4
+Stable tag:  3.0.5
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,8 +27,9 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 [youtube https://youtu.be/g6JLA3ewph8]
 
-== KEY FEATURES OF FREE GIFT CARDS FOR WOOCOMMERCE PLUGIN ==
+Don’t miss our Halloween Sale—grab the [**WooCommerce Gift Cards**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=referral&utm_campaign=hgiftcards-pro) today at 25% Off! 🎉👻
 
+== KEY FEATURES OF FREE GIFT CARDS FOR WOOCOMMERCE PLUGIN ==
 
 **1) Gift Cards Reports:** With this WooCommerce gift cards plugin, you can easily keep track of every gift card you sell using Gift Card Reports. You can monitor details like the purchase date, gift card amount, remaining balance, sender and receiver names, expiry date, and more. This helps you plan your coupon sales more effectively.
 
@@ -225,6 +226,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.0.5 - Released on 30 October 2024 = 
+* New : New ShortCode added - [DISCLAIMER] and [DELIVERYMETHOD] for email templates and pdf templates.
 
 = 3.0.4 - Released on 26 September 2024 = 
 * New : Latest compatible with WP(6.6.2) and WC(9.3.3)
@@ -477,5 +481,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.0.4 - Released on 26 September 2024 = 
-* New : Latest compatible with WP(6.6.2) and WC(9.3.3)
+= 3.0.5 - Released on 30 October 2024 = 
+* New : New ShortCode added - [DISCLAIMER] and [DELIVERYMETHOD] for email templates and pdf templates.
