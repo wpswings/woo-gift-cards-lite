@@ -233,7 +233,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 
-		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || is_page( 'my-account' ) ) {
+		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) {
 			$wps_wgm_check_balance = array(
 				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
