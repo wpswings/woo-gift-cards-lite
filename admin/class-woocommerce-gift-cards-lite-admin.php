@@ -1784,7 +1784,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			
 			$excluded_products = array( $excluded_product_id, $excluded_product_id1 );
 
-			if ( 'on' != $wps_wgm_product_setting_expiry_extension ) {
+			if ( 'on' != $wps_wgm_product_setting_expiry_extension || ! wps_uwgc_pro_active() ) {
 				array_push( $excluded_products, $extension_product_id );
 			}
 			// Exclude the specific product from the query.
