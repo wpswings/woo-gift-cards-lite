@@ -1776,11 +1776,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		// Check if we are in admin and on the products page.
 		if (is_admin() && $query->is_main_query() && $query->get('post_type') === 'product') {
 		
-			$excluded_product_id =  get_option( 'contributor_product_id' );
+			$excluded_product_id  = get_option( 'contributor_product_id' );
 			$excluded_product_id1 = get_option( 'wps_gccoupon_rechargeable_product_id' );
+			$extension_product_id = get_option( 'gc_expiry_extension_product_id' );
+			$product_settings     = get_option( 'wps_wgm_product_settings', true );
+			$wps_wgm_product_setting_expiry_extension = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_expiry_extension' );
+			
+			$excluded_products = array( $excluded_product_id, $excluded_product_id1 );
 
+			if ( 'on' != $wps_wgm_product_setting_expiry_extension || ! wps_uwgc_pro_active() ) {
+				array_push( $excluded_products, $extension_product_id );
+			}
 			// Exclude the specific product from the query.
-			$query->set('post__not_in', array($excluded_product_id,$excluded_product_id1));
+			$query->set('post__not_in', $excluded_products );
 		}
 	}
 

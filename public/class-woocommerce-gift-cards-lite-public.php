@@ -1209,9 +1209,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 			if ( get_option( 'gc_expiry_extension_product_id' ) == $product_id ) {
 				$gc_expiry_extension_already = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_expiry_extension_already', true );
-				if ( 'send' == $gc_expiry_extension_already ) {
-
-				} else {
+				if ( 'send' != $gc_expiry_extension_already ) {
 					do_action( 'wps_wgm_expiry_extend_to_existing_coupon', $order_id, $old_status, $new_status );
 				}
 			}
