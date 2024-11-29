@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 5.1.0
-Tested up to: 6.6.2
+Tested up to: 6.7.1
 WC requires at least: 5.5.0
-WC tested up to: 9.3.3
-Stable tag:  3.0.5
+WC tested up to: 9.4.2
+Stable tag:  3.0.6
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,7 +27,7 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 [youtube https://youtu.be/g6JLA3ewph8]
 
-Don’t miss our Halloween Sale—grab the [**WooCommerce Gift Cards**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=referral&utm_campaign=hgiftcards-pro) today at 25% Off! 🎉👻
+Don’t miss our BFCM Sale—grab the [**WooCommerce Gift Cards**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=referral&utm_campaign=hgiftcards-pro) today at 40% Off! 🎉👻
 
 == KEY FEATURES OF FREE GIFT CARDS FOR WOOCOMMERCE PLUGIN ==
 
@@ -226,6 +226,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.0.6 - Released on 27 November 2024 = 
+* New : Latest compatible with WP(6.7.1) and WC(9.4.2)
 
 = 3.0.5 - Released on 30 October 2024 = 
 * New : New ShortCode added - [DISCLAIMER] and [DELIVERYMETHOD] for email templates and pdf templates.
@@ -481,5 +484,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.0.5 - Released on 30 October 2024 = 
-* New : New ShortCode added - [DISCLAIMER] and [DELIVERYMETHOD] for email templates and pdf templates.
+= 3.0.6 - Released on 27 November 2024 = 
+* New : Latest compatible with WP(6.7.1) and WC(9.4.2)
