@@ -2046,6 +2046,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							}
 						}
 					}
+
+					$to = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
 					///////////////////////////////////////////////////////////////////////////////////////////////////
 						
 					$meta_key = 'suborder#'.$order_id;
