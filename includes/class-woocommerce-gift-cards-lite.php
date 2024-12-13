@@ -72,7 +72,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '3.0.6';
+			$this->version = '3.0.7';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -208,6 +208,13 @@ class Woocommerce_Gift_Cards_Lite {
 			$this->loader->add_action( 'wps_points_admin_table_log', $plugin_admin, 'wps_wgm_admin_end_points_log', 10, 1 );
 		}
 
+		// Gifting Portal Consumer Key and Secret.
+		$offline_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
+		$wps_wgm_gifting_api_keys        = get_option( 'wps_wgm_gifting_api_keys' );
+		if ( isset( $offline_giftcard_redeem_details ) && ! empty( $offline_giftcard_redeem_details ) && empty( $wps_wgm_gifting_api_keys ) ) {
+			$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_generate_gifting_api_key_and_secret' );
+		}
+		
 		// Reporting.
 		$this->loader->add_action( 'wp_before_admin_bar_render', $plugin_admin, 'wps_wgm_admin_toolbar' );
 		$this->loader->add_action( 'woocommerce_admin_reports', $plugin_admin, 'wps_wgm_report' );

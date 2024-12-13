@@ -117,7 +117,7 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '3.0.6';
+			self::$version = '3.0.7';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );

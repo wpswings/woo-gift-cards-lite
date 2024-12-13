@@ -2247,5 +2247,72 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 	}
 
+	/**
+	 * Function is used to generate consumer key and secret.
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_generate_gifting_api_key_and_secret()
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_generate_gifting_api_key_and_secret() {
+		$api_keys = array();
+		for ( $i = 0; $i < 2; $i++ ) {
+			$random     = wp_rand();
+			$api_keys[] = md5( $random );
+		}
+		$wps_wgm_gifting_api_keys['consumer_key']    = $api_keys[0];
+		$wps_wgm_gifting_api_keys['consumer_secret'] = $api_keys[1];
+
+		$url = 'https://gifting.wpswings.com/api/generate/update';
+
+		$offline_giftcard_redeem_details  = get_option( 'giftcard_offline_redeem_link' );
+		$client_license_code             = get_option( 'wps_gw_lcns_key', '' );
+		$userid                          = isset( $offline_giftcard_redeem_details['user_id'] ) ? $offline_giftcard_redeem_details['user_id'] : '';
+		$client_domain                   = home_url();
+		$request_type                    = 'generate_token';
+
+		$curl_data = array(
+			'user_id'         => $userid,
+			'domain'          => $client_domain,
+			'license'         => $client_license_code,
+			'consumer_key'    => $wps_wgm_gifting_api_keys['consumer_key'],
+			'consumer_secret' => $wps_wgm_gifting_api_keys['consumer_secret'],
+			'request_type'    => $request_type,
+		);
+
+		$response = wp_remote_post(
+			$url,
+			array(
+				'timeout' => 50,
+				'user-agent' => '',
+				'sslverify' => false,
+				'body' => $curl_data,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			error_log( 'Request failed: ' . $response->get_error_message() );
+			return;
+		}
+
+		$response_body = wp_remote_retrieve_body( $response );
+
+		if ( ! empty( $response_body ) ) {
+			$response_data = json_decode( $response_body );
+			if ( isset( $response_data->status ) ) {
+				if ( 'success' === $response_data->status ) {
+					update_option( 'wps_wgm_gifting_api_keys', $wps_wgm_gifting_api_keys );
+				} else {
+					error_log( 'API error: : Unknown error' );
+				}
+			} else {
+				error_log( 'Invalid response: Missing status field' );
+			}
+		} else {
+			error_log( 'Empty response from the API' );
+		}
+	}
+
 }
 ?>
