@@ -372,7 +372,7 @@ function wps_permission_check( $request ) {
 	$license         = $request->get_header( 'licensecode' );
 	$consumer_key    = $request->get_header( 'consumer-key' );
 	$consumer_secret = $request->get_header( 'consumer-secret' );
-
+	$return_value = true;
 	$wps_wgm_gifting_api_keys = get_option( 'wps_wgm_gifting_api_keys' );
 	$client_license_code      = get_option( 'wps_gw_lcns_key', '' );
 
@@ -381,14 +381,16 @@ function wps_permission_check( $request ) {
     }
 	
 	if ( $consumer_key === $wps_wgm_gifting_api_keys['consumer_key'] && $consumer_secret === $wps_wgm_gifting_api_keys['consumer_secret'] ) {
-		if ( empty( $license ) ) {
-            return true;
+		// This condition will be applied for pro plugin.
+		if (  ! empty( $license ) ) {
+            if ( trim( $client_license_code ) !== trim( $license ) ) {
+				return new WP_Error( 'rest_forbidden', esc_html__( 'Invalid license key.', 'woo-gift-cards-lite' ), array( 'status' => 403 ) );
+			} 
         }
+		// This value will be true in case of org if consumer_key and consumer_secret is correct.
+		return $return_value;
 
-		if ( trim( $client_license_code ) === trim( $license ) ) {
-			return true;
-		}
-		return new WP_Error( 'rest_forbidden', esc_html__( 'Invalid license key.', 'woo-gift-cards-lite' ), array( 'status' => 403 ) );
+
 	}
 	return new WP_Error( 'rest_forbidden', esc_html__( 'Invalid API key details.', 'woo-gift-cards-lite' ), array( 'status' => 401 ) );
 }
