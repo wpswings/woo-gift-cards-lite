@@ -27,8 +27,6 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 [youtube https://youtu.be/g6JLA3ewph8]
 
-Don’t miss our BFCM Sale—grab the [**WooCommerce Gift Cards**](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-pro&utm_medium=referral&utm_campaign=hgiftcards-pro) today at 40% Off! 🎉👻
-
 == KEY FEATURES OF FREE GIFT CARDS FOR WOOCOMMERCE PLUGIN ==
 
 **1) Gift Cards Reports:** With this WooCommerce gift cards plugin, you can easily keep track of every gift card you sell using Gift Card Reports. You can monitor details like the purchase date, gift card amount, remaining balance, sender and receiver names, expiry date, and more. This helps you plan your coupon sales more effectively.
@@ -107,20 +105,17 @@ Don’t miss our BFCM Sale—grab the [**WooCommerce Gift Cards**](https://wpswi
 
 == WHAT PREMIUM VERSION VERSION OF WOOCOMMERCE GIFT CARDS OFFERS ==
 
-* Group gifting
-* Send multiple cards In Bulk
-* Create a gift card template according to your need
-* 20+ Pre-Designed Card templates 
-* Card Shipping to Recipient’s Address
-* Twilio integration for SMS Notification
-* Use your predefined codes
-* Sell gift cards offline
-* Send gift card template as pdf
-* Give discounts on gift cards
-* Gift card report
-* Thank You gift card
-* WhatsApp Sharing for Gift Certificates
-* Automated balance updates
+**1) Easily Import and Export Gift Cards**: With our gift cards plugin, you can quickly export gift card details (both online and offline) as a CSV file. You can also import custom coupon code files with ease.
+
+**2) Customizable Gift Cards**: With Gift Cards Pro customers can choose or upload images, add custom messages, set delivery preferences, and personalize their gift cards in their own unique way.
+
+**3) Sms Notifications Via Twilio**: With Twilio integration, you can send WooCommerce gift cards via SMS, ensuring quick and easy delivery to recipients. 
+
+**4) QR/Barcode Support**: Protect gift cards with QR codes or barcodes for easy redemption. You can display these codes on gift certificates and customize templates for optimal code size and type.
+
+**5) Schedule Gift Cards**: Gift cards plugin lets you schedule the delivery of gift cards to recipients on a specific date
+
+**6) PDF Template**: Send both online and offline gift card emails with a PDF attachment. Customers can download their WooCommerce gift cards in PDF format, making it easy to store and use them later.
 
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE GIFT CARDS PRO PLUGIN ==
@@ -226,6 +221,13 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.1.0 - Released on 1 January 2025 = 
+* New : Latest compatible with WC(9.5.1)
+
+= 3.0.7 - Released on 16 December 2024 = 
+* Fix : Vulnerabilities issue fixed
+* New : Latest compatible with WC(9.4.3)
 
 = 3.0.6 - Released on 27 November 2024 = 
 * New : Latest compatible with WP(6.7.1) and WC(9.4.2)
@@ -484,5 +486,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.0.6 - Released on 27 November 2024 = 
-* New : Latest compatible with WP(6.7.1) and WC(9.4.2)
+= 3.1.0 - Released on 1 January 2025 = 
+* New : Latest compatible with WC(9.5.1)
