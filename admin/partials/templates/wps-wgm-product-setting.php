@@ -21,6 +21,16 @@ if ( isset( $_POST['wps_wgm_save_product'] ) ) {
 			$product_settings_array = array();
 			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
+				if ( isset( $postdata['wps_wgm_from_field'] ) && 'on' === $postdata['wps_wgm_from_field'] ) {
+					$postdata['wps_wgm_remove_validation_from'] = 'on';
+				}
+				if ( isset( $postdata['wps_wgm_message_field'] ) && 'on' === $postdata['wps_wgm_message_field'] ) {
+					$postdata['wps_wgm_remove_validation_msg'] = 'on';
+				}
+				if ( isset( $postdata['wps_wgm_to_email_field'] ) && 'on' === $postdata['wps_wgm_to_email_field'] ) {
+					$postdata['wps_wgm_remove_validation_to'] = 'on';
+					$postdata['wps_wgm_remove_validation_to_name'] = 'on';
+				}
 				foreach ( $postdata as $key => $value ) {
 					$product_settings_array[ $key ] = $value;
 					if ( 'wps_wgm_product_setting_expiry_extension' == $key && 'on' == $value ) {

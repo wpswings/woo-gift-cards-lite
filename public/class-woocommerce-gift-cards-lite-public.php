@@ -233,7 +233,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 
-		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || is_page( 'my-account' ) ) {
+		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) {
 			$wps_wgm_check_balance = array(
 				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
@@ -2590,19 +2590,28 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 			if ( 'wgm_gift_card' == $prod_type ) {
 
+				$price_preview_html = '<span id="wps_wgm_price_preview"></span>';
+				$currency_symbol = get_woocommerce_currency_symbol();
+				$currency_position = get_option( 'woocommerce_currency_pos', 'left' );
+	
+				if ( 'left' === $currency_position || 'left_space' === $currency_position ) {
+					$price_preview_html = ( 'left_space' === $currency_position ? $currency_symbol . ' ' : $currency_symbol ) . $price_preview_html;
+				} else {
+					$price_preview_html .= ( 'right_space' === $currency_position ? ' ' . $currency_symbol : $currency_symbol );
+				}
+	
 				$html .= '<div class="wps_wgm_wrapper_for_preview"> 
-					  <h2>' . $prod_title . '<span>' . get_woocommerce_currency_symbol() . '<span id="wps_wgm_price_preview"></span></span></h2>';
-					  if ( 'on' != $disable_from_field ) {
-						$html .= '<p >' . __( 'From', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_from_preview"> ' . __( 'xyz test', 'woo-gift-cards-lite' ) . '</span> </p>';
-					  }
-					  if ( 'on' != $disable_to_email_field ) {
-						$html .= '<p >' . __( 'To', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_to_preview">' . __( 'xyz@gmail.com', 'woo-gift-cards-lite' ) . '</span></p>';
-					  }
-					  if ( 'on' != $disable_message_field ) {
-					  	$html .= '<p >' . __( 'Message', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_message_preview">' . __( 'Write your message gift card receiver', 'woo-gift-cards-lite' ) . '</span></p>';
-					  }
-				$html .='</div>';
-
+						  <h2>' . $prod_title . '<span>' . $price_preview_html . '</span></h2>';
+						  if ( 'on' != $disable_from_field ) {
+							$html .= '<p >' . __( 'From', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_from_preview"> ' . __( 'xyz test', 'woo-gift-cards-lite' ) . '</span> </p>';
+						  }
+						  if ( 'on' != $disable_to_email_field ) {
+							$html .= '<p >' . __( 'To', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_to_preview">' . __( 'xyz@gmail.com', 'woo-gift-cards-lite' ) . '</span></p>';
+						  }
+						  if ( 'on' != $disable_message_field ) {
+							  $html .= '<p >' . __( 'Message', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_message_preview">' . __( 'Write your message gift card receiver', 'woo-gift-cards-lite' ) . '</span></p>';
+						  }
+					$html .='</div>';
 			}
 			echo wp_kses_post( $html );
 		}
