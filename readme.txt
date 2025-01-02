@@ -222,7 +222,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 3.1.0 - Released on 1 January 2025 = 
+= 3.1.0 - Released on 2 January 2025 = 
 * New : Latest compatible with WC(9.5.1)
 
 = 3.0.7 - Released on 16 December 2024 = 
@@ -486,5 +486,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.1.0 - Released on 1 January 2025 = 
+= 3.1.0 - Released on 2 January 2025 = 
 * New : Latest compatible with WC(9.5.1)
