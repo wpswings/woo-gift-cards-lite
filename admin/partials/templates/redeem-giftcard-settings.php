@@ -91,6 +91,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 				if ( isset( $response->status ) && 'success' == $response->status ) {
 					delete_option( 'giftcard_offline_redeem_link' );
 					delete_option( 'giftcard_offline_redeem_settings' );
+					delete_option( 'wps_wgm_gifting_api_keys' );
 				}
 			}
 		}

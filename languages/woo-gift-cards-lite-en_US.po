@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.0.6\n"
-"POT-Creation-Date: 2024-11-26 21:00+0530\n"
-"PO-Revision-Date: 2024-11-26 21:00+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.0.7\n"
+"POT-Creation-Date: 2024-12-16 15:26+0530\n"
+"PO-Revision-Date: 2024-12-16 15:26+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -535,142 +535,142 @@ msgstr ""
 msgid " = "
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:167
+#: admin/partials/templates/redeem-giftcard-settings.php:168
 msgid "Gift Card  Redeem / Recharge "
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:179
+#: admin/partials/templates/redeem-giftcard-settings.php:180
 msgid "Get me My FREE redeem Link"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:180
+#: admin/partials/templates/redeem-giftcard-settings.php:181
 msgid "(you can delete your redeem link anytime)"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:185
+#: admin/partials/templates/redeem-giftcard-settings.php:186
 msgid "Hello Dear"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:186
+#: admin/partials/templates/redeem-giftcard-settings.php:187
 msgid ""
 "We are thrilled to announce that we have launched a FREE service to simplify "
 "the problem of redeeming gift cards at a retail store"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:188
+#: admin/partials/templates/redeem-giftcard-settings.php:189
 msgid ""
 "We have made this just on your demand so we would love your suggestion to "
 "improve it"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:192
+#: admin/partials/templates/redeem-giftcard-settings.php:193
 msgid "What it Contains"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:194
+#: admin/partials/templates/redeem-giftcard-settings.php:195
 msgid "Scan"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:195
+#: admin/partials/templates/redeem-giftcard-settings.php:196
 msgid "Redeem"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:196
+#: admin/partials/templates/redeem-giftcard-settings.php:197
 msgid "Recharge"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:197
+#: admin/partials/templates/redeem-giftcard-settings.php:198
 msgid "Reports"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:208
+#: admin/partials/templates/redeem-giftcard-settings.php:209
 msgid "Your Gift Card Redeem Details"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:214
+#: admin/partials/templates/redeem-giftcard-settings.php:215
 msgid "Gift Card Redeem Link"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:219
+#: admin/partials/templates/redeem-giftcard-settings.php:220
 msgid "Please open the link to redeem the gift card"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:242
+#: admin/partials/templates/redeem-giftcard-settings.php:243
 msgid "Embedded Link"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:247
+#: admin/partials/templates/redeem-giftcard-settings.php:248
 msgid "Enter this code to add the redeem page in your site"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:273
+#: admin/partials/templates/redeem-giftcard-settings.php:274
 msgid "Open Shop"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:291
+#: admin/partials/templates/redeem-giftcard-settings.php:292
 msgid ""
 "This is your limited  account so please purchase the pro and update the "
 "details ."
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:298
+#: admin/partials/templates/redeem-giftcard-settings.php:299
 msgid "To use the redeem link as it is, follow the steps below"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:300
+#: admin/partials/templates/redeem-giftcard-settings.php:301
 msgid ""
 "Click on the Open Shop button and log in using the credentials provided in "
 "the received email"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:301
-#: admin/partials/templates/redeem-giftcard-settings.php:309
-#: admin/partials/templates/redeem-giftcard-settings.php:316
+#: admin/partials/templates/redeem-giftcard-settings.php:302
+#: admin/partials/templates/redeem-giftcard-settings.php:310
+#: admin/partials/templates/redeem-giftcard-settings.php:317
 msgid "Start Scan/Fetch and Redeem/Recharge"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:304
+#: admin/partials/templates/redeem-giftcard-settings.php:305
 msgid "To use the redeem link on the web-store follow the steps below"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:306
+#: admin/partials/templates/redeem-giftcard-settings.php:307
 msgid "Create a page"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:307
+#: admin/partials/templates/redeem-giftcard-settings.php:308
 msgid "Copy the embed link and paste it in the created page"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:308
-#: admin/partials/templates/redeem-giftcard-settings.php:315
+#: admin/partials/templates/redeem-giftcard-settings.php:309
+#: admin/partials/templates/redeem-giftcard-settings.php:316
 msgid "Login using the credentials given in the received email"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:312
+#: admin/partials/templates/redeem-giftcard-settings.php:313
 msgid "To use the redeem link on this POS system, follow the steps below"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:314
+#: admin/partials/templates/redeem-giftcard-settings.php:315
 msgid "Copy the embed link and paste it on any page at POS"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:323
+#: admin/partials/templates/redeem-giftcard-settings.php:324
 msgid "See it in Action"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:337
+#: admin/partials/templates/redeem-giftcard-settings.php:338
 msgid "Email"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:342
+#: admin/partials/templates/redeem-giftcard-settings.php:343
 msgid "Enter the email for account creation"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:352
+#: admin/partials/templates/redeem-giftcard-settings.php:353
 msgid "Name"
 msgstr ""
 
-#: admin/partials/templates/redeem-giftcard-settings.php:357
+#: admin/partials/templates/redeem-giftcard-settings.php:358
 msgid "Enter the name for account creation"
 msgstr ""
 
@@ -1590,6 +1590,18 @@ msgstr ""
 
 #: includes/extra-templates/wpswings-onboarding-template-display.php:44
 msgid "Skip For Now"
+msgstr ""
+
+#: includes/giftcard-redeem-api-addon.php:380
+msgid "API keys are not set properly on your site."
+msgstr ""
+
+#: includes/giftcard-redeem-api-addon.php:391
+msgid "Invalid license key."
+msgstr ""
+
+#: includes/giftcard-redeem-api-addon.php:393
+msgid "Invalid API key details."
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:132
