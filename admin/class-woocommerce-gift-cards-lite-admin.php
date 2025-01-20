@@ -2316,5 +2316,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 	}
 
+	/**
+	 * Callback function to reset the gifting request count
+	 */
+	public function wps_reset_gifting_request() {
+		update_option( 'wps_wgm_gifting_request', 0 );
+	}
+
 }
 ?>

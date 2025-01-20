@@ -214,6 +214,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( isset( $offline_giftcard_redeem_details ) && ! empty( $offline_giftcard_redeem_details ) && empty( $wps_wgm_gifting_api_keys ) ) {
 			$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_generate_gifting_api_key_and_secret' );
 		}
+		$this->loader->add_action( 'wps_reset_gifting_request', $plugin_admin, 'wps_reset_gifting_request' );
 
 		// Reporting.
 		$this->loader->add_action( 'wp_before_admin_bar_render', $plugin_admin, 'wps_wgm_admin_toolbar' );

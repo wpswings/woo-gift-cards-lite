@@ -314,6 +314,17 @@ if ( $activated ) {
 	}
 	run_woocommerce_gift_cards_lite();
 
+	/**
+	 * Schedule the daily reset event at 12:00 AM site time.
+	 */
+	function wps_wgm_schedule_midnight_reset() {
+		if ( ! wp_next_scheduled( 'wps_reset_gifting_request' ) ) {
+			$timestamp = strtotime( 'tomorrow midnight', current_time( 'timestamp' ) );
+			wp_schedule_event( $timestamp, 'daily', 'wps_reset_gifting_request' );
+		}
+	}
+	add_action( 'wp', 'wps_wgm_schedule_midnight_reset' );
+
 	register_deactivation_hook( __FILE__, 'wps_uwgc_remove_cron_for_notification_update' );
 
 	/**
@@ -323,6 +334,10 @@ if ( $activated ) {
 	 */
 	function wps_uwgc_remove_cron_for_notification_update() {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+		$timestamp = wp_next_scheduled( 'wps_reset_gifting_request' );
+		if ( $timestamp ) {
+			wp_unschedule_event( $timestamp, 'wps_reset_gifting_request' );
+		}
 	}
 
 	include_once WPS_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
