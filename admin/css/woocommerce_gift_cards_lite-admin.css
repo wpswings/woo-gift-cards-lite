@@ -730,6 +730,8 @@
      max-width: 767px;
      margin: 0 auto;
      position: relative;
+     padding: 25px;
+     background: #fff;
  }
  
  .wps-redeem-pop-close {
@@ -755,7 +757,9 @@
  }
  
  .wps_redeem_registraion_div .wps_gw_general_setting th {
-     padding-left: 10px;
+    display: table-cell;
+    max-width: 150px;
+    padding: 10px;
  }
  
  .wps_redeem_registraion_div {
@@ -786,6 +790,26 @@
  .wps_redeem_details td,
  .wps_redeem_details th {
      padding: 15px;
+ }
+
+ .wps_redeem_registraion_div .wps_gw_general_setting td.forminp {
+    text-align: left;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+    /* display: table-cell !important; */
+}
+
+.wps_redeem_registraion_div .wps_gw_general_setting tr:last-of-type td{
+    display: table-cell !important;
+}
+
+.wps_redeem_registraion_div .wps_gw_general_setting input#wcgm_generate_offine_redeem_url {
+    margin: 0;
+}
+
+.wps_redeem_registraion_div .wps_gw_general_setting td.forminp .input-text {
+    max-width: 350px;
  }
  
  #wps_gw_setting_wrapper table.wps_redeem_details thead th {
@@ -907,6 +931,13 @@
      .wps_wgm_mail_setting_upload_logo.button {
          margin: 4px 0;
      }
+
+     .wps_redeem_registraion_div .wps_gw_general_setting .form-table label {
+        font-size: 14px;
+        display: inline-block;
+        max-width: 350px;
+        width: 100%;
+    }
  }
  
  @media only screen and (max-width: 1200px) {
@@ -1004,6 +1035,12 @@
      .wps_redeem_details td input[type="text"] {
          width: 78%;
      }
+
+     .wps_redeem_registraion_div .wps_gw_general_setting tr {
+        display: flex;
+        flex-direction: column;
+     }
+
  }
  
  @media only screen and (max-width: 992px) {
