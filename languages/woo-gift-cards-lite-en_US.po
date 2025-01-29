@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.0\n"
-"POT-Creation-Date: 2025-01-01 18:22+0530\n"
-"PO-Revision-Date: 2025-01-01 18:22+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.1\n"
+"POT-Creation-Date: 2025-01-29 19:58+0530\n"
+"PO-Revision-Date: 2025-01-29 19:58+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: includes/class-makewebbetter-onboarding-helper.php:874
 #: includes/class-woocommerce-gift-cards-common-function.php:591
 #: public/class-woocommerce-gift-cards-lite-public.php:2018
-#: woocommerce_gift_cards_lite.php:519 woocommerce_gift_cards_lite.php:566
+#: woocommerce_gift_cards_lite.php:534 woocommerce_gift_cards_lite.php:581
 msgid "Nonce Not verified"
 msgstr ""
 
@@ -1592,11 +1592,23 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: includes/giftcard-redeem-api-addon.php:380
+#: includes/giftcard-redeem-api-addon.php:398
+msgid ""
+"Daily limit of 20 requests reached. Upgrade to Pro for unlimited access: <a "
+"href=\"https://wpswings.com/product/gift-cards-for-woocommerce-pro/?"
+"utm_source=wpswings-giftcards-pro&utm_medium=gifting-shop-"
+"page&utm_campaign=go-pro\" target=\"_blank\">Go PRO Now</a>"
+msgstr ""
+
+#: includes/giftcard-redeem-api-addon.php:401
+msgid "License Not Verified"
+msgstr ""
+
+#: includes/giftcard-redeem-api-addon.php:423
 msgid "API keys are not set properly on your site."
 msgstr ""
 
-#: includes/giftcard-redeem-api-addon.php:386
+#: includes/giftcard-redeem-api-addon.php:429
 msgid "Invalid API key details."
 msgstr ""
 
@@ -1933,11 +1945,11 @@ msgstr ""
 msgid "GO PRO"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:375 woocommerce_gift_cards_lite.php:376
+#: woocommerce_gift_cards_lite.php:390 woocommerce_gift_cards_lite.php:391
 msgid "Gift Card Balance"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:504
+#: woocommerce_gift_cards_lite.php:519
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Ultimate Gift Cards For WooCommerce"
