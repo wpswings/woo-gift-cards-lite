@@ -62,7 +62,7 @@ add_action(
 function wps_get_giftcard_details( $request ) {
 
 	$check_license_pro = wps_wgm_check_license_pro( $request );
-	if ( $check_license_pro === true ) {
+	if ( true === $check_license_pro ) {
 		global $woocommerce;
 		$request_params = $request->get_params();
 
@@ -130,7 +130,7 @@ function wps_get_giftcard_details( $request ) {
 function wps_redeem_giftcard_offline( $request ) {
 
 	$check_license_pro = wps_wgm_check_license_pro( $request );
-	if ( $check_license_pro === true ) {
+	if ( true === $check_license_pro ) {
 		global $woocommerce;
 
 		$request_params = $request->get_params();
@@ -268,7 +268,7 @@ function wps_redeem_giftcard_offline( $request ) {
 function wps_recharge_giftcard_offine( $request ) {
 	
 	$check_license_pro = wps_wgm_check_license_pro( $request );
-	if ( $check_license_pro === true ) {
+	if ( true === $check_license_pro ) {
 		global $woocommerce;
 		$request_params = $request->get_params();
 		$coupon_code = $request_params['coupon_code'];
@@ -374,6 +374,15 @@ function wps_recharge_giftcard_offine( $request ) {
 	}
 }
 
+/**
+ * Check license Pro
+ *
+ * @since      1.0.0
+ * @name wps_wgm_check_license_pro
+ * @param mixed $request request.
+ * @author WP Swings <webmaster@wpswings.com>
+ * @link https://www.wpswings.com/
+ */
 function wps_wgm_check_license_pro( $request ) {
 	$license                 = $request->get_header( 'licensecode' );
 	$client_license_code     = get_option( 'wps_gw_lcns_key', '' );

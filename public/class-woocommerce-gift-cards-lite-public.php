@@ -2122,7 +2122,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
 				// @codingStandardsIgnoreStart.
 				echo wp_kses( $message, $allowed_tags );
-				die();
+				wp_die();
 				// @codingStandardsIgnoreEnd.
 			}
 		}

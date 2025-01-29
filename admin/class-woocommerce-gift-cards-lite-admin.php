@@ -1295,7 +1295,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
 								// @codingStandardsIgnoreStart.
 								echo wp_kses( $finalhtml, $allowed_tags );
-								die();
+								wp_die();
 								// @codingStandardsIgnoreEnd.
 							}
 						}
@@ -2209,7 +2209,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$wps_admin_obj = new Woocommerce_Gift_Cards_Common_Function();
 				$allowed_tags = $wps_admin_obj->wps_allowed_html_tags();
 				echo wp_kses( $message, $allowed_tags );
-				die();
+				wp_die();
 			}
 		}
 	}
