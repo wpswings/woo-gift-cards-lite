@@ -1,4 +1,4 @@
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)![Active installs](https://img.shields.io/badge/Active-7000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.7.1-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-9.5.1-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.4-blue)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)![Active installs](https://img.shields.io/badge/Active-7000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.7.1-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-9.6.0-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.4-blue)
 # Ultimate Gift Cards for WooCommerce - Ultimate Gift Cards for Woocommerce – Create Vouchers, Redeem & Manage Digital Gift Coupons. Offer Gift Certificates, Schedule Gift Cards, and Use Advance Coupons With Personalized Templates.
 ![Ultimate Gift Cards for WooCommerce](https://ps.w.org/woo-gift-cards-lite/assets/banner-772x250.jpg?rev=2671960)
 * Contributors: WP Swings
@@ -29,31 +29,35 @@ Render seamless gifting for both online and offline stores with our versatile gi
 
 * **3) Gifting Portal:** With Gift Cards for WooCommerce plugin you get access to the WP Swings Gifting Portal which allows you to redeem gift coupons and vouchers in online & retail stores.
 
-* **4) Minimum and Maximum Limit to Redeem Gift Cards:** Set the maximum and minimum amount customers must spend before using a WooCommerce gift certificate.
+* **4) Gifting Portal:** With the Gift Cards for WooCommerce plugin, you can redeem, recharge, and fetch gift coupons in online and retail stores and add employees for portal management. The Org version limits employee additions to 2 and transactions to 20 per day. Upgrade to Pro for unlimited access and more features.
 
-* **5) Set Expiry Date:** You can define the expiry date for your gift vouchers, which will be in effect from the date of purchase or from the scheduled date of delivery for scheduled cards.
+**Note:** When a merchant account is deleted, all employees associated with that merchant will also be removed.
 
-* **6) Ultimate Cards with Duration Based Costing:** Create variable-priced WooCommerce gift cards for time-based services like grooming, decors, etc. Set durations as descriptions & prices accordingly.
+* **5) Minimum and Maximum Limit to Redeem Gift Cards:** Set the maximum and minimum amount customers must spend before using a WooCommerce gift certificate.
 
-* **7) Gift Cards Pricing type:** Create WooCommerce Gift Cards for your products & services using these pricing types: default price, price range, selected price, user price, and variable prices.
+* **6) Set Expiry Date:** You can define the expiry date for your gift vouchers, which will be in effect from the date of purchase or from the scheduled date of delivery for scheduled cards.
 
-* **8) Flexible Delivery Options:** Choose the email method to send the gift card directly to the recipient. The downloadable option allows customers to receive the card & deliver it to others.
+* **7) Ultimate Cards with Duration Based Costing:** Create variable-priced WooCommerce gift cards for time-based services like grooming, decors, etc. Set durations as descriptions & prices accordingly.
 
-* **9) Tax Calculation:** Enable automated tax calculation on gift card products to streamline tax payments for customers.
+* **8) Gift Cards Pricing type:** Create WooCommerce Gift Cards for your products & services using these pricing types: default price, price range, selected price, user price, and variable prices.
 
-* **10) Customize Coupon Codes:** Ultimate WooCommerce Gift Cards Plugin can generate coupon codes. You can tweak the coupon code length, prefix, expiry date, & usage limit.
+* **9) Flexible Delivery Options:** Choose the email method to send the gift card directly to the recipient. The downloadable option allows customers to receive the card & deliver it to others.
 
-* **11) Customize Gift Card Email Template:** Upload logo, adjust logo height & width, card message length, disclaimer text, subject line, and more to tailor your gift certificate emails.
+* **10) Tax Calculation:** Enable automated tax calculation on gift card products to streamline tax payments for customers.
 
-* **12) Product & Category Exclusion:** With the WooCommerce Ultimate Gift Card plugin, you can exclude certain categories, products, or sale items from being eligible for redemption.
+* **11) Customize Coupon Codes:** Ultimate WooCommerce Gift Cards Plugin can generate coupon codes. You can tweak the coupon code length, prefix, expiry date, & usage limit.
 
-* **13) Purchase Date on the Gift Coupon:** Show the purchase date on the gift card WooCommerce email using the shortcode [PURCHASEDATE].
+* **12) Customize Gift Card Email Template:** Upload logo, adjust logo height & width, card message length, disclaimer text, subject line, and more to tailor your gift certificate emails.
 
-* **14) Limit Gift Cards for Individual Use Only:** You can set gift coupons for individual use only; not redeemable with other coupons. Thereby, restricting customers from getting unfair discounts.
+* **13) Product & Category Exclusion:** With the WooCommerce Ultimate Gift Card plugin, you can exclude certain categories, products, or sale items from being eligible for redemption.
 
-* **15) Minimum Limit On User Pricing:** You can set a minimum limit on user price for the WooCommerce gift card. The customers can’t enter a custom amount lower than the minimum limit.
+* **14) Purchase Date on the Gift Coupon:** Show the purchase date on the gift card WooCommerce email using the shortcode [PURCHASEDATE].
 
-* **16) Pre-Loaded & Custom Gift Card WooCommerce Templates:** Create gift certificates with templates for Mother’s Day, Christmas, Gift for You, etc. Additionally, you can upload custom card templates.
+* **15) Limit Gift Cards for Individual Use Only:** You can set gift coupons for individual use only; not redeemable with other coupons. Thereby, restricting customers from getting unfair discounts.
+
+* **16) Minimum Limit On User Pricing:** You can set a minimum limit on user price for the WooCommerce gift card. The customers can’t enter a custom amount lower than the minimum limit.
+
+* **17) Pre-Loaded & Custom Gift Card WooCommerce Templates:** Create gift certificates with templates for Mother’s Day, Christmas, Gift for You, etc. Additionally, you can upload custom card templates.
 ## LIVE DEMO: WOOCOMMERCE GIFT CARDS PLUGIN
 * [ **Gift Cards  Frontend demo**](https://demo.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-demo&utm_medium=giftcards-github-page&utm_campaign=frontend-demo)
 
