@@ -172,7 +172,7 @@ if ( ! wps_uwgc_pro_active() ) {
 						</a>
 					</li>
 					<li class="wps_wgm_header_menu_button"><a
-							href="https://docs.wpswings.com/gift-cards-for-woocommerce-pro/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-pro-backend&utm_campaign=documentation"
+							href="https://docs.wpswings.com/gift-cards-for-woocommerce/?utm_source=wpswings-giftcards-doc&utm_medium=giftcards-pro-backend&utm_campaign=documentation"
 							target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
 							<span class="wps-wgn-icon-text"><?php esc_html_e( 'DOC', 'woo-gift-cards-lite' ); ?></span>
@@ -201,7 +201,7 @@ if ( ! wps_uwgc_pro_active() ) {
 							class="wps-wgn-icon-text" title="" target="_blank">
 							<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/Demo.svg" class="wps-info-img"
 								alt="Demo image">
-							<span class="wps-wgn-icon-text"><?php esc_html_e( 'DEMO', 'woo-giftwps-wgc-nonce-cards-lite' ); ?></span>
+							<span class="wps-wgn-icon-text"><?php esc_html_e( 'DEMO', 'woo-gift-cards-lite' ); ?></span>
 						</a>
 					</li>
 					<li class="wps_wgm_header_menu_button">

@@ -15,7 +15,7 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           3.1.0
+ * Version:           3.1.1
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
@@ -24,7 +24,7 @@
  * Requires Plugins:  woocommerce
  * WP Tested up to:   6.7.1
  * WP requires at least: 5.5.0
- * WC tested up to:   9.5.1
+ * WC tested up to:   9.6.0
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
@@ -72,7 +72,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '3.1.0' );
+	define( 'WPS_WGC_VERSION', '3.1.1' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -314,6 +314,17 @@ if ( $activated ) {
 	}
 	run_woocommerce_gift_cards_lite();
 
+	/**
+	 * Schedule the daily reset event at 12:00 AM site time.
+	 */
+	function wps_wgm_schedule_midnight_reset() {
+		if ( ! wp_next_scheduled( 'wps_reset_gifting_request' ) ) {
+			$timestamp = strtotime( 'tomorrow midnight', current_time( 'timestamp' ) );
+			wp_schedule_event( $timestamp, 'daily', 'wps_reset_gifting_request' );
+		}
+	}
+	add_action( 'wp', 'wps_wgm_schedule_midnight_reset' );
+
 	register_deactivation_hook( __FILE__, 'wps_uwgc_remove_cron_for_notification_update' );
 
 	/**
@@ -323,6 +334,10 @@ if ( $activated ) {
 	 */
 	function wps_uwgc_remove_cron_for_notification_update() {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+		$timestamp = wp_next_scheduled( 'wps_reset_gifting_request' );
+		if ( $timestamp ) {
+			wp_unschedule_event( $timestamp, 'wps_reset_gifting_request' );
+		}
 	}
 
 	include_once WPS_WGC_DIRPATH . 'includes/giftcard-redeem-api-addon.php';
