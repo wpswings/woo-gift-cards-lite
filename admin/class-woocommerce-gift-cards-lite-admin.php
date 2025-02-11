@@ -2044,6 +2044,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							if ( isset( $value->key ) && 'Send Date' == $value->key && ! empty( $value->value ) ) {
 								$gift_date = $value->value;
 							}
+							if ( isset( $value->key ) && 'Variable Price Description' == $value->key && ! empty( $value->value ) ) {
+								$variable_price_desc = $value->value;
+							}
 						}
 					}
 
@@ -2101,6 +2104,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<td><b><?php esc_html_e( 'Scheduled Date :', 'woo-gift-cards-lite' ); ?></b></td>
 								<td><?php echo esc_html( ( '' !== $gift_date ) ? $gift_date : $order_date ); ?></td>
 							</tr>
+							<?php if ( isset( $variable_price_desc ) ) {
+								?>
+								<tr>
+									<td><b><?php esc_html_e( 'Variable Price Description :', 'woo-gift-cards-lite' ); ?></b></td>
+									<td><?php echo esc_html( $variable_price_desc ); ?></td>
+								</tr>
+								<?php
+							}
+							?>
 							<tr>
 								<td><b><?php esc_html_e( 'Product :', 'woo-gift-cards-lite' ); ?></b></td>
 								<td><a target="_blank" href="<?php echo esc_attr( $pro_permalink ); ?>"><?php echo esc_html( $productname ); ?></a></td>

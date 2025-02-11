@@ -1604,7 +1604,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$temp_metas = array();
 		if ( isset( $formatted_meta ) && ! empty( $formatted_meta ) && is_array( $formatted_meta ) ) {
 			foreach ( $formatted_meta as $key => $meta ) {
-				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Original Price', 'Selected Template', 'Variable Price Description' ) ) ) {
+				if ( isset( $meta->key ) && ! in_array( $meta->key, array( 'Original Price', 'Selected Template' ) ) ) {
 
 					$temp_metas[ $key ] = $meta;
 				}
