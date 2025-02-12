@@ -240,9 +240,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				'empty_msg'       => esc_html__( 'Fields cannot be empty!', 'woo-gift-cards-lite' ), // PAR Compatibility.
 			);
 
-			wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
-			wp_localize_script( $this->plugin_name, 'wps_wgm_check_balance', $wps_wgm_check_balance );
-			wp_enqueue_script( $this->plugin_name );
+			wp_register_script( $this->plugin_name . 'check_balance_page', plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
+			wp_localize_script( $this->plugin_name . 'check_balance_page', 'wps_wgm_check_balance', $wps_wgm_check_balance );
+			wp_enqueue_script( $this->plugin_name . 'check_balance_page' );
 		}
 	}
 	/**
