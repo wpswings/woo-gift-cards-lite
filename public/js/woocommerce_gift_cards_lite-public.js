@@ -622,28 +622,28 @@ jQuery(document).ready(function () {
 		jQuery('#wps_wgm_price_preview').html(jQuery('#wps_wgm_price').val());
 	});
 	jQuery("#wps_wgm_from_name").keyup(function () {
-		jQuery("#wps_from_preview").html( jQuery('#wps_wgm_from_name').val());
+		jQuery("#wps_from_preview").text( jQuery('#wps_wgm_from_name').val());
 	});
 
 	jQuery("#wps_wgm_message").keyup(function () {
-		jQuery("#wps_message_preview").html( jQuery('#wps_wgm_message').val());
+		jQuery("#wps_message_preview").text( jQuery('#wps_wgm_message').val());
 	});
 
 	jQuery("#wps_wgm_to_email").keyup(function () {
 
 		jQuery("#wps_wgm_to_download").val('');
 		jQuery("#wps_wgm_to_ship").val('');
-		jQuery("#wps_to_preview").html( jQuery('#wps_wgm_to_email').val());
+		jQuery("#wps_to_preview").text( jQuery('#wps_wgm_to_email').val());
 	});
 	jQuery("#wps_wgm_to_download").keyup(function () {
 		jQuery("#wps_wgm_to_email").val('');
 		jQuery("#wps_wgm_to_ship").val('');
-		jQuery("#wps_to_preview").html( jQuery('#wps_wgm_to_download').val());
+		jQuery("#wps_to_preview").text( jQuery('#wps_wgm_to_download').val());
 	});
 	jQuery("#wps_wgm_to_ship").keyup(function () {
 		jQuery("#wps_wgm_to_email").val('');
 		jQuery("#wps_wgm_to_email").val('');
-		jQuery("#wps_to_preview").html(  jQuery('#wps_wgm_to_ship').val());
+		jQuery("#wps_to_preview").text(  jQuery('#wps_wgm_to_ship').val());
 	});
 
 	setTimeout(function (e) {
