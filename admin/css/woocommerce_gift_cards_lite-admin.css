@@ -1861,6 +1861,10 @@ th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_sel
 	animation: blink_text 1.2s infinite forwards linear;
 }
 
+.wps_wgm_select_library{
+    display: none;
+}
+
 /* PAR Compatibility */
 
 .wps_wgm_par_parent_wrapper {

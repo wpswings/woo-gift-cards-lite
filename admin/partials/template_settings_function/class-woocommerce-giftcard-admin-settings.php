@@ -470,7 +470,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 		if ( isset( $setting_html_array ) && is_array( $setting_html_array ) && ! empty( $setting_html_array ) ) {
 			foreach ( $setting_html_array  as $key => $value ) {
 				?>
-				<tr valign="top">			
+				<tr valign="top" class="<?php echo isset( $value['id'] ) ? esc_attr( $value['id'] ) : ''; ?>">			
 					<th scope="row" class="titledesc">
 						<?php $this->wps_wgm_generate_label( $value ); ?>
 					</th>
