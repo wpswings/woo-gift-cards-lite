@@ -22,9 +22,9 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
  * Requires Plugins:  woocommerce
- * WP Tested up to:   6.7.1
+ * WP Tested up to:   6.7.2
  * WP requires at least: 5.5.0
- * WC tested up to:   9.6.1
+ * WC tested up to:   9.6.2
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */
