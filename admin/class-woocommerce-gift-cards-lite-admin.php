@@ -202,7 +202,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 			}
 
-			// giftcard reporting js.
 			if ( isset( $_GET['tab'] ) && 'giftcard_report' == $_GET['tab'] ) {
 				$wps_uwgc_report_array = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -1902,7 +1901,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$args = array(
 			'id'     => 'gift-cards',
 			'title'  => __( 'GC Reports', 'woo-gift-cards-lite' ),
-			'href'   => admin_url( 'admin.php?page=wc-reports&tab=giftcard_report' ),
+			'href'   => admin_url( 'admin.php?page=wc-reports&tab=giftcard_report'),
 		);
 
 		$wp_admin_bar->add_menu( $args );
@@ -1940,7 +1939,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
-	public static function wps_wgm_giftcard_report() {
+	public static function wps_wgm_giftcard_report() {	
 		include_once WPS_WGC_DIRPATH . '/admin/partials/class-wps-wgm-giftcard-report-list.php';
 	}
 
@@ -2306,7 +2305,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			error_log( 'Request failed: ' . $response->get_error_message() );
+			$logger = wc_get_logger();
+			$logger->error( 'Request failed: ' . $response->get_error_message(), array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
+			return;
+		}
+
+		if ( is_wp_error( $response ) ) {
+			$logger = wc_get_logger();
+			$logger->error( 'Request failed: ' . $response->get_error_message(), array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
 			return;
 		}
 
@@ -2318,13 +2324,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				if ( 'success' === $response_data->status ) {
 					update_option( 'wps_wgm_gifting_api_keys', $wps_wgm_gifting_api_keys );
 				} else {
-					error_log( 'API error: : Unknown error' );
+
+					$logger = wc_get_logger();
+					$logger->error( 'API error: : Unknown error' , array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
 				}
 			} else {
-				error_log( 'Invalid response: Missing status field' );
+				$logger = wc_get_logger();
+				$logger->error( 'API error: :Invalid response: Missing status field' , array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
+
 			}
 		} else {
-			error_log( 'Empty response from the API' );
+			$logger = wc_get_logger();
+			$logger->error( 'API error: : Empty response from the API' , array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
+
 		}
 	}
 

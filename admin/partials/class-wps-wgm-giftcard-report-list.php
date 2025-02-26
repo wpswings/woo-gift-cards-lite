@@ -8,6 +8,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );	
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -34,6 +35,8 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 				?>
 			</tr>
 		</table>
+		<input type="hidden" name="report-page" value="<?php echo esc_attr( wp_create_nonce( 'wps-gc-report-nonce' ) ) ?>">
+
 	</div>
 <?php
 

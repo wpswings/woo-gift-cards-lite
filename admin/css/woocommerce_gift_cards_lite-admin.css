@@ -1831,6 +1831,7 @@ a.wps-gc__popup-for-pro-link:hover {
 }
 /* Group Gifting tab Added */
 
+
 @keyframes blink_text {
 	0%{
 		transform: rotate(-45deg) scale(1);
