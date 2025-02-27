@@ -24,7 +24,7 @@
  * Requires Plugins:  woocommerce
  * WP Tested up to:   6.7.2
  * WP requires at least: 5.5.0
- * WC tested up to:   9.6.2
+ * WC tested up to:   9.7.0
  * WC requires at least: 5.5.0
  * Domain Path:       /languages
  */

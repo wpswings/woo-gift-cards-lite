@@ -5,7 +5,7 @@ Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 5.1.0
 Tested up to: 6.7.2
 WC requires at least: 5.5.0
-WC tested up to: 9.6.2
+WC tested up to: 9.7.0
 Stable tag:  3.1.2
 Requires PHP: 7.4
 License: GPL-3.0+
