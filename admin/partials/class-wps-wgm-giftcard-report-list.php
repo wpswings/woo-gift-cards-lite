@@ -208,6 +208,11 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * @param  array $cloumnb Column B.
 	 */
 	public function wps_uwgc_usort_reorder_report( $cloumna, $cloumnb ) {
+		$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'order_id';
 		$order = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'dsc';
 		$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
@@ -281,13 +286,20 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
 
 					if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
-						$giftresults = $wpdb->get_results( 
-							$wpdb->prepare(
-							"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
-							$order_id
-							),
-							ARRAY_A
-						);
+						$cache_key = 'wps_wgm_offline_giftcard_' . intval( $order_id );
+						$giftresults = wp_cache_get( $cache_key, 'wps_wgm' );
+
+						if ( false === $giftresults ) {
+							$giftresults = $wpdb->get_results(
+								$wpdb->prepare(
+									"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
+									intval( $order_id )
+								),
+								ARRAY_A
+							);
+
+							wp_cache_set( $cache_key, $giftresults, 'wps_wgm', HOUR_IN_SECONDS );
+						}
 					}
 
 					if ( ! empty( $order ) ) {
@@ -332,6 +344,11 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * @param array $wps_uwgc_data Array of data.
 	 */
 	public function wps_uwgc_search_option( $wps_uwgc_data ) {
+		$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 		$wps_uwgc_search_arr = array();
 		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$search_coupon = strtolower( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) );
@@ -418,6 +435,11 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	}
 }
 
+$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
+$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
+if ( ! $id_nonce_verified ) {
+	wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+}
 ?>
 <form method="post">
 	<input type="hidden" name="page" value="<?php echo esc_attr( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' ); ?>">

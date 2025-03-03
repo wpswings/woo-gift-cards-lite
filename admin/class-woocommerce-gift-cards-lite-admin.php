@@ -202,8 +202,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 			}
 
-			// giftcard reporting js.
-			if ( isset( $_GET['tab'] ) && 'giftcard_report' == $_GET['tab'] ) {
+			if ( 'woocommerce_page_wc-reports' == $pagescreen ) {
 				$wps_uwgc_report_array = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'wps_uwgc_report_nonce' => wp_create_nonce( 'wps-uwgc-giftcard-report-nonce' ),
@@ -1902,7 +1901,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$args = array(
 			'id'     => 'gift-cards',
 			'title'  => __( 'GC Reports', 'woo-gift-cards-lite' ),
-			'href'   => admin_url( 'admin.php?page=wc-reports&tab=giftcard_report' ),
+			'href'   => admin_url( 'admin.php?page=wc-reports&tab=giftcard_report'),
 		);
 
 		$wp_admin_bar->add_menu( $args );
@@ -1940,7 +1939,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
-	public static function wps_wgm_giftcard_report() {
+	public static function wps_wgm_giftcard_report() {	
 		include_once WPS_WGC_DIRPATH . '/admin/partials/class-wps-wgm-giftcard-report-list.php';
 	}
 
@@ -1973,6 +1972,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_report_details() {
+		$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
 		if ( isset( $_GET['wps_uwgc_report_details'] ) && 'wps_uwgc_report_details' == $_GET['wps_uwgc_report_details'] ) {
 			$order_id = isset( $_GET['order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : '';
 			$coupon_id = isset( $_GET['coupon_id'] ) ? sanitize_text_field( wp_unslash( $_GET['coupon_id'] ) ) : '';
@@ -1995,13 +1999,20 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
 
 				if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
-					$giftresults = $wpdb->get_results(
-						$wpdb->prepare(
-						"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
-						$order_id
-						),
-						ARRAY_A
-					);
+					$cache_key = 'wps_wgm_offline_giftcard_' . intval( $order_id );
+					$giftresults = wp_cache_get( $cache_key, 'wps_wgm' );
+
+					if ( false === $giftresults ) {
+						$giftresults = $wpdb->get_results(
+							$wpdb->prepare(
+								"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
+								intval( $order_id )
+							),
+							ARRAY_A
+						);
+
+						wp_cache_set( $cache_key, $giftresults, 'wps_wgm', HOUR_IN_SECONDS );
+					}
 				}
 				
 				if ( isset( $giftresults[0] ) ) {
@@ -2043,6 +2054,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 							}
 							if ( isset( $value->key ) && 'Send Date' == $value->key && ! empty( $value->value ) ) {
 								$gift_date = $value->value;
+							}
+							if ( isset( $value->key ) && 'Variable Price Description' == $value->key && ! empty( $value->value ) ) {
+								$variable_price_desc = $value->value;
 							}
 						}
 					}
@@ -2101,6 +2115,15 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<td><b><?php esc_html_e( 'Scheduled Date :', 'woo-gift-cards-lite' ); ?></b></td>
 								<td><?php echo esc_html( ( '' !== $gift_date ) ? $gift_date : $order_date ); ?></td>
 							</tr>
+							<?php if ( isset( $variable_price_desc ) ) {
+								?>
+								<tr>
+									<td><b><?php esc_html_e( 'Variable Price Description :', 'woo-gift-cards-lite' ); ?></b></td>
+									<td><?php echo esc_html( $variable_price_desc ); ?></td>
+								</tr>
+								<?php
+							}
+							?>
 							<tr>
 								<td><b><?php esc_html_e( 'Product :', 'woo-gift-cards-lite' ); ?></b></td>
 								<td><a target="_blank" href="<?php echo esc_attr( $pro_permalink ); ?>"><?php echo esc_html( $productname ); ?></a></td>
@@ -2294,7 +2317,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			error_log( 'Request failed: ' . $response->get_error_message() );
+			$logger = wc_get_logger();
+			$logger->error( 'Request failed: ' . $response->get_error_message(), array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
 			return;
 		}
 
@@ -2306,13 +2330,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				if ( 'success' === $response_data->status ) {
 					update_option( 'wps_wgm_gifting_api_keys', $wps_wgm_gifting_api_keys );
 				} else {
-					error_log( 'API error: : Unknown error' );
+					$logger = wc_get_logger();
+					$logger->error( 'API error: : Unknown error' , array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
 				}
 			} else {
-				error_log( 'Invalid response: Missing status field' );
+				$logger = wc_get_logger();
+				$logger->error( 'API error: :Invalid response: Missing status field' , array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
 			}
 		} else {
-			error_log( 'Empty response from the API' );
+			$logger = wc_get_logger();
+			$logger->error( 'API error: : Empty response from the API' , array( 'source' => 'Ultimate Gift Cards For WooCommerce' ) );
 		}
 	}
 

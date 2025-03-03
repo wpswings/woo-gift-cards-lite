@@ -1831,6 +1831,7 @@ a.wps-gc__popup-for-pro-link:hover {
 }
 /* Group Gifting tab Added */
 
+
 @keyframes blink_text {
 	0%{
 		transform: rotate(-45deg) scale(1);
@@ -1859,6 +1860,10 @@ th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_sel
 	left: -25px;
 	top: -10px;
 	animation: blink_text 1.2s infinite forwards linear;
+}
+
+.wps_wgm_select_library{
+    display: none;
 }
 
 /* PAR Compatibility */
