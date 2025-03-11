@@ -2474,12 +2474,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_uwgc_gift_card_balance_org() {
+		ob_start();
 		$html = '<div class="wps_gift_card_balance_wrapper">';
 
 		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'woo-gift-cards-lite' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'woo-gift-cards-lite' ) . '"><span id="wps_notification"></span></p></div>';
 		$html .= '<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader"><img src="' . WPS_WGC_URL . 'assets/images/loading.gif"></div></div>';
+		ob_get_clean();
 		return $html;
 	}
 

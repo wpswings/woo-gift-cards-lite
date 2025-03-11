@@ -130,7 +130,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		wp_enqueue_script( 'thickbox' );
 		if ( isset( $screen->id ) ) {
 			if ( wps_uwgc_pro_active() ) {
-				wp_enqueue_script( 'pro_tag_remove_class', plugin_dir_url( __FILE__ ) . '/js/wps_wgm_gift_card_pro_admin.js', array( 'jquery' ), time(), true );
+				wp_enqueue_script( 'pro_tag_remove_class', plugin_dir_url( __FILE__ ) . '/js/wps_wgm_gift_card_pro_admin.js', array( 'jquery' ), $this->version, true );
 			}
 			$pagescreen = $screen->id;
 
@@ -855,6 +855,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'supports'           => array( 'title', 'editor', 'thumbnail' ),
 		);
 		register_post_type( 'giftcard', $args );
+
+		$this->wps_wgm_list_shortcode_in_gutenburg_block();
 	}
 
 	/**
@@ -2348,6 +2350,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_reset_gifting_request() {
 		update_option( 'wps_wgm_gifting_request', 0 );
+	}
+
+	/**
+	 * This function is used to list shortcodes in Gutenburg.
+	 *
+	 * @return void
+	 */
+	public function wps_wgm_list_shortcode_in_gutenburg_block() {
+		wp_register_script( 'google-embeds-org-block-giftcard', plugins_url( 'js/wps_wgm_gift_card_pro_admin.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' ), $this->version, false );
+		register_block_type( 'wpswings/googles-embed-org-giftcard', array( 'editor_script' => 'google-embeds-org-block-giftcard') );
 	}
 
 }
