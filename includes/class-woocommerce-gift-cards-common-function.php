@@ -567,7 +567,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						wc_mail( $from, $receive_subject, $receive_message );
 					}
 				}
+				$wps_wgm_common_arr['expirydate'] = $wps_wgm_common_arr['expirydate_format'];
 				do_action( 'wps_wgm_send_giftcard_over_sms', $wps_wgm_common_arr, $order );
+				do_action( 'wps_wgm_send_giftcard_over_whatsapp', $wps_wgm_common_arr, $order );
 				return true;
 			} else {
 				return false;

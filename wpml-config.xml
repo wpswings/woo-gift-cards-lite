@@ -1,4 +1,19 @@
 <wpml-config>
+	<custom-fields>
+		<custom-field action="translate">wps_wgm_discount</custom-field>
+		<custom-field action="translate">wps_wgm_overwrite</custom-field>
+		<custom-field action="translate">wps_wgm_email_to_recipient</custom-field>
+		<custom-field action="translate">wps_wgm_download</custom-field>
+		<custom-field action="translate">wps_wgm_shipping</custom-field>
+		<custom-field action="translate">woocommerce_customizable_giftware</custom-field>
+		<custom-field action="translate">wps_wgm_include_per_category</custom-field>
+		<custom-field action="translate">wps_wgm_include_per_product</custom-field>
+		<custom-field action="translate">wps_wgm_exclude_per_category</custom-field>
+		<custom-field action="translate">wps_wgm_exclude_per_product</custom-field>
+		<custom-field action="translate">_sell_as_a_giftcard</custom-field>
+		<custom-field action="translate">wps_wgm_pricing_details</custom-field>
+		<custom-field action="translate">wps_wgm_pricing</custom-field>
+	</custom-fields>
 	<admin-texts>
 		<key name="wps_wgm_mail_settings" >
 		<key name="wps_wgm_mail_setting_default_message" />

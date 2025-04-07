@@ -1634,40 +1634,39 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( $wps_wgc_enable ) {
 			if ( isset( $values ['product_meta'] ) ) {
 				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ) {
-					$order_val = stripslashes( $val );
 
 					if ( $val ) {
 						if ( 'wps_wgm_to_email' == $key ) {
-							$item->add_meta_data( 'To', $order_val );
+							$item->add_meta_data( 'To', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_from_name' == $key ) {
-							$item->add_meta_data( 'From', $order_val );
+							$item->add_meta_data( 'From', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_message' == $key ) {
-							$item->add_meta_data( 'Message', $order_val );
+							$item->add_meta_data( 'Message', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_price' == $key ) {
-							$item->add_meta_data( 'Original Price', $order_val );
+							$item->add_meta_data( 'Original Price', stripslashes( $val ) );
 						}
 						if ( 'delivery_method' == $key ) {
-							$item->add_meta_data( 'Delivery Method', $order_val );
+							$item->add_meta_data( 'Delivery Method', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_selected_temp' == $key ) {
-							$item->add_meta_data( 'Selected Template', $order_val );
+							$item->add_meta_data( 'Selected Template', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_variable_price_description' == $key ) {
-							$item->add_meta_data( 'Variable Price Description', $order_val );
+							$item->add_meta_data( 'Variable Price Description', stripslashes( $val ) );
 						}
 						if ( 'recharge_coupon_key_field' == $key ) {
-							$item->add_meta_data( 'Coupon code', $order_val );
+							$item->add_meta_data( 'Coupon code', stripslashes( $val ) );
 						}
 						if ( 'wps_main_order_id' == $key ) {
-							$item->add_meta_data( 'Main order id', $order_val );
+							$item->add_meta_data( 'Main order id', stripslashes( $val ) );
 						}
 						if ( 'wps_main_prod_id' == $key ) {
-							$item->add_meta_data( 'Main Product id', $order_val );
+							$item->add_meta_data( 'Main Product id', stripslashes( $val ) );
 						}
-						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $order_val );
+						do_action( 'wps_wgm_checkout_create_order_line_item', $item, $key, $val );
 					}
 				}
 			}
@@ -2474,12 +2473,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_uwgc_gift_card_balance_org() {
+		ob_start();
 		$html = '<div class="wps_gift_card_balance_wrapper">';
 
 		$html .= '<div class="gift_card_balance_email"><label>' . __( 'Enter Recipient Email', 'woo-gift-cards-lite' ) . '</label>	<input type="email" id="gift_card_balance_email" class="wps_gift_balance" placeholder="' . __( 'Enter Recipient Email/Name or Sender Email.', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<div class="gift_card_code"><label>' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '</label>	<input type="text" id="gift_card_code" class="wps_gift_balance" placeholder="' . __( 'Enter Gift Card Code', 'woo-gift-cards-lite' ) . '" required="required"></div>';
 		$html .= '<p class="wps_check_balance"><input class="button wps_check_balance" type="button" id="wps_check_balance" value="' . __( 'Check Balance', 'woo-gift-cards-lite' ) . '"><span id="wps_notification"></span></p></div>';
 		$html .= '<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader"><img src="' . WPS_WGC_URL . 'assets/images/loading.gif"></div></div>';
+		ob_get_clean();
 		return $html;
 	}
 
