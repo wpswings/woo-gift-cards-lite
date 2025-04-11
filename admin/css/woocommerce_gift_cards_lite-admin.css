@@ -1849,7 +1849,7 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
     position:relative
 }
 
-th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_select_library]:before {
+/* th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_select_library]:before {
     vertical-align: middle;
     content: "New!";
    transform: rotate(-45deg);
@@ -1860,7 +1860,7 @@ th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_sel
 	left: -25px;
 	top: -10px;
 	animation: blink_text 1.2s infinite forwards linear;
-}
+} */
 
 .wps_wgm_select_library{
     display: none;
