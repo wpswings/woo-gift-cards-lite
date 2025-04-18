@@ -240,48 +240,61 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * Function is used to show giftcard coupons.
 	 */
 	public function wps_uwgc_giftcard_report_data() {
-
+		global $wpdb;
 		$current_page = isset( $_GET['paged'] ) ? sanitize_text_field( wp_unslash( $_GET['paged'] ) ) : 1;
+		$per_page     = 10;
+		$offset       = ( $current_page - 1 ) * $per_page;
 
-		$args = array(
-			'posts_per_page' => 10,
-			'paged'          => $current_page,
-			'post_type'        => 'shop_coupon',
-			'post_status'      => 'publish',
-		);
+		$sql = "
+		SELECT p.ID, p.post_title
+		FROM {$wpdb->posts} p
+		WHERE p.post_type = 'shop_coupon'
+		AND p.post_status = 'publish'
+		";
 
-		if ( isset( $_POST['wps_gc_date_filter_1'] ) && isset( $_POST['wps_gc_date_filter_2'] ) ) {
-			$nonce = ( isset( $_POST['wps_wgm_report_nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
+		if ( ! empty( $_POST['wps_gc_date_filter_1'] ) && ! empty( $_POST['wps_gc_date_filter_2'] ) ) {
+			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
 			if ( ! wp_verify_nonce( $nonce ) ) {
 				return false;
 			}
 			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
 
-			$args['date_query'] = array(
-				array(
-					'after'     => $gc_date_1,
-					'before'    => $gc_date_2,
-					'inclusive' => true,
-				),
+			$sql .= $wpdb->prepare(
+				" AND p.post_date BETWEEN %s AND %s",
+				$gc_date_1 . ' 00:00:00',
+				$gc_date_2 . ' 23:59:59'
 			);
 		}
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			$search_coupon = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-			$args['s'] = $search_coupon;
+			$search = '%' . $wpdb->esc_like( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) . '%';
+			$sql   .= $wpdb->prepare( " AND p.post_title LIKE %s", $search );
 		}
 
-		$coupons = get_posts( $args );
+		$sql .= "
+			AND (
+				p.post_content LIKE '%GIFTCARD ORDER #%'
+				OR (
+					p.post_content LIKE '%Imported Coupon%'
+					AND EXISTS (
+						SELECT 1 FROM {$wpdb->postmeta} pm
+						WHERE pm.post_id = p.ID
+						AND pm.meta_key = 'wps_wgm_imported_coupon'
+						AND pm.meta_value = 'purchased'
+					)
+				)
+			)
+		";
+
+		$sql .= $wpdb->prepare( " ORDER BY p.ID DESC LIMIT %d OFFSET %d", $per_page, $offset );
+
+		$results = $wpdb->get_results( $sql );
 
 		$coupon_codes = array();
-		if ( isset( $coupons ) && is_array( $coupons ) && ! empty( $coupons ) ) {
-			foreach ( $coupons as $coupon ) {
-				$couponcontent = $coupon->post_content;
-				if ( strpos( $couponcontent, 'GIFTCARD ORDER #' ) !== false || ( strpos( $couponcontent, 'Imported Coupon' ) !== false && 'purchased' === get_post_meta( $coupon->ID, 'wps_wgm_imported_coupon', true ) ) ) {
-					$coupon_name = strtolower( $coupon->post_title );
-					array_push( $coupon_codes, $coupon_name );
-				}
+		if ( ! empty( $results ) ) {
+			foreach ( $results as $row ) {
+				$coupon_codes[] = strtolower( $row->post_title );
 			}
 		}
 

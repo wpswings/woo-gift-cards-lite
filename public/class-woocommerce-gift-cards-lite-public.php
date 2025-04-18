@@ -256,6 +256,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_wgm_woocommerce_before_add_to_cart_button( $wps_product ) {
 
+		global $wp_query, $post;
+
+		$other_settings = get_option( 'wps_wgm_other_settings', array() );
+		$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
+		$wps_wgm_gc_custom_page = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
+
+		if ( empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
+			$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
+			$wps_cart_html = apply_filters( 'wps_wgm_enable_sell_as_a_gc', $wps_product );
+			echo wp_kses( $wps_cart_html, $allowed_tags );
+			return false;
+		}
+
 		if ( '' === $wps_product ) {
 			global $product;
 			$product_id = $product->get_id();
@@ -1897,6 +1910,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_wc_shipping_enabled( $enable ) {
+		static $already_checked = false;
+
+		if ( $already_checked ) {
+			return $enable;
+		}
+
+		$already_checked = true;
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 
 		if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {

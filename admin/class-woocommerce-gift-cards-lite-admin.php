@@ -2253,7 +2253,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_coupon_reporting_with_order_id( $coupon_id, $item, $total_discount, $remaining_amount ) {
 		$if_gc_coupon = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_unique', true );
-		if ( 'online' === $if_gc_coupon ) {
+		if ( 'online' === $if_gc_coupon || 'offline' === $if_gc_coupon ) {
 			$wps_uwgc_order = get_post_meta( $coupon_id, 'wps_uwgc_used_order_id', true );
 			if ( is_array( $wps_uwgc_order ) && ! empty( $wps_uwgc_order ) ) {
 				$wps_uwgc_used_order_id = $item->get_order_id();
