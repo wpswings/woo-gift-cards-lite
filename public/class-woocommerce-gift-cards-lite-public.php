@@ -118,10 +118,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function enqueue_scripts() {
 		$mail_settings           = get_option( 'wps_wgm_mail_settings', array() );
+		$other_settings          = get_option( 'wps_wgm_other_settings', array() );
 		$giftcard_message_length = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_giftcard_message_length' );
 		if ( '' === $giftcard_message_length ) {
 			$giftcard_message_length = 300;
 		}
+		$wps_wgm_gc_custom_page  = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
+
 
 		$wps_wgm = array(
 			'ajaxurl'        => admin_url( 'admin-ajax.php' ),
@@ -156,7 +159,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$page         = get_post( $post->ID );
 			$page_content = ! empty( $page->post_content ) ? $page->post_content : '';
 		}
-		if ( is_product() || str_contains( $page_content, 'product_page id' ) ) {
+
+		if ( is_product() || ( str_contains( $page_content, 'product_page id' ) && 'on' == $wps_wgm_gc_custom_page ) ) {
 
 			if ( str_contains( $page_content, 'product_page id' ) ) {
 				$content = $post->post_content;
@@ -259,8 +263,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		global $wp_query, $post;
 
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
-		$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
-		$wps_wgm_gc_custom_page = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
+		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
 		if ( empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
 			$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
@@ -325,8 +328,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 							$other_settings = get_option( 'wps_wgm_other_settings', array() );
 
-							$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
-							$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+							$use_new_page_layout = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 							if ( 'on' == $use_new_page_layout ) {
 								$cart_html .= '<div class="wps_wgm_added_wrapper wps-gc_lay-2">';
 							} else {
@@ -533,8 +535,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							// new layout setting ///////////////////////////////.
 							$other_settings = get_option( 'wps_wgm_other_settings', array() );
-							$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
-							$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+							$use_new_page_layout = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 
 							if ( 'on' == $use_new_page_layout ) {
 								if ( '' !== apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id ) ) {
@@ -835,6 +836,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param  int   $product_id product_id.
 	 */
 	public function wps_nonce_not_verify_add_to_cart( $cart_item_key, $product_id ) {
+
+		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
+
+		if ( ! $referer || strpos( $referer, get_permalink( $product_id ) ) === false ) {
+			return false;
+		}
 
 		$product_types = wp_get_object_terms( $product_id, 'product_type' );
 
@@ -1910,13 +1917,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_wc_shipping_enabled( $enable ) {
-		static $already_checked = false;
-
-		if ( $already_checked ) {
-			return $enable;
-		}
-
-		$already_checked = true;
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 
 		if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {
@@ -2591,15 +2591,21 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_wgm_preview_below_thumbnail() {
 
-		global $product;
+		global $product, $wp_query;
+
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
-		$wps_public_obj = new Woocommerce_Gift_Cards_Common_Function();
-		$use_new_page_layout = $wps_public_obj->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
+		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
+
+		if ( empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
+			return false;
+		}
+
+		$use_new_page_layout = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 
 		$product_settings   = get_option( 'wps_wgm_product_settings', array() );
-		$disable_from_field = $wps_public_obj->wps_wgm_get_template_data( $product_settings, 'wps_wgm_from_field' );
-		$disable_message_field = $wps_public_obj->wps_wgm_get_template_data( $product_settings, 'wps_wgm_message_field' );
-		$disable_to_email_field = $wps_public_obj->wps_wgm_get_template_data( $product_settings, 'wps_wgm_to_email_field' );
+		$disable_from_field = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_from_field' );
+		$disable_message_field = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_message_field' );
+		$disable_to_email_field = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_to_email_field' );
 
 		if ( 'on' == $use_new_page_layout ) {
 			$prod_id = wc_get_product( $product->get_id() );
