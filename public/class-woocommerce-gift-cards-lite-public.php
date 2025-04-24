@@ -267,8 +267,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
 			$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
-			$wps_cart_html = apply_filters( 'wps_wgm_enable_sell_as_a_gc', $wps_product );
-			echo wp_kses( $wps_cart_html, $allowed_tags );
+			echo wp_kses( $wps_product, $allowed_tags );
 			return false;
 		}
 
@@ -837,7 +836,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_nonce_not_verify_add_to_cart( $cart_item_key, $product_id ) {
 
-		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url( $_SERVER['HTTP_REFERER'] ) : '';
+		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url( sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) ) : '';
 
 		if ( ! $referer || strpos( $referer, get_permalink( $product_id ) ) === false ) {
 			return false;

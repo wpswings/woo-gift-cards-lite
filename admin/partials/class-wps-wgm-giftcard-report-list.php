@@ -463,7 +463,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				$coupon_value = (float) get_post_meta( $coupon_id, 'coupon_amount', true );
 	
 				$is_valid = $this->wps_uwgc_validate_expiry( $coupon_obj );
-				if ( $is_valid && ( $usage_limit === 0 || $usage_count < $usage_limit ) ) {
+				if ( $is_valid && ( 0 === $usage_limit || $usage_count < $usage_limit ) ) {
 					$total_balance += $coupon_value;
 					continue;
 				}
@@ -479,8 +479,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			'total_balance'   => $total_balance,
 			'expire_giftcard' => $expire_giftcard,
 		);
-	
-		// Cache the result for 1 hour
+
 		wp_cache_set( $cache_key, $result, 'wps_wgm', HOUR_IN_SECONDS );
 	
 		return $result;
