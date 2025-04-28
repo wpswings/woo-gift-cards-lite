@@ -1527,51 +1527,6 @@
      width: 100%;
      max-width: 25em;
  }
- .wps-gc-overview__keywords {
-     display: flex;
-     flex-wrap: wrap;
-     margin-left: -15px;
-     marging-right: -15px;
- }
- .wps-gc-overview__keywords-item{
-     padding: 0px 15px;
-     max-width: 33.333%;
-     flex: 0 0 100%;
-     margin-bottom: 30px;
- }
- .wps-gc-overview__keywords-card {
-     border-radius: 8px;
-     padding: 10px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-     height: 100%;
- }
- .wps-gc-overview__keywords-image {
-     max-width: 120px;
-     margin: 0 auto;
- }
- .wps-gc-overview__keywords-image img{
-     width: 100%;
- }
- .wps-gc-overview__keywords-text{
-     text-align: center;
- }
- .wps-gc-overview__wrapper img {
-     width: 100%;
-     height: auto;
- }
- #wps-gc_rwpr_setting_wrapper * {
-     box-sizing: border-box;
- }
- #wps-gc_rwpr_setting_wrapper h3 {
-     line-height: 28px;
-     margin: 0;
- }
- #wps-gc_rwpr_setting_wrapper * {
-     box-sizing: border-box;
- }
- #wps-gc_rwpr_setting_wrapper * {
-     box-sizing: border-box;
- }
  .wps-gift-card-pro-tmplt .table.wps-table-wrapper {
      width: 100%;
  }
@@ -1849,7 +1804,7 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
     position:relative
 }
 
-th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_select_library]:before {
+/* th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_select_library]:before {
     vertical-align: middle;
     content: "New!";
    transform: rotate(-45deg);
@@ -1860,7 +1815,7 @@ th label[for=wps_wgm_new_gift_card_page_layout]:before, th label[for=wps_wgm_sel
 	left: -25px;
 	top: -10px;
 	animation: blink_text 1.2s infinite forwards linear;
-}
+} */
 
 .wps_wgm_select_library{
     display: none;

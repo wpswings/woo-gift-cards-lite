@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 5.1.0
-Tested up to: 6.7.2
+Tested up to: 6.8
 WC requires at least: 5.5.0
-WC tested up to: 9.7.1
-Stable tag:  3.1.3
+WC tested up to: 9.8.2
+Stable tag:  3.1.4
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -235,12 +235,17 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 3.1.4 - Released on 25 April 2025 =
+* New: Compatibility with latest WP (6.8) and WC (9.8.2).  
+* New: Compatibility with Google Tag Manager. 
+* Fix: Gift Card Reports - Optimize Code to fetch Coupons data.
+
 = 3.1.3 - Released on 25 March 2025 =
 * New: Converted existing shortcodes to Gutenberg block  i.e  [wps_check_your_gift_card_balance]
 * New: Compatibilty with latest WC ( 9.7.1 )
 * New: Compatibility with Membership plugin
 * Fix: Love You Mom Template Preview
-* Fix: Compatibilty Issue with Event plugin on order placed
+* Fix: Compatibility Issue with Event plugin on order placed
 
 = 3.1.2 - Released on 28 February 2025 = 
 * New : Gift Card Date Feature - WordPress date format
@@ -518,9 +523,7 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.1.3 - Released on 25 March 2025 =
-* New: Converted existing shortcodes to Gutenberg block  i.e  [wps_check_your_gift_card_balance]
-* New: Compatibilty with latest WC ( 9.7.1 )
-* New: Compatibility with Membership plugin
-* Fix: Love You Mom Template Preview
-* Fix: Compatibilty Issue with Event plugin on order placed
+= 3.1.4 - Released on 25 April 2025 =
+* New: Compatibility with latest WP (6.8) and WC (9.8.2). 
+* New: Compatibility with Google Tag Manager. 
+* Fix: Gift Card Reports - Optimize Code to fetch Coupons data.
