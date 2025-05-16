@@ -292,6 +292,8 @@ class Woocommerce_Gift_Cards_Lite {
 			$this->loader->add_action( 'wp_ajax_redeem_gift_card_coupon', $plugin_public, 'wps_wgm_redeem_gift_card_coupon' );
 			$this->loader->add_action( 'wps_points_on_first_order', $plugin_public, 'wps_wgm_user_end_points_log', 10, 1 );
 		}
+
+		$this->loader->add_action( 'wps_wgm_send_mail_to_sender', $plugin_public, 'wps_wgm_send_mail_to_sender_on_reciever', 10, 3 );
 	}
 
 	/**
