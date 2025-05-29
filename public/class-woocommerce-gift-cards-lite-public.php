@@ -2897,8 +2897,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 			if ( $sender_email && is_email( $sender_email ) ) {
 				$site_name = get_bloginfo( 'name' );
-				$subject   = sprintf( __( 'Your gift card has been used – %s', 'giftware' ), $site_name );
-				$message   = sprintf( __( 'Hello, your gift card (code: %s) sent to %s was recently used on %s.', 'giftware' ), $coupon_code, $recipient_email, $site_name );
+				// translators: %s: Site name.
+				$subject = sprintf( __( 'Your gift card has been used – %s', 'giftware' ), $site_name );
+
+				// translators: %1$s: Coupon code, %2$s: Recipient email, %3$s: Site name.
+				$message = sprintf( __( 'Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s.', 'giftware' ), $coupon_code, $recipient_email, $site_name );
 
 				wc_mail( $sender_email, $subject, $message );
 			}
