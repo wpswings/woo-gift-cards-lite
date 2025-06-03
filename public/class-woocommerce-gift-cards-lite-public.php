@@ -1897,6 +1897,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					}
 					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
 					do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, $remaining_amount );
+					do_action( 'wps_wgm_send_mail_to_sender', $coupon_code, $the_coupon, $order_id );
 				} else {
 					do_action( 'wps_wgm_offline_giftcard_coupon', $coupon_id, $item );
 				}
@@ -2848,4 +2849,62 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 	}
 
+	/**
+	 * This function is used to send mail to sender on receiver.
+	 *
+	 * @param  array $coupon_code coupon_code.
+	 * @param  array $the_coupon the_coupon.
+	 * @param  array $order_id order_id.
+	 * @return void
+	 */
+	public function wps_wgm_send_mail_to_sender_on_reciever( $coupon_code, $the_coupon, $order_id ) {
+
+		if ( empty( $coupon_code ) || empty( $the_coupon ) || empty( $order_id ) ) {
+			return;
+		}
+
+		$mail_settings    = get_option( 'wps_wgm_mail_settings', array() );
+		$enable_reminder  = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_enable_notify_sender' );
+
+		if ( 'on' !== $enable_reminder ) {
+			return;
+		}
+		
+		$coupon_id = $the_coupon->get_id();
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+	
+		$content = $the_coupon->get_description();
+		$is_giftcard = false;
+
+		if ( strpos( $content, 'GIFTCARD ORDER #' ) !== false ) {
+			$is_giftcard = true;
+		} elseif (
+			strpos( $content, 'Imported Coupon' ) !== false &&
+			get_post_meta( $coupon_id, 'wps_wgm_imported_coupon', true ) === 'purchased'
+		) {
+			$is_giftcard = true;
+		}
+
+		if ( $is_giftcard ) {
+			$order_id_generated = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+			$order_generated = wc_get_order( $order_id_generated );
+			$sender_email = $order_generated->get_billing_email();
+
+			$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+
+			if ( $sender_email && is_email( $sender_email ) ) {
+				$site_name = get_bloginfo( 'name' );
+				// translators: %s: Site name.
+				$subject = sprintf( __( 'Your gift card has been used – %s', 'woo-gift-cards-lite' ), $site_name );
+
+				// translators: %1$s: Coupon code, %2$s: Recipient email, %3$s: Site name.
+				$message = sprintf( __( 'Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s.', 'woo-gift-cards-lite' ), $coupon_code, $recipient_email, $site_name );
+
+				wc_mail( $sender_email, $subject, $message );
+			}
+		}
+	}
 }

@@ -683,8 +683,16 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					} else {
 						global $wpdb;
 						$table_name = $wpdb->prefix . 'wc_product_meta_lookup';
-						$sql        = 'UPDATE ' . $table_name . ' SET `min_price`=' . $default_price . ',`max_price`=' . $default_price . ' WHERE product_id = ' . $product_id;
-						$results    = $wpdb->get_results( '%d', $sql );
+						$wpdb->update(
+							$table_name,
+							[
+								'min_price' => (float) $default_price,
+								'max_price' => (float) $default_price,
+							],
+							[ 'product_id' => (int) $product_id ],
+							[ '%f', '%f' ],
+							[ '%d' ]
+						);
 					}
 					do_action( 'wps_wgm_product_pricing', $wps_wgm_pricing );
 					$wps_wgm_pricing = apply_filters( 'wps_wgm_product_pricing', $wps_wgm_pricing );

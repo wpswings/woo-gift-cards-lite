@@ -104,6 +104,14 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 			 'type' => 'wp_editor',
 			 'desc_tip' => esc_html__( 'Set the Disclaimer Text for Email Template.', 'woo-gift-cards-lite' ),
 		 ),
+		 array(
+			'title' => esc_html__( 'Enable Notify the sender when recipient uses the gift card', 'woo-gift-cards-lite' ),
+			'id' => 'wps_wgm_mail_setting_enable_notify_sender',
+			'type' => 'checkbox',
+			'class' => 'input-text',
+			'desc_tip' => esc_html__( 'Enable Notify the sender via email when the recipient uses the gift card for a purchase in your shop', 'woo-gift-cards-lite' ),
+			'desc' => esc_html__( 'Enable Notify the sender when recipient uses the gift card', 'woo-gift-cards-lite' ),
+		),
 	 ),
 	 'middle' => array(
 		 array(
