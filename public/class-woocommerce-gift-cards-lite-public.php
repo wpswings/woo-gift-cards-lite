@@ -2911,4 +2911,52 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 	}
+
+	/**
+	 * This function is used to disable gift card on order status change.
+	 *
+	 * @param int $order_id order_id.
+	 * @return void
+	 */
+	public function wps_disable_giftcard_on_order_status( $order_id ) {
+
+		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		if ( $wps_wgc_enable ) {
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				return;
+			}
+
+			foreach ( $order->get_items() as $item_id => $item ) {
+				$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
+				if ( isset( $giftcoupon ) && ! empty( $giftcoupon ) ) {
+					foreach ( $giftcoupon as $key => $value ) {
+						$coupon_data = new WC_Coupon( $value );
+						$coupon_id   = $coupon_data->get_id();
+						update_post_meta( $coupon_id, '_wps_giftcard_enabled', 'no' );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to disable specific coupon conditionally.
+	 *
+	 * @param bool   $is_valid is_valid.
+	 * @param object $coupon coupon.
+	 * @return bool
+	 */
+	public function wps_disable_specific_coupon_conditionally( $is_valid, $coupon ) {
+		$coupon_id = $coupon->get_id();
+
+		$enabled = get_post_meta( $coupon_id, '_wps_giftcard_enabled', true );
+
+		if ( 'no' === $enabled ) {
+			throw new Exception( sprintf( __( 'This gift card has been disabled.', 'woo-gift-cards-lite' ) ) );
+		}
+
+		return $is_valid;
+	}
+
 }
