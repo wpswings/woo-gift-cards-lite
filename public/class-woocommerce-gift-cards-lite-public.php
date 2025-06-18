@@ -2943,6 +2943,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	/**
 	 * This function is used to disable specific coupon conditionally.
 	 *
+	 * @throws Exception If coupon is disabled.
 	 * @param bool   $is_valid is_valid.
 	 * @param object $coupon coupon.
 	 * @return bool
