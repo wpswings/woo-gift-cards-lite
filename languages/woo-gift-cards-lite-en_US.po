@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.5\n"
-"POT-Creation-Date: 2025-05-29 17:22+0530\n"
-"PO-Revision-Date: 2025-05-29 17:22+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.6\n"
+"POT-Creation-Date: 2025-06-18 15:44+0530\n"
+"PO-Revision-Date: 2025-06-18 15:44+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -475,6 +475,36 @@ msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:2196
 msgid "Gift Cards Not Used "
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2380
+msgid "Disable Coupons"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2381
+msgid "Enable Coupons"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2431
+#, php-format
+msgid "%s coupon disabled."
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2442
+#, php-format
+msgid "%s coupon enabled."
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2462
+msgid "Enable/Disable"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2477
+msgid "Disabled"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2479
+msgid "Enabled"
 msgstr ""
 
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:22
@@ -1951,15 +1981,19 @@ msgstr ""
 msgid "Coupon Name"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2901
+#: public/class-woocommerce-gift-cards-lite-public.php:2903
 #, php-format
 msgid "Your gift card has been used – %s"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2904
+#: public/class-woocommerce-gift-cards-lite-public.php:2906
 #, php-format
 msgid ""
 "Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s."
+msgstr ""
+
+#: public/class-woocommerce-gift-cards-lite-public.php:2957
+msgid "This gift card has been disabled."
 msgstr ""
 
 #: public/partials/wallet-system-for-woocommerce-wallet-giftcard.php:17
