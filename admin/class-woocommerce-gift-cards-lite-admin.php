@@ -2427,20 +2427,24 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		if ( ! empty( $notices ) ) {
 			if ( ! empty( $notices['disabled'] ) ) {
+				// Translators: %s is the number of coupons that were disabled.
+				$singular_plural = _n( '%s coupon disabled.', '%s coupons disabled.', $notices['disabled'], 'woo-gift-cards-lite' );
+				$message = sprintf( $singular_plural, number_format_i18n( $notices['disabled'] ) );
+
 				printf(
-					'<div class="notice notice-success is-dismissible"><p>' .
-					_n( '%s coupon disabled.', '%s coupons disabled.', $notices['disabled'], 'woo-gift-cards-lite' ) .
-					'</p></div>',
-					$notices['disabled']
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					esc_html( $message )
 				);
 			}
 
 			if ( ! empty( $notices['enabled'] ) ) {
+				// Translators: %s is the number of coupons that were enabled.
+				$singular_plural = _n( '%s coupon enabled.', '%s coupons enabled.', $notices['enabled'], 'woo-gift-cards-lite' );
+				$message = sprintf( $singular_plural, number_format_i18n( $notices['enabled'] ) );
+
 				printf(
-					'<div class="notice notice-success is-dismissible"><p>' .
-					_n( '%s coupon enabled.', '%s coupons enabled.', $notices['enabled'], 'woo-gift-cards-lite' ) .
-					'</p></div>',
-					$notices['enabled']
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					esc_html( $message )
 				);
 			}
 

@@ -2953,7 +2953,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$enabled = get_post_meta( $coupon_id, '_wps_giftcard_enabled', true );
 
 		if ( 'no' === $enabled ) {
-			throw new Exception( sprintf( __( 'This gift card has been disabled.', 'woo-gift-cards-lite' ) ) );
+			throw new Exception( esc_html__( 'This gift card has been disabled.', 'woo-gift-cards-lite' ) );
 		}
 
 		return $is_valid;
