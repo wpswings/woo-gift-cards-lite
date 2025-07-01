@@ -169,4 +169,75 @@ if ( ! defined( 'ABSPATH' ) ) {
         "coupon_expiry": "30/05/2024"
     }
 	</pre>
+
+    <h4>For Creating Gift Card Coupon ( Online / Offline coupon ) : </h4> 
+	<p><strong><code>POST {home_url}/wp-json/api/v1/giftcard/creating-giftcard</code></strong><p>
+	<p>
+	Your Url : 
+	https://your-site.com
+	/wp-json/api/v1/giftcard/creating-giftcard
+	</p>
+	<p>
+		Required Parameters : consumer_key, consumer_secret, coupon_code, coupon_amount
+	</p>
+	<p>
+		Optional Parameters : coupon_expiry( in timestamp ), usage_limit, coupon_type, product_id
+	</p>
+	<p>JSON request example:</p>
+    <pre>
+    {
+        "consumer_key": "XXXXX",
+        "consumer_secret": "XXXXX",
+        "coupon_code": "wps-uwsqb",
+        "coupon_amount": 20,
+        "coupon_expiry": "1717050604",
+        "usage_limit": 10,
+        "coupon_type": "online/offline",
+        "product_id": 71
+    }
+	</pre>
+	<p>JSON response example:</p>
+    <pre>
+    {
+        "code": "success",
+        "message": "Gift Card Coupon is Created Successfully",
+        "coupon_id": 1242,
+        "coupon_expiry": "30/05/2024"
+    }
+	</pre>
+
+    <h4>For Creating and Sending Gift Card Coupon :</h4> 
+	<p><strong><code>POST {home_url}/wp-json/api/v1/giftcard/sending-giftcard</code></strong><p>
+	<p>
+	Your Url : 
+	https://your-site.com
+	wp-json/api/v1/giftcard/sending-giftcard
+	</p>
+	<p>
+		Required Parameters : consumer_key, consumer_secret, to, from, message, amount, product_id
+	</p>
+	<p>
+		Optional Parameters : schedule
+	</p>
+	<p>JSON request example:</p>
+    <pre>
+    {
+        "consumer_key": "XXXXX",
+        "consumer_secret": "XXXXX",
+        "to": "abc@gmail.com",
+        "from": "xyz@gmail.com",
+        "message": "Happy Bithday To You !!",
+        "amount": 10,
+        "product_id": 71,
+        "schedule": "2025-06-10"
+    }
+	</pre>
+	<p>JSON response example:</p>
+    <pre>
+    {
+        "code": "success",
+        "message": "Gift Card Coupon is Created and Sending Successfully",
+        "coupon": "LML8S"
+    }
+	</pre>
 </div>

@@ -265,7 +265,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
 		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
-		if ( empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
+		if ( wps_uwgc_pro_active() && empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
 			$allowed_tags = $this->wps_common_fun->wps_allowed_html_tags();
 			echo wp_kses( $wps_product, $allowed_tags );
 			return false;
@@ -2596,7 +2596,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
 		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
-		if ( empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
+		if ( wps_uwgc_pro_active() && empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
 			return false;
 		}
 
@@ -2890,21 +2890,74 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( $is_giftcard ) {
 			$order_id_generated = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
-			$order_generated = wc_get_order( $order_id_generated );
-			$sender_email = $order_generated->get_billing_email();
+			if ( ! empty( $order_id_generated ) ) {
+				$order_generated = wc_get_order( $order_id_generated );
+				if ( $order_generated instanceof WC_Order ) {
+					$sender_email = $order_generated->get_billing_email();
 
-			$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+					$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
 
-			if ( $sender_email && is_email( $sender_email ) ) {
-				$site_name = get_bloginfo( 'name' );
-				// translators: %s: Site name.
-				$subject = sprintf( __( 'Your gift card has been used – %s', 'woo-gift-cards-lite' ), $site_name );
+					if ( $sender_email && is_email( $sender_email ) ) {
+						$site_name = get_bloginfo( 'name' );
+						// translators: %s: Site name.
+						$subject = sprintf( __( 'Your gift card has been used – %s', 'woo-gift-cards-lite' ), $site_name );
 
-				// translators: %1$s: Coupon code, %2$s: Recipient email, %3$s: Site name.
-				$message = sprintf( __( 'Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s.', 'woo-gift-cards-lite' ), $coupon_code, $recipient_email, $site_name );
+						// translators: %1$s: Coupon code, %2$s: Recipient email, %3$s: Site name.
+						$message = sprintf( __( 'Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s.', 'woo-gift-cards-lite' ), $coupon_code, $recipient_email, $site_name );
 
-				wc_mail( $sender_email, $subject, $message );
+						wc_mail( $sender_email, $subject, $message );
+					}
+				}
 			}
 		}
 	}
+
+	/**
+	 * This function is used to disable gift card on order status change.
+	 *
+	 * @param int $order_id order_id.
+	 * @return void
+	 */
+	public function wps_disable_giftcard_on_order_status( $order_id ) {
+
+		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		if ( $wps_wgc_enable ) {
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				return;
+			}
+
+			foreach ( $order->get_items() as $item_id => $item ) {
+				$giftcoupon = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
+				if ( isset( $giftcoupon ) && ! empty( $giftcoupon ) ) {
+					foreach ( $giftcoupon as $key => $value ) {
+						$coupon_data = new WC_Coupon( $value );
+						$coupon_id   = $coupon_data->get_id();
+						update_post_meta( $coupon_id, '_wps_giftcard_enabled', 'no' );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to disable specific coupon conditionally.
+	 *
+	 * @throws Exception If coupon is disabled.
+	 * @param bool   $is_valid is_valid.
+	 * @param object $coupon coupon.
+	 * @return bool
+	 */
+	public function wps_disable_specific_coupon_conditionally( $is_valid, $coupon ) {
+		$coupon_id = $coupon->get_id();
+
+		$enabled = get_post_meta( $coupon_id, '_wps_giftcard_enabled', true );
+
+		if ( 'no' === $enabled ) {
+			throw new Exception( esc_html__( 'This gift card has been disabled.', 'woo-gift-cards-lite' ) );
+		}
+
+		return $is_valid;
+	}
+
 }

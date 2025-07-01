@@ -72,7 +72,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '3.1.5';
+			$this->version = '3.1.6';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -223,6 +223,16 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'wp_ajax_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
 		$this->loader->add_action( 'wps_wgm_coupon_reporting_with_order', $plugin_admin, 'wps_wgm_coupon_reporting_with_order_id', 10, 4 );
+	
+		// Add Disable/Enable coupon bulk actions.
+		$this->loader->add_filter( 'bulk_actions-edit-shop_coupon', $plugin_admin, 'wps_add_custom_coupon_bulk_actions' );
+		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_coupon', $plugin_admin, 'wps_handle_custom_coupon_bulk_actions', 10, 3 );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_custom_coupon_bulk_action_notices' );
+		
+		// to show Disable/Enable column.
+		$this->loader->add_filter( 'manage_edit-shop_coupon_columns',  $plugin_admin, 'add_enable_disable_column' );
+		$this->loader->add_action( 'manage_shop_coupon_posts_custom_column', $plugin_admin, 'populate_enable_disable_column', 10, 2 );
+
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -271,6 +281,10 @@ class Woocommerce_Gift_Cards_Lite {
 		// Compatibilty with WPS Currency Switcher.
 		$this->loader->add_filter( 'wps_currency_switcher_get_custom_product_type', $plugin_public, 'wps_currency_switcher_get_custom_product_type', 10, 2 );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wgm_manage_coupon_amount_on_refund', 10, 3 );
+		$this->loader->add_action( 'woocommerce_order_status_cancelled', $plugin_public, 'wps_disable_giftcard_on_order_status' );
+		$this->loader->add_action( 'woocommerce_order_status_refunded', $plugin_public, 'wps_disable_giftcard_on_order_status' );
+		$this->loader->add_filter( 'woocommerce_coupon_is_valid', $plugin_public, 'wps_disable_specific_coupon_conditionally', 10, 2 );
+
 		// Compatible with Wallet.
 		$this->loader->add_action( 'wps_wsfw_add_wallet_register_endpoint', $plugin_public, 'wps_wgm_add_wallet_register_endpoint', 10 );
 		$this->loader->add_filter( 'wps_wsfw_add_wallet_tabs', $plugin_public, 'wps_wgm_add_wallet_tabs', 10, 1 );

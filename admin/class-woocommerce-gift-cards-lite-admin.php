@@ -2370,5 +2370,115 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		register_block_type( 'wpswings/googles-embed-org-giftcard', array( 'editor_script' => 'google-embeds-org-block-giftcard') );
 	}
 
+	/**
+	 * Add custom bulk actions for coupons
+	 *
+	 * @param array $bulk_actions Existing bulk actions.
+	 * @return array Modified bulk actions.
+	 */
+	public function wps_add_custom_coupon_bulk_actions( $bulk_actions ) {
+		$bulk_actions['disable_coupon'] = __( 'Disable Coupons', 'woo-gift-cards-lite' );
+		$bulk_actions['enable_coupon']  = __( 'Enable Coupons', 'woo-gift-cards-lite' );
+		return $bulk_actions;
+	}
+
+	/**
+	 * Handle custom bulk actions for coupons.
+	 *
+	 * @param string $redirect_to URL to redirect to after processing the bulk action.
+	 * @param string $action The action being performed.
+	 * @param array  $post_ids Array of post IDs on which the action is being performed.
+	 * @return string Redirect URL with query arguments indicating the number of coupons disabled/enabled.
+	 */
+	public function wps_handle_custom_coupon_bulk_actions( $redirect_to, $action, $post_ids ) {
+		$disabled = 0;
+		$enabled  = 0;
+
+		foreach ( $post_ids as $post_id ) {
+			$is_giftcard = get_post_meta( $post_id, 'wps_wgm_giftcard_coupon', true );
+			if ( $is_giftcard && get_post_type( $post_id ) === 'shop_coupon' ) {
+				if ( 'disable_coupon' === $action ) {
+					update_post_meta( $post_id, '_wps_giftcard_enabled', 'no' );
+					$disabled++;
+				} elseif ( 'enable_coupon' === $action ) {
+					update_post_meta( $post_id, '_wps_giftcard_enabled', 'yes' );
+					$enabled++;
+				}
+			}
+		}
+
+		if ( $disabled || $enabled ) {
+			set_transient( 'wps_coupon_bulk_action_notice', [
+				'disabled' => $disabled,
+				'enabled'  => $enabled,
+			], 30 );
+		}
+
+		return $redirect_to;
+	}
+
+	/**
+	 * Display notices for custom bulk actions.
+	 *
+	 * @return void
+	 */
+	public function wps_custom_coupon_bulk_action_notices() {
+		$notices = get_transient( 'wps_coupon_bulk_action_notice' );
+
+		if ( ! empty( $notices ) ) {
+			if ( ! empty( $notices['disabled'] ) ) {
+				// Translators: %s is the number of coupons that were disabled.
+				$singular_plural = _n( '%s coupon disabled.', '%s coupons disabled.', $notices['disabled'], 'woo-gift-cards-lite' );
+				$message = sprintf( $singular_plural, number_format_i18n( $notices['disabled'] ) );
+
+				printf(
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					esc_html( $message )
+				);
+			}
+
+			if ( ! empty( $notices['enabled'] ) ) {
+				// Translators: %s is the number of coupons that were enabled.
+				$singular_plural = _n( '%s coupon enabled.', '%s coupons enabled.', $notices['enabled'], 'woo-gift-cards-lite' );
+				$message = sprintf( $singular_plural, number_format_i18n( $notices['enabled'] ) );
+
+				printf(
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					esc_html( $message )
+				);
+			}
+
+			delete_transient( 'wps_coupon_bulk_action_notice' );
+		}
+	}
+
+	/**
+	 * Add a custom column to the coupons list table for imported coupon availability.
+	 *
+	 * @param array $columns Existing columns.
+	 * @return array Modified columns.
+	 */
+	public function add_enable_disable_column( $columns ) {
+		$columns['wps_wgm_enable_disable_coupon'] = __( 'Enable/Disable', 'woo-gift-cards-lite' );
+		return $columns;
+	}
+
+	/**
+	 * Populate the custom column with data.
+	 *
+	 * @param string $column The column name.
+	 * @param int    $coupon_id The coupon ID.
+	 */
+	public function populate_enable_disable_column( $column, $coupon_id ) {
+		if ( 'wps_wgm_enable_disable_coupon' === $column ) {
+			$enabled = get_post_meta( $coupon_id, '_wps_giftcard_enabled', true );
+
+			if ( 'no' == $enabled ) {
+				echo esc_html__( 'Disabled', 'woo-gift-cards-lite' );
+			} else {
+				echo esc_html__( 'Enabled', 'woo-gift-cards-lite' );
+			}
+		}
+	}
 }
 ?>
