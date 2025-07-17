@@ -137,6 +137,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$wps_wgm_notice = array(
 				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 				'wps_wgm_nonce' => wp_create_nonce( 'wps-wgm-verify-notice-nonce' ),
+				'is_pro_plugin_active' => wps_uwgc_pro_active(),
 			);
 			wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script( $this->plugin_name . 'admin-notice', 'wps_wgm_notice', $wps_wgm_notice );
@@ -1403,7 +1404,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
 			update_option( 'wps_banner_type', $banner_type );
 			if ( 'regular' == $banner_type ) {
-				 update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+				update_option( 'wps_wgm_notify_hide_baneer_notification', 0 );
 			}
 		}
 	}
