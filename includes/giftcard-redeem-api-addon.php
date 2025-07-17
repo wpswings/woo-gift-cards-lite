@@ -76,7 +76,7 @@ function wps_get_giftcard_details( $request ) {
 		if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 
 			$woo_ver = WC()->version;
-			if ( $woo_ver < '3.6.0' ) {
+			if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
 
 				$coupon_expiry = get_post_meta( $coupon_id, 'expiry_date', true );
 
@@ -151,7 +151,7 @@ function wps_redeem_giftcard_offline( $request ) {
 				$woo_ver = WC()->version;
 
 				$coupon_expiry = '';
-				if ( $woo_ver < '3.6.0' ) {
+				if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
 
 					$coupon_expiry = get_post_meta( $coupon_id, 'expiry_date', true );
 
@@ -286,7 +286,7 @@ function wps_recharge_giftcard_offine( $request ) {
 			$coupon_expiry = '';
 			$woo_ver = WC()->version;
 
-			if ( $woo_ver < '3.6.0' ) {
+			if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
 
 				$coupon_expiry = get_post_meta( $coupon_id, 'expiry_date', true );
 
@@ -307,7 +307,7 @@ function wps_recharge_giftcard_offine( $request ) {
 					update_post_meta( $coupon_id, 'usage_limit', $usage_limit );
 					update_post_meta( $coupon_id, 'usage_count', 0 );
 
-					if ( $woo_ver < '3.6.0' ) {
+					if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
 						if ( $coupon_expirys > time() ) {
 							update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
 							$coupon_expiry = $coupon_expirys;

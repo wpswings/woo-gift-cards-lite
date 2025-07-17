@@ -378,7 +378,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					}
 
 					$woo_ver = WC()->version;
-					if ( $woo_ver < '3.6.0' ) {
+					if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
 						update_post_meta( $new_coupon_id, 'expiry_date', $expirydate );
 					} else {
 						$expirydate = strtotime( $expirydate );
@@ -519,7 +519,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					if ( isset( $wps_wgm_common_arr['delivery_method'] ) ) {
 						if ( 'Mail to recipient' == $wps_wgm_common_arr['delivery_method'] ) {
 							$woo_ver = WC()->version;
-							if ( $woo_ver < '3.0.0' ) {
+							if ( version_compare( $woo_ver, '3.0.0', '<' ) ) {
 								$from = $order->billing_email;
 							} else {
 								$from = $order->get_billing_email();
@@ -527,7 +527,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						}
 						if ( 'Downloadable' == $wps_wgm_common_arr['delivery_method'] ) {
 							$woo_ver = WC()->version;
-							if ( $woo_ver < '3.0.0' ) {
+							if ( version_compare( $woo_ver, '3.0.0', '<' ) ) {
 								$to = $order->billing_email;
 							} else {
 								$to = $order->get_billing_email();
