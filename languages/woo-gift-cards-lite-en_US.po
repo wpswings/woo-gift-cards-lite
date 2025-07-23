@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.7\n"
-"POT-Creation-Date: 2025-07-17 13:48+0530\n"
-"PO-Revision-Date: 2025-07-17 13:48+0530\n"
+"POT-Creation-Date: 2025-07-23 13:51+0530\n"
+"PO-Revision-Date: 2025-07-23 13:52+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -30,7 +30,7 @@ msgstr ""
 #: includes/class-makewebbetter-onboarding-helper.php:874
 #: includes/class-woocommerce-gift-cards-common-function.php:593
 #: public/class-woocommerce-gift-cards-lite-public.php:2037
-#: woocommerce_gift_cards_lite.php:534 woocommerce_gift_cards_lite.php:581
+#: woocommerce_gift_cards_lite.php:535 woocommerce_gift_cards_lite.php:582
 msgid "Nonce Not verified"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgid "Export"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:228
-#: woocommerce_gift_cards_lite.php:118
+#: woocommerce_gift_cards_lite.php:119
 msgid "Settings"
 msgstr ""
 
@@ -75,8 +75,8 @@ msgstr ""
 #: admin/class-woocommerce-gift-cards-lite-admin.php:587
 #: admin/class-woocommerce-gift-cards-lite-admin.php:829
 #: admin/class-woocommerce-gift-cards-lite-admin.php:831
-#: woocommerce_gift_cards_lite.php:174 woocommerce_gift_cards_lite.php:186
-#: woocommerce_gift_cards_lite.php:187
+#: woocommerce_gift_cards_lite.php:175 woocommerce_gift_cards_lite.php:187
+#: woocommerce_gift_cards_lite.php:188
 msgid "Gift Card"
 msgstr ""
 
@@ -2004,15 +2004,15 @@ msgstr ""
 msgid "Proceed"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:119
+#: woocommerce_gift_cards_lite.php:120
 msgid "GO PRO"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:390 woocommerce_gift_cards_lite.php:391
+#: woocommerce_gift_cards_lite.php:391 woocommerce_gift_cards_lite.php:392
 msgid "Gift Card Balance"
 msgstr ""
 
-#: woocommerce_gift_cards_lite.php:519
+#: woocommerce_gift_cards_lite.php:520
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Ultimate Gift Cards For WooCommerce"
