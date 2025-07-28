@@ -102,7 +102,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$pagescreen = $screen->id;
 		}
 
-		if ( ( isset( $_GET['page'] ) && ( 'wps-wgc-setting-lite' === $_GET['page'] ) || 'wc-settings' == $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && ( 'plugins' === $pagescreen || 'product' === $pagescreen || 'dashboard' == $pagescreen ) ) ) {
+		if ( ( isset( $_GET['page'] ) && ( 'wps-wgc-setting-lite' === $_GET['page'] || 'wc-settings' == $_GET['page'] ) ) || ( isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) || ( isset( $_GET['post_type'] ) && 'giftcard' === $_GET['post_type'] ) || ( isset( $pagescreen ) && ( 'plugins' === $pagescreen || 'product' === $pagescreen || 'dashboard' == $pagescreen ) ) ) {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'select2' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-admin.css', array(), $this->version, 'all' );
