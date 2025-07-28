@@ -2544,10 +2544,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
  
         echo '<ul style="list-style: disc; padding-left: 20px;">';
         echo '<li><strong>' . esc_html__( 'Total Gift Cards Issued:', 'woo-gift-cards-lite' ) . '</strong> ' . esc_html( $total_cards ) . '</li>';
-        echo '<li><strong>' . esc_html__( 'Total Value Issued:', 'woo-gift-cards-lite' ) . '</strong> ' . wc_price( $total_issued ) . '</li>';
-        echo '<li><strong>' . esc_html__( 'Total Value Redeemed:', 'woo-gift-cards-lite' ) . '</strong> ' . wc_price( $total_redeemed ) . '</li>';
-        echo '<li><strong>' . esc_html__( 'Total Expired Value:', 'woo-gift-cards-lite' ) . '</strong> ' . wc_price( $total_expired ) . '</li>';
-        echo '<li><strong>' . esc_html__( 'Remaining Balance:', 'woo-gift-cards-lite' ) . '</strong> ' . wc_price( $total_remaining ) . '</li>';
+        echo '<li><strong>' . esc_html__( 'Total Value Issued:', 'woo-gift-cards-lite' ) . '</strong> ' . wp_kses_post( wc_price( $total_issued ) ) . '</li>';
+        echo '<li><strong>' . esc_html__( 'Total Value Redeemed:', 'woo-gift-cards-lite' ) . '</strong> ' . wp_kses_post( wc_price( $total_redeemed ) ) . '</li>';
+        echo '<li><strong>' . esc_html__( 'Total Expired Value:', 'woo-gift-cards-lite' ) . '</strong> ' . wp_kses_post( wc_price( $total_expired ) ) . '</li>';
+        echo '<li><strong>' . esc_html__( 'Remaining Balance:', 'woo-gift-cards-lite' ) . '</strong> ' . wp_kses_post( wc_price( $total_remaining ) ) . '</li>';
         echo '</ul>';
     }
 }
