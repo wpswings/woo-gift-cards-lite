@@ -72,7 +72,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '3.1.8';
+			$this->version = '3.1.9';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -233,6 +233,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'manage_edit-shop_coupon_columns',  $plugin_admin, 'add_enable_disable_column' );
 		$this->loader->add_action( 'manage_shop_coupon_posts_custom_column', $plugin_admin, 'populate_enable_disable_column', 10, 2 );
 
+		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'wps_wgm_add_gift_card_dashboard_widget' );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality

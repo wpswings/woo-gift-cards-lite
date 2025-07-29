@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.8\n"
-"POT-Creation-Date: 2025-07-23 13:51+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.1.9\n"
+"POT-Creation-Date: 2025-07-28 18:17+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -20,10 +20,10 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:96
-#: admin/class-woocommerce-gift-cards-lite-admin.php:261
-#: admin/class-woocommerce-gift-cards-lite-admin.php:747
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1457
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1988
+#: admin/class-woocommerce-gift-cards-lite-admin.php:262
+#: admin/class-woocommerce-gift-cards-lite-admin.php:748
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1458
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1989
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:146
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:220
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:506
@@ -31,481 +31,505 @@ msgstr ""
 #: includes/class-makewebbetter-onboarding-helper.php:874
 #: includes/class-woocommerce-gift-cards-common-function.php:593
 #: public/class-woocommerce-gift-cards-lite-public.php:2037
-#: woocommerce_gift_cards_lite.php:535 woocommerce_gift_cards_lite.php:582
+#: woocommerce_gift_cards_lite.php:535 woocommerce_gift_cards_lite.php:585
 msgid "Nonce Not verified"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:180
+#: admin/class-woocommerce-gift-cards-lite-admin.php:181
 #, php-format
 msgid "Please enter in decimal (%s) format without thousand separators."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:182
+#: admin/class-woocommerce-gift-cards-lite-admin.php:183
 #, php-format
 msgid ""
 "Please enter in monetary decimal (%s) format without thousand separators and "
 "currency symbols."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:183
+#: admin/class-woocommerce-gift-cards-lite-admin.php:184
 msgid "Please enter in country code with two capital letters."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:184
+#: admin/class-woocommerce-gift-cards-lite-admin.php:185
 msgid "Please enter in a value less than the regular price."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:188
+#: admin/class-woocommerce-gift-cards-lite-admin.php:189
 msgid "Import"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:189
+#: admin/class-woocommerce-gift-cards-lite-admin.php:190
 msgid "Export"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:228
+#: admin/class-woocommerce-gift-cards-lite-admin.php:229
 #: woocommerce_gift_cards_lite.php:119
 msgid "Settings"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:230
+#: admin/class-woocommerce-gift-cards-lite-admin.php:231
 msgid "Premium Plugin"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:283
-#: admin/class-woocommerce-gift-cards-lite-admin.php:587
-#: admin/class-woocommerce-gift-cards-lite-admin.php:829
-#: admin/class-woocommerce-gift-cards-lite-admin.php:831
+#: admin/class-woocommerce-gift-cards-lite-admin.php:284
+#: admin/class-woocommerce-gift-cards-lite-admin.php:588
+#: admin/class-woocommerce-gift-cards-lite-admin.php:830
+#: admin/class-woocommerce-gift-cards-lite-admin.php:832
 #: woocommerce_gift_cards_lite.php:175 woocommerce_gift_cards_lite.php:187
 #: woocommerce_gift_cards_lite.php:188
 msgid "Gift Card"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:298
-#: admin/class-woocommerce-gift-cards-lite-admin.php:374
+#: admin/class-woocommerce-gift-cards-lite-admin.php:299
+#: admin/class-woocommerce-gift-cards-lite-admin.php:375
 msgid "Default Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:299
+#: admin/class-woocommerce-gift-cards-lite-admin.php:300
 msgid "Price Range"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:300
+#: admin/class-woocommerce-gift-cards-lite-admin.php:301
 msgid "Selected Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:301
+#: admin/class-woocommerce-gift-cards-lite-admin.php:302
 msgid "User Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:302
+#: admin/class-woocommerce-gift-cards-lite-admin.php:303
 msgid "Variable Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:376
+#: admin/class-woocommerce-gift-cards-lite-admin.php:377
 msgid ""
 "Gift card default price. if you are using Price range pricing type then try "
 "to add default price in between from and to range"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:385
+#: admin/class-woocommerce-gift-cards-lite-admin.php:386
 msgid "Pricing type"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:395
+#: admin/class-woocommerce-gift-cards-lite-admin.php:396
 msgid "From Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:397
+#: admin/class-woocommerce-gift-cards-lite-admin.php:398
 msgid "Gift card price range start from."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:407
+#: admin/class-woocommerce-gift-cards-lite-admin.php:408
 msgid "To Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:409
+#: admin/class-woocommerce-gift-cards-lite-admin.php:410
 msgid "Gift card price range end to."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:419
-#: admin/class-woocommerce-gift-cards-lite-admin.php:444
+#: admin/class-woocommerce-gift-cards-lite-admin.php:420
+#: admin/class-woocommerce-gift-cards-lite-admin.php:445
 msgid "Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:421
+#: admin/class-woocommerce-gift-cards-lite-admin.php:422
 msgid "Enter price using separator |. Ex : (10 | 20)"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:430
+#: admin/class-woocommerce-gift-cards-lite-admin.php:431
 msgid "Set Minimum Price"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:432
+#: admin/class-woocommerce-gift-cards-lite-admin.php:433
 msgid "Leave Empty for No Minimum Gift card price."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:443
+#: admin/class-woocommerce-gift-cards-lite-admin.php:444
 msgid "Description"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:462
+#: admin/class-woocommerce-gift-cards-lite-admin.php:463
 msgid "Remove"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:470
+#: admin/class-woocommerce-gift-cards-lite-admin.php:471
 msgid "Add"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:476
-#: admin/class-woocommerce-gift-cards-lite-admin.php:481
+#: admin/class-woocommerce-gift-cards-lite-admin.php:477
+#: admin/class-woocommerce-gift-cards-lite-admin.php:482
 msgid "Instruction"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:477
+#: admin/class-woocommerce-gift-cards-lite-admin.php:478
 msgid "WooCommerce Product regular price is used as a gift card price."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:482
+#: admin/class-woocommerce-gift-cards-lite-admin.php:483
 msgid "Users can purchase any amount of Gift Card."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:494
+#: admin/class-woocommerce-gift-cards-lite-admin.php:495
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:39
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:66
 msgid "Email Template"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:779
+#: admin/class-woocommerce-gift-cards-lite-admin.php:780
 msgid "Gift Coupon"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:828
-#: admin/class-woocommerce-gift-cards-lite-admin.php:830
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1931
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1934
+#: admin/class-woocommerce-gift-cards-lite-admin.php:829
+#: admin/class-woocommerce-gift-cards-lite-admin.php:831
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1932
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1935
 msgid "Gift Cards"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:832
+#: admin/class-woocommerce-gift-cards-lite-admin.php:833
 msgid "Add New"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:833
+#: admin/class-woocommerce-gift-cards-lite-admin.php:834
 msgid "Add New Gift Card"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:834
+#: admin/class-woocommerce-gift-cards-lite-admin.php:835
 msgid "New Gift Card"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:835
+#: admin/class-woocommerce-gift-cards-lite-admin.php:836
 msgid "Edit Gift Card"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:836
+#: admin/class-woocommerce-gift-cards-lite-admin.php:837
 msgid "View Gift Card"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:837
+#: admin/class-woocommerce-gift-cards-lite-admin.php:838
 msgid "Templates"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:838
+#: admin/class-woocommerce-gift-cards-lite-admin.php:839
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:514
 msgid "Search Gift Cards"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:839
+#: admin/class-woocommerce-gift-cards-lite-admin.php:840
 msgid "Parent Gift Cards:"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:840
+#: admin/class-woocommerce-gift-cards-lite-admin.php:841
 msgid "No gift cards found."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:841
+#: admin/class-woocommerce-gift-cards-lite-admin.php:842
 msgid "No gift cards found in Trash."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:849
+#: admin/class-woocommerce-gift-cards-lite-admin.php:850
 msgid "Description."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:884
+#: admin/class-woocommerce-gift-cards-lite-admin.php:885
 msgid "Instruction for using Shortcode"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:888
+#: admin/class-woocommerce-gift-cards-lite-admin.php:889
 msgid "SHORTCODE"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:889
+#: admin/class-woocommerce-gift-cards-lite-admin.php:890
 msgid "DESCRIPTION."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:893
+#: admin/class-woocommerce-gift-cards-lite-admin.php:894
 msgid "Replace with the logo of the company on the email template."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:897
+#: admin/class-woocommerce-gift-cards-lite-admin.php:898
 msgid "Replace with the email of the user to which gift card send."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:901
+#: admin/class-woocommerce-gift-cards-lite-admin.php:902
 msgid "Replace with email/name of the user who sends the gift card."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:905
+#: admin/class-woocommerce-gift-cards-lite-admin.php:906
 msgid "Replace with Message of the user who sends the gift card."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:909
+#: admin/class-woocommerce-gift-cards-lite-admin.php:910
 msgid "Replace with Gift Card Amount."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:913
+#: admin/class-woocommerce-gift-cards-lite-admin.php:914
 msgid "Replace with Gift Card Coupon Code."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:917
+#: admin/class-woocommerce-gift-cards-lite-admin.php:918
 msgid "Replace with Default event image set on Setting."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:921
+#: admin/class-woocommerce-gift-cards-lite-admin.php:922
 msgid "Replace with Gift Card Expiry Date."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:925
+#: admin/class-woocommerce-gift-cards-lite-admin.php:926
 msgid "Replace with Disclaimer on Gift Card."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:929
+#: admin/class-woocommerce-gift-cards-lite-admin.php:930
 msgid "Replace with Gift Card Purchase Date."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:933
+#: admin/class-woocommerce-gift-cards-lite-admin.php:934
 msgid "Replaced with Variable Product Description."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:937
+#: admin/class-woocommerce-gift-cards-lite-admin.php:938
 msgid "Replaced with giftcard delivery method."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1230
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1231
 msgid "Preview"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1280
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1281
 msgid "from@example.com"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1281
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1282
 msgid "to@example.com"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1282
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1283
 msgid "Your gift message will appear here which you send to your receiver. "
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1330
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1331
 msgid "Demo"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1331
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1332
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1332
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1333
 msgid "Video"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1333
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1334
 msgid "Support"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1334
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1335
 msgid "Services"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1542
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1543
 msgid "Welcome to Ultimate Gift Cards For WooCommerce"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1542
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1543
 msgid "– Create and sell multiple gift cards with ease."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1552
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1553
 msgid "Enable Gift Cards"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1629
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1630
 msgid "Import Templates"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1629
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1630
 msgid "Import Templates <span style=\"color:#00FF00;\">Pro</span>"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1684
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1685
 msgid "Import Gift Card Templates"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1689
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1690
 msgid "Filter Gift Card Templates"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1693
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1694
 msgid "Import All Gift Card Templates At Once"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1749
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1750
 msgid "Import this template."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1816
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1817
 msgid "Convert Coupon into Points"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1820
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1821
 msgid ""
 "By enabling this setting, users have the ability to redeem their coupons and "
 "convert them into points."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1821
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1822
 msgid "Enable this to convert coupons amount into points."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1824
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1825
 msgid "Enter Coupon redeem conversion rate"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1843
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1844
 msgid " Points "
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1863
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1864
 #: public/class-woocommerce-gift-cards-lite-public.php:2818
 msgid "Gift Coupon Redeem Points"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1870
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1871
 msgid "Date & Time"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1873
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1874
 #: public/class-woocommerce-gift-cards-lite-public.php:2827
 msgid "Point Status"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1876
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1877
 msgid "Coupon Name."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:1913
+#: admin/class-woocommerce-gift-cards-lite-admin.php:1914
 msgid "GC Reports"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2092
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2093
 #: wps-wgc-lite-gdpr.php:89
 msgid "Gift Card Details"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2096
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2097
 msgid "Purchased Date :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2103
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2104
 msgid "Gift Card Amount :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2109
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2110
 msgid "Remaining Amount :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2113
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2114
 msgid " To :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2117
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2118
 msgid "From :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2121
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2122
 msgid "Message :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2125
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2126
 msgid "Scheduled Date :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2131
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2132
 msgid "Variable Price Description :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2138
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2139
 msgid "Product :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2146
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2147
 msgid "Suborder Transactions"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2148
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2149
 msgid "Contributor Email :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2149
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2150
 msgid "Contribution Amount :"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2168
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2169
 msgid "Gift Card Transactions"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2174
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2175
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:104
 msgid "Order Id"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2175
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2176
 msgid "Used Amount"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2196
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2197
 msgid "Gift Cards Not Used "
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2380
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2381
 msgid "Disable Coupons"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2381
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2382
 msgid "Enable Coupons"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2431
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2432
 #, php-format
 msgid "%s coupon disabled."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2442
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2443
 #, php-format
 msgid "%s coupon enabled."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2462
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2463
 msgid "Enable/Disable"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2477
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2478
 msgid "Disabled"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2479
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2480
 msgid "Enabled"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2491
+msgid "Gift Card Summary"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2546
+msgid "Total Gift Cards Issued:"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2547
+msgid "Total Value Issued:"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2548
+msgid "Total Value Redeemed:"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2549
+msgid "Total Expired Value:"
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2550
+msgid "Remaining Balance:"
 msgstr ""
 
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:22

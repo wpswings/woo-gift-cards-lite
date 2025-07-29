@@ -15,7 +15,7 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           3.1.8
+ * Version:           3.1.9
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
@@ -24,7 +24,7 @@
  * Requires Plugins:  woocommerce
  * Tested up to:      6.8.2
  * Requires at least: 6.7
- * WC tested up to:   10.0.3
+ * WC tested up to:   10.0.4
  * WC requires at least: 6.5
  * Requires PHP:      7.4
  * Domain Path:       /languages
@@ -73,7 +73,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '3.1.8' );
+	define( 'WPS_WGC_VERSION', '3.1.9' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -538,16 +538,19 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
-		if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) ) {
-			$notification_id = get_option( 'wps_wgm_notify_new_msg_id', false );
+
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+        $page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+		if ( 'wc-settings' === $page_param || in_array( $pagescreen, $target_screens, true ) ) {
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-			if ( isset( $banner_id ) && '' !== $banner_id ) {
-				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
-				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
-				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+			if ( isset( $banner_id ) && ! empty( $banner_id ) ) {
+				$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
 				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
-					if ( '' !== $banner_image && '' !== $banner_url ) {
+					if ( ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 
 						?>
 							<div class="wps-offer-notice notice notice-warning is-dismissible">
