@@ -292,6 +292,11 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 3.1.9 - Released on 29 July 2025 =
+* New : Gift Card Report Summary on the WordPress Dashboard.
+* New : Compatibilty with latest WC ( 10.0.4 ) and WP( 6.8.2 ).
+* Fix : Banner Image & Condition.
+
 = 3.1.8 - Released on 23 July 2025 =
 
 * New : Compatibilty with latest WC ( 10.0.3 ) and WP( 6.8.2 )
@@ -599,6 +604,7 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.1.8 - Released on 23 July 2025 =
-
-* New : Compatibilty with latest WC ( 10.0.3 ) and WP( 6.8.2 )
+= 3.1.9 - Released on 29 July 2025 =
+* New : Gift Card Report Summary on the WordPress Dashboard.
+* New : Compatibilty with latest WC ( 10.0.4 ) and WP( 6.8.2 ).
+* Fix : Banner Image & Condition.
