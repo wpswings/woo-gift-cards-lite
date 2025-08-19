@@ -314,61 +314,45 @@ function wps_recharge_giftcard_offine( $request ) {
 
 			if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
-				$excluded_days = get_post_meta( $coupon_id, 'wps_wgm_excluded_days', true );
+				if ( isset( $recharge_amount ) && ! empty ( $recharge_amount ) && '0' != $recharge_amount && '0' < $recharge_amount ) {
 
-				$current_day = strtolower( date( 'l' ) );
+					$updated_amount = $coupon_amount + $recharge_amount;
 
-				if ( ! in_array( $current_day, $excluded_days ) ) {
+					update_post_meta( $coupon_id, 'coupon_amount', $updated_amount );
 
-					if ( isset( $recharge_amount ) && ! empty ( $recharge_amount ) && '0' != $recharge_amount && '0' < $recharge_amount ) {
+					update_post_meta( $coupon_id, 'usage_limit', $usage_limit );
+					update_post_meta( $coupon_id, 'usage_count', 0 );
 
-						$updated_amount = $coupon_amount + $recharge_amount;
-
-						update_post_meta( $coupon_id, 'coupon_amount', $updated_amount );
-
-						update_post_meta( $coupon_id, 'usage_limit', $usage_limit );
-						update_post_meta( $coupon_id, 'usage_count', 0 );
-
-						if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
-							if ( $coupon_expirys > time() ) {
-								update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
-								$coupon_expiry = $coupon_expirys;
-							}
-						} else {
-							if ( $coupon_expirys > time() ) {
-								update_post_meta( $coupon_id, 'date_expires', $coupon_expirys );
-								$coupon_expiry = $coupon_expirys;
-							}
+					if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
+						if ( $coupon_expirys > time() ) {
+							update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
+							$coupon_expiry = $coupon_expirys;
 						}
-
-						$response['code'] = 'success';
-						$response['message'] = 'Coupon is successfully Recharged';
-
-						$data = array(
-							'status' => 200,
-							'remaining_amount' => $updated_amount,
-							'discount_type' => $the_coupon->get_discount_type(),
-							'usage_count' => 0,
-							'usage_limit' => $usage_limit,
-							'description' => $the_coupon->get_description(),
-							'coupon_expiry' => $coupon_expiry,
-						);
-						$response['data'] = $data;
-						$response = new WP_REST_Response( $response );
 					} else {
-						$response['code'] = 'error';
-						$response['message'] = 'Recharge amount should be greater than 0';
-
-						$data = array(
-							'status' => 404,
-
-						);
-						$response['data'] = $data;
-						$response = new WP_REST_Response( $response );
+						if ( $coupon_expirys > time() ) {
+							update_post_meta( $coupon_id, 'date_expires', $coupon_expirys );
+							$coupon_expiry = $coupon_expirys;
+						}
 					}
+
+					$response['code'] = 'success';
+					$response['message'] = 'Coupon is successfully Recharged';
+
+					$data = array(
+						'status' => 200,
+						'remaining_amount' => $updated_amount,
+						'discount_type' => $the_coupon->get_discount_type(),
+						'usage_count' => 0,
+						'usage_limit' => $usage_limit,
+						'description' => $the_coupon->get_description(),
+						'coupon_expiry' => $coupon_expiry,
+					);
+					$response['data'] = $data;
+					$response = new WP_REST_Response( $response );
 				} else {
 					$response['code'] = 'error';
-					$response['message'] = 'Recharge is not allowed on this day';
+					$response['message'] = 'Recharge amount should be greater than 0';
+
 					$data = array(
 						'status' => 404,
 
