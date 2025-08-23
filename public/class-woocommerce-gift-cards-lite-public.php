@@ -673,7 +673,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$wps_wgm_preview_disable = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_additional_preview_disable' );
 
 							if ( empty( $wps_wgm_preview_disable ) ) {
-								$cart_html .= '<span class="mwg_wgm_preview_email"><a id="mwg_wgm_preview_email" href="javascript:void(0);">' . __( 'PREVIEW', 'woo-gift-cards-lite' ) . '</a></span>';
+								$cart_html .= '<span class="mwg_wgm_preview_email"><a id="mwg_wgm_preview_email">' . __( 'PREVIEW', 'woo-gift-cards-lite' ) . '</a></span>';
 							}
 							$cart_html .= apply_filters( 'wps_wgm_after_preview_section', $wps_additional_section, $product_id );
 							$cart_html .= '</div>';

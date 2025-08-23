@@ -8,7 +8,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-require_once WPS_WGC_DIRPATH . 'admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php';
+
 $flag        = false;
 $current_tab = 'wps_wgm_mail_setting';
 if ( isset( $_POST['wps_wgm_save_mail'] ) ) {
@@ -33,6 +33,7 @@ if ( isset( $_POST['wps_wgm_save_mail'] ) ) {
 		$flag = true;
 	}
 }
+require_once WPS_WGC_DIRPATH . 'admin/partials/templates/wps_wgm_settings/wps-wgm-mail-template-settings-array.php';
 if ( $flag ) {
 	$settings_obj->wps_wgm_settings_saved();
 }

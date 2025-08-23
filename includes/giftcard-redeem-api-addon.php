@@ -165,7 +165,7 @@ function wps_redeem_giftcard_offline( $request ) {
 
 					$excluded_days = get_post_meta( $coupon_id, 'wps_wgm_excluded_days', true );
 
-					$current_day = strtolower( date( 'l' ) );
+					$current_day = strtolower( date_i18n( 'l' ) );
 
 					if ( ! in_array( $current_day, $excluded_days ) ) {
 
