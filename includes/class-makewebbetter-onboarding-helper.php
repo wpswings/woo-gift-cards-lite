@@ -532,7 +532,7 @@ class Makewebbetter_Onboarding_Helper {
 				'name' => 'deactivation_reason_text',
 				'value' => '',
 				'required' => '',
-				'extra-class' => 'wps-keep-hidden',
+				'extra-class' => 'keep_hidden',
 			),
 
 			wp_rand() => array(
