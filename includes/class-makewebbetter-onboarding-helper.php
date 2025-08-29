@@ -117,7 +117,7 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '3.1.9';
+			self::$version = '3.2.0';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -532,7 +532,7 @@ class Makewebbetter_Onboarding_Helper {
 				'name' => 'deactivation_reason_text',
 				'value' => '',
 				'required' => '',
-				'extra-class' => 'wps-keep-hidden',
+				'extra-class' => 'keep_hidden',
 			),
 
 			wp_rand() => array(

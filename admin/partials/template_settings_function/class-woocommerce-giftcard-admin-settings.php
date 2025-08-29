@@ -510,6 +510,8 @@ class Woocommerce_Giftcard_Admin_Settings {
 								?>
 							</div>
 							<?php
+						} elseif ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
+							$this->wps_wgm_generate_single_select_drop_down_with_key_value_pair_org( $value, $saved_settings );
 						}
 						do_action( 'wps_wgm_admin_setting_fields_html', $value, $saved_settings );
 						?>
@@ -519,6 +521,41 @@ class Woocommerce_Giftcard_Admin_Settings {
 				<?php
 			}
 		}
+	}
+
+	/**
+	 * Function to generate single selct drop dowm
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_generate_single_select_drop_down_with_key_value_pair().
+	 * @param array $value Array of html.
+	 * @param array $saved_settings Array of html.
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_generate_single_select_drop_down_with_key_value_pair_org( $value, $saved_settings ) {
+		$selectedvalue = isset( $saved_settings[ $value['id'] ] ) ? ( $saved_settings[ $value['id'] ] ) : array();
+		if ( '' == $selectedvalue ) {
+			$selectedvalue = '';
+		}
+		?>
+		<select name="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>" class="<?php echo esc_attr( array_key_exists( 'class', $value ) ? $value['class'] : '' ); ?>">
+			<?php
+			if ( is_array( $value['custom_attribute'] ) && ! empty( $value['custom_attribute'] ) ) {
+				foreach ( $value['custom_attribute'] as $option ) {
+					$select = 0;
+					if ( $option['id'] == $selectedvalue && ! empty( $selectedvalue ) ) {
+						$select = 1;
+					}
+					?>
+					<option value="<?php echo esc_attr( $option['id'] ); ?>" <?php echo selected( 1, $select ); ?> ><?php echo esc_attr( $option['name'] ); ?></option>
+					<?php
+				}
+			}
+			?>
+
+		</select>
+		<?php
 	}
 
 	/**

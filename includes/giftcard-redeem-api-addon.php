@@ -163,36 +163,53 @@ function wps_redeem_giftcard_offline( $request ) {
 
 				if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
-					if ( isset( $redeem_amount ) && ! empty ( $redeem_amount ) && '0' != $redeem_amount && '0' < $redeem_amount ) {
+					$excluded_days = get_post_meta( $coupon_id, 'wps_wgm_excluded_days', true );
 
-						if ( $coupon_amount >= $redeem_amount ) {
+					$current_day = strtolower( date_i18n( 'l' ) );
 
-							$remaining_amount = $coupon_amount - $redeem_amount;
+					if ( ! in_array( $current_day, $excluded_days ) ) {
 
-							update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
-							$coupon_usage_count = ++$coupon_usage_count;
-							update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
+						if ( isset( $redeem_amount ) && ! empty ( $redeem_amount ) && '0' != $redeem_amount && '0' < $redeem_amount ) {
 
-							$response['code'] = 'success';
-							$response['message'] = 'Coupon is successfully Redeemed';
+							if ( $coupon_amount >= $redeem_amount ) {
 
-							$data = array(
-								'status' => 200,
-								'remaining_amount' => $remaining_amount,
-								'discount_type' => $the_coupon->get_discount_type(),
-								'usage_count' => $coupon_usage_count,
-								'usage_limit' => $the_coupon->get_usage_limit(),
-								'description' => $the_coupon->get_description(),
-								'coupon_expiry' => $coupon_expiry,
-							);
-							$response['data'] = $data;
+								$remaining_amount = $coupon_amount - $redeem_amount;
 
-							$response = new WP_REST_Response( $response );
+								update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+								$coupon_usage_count = ++$coupon_usage_count;
+								update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
 
+								$response['code'] = 'success';
+								$response['message'] = 'Coupon is successfully Redeemed';
+
+								$data = array(
+									'status' => 200,
+									'remaining_amount' => $remaining_amount,
+									'discount_type' => $the_coupon->get_discount_type(),
+									'usage_count' => $coupon_usage_count,
+									'usage_limit' => $the_coupon->get_usage_limit(),
+									'description' => $the_coupon->get_description(),
+									'coupon_expiry' => $coupon_expiry,
+								);
+								$response['data'] = $data;
+
+								$response = new WP_REST_Response( $response );
+
+							} else {
+
+								$response['code'] = 'error';
+								$response['message'] = 'Redeem amount is greater than Coupon amount';
+
+								$data = array(
+									'status' => 404,
+
+								);
+								$response['data'] = $data;
+								$response = new WP_REST_Response( $response );
+							}
 						} else {
-
 							$response['code'] = 'error';
-							$response['message'] = 'Redeem amount is greater than Coupon amount';
+							$response['message'] = 'Redeem amount should be greater than 0';
 
 							$data = array(
 								'status' => 404,
@@ -203,8 +220,7 @@ function wps_redeem_giftcard_offline( $request ) {
 						}
 					} else {
 						$response['code'] = 'error';
-						$response['message'] = 'Redeem amount should be greater than 0';
-
+						$response['message'] = 'Redeem is not allowed on this day';
 						$data = array(
 							'status' => 404,
 
@@ -344,7 +360,6 @@ function wps_recharge_giftcard_offine( $request ) {
 					$response['data'] = $data;
 					$response = new WP_REST_Response( $response );
 				}
-
 			} else {
 
 				$response['code'] = 'error';
