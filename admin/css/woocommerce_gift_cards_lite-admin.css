@@ -1845,3 +1845,7 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
         max-width: 80px;
     }
 }
+
+.wps_ml-35 {
+    margin-left: 35px;
+}
