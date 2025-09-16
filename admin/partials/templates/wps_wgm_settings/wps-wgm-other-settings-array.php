@@ -39,7 +39,7 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 	 ),
  );
  // woocommerce smart coupon by storeapp integration.
-if ( class_exists( 'WC_Smart_Coupons' ) || true ) {
+if ( class_exists( 'WC_Smart_Coupons' ) ) {
 	$smart_coupons_options = array( 
 		array(
 			'title'       => __( 'WooCommerce Smart Coupons Integration', 'woo-gift-cards-lite' ),
