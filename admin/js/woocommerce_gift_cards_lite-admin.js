@@ -497,7 +497,7 @@
 				"#wps_wgm_transfer_smart_coupons",
 				function() {
 					var data = { action:'wps_migrate_smart_coupons_to_giftcards' };
-					$("#wps_uwgc_loader").show();
+					$("#wps_wgm_loader_other").show();
 
 					$.ajax({
 						url: wps_wgc.ajaxurl,
@@ -505,7 +505,7 @@
 						type: "POST",
 						dataType :'json',
 						success: function(response) {
-							$("#wps_uwgc_loader").hide();
+							$("#wps_wgm_loader_other").hide();
 
 							if (response.success) {
 								$("#wps_wgm_transfer_smart_coupons").after(
