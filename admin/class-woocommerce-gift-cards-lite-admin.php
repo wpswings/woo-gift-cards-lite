@@ -2590,6 +2590,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$coupon_amount          = get_post_meta( $coupon_id, 'coupon_amount', true );
 			$recipient_emails_array = get_post_meta( $coupon_id, 'customer_email', true );
 
+			wp_update_post(
+				array(
+					'ID'           => $coupon_id,
+					'post_content' => 'Gift Card generated via Smart Coupons Migration',
+					'post_excerpt' => 'Gift Card generated via Smart Coupons Migration',
+				)
+			);
+
 			$meta_updates = array(
 				'discount_type'                   => 'fixed_cart',
 				'individual_use'                  => $individual_use,
