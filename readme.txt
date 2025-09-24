@@ -1,4 +1,4 @@
-=== Ultimate Gift Cards for WooCommerce -  WooCommerce Plugin to Sell Gift Cards, WooCommerce Store Credit Plugin, eGift Cards, Vouchers & Digital Gift Cards ===
+=== Ultimate Gift Cards for WooCommerce ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
@@ -15,7 +15,7 @@ Create, sell and manage WooCommerce gift cards to attract more sales and multipl
 
 == Description ==
 
-**INTRODUCE DIGITAL GIFT CARDS ON YOUR WORDPRESS WEBSITE! EMBRACE THE EFFORTLESS WOOCOMMERCE GIFT CERTIFICATES SOLUTION - EASY CREATION, REDEMPTION & MANAGEMENT. PERSONALIZE CARDS, SET BEAUTIFUL FESTIVE GIFT CERTIFICATES TEMPLATES, AND SHARE GIFT VOUCHERS VIA EMAIL!**
+**Get the best digital gift cards on your WordPress website with an easy WooCommerce gift certificates solution. Simply create, redeem & manage WooCommerce gift cards. Make personalize cards, set beautiful festive gift certificate's templates, and share gift vouchers via email etc...**
 
 Now a days digital gift cards are must for the businesses who are looking to drive sales and attract new customers. WooCommerce gift cards lets you sell digital gift cards efficiently by providing your businesses to offer a gratifying experience to your customers and increasing your conversion rate.
 
@@ -143,25 +143,27 @@ With our gift certificate plugin you can create gift certificates with templates
 
 == WOOCOMMERCE GIFT CARD PLUGIN COMPATIBILITIES ==
 
-**1)** Compatibility With [**Membership For WooCommerce**](https://wordpress.org/plugins/membership-for-woocommerce/), helping you to add gift cards to a membership plan.
+**1)** Compatibility with [**Smart Coupons For WooCommerce**](https://www.storeapps.org/product/smart-coupons/), allowing you to migrate your smart coupons into gift card coupons.
 
-**2)** Compatibility With PayPal Payments to accept payments via PayPal.
+**2)** Compatibility With [**Membership For WooCommerce**](https://wordpress.org/plugins/membership-for-woocommerce/), helping you to add gift cards to a membership plan.
 
-**3)** Compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and  [**Wallet System for WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=wallet-pro). It allows users to redeem their WooCommerce giftcard coupons to recharge their wallets and use that balance to purchase products & services.  It is crucial for repurposing the remaining gift coupon value. 
+**3)** Compatibility With PayPal Payments to accept payments via PayPal.
 
-**4)** Compatibility with the [**Price Based On Country for WooCommerce**](https://wordpress.org/plugins/woocommerce-product-price-based-on-countries/)plugin. Set country-based prices for WooCommerce gift cards using geolocation tracking. The store will display gift coupon prices in the user's relevant currency, with the option to manually set the price or auto-apply exchange rates.
+**4)** Compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and  [**Wallet System for WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=wallet-pro). It allows users to redeem their WooCommerce giftcard coupons to recharge their wallets and use that balance to purchase products & services.  It is crucial for repurposing the remaining gift coupon value. 
 
-**5)** Compatibility with the [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=rma-pro) are compatible with our gift voucher plugin. Customers can request refunds and exchanges for purchased WooCommerce gift card products, provided the gift vouchers have not expired and have not been used. Additionally, you can refund the coupon value to the RMA wallet instead of the original payment method used.
+**5)** Compatibility with the [**Price Based On Country for WooCommerce**](https://wordpress.org/plugins/woocommerce-product-price-based-on-countries/)plugin. Set country-based prices for WooCommerce gift cards using geolocation tracking. The store will display gift coupon prices in the user's relevant currency, with the option to manually set the price or auto-apply exchange rates.
 
-**6)** Compatibility With [**WooCommerce HPOS**](https://woocommerce.com/document/high-performance-order-storage/) to Easily Handle Bulk Order Volume
+**6)** Compatibility with the [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=rma-pro) are compatible with our gift voucher plugin. Customers can request refunds and exchanges for purchased WooCommerce gift card products, provided the gift vouchers have not expired and have not been used. Additionally, you can refund the coupon value to the RMA wallet instead of the original payment method used.
 
-**7)** Compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=subs-pro) to Leverage the benefits of Recurring Revenue with a subscription program.
+**7)** Compatibility With [**WooCommerce HPOS**](https://woocommerce.com/document/high-performance-order-storage/) to Easily Handle Bulk Order Volume
 
-**8)** Compatibility with [**Points and Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) and [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=par-pro) to Convert your coupon amount into points
+**8)** Compatible with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=subs-pro) to Leverage the benefits of Recurring Revenue with a subscription program.
 
-**9)** WPML Multilingual Support: The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
+**9)** Compatibility with [**Points and Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) and [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=par-pro) to Convert your coupon amount into points
 
-**10)** The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
+**10)** WPML Multilingual Support: The WooCommerce plugin gift card has WPML support, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
+
+**11)** The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
 
 
 == WHAT PREMIUM VERSION VERSION OF WOOCOMMERCE GIFT CARDS OFFERS ==
@@ -291,18 +293,23 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 3.2.0 - Released on 28 August 2025 =
+= 3.2.1 - Released on 25 September 2025 =
+* New : Smart Coupons for WooCommerce by StoreApps - Migrate smart coupons to Gift Cards Coupons.
+* New : Compatibility with latest WC ( 10.2.1 ) and WP( 6.8.2 )
+* Fix : Gifting - Days wise exclude redemption.
+
+= 3.2.0 - Released on 29 August 2025 =
 * Fix : Banner Condition Update.
-* New : Compatibilty with latest WC ( 10.1.1 ) and WP( 6.8.2 )
+* New : Compatibility with latest WC ( 10.1.1 ) and WP( 6.8.2 )
 
 = 3.1.9 - Released on 29 July 2025 =
 * New : Gift Card Report Summary on the WordPress Dashboard.
-* New : Compatibilty with latest WC ( 10.0.4 ) and WP( 6.8.2 ).
+* New : Compatibility with latest WC ( 10.0.4 ) and WP( 6.8.2 ).
 * Fix : Banner Image & Condition.
 
 = 3.1.8 - Released on 23 July 2025 =
 
-* New : Compatibilty with latest WC ( 10.0.3 ) and WP( 6.8.2 )
+* New : Compatibility with latest WC ( 10.0.3 ) and WP( 6.8.2 )
 
 = 3.1.7 - Released on 17 July 2025 =
 
@@ -326,7 +333,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 = 3.1.3 - Released on 25 March 2025 =
 * New: Converted existing shortcodes to Gutenberg block  i.e  [wps_check_your_gift_card_balance]
-* New: Compatibilty with latest WC ( 9.7.1 )
+* New: Compatibility with latest WC ( 9.7.1 )
 * New: Compatibility with Membership plugin
 * Fix: Love You Mom Template Preview
 * Fix: Compatibility Issue with Event plugin on order placed
@@ -450,7 +457,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 = 2.5.0 - Released on 3 March 2023 = 
 * New: Compatibility with latest WP( 6.1.1) and WC(7.4.1)
-* New: Compatibilty with [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-org-page&utm_campaign=rma-pro)
+* New: Compatibility with [**Return Refund & Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**RMA Return Refund & Exchange for WooCommerce Pro**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-org-page&utm_campaign=rma-pro)
 
 = 2.4.9 - Released on 20 Jan 2023 =
 
@@ -607,6 +614,8 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.0 - Released on 28 August 2025 =
-* Fix : Banner Condition Update
-* New : Compatibilty with latest WC ( 10.1.1 ) and WP( 6.8.2 )
+= 3.2.1 - Released on 25 September 2025 =
+ 
+* New : Smart Coupons for WooCommerce by StoreApps - Migrate smart coupons to Gift Cards Coupons.
+* New : Compatibility with latest WC ( 10.2.1 ) and WP( 6.8.2 )
+* Fix : Gifting - Days wise exclude redemption.
