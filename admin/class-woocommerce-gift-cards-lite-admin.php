@@ -2562,7 +2562,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$products_settings = get_option( 'wps_wgm_product_settings', array() );
 
 		$individual_use   = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_individual_use' ) === 'on' ? 'yes' : 'no';
-		$usage_limit      = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' ) ?: 1;
+		$usage_limit      = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' );
+		$usage_limit      = ( '' != $usage_limit ) ? $usage_limit : 0;
 		$free_shipping    = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' ) === 'on' ? 'yes' : 'no';
 		$minimum_amount   = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_minspend' );
 		$maximum_amount   = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_maxspend' );
@@ -2622,6 +2623,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 
 		wp_send_json_success( [
+			/* translators: %d: is the number of coupons successfully migrated */
 			'message' => sprintf( __( "%d Smart Coupons successfully migrated to Gift Cards.", "woo-gift-cards-lite" ), $total_coupons ),
 		] );
 	}
