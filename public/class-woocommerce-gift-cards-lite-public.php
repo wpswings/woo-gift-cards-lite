@@ -2540,7 +2540,14 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						}
 					} elseif ( 'online' === $coupon_type ) {
 						$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
-						if ( isset( $order_id ) && ! empty( $order_id ) ) {
+						if ( empty( $order_id ) ) {
+							if ( in_array( $wps_check_email, $user_email ) ) {
+								$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
+								$response['result'] = true;
+								$response['html'] = $html;
+								$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
+							}
+						} elseif ( isset( $order_id ) && ! empty( $order_id ) ) {
 							$order = wc_get_order( $order_id );
 							$sender_email = $order->get_billing_email();
 							$user_id = $order->get_user_id();

@@ -41,6 +41,9 @@ if ( $flag ) {
 <h3 class="wps_wgm_overview_heading"><?php esc_html_e( 'Other Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="wps_wgm_table_wrapper">	
 	<div class="wps_table">
+		<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader_other">
+			<img src="<?php echo esc_url( WPS_WGC_URL ); ?>assets/images/loading.gif">
+		</div>
 		<table class="form-table wps_wgm_general_setting">
 			<tbody>
 				<?php

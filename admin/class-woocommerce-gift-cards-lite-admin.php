@@ -2550,5 +2550,82 @@ class Woocommerce_Gift_Cards_Lite_Admin {
         echo '<li><strong>' . esc_html__( 'Remaining Balance:', 'woo-gift-cards-lite' ) . '</strong> ' . wp_kses_post( wc_price( $total_remaining ) ) . '</li>';
         echo '</ul>';
     }
+
+	/**
+	 * Function to migrate smart coupons to gift cards.
+	 * @name wps_wgm_migrate_smart_coupons_to_giftcards()
+	 */
+	public function wps_wgm_migrate_smart_coupons_to_giftcards() {
+		global $wpdb;
+
+		$general_settings  = get_option( 'wps_wgm_general_settings', array() );
+		$products_settings = get_option( 'wps_wgm_product_settings', array() );
+
+		$individual_use   = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_individual_use' ) === 'on' ? 'yes' : 'no';
+		$usage_limit      = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' );
+		$usage_limit      = ( '' != $usage_limit ) ? $usage_limit : 0;
+		$free_shipping    = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' ) === 'on' ? 'yes' : 'no';
+		$minimum_amount   = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_minspend' );
+		$maximum_amount   = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_maxspend' );
+
+		$exclude_sale_items = $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_product_setting_giftcard_ex_sale' ) === 'on' ? 'yes' : 'no';
+		$exclude_products   = (array) $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_product_setting_exclude_product' );
+		$exclude_products   = !empty( $exclude_products ) ? implode( ',', $exclude_products ) : '';
+		$exclude_category   = $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_product_setting_exclude_category' );
+
+		$include_products   = (array) $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_product_setting_include_product' );
+		$include_products   = !empty( $include_products ) ? implode( ',', $include_products ) : '';
+		$include_category   = $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_product_setting_include_category' );
+		$day_excluded       = $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_excluded_days' );
+
+		$coupons_array = $wpdb->get_results( "SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key= 'discount_type' AND meta_value= 'smart_coupon'" );
+		$total_coupons = count( $coupons_array );
+
+		if ( empty( $coupons_array ) ) {
+			wp_send_json_success( [ 'message' => __( "No Smart Coupons found to migrate.", "woo-gift-cards-lite" ) ] );
+		}
+
+		foreach ( $coupons_array as $coupon ) {
+			$coupon_id = intval( $coupon->post_id );
+
+			$coupon_amount          = get_post_meta( $coupon_id, 'coupon_amount', true );
+			$recipient_emails_array = get_post_meta( $coupon_id, 'customer_email', true );
+
+			wp_update_post(
+				array(
+					'ID'           => $coupon_id,
+					'post_content' => 'Gift Card generated via Smart Coupons Migration',
+					'post_excerpt' => 'Gift Card generated via Smart Coupons Migration',
+				)
+			);
+
+			$meta_updates = array(
+				'discount_type'                   => 'fixed_cart',
+				'individual_use'                  => $individual_use,
+				'usage_limit'                     => $usage_limit,
+				'free_shipping'                   => $free_shipping,
+				'minimum_amount'                  => $minimum_amount,
+				'maximum_amount'                  => $maximum_amount,
+				'exclude_sale_items'              => $exclude_sale_items,
+				'exclude_product_categories'      => $exclude_category,
+				'exclude_product_ids'             => $exclude_products,
+				'wps_wgm_giftcard_coupon_unique'  => 'online',
+				'wps_wgm_giftcard_coupon_mail_to' => $recipient_emails_array,
+				'product_ids'                     => $include_products,
+				'product_categories'              => $include_category,
+				'wps_wgm_excluded_days'           => $day_excluded,
+				'wps_wgm_coupon_amount'           => $coupon_amount,
+			);
+
+			foreach ( $meta_updates as $meta_key => $meta_value ) {
+				update_post_meta( $coupon_id, $meta_key, $meta_value );
+			}
+		}
+
+		wp_send_json_success( [
+			/* translators: %d: is the number of coupons successfully migrated */
+			'message' => sprintf( __( "%d Smart Coupons successfully migrated to Gift Cards.", "woo-gift-cards-lite" ), $total_coupons ),
+		] );
+	}
 }
 ?>

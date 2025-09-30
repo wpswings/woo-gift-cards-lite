@@ -491,6 +491,38 @@
 					$('#wps_wgm_min_user_price').val('');
 				}
 			});
+
+			$( document ).on(
+				"click",
+				"#wps_wgm_transfer_smart_coupons",
+				function() {
+					var data = { action:'wps_migrate_smart_coupons_to_giftcards' };
+					$("#wps_wgm_loader_other").show();
+
+					$.ajax({
+						url: wps_wgc.ajaxurl,
+						data: data,
+						type: "POST",
+						dataType :'json',
+						success: function(response) {
+							$("#wps_wgm_loader_other").hide();
+
+							if (response.success) {
+								$("#wps_wgm_transfer_smart_coupons").after(
+									'<div class="notice notice-success is-dismissible" style="margin:15px 40px;"><p>' 
+									+ response.data.message + 
+									'</p></div>'
+								);
+								setTimeout(function() {
+									$('.notice-success').fadeOut('slow', function() {
+										$(this).remove();
+									});
+								}, 2000);
+							}
+						}
+					});
+				}
+			);
 		}
 	);
 })( jQuery );

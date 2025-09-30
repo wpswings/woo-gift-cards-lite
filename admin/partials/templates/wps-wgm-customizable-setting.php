@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										value="Upload">
 
 								</div>
-								<p class="description">Note: Suggested Dimension is (600*400)</p>
+								<p class="wps_ml-35">Note: Suggested Dimension is (600*400)</p>
 							</div>
 							<input type="hidden" value="0">
 

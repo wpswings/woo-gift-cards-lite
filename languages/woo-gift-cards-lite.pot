@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.2.0\n"
-"POT-Creation-Date: 2025-08-27 16:45+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.2.1\n"
+"POT-Creation-Date: 2025-09-24 17:10+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -386,7 +386,7 @@ msgid " Points "
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:1864
-#: public/class-woocommerce-gift-cards-lite-public.php:2818
+#: public/class-woocommerce-gift-cards-lite-public.php:2825
 msgid "Gift Coupon Redeem Points"
 msgstr ""
 
@@ -395,7 +395,7 @@ msgid "Date & Time"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:1874
-#: public/class-woocommerce-gift-cards-lite-public.php:2827
+#: public/class-woocommerce-gift-cards-lite-public.php:2834
 msgid "Point Status"
 msgstr ""
 
@@ -531,6 +531,15 @@ msgstr ""
 msgid "Remaining Balance:"
 msgstr ""
 
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2585
+msgid "No Smart Coupons found to migrate."
+msgstr ""
+
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2627
+#, php-format
+msgid "%d Smart Coupons successfully migrated to Gift Cards."
+msgstr ""
+
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:22
 msgid "Outstanding Balance"
 msgstr ""
@@ -592,7 +601,7 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php:507
+#: admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php:523
 msgid " = "
 msgstr ""
 
@@ -1452,6 +1461,18 @@ msgstr ""
 msgid "Enable this if you want to use New Product Page Layout"
 msgstr ""
 
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:45
+msgid "WooCommerce Smart Coupons Integration"
+msgstr ""
+
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:50
+msgid "Transfer \"Store Credit / Gift Certificate\" coupons to Gift Cards"
+msgstr ""
+
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php:51
+msgid "Note: this action cannot be undone."
+msgstr ""
+
 #: admin/partials/templates/wps_wgm_settings/wps-wgm-product-settings-array.php:16
 msgid "Exclude Sale Items"
 msgstr ""
@@ -1664,7 +1685,7 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: includes/giftcard-redeem-api-addon.php:413
+#: includes/giftcard-redeem-api-addon.php:415
 msgid ""
 "Daily limit of 20 requests reached. Upgrade to Pro for unlimited access: <a "
 "href=\"https://wpswings.com/product/gift-cards-for-woocommerce-pro/?"
@@ -1672,15 +1693,15 @@ msgid ""
 "page&utm_campaign=go-pro\" target=\"_blank\">Go PRO Now</a>"
 msgstr ""
 
-#: includes/giftcard-redeem-api-addon.php:416
+#: includes/giftcard-redeem-api-addon.php:418
 msgid "License Not Verified"
 msgstr ""
 
-#: includes/giftcard-redeem-api-addon.php:438
+#: includes/giftcard-redeem-api-addon.php:440
 msgid "API keys are not set properly on your site."
 msgstr ""
 
-#: includes/giftcard-redeem-api-addon.php:444
+#: includes/giftcard-redeem-api-addon.php:446
 msgid "Invalid API key details."
 msgstr ""
 
@@ -1731,7 +1752,7 @@ msgid " recipient names should be entered seperated by comma"
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:244
-#: public/class-woocommerce-gift-cards-lite-public.php:2582
+#: public/class-woocommerce-gift-cards-lite-public.php:2589
 msgid "Fields cannot be empty!"
 msgstr ""
 
@@ -1760,7 +1781,7 @@ msgstr ""
 #: public/class-woocommerce-gift-cards-lite-public.php:552
 #: public/class-woocommerce-gift-cards-lite-public.php:560
 #: public/class-woocommerce-gift-cards-lite-public.php:885
-#: public/class-woocommerce-gift-cards-lite-public.php:2633
+#: public/class-woocommerce-gift-cards-lite-public.php:2640
 msgid "From"
 msgstr ""
 
@@ -1815,7 +1836,7 @@ msgid "Sorry, your nonce not verify. Please try again !"
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:879
-#: public/class-woocommerce-gift-cards-lite-public.php:2636
+#: public/class-woocommerce-gift-cards-lite-public.php:2643
 msgid "To"
 msgstr ""
 
@@ -1903,16 +1924,18 @@ msgid "Balance cannot be checked yet, Please Try again later!"
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:2532
-#: public/class-woocommerce-gift-cards-lite-public.php:2551
-#: public/class-woocommerce-gift-cards-lite-public.php:2556
-#: public/class-woocommerce-gift-cards-lite-public.php:2561
+#: public/class-woocommerce-gift-cards-lite-public.php:2545
+#: public/class-woocommerce-gift-cards-lite-public.php:2558
+#: public/class-woocommerce-gift-cards-lite-public.php:2563
+#: public/class-woocommerce-gift-cards-lite-public.php:2568
 msgid "Balance: "
 msgstr ""
 
 #: public/class-woocommerce-gift-cards-lite-public.php:2535
-#: public/class-woocommerce-gift-cards-lite-public.php:2554
-#: public/class-woocommerce-gift-cards-lite-public.php:2559
-#: public/class-woocommerce-gift-cards-lite-public.php:2564
+#: public/class-woocommerce-gift-cards-lite-public.php:2548
+#: public/class-woocommerce-gift-cards-lite-public.php:2561
+#: public/class-woocommerce-gift-cards-lite-public.php:2566
+#: public/class-woocommerce-gift-cards-lite-public.php:2571
 msgid "Data Match Successfully!!"
 msgstr ""
 
@@ -1920,103 +1943,103 @@ msgstr ""
 msgid "Recipient Email should be correct!!"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2567
+#: public/class-woocommerce-gift-cards-lite-public.php:2574
 msgid "Recipient Email or Sender Email|Name should be correct!!"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2573
+#: public/class-woocommerce-gift-cards-lite-public.php:2580
 msgid "Balance cannot be checked for this coupon."
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2577
+#: public/class-woocommerce-gift-cards-lite-public.php:2584
 msgid "Coupon is Invalid!"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2633
+#: public/class-woocommerce-gift-cards-lite-public.php:2640
 msgid "xyz test"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2636
+#: public/class-woocommerce-gift-cards-lite-public.php:2643
 msgid "xyz@gmail.com"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2639
+#: public/class-woocommerce-gift-cards-lite-public.php:2646
 msgid "Message"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2639
+#: public/class-woocommerce-gift-cards-lite-public.php:2646
 msgid "Write your message gift card receiver"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2666
+#: public/class-woocommerce-gift-cards-lite-public.php:2673
 msgid "Convert gift coupons into points."
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2669
+#: public/class-woocommerce-gift-cards-lite-public.php:2676
 msgid "Coupon Redeem rate : "
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2670
+#: public/class-woocommerce-gift-cards-lite-public.php:2677
 msgid " Points"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2675
+#: public/class-woocommerce-gift-cards-lite-public.php:2682
 msgid "Enter your Coupon :"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2679
+#: public/class-woocommerce-gift-cards-lite-public.php:2686
 msgid "Enter Coupon"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2680
+#: public/class-woocommerce-gift-cards-lite-public.php:2687
 msgid "Redeem Coupon"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2681
+#: public/class-woocommerce-gift-cards-lite-public.php:2688
 msgid "assets/images/loading.gif"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2719
+#: public/class-woocommerce-gift-cards-lite-public.php:2726
 msgid "Coupon redeem successfully..."
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2723
+#: public/class-woocommerce-gift-cards-lite-public.php:2730
 msgid "The coupon has already been redeemed"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2727
+#: public/class-woocommerce-gift-cards-lite-public.php:2734
 msgid "Expired Coupon"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2732
-#: public/class-woocommerce-gift-cards-lite-public.php:2737
+#: public/class-woocommerce-gift-cards-lite-public.php:2739
+#: public/class-woocommerce-gift-cards-lite-public.php:2744
 msgid "Invalid Coupon"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2742
+#: public/class-woocommerce-gift-cards-lite-public.php:2749
 msgid "Please enter values"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2824
+#: public/class-woocommerce-gift-cards-lite-public.php:2831
 msgid "Date"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2830
+#: public/class-woocommerce-gift-cards-lite-public.php:2837
 msgid "Coupon Name"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2903
+#: public/class-woocommerce-gift-cards-lite-public.php:2910
 #, php-format
 msgid "Your gift card has been used – %s"
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2906
+#: public/class-woocommerce-gift-cards-lite-public.php:2913
 #, php-format
 msgid ""
 "Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s."
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2957
+#: public/class-woocommerce-gift-cards-lite-public.php:2964
 msgid "This gift card has been disabled."
 msgstr ""
 

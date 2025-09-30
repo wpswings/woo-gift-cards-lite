@@ -437,6 +437,22 @@ class Woocommerce_Giftcard_Admin_Settings {
 	}
 
 	/**
+	 * Function to generate normal button html
+	 *
+	 * @since 1.0.0
+	 * @name wps_wgm_generate_button_html()
+	 * @param array $value Array of buttons.
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_generate_button_html_global( $value ) {
+		?>
+		<input type="button" name="<?php echo esc_attr( array_key_exists( 'name', $value ) ? $value['name'] : '' ); ?>" class="button-primary" id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>" value="<?php echo esc_attr( array_key_exists( 'value', $value ) ? $value['value'] : '' ); ?>">
+		<?php
+		$this->wps_wgm_generate_bottom_description_field( $value );
+	}
+
+	/**
 	 * Generates paragraph to show picture
 	 *
 	 * @since 2.0.0
@@ -512,6 +528,8 @@ class Woocommerce_Giftcard_Admin_Settings {
 							<?php
 						} elseif ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
 							$this->wps_wgm_generate_single_select_drop_down_with_key_value_pair_org( $value, $saved_settings );
+						} elseif ( 'button' == $value['type'] ) {
+ 							$this->wps_wgm_generate_button_html_global( $value, $saved_settings );
 						}
 						do_action( 'wps_wgm_admin_setting_fields_html', $value, $saved_settings );
 						?>

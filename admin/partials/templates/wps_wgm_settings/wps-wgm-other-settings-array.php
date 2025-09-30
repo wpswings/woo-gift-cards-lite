@@ -38,4 +38,19 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 		 'desc' => __( 'Enable this if you want to use New Product Page Layout', 'woo-gift-cards-lite' ),
 	 ),
  );
+ // woocommerce smart coupon by storeapp integration.
+ if ( class_exists( 'WC_Smart_Coupons' ) ) {
+	 $smart_coupons_options = array(
+		 array(
+			 'title'       => __( 'WooCommerce Smart Coupons Integration', 'woo-gift-cards-lite' ),
+			 'id'          => 'wps_wgm_transfer_smart_coupons',
+			 'type'        => 'button',
+			 'value'       => 'Transfer',
+			 'class'       => 'wps_ml-35',
+			 'desc_tip'    => __( 'Transfer "Store Credit / Gift Certificate" coupons to Gift Cards', 'woo-gift-cards-lite' ),
+			 'bottom_desc' => __( 'Note: this action cannot be undone.', 'woo-gift-cards-lite' ),
+		 ),
+	 );
+	 $wps_wgm_other_setting = array_merge( $wps_wgm_other_setting, $smart_coupons_options );
+ }
  $wps_wgm_other_setting = apply_filters( 'wps_wgm_other_setting', $wps_wgm_other_setting );

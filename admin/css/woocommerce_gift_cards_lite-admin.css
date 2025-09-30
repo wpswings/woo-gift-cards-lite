@@ -1845,3 +1845,26 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
         max-width: 80px;
     }
 }
+
+#wps_wgm_loader_other {
+  background-color: rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 99999;
+}
+#wps_wgm_loader_other img {
+  display: block;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+.wps_ml-35 {
+    margin-left: 35px;
+}
