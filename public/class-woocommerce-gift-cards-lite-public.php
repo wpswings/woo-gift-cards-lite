@@ -1785,7 +1785,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$sell_as_a_giftcard = get_post_meta( $product_id, '_sell_as_a_giftcard' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
-				if ( 'wgm_gift_card' === $product_type || isset( $sell_as_a_giftcard[0] ) && 'yes' === $sell_as_a_giftcard[0] ) {
+				if ( 'wgm_gift_card' === $product_type || ( isset( $sell_as_a_giftcard[0] ) && 'yes' === $sell_as_a_giftcard[0] ) ) {
 					?>
 					<div class="woocommerce-error" id="wps_wgm_error_notice" style="display:none;"></div>
 					<?php
