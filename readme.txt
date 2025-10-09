@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 6.7
-Tested up to: 6.8.2
+Tested up to: 6.8.3
 WC requires at least: 6.5
-WC tested up to: 10.2.1
-Stable tag:  3.2.1
+WC tested up to: 10.2.2
+Stable tag:  3.2.2
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -292,6 +292,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.2.2 - Released on 09 October 2025 =
+ * New : Compatibility with latest WC( 10.2.2 ) and WP( 6.8.3 )
 
 = 3.2.1 - Released on 25 September 2025 =
 * New : Smart Coupons for WooCommerce by StoreApps - Migrate smart coupons to Gift Cards Coupons.
@@ -614,8 +617,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.1 - Released on 25 September 2025 =
- 
-* New : Smart Coupons for WooCommerce by StoreApps - Migrate smart coupons to Gift Cards Coupons.
-* New : Compatibility with latest WC ( 10.2.1 ) and WP( 6.8.2 )
-* Fix : Gifting - Days wise exclude redemption.
+= 3.2.2 - Released on 09 October 2025 =
+ * New : Compatibility with latest WC( 10.2.2 ) and WP( 6.8.3 )
