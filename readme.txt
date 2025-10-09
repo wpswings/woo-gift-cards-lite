@@ -293,6 +293,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 3.2.2 - Released on 09 October 2025 =
+ * New : Compatibility with latest WC( 10.2.2 ) and WP( 6.8.3 )
+
 = 3.2.1 - Released on 25 September 2025 =
 * New : Smart Coupons for WooCommerce by StoreApps - Migrate smart coupons to Gift Cards Coupons.
 * New : Compatibility with latest WC ( 10.2.1 ) and WP( 6.8.2 )
@@ -614,8 +617,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.1 - Released on 25 September 2025 =
- 
-* New : Smart Coupons for WooCommerce by StoreApps - Migrate smart coupons to Gift Cards Coupons.
-* New : Compatibility with latest WC ( 10.2.1 ) and WP( 6.8.2 )
-* Fix : Gifting - Days wise exclude redemption.
+= 3.2.2 - Released on 09 October 2025 =
+ * New : Compatibility with latest WC( 10.2.2 ) and WP( 6.8.3 )
