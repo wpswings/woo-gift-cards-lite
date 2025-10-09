@@ -66,7 +66,7 @@ jobs:
 
       - name: Generate POT file
         run: |
-          wp i18n make-pot . languages/mautic-integration-for-woocommerce.pot \
+          wp i18n make-pot . languages/woo-gift-cards-lite.pot \
             --exclude=node_modules,vendor,tests,public/js,admin/js,packages,build,dist
 
       - name: Install gettext
