@@ -413,6 +413,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$from = $wps_wgm_common_arr['from'];
 				$item_id = $wps_wgm_common_arr['item_id'];
 				$product_id = $wps_wgm_common_arr['product_id'];
+
+				$product_id = apply_filters( 'wps_wgm_wpml_product_switcher', $product_id, $order->get_id() );
+
 				$wps_wgm_pricing = ! empty( get_post_meta( $product_id, 'wps_wgm_pricing', true ) ) ? get_post_meta( $product_id, 'wps_wgm_pricing', true ) : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
 				if ( is_array( $wps_wgm_pricing ) && array_key_exists( 'template', $wps_wgm_pricing ) ) {
 					$templateid = $wps_wgm_pricing['template'];
@@ -510,6 +513,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$send_subject = "$bloginfo:";
 						$send_subject .= __( ' Hurry!  the gift card is Received', 'woo-gift-cards-lite' );
 					}
+
+					$send_subject = apply_filters( 'wps_wgm_wpml_send_subject', $send_subject, $order_id );
+
 					$buyer_email = $order->get_billing_email();
 					$buyer_email = ! empty( $buyer_email ) ? $buyer_email : '';
 					$send_subject = str_replace( '[SITENAME]', $bloginfo, $send_subject );

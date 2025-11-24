@@ -5,8 +5,8 @@ Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 6.7
 Tested up to: 6.8.3
 WC requires at least: 6.5
-WC tested up to: 10.2.2
-Stable tag:  3.2.2
+WC tested up to: 10.3.5
+Stable tag:  3.2.3
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -176,7 +176,7 @@ With our gift certificate plugin you can create gift certificates with templates
 
 **4) QR/Barcode Support**: Protect gift cards with QR codes or barcodes for easy redemption. You can display these codes on gift certificates and customize templates for optimal code size and type.
 
-**5) Schedule Gift Card Delivery: Gift cards plugin lets you Schedule Gift Card Delivery  to recipients on a specific date
+**5) Schedule Gift Card Delivery**: Gift cards plugin lets you Schedule Gift Card Delivery  to recipients on a specific date
 
 **6) PDF Template**: Send both online and offline gift card emails with a PDF attachment. Customers can download their cards in PDF format, making it easy to store and use them later.
 
@@ -293,7 +293,10 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 3.2.2 - Released on 09 October 2025 =
+= 3.2.3 - Released on 24 November 2025 =
+ * New : Compatibility with latest WC( 10.3.5 ) and WP( 6.8.3 )
+
+= 3.2.2 - Released on 08 October 2025 =
  * New : Compatibility with latest WC( 10.2.2 ) and WP( 6.8.3 )
 
 = 3.2.1 - Released on 25 September 2025 =
@@ -617,5 +620,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.2 - Released on 09 October 2025 =
- * New : Compatibility with latest WC( 10.2.2 ) and WP( 6.8.3 )
+= 3.2.3 - Released on 24 November 2025 =
+ * New : Compatibility with latest WC( 10.3.5 ) and WP( 6.8.3 )
