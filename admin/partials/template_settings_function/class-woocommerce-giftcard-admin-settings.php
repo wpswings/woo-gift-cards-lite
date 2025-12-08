@@ -367,6 +367,31 @@ class Woocommerce_Giftcard_Admin_Settings {
 	}
 
 	/**
+	 * Retrieve editable user roles for settings dropdowns.
+	 *
+	 * @since 4.2.4
+	 * @return array
+	 */
+	public function wps_wgm_get_user_roles() {
+		$roles = array();
+		if ( ! function_exists( 'get_editable_roles' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/user.php';
+		}
+		if ( function_exists( 'get_editable_roles' ) ) {
+			$editable_roles = get_editable_roles();
+			if ( ! empty( $editable_roles ) ) {
+				foreach ( $editable_roles as $role_key => $role_data ) {
+					$roles[] = array(
+						'id'   => $role_key,
+						'name' => translate_user_role( $role_data['name'] ),
+					);
+				}
+			}
+		}
+		return $roles;
+	}
+
+	/**
 	 * Returns globally excluded products
 	 *
 	 * @since 1.0.0
