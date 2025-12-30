@@ -293,6 +293,9 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 3.2.4 - Released on 5th January 2026 =
+* New : Compatibility with latest WC ( 10.4.2 ) and WP( 6.9 )
+
 = 3.2.3 - Released on 24 November 2025 =
  * New : Compatibility with latest WC( 10.3.5 ) and WP( 6.8.3 )
 
@@ -620,5 +623,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.3 - Released on 24 November 2025 =
- * New : Compatibility with latest WC( 10.3.5 ) and WP( 6.8.3 )
+= 3.2.4 - Released on 5th January 2026 =
+* New : Compatibility with latest WC ( 10.4.2 ) and WP( 6.9 )
