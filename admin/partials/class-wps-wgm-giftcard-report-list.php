@@ -287,79 +287,95 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			)
 		";
 
-		$sql .= $wpdb->prepare( " ORDER BY p.ID DESC LIMIT %d OFFSET %d", $per_page, $offset );
+		$sql .= ' ORDER BY p.ID DESC';
 
-		$results = $wpdb->get_results( $sql );
+		$valid_offset = $offset;
+		$raw_offset   = 0;
+		$batch_size   = $per_page;
+		$skipped      = 0;
 
-		$coupon_codes = array();
-		if ( ! empty( $results ) ) {
-			foreach ( $results as $row ) {
-				$coupon_codes[] = strtolower( $row->post_title );
+		$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
+		$wps_uwgc_data    = array();
+
+		while ( count( $wps_uwgc_data ) < $per_page ) {
+			$paged_sql = $sql . $wpdb->prepare( ' LIMIT %d OFFSET %d', $batch_size, $raw_offset );
+			$results   = $wpdb->get_results( $paged_sql );
+
+			if ( empty( $results ) ) {
+				break;
 			}
-		}
 
-		$wps_uwgc_data = array();
+			$raw_offset += $batch_size;
 
-		if ( is_array( $coupon_codes ) && ! empty( $coupon_codes ) && count( $coupon_codes ) ) {
+			foreach ( $results as $row ) {
+				$coupon_code = strtolower( $row->post_title );
+				$coupon_obj  = new WC_Coupon( $coupon_code );
+				$coupon_id   = $coupon_obj->get_id();
 
-			foreach ( $coupon_codes as $key => $value ) {
-				$coupon_obj = new WC_Coupon( $value );
-				$order_id = get_post_meta( $coupon_obj->get_id(), 'wps_wgm_giftcard_coupon', true );
-				if ( isset( $order_id ) && ! empty( $order_id ) ) {
-					$order = wc_get_order( $order_id );
+				if ( empty( $coupon_id ) ) {
+					continue;
+				}
 
-					global $wpdb;
+				$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 
-					$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
+				if ( empty( $order_id ) ) {
+					continue;
+				}
 
-					if ( isset( $offline_giftcard ) && ! empty( $offline_giftcard ) ) {
-						$cache_key = 'wps_wgm_offline_giftcard_' . intval( $order_id );
-						$giftresults = wp_cache_get( $cache_key, 'wps_wgm' );
+				$order       = wc_get_order( $order_id );
+				$giftresults = array();
 
-						if ( false === $giftresults ) {
-							$giftresults = $wpdb->get_results(
-								$wpdb->prepare(
-									"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
-									intval( $order_id )
-								),
-								ARRAY_A
-							);
+				if ( empty( $order ) && ! empty( $offline_giftcard ) ) {
+					$cache_key   = 'wps_wgm_offline_giftcard_' . intval( $order_id );
+					$giftresults = wp_cache_get( $cache_key, 'wps_wgm' );
 
-							wp_cache_set( $cache_key, $giftresults, 'wps_wgm', HOUR_IN_SECONDS );
-						}
-					}
-
-					if ( ! empty( $order ) ) {
-						$user_email = $order->get_billing_email();
-						$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
-						$expiry_date = $coupon_obj->get_date_expires();
-						$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
-						$wps_uwgc_data[] = array(
-							'coupon_id' => $coupon_obj->get_id(),
-							'giftcard_code' => $value,
-							'order_id'  => $order_id,
-							'coupon_amount' => $coupon_amount,
-							'expiry_date' => $expiry_date,
-							'buyer_email' => $user_email,
+					if ( false === $giftresults ) {
+						$giftresults = $wpdb->get_results(
+							$wpdb->prepare(
+								"SELECT * FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
+								intval( $order_id )
+							),
+							ARRAY_A
 						);
-					} else if ( isset( $giftresults[0] ) ) {
-						$giftresult = $giftresults[0];
-						$user_email = $giftresult['from'];
-						$coupon_amount = get_post_meta( $coupon_obj->get_id(), 'coupon_amount', true );
-						$expiry_date = $coupon_obj->get_date_expires();
-						$expiry_date = 	isset( $expiry_date ) ? gmdate('F j, Y', strtotime('-1 day', strtotime($expiry_date))): esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
-						$wps_uwgc_data[] = array(
-							'coupon_id' => $coupon_obj->get_id(),
-							'giftcard_code' => $value,
-							'order_id'  => $order_id,
-							'coupon_amount' => $coupon_amount,
-							'expiry_date' => $expiry_date,
-							'buyer_email' => $user_email,
-						);
+
+						wp_cache_set( $cache_key, $giftresults, 'wps_wgm', HOUR_IN_SECONDS );
 					}
 				}
-			}
 
+				if ( empty( $order ) && empty( $giftresults ) ) {
+					continue;
+				}
+
+				if ( $skipped < $valid_offset ) {
+					$skipped++;
+					continue;
+				}
+
+				if ( ! empty( $order ) ) {
+					$user_email = $order->get_billing_email();
+				} elseif ( isset( $giftresults[0] ) ) {
+					$user_email = $giftresults[0]['from'];
+				} else {
+					$user_email = '';
+				}
+
+				$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
+				$expiry_date   = $coupon_obj->get_date_expires();
+				$expiry_date   = isset( $expiry_date ) ? gmdate( 'F j, Y', strtotime( '-1 day', strtotime( $expiry_date ) ) ) : esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
+
+				$wps_uwgc_data[] = array(
+					'coupon_id'     => $coupon_id,
+					'giftcard_code' => $coupon_code,
+					'order_id'      => $order_id,
+					'coupon_amount' => $coupon_amount,
+					'expiry_date'   => $expiry_date,
+					'buyer_email'   => $user_email,
+				);
+
+				if ( count( $wps_uwgc_data ) >= $per_page ) {
+					break 2;
+				}
+			}
 		}
 
 		// Count total number of matching gift card coupon codes.
@@ -396,6 +412,8 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		$total_count = 0;
 
+		$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
+
 		if ( ! empty( $coupon_ids ) ) {
 			foreach ( $coupon_ids as $coupon_id ) {
 				$content = get_post_field( 'post_content', $coupon_id );
@@ -403,7 +421,41 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					|| ( strpos( $content, 'Imported Coupon' ) !== false
 						&& get_post_meta( $coupon_id, 'wps_wgm_imported_coupon', true ) === 'purchased' );
 
-				if ( $is_giftcard ) {
+				if ( ! $is_giftcard ) {
+					continue;
+				}
+
+				$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+				if ( empty( $order_id ) ) {
+					continue;
+				}
+
+				$order_exists = false;
+				$order = wc_get_order( $order_id );
+				if ( ! empty( $order ) ) {
+					$order_exists = true;
+				} elseif ( $offline_giftcard ) {
+					global $wpdb;
+					$cache_key = 'wps_wgm_offline_giftcard_' . intval( $order_id );
+					$giftresults = wp_cache_get( $cache_key, 'wps_wgm' );
+
+					if ( false === $giftresults ) {
+						$giftresults = $wpdb->get_results(
+							$wpdb->prepare(
+								"SELECT id FROM {$wpdb->prefix}offline_giftcard WHERE `id` = %d",
+								intval( $order_id )
+							)
+						);
+
+						wp_cache_set( $cache_key, $giftresults, 'wps_wgm', HOUR_IN_SECONDS );
+					}
+
+					if ( ! empty( $giftresults ) ) {
+						$order_exists = true;
+					}
+				}
+
+				if ( $order_exists ) {
 					$total_count++;
 				}
 			}

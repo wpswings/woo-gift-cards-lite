@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.2.3\n"
-"POT-Creation-Date: 2025-11-21 19:26+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.2.4\n"
+"POT-Creation-Date: 2025-12-18 12:25+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -25,10 +25,10 @@ msgstr ""
 #: admin/class-woocommerce-gift-cards-lite-admin.php:1989
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:146
 #: admin/partials/class-wps-wgm-giftcard-report-list.php:220
-#: admin/partials/class-wps-wgm-giftcard-report-list.php:506
+#: admin/partials/class-wps-wgm-giftcard-report-list.php:558
 #: admin/partials/woocommerce-gift-cards-lite-admin-display.php:223
 #: includes/class-makewebbetter-onboarding-helper.php:874
-#: includes/class-woocommerce-gift-cards-common-function.php:593
+#: includes/class-woocommerce-gift-cards-common-function.php:599
 #: public/class-woocommerce-gift-cards-lite-public.php:2037
 #: woocommerce_gift_cards_lite.php:535 woocommerce_gift_cards_lite.php:584
 msgid "Nonce Not verified"
@@ -211,7 +211,7 @@ msgid "Templates"
 msgstr ""
 
 #: admin/class-woocommerce-gift-cards-lite-admin.php:839
-#: admin/partials/class-wps-wgm-giftcard-report-list.php:514
+#: admin/partials/class-wps-wgm-giftcard-report-list.php:566
 msgid "Search Gift Cards"
 msgstr ""
 
@@ -584,8 +584,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: admin/partials/class-wps-wgm-giftcard-report-list.php:336
-#: admin/partials/class-wps-wgm-giftcard-report-list.php:350
+#: admin/partials/class-wps-wgm-giftcard-report-list.php:364
 msgid "No Expiry"
 msgstr ""
 
@@ -601,7 +600,7 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php:523
+#: admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php:548
 msgid " = "
 msgstr ""
 
@@ -1160,13 +1159,13 @@ msgstr ""
 msgid "Select the status when the ThankYou Gift Coupon would be send"
 msgstr ""
 
-#: admin/partials/templates/wps-wgm-thankyou-setting.php:60
+#: admin/partials/templates/wps-wgm-thankyou-setting.php:71
 msgid ""
 "Enter the number of orders, after that, you want to give a thank you Gift "
 "Card to your customers"
 msgstr ""
 
-#: admin/partials/templates/wps-wgm-thankyou-setting.php:76
+#: admin/partials/templates/wps-wgm-thankyou-setting.php:98
 msgid ""
 "Enter number of days for Coupon Expiry,  Keep value \"1\" for one-day "
 "expiry \n"
@@ -1174,11 +1173,11 @@ msgid ""
 "expiry."
 msgstr ""
 
-#: admin/partials/templates/wps-wgm-thankyou-setting.php:94
+#: admin/partials/templates/wps-wgm-thankyou-setting.php:116
 msgid "Choose the ThankYou Gift Coupon Type for Customers"
 msgstr ""
 
-#: admin/partials/templates/wps-wgm-thankyou-setting.php:113
+#: admin/partials/templates/wps-wgm-thankyou-setting.php:135
 msgid "This message will print inside the Thankyou Gift coupon Template"
 msgstr ""
 
@@ -1628,7 +1627,7 @@ msgstr ""
 
 #: includes/class-woocommerce-gift-cards-common-function.php:141
 #: includes/class-woocommerce-gift-cards-common-function.php:161
-#: includes/class-woocommerce-gift-cards-common-function.php:618
+#: includes/class-woocommerce-gift-cards-common-function.php:624
 msgid "No Expiration"
 msgstr ""
 
@@ -1650,15 +1649,15 @@ msgstr ""
 msgid "shipping"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:511
+#: includes/class-woocommerce-gift-cards-common-function.php:514
 msgid " Hurry!  the gift card is Received"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:551
+#: includes/class-woocommerce-gift-cards-common-function.php:557
 msgid " Gift Card is Sent Successfully"
 msgstr ""
 
-#: includes/class-woocommerce-gift-cards-common-function.php:558
+#: includes/class-woocommerce-gift-cards-common-function.php:564
 msgid " Gift Card is Sent Successfully to the Email Id: [TO]"
 msgstr ""
 

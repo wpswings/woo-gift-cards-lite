@@ -50,6 +50,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                         </td>
                     </tr>
+                    <tr valign="top" class="wps_wgm_thankyouorder_user_roles">			
+                        <th scope="row" class="titledesc">
+                            <label for="wps_wgm_thankyouorder_user_roles">Eligible User Roles</label>		
+                        </th>
+                        <td class="forminp forminp-text">
+                            <span class="woocommerce-help-tip"></span>
+                                <select name="wps_wgm_thankyouorder_user_roles[]" id="wps_wgm_thankyouorder_user_roles" multiple="" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+                                </select>
+                            <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 350px;"><span class="selection"><span class="select2-selection select2-selection--multiple" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered" aria-live="polite" aria-relevant="additions removals" aria-atomic="true"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="text" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>												
+                        </td>
+                    </tr>
                     <tr valign="top">
                         <th scope="row" class="titledesc">
                             <label for="wps_wgm_thankyouorder_number">Number of Orders, after which the thankyou gift
@@ -64,6 +75,17 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     id="wps_wgm_thankyouorder_number" class="input-text wps_wgm_new_woo_ver_style_text">
                             </label>
 
+                        </td>
+                    </tr>
+                    <tr valign="top" class="wps_wgm_thankyouorder_first_purchase_only">			
+                        <th scope="row" class="titledesc">
+                            <label for="wps_wgm_thankyouorder_first_purchase_only">Only First-Time Buyers</label>		
+                        </th>
+                        <td class="forminp forminp-text">
+                            <span class="woocommerce-help-tip"></span>
+                            <label for="wps_wgm_thankyouorder_first_purchase_only">
+                                <input type="checkbox" name="wps_wgm_thankyouorder_first_purchase_only" id="wps_wgm_thankyouorder_first_purchase_only" class="input-text">Restrict ThankYou coupon to first-time buyers		
+                            </label>                                            
                         </td>
                     </tr>
                     <tr valign="top">
