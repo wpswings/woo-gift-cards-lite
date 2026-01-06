@@ -496,7 +496,10 @@
 				"click",
 				"#wps_wgm_transfer_smart_coupons",
 				function() {
-					var data = { action:'wps_migrate_smart_coupons_to_giftcards' };
+					var data = {
+						action:'wps_migrate_smart_coupons_to_giftcards',
+						nonce : wps_wgc.wps_wgm_nonce
+					};
 					$("#wps_wgm_loader_other").show();
 
 					$.ajax({
