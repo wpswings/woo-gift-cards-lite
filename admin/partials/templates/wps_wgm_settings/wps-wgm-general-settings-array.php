@@ -106,6 +106,18 @@ $wps_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the Gift card coupon.', 'woo-gift-cards-lite' ),
 	),
 	array(
+		'title' => esc_html__( 'Maximum % of Order Payable via Gift Card', 'woo-gift-cards-lite' ),
+		'id' => 'wps_wgm_general_setting_giftcard_max_percent',
+		'type' => 'number',
+		'custom_attribute' => array(
+			'min' => '"1"',
+			'max' => '"100"',
+			'step' => '"1"',
+		),
+		'class' => 'input-text wps_wgm_new_woo_ver_style_text',
+		'desc_tip' => esc_html__( 'Limit the portion of an order total that can be paid using a gift card. Leave empty for no limit.', 'woo-gift-cards-lite' ),
+	),
+	array(
 		'title' => esc_html__( 'Gift Card No of time usage', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_use',
 		'type' => 'number',
