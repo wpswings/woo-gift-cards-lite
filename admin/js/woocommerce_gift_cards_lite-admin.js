@@ -10,6 +10,12 @@
 
 	jQuery( document ).ready(
 		function(){
+
+			var maxPercentField = $( '#wps_wgm_general_setting_giftcard_max_percent, input[name="wps_wgm_general_setting_giftcard_max_percent"]' );
+			if ( maxPercentField.length ) {
+				// Allow 0 to represent "no limit" without failing HTML5 min validation.
+				maxPercentField.attr( 'min', '0' );
+			}
 		
 			jQuery( '.cancel_notice' ).on(
 				'click',
