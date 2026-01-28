@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.2.4\n"
-"POT-Creation-Date: 2025-12-18 12:25+0530\n"
+"Project-Id-Version: Ultimate Gift Cards For WooCommerce 3.2.5\n"
+"POT-Creation-Date: 2026-01-27 19:15+0530\n"
 "PO-Revision-Date: 2023-01-09 11:42+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -531,11 +531,11 @@ msgstr ""
 msgid "Remaining Balance:"
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2585
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2591
 msgid "No Smart Coupons found to migrate."
 msgstr ""
 
-#: admin/class-woocommerce-gift-cards-lite-admin.php:2627
+#: admin/class-woocommerce-gift-cards-lite-admin.php:2633
 #, php-format
 msgid "%d Smart Coupons successfully migrated to Gift Cards."
 msgstr ""
@@ -1319,10 +1319,20 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:109
+msgid "Maximum % of Order Payable via Gift Card"
+msgstr ""
+
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:118
+msgid ""
+"Limit the portion of an order total that can be paid using a gift card. "
+"Leave empty for no limit."
+msgstr ""
+
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:121
 msgid "Gift Card No of time usage"
 msgstr ""
 
-#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:115
+#: admin/partials/templates/wps_wgm_settings/wps-wgm-general-settings-array.php:127
 msgid ""
 "How many times this coupon can be used before Gift card is void. keep value "
 "\"0\" for unlimited use."
@@ -2038,7 +2048,7 @@ msgid ""
 "Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s."
 msgstr ""
 
-#: public/class-woocommerce-gift-cards-lite-public.php:2964
+#: public/class-woocommerce-gift-cards-lite-public.php:2984
 msgid "This gift card has been disabled."
 msgstr ""
 
