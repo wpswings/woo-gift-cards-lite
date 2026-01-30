@@ -923,5 +923,171 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 	
 			return $gift_card_only;
 		}
+
+		/**
+		 * Limit how much of an order can be paid with gift card coupons.
+		 *
+		 * @param float     $discount Discount to apply.
+		 * @param float     $discounting_amount Amount being discounted.
+		 * @param array     $cart_item Cart item data.
+		 * @param bool      $single Whether the coupon is applied to a single item.
+		 * @param WC_Coupon $coupon Coupon object.
+		 * @return float
+		 */
+		public function wps_wgm_limit_giftcard_discount_amount( $discount, $discounting_amount, $cart_item, $single, $coupon ) {
+			if ( ! ( $coupon instanceof WC_Coupon ) ) {
+				return $discount;
+			}
+
+			if ( ! $this->wps_wgm_is_giftcard_coupon( $coupon ) ) {
+				return $discount;
+			}
+
+			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			$max_percent = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_max_percent' );
+			$max_percent = is_numeric( $max_percent ) ? (float) $max_percent : 0;
+			if ( $max_percent <= 0 ) {
+				return $discount;
+			}
+			if ( $max_percent > 100 ) {
+				$max_percent = 100;
+			}
+
+			if ( ! WC()->cart ) {
+				return $discount;
+			}
+
+			$base_total = $this->wps_wgm_get_giftcard_limit_base_total( WC()->cart );
+			if ( $base_total <= 0 ) {
+				return $discount;
+			}
+
+			$max_allowed = $base_total * ( $max_percent / 100 );
+			static $remaining_total = null;
+			static $cart_hash = null;
+			static $last_calc_count = null;
+			$calc_count = did_action( 'woocommerce_before_calculate_totals' );
+			if ( $last_calc_count !== $calc_count ) {
+				$last_calc_count = $calc_count;
+				$remaining_total = null;
+				$cart_hash = null;
+			}
+			$current_hash = WC()->cart->get_cart_hash();
+			if ( $cart_hash !== $current_hash ) {
+				$cart_hash = $current_hash;
+				$remaining_total = null;
+			}
+			if ( null === $remaining_total ) {
+				$remaining_total = $max_allowed;
+			}
+
+			if ( $remaining_total <= 0 ) {
+				return 0;
+			}
+
+			if ( $discount > $remaining_total ) {
+				$discount = $remaining_total;
+			}
+			$remaining_total -= $discount;
+
+			return $discount;
+		}
+
+		/**
+		 * Check if a coupon is a gift card coupon.
+		 *
+		 * @param WC_Coupon $coupon Coupon object.
+		 * @return bool
+		 */
+		public function wps_wgm_is_giftcard_coupon( $coupon ) {
+			$coupon_id = $coupon->get_id();
+			if ( empty( $coupon_id ) ) {
+				return false;
+			}
+
+			$giftcard_flag = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+			if ( ! empty( $giftcard_flag ) ) {
+				return true;
+			}
+
+			$unique_type = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_unique', true );
+			if ( ! empty( $unique_type ) ) {
+				return true;
+			}
+
+			if ( 'purchased' === get_post_meta( $coupon_id, 'wps_wgm_imported_coupon', true ) ) {
+				return true;
+			}
+
+			$content = get_post_field( 'post_content', $coupon_id );
+			if ( false !== strpos( $content, 'GIFTCARD ORDER #' ) || false !== strpos( $content, 'OFFLINE GIFTCARD ORDER #' ) || false !== strpos( $content, 'Imported Coupon' ) || false !== strpos( $content, 'ThankYou ORDER #' ) ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 * Get the base total used to cap gift card discounts.
+		 *
+		 * @param WC_Cart $cart Cart instance.
+		 * @return float
+		 */
+		public function wps_wgm_get_giftcard_limit_base_total( $cart ) {
+			$base_total = (float) $cart->get_subtotal();
+			if ( method_exists( $cart, 'get_subtotal_tax' ) ) {
+				$base_total += (float) $cart->get_subtotal_tax();
+			}
+			if ( method_exists( $cart, 'get_fee_total' ) ) {
+				$base_total += (float) $cart->get_fee_total();
+			}
+			if ( method_exists( $cart, 'get_fee_tax' ) ) {
+				$base_total += (float) $cart->get_fee_tax();
+			}
+			if ( method_exists( $cart, 'get_shipping_total' ) ) {
+				$base_total += (float) $cart->get_shipping_total();
+			}
+			if ( method_exists( $cart, 'get_shipping_tax' ) ) {
+				$base_total += (float) $cart->get_shipping_tax();
+			}
+
+			return max( 0, $base_total );
+		}
+
+		/**
+		 * Get gift card coupon totals from the cart.
+		 *
+		 * @param array $coupons Cart coupons.
+		 * @return array
+		 */
+		public function wps_wgm_get_giftcard_coupon_totals( $coupons ) {
+			$total_amount = 0;
+			$total_discount = 0;
+			$discount_amounts = isset( WC()->cart ) ? WC()->cart->coupon_discount_amounts : array();
+			$woo_ver = WC()->version;
+
+			foreach ( $coupons as $coupon ) {
+				if ( ! $this->wps_wgm_is_giftcard_coupon( $coupon ) ) {
+					continue;
+				}
+
+				if ( version_compare( $woo_ver, '3.0.0', '<' ) ) {
+					$total_amount += $coupon->coupon_amount;
+					$code = $coupon->code;
+				} else {
+					$total_amount += $coupon->get_amount();
+					$code = $coupon->get_code();
+				}
+
+				if ( isset( $discount_amounts[ $code ] ) ) {
+					$total_discount += $discount_amounts[ $code ];
+				}
+			}
+
+			return array(
+				'amount' => $total_amount,
+				'discount' => $total_discount,
+			);
+		}
 	}
 }

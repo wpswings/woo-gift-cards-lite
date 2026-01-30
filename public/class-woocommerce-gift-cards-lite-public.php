@@ -2948,6 +2948,26 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 
 	/**
+	 * Limit how much of an order can be paid with gift card coupons.
+	 *
+	 * @param float     $discount Discount to apply.
+	 * @param float     $discounting_amount Amount being discounted.
+	 * @param array     $cart_item Cart item data.
+	 * @param bool      $single Whether the coupon is applied to a single item.
+	 * @param WC_Coupon $coupon Coupon object.
+	 * @return float
+	 */
+	public function wps_wgm_limit_giftcard_discount_amount( $discount, $discounting_amount, $cart_item, $single, $coupon ) {
+		return $this->wps_common_fun->wps_wgm_limit_giftcard_discount_amount(
+			$discount,
+			$discounting_amount,
+			$cart_item,
+			$single,
+			$coupon
+		);
+	}
+
+	/**
 	 * This function is used to disable specific coupon conditionally.
 	 *
 	 * @throws Exception If coupon is disabled.

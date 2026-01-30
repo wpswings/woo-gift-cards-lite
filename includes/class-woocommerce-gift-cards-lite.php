@@ -72,7 +72,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '3.2.4';
+			$this->version = '3.2.5';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -288,6 +288,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'woocommerce_order_status_cancelled', $plugin_public, 'wps_disable_giftcard_on_order_status' );
 		$this->loader->add_action( 'woocommerce_order_status_refunded', $plugin_public, 'wps_disable_giftcard_on_order_status' );
 		$this->loader->add_filter( 'woocommerce_coupon_is_valid', $plugin_public, 'wps_disable_specific_coupon_conditionally', 10, 2 );
+		$this->loader->add_filter( 'woocommerce_coupon_get_discount_amount', $plugin_public, 'wps_wgm_limit_giftcard_discount_amount', 10, 5 );
 
 		// Compatible with Wallet.
 		$this->loader->add_action( 'wps_wsfw_add_wallet_register_endpoint', $plugin_public, 'wps_wgm_add_wallet_register_endpoint', 10 );

@@ -2556,6 +2556,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @name wps_wgm_migrate_smart_coupons_to_giftcards()
 	 */
 	public function wps_wgm_migrate_smart_coupons_to_giftcards() {
+
+		check_ajax_referer( 'wps-wgm-verify-nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+  			return;
+		}
+
 		global $wpdb;
 
 		$general_settings  = get_option( 'wps_wgm_general_settings', array() );
