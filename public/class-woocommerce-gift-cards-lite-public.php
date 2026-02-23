@@ -1241,6 +1241,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				if ( 'completed' == $new_status || 'processing' == $new_status ) {
 					$is_gift_card = false;
 					$datecheck = true;
+					$order_datecheck = true;
 					$order = wc_get_order( $order_id );
 
 					foreach ( $order->get_items() as $item_id => $item ) {
@@ -1379,6 +1380,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$wps_wgm_mail_template_data = apply_filters( 'wps_wgm_mail_templates_data_set', $wps_wgm_mail_template_data, $order->get_items(), $order_id );
 
 						if ( isset( $wps_wgm_mail_template_data['datecheck'] ) && ! $wps_wgm_mail_template_data['datecheck'] ) {
+							$order_datecheck = false;	
 							continue;
 						}
 						if ( isset( $wps_wgm_mail_template_data['mail_send'] ) && $wps_wgm_mail_template_data['mail_send'] ) {
@@ -1442,7 +1444,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						}
 					}
 
-					if ( $gift_order && isset( $wps_wgm_mail_template_data['datecheck'] ) && $wps_wgm_mail_template_data['datecheck'] ) {
+					if ( $gift_order && $order_datecheck ) {
 						wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'send' );
 						$other_settings                               = get_option( 'wps_wgm_other_settings', array() );
 						$wps_wgm_enable_auto_complete_gift_card_order = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_enable_auto_complete_gift_card_order' );
