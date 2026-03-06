@@ -118,6 +118,18 @@ $wps_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'Limit the portion of an order total that can be paid using a gift card. Leave empty for no limit.', 'woo-gift-cards-lite' ),
 	),
 	array(
+		'title' => esc_html__( 'Max Daily Redemptions Per User', 'woo-gift-cards-lite' ),
+		'id' => 'wps_wgm_general_setting_daily_redemption_limit',
+		'type' => 'number',
+		'custom_attribute' => array(
+			'min' => '"0"',
+			'step' => '"1"',
+		),
+		'default' => 0,
+		'class' => 'input-text wps_wgm_new_woo_ver_style_text',
+		'desc_tip' => esc_html__( 'Set the maximum number of gift card redemptions a user can make per day. Leave empty or set to 0 for no limit.', 'woo-gift-cards-lite' ),
+	),
+	array(
 		'title' => esc_html__( 'Gift Card No of time usage', 'woo-gift-cards-lite' ),
 		'id' => 'wps_wgm_general_setting_giftcard_use',
 		'type' => 'number',

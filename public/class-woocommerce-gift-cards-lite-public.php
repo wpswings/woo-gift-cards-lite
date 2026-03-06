@@ -2989,4 +2989,116 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		return $is_valid;
 	}
 
+	/**
+	 * Validate coupon usage restriction based on daily redemption limits per user.
+	 *
+	 * @param bool      $is_valid Whether the coupon is valid.
+	 * @param WC_Coupon $coupon The coupon object.
+	 * @return bool
+	 * @throws Exception If the daily redemption limit is exceeded.
+	 */
+	public function wps_wgm_validate_daily_redemption_limit( $is_valid, $coupon ) {
+		$general_settings = get_option( 'wps_wgm_general_settings', array() );
+		$limit = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_daily_redemption_limit' );
+		$limit = is_numeric( $limit ) ? absint( $limit ) : 0;
+		$limit = (int) apply_filters( 'wps_wgm_daily_redemption_limit', $limit, $coupon );
+
+		if ( $limit <= 0 ) {
+			return $is_valid;
+		}
+
+		if ( ! $this->wps_common_fun->wps_wgm_is_giftcard_coupon( $coupon ) ) {
+			return $is_valid;
+		}
+
+		$user_id = get_current_user_id();
+		$billing_email = '';
+		if ( $user_id > 0 ) {
+			$user = get_userdata( $user_id );
+			if ( $user && ! empty( $user->user_email ) ) {
+				$billing_email = $user->user_email;
+			}
+		}
+
+		if ( empty( $billing_email ) && function_exists( 'WC' ) && WC()->customer ) {
+			$billing_email = WC()->customer->get_email();
+		}
+
+		if ( empty( $billing_email ) && isset( $_POST['billing_email'] ) ) {
+			$billing_email = sanitize_email( wp_unslash( $_POST['billing_email'] ) );
+		}
+
+		if ( empty( $user_id ) && empty( $billing_email ) ) {
+			return $is_valid;
+		}
+
+		$order_statuses = apply_filters(
+			'wps_wgm_daily_redemption_order_statuses',
+			array( 'processing', 'completed', 'on-hold', 'pending' )
+		);
+
+		$today_date = date_i18n( 'Y-m-d', current_time( 'timestamp' ) );
+		$start_time = $today_date . ' 00:00:00';
+		$end_time   = $today_date . ' 23:59:59';
+
+		$query_args = array(
+			'limit'        => -1,
+			'status'       => $order_statuses,
+			'date_created' => $start_time . '...' . $end_time,
+		);
+
+		if ( $user_id > 0 ) {
+			$query_args['customer_id'] = $user_id;
+		} else {
+			$query_args['billing_email'] = $billing_email;
+		}
+
+		$orders = wc_get_orders( $query_args );
+		$redemption_count = 0;
+
+		if ( ! empty( $orders ) ) {
+			foreach ( $orders as $order ) {
+				if ( ! $order instanceof WC_Order ) {
+					continue;
+				}
+				$coupon_codes = $order->get_coupon_codes();
+				if ( empty( $coupon_codes ) ) {
+					continue;
+				}
+				foreach ( $coupon_codes as $code ) {
+					$order_coupon = new WC_Coupon( $code );
+					if ( $this->wps_common_fun->wps_wgm_is_giftcard_coupon( $order_coupon ) ) {
+						$redemption_count++;
+					}
+				}
+			}
+		}
+
+		$cart_count = 0;
+		if ( function_exists( 'WC' ) && WC()->cart ) {
+			$applied_coupons = WC()->cart->get_applied_coupons();
+			if ( is_array( $applied_coupons ) && ! empty( $applied_coupons ) ) {
+				foreach ( $applied_coupons as $code ) {
+					$cart_coupon = new WC_Coupon( $code );
+					if ( $this->wps_common_fun->wps_wgm_is_giftcard_coupon( $cart_coupon ) ) {
+						$cart_count++;
+					}
+				}
+			}
+
+			if ( ! in_array( $coupon->get_code(), $applied_coupons, true ) ) {
+				$cart_count++;
+			}
+		} else {
+			$cart_count = 1;
+		}
+
+		if ( ( $redemption_count + $cart_count ) > $limit ) {
+			// translators: %d is the maximum number of redemptions allowed per day.
+			throw new Exception( sprintf( __( 'Daily gift card redemption limit reached. You can redeem up to %d gift card(s) per day.', 'woo-gift-cards-lite' ), $limit ) );
+		}
+
+		return $is_valid;
+	}
+
 }
