@@ -3095,7 +3095,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( ( $redemption_count + $cart_count ) > $limit ) {
 			// translators: %d is the maximum number of redemptions allowed per day.
-			throw new Exception( sprintf( __( 'Daily gift card redemption limit reached. You can redeem up to %d gift card(s) per day.', 'woo-gift-cards-lite' ), $limit ) );
+			throw new Exception( sprintf( esc_html__( 'Daily gift card redemption limit reached. You can redeem up to %d gift card(s) per day.', 'woo-gift-cards-lite' ), absint( $limit ) ) );
 		}
 
 		return $is_valid;
