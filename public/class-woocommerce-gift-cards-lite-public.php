@@ -3021,11 +3021,29 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 
 		if ( empty( $billing_email ) && function_exists( 'WC' ) && WC()->customer ) {
-			$billing_email = WC()->customer->get_email();
+			$billing_email = WC()->customer->get_billing_email();
+			if ( empty( $billing_email ) ) {
+				$billing_email = WC()->customer->get_email();
+			}
 		}
 
 		if ( empty( $billing_email ) && isset( $_POST['billing_email'] ) ) {
 			$billing_email = sanitize_email( wp_unslash( $_POST['billing_email'] ) );
+		}
+
+		if ( empty( $billing_email ) && isset( $_POST['post_data'] ) ) {
+			$post_data = array();
+			parse_str( wp_unslash( $_POST['post_data'] ), $post_data );
+			if ( isset( $post_data['billing_email'] ) ) {
+				$billing_email = sanitize_email( $post_data['billing_email'] );
+			}
+		}
+
+		if ( empty( $user_id ) && ! empty( $billing_email ) ) {
+			$user = get_user_by( 'email', $billing_email );
+			if ( $user && isset( $user->ID ) ) {
+				$user_id = (int) $user->ID;
+			}
 		}
 
 		if ( empty( $user_id ) && empty( $billing_email ) ) {
@@ -3047,10 +3065,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'date_created' => $start_time . '...' . $end_time,
 		);
 
-		if ( $user_id > 0 ) {
-			$query_args['customer_id'] = $user_id;
-		} else {
+		if ( ! empty( $billing_email ) ) {
 			$query_args['billing_email'] = $billing_email;
+		} else {
+			$query_args['customer_id'] = $user_id;
 		}
 
 		$orders = wc_get_orders( $query_args );
