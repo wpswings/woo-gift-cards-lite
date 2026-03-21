@@ -1,10 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
- * The admin-specific functionality of the plugin.
+ * The onboarding helper for the plugin.
  *
  * @link       https://wpswings.com
  * @since      1.0.0
@@ -12,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes/
  */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * The Onboarding-specific functionality of the plugin admin side.

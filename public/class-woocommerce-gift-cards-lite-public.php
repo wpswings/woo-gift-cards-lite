@@ -3027,15 +3027,47 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 		}
 
-		if ( empty( $billing_email ) && isset( $_POST['billing_email'] ) ) {
-			$billing_email = sanitize_email( wp_unslash( $_POST['billing_email'] ) );
+		$posted_nonce_verified = false;
+		$checkout_nonce = filter_input( INPUT_POST, 'woocommerce-process-checkout-nonce', FILTER_UNSAFE_RAW );
+		if ( ! empty( $checkout_nonce ) ) {
+			$checkout_nonce = sanitize_text_field( $checkout_nonce );
+			$posted_nonce_verified = wp_verify_nonce( $checkout_nonce, 'woocommerce-process_checkout' );
 		}
 
-		if ( empty( $billing_email ) && isset( $_POST['post_data'] ) ) {
+		if ( ! $posted_nonce_verified ) {
+			$cart_nonce = filter_input( INPUT_POST, 'woocommerce-cart-nonce', FILTER_UNSAFE_RAW );
+			if ( ! empty( $cart_nonce ) ) {
+				$cart_nonce = sanitize_text_field( $cart_nonce );
+				$posted_nonce_verified = wp_verify_nonce( $cart_nonce, 'woocommerce-cart' );
+			}
+		}
+
+		if ( ! $posted_nonce_verified ) {
+			$security_nonce = filter_input( INPUT_POST, 'security', FILTER_UNSAFE_RAW );
+			if ( ! empty( $security_nonce ) ) {
+				$security_nonce = sanitize_text_field( $security_nonce );
+				if ( wp_verify_nonce( $security_nonce, 'update-order-review' ) || wp_verify_nonce( $security_nonce, 'apply-coupon' ) ) {
+					$posted_nonce_verified = true;
+				}
+			}
+		}
+
+		if ( $posted_nonce_verified && empty( $billing_email ) ) {
+			$billing_email_post = filter_input( INPUT_POST, 'billing_email', FILTER_UNSAFE_RAW );
+			if ( ! empty( $billing_email_post ) ) {
+				$billing_email = sanitize_email( $billing_email_post );
+			}
+		}
+
+		if ( $posted_nonce_verified && empty( $billing_email ) ) {
 			$post_data = array();
-			parse_str( wp_unslash( $_POST['post_data'] ), $post_data );
-			if ( isset( $post_data['billing_email'] ) ) {
-				$billing_email = sanitize_email( $post_data['billing_email'] );
+			$post_data_raw = filter_input( INPUT_POST, 'post_data', FILTER_UNSAFE_RAW );
+			if ( ! empty( $post_data_raw ) ) {
+				$post_data_raw = sanitize_text_field( $post_data_raw );
+				parse_str( $post_data_raw, $post_data );
+				if ( isset( $post_data['billing_email'] ) ) {
+					$billing_email = sanitize_email( $post_data['billing_email'] );
+				}
 			}
 		}
 

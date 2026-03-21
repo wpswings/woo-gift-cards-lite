@@ -1,12 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
- * Provide a admin area view for the plugin
- *
- * This file is used to markup the admin-facing aspects of the plugin.
+ * Deactivation template display.
  *
  * @link       https://wpswings.com
  * @since      1.0.0
@@ -14,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes/extra-templates
  */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 global $pagenow;
 if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
