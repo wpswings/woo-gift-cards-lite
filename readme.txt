@@ -3,9 +3,9 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 6.7
-Tested up to: 6.9.1
+Tested up to: 6.9
 WC requires at least: 6.5
-WC tested up to: 10.5.3
+WC tested up to: 10.6.1
 Stable tag:  3.2.6
 Requires PHP: 7.4
 License: GPL-3.0+

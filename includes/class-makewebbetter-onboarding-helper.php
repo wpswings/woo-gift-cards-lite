@@ -8,6 +8,7 @@
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes/
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
