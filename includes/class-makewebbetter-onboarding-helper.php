@@ -1,6 +1,6 @@
 <?php
 /**
- * The admin-specific functionality of the plugin.
+ * The onboarding helper for the plugin.
  *
  * @link       https://wpswings.com
  * @since      1.0.0
@@ -8,6 +8,10 @@
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes/
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * The Onboarding-specific functionality of the plugin admin side.
@@ -117,7 +121,7 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '3.2.5';
+			self::$version = '3.2.6';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );

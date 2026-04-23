@@ -1,6 +1,6 @@
 <?php
 /**
- * Register all actions and filters for the plugin
+ * Register all actions and filters for the plugin.
  *
  * @link       https://wpswings.com/
  * @since      1.0.0
@@ -8,6 +8,10 @@
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Register all actions and filters for the plugin.

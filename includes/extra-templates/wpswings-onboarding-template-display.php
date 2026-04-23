@@ -1,8 +1,6 @@
 <?php
 /**
- * Provide a admin area view for the plugin
- *
- * This file is used to markup the admin-facing aspects of the plugin.
+ * Onboarding template display.
  *
  * @link       https://wpswings.com
  * @since      1.0.0
@@ -10,6 +8,10 @@
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes/extra-templates
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 $screen = get_current_screen();
 $is_valid = in_array( $screen->id, apply_filters( 'wps_helper_valid_frontend_screens', array() ) );
