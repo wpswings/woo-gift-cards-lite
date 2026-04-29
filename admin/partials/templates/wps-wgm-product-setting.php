@@ -63,7 +63,6 @@ if ( $flag ) {
 }
 ?>
 <?php $product_settings = get_option( 'wps_wgm_product_settings', array() ); ?>
-<h3 class="wps_wgm_overview_heading"><?php esc_html_e( 'Product Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="wps_wgm_table_wrapper">
     <table class="form-table wps_wgm_product_setting">
         <tbody>

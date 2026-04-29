@@ -68,6 +68,35 @@
 				$(this).hide();
 				$('.wps-gc__popup-for-pro').removeClass('active-pro');
 			})
+
+			$( '#wps_wgm_setting_wrapper .wps_wgm_content_panel p.submit' ).addClass( 'wps_wgm_floating_submit' );
+			$( document ).on( 'click', '#wps_wgm_setting_wrapper .wps_wgm_dashboard_page_notice .notice-dismiss', function( e ) {
+				e.preventDefault();
+				$( this ).closest( '.wps_wgm_dashboard_page_notice' ).fadeOut( 150 );
+			} );
+
+			$( document ).on( 'click', '.wps_wgm_nav_tab_more', function( e ) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				var $wrapper = $( this ).closest( '.wps_wgm_tabs_more' );
+				var isOpen = $wrapper.hasClass( 'is-open' );
+
+				$( '.wps_wgm_tabs_more' ).removeClass( 'is-open' );
+				$( '.wps_wgm_nav_tab_more' ).attr( 'aria-expanded', 'false' );
+
+				if ( ! isOpen ) {
+					$wrapper.addClass( 'is-open' );
+					$( this ).attr( 'aria-expanded', 'true' );
+				}
+			} );
+
+			$( document ).on( 'click', function( e ) {
+				if ( ! $( e.target ).closest( '.wps_wgm_tabs_more' ).length ) {
+					$( '.wps_wgm_tabs_more' ).removeClass( 'is-open' );
+					$( '.wps_wgm_nav_tab_more' ).attr( 'aria-expanded', 'false' );
+				}
+			} );
 			
 			
 			//////////////////
@@ -160,16 +189,24 @@
 				$( "#wps_wgm_mail_setting_remove_logo" ).show();
 
 			}
-			jQuery( "#wps_wgm_mail_setting" ).on( 
+			jQuery( "#wps_wgm_mail_setting" ).on(
 				'click',
-				function(){
-					jQuery( "#wps_wgm_mail_setting_wrapper" ).slideToggle();
+				function() {
+					var $mailSettingTab = jQuery( this );
+					var $mailSettingWrapper = jQuery( "#wps_wgm_mail_setting_wrapper" );
+					var isExpanded = $mailSettingTab.hasClass( 'is-open' );
+
+					$mailSettingTab.toggleClass( 'is-open', ! isExpanded );
+					$mailSettingTab.attr( 'aria-expanded', ! isExpanded ? 'true' : 'false' );
+					$mailSettingWrapper.stop( true, true ).slideToggle();
 				}
 			);
 
-			jQuery( '.wps_wgm_mail_setting_upload_logo' ).on( 
+			jQuery( 'input[type="button"].wps_wgm_mail_setting_upload_logo.button' ).on( 
 				'click',
-				function(){
+				function( e ){
+					e.preventDefault();
+					e.stopPropagation();
 					var imageurl = $( "#wps_wgm_mail_setting_upload_logo" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
 
@@ -195,10 +232,12 @@
 				}
 			);
 
-			jQuery( '.wps_wgm_mail_setting_background_logo' ).on( 
+			jQuery( 'input[type="button"].wps_wgm_mail_setting_background_logo.button' ).on( 
 				'click',
-				function()
+				function( e )
 				{
+					e.preventDefault();
+					e.stopPropagation();
 					var imageurl = $( "#wps_mail_other_setting_background_logo_value" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
 					 window.send_to_editor = function(html)
