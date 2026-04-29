@@ -47,8 +47,7 @@ if ( $flag ) {
 }
 ?>
 <?php $general_settings = get_option( 'wps_wgm_general_settings', array() ); ?>
-<h3 class="wps_wgm_overview_heading"><?php esc_html_e( 'General Settings', 'woo-gift-cards-lite' ); ?></h3>
-<div class="wps_wgm_table_wrapper">	
+	<div class="wps_wgm_table_wrapper">	
 	<div class="wps_table">
 		<table class="form-table wps_wgm_general_setting">
 			<tbody>

@@ -38,7 +38,6 @@ if ( $flag ) {
 }
 ?>
 <?php $other_settings = get_option( 'wps_wgm_other_settings', array() ); ?>
-<h3 class="wps_wgm_overview_heading"><?php esc_html_e( 'Other Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="wps_wgm_table_wrapper">	
 	<div class="wps_table">
 		<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader_other">
