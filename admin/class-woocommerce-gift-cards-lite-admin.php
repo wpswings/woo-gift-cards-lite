@@ -208,7 +208,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'wps_uwgc_report_nonce' => wp_create_nonce( 'wps-uwgc-giftcard-report-nonce' ),
 				);
-				wp_enqueue_script( 'wps_uwgc_report_js', plugin_dir_url( __FILE__ ) . 'js/ultimate-woocommerce-giftcard-report.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'wps_uwgc_report_js', plugin_dir_url( __FILE__ ) . 'js/ultimate-woocommerce-giftcard-report.js', array( 'jquery' ), $this->version, true );
 				wp_localize_script( 'wps_uwgc_report_js', 'ajax_object', $wps_uwgc_report_array );
 				wp_enqueue_script( 'thickbox' );
 				wp_enqueue_style( 'thickbox' );

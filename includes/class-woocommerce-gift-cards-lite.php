@@ -369,10 +369,13 @@ class Woocommerce_Gift_Cards_Lite {
 	 */
 	public function wps_wgm_is_par_active() {
 
+		static $flag = null;
+		if ( null !== $flag ) {
+			return $flag;
+		}
 		$flag           = false;
 		$active_plugins = (array) get_option( 'active_plugins', array() );
 		if ( in_array( 'points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php', $active_plugins ) ) {
-
 			$flag = true;
 		}
 		return $flag;
@@ -385,12 +388,15 @@ class Woocommerce_Gift_Cards_Lite {
 	 */
 	public function wps_wgm_is_par_enable() {
 
+		static $flag = null;
+		if ( null !== $flag ) {
+			return $flag;
+		}
 		$flag             = false;
 		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
 		$general_settings = ! empty( $general_settings ) && is_array( $general_settings ) ? $general_settings : array();
 		$wps_wpr_enable   = ! empty( $general_settings['wps_wpr_general_setting_enable'] ) ? $general_settings['wps_wpr_general_setting_enable'] : 0;
 		if ( '1' == $wps_wpr_enable ) {
-
 			$flag = true;
 		}
 		return $flag;

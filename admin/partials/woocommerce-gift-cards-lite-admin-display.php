@@ -238,6 +238,15 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 
 		<div class="wps_wgm_dashboard_shell">
 
+			<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
+				<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
+					<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
+					<button type="button" class="notice-dismiss">
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
+					</button>
+				</div>
+			<?php endif; ?>
+
 			<div class="wps_wgm_dashboard_notice_stack">
 				<div class="wps_wgm_dashboard_notice wps_wgm_dashboard_notice_status">
 					<div class="wps_wgm_dashboard_notice_badge wps_wgm_dashboard_notice_badge_dark">
@@ -324,14 +333,6 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 								<span class="wps_wgm_content_header_eyebrow"><?php esc_html_e( 'Settings', 'woo-gift-cards-lite' ); ?></span>
 								<h2><?php echo esc_html( $active_tab_title ); ?></h2>
 								<p><?php echo esc_html( $active_tab_description ); ?></p>
-								<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
-									<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
-										<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
-										<button type="button" class="notice-dismiss">
-											<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
-										</button>
-									</div>
-								<?php endif; ?>
 							</div>
 							<div class="wps_wgm_content_header_actions">
 								<a class="wps_wgm_dashboard_action" href="<?php echo esc_url( $help_links[1]['url'] ); ?>" target="_blank"><?php esc_html_e( 'Read Documentation', 'woo-gift-cards-lite' ); ?></a>
