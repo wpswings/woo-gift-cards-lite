@@ -234,6 +234,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
 					'is_tax_enable_for_gift' => $giftcard_tax_cal_enable,
 					'wps_wgm_nonce'          => wp_create_nonce( 'wps-wgm-verify-nonce' ),
+					'wps_wgm_expert_action'  => Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::AJAX_ACTION,
+					'wps_wgm_expert_nonce'   => wp_create_nonce( Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::NONCE_ACTION ),
 					'decimal_separator'      => get_option( 'woocommerce_price_decimal_sep' ),
 				);
 				$url     = plugins_url();

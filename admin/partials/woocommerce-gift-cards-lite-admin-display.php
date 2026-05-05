@@ -195,7 +195,7 @@ $help_links = array(
 	),
 );
 
-$wps_wgm_services_link = 'https://wpswings.com/woocommerce-services/?utm_source=wpswings-giftcards-services&utm_medium=giftcards-org-backend&utm_campaign=woocommerce-services';
+$wps_wgm_services_link = Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::wps_wgm_get_services_landing_url();
 $wps_wgm_marketing_services = array(
 	array(
 		'icon'        => 'seo',
@@ -408,7 +408,7 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 											</a>
 										<?php endforeach; ?>
 									</div>
-									<a class="wps_wgm_sidebar_services_button" href="<?php echo esc_url( $wps_wgm_services_link ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Talk to an Expert', 'woo-gift-cards-lite' ); ?></a>
+									<button type="button" class="wps_wgm_sidebar_services_button" data-wps-wgm-open-expert-modal><?php esc_html_e( 'Talk to an Expert', 'woo-gift-cards-lite' ); ?></button>
 									<div class="wps_wgm_service_rail_footer"><?php esc_html_e( 'Services by WP Swings', 'woo-gift-cards-lite' ); ?></div>
 								</div>
 								<div class="wps_wgm_sidebar_card wps_wgm_sidebar_card_tint">
@@ -433,4 +433,5 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 			</div>
 		</div>
 	</form>
+	<?php Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::wps_wgm_render_modal(); ?>
 </div>
