@@ -86,6 +86,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		 * class.
 		 */
 
+		if ( ! $this->wps_wgm_should_enqueue_frontend_assets() ) {
+			return;
+		}
+
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'thickbox' );
 		$other_settings = get_option( 'wps_wgm_other_settings', array() );
@@ -95,6 +99,49 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 			wp_enqueue_style( $this->plugin_name . 'single-page', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_lite-single-page.css', array(), $this->version, 'all' );
 		}
+	}
+
+	/**
+	 * Check whether current frontend view needs gift card assets.
+	 *
+	 * @return bool
+	 */
+	private function wps_wgm_should_enqueue_frontend_assets() {
+		$other_settings        = get_option( 'wps_wgm_other_settings', array() );
+		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
+
+		global $post;
+		$post_id      = isset( $post->ID ) ? $post->ID : '';
+		$page_content = '';
+		if ( ! empty( $post_id ) ) {
+			$page         = get_post( $post->ID );
+			$page_content = ! empty( $page->post_content ) ? $page->post_content : '';
+		}
+
+		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) {
+			return true;
+		}
+
+		if ( ! is_product() && ! ( str_contains( $page_content, 'product_page id' ) && 'on' == $wps_wgm_gc_custom_page ) ) {
+			return (bool) apply_filters( 'wps_wgm_load_product_script', false );
+		}
+
+		if ( str_contains( $page_content, 'product_page id' ) ) {
+			$content = $post->post_content;
+			if ( isset( ( explode( '=', explode( ']', $content )[0] ) )[1] ) ) {
+				$array      = ( explode( '=', explode( ']', $content )[0] ) )[1];
+				$product_id = intval( explode( '"', $array )[1] );
+			} else {
+				$product_id = $post->ID;
+			}
+		} else {
+			$product_id = $post->ID;
+		}
+
+		$product_type       = WC_Product_Factory::get_product_type( $product_id );
+		$sell_as_a_giftcard = get_post_meta( $product_id, '_sell_as_a_giftcard' );
+
+		return 'wgm_gift_card' === $product_type || ( isset( $sell_as_a_giftcard[0] ) && 'yes' === $sell_as_a_giftcard[0] );
 	}
 
 	/**
