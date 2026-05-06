@@ -4546,6 +4546,21 @@ body.wps-wgm-expert-modal-open {
     gap: 18px;
 }
 
+.wps-wgm-expert-modal__form[hidden] {
+    display: none !important;
+}
+
+.wps-wgm-expert-modal.is-success .wps-wgm-expert-modal__header {
+    display: none;
+}
+
+.wps-wgm-expert-modal.is-success .wps-wgm-expert-modal__panel {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: min(520px, calc(100vh - 120px));
+}
+
 .wps-wgm-expert-modal__grid {
     display: grid;
     gap: 16px;

@@ -1055,3 +1055,174 @@ input[type="text"] {
     max-width: 100% !important;
   }
 }
+
+/* Deactivation feedback modal */
+.wps-deactivation-feedback-wrapper-background {
+  max-width: 750px;
+}
+
+.wps-deactivation-feedback-wrapper {
+  border-radius: 0;
+  padding: 32px 56px 24px;
+}
+
+.wps-deactivation-feedback-wrapper .wps-on-boarding-close-btn {
+  border: 2px solid #0073aa;
+  box-shadow: none;
+  height: 32px;
+  right: 10px;
+  top: 12px;
+  width: 32px;
+}
+
+.wps-deactivation-feedback-wrapper .wps-on-boarding-close-btn a {
+  color: #111827;
+}
+
+.wps-deactivation-feedback-wrapper .wps-on-boarding-close-btn .close-form::before {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.wps-deactivation-feedback-wrapper .wps-on-boarding-heading {
+  color: #111827;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0 auto 12px;
+  max-width: 640px;
+}
+
+.wps-deactivation-feedback-wrapper .wps-on-boarding-desc {
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 auto 40px;
+  max-width: 520px;
+}
+
+.wps-deactivation-feedback-form {
+  max-width: 100%;
+}
+
+.wps-deactivation-feedback-form .wps-customer-data-form-single-field {
+  border: 0;
+  display: block;
+  margin: 0;
+  max-width: none;
+  padding: 0;
+}
+
+.wps-deactivation-feedback-form .wps-customer-data-form-single-field:first-of-type > .on-boarding-label:empty {
+  display: none;
+}
+
+.wps-deactivation-feedback-form .wps-customer-data-form-single-field:first-of-type {
+  margin: 0 0 18px;
+  max-width: 470px;
+}
+
+.wps-deactivation-feedback-form .wps-deactivating-radio-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin: 0 0 6px;
+  max-width: none;
+  min-height: 17px;
+  width: 100%;
+}
+
+.wps-deactivation-feedback-form .wps-deactivating-radio-wrapper input[type="radio"] {
+  border: 1px solid #8c8f94;
+  height: 16px;
+  width: 16px;
+}
+
+.wps-deactivation-feedback-form .wps-deactivating-radio-wrapper input[type="radio"]:checked::before {
+  height: 6px;
+  margin: 4px;
+  width: 6px;
+}
+
+.wps-deactivation-feedback-form .on-boarding-field-label {
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.wps-deactivation-feedback-form .deactivating-textarea-field,
+.wps-deactivation-feedback-form .deactivating-textarea-field.keep_hidden {
+  display: block;
+  max-width: 452px !important;
+  min-height: 66px;
+  resize: vertical;
+  width: 100% !important;
+}
+
+.wps-deactivation-feedback-form .wps-on-boarding-form-btn__wrapper {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.wps-deactivation-feedback-form .wps-on-boarding-form-submit,
+.wps-deactivation-feedback-form .wps-on-boarding-form-no_thanks {
+  display: flex;
+  float: none;
+  margin: 0;
+  max-width: none !important;
+  width: auto;
+}
+
+.wps-deactivation-feedback-form .wps-on-boarding-submit {
+  background: #1a0a3d !important;
+  border: 1px solid #1a0a3d !important;
+  border-radius: 3px;
+  min-width: 286px;
+  padding: 14px 54px 14px 24px;
+}
+
+.wps-deactivation-feedback-form .wps-on-boarding-form-verify:after {
+  right: 22px;
+  top: 16px;
+}
+
+.wps-deactivation-feedback-form .wps-deactivation-no_thanks {
+  align-items: center;
+  color: #1a0a3d !important;
+  display: inline-flex;
+  font-weight: 700;
+  min-height: 54px;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .wps-deactivation-feedback-wrapper {
+    padding: 54px 22px 24px;
+  }
+
+  .wps-deactivation-feedback-wrapper .wps-on-boarding-heading {
+    font-size: 24px;
+    padding-right: 0;
+  }
+
+  .wps-deactivation-feedback-wrapper .wps-on-boarding-desc {
+    margin-bottom: 26px;
+  }
+
+  .wps-deactivation-feedback-form .wps-on-boarding-form-btn__wrapper {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wps-deactivation-feedback-form .wps-on-boarding-form-submit,
+  .wps-deactivation-feedback-form .wps-on-boarding-form-no_thanks,
+  .wps-deactivation-feedback-form .wps-on-boarding-submit,
+  .wps-deactivation-feedback-form .wps-deactivation-no_thanks {
+    justify-content: center;
+    width: 100%;
+  }
+}
