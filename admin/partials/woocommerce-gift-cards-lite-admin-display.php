@@ -195,6 +195,30 @@ $help_links = array(
 	),
 );
 
+$wps_wgm_services_link = Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::wps_wgm_get_services_landing_url();
+$wps_wgm_marketing_services = array(
+	array(
+		'icon'        => 'seo',
+		'title'       => esc_html__( 'SEO Services', 'woo-gift-cards-lite' ),
+		'description' => esc_html__( 'Improve rankings & organic traffic', 'woo-gift-cards-lite' ),
+	),
+	array(
+		'icon'        => 'ads',
+		'title'       => esc_html__( 'Google Ads Setup And G4 Setup', 'woo-gift-cards-lite' ),
+		'description' => esc_html__( 'Run profitable ad campaigns', 'woo-gift-cards-lite' ),
+	),
+	array(
+		'icon'        => 'speed',
+		'title'       => esc_html__( 'Speed Optimization', 'woo-gift-cards-lite' ),
+		'description' => esc_html__( 'Faster store, happier customers', 'woo-gift-cards-lite' ),
+	),
+	array(
+		'icon'        => 'dev',
+		'title'       => esc_html__( 'WooCommerce Development Services', 'woo-gift-cards-lite' ),
+		'description' => esc_html__( 'Custom Solution For your store needs', 'woo-gift-cards-lite' ),
+	),
+);
+
 $secure_nonce = wp_create_nonce( 'wps-gc-auth-nonce' );
 $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
 if ( ! $id_nonce_verified ) {
@@ -237,6 +261,15 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 		<?php wp_nonce_field( 'wps-wgc-nonce', 'wps-wgc-nonce' ); ?>
 
 		<div class="wps_wgm_dashboard_shell">
+
+			<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
+				<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
+					<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
+					<button type="button" class="notice-dismiss">
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
+					</button>
+				</div>
+			<?php endif; ?>
 
 			<div class="wps_wgm_dashboard_notice_stack">
 				<div class="wps_wgm_dashboard_notice wps_wgm_dashboard_notice_status">
@@ -324,14 +357,6 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 								<span class="wps_wgm_content_header_eyebrow"><?php esc_html_e( 'Settings', 'woo-gift-cards-lite' ); ?></span>
 								<h2><?php echo esc_html( $active_tab_title ); ?></h2>
 								<p><?php echo esc_html( $active_tab_description ); ?></p>
-								<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
-									<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
-										<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
-										<button type="button" class="notice-dismiss">
-											<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
-										</button>
-									</div>
-								<?php endif; ?>
 							</div>
 							<div class="wps_wgm_content_header_actions">
 								<a class="wps_wgm_dashboard_action" href="<?php echo esc_url( $help_links[1]['url'] ); ?>" target="_blank"><?php esc_html_e( 'Read Documentation', 'woo-gift-cards-lite' ); ?></a>
@@ -365,6 +390,27 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 									</div>
 								</div>
 
+								<div class="wps_wgm_sidebar_card wps_wgm_sidebar_card_services">
+									<div class="wps_wgm_sidebar_services_header">
+										<h3><?php esc_html_e( 'Grow Your Store With WP Swings', 'woo-gift-cards-lite' ); ?></h3>
+										<span class="wps_wgm_sidebar_services_badge" aria-hidden="true"></span>
+									</div>
+									<p><?php esc_html_e( "Expert solutions to boost your store's performance.", 'woo-gift-cards-lite' ); ?></p>
+									<div class="wps_wgm_service_rail">
+										<?php foreach ( $wps_wgm_marketing_services as $wps_wgm_marketing_service ) : ?>
+											<a class="wps_wgm_service_rail_item" href="<?php echo esc_url( $wps_wgm_services_link ); ?>" target="_blank" rel="noopener noreferrer">
+												<span class="wps_wgm_service_rail_icon wps_wgm_service_rail_icon_<?php echo esc_attr( $wps_wgm_marketing_service['icon'] ); ?>" aria-hidden="true"></span>
+												<span class="wps_wgm_service_rail_content">
+													<span class="wps_wgm_service_rail_title"><?php echo esc_html( $wps_wgm_marketing_service['title'] ); ?></span>
+													<span class="wps_wgm_service_rail_description"><?php echo esc_html( $wps_wgm_marketing_service['description'] ); ?></span>
+												</span>
+												<span class="wps_wgm_service_rail_arrow" aria-hidden="true">&rsaquo;</span>
+											</a>
+										<?php endforeach; ?>
+									</div>
+									<button type="button" class="wps_wgm_sidebar_services_button" data-wps-wgm-open-expert-modal><?php esc_html_e( 'Talk to an Expert', 'woo-gift-cards-lite' ); ?></button>
+									<div class="wps_wgm_service_rail_footer"><?php esc_html_e( 'Services by WP Swings', 'woo-gift-cards-lite' ); ?></div>
+								</div>
 								<div class="wps_wgm_sidebar_card wps_wgm_sidebar_card_tint">
 									<h3><?php esc_html_e( 'Still facing problems?', 'woo-gift-cards-lite' ); ?></h3>
 									<p><?php esc_html_e( 'We are ready to resolve workflow, styling, and integration issues across your store setup.', 'woo-gift-cards-lite' ); ?></p>
@@ -387,4 +433,5 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 			</div>
 		</div>
 	</form>
+	<?php Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::wps_wgm_render_modal(); ?>
 </div>

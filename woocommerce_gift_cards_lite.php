@@ -147,19 +147,38 @@ if ( $activated ) {
 		 * @link https://www.wpswings.com/
 		 */
 		function wps_wgm_giftcard_enable() {
+			static $result = null;
+			if ( null !== $result ) {
+				return $result;
+			}
 			$giftcard_enable = get_option( 'wps_wgm_general_settings', array() );
 			if ( ! empty( $giftcard_enable ) && array_key_exists( 'wps_wgm_general_setting_enable', $giftcard_enable ) ) {
 				$check_enable = $giftcard_enable['wps_wgm_general_setting_enable'];
 				if ( isset( $check_enable ) && ! empty( $check_enable ) ) {
-					if ( 'on' === $check_enable ) {
-						return true;
-					} else {
-						return false;
-					}
+					$result = ( 'on' === $check_enable );
+					return $result;
 				}
 			}
+			$result = false;
+			return $result;
 		}
 	}
+	/**
+	 * Per-request cache wrapper for frequently read plugin options.
+	 * Prevents repeated get_option() calls for the same key within a single request.
+	 *
+	 * @param string $key     Option key.
+	 * @param mixed  $default Default value when option is not set.
+	 * @return mixed
+	 */
+	function wps_wgm_get_plugin_option( $key, $default = array() ) {
+		static $cache = array();
+		if ( ! array_key_exists( $key, $cache ) ) {
+			$cache[ $key ] = get_option( $key, $default );
+		}
+		return $cache[ $key ];
+	}
+
 	register_activation_hook( __FILE__, 'wps_wgm_create_gift_card_taxonomy' );
 
 
@@ -288,7 +307,7 @@ if ( $activated ) {
 				$password .= $final_array[ $key ];
 			}
 
-			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 			if ( ! empty( $general_settings ) && array_key_exists( 'wps_wgm_general_setting_giftcard_prefix', $general_settings ) ) {
 				$giftcard_prefix = $general_settings['wps_wgm_general_setting_giftcard_prefix'];
 			} else {
@@ -319,10 +338,14 @@ if ( $activated ) {
 	 * Schedule the daily reset event at 12:00 AM site time.
 	 */
 	function wps_wgm_schedule_midnight_reset() {
+		if ( get_transient( 'wps_wgm_cron_scheduled' ) ) {
+			return;
+		}
 		if ( ! wp_next_scheduled( 'wps_reset_gifting_request' ) ) {
 			$timestamp = strtotime( 'tomorrow midnight', current_time( 'timestamp' ) );
 			wp_schedule_event( $timestamp, 'daily', 'wps_reset_gifting_request' );
 		}
+		set_transient( 'wps_wgm_cron_scheduled', true, 12 * HOUR_IN_SECONDS );
 	}
 	add_action( 'wp', 'wps_wgm_schedule_midnight_reset' );
 
