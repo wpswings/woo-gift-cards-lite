@@ -610,6 +610,8 @@
 			var $successMessage = $modal.find( successMessageSelector ).first();
 			var $submitButton = $form.find( 'button[type="submit"]' ).first();
 
+			$modal.removeClass( 'is-success' );
+
 			if ( $form.length ) {
 				if ( $form.get( 0 ) && 'function' === typeof $form.get( 0 ).reset ) {
 					$form.get( 0 ).reset();
@@ -639,11 +641,13 @@
 			var $form = $modal.find( formSelector ).first();
 			var $success = $modal.find( successSelector ).first();
 			var $successMessage = $modal.find( successMessageSelector ).first();
+			var $dialog = $modal.find( '.wps-wgm-expert-modal__dialog' ).first();
 
 			if ( $form.length ) {
 				$form.attr( 'hidden', true );
 			}
 
+			$modal.addClass( 'is-success' );
 			wpsWgmSetExpertStatus( $modal, '', '' );
 
 			if ( $successMessage.length ) {
@@ -656,6 +660,10 @@
 				window.setTimeout( function() {
 					$success.addClass( 'is-visible' );
 				}, 20 );
+			}
+
+			if ( $dialog.length ) {
+				$dialog.scrollTop( 0 );
 			}
 		}
 
@@ -751,10 +759,6 @@
 
 				if ( isSuccess && message ) {
 					wpsWgmShowExpertSuccessState( $modal, message );
-
-					successCloseTimer = window.setTimeout( function() {
-						wpsWgmToggleExpertModal( false );
-					}, 3000 );
 					return;
 				}
 

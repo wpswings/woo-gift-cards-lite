@@ -24,8 +24,8 @@ if ( ! empty( $form_fields ) ) : ?>
 		<img src="<?php echo esc_url( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
 	<div class="wps-onboarding-section">
-		<div class="wps-on-boarding-wrapper-background">
-		<div class="wps-on-boarding-wrapper">
+		<div class="wps-on-boarding-wrapper-background wps-deactivation-feedback-wrapper-background">
+		<div class="wps-on-boarding-wrapper wps-deactivation-feedback-wrapper">
 			<div class="wps-on-boarding-close-btn">
 				<a href="javascript:void(0);">
 					<span class="close-form">x</span>
@@ -33,7 +33,7 @@ if ( ! empty( $form_fields ) ) : ?>
 			</div>
 			<h3 class="wps-on-boarding-heading"></h3>
 			<p class="wps-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'woo-gift-cards-lite' ); ?></p>
-			<form action="#" method="post" class="wps-on-boarding-form">
+			<form action="#" method="post" class="wps-on-boarding-form wps-deactivation-feedback-form">
 				<?php foreach ( $form_fields as $key => $field_attr ) : ?>
 					<?php $this->render_field_html( $field_attr, 'deactivating' ); ?>
 				<?php endforeach; ?>
