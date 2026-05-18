@@ -311,7 +311,7 @@
      text-align: left;
      line-height: 1.25;
      padding: 18px 20px;
-     background-color: #2196f3;
+     background-color: #2f154e;
      display: block;
      color: #fff;
      font-weight: 700;
@@ -1197,7 +1197,7 @@
  
 .wps_wgm_mail_setting_tab {
      align-items: center;
-     background-color: #2196f3;
+     background-color: #2f154e;
      color: #ffffff;
      display: flex;
      justify-content: space-between;
@@ -1569,7 +1569,7 @@
      padding: 8px 15px;
  }
  .wps-gift-card-pro-tmplt .table.wps-table-wrapper th {
-     background-color: #5244f9;
+     background-color: #2f154e;
      text-align: left;
      padding: 7px 15px;
      color: #fff;
@@ -2496,9 +2496,9 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .wps_wgm_overview_heading,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel h3.wps_wgm_heading,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .wps_uwgc-license-sec-wrap h3 {
-    background: #edf6ff;
-    border-bottom: 1px solid #dbeaf7;
-    color: #2081ca;
+    background: #2f154e;
+    border-bottom: 1px solid #2f154e;
+    color: #ffffff;
     font-size: 24px;
     font-weight: 700;
     margin: -22px -24px 24px;
@@ -2890,10 +2890,10 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .wps_wgm_overview_heading,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel h3.wps_wgm_heading,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .wps_uwgc-license-sec-wrap h3 {
-    background: #e8f6ff;
+    background: #2f154e;
     border-bottom: 0;
     border-radius: 8px 8px 0 0;
-    color: #1f88d5;
+    color: #ffffff;
     font-size: 18px;
     margin: -14px -18px 20px;
     padding: 12px 16px;
@@ -2984,9 +2984,9 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .wps_wgm_overview_heading,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel h3.wps_wgm_heading,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .wps_uwgc-license-sec-wrap h3 {
-    background: #dff1ff;
+    background: #2f154e;
     border-radius: 10px 10px 0 0;
-    color: #2892dd;
+    color: #ffffff;
     font-size: 16px;
     line-height: 1.2;
     margin: -12px -14px 0;
@@ -3777,16 +3777,17 @@ th label[for=wps_wgm_new_gift_card_page_layout], th label[for=wps_wgm_select_lib
 
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .select2-container-multi .select2-choices .select2-search-field input,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .select2-search--inline .select2-search__field {
-    background: #ffffff !important;
-    border: 1px solid #ddd6ea !important;
-    border-radius: 8px;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0;
     box-shadow: none !important;
     color: #2f2943;
     font-size: 13px;
-    height: 34px;
+    height: 28px;
     margin: 0 !important;
-    min-width: 160px;
-    padding: 0 12px !important;
+    min-width: 80px;
+    outline: none !important;
+    padding: 0 4px !important;
 }
 
 #wps_wgm_setting_wrapper .wps_wgm_content_panel .select2-container-multi .select2-choices .select2-search-choice,
@@ -4964,56 +4965,17 @@ body.wps-wgm-expert-modal-open {
     text-align: center;
 }
 
-/* Mail image upload row layout */
-#wps_wgm_setting_wrapper tr.wps_wgm_mail_setting_background_logo td.forminp.forminp-text,
-#wps_wgm_setting_wrapper tr.wps_wgm_mail_setting_upload_logo td.forminp.forminp-text {
-    align-items: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+/* Mail image upload row layout — match pro plugin (giftware) defaults */
+input.wps_wgm_mail_setting_upload_logo.button,
+input.wps_wgm_mail_setting_background_logo.button {
+    margin: 10px;
 }
 
-#wps_wgm_setting_wrapper #wps_wgm_mail_setting_background_logo_value,
-#wps_wgm_setting_wrapper #wps_wgm_mail_setting_upload_logo {
-    flex: 1 1 420px;
-    margin: 0 !important;
-    max-width: 100%;
-    min-width: 280px;
-}
-
-#wps_wgm_setting_wrapper .wps_wgm_mail_setting_background_logo.button,
-#wps_wgm_setting_wrapper .wps_wgm_mail_setting_upload_logo.button {
-    align-items: center;
-    display: inline-flex;
-    flex: 0 0 auto;
-    justify-content: center;
-    margin: 0 !important;
-    min-height: 42px;
-    padding: 0 18px;
-    white-space: nowrap;
-}
-
-#wps_wgm_setting_wrapper #wps_wgm_mail_setting_remove_background,
-#wps_wgm_setting_wrapper #wps_wgm_mail_setting_remove_logo {
-    margin: 4px 0 0;
-    padding: 0;
-    width: 100%;
-}
-
-#wps_wgm_setting_wrapper #wps_wgm_mail_setting_remove_background > span,
-#wps_wgm_setting_wrapper #wps_wgm_mail_setting_remove_logo > span {
-    align-items: center;
-    column-gap: 14px;
-    display: inline-flex;
-    flex-wrap: wrap;
-}
-
-@media only screen and (max-width: 767px) {
-    #wps_wgm_setting_wrapper #wps_wgm_mail_setting_background_logo_value,
-    #wps_wgm_setting_wrapper #wps_wgm_mail_setting_upload_logo {
-        flex-basis: 100%;
-        min-width: 100%;
-    }
+#wps_wgm_setting_wrapper #wps_wgm_mail_setting_upload_image,
+#wps_wgm_setting_wrapper #wps_wgm_mail_setting_background_logo_image {
+    height: 150px !important;
+    object-fit: contain;
+    width: 150px !important;
 }
 
 /* Locked tabs should match normal tab layout */
@@ -5198,14 +5160,14 @@ body.wp-admin #wps_wgm_setting_wrapper .wps_wgm_content_panel {
 }
 
 body.wp-admin #wps_wgm_setting_wrapper .wps_wgm_content_panel p.submit.wps_wgm_floating_submit {
-    background: #ffffff !important;
-    border: 1px solid #ece8f4 !important;
-    border-radius: 20px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
     bottom: 22px !important;
-    box-shadow: 0 8px 18px rgba(18, 12, 35, 0.12) !important;
-    left: 170px !important;
-    margin: 0 !important;
-    padding: 10px 14px !important;
+    box-shadow: none !important;
+    left: 200px !important;
+    margin: 0 0 0 24px !important;
+    padding: 0 !important;
     position: fixed !important;
     width: auto !important;
     z-index: 99999 !important;
@@ -5246,14 +5208,14 @@ body.wp-admin #wps_wgm_setting_wrapper .wps_wgm_content_panel {
 }
 
 body.wp-admin #wps_wgm_setting_wrapper .wps_wgm_content_panel p.submit.wps_wgm_floating_submit {
-    background: rgba(255, 255, 255, 0.97) !important;
-    border: 1px solid #e7e2f2 !important;
-    border-radius: 18px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
     bottom: 22px !important;
-    box-shadow: 0 14px 32px rgba(34, 22, 71, 0.14) !important;
-    left: 170px !important;
-    margin: 0 !important;
-    padding: 12px 14px !important;
+    box-shadow: none !important;
+    left: 200px !important;
+    margin: 0 0 0 24px !important;
+    padding: 0 !important;
     position: fixed !important;
     width: fit-content !important;
     z-index: 99999 !important;
@@ -5277,14 +5239,14 @@ body.wp-admin #wps_wgm_setting_wrapper .wps_wgm_content_panel p.submit.wps_wgm_f
 
 #wps_wgm_setting_wrapper .wps_wgm_content_panel > p.submit,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel > .submit {
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid #e7e2f2;
-    border-radius: 18px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
     bottom: 24px;
-    box-shadow: 0 14px 32px rgba(34, 22, 71, 0.14);
-    left: 176px;
-    margin: 0;
-    padding: 12px 14px;
+    box-shadow: none;
+    left: 200px;
+    margin: 0 0 0 24px;
+    padding: 0;
     position: fixed;
     width: fit-content;
     z-index: 999;
@@ -5310,16 +5272,16 @@ body.wp-admin #wps_wgm_setting_wrapper .wps_wgm_content_panel p.submit.wps_wgm_f
 
 #wps_wgm_setting_wrapper .wps_wgm_content_panel > p.submit,
 #wps_wgm_setting_wrapper .wps_wgm_content_panel > .submit {
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.94);
-    border: 1px solid #e7e2f2;
-    border-radius: 18px;
+    backdrop-filter: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
     bottom: 18px;
-    box-shadow: 0 14px 32px rgba(34, 22, 71, 0.12);
+    box-shadow: none;
     clear: both;
-    left: 18px;
-    margin: 0;
-    padding: 12px 14px;
+    left: 40px;
+    margin: 0 0 0 24px;
+    padding: 0;
     position: sticky;
     width: fit-content;
     z-index: 20;
