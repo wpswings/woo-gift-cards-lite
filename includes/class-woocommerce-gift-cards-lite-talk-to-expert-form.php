@@ -246,8 +246,8 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 			);
 		}
 
-		$form_data = isset( $_POST['form_data'] ) ? wp_unslash( $_POST['form_data'] ) : '';
-		$form_data = is_string( $form_data ) ? json_decode( $form_data, true ) : array();
+		$form_data_raw = isset( $_POST['form_data'] ) ? sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) : '';
+		$form_data     = '' !== $form_data_raw ? json_decode( $form_data_raw, true ) : array();
 
 		if ( ! is_array( $form_data ) ) {
 			wp_send_json_error(
@@ -496,8 +496,8 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 				continue;
 			}
 
-			$raw_value = wp_unslash( $_SERVER[ $header_key ] );
-			$ip_list   = is_string( $raw_value ) ? explode( ',', $raw_value ) : array( $raw_value );
+			$raw_value = sanitize_text_field( wp_unslash( $_SERVER[ $header_key ] ) );
+			$ip_list   = '' !== $raw_value ? explode( ',', $raw_value ) : array();
 
 			foreach ( $ip_list as $ip_candidate ) {
 				$ip_candidate = trim( sanitize_text_field( (string) $ip_candidate ) );
@@ -620,9 +620,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 			return false;
 		}
 
-		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name );
-
-		return $table_name === (string) $wpdb->get_var( $query );
+		return $table_name === (string) $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
 
 	/**
@@ -644,7 +642,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 		$args          = array_merge( array( $sql, $start_date ), $paid_statuses );
 		$query         = call_user_func_array( array( $wpdb, 'prepare' ), $args );
 
-		return (float) $wpdb->get_var( $query );
+		return (float) $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
 
 	/**
