@@ -118,7 +118,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$page_content = ! empty( $page->post_content ) ? $page->post_content : '';
 		}
 
-		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) {
+		// Auto-generated "Gift Card" page is a WP page that embeds the gift card
+		// product category via [product_category category='wps_wgm_giftcard'].
+		$is_giftcard_category_page = str_contains( $page_content, '[product_category' )
+			&& str_contains( $page_content, 'wps_wgm_giftcard' );
+
+		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' )
+			|| ( function_exists( 'is_account_page' ) && is_account_page() )
+			|| ( function_exists( 'is_shop' ) && is_shop() )
+			|| ( function_exists( 'is_product_taxonomy' ) && is_product_taxonomy() )
+			|| ( function_exists( 'is_cart' ) && is_cart() )
+			|| ( function_exists( 'is_checkout' ) && is_checkout() )
+			|| $is_giftcard_category_page ) {
 			return true;
 		}
 
