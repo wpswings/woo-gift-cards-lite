@@ -638,11 +638,14 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 		$paid_statuses = self::wps_wgm_get_paid_status_values();
 		$placeholders  = implode( ', ', array_fill( 0, count( $paid_statuses ), '%s' ) );
 		$start_date    = gmdate( 'Y-m-d H:i:s', strtotime( '-12 months' ) );
-		$sql           = "SELECT COALESCE(SUM(total_sales), 0) FROM {$table_name} WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid >= %s AND status IN ({$placeholders})";
-		$args          = array_merge( array( $sql, $start_date ), $paid_statuses );
-		$query         = call_user_func_array( array( $wpdb, 'prepare' ), $args );
+		$args          = array_merge( array( $start_date ), $paid_statuses );
 
-		return (float) $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		return (float) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				"SELECT COALESCE(SUM(total_sales), 0) FROM {$table_name} WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid >= %s AND status IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$args
+			)
+		);
 	}
 
 	/**
