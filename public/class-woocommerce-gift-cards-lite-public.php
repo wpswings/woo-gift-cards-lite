@@ -1576,8 +1576,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						// Get the coupon object.
 						$coupon = new WC_Coupon( $coupon_code );
 
-						// Check if the coupon exists.
-						if ( $coupon->is_valid() ) {
+						// Recharge-only validity: existence, expiry, usage limit, enabled flag.
+						$wps_coupon_id   = $coupon->get_id();
+						$wps_expires_at  = $coupon->get_date_expires();
+						$wps_usage_limit = (int) $coupon->get_usage_limit();
+						$wps_usage_count = (int) $coupon->get_usage_count();
+						$wps_enabled     = get_post_meta( $wps_coupon_id, '_wps_giftcard_enabled', true );
+
+						$wps_is_rechargeable = ( $wps_coupon_id > 0 )
+							&& ( ! $wps_expires_at || $wps_expires_at->getTimestamp() > current_time( 'timestamp', true ) )
+							&& ( 0 === $wps_usage_limit || $wps_usage_count < $wps_usage_limit )
+							&& ( 'no' !== $wps_enabled );
+
+						if ( $wps_is_rechargeable ) {
 
 							$total = $order->get_subtotal() + $coupon->get_amount();
 							$coupon->set_amount( $total );

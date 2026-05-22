@@ -262,6 +262,8 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 
 		<div class="wps_wgm_dashboard_shell">
 
+			<hr class="wp-header-end" style="display:none;visibility:hidden;height:0;margin:0;border:0;" />
+
 			<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
 				<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
 					<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
