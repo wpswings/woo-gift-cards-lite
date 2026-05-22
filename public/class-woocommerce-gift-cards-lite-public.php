@@ -319,7 +319,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$product_id = $wps_product;
 		}
 
-		$product_type = WC_Product_Factory::get_product_type( $product_id ) ?: '';
+		$product_type = WC_Product_Factory::get_product_type( $product_id );
+		$product_type = $product_type ? $product_type : '';
 
 		if ( 'wgm_gift_card' === $product_type ) {
 			$wps_cart_html = $this->wps_wgm_before_cart_data( $wps_product );
