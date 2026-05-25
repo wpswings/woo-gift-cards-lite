@@ -322,10 +322,15 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 3.2.7 - Released on 25th May 2026 =
+* New : Compatibility with the latest WC ( 10.7.0 ) and WP ( 7.0 )
+* New: UI/UX dashboard layout changes
+* Fix: Performance Optimisation
+
 = 3.2.6 - Released on 24th of March 2026 =
-* New : Compatibility with latest WC ( 10.6.1 ) and WP ( 6.9 ).
-* New : Maximum daily redemption limits per user.
-* Fix : Coupon Generated for multiple gift card items in order.
+* New : Compatibility with the latest WC ( 10.6.1 ) and WP ( 6.9 ).
+* New: Maximum daily redemption limits per user.
+* Fix: Coupon generated for multiple gift card items in order.
 
 = 3.2.5 - Released on 28th January 2026 =
 * New: Compatibility with Upsell Funnel Builder.
@@ -663,7 +668,7 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.6 - Released on 24th of March 2026 =
-* New : Compatibility with latest WC ( 10.6.1 ) and WP ( 6.9 ).
-* New : Maximum daily redemption limits per user.
-* Fix : Coupon Generated for multiple gift card items in order.
+= 3.2.7 - Released on 25th May 2026 =
+* New : Compatibility with the latest WC ( 10.7.0 ) and WP ( 7.0 )
+* New: UI/UX dashboard layout changes
+* Fix: Performance Optimisation
