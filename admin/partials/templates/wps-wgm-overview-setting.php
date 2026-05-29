@@ -12,32 +12,78 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="wps_wgm_table_wrapper wps_wgm_overview-wrapper">
-	
-	<div class="wps_wgm_overview_content">
-	 
-		<h3 class="wps_wgm_overview_heading">
-			<?php esc_html_e( 'Connect With Us and Explore More About Ultimate Gift Cards For WooCommerce', 'woo-gift-cards-lite' ); ?>
-		</h3>
-		
-		<p><?php esc_html_e( 'Ultimate Gift Cards For WooCommerce is the plugin that allows merchants (admin) to manage store with digital gifting solutions like this. Here the merchant can create gifts cards according to his desires and wishes after selection of the price selection. This digital certificate e-solution comes with ample number benefits like capable to increase sales, encourage an easy and desire gifting solution for your customers, initiate e-gifting via emails. ', 'woo-gift-cards-lite' ); ?>
-		</p>
-	</div>
 	<?php
-	if ( ! wps_uwgc_pro_active() ) {
-		?>
-		<div class="wps_wgm_video_wrapper">
-			<iframe height="411" src="https://www.youtube.com/embed/g6JLA3ewph8?si=mzCftUBqh8AJFit2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
-		<?php
-	} else {
-		?>
-		<div class="wps_wgm_video_wrapper">
-			<iframe height="411" src="https://www.youtube.com/embed/zxMqtV-HJLQ?si=WhZtX5-JCFCEG2fT" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
-		<?php
-	}
+	$wgm_support_link = 'https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support';
+	$wgm_overview_cards = array(
+		array(
+			'image'       => WPS_WGC_URL . 'assets/images/featur1.png',
+			'image_alt'   => __( 'Gift card templates', 'woo-gift-cards-lite' ),
+			'title'       => __( 'Flexible gift card templates', 'woo-gift-cards-lite' ),
+			'description' => __( 'Launch branded gifting faster with editable templates, custom messaging, and product-ready gift card designs.', 'woo-gift-cards-lite' ),
+		),
+		array(
+			'image'       => WPS_WGC_URL . 'assets/images/wps-feature2.png',
+			'image_alt'   => __( 'Redeem and recharge gift cards', 'woo-gift-cards-lite' ),
+			'title'       => __( 'Redeem and recharge flows', 'woo-gift-cards-lite' ),
+			'description' => __( 'Let shoppers redeem balances with confidence and support reload-ready gift card workflows from one plugin.', 'woo-gift-cards-lite' ),
+		),
+		array(
+			'image'       => WPS_WGC_URL . 'assets/images/featur3.png',
+			'image_alt'   => __( 'QR code and barcode security', 'woo-gift-cards-lite' ),
+			'title'       => __( 'Secure coupon delivery', 'woo-gift-cards-lite' ),
+			'description' => __( 'Strengthen digital gifting with QR and barcode support for easier validation and safer coupon sharing.', 'woo-gift-cards-lite' ),
+		),
+		array(
+			'image'       => WPS_WGC_URL . 'assets/images/featur6.png',
+			'image_alt'   => __( 'Scheduled gift cards', 'woo-gift-cards-lite' ),
+			'title'       => __( 'Scheduled gifting', 'woo-gift-cards-lite' ),
+			'description' => __( 'Deliver gift cards on birthdays, holidays, or campaign launch dates with scheduled email-based delivery.', 'woo-gift-cards-lite' ),
+		),
+		array(
+			'image'       => WPS_WGC_URL . 'assets/images/featur5.png',
+			'image_alt'   => __( 'Gift card reporting', 'woo-gift-cards-lite' ),
+			'title'       => __( 'Reporting and performance', 'woo-gift-cards-lite' ),
+			'description' => __( 'Track gifting activity, coupon usage, and store-level performance to understand how gift cards drive revenue.', 'woo-gift-cards-lite' ),
+		),
+	);
+	?>
 
+	<div class="wps-wgm-overview">
+		<div class="wps-wgm-overview__hero">
+			<div class="wps-wgm-overview__icon"><?php esc_html_e( 'GC', 'woo-gift-cards-lite' ); ?></div>
+			<span class="wps-wgm-overview__eyebrow"><?php esc_html_e( 'Overview', 'woo-gift-cards-lite' ); ?></span>
+			<h2><?php esc_html_e( 'Digital gifting workflows built for WooCommerce stores', 'woo-gift-cards-lite' ); ?></h2>
+			<p><?php esc_html_e( 'Ultimate Gift Cards for WooCommerce helps merchants launch branded gift cards, automate delivery, manage redemption, and build repeat-purchase flows through flexible gifting experiences.', 'woo-gift-cards-lite' ); ?></p>
+		</div>
 
+		<div class="wps-wgm-overview__heading-row">
+			<span><?php esc_html_e( 'Top features of this plugin', 'woo-gift-cards-lite' ); ?></span>
+		</div>
+
+		<div class="wps-wgm-overview__grid">
+			<?php foreach ( $wgm_overview_cards as $wgm_overview_card ) : ?>
+				<div class="wps-wgm-overview-card">
+					<div class="wps-wgm-overview-card__media">
+						<img src="<?php echo esc_url( $wgm_overview_card['image'] ); ?>" alt="<?php echo esc_attr( $wgm_overview_card['image_alt'] ); ?>">
+					</div>
+					<h3><?php echo esc_html( $wgm_overview_card['title'] ); ?></h3>
+					<p><?php echo esc_html( $wgm_overview_card['description'] ); ?></p>
+				</div>
+			<?php endforeach; ?>
+		</div>
+
+		<div class="wps-wgm-overview__cta">
+			<div>
+				<strong><?php esc_html_e( 'Need help with gifting setup?', 'woo-gift-cards-lite' ); ?></strong>
+				<p><?php esc_html_e( 'Reach out for support with gift card configuration, delivery setup, and advanced gifting workflows for your store.', 'woo-gift-cards-lite' ); ?></p>
+			</div>
+			<div class="wps-wgm-overview__cta-actions">
+				<a href="<?php echo esc_url( $wgm_support_link ); ?>" target="_blank" class="wps-wgm-overview__button wps-wgm-overview__button--secondary"><?php esc_html_e( 'Contact Support', 'woo-gift-cards-lite' ); ?></a>
+			</div>
+		</div>
+	</div>
+
+	<?php
 	if ( ! is_plugin_active( 'giftware/giftware.php' ) ) {
 
 
@@ -368,6 +414,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-</div>
 		<?php
 	}
+	?>
+</div>

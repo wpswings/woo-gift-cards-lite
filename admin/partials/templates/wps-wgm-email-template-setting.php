@@ -39,7 +39,6 @@ if ( $flag ) {
 }
 ?>
 <?php $mail_settings = get_option( 'wps_wgm_mail_settings', array() ); ?>
-<h3 class="wps_wgm_overview_heading"><?php esc_html_e( 'Email Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="wps_wgm_table_wrapper">	
 	<div class="wps_table">
 		<table class="form-table wps_wgm_general_setting">
@@ -51,7 +50,10 @@ if ( $flag ) {
 		</table>
 	</div>
 </div>
-<h3 id="wps_wgm_mail_setting" class="wps_wgm_mail_setting_tab"><?php esc_html_e( 'Mail Settings', 'woo-gift-cards-lite' ); ?></h3>
+<h3 id="wps_wgm_mail_setting" class="wps_wgm_mail_setting_tab" aria-expanded="false">
+	<span class="wps_wgm_mail_setting_tab_label"><?php esc_html_e( 'Mail Settings', 'woo-gift-cards-lite' ); ?></span>
+	<span class="wps_wgm_mail_setting_toggle" aria-hidden="true"></span>
+</h3>
 <div id="wps_wgm_mail_setting_wrapper" class="wps_wgm_table_wrapper">
 	<table class="form-table wps_wgm_general_setting">	
 		<tbody>

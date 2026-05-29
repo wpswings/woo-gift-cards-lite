@@ -68,6 +68,35 @@
 				$(this).hide();
 				$('.wps-gc__popup-for-pro').removeClass('active-pro');
 			})
+
+			$( '#wps_wgm_setting_wrapper .wps_wgm_content_panel p.submit' ).addClass( 'wps_wgm_floating_submit' );
+			$( document ).on( 'click', '#wps_wgm_setting_wrapper .wps_wgm_dashboard_page_notice .notice-dismiss', function( e ) {
+				e.preventDefault();
+				$( this ).closest( '.wps_wgm_dashboard_page_notice' ).fadeOut( 150 );
+			} );
+
+			$( document ).on( 'click', '.wps_wgm_nav_tab_more', function( e ) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				var $wrapper = $( this ).closest( '.wps_wgm_tabs_more' );
+				var isOpen = $wrapper.hasClass( 'is-open' );
+
+				$( '.wps_wgm_tabs_more' ).removeClass( 'is-open' );
+				$( '.wps_wgm_nav_tab_more' ).attr( 'aria-expanded', 'false' );
+
+				if ( ! isOpen ) {
+					$wrapper.addClass( 'is-open' );
+					$( this ).attr( 'aria-expanded', 'true' );
+				}
+			} );
+
+			$( document ).on( 'click', function( e ) {
+				if ( ! $( e.target ).closest( '.wps_wgm_tabs_more' ).length ) {
+					$( '.wps_wgm_tabs_more' ).removeClass( 'is-open' );
+					$( '.wps_wgm_nav_tab_more' ).attr( 'aria-expanded', 'false' );
+				}
+			} );
 			
 			
 			//////////////////
@@ -160,16 +189,24 @@
 				$( "#wps_wgm_mail_setting_remove_logo" ).show();
 
 			}
-			jQuery( "#wps_wgm_mail_setting" ).on( 
+			jQuery( "#wps_wgm_mail_setting" ).on(
 				'click',
-				function(){
-					jQuery( "#wps_wgm_mail_setting_wrapper" ).slideToggle();
+				function() {
+					var $mailSettingTab = jQuery( this );
+					var $mailSettingWrapper = jQuery( "#wps_wgm_mail_setting_wrapper" );
+					var isExpanded = $mailSettingTab.hasClass( 'is-open' );
+
+					$mailSettingTab.toggleClass( 'is-open', ! isExpanded );
+					$mailSettingTab.attr( 'aria-expanded', ! isExpanded ? 'true' : 'false' );
+					$mailSettingWrapper.stop( true, true ).slideToggle();
 				}
 			);
 
-			jQuery( '.wps_wgm_mail_setting_upload_logo' ).on( 
+			jQuery( 'input[type="button"].wps_wgm_mail_setting_upload_logo.button' ).on( 
 				'click',
-				function(){
+				function( e ){
+					e.preventDefault();
+					e.stopPropagation();
 					var imageurl = $( "#wps_wgm_mail_setting_upload_logo" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
 
@@ -195,10 +232,12 @@
 				}
 			);
 
-			jQuery( '.wps_wgm_mail_setting_background_logo' ).on( 
+			jQuery( 'input[type="button"].wps_wgm_mail_setting_background_logo.button' ).on( 
 				'click',
-				function()
+				function( e )
 				{
+					e.preventDefault();
+					e.stopPropagation();
 					var imageurl = $( "#wps_mail_other_setting_background_logo_value" ).val();
 					tb_show( '', 'media-upload.php?TB_iframe=true' );
 					 window.send_to_editor = function(html)
@@ -534,4 +573,207 @@
 			);
 		}
 	);
+
+	$(function() {
+		var modalSelector = '[data-wps-wgm-expert-modal]';
+		var openTriggerSelector = '[data-wps-wgm-open-expert-modal]';
+		var closeTriggerSelector = '[data-wps-wgm-expert-modal-close]';
+		var formSelector = '[data-wps-wgm-expert-modal-form]';
+		var statusSelector = '[data-wps-wgm-expert-modal-status]';
+		var successSelector = '[data-wps-wgm-expert-modal-success]';
+		var successMessageSelector = '[data-wps-wgm-expert-modal-success-message]';
+		var bodyLockClass = 'wps-wgm-expert-modal-open';
+		var successCloseTimer = null;
+
+		function wpsWgmGetExpertModal() {
+			return $( modalSelector ).first();
+		}
+
+		function wpsWgmSetExpertStatus( $modal, message, statusType ) {
+			var $status = $modal.find( statusSelector ).first();
+
+			if ( ! $status.length ) {
+				return;
+			}
+
+			if ( ! message ) {
+				$status.attr( 'hidden', true ).removeClass( 'is-success is-error' ).text( '' );
+				return;
+			}
+
+			$status.removeAttr( 'hidden' ).removeClass( 'is-success is-error' ).addClass( 'is-' + statusType ).text( message );
+		}
+
+		function wpsWgmResetExpertModalState( $modal ) {
+			var $form = $modal.find( formSelector ).first();
+			var $success = $modal.find( successSelector ).first();
+			var $successMessage = $modal.find( successMessageSelector ).first();
+			var $submitButton = $form.find( 'button[type="submit"]' ).first();
+
+			$modal.removeClass( 'is-success' );
+
+			if ( $form.length ) {
+				if ( $form.get( 0 ) && 'function' === typeof $form.get( 0 ).reset ) {
+					$form.get( 0 ).reset();
+				}
+
+				$form.removeAttr( 'hidden' );
+			}
+
+			if ( $submitButton.length ) {
+				$submitButton
+					.prop( 'disabled', false )
+					.text( $submitButton.attr( 'data-submit-label' ) || 'Submit Request' );
+			}
+
+			if ( $success.length ) {
+				$success.attr( 'hidden', true ).removeClass( 'is-visible' );
+			}
+
+			if ( $successMessage.length ) {
+				$successMessage.text( 'Thank you for submitting your request.' );
+			}
+
+			wpsWgmSetExpertStatus( $modal, '', '' );
+		}
+
+		function wpsWgmShowExpertSuccessState( $modal, message ) {
+			var $form = $modal.find( formSelector ).first();
+			var $success = $modal.find( successSelector ).first();
+			var $successMessage = $modal.find( successMessageSelector ).first();
+			var $dialog = $modal.find( '.wps-wgm-expert-modal__dialog' ).first();
+
+			if ( $form.length ) {
+				$form.attr( 'hidden', true );
+			}
+
+			$modal.addClass( 'is-success' );
+			wpsWgmSetExpertStatus( $modal, '', '' );
+
+			if ( $successMessage.length ) {
+				$successMessage.text( message );
+			}
+
+			if ( $success.length ) {
+				$success.removeAttr( 'hidden' );
+
+				window.setTimeout( function() {
+					$success.addClass( 'is-visible' );
+				}, 20 );
+			}
+
+			if ( $dialog.length ) {
+				$dialog.scrollTop( 0 );
+			}
+		}
+
+		function wpsWgmToggleExpertModal( shouldOpen ) {
+			var $modal = wpsWgmGetExpertModal();
+
+			if ( ! $modal.length ) {
+				return;
+			}
+
+			if ( successCloseTimer ) {
+				window.clearTimeout( successCloseTimer );
+				successCloseTimer = null;
+			}
+
+			if ( shouldOpen ) {
+				$modal.removeAttr( 'hidden' );
+				$( 'body' ).addClass( bodyLockClass );
+				wpsWgmResetExpertModalState( $modal );
+				return;
+			}
+
+			$modal.attr( 'hidden', true );
+			$( 'body' ).removeClass( bodyLockClass );
+			wpsWgmResetExpertModalState( $modal );
+		}
+
+		function wpsWgmNormalizeExpertPayload( formElement ) {
+			var payload = {};
+			var formData = new window.FormData( formElement );
+
+			formData.forEach( function( value, key ) {
+				var normalizedKey = key.replace( /\[\]$/, '' );
+
+				if ( Object.prototype.hasOwnProperty.call( payload, normalizedKey ) ) {
+					if ( ! Array.isArray( payload[ normalizedKey ] ) ) {
+						payload[ normalizedKey ] = [ payload[ normalizedKey ] ];
+					}
+
+					payload[ normalizedKey ].push( value );
+					return;
+				}
+
+				payload[ normalizedKey ] = value;
+			} );
+
+			return payload;
+		}
+
+		$( document ).off( 'click.wpsWgmExpertModalOpen', openTriggerSelector ).on( 'click.wpsWgmExpertModalOpen', openTriggerSelector, function(event) {
+			event.preventDefault();
+			wpsWgmToggleExpertModal( true );
+		} );
+
+		$( document ).off( 'click.wpsWgmExpertModalClose', closeTriggerSelector ).on( 'click.wpsWgmExpertModalClose', closeTriggerSelector, function(event) {
+			event.preventDefault();
+			wpsWgmToggleExpertModal( false );
+		} );
+
+		$( document ).off( 'keydown.wpsWgmExpertModal' ).on( 'keydown.wpsWgmExpertModal', function(event) {
+			if ( 'Escape' === event.key ) {
+				wpsWgmToggleExpertModal( false );
+			}
+		} );
+
+		$( document ).off( 'submit.wpsWgmExpertModal', formSelector ).on( 'submit.wpsWgmExpertModal', formSelector, function(event) {
+			var $form = $( this );
+			var $modal = $form.closest( modalSelector );
+			var $submitButton = $form.find( 'button[type="submit"]' ).first();
+			var submitLabel = $submitButton.attr( 'data-submit-label' ) || $submitButton.text();
+			var loadingLabel = $submitButton.attr( 'data-loading-label' ) || 'Sending...';
+
+			event.preventDefault();
+			wpsWgmSetExpertStatus( $modal, '', '' );
+			$submitButton.prop( 'disabled', true ).text( loadingLabel );
+
+			$.ajax( {
+				url: wps_wgc.ajaxurl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: wps_wgc.wps_wgm_expert_action,
+					nonce: wps_wgc.wps_wgm_expert_nonce,
+					form_data: JSON.stringify( wpsWgmNormalizeExpertPayload( $form.get( 0 ) ) )
+				}
+			} ).done( function( response ) {
+				var isSuccess = !! ( response && response.success );
+				var message = response && response.data && response.data.message ? response.data.message : '';
+
+				if ( ! message ) {
+					message = isSuccess ? 'Thank you for submitting your request.' : 'We could not submit your request right now. Please try again.';
+				}
+
+				if ( isSuccess && message ) {
+					wpsWgmShowExpertSuccessState( $modal, message );
+					return;
+				}
+
+				wpsWgmSetExpertStatus( $modal, message, 'error' );
+			} ).fail( function( xhr ) {
+				var message = 'We could not submit your request right now. Please try again.';
+
+				if ( xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message ) {
+					message = xhr.responseJSON.data.message;
+				}
+
+				wpsWgmSetExpertStatus( $modal, message, 'error' );
+			} ).always( function() {
+				$submitButton.prop( 'disabled', false ).text( submitLabel );
+			} );
+		} );
+	});
 })( jQuery );

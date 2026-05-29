@@ -121,13 +121,12 @@ class Makewebbetter_Onboarding_Helper {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			self::$version = WPS_WGC_VERSION;
 		} else {
-			self::$version = '3.2.6';
+			self::$version = '3.2.7';
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'admin_footer', array( $this, 'add_onboarding_popup_screen' ) );
-		add_action( 'admin_footer', array( $this, 'add_deactivation_popup_screen' ) );
+		add_action( 'current_screen', array( $this, 'register_popup_footer_hooks' ) );
 		add_filter( 'wps_on_boarding_form_fields', array( $this, 'add_on_boarding_form_fields' ) );
 		add_filter( 'wps_deactivation_form_fields', array( $this, 'add_deactivation_form_fields' ) );
 
@@ -139,6 +138,20 @@ class Makewebbetter_Onboarding_Helper {
 		add_action( 'wp_ajax_skip_onboarding_popup', array( $this, 'skip_onboarding_popup' ) );
 		add_action( 'wp_ajax_nopriv_skip_onboarding_popup', array( $this, 'skip_onboarding_popup' ) );
 
+	}
+
+	/**
+	 * Register popup footer hooks only on screens where they can render.
+	 *
+	 * @return void
+	 */
+	public function register_popup_footer_hooks() {
+		if ( ! $this->is_valid_page_screen() ) {
+			return;
+		}
+
+		add_action( 'admin_footer', array( $this, 'add_onboarding_popup_screen' ) );
+		add_action( 'admin_footer', array( $this, 'add_deactivation_popup_screen' ) );
 	}
 
 

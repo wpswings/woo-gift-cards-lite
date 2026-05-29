@@ -230,14 +230,10 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @since 2.0.0
 	 */
 	public function wps_wgm_settings_saved() {
-		?>
-		<div class="notice notice-success is-dismissible">
-			<p><strong><?php esc_html_e( 'Settings saved.', 'woo-gift-cards-lite' ); ?></strong></p>
-			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
-			</button>
-		</div>
-		<?php
+		$GLOBALS['wps_wgm_dashboard_notice'] = array(
+			'type'    => 'success',
+			'message' => esc_html__( 'Settings saved !', 'woo-gift-cards-lite' ),
+		);
 	}
 
 	/**

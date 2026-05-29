@@ -44,7 +44,6 @@ if ( ! is_array( $delivery_settings ) ) :
 	$delivery_settings = array();
 endif;
 ?>
-<h3 class="wps_wgm_overview_heading"><?php esc_html_e( 'Delivery Settings', 'woo-gift-cards-lite' ); ?></h3>
 <div class="wps_wgm_table_wrapper">	
 	<div class="wps_table">
 		<table class="form-table wps_wgm_general_setting">

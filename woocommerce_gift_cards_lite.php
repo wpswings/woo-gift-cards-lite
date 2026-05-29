@@ -15,16 +15,16 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           3.2.6
+ * Version:           3.2.7
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       woo-gift-cards-lite
  * Requires Plugins:  woocommerce
- * Tested up to:      6.9
+ * Tested up to:      7.0
  * Requires at least: 6.7
- * WC tested up to:   10.6.1
+ * WC tested up to:   10.7.0
  * WC requires at least: 6.5
  * Requires PHP:      7.4
  * Domain Path:       /languages
@@ -73,7 +73,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '3.2.6' );
+	define( 'WPS_WGC_VERSION', '3.2.7' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -147,19 +147,38 @@ if ( $activated ) {
 		 * @link https://www.wpswings.com/
 		 */
 		function wps_wgm_giftcard_enable() {
+			static $result = null;
+			if ( null !== $result ) {
+				return $result;
+			}
 			$giftcard_enable = get_option( 'wps_wgm_general_settings', array() );
 			if ( ! empty( $giftcard_enable ) && array_key_exists( 'wps_wgm_general_setting_enable', $giftcard_enable ) ) {
 				$check_enable = $giftcard_enable['wps_wgm_general_setting_enable'];
 				if ( isset( $check_enable ) && ! empty( $check_enable ) ) {
-					if ( 'on' === $check_enable ) {
-						return true;
-					} else {
-						return false;
-					}
+					$result = ( 'on' === $check_enable );
+					return $result;
 				}
 			}
+			$result = false;
+			return $result;
 		}
 	}
+	/**
+	 * Per-request cache wrapper for frequently read plugin options.
+	 * Prevents repeated get_option() calls for the same key within a single request.
+	 *
+	 * @param string $key     Option key.
+	 * @param mixed  $default Default value when option is not set.
+	 * @return mixed
+	 */
+	function wps_wgm_get_plugin_option( $key, $default = array() ) {
+		static $cache = array();
+		if ( ! array_key_exists( $key, $cache ) ) {
+			$cache[ $key ] = get_option( $key, $default );
+		}
+		return $cache[ $key ];
+	}
+
 	register_activation_hook( __FILE__, 'wps_wgm_create_gift_card_taxonomy' );
 
 
@@ -288,7 +307,7 @@ if ( $activated ) {
 				$password .= $final_array[ $key ];
 			}
 
-			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 			if ( ! empty( $general_settings ) && array_key_exists( 'wps_wgm_general_setting_giftcard_prefix', $general_settings ) ) {
 				$giftcard_prefix = $general_settings['wps_wgm_general_setting_giftcard_prefix'];
 			} else {
@@ -319,10 +338,14 @@ if ( $activated ) {
 	 * Schedule the daily reset event at 12:00 AM site time.
 	 */
 	function wps_wgm_schedule_midnight_reset() {
+		if ( get_transient( 'wps_wgm_cron_scheduled' ) ) {
+			return;
+		}
 		if ( ! wp_next_scheduled( 'wps_reset_gifting_request' ) ) {
 			$timestamp = strtotime( 'tomorrow midnight', current_time( 'timestamp' ) );
 			wp_schedule_event( $timestamp, 'daily', 'wps_reset_gifting_request' );
 		}
+		set_transient( 'wps_wgm_cron_scheduled', true, 12 * HOUR_IN_SECONDS );
 	}
 	add_action( 'wp', 'wps_wgm_schedule_midnight_reset' );
 

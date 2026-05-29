@@ -76,7 +76,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '3.2.6';
+			$this->version = '3.2.7';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -122,6 +122,11 @@ class Woocommerce_Gift_Cards_Lite {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woocommerce-gift-cards-lite-admin.php';
 
 		/**
+		 * The class responsible for handling the admin Talk to an Expert form.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-gift-cards-lite-talk-to-expert-form.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -161,7 +166,8 @@ class Woocommerce_Gift_Cards_Lite {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Woocommerce_Gift_Cards_Lite_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin   = new Woocommerce_Gift_Cards_Lite_Admin( $this->get_plugin_name(), $this->get_version() );
+		$talk_to_expert = new Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wgm_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wgm_enqueue_scripts' );
@@ -192,6 +198,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wgm_display_notification_bar' );
 		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice', $plugin_admin, 'wps_wgm_dismiss_notice' );
 		$this->loader->add_action( 'wp_ajax_wps_wgm_dismiss_notice_banner', $plugin_admin, 'wps_wgm_dismiss_notice_banner' );
+		$this->loader->add_action( 'wp_ajax_' . Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::AJAX_ACTION, $talk_to_expert, 'wps_wgm_handle_ajax_submission' );
 		// Add your screen.
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
 		// Add Deactivation screen.
@@ -369,10 +376,13 @@ class Woocommerce_Gift_Cards_Lite {
 	 */
 	public function wps_wgm_is_par_active() {
 
+		static $flag = null;
+		if ( null !== $flag ) {
+			return $flag;
+		}
 		$flag           = false;
 		$active_plugins = (array) get_option( 'active_plugins', array() );
 		if ( in_array( 'points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php', $active_plugins ) ) {
-
 			$flag = true;
 		}
 		return $flag;
@@ -385,12 +395,15 @@ class Woocommerce_Gift_Cards_Lite {
 	 */
 	public function wps_wgm_is_par_enable() {
 
+		static $flag = null;
+		if ( null !== $flag ) {
+			return $flag;
+		}
 		$flag             = false;
 		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
 		$general_settings = ! empty( $general_settings ) && is_array( $general_settings ) ? $general_settings : array();
 		$wps_wpr_enable   = ! empty( $general_settings['wps_wpr_general_setting_enable'] ) ? $general_settings['wps_wpr_general_setting_enable'] : 0;
 		if ( '1' == $wps_wpr_enable ) {
-
 			$flag = true;
 		}
 		return $flag;

@@ -49,7 +49,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$giftcard_logo_html = '';
 				$giftcard_featured = '';
 				$giftcard_event_html = '';
-				$wps_wgm_mail_settings = get_option( 'wps_wgm_mail_settings', array() );
+				$wps_wgm_mail_settings = wps_wgm_get_plugin_option( 'wps_wgm_mail_settings' );
 				$giftcard_upload_logo = $this->wps_wgm_get_template_data( $wps_wgm_mail_settings, 'wps_wgm_mail_setting_upload_logo' );
 
 				$giftcard_logo_height = $this->wps_wgm_get_template_data( $wps_wgm_mail_settings, 'wps_wgm_mail_setting_upload_logo_dimension_height' );
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 				$featured_image = wp_get_attachment_url( get_post_thumbnail_id( $templateid ) );
 
-				$other_settings              = get_option( 'wps_wgm_other_settings', array() );
+				$other_settings              = wps_wgm_get_plugin_option( 'wps_wgm_other_settings' );
 				$wps_wgm_select_library = $this->wps_wgm_get_template_data( $other_settings, 'wps_wgm_select_library' );
 
 				if ( isset( $background_image ) && ! empty( $background_image ) ) {
@@ -126,13 +126,12 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				if ( wps_uwgc_pro_active() ) {
 
-					$general_settings = get_option( 'wps_wgm_general_settings', array() );
+					$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 
-					$wps_obj = new Woocommerce_Gift_Cards_Common_Function();
-					$selected_date = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+					$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 
 					if ( '' != $selected_date || ! empty( $selected_date ) ) {
-							$giftcard_selected_date  = $wps_obj->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
+							$giftcard_selected_date  = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
 
 						if ( isset( $giftcard_selected_date ) ) {
 							$selected_date = $selected_date;
@@ -219,20 +218,41 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 				$args['variable_price_description'] = isset( $args['variable_price_description'] ) ? $args['variable_price_description'] : '';
 
-				$templatehtml = str_replace( '[ARROWIMAGE]', $arrow_img, $templatehtml );
-				$templatehtml = str_replace( '[BACK]', $mothers_day_backimg, $templatehtml );
-				$templatehtml = str_replace( '[LOGO]', $giftcard_logo_html, $templatehtml );
-				$templatehtml = str_replace( '[AMOUNT]', $args['amount'], $templatehtml );
-				$templatehtml = str_replace( '[COUPON]', $args['coupon'], $templatehtml );
-				$templatehtml = str_replace( '[EXPIRYDATE]', $args['expirydate'], $templatehtml );
-				$templatehtml = str_replace( '[PURCHASEDATE]', $formatted_purchase_date, $templatehtml );
-				$templatehtml = str_replace( '[DISCLAIMER]', $giftcard_disclaimer, $templatehtml );
-				$templatehtml = str_replace( '[DELIVERYMETHOD]', $args['delivery_method'], $templatehtml );
-				$templatehtml = str_replace( '[VARIABLEDESCRIPTION]', $args['variable_price_description'], $templatehtml );
-				$templatehtml = str_replace( '[RECOMMENDEDPRODUCT]', $recommand_product, $templatehtml );
-				$templatehtml = str_replace( '[DEFAULTEVENT]', $giftcard_event_html, $templatehtml );
-				$templatehtml = str_replace( '[FEATUREDIMAGE]', $giftcard_featured, $templatehtml );
-				$templatehtml = str_replace( '[BGIMAGE]', $bgimg, $templatehtml );
+				$templatehtml = str_replace(
+					array(
+						'[ARROWIMAGE]',
+						'[BACK]',
+						'[LOGO]',
+						'[AMOUNT]',
+						'[COUPON]',
+						'[EXPIRYDATE]',
+						'[PURCHASEDATE]',
+						'[DISCLAIMER]',
+						'[DELIVERYMETHOD]',
+						'[VARIABLEDESCRIPTION]',
+						'[RECOMMENDEDPRODUCT]',
+						'[DEFAULTEVENT]',
+						'[FEATUREDIMAGE]',
+						'[BGIMAGE]',
+					),
+					array(
+						$arrow_img,
+						$mothers_day_backimg,
+						$giftcard_logo_html,
+						$args['amount'],
+						$args['coupon'],
+						$args['expirydate'],
+						$formatted_purchase_date,
+						$giftcard_disclaimer,
+						$args['delivery_method'],
+						$args['variable_price_description'],
+						$recommand_product,
+						$giftcard_event_html,
+						$giftcard_featured,
+						$bgimg,
+					),
+					$templatehtml
+				);
 				$templatehtml = $template_css . $templatehtml;
 				$templatehtml = apply_filters( 'wps_wgm_email_template_html', $templatehtml, $args );
 				return $templatehtml;
@@ -297,8 +317,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$coupon_obj = new WC_Coupon( $new_coupon_id );
 						$coupon_obj->save();
 					}
-					$general_settings = get_option( 'wps_wgm_general_settings', array() );
-					$product_settings = get_option( 'wps_wgm_product_settings', array() );
+					$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
+					$product_settings = wps_wgm_get_plugin_option( 'wps_wgm_product_settings' );
 					$individual_use = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_individual_use' );
 					$individual_use = ( 'on' == $individual_use ) ? 'yes' : 'no';
 
@@ -498,7 +518,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 
 				if ( $get_mail_status ) {
-					$wps_wgm_mail_settings = get_option( 'wps_wgm_mail_settings', array() );
+					$wps_wgm_mail_settings = wps_wgm_get_plugin_option( 'wps_wgm_mail_settings' );
 
 					$send_subject = $this->wps_wgm_get_template_data( $wps_wgm_mail_settings, 'wps_wgm_mail_setting_giftcard_subject' );
 
@@ -598,7 +618,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			if ( ! $id_nonce_verified ) {
 					wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 			}
-			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 			$todaydate = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
@@ -943,7 +963,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				return $discount;
 			}
 
-			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 			$max_percent = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_max_percent' );
 			$max_percent = is_numeric( $max_percent ) ? (float) $max_percent : 0;
 			if ( $max_percent <= 0 ) {
