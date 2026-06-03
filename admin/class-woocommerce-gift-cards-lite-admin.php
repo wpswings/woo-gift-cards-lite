@@ -2050,13 +2050,25 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_gift_card_details() {
 		check_ajax_referer( 'wps-uwgc-giftcard-report-nonce', 'wps_uwgc_nonce' );
-		$_POST['wps_uwgc_report_details'] = 'wps_uwgc_report_details';
-		$_POST['width'] = '650';
-		$_POST['height'] = '480';
-		$_POST['TB_iframe'] = true;
-		$query = http_build_query( $_POST );
+
+		// Security: Whitelist only allowed POST fields to prevent query parameter injection
+		$allowed_fields = array( 'coupon_id', 'order_id' );
+		$safe_post = array();
+
+		foreach ( $allowed_fields as $field ) {
+			if ( isset( $_POST[ $field ] ) ) {
+				$safe_post[ $field ] = sanitize_text_field( wp_unslash( $_POST[ $field ] ) );
+			}
+		}
+
+		$safe_post['wps_uwgc_report_details'] = 'wps_uwgc_report_details';
+		$safe_post['width'] = '650';
+		$safe_post['height'] = '480';
+		$safe_post['TB_iframe'] = 'true';
+
+		$query = http_build_query( $safe_post );
 		$ajax_url = home_url( "?$query" );
-		echo wp_kses_post( $ajax_url );
+		echo esc_url( $ajax_url );
 		wp_die();
 	}
 

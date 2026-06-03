@@ -912,19 +912,22 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'wps_wgm_to_email' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'To', 'woo-gift-cards-lite' ),
-							'value' => stripslashes( $val ),
+							// Security: Escape output to prevent XSS
+							'value' => esc_html( stripslashes( $val ) ),
 						);
 					}
 					if ( 'wps_wgm_from_name' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'From', 'woo-gift-cards-lite' ),
-							'value' => stripslashes( $val ),
+							// Security: Escape output to prevent XSS
+							'value' => esc_html( stripslashes( $val ) ),
 						);
 					}
 					if ( 'wps_wgm_message' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'Gift Message', 'woo-gift-cards-lite' ),
-							'value' => stripslashes( $val ),
+							// Security: Escape output to prevent XSS
+							'value' => esc_html( stripslashes( $val ) ),
 						);
 					}
 					if ( 'delivery_method' == $key ) {
@@ -1702,13 +1705,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					if ( $val ) {
 						if ( 'wps_wgm_to_email' == $key ) {
-							$item->add_meta_data( 'To', stripslashes( $val ) );
+							// Security: Escape to prevent XSS
+							$item->add_meta_data( 'To', esc_html( stripslashes( $val ) ) );
 						}
 						if ( 'wps_wgm_from_name' == $key ) {
-							$item->add_meta_data( 'From', stripslashes( $val ) );
+							// Security: Escape to prevent XSS
+							$item->add_meta_data( 'From', esc_html( stripslashes( $val ) ) );
 						}
 						if ( 'wps_wgm_message' == $key ) {
-							$item->add_meta_data( 'Message', stripslashes( $val ) );
+							// Security: Escape to prevent XSS
+							$item->add_meta_data( 'Message', wp_kses_post( stripslashes( $val ) ) );
 						}
 						if ( 'wps_wgm_price' == $key ) {
 							$item->add_meta_data( 'Original Price', stripslashes( $val ) );
@@ -2038,16 +2044,23 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_wgm_preview_thickbox_rqst() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
-		$_POST['wps_wgc_preview_email'] = 'wps_wgm_single_page_popup';
-		$_POST['tempId'] = isset( $_POST['tempId'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) ) : '';
-		$_POST = apply_filters( 'wps_wgm_upload_giftcard_image', $_POST );
-		$_POST['message'] = isset( $_POST['message'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['message'] ) ) ) : '';
-		$_POST['width'] = '630';
-		$_POST['height'] = '530';
-		$_POST['TB_iframe'] = true;
-		$query = http_build_query( wp_unslash( $_POST ) );
+
+		// Security: Whitelist only allowed POST fields to prevent parameter pollution
+		$safe_params = array(
+			'wps_wgc_preview_email' => 'wps_wgm_single_page_popup',
+			'tempId' => isset( $_POST['tempId'] ) ? sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) : '',
+			'message' => isset( $_POST['message'] ) ? sanitize_text_field( wp_unslash( $_POST['message'] ) ) : '',
+			'width' => '630',
+			'height' => '530',
+			'TB_iframe' => 'true',
+		);
+
+		// Allow filter to modify safe params only
+		$safe_params = apply_filters( 'wps_wgm_upload_giftcard_image_safe', $safe_params );
+
+		$query = http_build_query( $safe_params );
 		$ajax_url = home_url( "?$query" );
-		echo esc_attr( $ajax_url );
+		echo esc_url( $ajax_url );
 		wp_die();
 	}
 	/**

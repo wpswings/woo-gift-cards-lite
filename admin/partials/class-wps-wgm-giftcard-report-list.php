@@ -214,9 +214,8 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * @param  array $cloumnb Column B.
 	 */
 	public function wps_uwgc_usort_reorder_report( $cloumna, $cloumnb ) {
-		$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
-		if ( ! $id_nonce_verified ) {
+		// Security: Verify existing nonce from request, don't create new one
+		if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'wps-gc-report-nonce' ) ) {
 			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'order_id';
@@ -254,8 +253,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( ! empty( $_POST['wps_gc_date_filter_1'] ) && ! empty( $_POST['wps_gc_date_filter_2'] ) ) {
 			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
-			if ( ! wp_verify_nonce( $nonce ) ) {
-				return false;
+			// Security: Add action name to nonce verification
+			if ( ! wp_verify_nonce( $nonce, 'wps_wgm_report_action' ) ) {
+				wp_die( esc_html__( 'Security check failed', 'woo-gift-cards-lite' ) );
 			}
 			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
@@ -388,8 +388,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( isset( $_POST['wps_gc_date_filter_1'], $_POST['wps_gc_date_filter_2'] ) ) {
 			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
-			if ( ! wp_verify_nonce( $nonce ) ) {
-				return false;
+			// Security: Add action name to nonce verification
+			if ( ! wp_verify_nonce( $nonce, 'wps_wgm_report_action' ) ) {
+				wp_die( esc_html__( 'Security check failed', 'woo-gift-cards-lite' ) );
 			}
 			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
