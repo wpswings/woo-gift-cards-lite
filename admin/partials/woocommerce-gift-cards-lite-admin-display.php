@@ -156,7 +156,7 @@ $tab_descriptions = array(
 	'premium_plugin'        => esc_html__( 'Explore premium-only modules available for advanced gift card workflows.', 'woo-gift-cards-lite' ),
 );
 $active_tab_description = isset( $tab_descriptions[ $active_tab ] ) ? $tab_descriptions[ $active_tab ] : esc_html__( 'Configure and manage all gift card options from this section.', 'woo-gift-cards-lite' );
-$plugin_display_version = defined( 'WPS_WGC_VERSION' ) ? WPS_WGC_VERSION : '3.2.7';
+$plugin_display_version = defined( 'WPS_WGC_VERSION' ) ? WPS_WGC_VERSION : '3.2.8';
 if ( $is_pro_active && defined( 'WPS_UWGC_PLUGIN_VERSION' ) ) {
 	$plugin_display_version = WPS_UWGC_PLUGIN_VERSION;
 }
