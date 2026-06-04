@@ -179,8 +179,65 @@ if ( $activated ) {
 		return $cache[ $key ];
 	}
 
-	register_activation_hook( __FILE__, 'wps_wgm_create_gift_card_taxonomy' );
+	// Security: Safe activation with requirement checks and error handling
+	register_activation_hook( __FILE__, 'wps_wgc_safe_activate' );
 
+	/**
+	 * Safe activation with PHP and WooCommerce requirement checks
+	 *
+	 * @param boolean $network_wide Whether this is a network-wide activation
+	 * @since 3.2.9
+	 */
+	function wps_wgc_safe_activate( $network_wide ) {
+		// Check PHP version requirement
+		if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires PHP 7.4 or higher. You are running PHP ', 'woo-gift-cards-lite' ) . PHP_VERSION,
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+
+		// Check WooCommerce is active
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires WooCommerce to be installed and activated.', 'woo-gift-cards-lite' ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+
+		// Check WooCommerce version
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.5', '<' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires WooCommerce 6.5 or higher. You are running WooCommerce ', 'woo-gift-cards-lite' ) . WC_VERSION,
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+
+		// Proceed with activation with error handling
+		try {
+			wps_wgm_create_gift_card_taxonomy( $network_wide );
+		} catch ( Exception $e ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Plugin activation failed: ', 'woo-gift-cards-lite' ) . esc_html( $e->getMessage() ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		} catch ( Error $e ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Plugin activation failed: ', 'woo-gift-cards-lite' ) . esc_html( $e->getMessage() ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+	}
 
 	/**
 	 * Create the Taxonomy for Gift Card Product at activation.
@@ -238,6 +295,8 @@ if ( $activated ) {
 			// activated on a single site, in a multi-site or on a single site.
 			wps_create_giftcard_page();
 		}
+
+		require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 		$restore_data = new Woocommerce_Gift_Cards_Activation();
 		$restore_data->wps_wgm_restore_data( $network_wide );
 		set_transient( 'wps-wgm-giftcard-setting-notice', true, 5 );
