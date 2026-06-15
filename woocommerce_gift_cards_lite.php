@@ -90,6 +90,7 @@ if ( $activated ) {
 	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-lite.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 
+	
 	/**
 	 *Add link for settings
 	*/
