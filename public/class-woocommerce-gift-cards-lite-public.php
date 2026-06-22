@@ -3191,4 +3191,53 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		return $is_valid;
 	}
 
+	/**
+	 * Check if product is a gift card
+	 *
+	 * @param int $product_id Product ID.
+	 * @return bool Whether the product is a gift card
+	 * @since 3.2.8
+	 */
+	private function wps_wgc_is_gift_card_product( $product_id ) {
+		$product = wc_get_product( $product_id );
+		if ( ! $product ) {
+			return false;
+		}
+
+		// Check if product type is gift card
+		return 'wgm_gift_card' === $product->get_type();
+	}
+
+	/**
+	 * Exclude gift card amounts from free shipping calculation
+	 * Filters the cart subtotal used by WC_Shipping_Free_Shipping
+	 *
+	 * @param array $packages Shipping packages.
+	 * @return array Modified packages with adjusted totals
+	 * @since 3.2.8
+	 */
+	public function wps_wgc_exclude_gc_from_free_shipping( $packages ) {
+		if ( ! WC()->cart || WC()->cart->is_empty() ) {
+			return $packages;
+		}
+
+		foreach ( $packages as $package_key => $package ) {
+			$gc_total = 0;
+
+			// Calculate total of gift card items
+			foreach ( $package['contents'] as $item_key => $item ) {
+				if ( isset( $item['data'] ) && $this->wps_wgc_is_gift_card_product( $item['data']->get_id() ) ) {
+					$gc_total += $item['line_total'];
+				}
+			}
+
+			// Adjust package contents_cost to exclude gift cards
+			if ( $gc_total > 0 && isset( $packages[ $package_key ]['contents_cost'] ) ) {
+				$packages[ $package_key ]['contents_cost'] = max( 0, $packages[ $package_key ]['contents_cost'] - $gc_total );
+			}
+		}
+
+		return $packages;
+	}
+
 }

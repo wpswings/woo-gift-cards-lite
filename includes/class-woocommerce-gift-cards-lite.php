@@ -291,6 +291,8 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'wps_wgm_woocommerce_hide_order_metafields', 10, 1 );
 		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'wps_wgm_price_based_country_giftcard' );
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'wps_wgm_apply_already_created_giftcard_coupons' );
+		// Exclude gift cards from free shipping calculation.
+		$this->loader->add_filter( 'woocommerce_cart_shipping_packages', $plugin_public, 'wps_wgc_exclude_gc_from_free_shipping', 10, 1 );
 		// Compatibility with Flatsome theme minicart price issue.
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'wps_mini_cart_product_price', 10, 3 );
 		// Compatibilty with WPS Currency Switcher.
