@@ -403,7 +403,7 @@
 				function(e) {
 					e.preventDefault()
 					var form_Data = new FormData();
-					
+					debugger;
 					$( "#wps_wgm_error_notice" ).hide();
 					var from_mail = $( "#wps_wgm_from_name" ).val();
 					var message = $( "#wps_wgm_message" ).val();

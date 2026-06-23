@@ -99,7 +99,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$template_css = apply_filters( 'wps_wgm_template_custom_css', $template_css, $templateid );
 
 				if ( null != $template_css && '' != $template_css ) {
-					$template_css = "<style>$template_css</style>";
+					$template_css = "<style type='text/css'>$template_css</style>";
 				}
 
 				if ( isset( $args['message'] ) && ! empty( $args['message'] ) ) {
@@ -806,7 +806,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'span'       => array(),
 				),
 				'th'         => array(),
-				'style'      => array(),
+				'style'      => array(
+					'type' => array(),
+				),
 				'center'     => array(
 					'style' => array(),
 				),

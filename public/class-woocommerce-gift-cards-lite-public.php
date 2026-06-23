@@ -2044,23 +2044,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_wgm_preview_thickbox_rqst() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
-
-		// Security: Whitelist only allowed POST fields to prevent parameter pollution
-		$safe_params = array(
-			'wps_wgc_preview_email' => 'wps_wgm_single_page_popup',
-			'tempId' => isset( $_POST['tempId'] ) ? sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) : '',
-			'message' => isset( $_POST['message'] ) ? sanitize_text_field( wp_unslash( $_POST['message'] ) ) : '',
-			'width' => '630',
-			'height' => '530',
-			'TB_iframe' => 'true',
-		);
-
-		// Allow filter to modify safe params only
-		$safe_params = apply_filters( 'wps_wgm_upload_giftcard_image_safe', $safe_params );
-
-		$query = http_build_query( $safe_params );
+		$_POST['wps_wgc_preview_email'] = 'wps_wgm_single_page_popup';
+		$_POST['tempId'] = isset( $_POST['tempId'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) ) : '';
+		$_POST = apply_filters( 'wps_wgm_upload_giftcard_image', $_POST );
+		$_POST['message'] = isset( $_POST['message'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['message'] ) ) ) : '';
+		$_POST['width'] = '630';
+		$_POST['height'] = '530';
+		$_POST['TB_iframe'] = true;
+		$query = http_build_query( wp_unslash( $_POST ) );
 		$ajax_url = home_url( "?$query" );
-		echo esc_url( $ajax_url );
+		echo esc_attr( $ajax_url );
 		wp_die();
 	}
 	/**
@@ -2077,12 +2070,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
+	
 		if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
 
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
 			$_pricing_raw                   = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 			$product_pricing                = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
-			$product_pricing_type           = $product_pricing['type'];
+
+			// Ensure $product_pricing is an array before accessing (fixes fatal error)
+			if ( ! is_array( $product_pricing ) ) {
+				$product_pricing = array();
+			}
+
+			$product_pricing_type           = isset( $product_pricing['type'] ) ? $product_pricing['type'] : '';
 			$general_setting                = get_option( 'wps_wgm_general_settings', array() );
 			$giftcard_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_giftcard_coupon_length' );
 			if ( '' == $giftcard_coupon_length_display ) {
@@ -2109,7 +2109,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 			$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 			$wps_temp_id = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
-			if ( array_key_exists( 'template', $product_pricing ) ) {
+
+			// Safe array access - check if array and key exists
+			if ( is_array( $product_pricing ) && array_key_exists( 'template', $product_pricing ) ) {
 				$templateid = $product_pricing['template'];
 			} else {
 				$templateid = $this->wps_common_fun->wps_get_org_selected_template();
@@ -2170,6 +2172,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $amt );
 			} else {
 				$amt               = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
+				// If price is empty, try to get default product price
+				if ( empty( $amt ) && ! empty( $product_id ) ) {
+					$product = wc_get_product( $product_id );
+					if ( $product ) {
+						$amt = $product->get_price();
+					}
+				}
 				$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
 				$amt               = floatval( str_replace( $decimal_separator, '.', $amt ) );
 				$args['amount']    = wc_price( $amt );
@@ -2243,8 +2252,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_currency_switcher_get_custom_product_type( $custom_product_type, $product_id ) {
 		$product_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
-		if ( ! empty( $product_pricing ) ) {
-			$product_pricing_type = $product_pricing['type'];
+
+		// Ensure $product_pricing is an array (fixes fatal error when meta returns false)
+		if ( ! empty( $product_pricing ) && is_array( $product_pricing ) ) {
+			$product_pricing_type = isset( $product_pricing['type'] ) ? $product_pricing['type'] : '';
 			if ( ! empty( $product_pricing_type ) ) {
 				if ( 'wps_wgm_default_price' === $product_pricing_type ) {
 					return 'simple';
