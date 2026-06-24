@@ -840,7 +840,13 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'name'         => array(),
 					'placeholder'         => array(),
 				),
-				
+				'button'      => array(
+					'type'      => array(),
+					'id'         => array(),
+					'class'         => array(),
+					'style'         => array(),
+					'disabled'      => array(),
+				),
 
 			);
 			return apply_filters( 'wps_allowed_html_for_preview', $allowed_tags );

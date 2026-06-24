@@ -275,6 +275,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
 					}
 
+					$wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					$wps_wgm['pricing_type'] = $wps_wgm_pricing;
 					$wps_wgm['product_id']   = $product_id;
 					$wps_wgm['is_customizable'] = $is_customizable;
@@ -616,8 +617,28 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$giftcard_message_length = 300;
 							}
 							$cart_html .= '<span class = "wps_wgm_message_length" >';
-							$cart_html .= __( 'Characters: ( ', 'woo-gift-cards-lite' ) . '<span class="wps_box_char">0</span>/' . $giftcard_message_length . ')</span>							
+							$cart_html .= __( 'Characters: ( ', 'woo-gift-cards-lite' ) . '<span class="wps_box_char">0</span>/' . $giftcard_message_length . ')</span>
 							</p>';
+
+							// Check if Claude AI API key is configured
+							$customizable_settings = get_option( 'wps_wgm_customizable_settings', array() );
+							$claude_api_key = isset( $customizable_settings['wps_gc_claude_api_key'] ) ? $customizable_settings['wps_gc_claude_api_key'] : '';
+
+							// Only show AI suggest button if API key is configured
+							if ( ! empty( $claude_api_key ) ) {
+								$cart_html .= '<div style="margin-top: 10px; margin-bottom: 51px; clear: both;">
+									<button type="button" id="wps_gc_ai_suggest_btn" class="button wps-gc-ai-suggest-btn" style="display: inline-block !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; color: #fff !important; border: none !important; padding: 10px 20px !important; border-radius: 6px !important; cursor: pointer !important; font-size: 14px !important; font-weight: 500 !important; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;">✨ Suggest a Message</button>
+									<div id="wps_gc_ai_suggestions" class="wps-gc-ai-suggestions" style="margin-top: 10px; display: none;">
+									<br>	<p class="wps_cgw_heading" style="font-size: 12px; margin-bottom: 5px;">' . __( 'Click a suggestion to use it:', 'woo-gift-cards-lite' ) . '</p>
+										<div id="wps_gc_ai_suggestions_container" class="wps-gc-suggestions-container"></div>
+									</div>
+									<div id="wps_gc_ai_loading" class="wps-gc-ai-loading" style="display: none; margin-top: 10px; color: #666;">
+										' . __( 'Generating suggestions...', 'woo-gift-cards-lite' ) . '
+									</div>
+									<div id="wps_gc_ai_error" class="wps-gc-ai-error" style="display: none; margin-top: 10px; color: #dc3232;">
+									</div>
+								</div>';
+							}
 							$cart_html .= apply_filters( 'wps_wgm_add_notiication_section', $wps_additional_section, $product_id );
 							$delivery_settings = get_option( 'wps_wgm_delivery_settings', true );
 							$wps_wgm_delivery_setting_method = $this->wps_common_fun->wps_wgm_get_template_data( $delivery_settings, 'wps_wgm_send_giftcard' );
@@ -3249,6 +3270,277 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		}
 
 		return $packages;
+	}
+
+	/**
+	 * Generate fallback gift card messages based on occasion
+	 *
+	 * @param string $occasion The occasion for the gift card.
+	 * @param string $recipient_name The recipient's name (optional).
+	 * @return array Array of 3 fallback messages.
+	 */
+	private function wps_gc_get_fallback_messages( $occasion, $recipient_name = '' ) {
+		$name_prefix = ! empty( $recipient_name ) ? $recipient_name . ', ' : '';
+
+		$messages = array();
+
+		switch ( strtolower( $occasion ) ) {
+			case 'birthday':
+				$messages = array(
+					$name_prefix . 'Wishing you a fantastic birthday filled with joy and laughter!',
+					$name_prefix . 'Happy Birthday! May your special day be as wonderful as you are.',
+					$name_prefix . 'Celebrate big today! Sending you warmest birthday wishes.'
+				);
+				break;
+
+			case 'christmas':
+			case 'xmas':
+				$messages = array(
+					$name_prefix . 'Merry Christmas! Wishing you peace, joy, and happiness this holiday season.',
+					$name_prefix . 'May your Christmas be filled with warmth, love, and cherished moments.',
+					$name_prefix . 'Sending you holiday cheer and best wishes for a Merry Christmas!'
+				);
+				break;
+
+			case 'anniversary':
+				$messages = array(
+					$name_prefix . 'Happy Anniversary! Here\'s to many more years of happiness together.',
+					$name_prefix . 'Congratulations on your special day! Wishing you continued love and joy.',
+					$name_prefix . 'Celebrating your love today and always. Happy Anniversary!'
+				);
+				break;
+
+			case 'wedding':
+				$messages = array(
+					$name_prefix . 'Congratulations on your wedding! Wishing you a lifetime of love and happiness.',
+					$name_prefix . 'Best wishes on your special day and for a wonderful life together!',
+					$name_prefix . 'May your marriage be filled with love, laughter, and endless joy.'
+				);
+				break;
+
+			case 'thank you':
+				$messages = array(
+					$name_prefix . 'Thank you for everything! Your kindness means the world to me.',
+					$name_prefix . 'I\'m so grateful for you. Thank you for being amazing!',
+					$name_prefix . 'A heartfelt thank you for your thoughtfulness and generosity.'
+				);
+				break;
+
+			case 'congratulations':
+				$messages = array(
+					$name_prefix . 'Congratulations! You deserve all the success coming your way.',
+					$name_prefix . 'Well done! Your hard work and dedication have paid off.',
+					$name_prefix . 'So proud of you! Congratulations on this amazing achievement!'
+				);
+				break;
+
+			case 'valentine\'s day':
+			case 'valentine':
+				$messages = array(
+					$name_prefix . 'Happy Valentine\'s Day! You make my heart smile every day.',
+					$name_prefix . 'Sending you all my love on this special day. Happy Valentine\'s!',
+					$name_prefix . 'You\'re my favorite person. Happy Valentine\'s Day, sweetheart!'
+				);
+				break;
+
+			case 'new year':
+				$messages = array(
+					$name_prefix . 'Happy New Year! May this year bring you joy, success, and prosperity.',
+					$name_prefix . 'Wishing you a fantastic new year filled with wonderful opportunities!',
+					$name_prefix . 'Cheers to new beginnings! Happy New Year!'
+				);
+				break;
+
+			case 'graduation':
+				$messages = array(
+					$name_prefix . 'Congratulations on your graduation! The future is bright!',
+					$name_prefix . 'You did it! Wishing you success in your next chapter.',
+					$name_prefix . 'So proud of your achievement! Congratulations, graduate!'
+				);
+				break;
+
+			default: // special occasion
+				$messages = array(
+					$name_prefix . 'Enjoy this special gift! Wishing you happiness and joy.',
+					$name_prefix . 'Thinking of you and sending warm wishes your way!',
+					$name_prefix . 'Hope this brings a smile to your face. You deserve it!'
+				);
+				break;
+		}
+
+		return $messages;
+	}
+
+	/**
+	 * AI-powered message suggestion handler
+	 *
+	 * @name wps_gc_ai_suggest_message
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_gc_ai_suggest_message() {
+		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_wgm_nonce_check' );
+
+		$occasion = isset( $_POST['occasion'] ) ? sanitize_text_field( wp_unslash( $_POST['occasion'] ) ) : 'special occasion';
+		$recipient_name = isset( $_POST['recipient_name'] ) ? sanitize_text_field( wp_unslash( $_POST['recipient_name'] ) ) : '';
+		$relationship = isset( $_POST['relationship'] ) ? sanitize_text_field( wp_unslash( $_POST['relationship'] ) ) : '';
+		$template_id = isset( $_POST['template_id'] ) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
+		$product_id = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
+
+		// Get template information to determine occasion
+		$template_occasion = 'special occasion';
+		if ( ! empty( $template_id ) ) {
+			// Get template name/title to determine the occasion
+			$template_post = get_post( $template_id );
+			if ( $template_post ) {
+				$template_title = strtolower( $template_post->post_title );
+
+				// Detect occasion from template name
+				if ( strpos( $template_title, 'birthday' ) !== false ) {
+					$template_occasion = 'birthday';
+				} elseif ( strpos( $template_title, 'christmas' ) !== false || strpos( $template_title, 'xmas' ) !== false ) {
+					$template_occasion = 'Christmas';
+				} elseif ( strpos( $template_title, 'anniversary' ) !== false ) {
+					$template_occasion = 'anniversary';
+				} elseif ( strpos( $template_title, 'wedding' ) !== false ) {
+					$template_occasion = 'wedding';
+				} elseif ( strpos( $template_title, 'thank' ) !== false ) {
+					$template_occasion = 'thank you';
+				} elseif ( strpos( $template_title, 'congratulation' ) !== false ) {
+					$template_occasion = 'congratulations';
+				} elseif ( strpos( $template_title, 'valentine' ) !== false ) {
+					$template_occasion = 'Valentine\'s Day';
+				} elseif ( strpos( $template_title, 'new year' ) !== false ) {
+					$template_occasion = 'New Year';
+				} elseif ( strpos( $template_title, 'graduation' ) !== false ) {
+					$template_occasion = 'graduation';
+				}
+			}
+		}
+
+		// Use template-detected occasion, or fall back to passed occasion
+		$occasion = ! empty( $template_occasion ) ? $template_occasion : $occasion;
+
+		// Get API key from settings
+		$customizable_settings = get_option( 'wps_wgm_customizable_settings', array() );
+		$api_key = isset( $customizable_settings['wps_gc_claude_api_key'] ) ? $customizable_settings['wps_gc_claude_api_key'] : '';
+
+		// Check if API key is set
+		if ( empty( $api_key ) ) {
+			wp_send_json_error( array(
+				'message' => __( 'AI service is not configured. Please contact the administrator.', 'woo-gift-cards-lite' )
+			) );
+			return;
+		}
+
+		// Build context for Claude
+		$context = "Write 3 short gift card messages (maximum 25 words each) for a {$occasion} gift";
+		if ( ! empty( $recipient_name ) ) {
+			$context .= " to {$recipient_name}";
+		}
+		if ( ! empty( $relationship ) ) {
+			$context .= " (recipient is my {$relationship})";
+		}
+		$context .= ". Return only a JSON array of strings like: [\"message 1\", \"message 2\", \"message 3\"]. No additional text.";
+
+		// Call Claude API
+		$response = wp_remote_post( 'https://api.anthropic.com/v1/messages', array(
+			'headers' => array(
+				'x-api-key' => $api_key,
+				'anthropic-version' => '2023-06-01',
+				'content-type' => 'application/json',
+			),
+			'body' => wp_json_encode( array(
+				'model' => 'claude-3-5-sonnet-20241022',
+				'max_tokens' => 300,
+				'messages' => array(
+					array(
+						'role' => 'user',
+						'content' => $context
+					)
+				)
+			) ),
+			'timeout' => 30,
+		) );
+
+		// Handle API errors - use fallback messages
+		if ( is_wp_error( $response ) ) {
+			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
+			wp_send_json_success( array(
+				'suggestions' => $fallback_suggestions,
+				'fallback' => true
+			) );
+			return;
+		}
+
+		$response_code = wp_remote_retrieve_response_code( $response );
+		if ( 200 !== $response_code ) {
+			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
+			wp_send_json_success( array(
+				'suggestions' => $fallback_suggestions,
+				'fallback' => true
+			) );
+			return;
+		}
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( ! isset( $body['content'] ) || ! isset( $body['content'][0] ) || ! isset( $body['content'][0]['text'] ) ) {
+			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
+			wp_send_json_success( array(
+				'suggestions' => $fallback_suggestions,
+				'fallback' => true
+			) );
+			return;
+		}
+
+		// Extract the suggestions from Claude's response
+		$text = $body['content'][0]['text'];
+
+		// Try to parse as JSON array
+		$suggestions = json_decode( $text, true );
+
+		// If not valid JSON, try to extract array from markdown code blocks
+		if ( ! is_array( $suggestions ) ) {
+			// Remove markdown code blocks
+			$text = preg_replace( '/```json\s*/', '', $text );
+			$text = preg_replace( '/```\s*/', '', $text );
+			$suggestions = json_decode( trim( $text ), true );
+		}
+
+		// Fallback: split by newlines if still not an array
+		if ( ! is_array( $suggestions ) ) {
+			$lines = explode( "\n", $text );
+			$suggestions = array();
+			foreach ( $lines as $line ) {
+				$line = trim( $line );
+				// Remove bullet points, numbers, quotes
+				$line = preg_replace( '/^[\d\-\*\.\)]+\s*/', '', $line );
+				$line = trim( $line, '"' );
+				if ( ! empty( $line ) && strlen( $line ) > 10 ) {
+					$suggestions[] = $line;
+					if ( count( $suggestions ) >= 3 ) {
+						break;
+					}
+				}
+			}
+		}
+
+		// Ensure we have exactly 3 suggestions
+		$suggestions = array_slice( array_filter( $suggestions ), 0, 3 );
+
+		if ( empty( $suggestions ) ) {
+			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
+			wp_send_json_success( array(
+				'suggestions' => $fallback_suggestions,
+				'fallback' => true
+			) );
+			return;
+		}
+
+		wp_send_json_success( array(
+			'suggestions' => $suggestions
+		) );
 	}
 
 }
