@@ -4973,6 +4973,7 @@ input.wps_wgm_mail_setting_background_logo.button {
     border: 1px solid #d9d3e8;
     min-height: 34px !important ;
     line-height: 0px !important;
+    margin-top:-1px;
 }
 
 #wps_wgm_setting_wrapper #wps_wgm_mail_setting_upload_image,
