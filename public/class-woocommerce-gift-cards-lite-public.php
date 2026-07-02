@@ -274,7 +274,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
 						$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
 					}
-
 					$wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					$wps_wgm['pricing_type'] = $wps_wgm_pricing;
 					$wps_wgm['product_id']   = $product_id;
@@ -933,22 +932,19 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( 'wps_wgm_to_email' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'To', 'woo-gift-cards-lite' ),
-							// Security: Escape output to prevent XSS
-							'value' => esc_html( stripslashes( $val ) ),
+							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_wgm_from_name' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'From', 'woo-gift-cards-lite' ),
-							// Security: Escape output to prevent XSS
-							'value' => esc_html( stripslashes( $val ) ),
+							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_wgm_message' == $key ) {
 						$item_meta [] = array(
 							'name' => esc_html__( 'Gift Message', 'woo-gift-cards-lite' ),
-							// Security: Escape output to prevent XSS
-							'value' => esc_html( stripslashes( $val ) ),
+							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'delivery_method' == $key ) {
@@ -1726,16 +1722,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					if ( $val ) {
 						if ( 'wps_wgm_to_email' == $key ) {
-							// Security: Escape to prevent XSS
-							$item->add_meta_data( 'To', esc_html( stripslashes( $val ) ) );
+							$item->add_meta_data( 'To', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_from_name' == $key ) {
-							// Security: Escape to prevent XSS
-							$item->add_meta_data( 'From', esc_html( stripslashes( $val ) ) );
+							$item->add_meta_data( 'From', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_message' == $key ) {
-							// Security: Escape to prevent XSS
-							$item->add_meta_data( 'Message', wp_kses_post( stripslashes( $val ) ) );
+							$item->add_meta_data( 'Message', stripslashes( $val ) );
 						}
 						if ( 'wps_wgm_price' == $key ) {
 							$item->add_meta_data( 'Original Price', stripslashes( $val ) );
@@ -2091,18 +2084,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
-	
 		if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
 
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
 			$_pricing_raw                   = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 			$product_pricing                = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
-
 			// Ensure $product_pricing is an array before accessing (fixes fatal error)
 			if ( ! is_array( $product_pricing ) ) {
 				$product_pricing = array();
 			}
-
 			$product_pricing_type           = isset( $product_pricing['type'] ) ? $product_pricing['type'] : '';
 			$general_setting                = get_option( 'wps_wgm_general_settings', array() );
 			$giftcard_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_giftcard_coupon_length' );
@@ -2130,9 +2120,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 			$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
 			$wps_temp_id = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
-
-			// Safe array access - check if array and key exists
-			if ( is_array( $product_pricing ) && array_key_exists( 'template', $product_pricing ) ) {
+			if ( array_key_exists( 'template', $product_pricing ) ) {
 				$templateid = $product_pricing['template'];
 			} else {
 				$templateid = $this->wps_common_fun->wps_get_org_selected_template();
@@ -2193,13 +2181,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$args['amount'] = wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $amt );
 			} else {
 				$amt               = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
-				// If price is empty, try to get default product price
-				if ( empty( $amt ) && ! empty( $product_id ) ) {
-					$product = wc_get_product( $product_id );
-					if ( $product ) {
-						$amt = $product->get_price();
-					}
-				}
 				$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
 				$amt               = floatval( str_replace( $decimal_separator, '.', $amt ) );
 				$args['amount']    = wc_price( $amt );
@@ -2273,7 +2254,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_currency_switcher_get_custom_product_type( $custom_product_type, $product_id ) {
 		$product_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
-
 		// Ensure $product_pricing is an array (fixes fatal error when meta returns false)
 		if ( ! empty( $product_pricing ) && is_array( $product_pricing ) ) {
 			$product_pricing_type = isset( $product_pricing['type'] ) ? $product_pricing['type'] : '';
@@ -3222,8 +3202,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		return $is_valid;
 	}
-
-	/**
+    /**
 	 * Check if product is a gift card
 	 *
 	 * @param int $product_id Product ID.
