@@ -10,8 +10,7 @@
 
 	jQuery( document ).ready(
 		function(){
-
-			 var nonStickyTabs = [ 'delivery_method', 'other_setting'];
+var nonStickyTabs = [ 'delivery_method', 'other_setting'];
 			 //featch current tab from url
 			 var urlParams = new URLSearchParams(window.location.search);
 			 var currentTab = urlParams.get('tab');

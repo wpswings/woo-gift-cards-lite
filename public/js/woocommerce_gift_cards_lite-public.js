@@ -403,7 +403,7 @@
 				function(e) {
 					e.preventDefault()
 					var form_Data = new FormData();
-					debugger;
+					
 					$( "#wps_wgm_error_notice" ).hide();
 					var from_mail = $( "#wps_wgm_from_name" ).val();
 					var message = $( "#wps_wgm_message" ).val();
@@ -651,114 +651,7 @@ jQuery(document).ready(function () {
 		jQuery(product_preview).insertAfter('.theme-flatsome.single-product .woocommerce-product-gallery');
 		jQuery(product_preview).appendTo('.theme-oceanwp.single-product .woocommerce-product-gallery');
 	}, 100)
+    
 
-	/**
-	 * ================================================================
-	 * AI-Powered Message Suggestions
-	 * ================================================================
-	 */
-
-	// Display suggestions as clickable chips - defined first to be accessible
-	function displaySuggestions(suggestions) {
-		console.log('displaySuggestions called with:', suggestions);
-
-		var $container = jQuery('.wps-gc-suggestions-container');
-		console.log('Container found:', $container.length);
-
-		$container.empty();
-
-		suggestions.forEach(function(suggestion) {
-			console.log('Creating chip for:', suggestion);
-			var $chip = jQuery('<button></button>')
-				.attr('type', 'button')
-				.addClass('wps-gc-suggestion-chip')
-				.text(suggestion)
-				.on('click', function(e) {
-					e.preventDefault();
-					jQuery('#wps_wgm_message').val(suggestion).focus();
-					jQuery('.wps-gc-ai-suggestions').fadeOut();
-
-					// Highlight the textarea briefly
-					jQuery('#wps_wgm_message').css('border-color', '#46b450');
-					setTimeout(function() {
-						jQuery('#wps_wgm_message').css('border-color', '');
-					}, 1000);
-				});
-			$container.append($chip);
-			console.log('Chip appended with text:', $chip.text());
-		});
-
-		console.log('Showing suggestions container');
-		var $suggestionsBox = jQuery('.wps-gc-ai-suggestions');
-		console.log('Suggestions box found:', $suggestionsBox.length);
-		console.log('Suggestions box display before fadeIn:', $suggestionsBox.css('display'));
-		$suggestionsBox.fadeIn();
-		console.log('Suggestions box display after fadeIn:', $suggestionsBox.css('display'));
-	}
-
-	// AI Suggest Message Button Click Handler
-	jQuery(document).on('click', '.wps-gc-ai-suggest-btn', function(e) {
-		e.preventDefault();
-
-		// Get context from form fields
-		var occasion = jQuery('#wps_wgm_to_name').length ? 'birthday' : 'special occasion'; // Default or from event selection if available
-		var recipientName = jQuery('#wps_wgm_to_name_optional').val() || jQuery('#wps_wgm_to_name').val() || '';
-		var relationship = ''; // Could be extended to add a relationship field
-
-		// Get template ID and product ID
-		var templateId = jQuery('#wps_wgm_selected_temp').val() || '';
-		var productId = jQuery('.wps_wgm_hidden_pro_id').val() || '';
-
-		// Hide previous suggestions and errors
-		jQuery('.wps-gc-ai-suggestions').hide();
-		jQuery('.wps-gc-ai-error').hide();
-
-		// Show loading state
-		jQuery('.wps-gc-ai-loading').show();
-		jQuery(this).prop('disabled', true).text('Generating...');
-
-		// Make AJAX call
-		jQuery.ajax({
-			url: wps_wgm.ajaxurl,
-			type: 'POST',
-			data: {
-				action: 'wps_gc_ai_suggest',
-				wps_wgm_nonce_check: wps_wgm.wps_wgm_nonce,
-				occasion: occasion,
-				recipient_name: recipientName,
-				relationship: relationship,
-				template_id: templateId,
-				product_id: productId
-			},
-			success: function(response) {
-				jQuery('.wps-gc-ai-loading').hide();
-				jQuery('.wps-gc-ai-suggest-btn').prop('disabled', false).html('✨ Suggest a Message');
-
-				console.log('AI Suggest Response:', response);
-
-				if (response.success && response.data.suggestions) {
-					console.log('Suggestions received:', response.data.suggestions);
-					displaySuggestions(response.data.suggestions);
-				} else {
-					console.log('No suggestions in response');
-					var errorMsg = response.data && response.data.message
-						? response.data.message
-						: 'Could not generate suggestions. Please try again.';
-					jQuery('.wps-gc-ai-error').text(errorMsg).show();
-				}
-			},
-			error: function() {
-				jQuery('.wps-gc-ai-loading').hide();
-				jQuery('.wps-gc-ai-suggest-btn').prop('disabled', false).html('✨ Suggest a Message');
-				jQuery('.wps-gc-ai-error').text('Network error. Please try again.').show();
-			}
-		});
-	});
-
-	/**
-	 * ================================================================
-	 * End AI-Powered Message Suggestions
-	 * ================================================================
-	 */
 
 });

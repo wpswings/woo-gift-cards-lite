@@ -274,7 +274,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
 						$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
 					}
-					$wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
+$wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
+					
 					$wps_wgm['pricing_type'] = $wps_wgm_pricing;
 					$wps_wgm['product_id']   = $product_id;
 					$wps_wgm['is_customizable'] = $is_customizable;
@@ -619,25 +620,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$cart_html .= __( 'Characters: ( ', 'woo-gift-cards-lite' ) . '<span class="wps_box_char">0</span>/' . $giftcard_message_length . ')</span>
 							</p>';
 
-							// Check if Claude AI API key is configured
-							$customizable_settings = get_option( 'wps_wgm_customizable_settings', array() );
-							$claude_api_key = isset( $customizable_settings['wps_gc_claude_api_key'] ) ? $customizable_settings['wps_gc_claude_api_key'] : '';
-
-							// Only show AI suggest button if API key is configured
-							if ( ! empty( $claude_api_key ) ) {
-								$cart_html .= '<div style="margin-top: 10px; margin-bottom: 51px; clear: both;">
-									<button type="button" id="wps_gc_ai_suggest_btn" class="button wps-gc-ai-suggest-btn" style="display: inline-block !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; color: #fff !important; border: none !important; padding: 10px 20px !important; border-radius: 6px !important; cursor: pointer !important; font-size: 14px !important; font-weight: 500 !important; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;">✨ Suggest a Message</button>
-									<div id="wps_gc_ai_suggestions" class="wps-gc-ai-suggestions" style="margin-top: 10px; display: none;">
-									<br>	<p class="wps_cgw_heading" style="font-size: 12px; margin-bottom: 5px;">' . __( 'Click a suggestion to use it:', 'woo-gift-cards-lite' ) . '</p>
-										<div id="wps_gc_ai_suggestions_container" class="wps-gc-suggestions-container"></div>
-									</div>
-									<div id="wps_gc_ai_loading" class="wps-gc-ai-loading" style="display: none; margin-top: 10px; color: #666;">
-										' . __( 'Generating suggestions...', 'woo-gift-cards-lite' ) . '
-									</div>
-									<div id="wps_gc_ai_error" class="wps-gc-ai-error" style="display: none; margin-top: 10px; color: #dc3232;">
-									</div>
-								</div>';
-							}
+							
 							$cart_html .= apply_filters( 'wps_wgm_add_notiication_section', $wps_additional_section, $product_id );
 							$delivery_settings = get_option( 'wps_wgm_delivery_settings', true );
 							$wps_wgm_delivery_setting_method = $this->wps_common_fun->wps_wgm_get_template_data( $delivery_settings, 'wps_wgm_send_giftcard' );
@@ -2089,11 +2072,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
 			$_pricing_raw                   = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 			$product_pricing                = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
-			// Ensure $product_pricing is an array before accessing (fixes fatal error)
-			if ( ! is_array( $product_pricing ) ) {
-				$product_pricing = array();
-			}
-			$product_pricing_type           = isset( $product_pricing['type'] ) ? $product_pricing['type'] : '';
+			$product_pricing_type           = $product_pricing['type'];
 			$general_setting                = get_option( 'wps_wgm_general_settings', array() );
 			$giftcard_coupon_length_display = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_giftcard_coupon_length' );
 			if ( '' == $giftcard_coupon_length_display ) {
@@ -2254,9 +2233,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_currency_switcher_get_custom_product_type( $custom_product_type, $product_id ) {
 		$product_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
-		// Ensure $product_pricing is an array (fixes fatal error when meta returns false)
-		if ( ! empty( $product_pricing ) && is_array( $product_pricing ) ) {
-			$product_pricing_type = isset( $product_pricing['type'] ) ? $product_pricing['type'] : '';
+		if ( ! empty( $product_pricing ) ) {
+			$product_pricing_type = $product_pricing['type'];
 			if ( ! empty( $product_pricing_type ) ) {
 				if ( 'wps_wgm_default_price' === $product_pricing_type ) {
 					return 'simple';
@@ -3202,7 +3180,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		return $is_valid;
 	}
-    /**
+	  /**
 	 * Check if product is a gift card
 	 *
 	 * @param int $product_id Product ID.
@@ -3523,3 +3501,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 
 }
+
+
+
