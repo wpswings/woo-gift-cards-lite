@@ -281,7 +281,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'init', $plugin_public, 'wps_uwgc_add_short_code_giftcard_balance_org' );
 		$this->loader->add_action( 'wp_ajax_wps_uwgc_check_gift_balance_org', $plugin_public, 'wps_uwgc_check_gift_balance_org' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_check_gift_balance_org', $plugin_public, 'wps_uwgc_check_gift_balance_org' );
-		// AI-powered message suggestions
+		// AI-powered message suggestions.
 		$this->loader->add_action( 'wp_ajax_wps_gc_ai_suggest', $plugin_public, 'wps_gc_ai_suggest_message' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_gc_ai_suggest', $plugin_public, 'wps_gc_ai_suggest_message' );
 				$other_setting = get_option( 'wps_wgm_other_settings', array() );

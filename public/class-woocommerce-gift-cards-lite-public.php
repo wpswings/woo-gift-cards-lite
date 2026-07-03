@@ -3181,10 +3181,10 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		return $is_valid;
 	}
 	  /**
-	 * Check if product is a gift card
+	 * Check if product is a gift card.
 	 *
 	 * @param int $product_id Product ID.
-	 * @return bool Whether the product is a gift card
+	 * @return bool Whether the product is a gift card.
 	 * @since 3.2.8
 	 */
 	private function wps_wgc_is_gift_card_product( $product_id ) {
@@ -3193,16 +3193,16 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			return false;
 		}
 
-		// Check if product type is gift card
+		// Check if product type is gift card.
 		return 'wgm_gift_card' === $product->get_type();
 	}
 
 	/**
-	 * Exclude gift card amounts from free shipping calculation
-	 * Filters the cart subtotal used by WC_Shipping_Free_Shipping
+	 * Exclude gift card amounts from free shipping calculation.
+	 * Filters the cart subtotal used by WC_Shipping_Free_Shipping.
 	 *
 	 * @param array $packages Shipping packages.
-	 * @return array Modified packages with adjusted totals
+	 * @return array Modified packages with adjusted totals.
 	 * @since 3.2.8
 	 */
 	public function wps_wgc_exclude_gc_from_free_shipping( $packages ) {
@@ -3213,14 +3213,14 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		foreach ( $packages as $package_key => $package ) {
 			$gc_total = 0;
 
-			// Calculate total of gift card items
+			// Calculate total of gift card items.
 			foreach ( $package['contents'] as $item_key => $item ) {
 				if ( isset( $item['data'] ) && $this->wps_wgc_is_gift_card_product( $item['data']->get_id() ) ) {
 					$gc_total += $item['line_total'];
 				}
 			}
 
-			// Adjust package contents_cost to exclude gift cards
+			// Adjust package contents_cost to exclude gift cards.
 			if ( $gc_total > 0 && isset( $packages[ $package_key ]['contents_cost'] ) ) {
 				$packages[ $package_key ]['contents_cost'] = max( 0, $packages[ $package_key ]['contents_cost'] - $gc_total );
 			}
@@ -3230,7 +3230,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	}
 
 	/**
-	 * Generate fallback gift card messages based on occasion
+	 * Generate fallback gift card messages based on occasion.
 	 *
 	 * @param string $occasion The occasion for the gift card.
 	 * @param string $recipient_name The recipient's name (optional).
@@ -3316,7 +3316,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				);
 				break;
 
-			default: // special occasion
+			default: // special occasion.
 				$messages = array(
 					$name_prefix . 'Enjoy this special gift! Wishing you happiness and joy.',
 					$name_prefix . 'Thinking of you and sending warm wishes your way!',
@@ -3329,9 +3329,9 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	}
 
 	/**
-	 * AI-powered message suggestion handler
+	 * AI-powered message suggestion handler.
 	 *
-	 * @name wps_gc_ai_suggest_message
+	 * @name wps_gc_ai_suggest_message.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link http://www.wpswings.com/
 	 */
@@ -3344,15 +3344,15 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		$template_id = isset( $_POST['template_id'] ) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
 		$product_id = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
 
-		// Get template information to determine occasion
+		// Get template information to determine occasion.
 		$template_occasion = 'special occasion';
 		if ( ! empty( $template_id ) ) {
-			// Get template name/title to determine the occasion
+			// Get template name/title to determine the occasion.
 			$template_post = get_post( $template_id );
 			if ( $template_post ) {
 				$template_title = strtolower( $template_post->post_title );
 
-				// Detect occasion from template name
+				// Detect occasion from template name.
 				if ( strpos( $template_title, 'birthday' ) !== false ) {
 					$template_occasion = 'birthday';
 				} elseif ( strpos( $template_title, 'christmas' ) !== false || strpos( $template_title, 'xmas' ) !== false ) {
@@ -3375,14 +3375,14 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			}
 		}
 
-		// Use template-detected occasion, or fall back to passed occasion
+		// Use template-detected occasion, or fall back to passed occasion.
 		$occasion = ! empty( $template_occasion ) ? $template_occasion : $occasion;
 
-		// Get API key from settings
+		// Get API key from settings.
 		$customizable_settings = get_option( 'wps_wgm_customizable_settings', array() );
 		$api_key = isset( $customizable_settings['wps_gc_claude_api_key'] ) ? $customizable_settings['wps_gc_claude_api_key'] : '';
 
-		// Check if API key is set
+		// Check if API key is set.
 		if ( empty( $api_key ) ) {
 			wp_send_json_error( array(
 				'message' => __( 'AI service is not configured. Please contact the administrator.', 'woo-gift-cards-lite' )
@@ -3390,7 +3390,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			return;
 		}
 
-		// Build context for Claude
+		// Build context for Claude.
 		$context = "Write 3 short gift card messages (maximum 25 words each) for a {$occasion} gift";
 		if ( ! empty( $recipient_name ) ) {
 			$context .= " to {$recipient_name}";
@@ -3400,7 +3400,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		}
 		$context .= ". Return only a JSON array of strings like: [\"message 1\", \"message 2\", \"message 3\"]. No additional text.";
 
-		// Call Claude API
+		// Call Claude API.
 		$response = wp_remote_post( 'https://api.anthropic.com/v1/messages', array(
 			'headers' => array(
 				'x-api-key' => $api_key,
@@ -3420,7 +3420,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			'timeout' => 30,
 		) );
 
-		// Handle API errors - use fallback messages
+		// Handle API errors - use fallback messages.
 		if ( is_wp_error( $response ) ) {
 			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
 			wp_send_json_success( array(
@@ -3451,27 +3451,27 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			return;
 		}
 
-		// Extract the suggestions from Claude's response
+		// Extract the suggestions from Claude's response.
 		$text = $body['content'][0]['text'];
 
-		// Try to parse as JSON array
+		// Try to parse as JSON array.
 		$suggestions = json_decode( $text, true );
 
-		// If not valid JSON, try to extract array from markdown code blocks
+		// If not valid JSON, try to extract array from markdown code blocks.
 		if ( ! is_array( $suggestions ) ) {
-			// Remove markdown code blocks
+			// Remove markdown code blocks.
 			$text = preg_replace( '/```json\s*/', '', $text );
 			$text = preg_replace( '/```\s*/', '', $text );
 			$suggestions = json_decode( trim( $text ), true );
 		}
 
-		// Fallback: split by newlines if still not an array
+		// Fallback: split by newlines if still not an array.
 		if ( ! is_array( $suggestions ) ) {
 			$lines = explode( "\n", $text );
 			$suggestions = array();
 			foreach ( $lines as $line ) {
 				$line = trim( $line );
-				// Remove bullet points, numbers, quotes
+				// Remove bullet points, numbers, quotes.
 				$line = preg_replace( '/^[\d\-\*\.\)]+\s*/', '', $line );
 				$line = trim( $line, '"' );
 				if ( ! empty( $line ) && strlen( $line ) > 10 ) {
@@ -3483,7 +3483,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			}
 		}
 
-		// Ensure we have exactly 3 suggestions
+		// Ensure we have exactly 3 suggestions.
 		$suggestions = array_slice( array_filter( $suggestions ), 0, 3 );
 
 		if ( empty( $suggestions ) ) {
