@@ -5,7 +5,7 @@ Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 6.7
 Tested up to: 7.0
 WC requires at least: 6.5
-WC tested up to: 10.7.0
+WC tested up to: 10.9.3
 Stable tag:  3.2.8
 Requires PHP: 7.4
 License: GPL-3.0+
@@ -322,7 +322,20 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
-= 3.2.8 - Released on 25th May 2026 =
+= 3.2.8 - Released on 06 July 2026 =
+
+* New : Compatibility with the latest WC ( 10.9.3 ) and WP ( 7.0 )
+* Fix: SQL injection vulnerability in raw $wpdb queries
+* Fix: XSS vulnerability in public templates and AJAX handlers (input sanitization + output escaping)
+* Fix: REST API authentication hardening
+* Fix: File upload validation on PDF template image uploads
+* Fix: Insecure direct object reference on gift card PDF download endpoint
+* Fix: Fatal errors on plugin activation + full PHP 8.x compatibility
+* Fix: Voucher code generation race condition
+* New: Compatibility with WooCommerce HPOS and WC 8.x–9.x
+* New: Full translation/i18n support with updated .pot file
+
+= 3.2.7 - Released on 26th May 2026 =
 * New : Compatibility with the latest WC ( 10.7.0 ) and WP ( 7.0 )
 * New: UI/UX dashboard layout changes
 * Fix: Performance Optimisation
@@ -668,7 +681,15 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.8 - Released on 25th May 2026 =
-* New : Compatibility with the latest WC ( 10.7.0 ) and WP ( 7.0 )
-* New: UI/UX dashboard layout changes
-* Fix: Performance Optimisation
+= 3.2.8 - Released on 06 July 2026 =
+
+* New : Compatibility with the latest WC ( 10.9.3 ) and WP ( 7.0 )
+* Fix: SQL injection vulnerability in raw $wpdb queries
+* Fix: XSS vulnerability in public templates and AJAX handlers (input sanitization + output escaping)
+* Fix: REST API authentication hardening
+* Fix: File upload validation on PDF template image uploads
+* Fix: Insecure direct object reference on gift card PDF download endpoint
+* Fix: Fatal errors on plugin activation + full PHP 8.x compatibility
+* Fix: Voucher code generation race condition
+* New: Compatibility with WooCommerce HPOS and WC 8.x–9.x
+* New: Full translation/i18n support with updated .pot file
