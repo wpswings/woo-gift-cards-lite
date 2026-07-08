@@ -3185,7 +3185,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	 *
 	 * @param int $product_id Product ID.
 	 * @return bool Whether the product is a gift card.
-	 * @since 3.2.8
+	 * @since 3.2.9
 	 */
 	private function wps_wgc_is_gift_card_product( $product_id ) {
 		$product = wc_get_product( $product_id );
@@ -3203,7 +3203,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	 *
 	 * @param array $packages Shipping packages.
 	 * @return array Modified packages with adjusted totals.
-	 * @since 3.2.8
+	 * @since 3.2.9
 	 */
 	public function wps_wgc_exclude_gc_from_free_shipping( $packages ) {
 		if ( ! WC()->cart || WC()->cart->is_empty() ) {
