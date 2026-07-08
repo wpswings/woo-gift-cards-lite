@@ -291,10 +291,16 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		}
 
 		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) {
+			// Get dashboard color from settings (pro feature) with fallback.
+			$general_settings = get_option( 'wps_wgm_general_settings', array() );
+			$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+			$button_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
+
 			$wps_wgm_check_balance = array(
 				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
 				'empty_msg'       => esc_html__( 'Fields cannot be empty!', 'woo-gift-cards-lite' ), // PAR Compatibility.
+				'button_color'    => $button_color,
 			);
 
 			wp_register_script( $this->plugin_name . 'check_balance_page', plugin_dir_url( __FILE__ ) . 'js/woocommerce_gifr_cards_lite_check_balance.js', array( 'jquery' ), $this->version, true );
@@ -2550,6 +2556,12 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		$response['message'] = __( 'Balance cannot be checked yet, Please Try again later!', 'woo-gift-cards-lite' );
 		$wps_check_email = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
 		$coupon = isset( $_POST['coupon'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon'] ) ) : '';
+
+		// Get dashboard color from settings (pro feature) with fallback
+		$general_settings = get_option( 'wps_wgm_general_settings', array() );
+		$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+		$coupon_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
+		$button_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
 		if ( isset( $coupon ) && ! empty( $coupon ) && isset( $wps_check_email ) && ! empty( $wps_check_email ) ) {
 			$the_coupon = new WC_Coupon( $coupon );
 			if ( isset( $the_coupon ) && ! empty( $coupon ) ) {
@@ -2561,7 +2573,13 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					if ( 'offline' === $coupon_type ) {
 						if ( isset( $user_email ) && ! empty( $user_email ) ) {
 							if ( $user_email == $wps_check_email ) {
-								$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
+								$html = '<div class="amount_wrapper">';
+								$html .= '<div style="margin-bottom: 15px;"><strong>' . __( 'Coupon Code: ', 'woo-gift-cards-lite' ) . '</strong>';
+								$html .= '<span class="wps-balance-coupon-code" style="font-size: 16px; color: ' . $coupon_color . '; background: #fff; padding: 5px 10px; border: 1px dashed ' . $coupon_color . '; border-radius: 3px; display: inline-block; margin: 0 10px;">' . esc_html( $coupon ) . '</span>';
+								$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 13px;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+								$html .= '</div>';
+								$html .= '<div><strong>' . __( 'Balance: ', 'woo-gift-cards-lite' ) . '</strong>' . wc_price( $left_amount ) . '</div>';
+								$html .= '</div>';
 								$response['result'] = true;
 								$response['html'] = $html;
 								$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
@@ -2574,7 +2592,13 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 						$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 						if ( empty( $order_id ) ) {
 							if ( in_array( $wps_check_email, $user_email ) ) {
-								$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
+								$html = '<div class="amount_wrapper">';
+								$html .= '<div style="margin-bottom: 15px;"><strong>' . __( 'Coupon Code: ', 'woo-gift-cards-lite' ) . '</strong>';
+								$html .= '<span class="wps-balance-coupon-code" style="font-size: 16px; color: ' . $coupon_color . '; background: #fff; padding: 5px 10px; border: 1px dashed ' . $coupon_color . '; border-radius: 3px; display: inline-block; margin: 0 10px;">' . esc_html( $coupon ) . '</span>';
+								$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 13px;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+								$html .= '</div>';
+								$html .= '<div><strong>' . __( 'Balance: ', 'woo-gift-cards-lite' ) . '</strong>' . wc_price( $left_amount ) . '</div>';
+								$html .= '</div>';
 								$response['result'] = true;
 								$response['html'] = $html;
 								$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
@@ -2587,17 +2611,35 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							$wps_sender_name = $wps_user_name->first_name . ' ' . $wps_user_name->last_name;
 							if ( ( isset( $user_email ) && ! empty( $user_email ) ) || ( isset( $sender_email ) && ! empty( $sender_email ) ) ) {
 								if ( $user_email == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
+									$html = '<div class="amount_wrapper">';
+									$html .= '<div style="margin-bottom: 15px;"><strong>' . __( 'Coupon Code: ', 'woo-gift-cards-lite' ) . '</strong>';
+									$html .= '<span class="wps-balance-coupon-code" style="font-size: 16px; color: ' . $coupon_color . '; background: #fff; padding: 5px 10px; border: 1px dashed ' . $coupon_color . '; border-radius: 3px; display: inline-block; margin: 0 10px;">' . esc_html( $coupon ) . '</span>';
+									$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 13px;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+									$html .= '</div>';
+									$html .= '<div><strong>' . __( 'Balance: ', 'woo-gift-cards-lite' ) . '</strong>' . wc_price( $left_amount ) . '</div>';
+									$html .= '</div>';
 									$response['result'] = true;
 									$response['html'] = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $sender_email == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
+									$html = '<div class="amount_wrapper">';
+									$html .= '<div style="margin-bottom: 15px;"><strong>' . __( 'Coupon Code: ', 'woo-gift-cards-lite' ) . '</strong>';
+									$html .= '<span class="wps-balance-coupon-code" style="font-size: 16px; color: ' . $coupon_color . '; background: #fff; padding: 5px 10px; border: 1px dashed ' . $coupon_color . '; border-radius: 3px; display: inline-block; margin: 0 10px;">' . esc_html( $coupon ) . '</span>';
+									$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 13px;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+									$html .= '</div>';
+									$html .= '<div><strong>' . __( 'Balance: ', 'woo-gift-cards-lite' ) . '</strong>' . wc_price( $left_amount ) . '</div>';
+									$html .= '</div>';
 									$response['result'] = true;
 									$response['html'] = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $wps_sender_name == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">' . __( 'Balance: ', 'woo-gift-cards-lite' ) . wc_price( $left_amount ) . '</div>';
+									$html = '<div class="amount_wrapper">';
+									$html .= '<div style="margin-bottom: 15px;"><strong>' . __( 'Coupon Code: ', 'woo-gift-cards-lite' ) . '</strong>';
+									$html .= '<span class="wps-balance-coupon-code" style="font-size: 16px; color: ' . $coupon_color . '; background: #fff; padding: 5px 10px; border: 1px dashed ' . $coupon_color . '; border-radius: 3px; display: inline-block; margin: 0 10px;">' . esc_html( $coupon ) . '</span>';
+									$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 13px;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+									$html .= '</div>';
+									$html .= '<div><strong>' . __( 'Balance: ', 'woo-gift-cards-lite' ) . '</strong>' . wc_price( $left_amount ) . '</div>';
+									$html .= '</div>';
 									$response['result'] = true;
 									$response['html'] = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
@@ -3498,6 +3540,297 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		wp_send_json_success( array(
 			'suggestions' => $suggestions
 		) );
+	}
+
+	/**
+	 * Display gift card details on the Thank You page.
+	 *
+	 * @since 1.0.0
+	 * @param int $order_id The order ID.
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wgm_display_gift_cards_on_thankyou_page( $order_id ) {
+		$wps_wgc_enable = wps_wgm_giftcard_enable();
+
+		if ( ! $wps_wgc_enable ) {
+			return;
+		}
+
+		$order = wc_get_order( $order_id );
+
+		if ( ! $order ) {
+			return;
+		}
+
+		// Get dashboard color from settings (pro feature) with fallback
+		$general_settings = get_option( 'wps_wgm_general_settings', array() );
+		$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+
+		// Fallback colors if setting doesn't exist
+		$coupon_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
+		$button_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
+		$button_hover = ! empty( $dashboard_color ) ? $this->adjust_brightness( $dashboard_color, -20 ) : '#138496';
+
+		$gift_cards_found = false;
+		$gift_card_data = array();
+
+		// Loop through order items to find gift card products.
+		foreach ( $order->get_items() as $item_id => $item ) {
+			$product_id = $item->get_product_id();
+			$product = $item->get_product();
+
+			if ( ! $product ) {
+				continue;
+			}
+
+			$product_type = $product->get_type();
+
+			// Check if this is a gift card product.
+			if ( 'wgm_gift_card' === $product_type ) {
+				$gift_cards_found = true;
+
+				// Get gift card details from item meta.
+				$to_email = $item->get_meta( 'To', true );
+				$from_name = $item->get_meta( 'From', true );
+				$message = $item->get_meta( 'Message', true );
+				$original_price = $item->get_meta( 'Original Price', true );
+
+				// Get associated coupons for this order.
+				$args = array(
+					'posts_per_page' => -1,
+					'post_type'      => 'shop_coupon',
+					'post_status'    => 'publish',
+					'meta_query'     => array(
+						array(
+							'key'     => 'wps_wgm_giftcard_coupon',
+							'value'   => $order_id,
+							'compare' => '=',
+						),
+					),
+				);
+
+				$coupons = get_posts( $args );
+
+				foreach ( $coupons as $coupon_post ) {
+					$coupon_code = $coupon_post->post_title;
+					$coupon_id = $coupon_post->ID;
+
+					// Get coupon details.
+					$coupon = new WC_Coupon( $coupon_code );
+					$coupon_amount = $coupon->get_amount();
+					$coupon_expiry = $coupon->get_date_expires();
+					$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+
+					// Store gift card data.
+					$gift_card_data[] = array(
+						'coupon_code'   => $coupon_code,
+						'amount'        => $coupon_amount,
+						'balance'       => $coupon_amount,
+						'expiry_date'   => $coupon_expiry ? $coupon_expiry->date( 'F j, Y' ) : __( 'No Expiry', 'woo-gift-cards-lite' ),
+						'recipient'     => $recipient_email ? $recipient_email : $to_email,
+						'from'          => $from_name,
+						'message'       => $message,
+					);
+				}
+			}
+		}
+
+		// Display gift card details if found.
+		if ( $gift_cards_found && ! empty( $gift_card_data ) ) {
+			?>
+			<section class="wps-wgm-thankyou-giftcards">
+				<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Your Gift Card Details', 'woo-gift-cards-lite' ); ?></h2>
+				<p><?php esc_html_e( 'Your gift card(s) have been generated successfully. Here are the details:', 'woo-gift-cards-lite' ); ?></p>
+
+				<?php foreach ( $gift_card_data as $gift_card ) : ?>
+					<div class="wps-wgm-giftcard-box" style="border: 2px solid #ddd; padding: 20px; margin: 15px 0; background-color: #f9f9f9; border-radius: 5px;">
+						<h3 style="margin-top: 0; color: #333;"><?php esc_html_e( 'Gift Card', 'woo-gift-cards-lite' ); ?></h3>
+
+						<table class="wps-wgm-giftcard-details" style="width: 100%; margin-bottom: 10px;">
+							<tbody>
+								<tr>
+									<td style="padding: 8px 0; font-weight: bold; width: 30%;">
+										<?php esc_html_e( 'Coupon Code:', 'woo-gift-cards-lite' ); ?>
+									</td>
+									<td style="padding: 8px 0;">
+										<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+											<strong style="font-size: 18px; color: <?php echo esc_attr( $coupon_color ); ?>; background: #fff; padding: 5px 10px; border: 1px dashed <?php echo esc_attr( $coupon_color ); ?>; border-radius: 3px; display: inline-block;" class="wps-giftcard-code">
+												<?php echo esc_html( $gift_card['coupon_code'] ); ?>
+											</strong>
+											<button type="button" class="wps-copy-coupon-btn" data-coupon="<?php echo esc_attr( $gift_card['coupon_code'] ); ?>" style="background: <?php echo esc_attr( $button_color ); ?>; color: #fff; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; font-size: 14px; transition: background 0.3s ease;">
+												<?php esc_html_e( 'Copy Code', 'woo-gift-cards-lite' ); ?>
+											</button>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 8px 0; font-weight: bold;">
+										<?php esc_html_e( 'Amount:', 'woo-gift-cards-lite' ); ?>
+									</td>
+									<td style="padding: 8px 0;">
+										<?php echo wp_kses_post( wc_price( $gift_card['amount'] ) ); ?>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 8px 0; font-weight: bold;">
+										<?php esc_html_e( 'Expiry Date:', 'woo-gift-cards-lite' ); ?>
+									</td>
+									<td style="padding: 8px 0;">
+										<?php echo esc_html( $gift_card['expiry_date'] ); ?>
+									</td>
+								</tr>
+								<?php if ( ! empty( $gift_card['recipient'] ) ) : ?>
+									<tr>
+										<td style="padding: 8px 0; font-weight: bold;">
+											<?php esc_html_e( 'Recipient:', 'woo-gift-cards-lite' ); ?>
+										</td>
+										<td style="padding: 8px 0;">
+											<?php echo esc_html( $gift_card['recipient'] ); ?>
+										</td>
+									</tr>
+								<?php endif; ?>
+								<?php if ( ! empty( $gift_card['from'] ) ) : ?>
+									<tr>
+										<td style="padding: 8px 0; font-weight: bold;">
+											<?php esc_html_e( 'From:', 'woo-gift-cards-lite' ); ?>
+										</td>
+										<td style="padding: 8px 0;">
+											<?php echo esc_html( $gift_card['from'] ); ?>
+										</td>
+									</tr>
+								<?php endif; ?>
+								<?php if ( ! empty( $gift_card['message'] ) ) : ?>
+									<tr>
+										<td style="padding: 8px 0; font-weight: bold; vertical-align: top;">
+											<?php esc_html_e( 'Message:', 'woo-gift-cards-lite' ); ?>
+										</td>
+										<td style="padding: 8px 0;">
+											<?php echo esc_html( $gift_card['message'] ); ?>
+										</td>
+									</tr>
+								<?php endif; ?>
+							</tbody>
+						</table>
+
+						<p style="margin: 10px 0 0 0; color: #666; font-size: 13px;">
+							<?php esc_html_e( 'You can use this coupon code during checkout to redeem your gift card.', 'woo-gift-cards-lite' ); ?>
+						</p>
+					</div>
+				<?php endforeach; ?>
+
+				<style>
+					.wps-wgm-thankyou-giftcards {
+						margin: 30px 0;
+					}
+					.wps-wgm-thankyou-giftcards h2 {
+						margin-bottom: 15px;
+					}
+					.wps-wgm-giftcard-box {
+						animation: fadeIn 0.5s ease-in;
+					}
+					.wps-copy-coupon-btn:hover {
+						background: <?php echo esc_attr( $button_hover ); ?> !important;
+					}
+					.wps-copy-coupon-btn:active {
+						transform: scale(0.95);
+					}
+					.wps-copy-coupon-btn.copied {
+						background: #28a745 !important;
+					}
+					@keyframes fadeIn {
+						from { opacity: 0; transform: translateY(10px); }
+						to { opacity: 1; transform: translateY(0); }
+					}
+					@media print {
+						.wps-wgm-giftcard-box {
+							page-break-inside: avoid;
+						}
+						.wps-copy-coupon-btn {
+							display: none;
+						}
+					}
+				</style>
+
+				<script>
+				document.addEventListener('DOMContentLoaded', function() {
+					const copyButtons = document.querySelectorAll('.wps-copy-coupon-btn');
+
+					copyButtons.forEach(function(button) {
+						button.addEventListener('click', function() {
+							const couponCode = this.getAttribute('data-coupon');
+							const originalText = this.textContent;
+
+							// Modern clipboard API
+							if (navigator.clipboard && navigator.clipboard.writeText) {
+								navigator.clipboard.writeText(couponCode).then(function() {
+									button.textContent = '<?php echo esc_js( __( 'Copied!', 'woo-gift-cards-lite' ) ); ?>';
+									button.classList.add('copied');
+
+									setTimeout(function() {
+										button.textContent = originalText;
+										button.classList.remove('copied');
+									}, 2000);
+								}).catch(function(err) {
+									console.error('Failed to copy:', err);
+								});
+							} else {
+								// Fallback for older browsers
+								const textArea = document.createElement('textarea');
+								textArea.value = couponCode;
+								textArea.style.position = 'fixed';
+								textArea.style.left = '-999999px';
+								document.body.appendChild(textArea);
+								textArea.select();
+
+								try {
+									document.execCommand('copy');
+									button.textContent = '<?php echo esc_js( __( 'Copied!', 'woo-gift-cards-lite' ) ); ?>';
+									button.classList.add('copied');
+
+									setTimeout(function() {
+										button.textContent = originalText;
+										button.classList.remove('copied');
+									}, 2000);
+								} catch (err) {
+									console.error('Failed to copy:', err);
+								}
+
+								document.body.removeChild(textArea);
+							}
+						});
+					});
+				});
+				</script>
+			</section>
+			<?php
+		}
+	}
+
+	/**
+	 * Adjust color brightness for hover effects.
+	 *
+	 * @since 1.0.0
+	 * @param string $hex Hex color code.
+	 * @param int    $steps Steps to adjust brightness (positive or negative).
+	 * @return string Adjusted hex color.
+	 */
+	private function adjust_brightness( $hex, $steps ) {
+		// Remove # if present
+		$hex = str_replace( '#', '', $hex );
+
+		// Convert to RGB
+		$r = hexdec( substr( $hex, 0, 2 ) );
+		$g = hexdec( substr( $hex, 2, 2 ) );
+		$b = hexdec( substr( $hex, 4, 2 ) );
+
+		// Adjust brightness
+		$r = max( 0, min( 255, $r + $steps ) );
+		$g = max( 0, min( 255, $g + $steps ) );
+		$b = max( 0, min( 255, $b + $steps ) );
+
+		// Convert back to hex
+		return sprintf( '#%02x%02x%02x', $r, $g, $b );
 	}
 
 }

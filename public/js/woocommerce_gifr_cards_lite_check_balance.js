@@ -40,11 +40,64 @@
 
                                 $('#wps_balance').html(html_balance)
                                 $("#wps-check-balamce-error").html(html_notice)
+
+                                // Initialize copy button functionality after AJAX response
+                                setTimeout(function() {
+                                    initializeCopyButtons();
+                                }, 100);
                             }
                         }
                     );
                 }
             );
+
+            // Copy button functionality
+            function initializeCopyButtons() {
+                $('.wps-copy-balance-btn').off('click').on('click', function() {
+                    var button = $(this);
+                    var couponCode = button.attr('data-coupon');
+                    var originalText = button.text();
+                    var buttonColor = wps_wgm_check_balance.button_color || '#17a2b8';
+
+                    // Modern clipboard API
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(couponCode).then(function() {
+                            button.text('Copied!');
+                            button.css('background', '#28a745');
+
+                            setTimeout(function() {
+                                button.text(originalText);
+                                button.css('background', buttonColor);
+                            }, 2000);
+                        }).catch(function(err) {
+                            console.error('Failed to copy:', err);
+                        });
+                    } else {
+                        // Fallback for older browsers
+                        var textArea = document.createElement('textarea');
+                        textArea.value = couponCode;
+                        textArea.style.position = 'fixed';
+                        textArea.style.left = '-999999px';
+                        document.body.appendChild(textArea);
+                        textArea.select();
+
+                        try {
+                            document.execCommand('copy');
+                            button.text('Copied!');
+                            button.css('background', '#28a745');
+
+                            setTimeout(function() {
+                                button.text(originalText);
+                                button.css('background', buttonColor);
+                            }, 2000);
+                        } catch (err) {
+                            console.error('Failed to copy:', err);
+                        }
+
+                        document.body.removeChild(textArea);
+                    }
+                });
+            }
 
             // PAR compatibility.
             jQuery(document).on('click', '#wps_wgm_redeem_coupon', function(){

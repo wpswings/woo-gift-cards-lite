@@ -321,6 +321,13 @@ class Woocommerce_Gift_Cards_Lite {
 
 		$this->loader->add_action( 'woocommerce_add_to_cart', $plugin_public, 'wps_nonce_not_verify_add_to_cart',10,2 );
 
+		// Display gift card details on Thank You page.
+		$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'wps_wgm_display_gift_cards_on_thankyou_page', 10, 1 );
+
+		// Display gift card details on My Account order details page.
+		$this->loader->add_action( 'woocommerce_view_order', $plugin_public, 'wps_wgm_display_gift_cards_on_thankyou_page', 10, 1 );
+		$this->loader->add_action( 'woocommerce_order_details_after_order_table', $plugin_public, 'wps_wgm_display_gift_cards_on_thankyou_page', 10, 1 );
+
 		// PAR compatibility.
 		if ( $this->wps_wgm_is_par_active() && $this->wps_wgm_is_par_enable() ) {
 
