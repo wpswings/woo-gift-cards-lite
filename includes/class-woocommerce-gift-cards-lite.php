@@ -245,6 +245,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'manage_shop_coupon_posts_custom_column', $plugin_admin, 'populate_enable_disable_column', 10, 2 );
 
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'wps_wgm_add_gift_card_dashboard_widget' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_lookup_gift_card', $plugin_admin, 'wps_wgm_lookup_gift_card' );
 
 		$this->loader->add_action( 'wp_ajax_wps_migrate_smart_coupons_to_giftcards', $plugin_admin, 'wps_wgm_migrate_smart_coupons_to_giftcards' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_migrate_smart_coupons_to_giftcards', $plugin_admin, 'wps_wgm_migrate_smart_coupons_to_giftcards' );
