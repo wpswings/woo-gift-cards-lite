@@ -180,6 +180,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), $this->version );
 			wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 			wp_enqueue_style( 'woocommerce_admin_styles' );
+
+			// Enqueue advanced report CSS on gift card report page
+			if ( isset( $_GET['page'] ) && $_GET['page'] === 'wc-reports' && isset( $_GET['tab'] ) && $_GET['tab'] === 'giftcard_report' ) {
+				wp_enqueue_style( $this->plugin_name . '-advanced-report', plugin_dir_url( __FILE__ ) . 'css/wps-uwgc-advanced-report.css', array(), $this->version, 'all' );
+			}
+
 			if ( ! wps_uwgc_pro_active() && $this->wps_wgm_is_import_template_screen() ) {
 
 				wp_enqueue_style( $this->plugin_name . 'tmp', plugin_dir_url( __FILE__ ) . 'css/woocommerce_gift_cards_import_tmp.css', array(), $this->version, 'all' );
@@ -2170,160 +2176,795 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						'meta_key'       => $meta_key, // Replace with your custom field key.
 					);
 					$suborders = wc_get_orders( $args );
-	
+
 					/////////////////////////////////////////////////////////////////////////////////////////////////////
 				}
+
+				// Get additional coupon information
+				$coupon_obj = new WC_Coupon( $coupon_id );
+				$coupon_code = $coupon_obj->get_code();
+				$usage_count = $coupon_obj->get_usage_count();
+				$expiry_date_obj = $coupon_obj->get_date_expires();
+				$expiry_date_formatted = $expiry_date_obj ? $expiry_date_obj->date_i18n( get_option( 'date_format' ) ) : __( 'No Expiry', 'woo-gift-cards-lite' );
+
+				// Calculate days to expiry
+				$days_to_expiry = __( 'No Expiry', 'woo-gift-cards-lite' );
+				$expiry_status_class = 'no-expiry';
+				if ( $expiry_date_obj ) {
+					$current_time = current_time( 'timestamp' );
+					$expiry_timestamp = $expiry_date_obj->getTimestamp();
+					$days_diff = floor( ( $expiry_timestamp - $current_time ) / DAY_IN_SECONDS );
+
+					if ( $days_diff < 0 ) {
+						$days_to_expiry = __( 'Expired', 'woo-gift-cards-lite' );
+						$expiry_status_class = 'expired';
+					} elseif ( $days_diff <= 30 ) {
+						$days_to_expiry = sprintf( __( '%d days remaining', 'woo-gift-cards-lite' ), $days_diff );
+						$expiry_status_class = 'expiring-soon';
+					} else {
+						$days_to_expiry = sprintf( __( '%d days remaining', 'woo-gift-cards-lite' ), $days_diff );
+						$expiry_status_class = 'active';
+					}
+				}
+
+				// Determine overall status
+				$is_expired = ( $expiry_status_class === 'expired' );
+				$is_fully_redeemed = ( $usage_count > 0 && floatval( $remaining_amt ) == 0 );
+				$is_partially_used = ( $usage_count > 0 && floatval( $remaining_amt ) > 0 );
+
+				if ( $is_expired ) {
+					$status_label = __( 'Expired', 'woo-gift-cards-lite' );
+					$status_class = 'expired';
+				} elseif ( $is_fully_redeemed ) {
+					$status_label = __( 'Fully Redeemed', 'woo-gift-cards-lite' );
+					$status_class = 'redeemed';
+				} elseif ( $is_partially_used ) {
+					$status_label = __( 'Partially Used', 'woo-gift-cards-lite' );
+					$status_class = 'partial';
+				} else {
+					$status_label = __( 'Active', 'woo-gift-cards-lite' );
+					$status_class = 'active';
+				}
+
+				// Calculate usage percentage
+				$usage_percentage = 0;
+				if ( ! empty( $giftcard_amount ) && $giftcard_amount > 0 ) {
+					$usage_percentage = round( ( ( $giftcard_amount - $remaining_amt ) / $giftcard_amount ) * 100, 2 );
+				}
 				?>
-				
-					<div class="wps_uwgc_report_preview">
-						<h3 style="text-align:;"><?php esc_html_e( 'Gift Card Details', 'woo-gift-cards-lite' ); ?></h3>
 
-						<table>
-							<tr>
-								<td><b><?php esc_html_e( 'Purchased Date :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo esc_html( $order_date ); ?></td>
-							</tr>
-							<tr>
-								<?php
-								if ( isset( $giftcard_amount ) && ! empty( $giftcard_amount ) ) {
-									?>
-								<td><b><?php esc_html_e( 'Gift Card Amount :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo wp_kses_post( wc_price( $giftcard_amount ) ); ?></td>
-								<?php } ?>
-							</tr>
-							
-							<tr>
-								<td><b><?php esc_html_e( 'Remaining Amount :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo wp_kses_post( wc_price( $remaining_amt ) ); ?></td>
-							</tr>
-							<tr>
-								<td><b><?php esc_html_e( ' To :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo esc_html( $to ); ?></td>
-							</tr>
-							<tr>
-								<td><b><?php esc_html_e( 'From :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo esc_html( $from ); ?></td>
-							</tr>
-							<tr>
-								<td><b><?php esc_html_e( 'Message :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo esc_html( $msg ); ?></td>
-							</tr>
-							<tr>
-								<td><b><?php esc_html_e( 'Scheduled Date :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><?php echo esc_html( ( '' !== $gift_date ) ? $gift_date : $order_date ); ?></td>
-							</tr>
-							<?php if ( isset( $variable_price_desc ) ) {
-								?>
-								<tr>
-									<td><b><?php esc_html_e( 'Variable Price Description :', 'woo-gift-cards-lite' ); ?></b></td>
-									<td><?php echo esc_html( $variable_price_desc ); ?></td>
-								</tr>
-								<?php
-							}
-							?>
-							<tr>
-								<td><b><?php esc_html_e( 'Product :', 'woo-gift-cards-lite' ); ?></b></td>
-								<td><a target="_blank" href="<?php echo esc_attr( $pro_permalink ); ?>"><?php echo esc_html( $productname ); ?></a></td>
-							</tr>
-						</table>
-						<?php
-						if (isset( $suborders ) && is_array($suborders) && !empty($suborders)){
-							?>
-								<table  class="wps_uwgc_suborer">
-								<h3 style="text-align:center;"><?php esc_html_e( 'Suborder Transactions', 'woo-gift-cards-lite' ); ?></h3>
-									<tr style="text-align:center;">
-										<th><?php esc_html_e( 'Contributor Email :', 'woo-gift-cards-lite' ); ?></th>
-										<th><?php esc_html_e( 'Contribution Amount :', 'woo-gift-cards-lite' ); ?></th>
-									</tr>
-								<?php
-									foreach ($suborders as $orde) {
-										$order_sub_id = $orde->get_id();
-										$sub_order = wc_get_order( $order_sub_id);
-									
-										$billing_email  = $sub_order->get_billing_email();
-										$product_amount = $sub_order->get_subtotal();
-										?>
-										<tr style="text-align:center;">
-											<td><?php echo esc_attr( $billing_email ); ?></td>
-											<td><?php echo wp_kses_post( wc_price( $product_amount) ); ?></td>
-										</tr>
-										<?php		
-									}
-								}
-							?>
-						<table class="wps_uwgc_transaction">
-							<h3 style="text-align:;"><?php esc_html_e( 'Gift Card Transactions', 'woo-gift-cards-lite' ); ?></h3>
-							<?php
-							$wps_gw_used_coupon_details = get_post_meta( $coupon_id, 'wps_uwgc_used_order_id', true );
-							if ( isset( $wps_gw_used_coupon_details ) && is_array( $wps_gw_used_coupon_details ) && ! empty( $wps_gw_used_coupon_details ) ) {
-								?>
-							<tr>
-								<th><?php esc_html_e( 'Order Id', 'woo-gift-cards-lite' ); ?></th>
-								<th><?php esc_html_e( 'Used Amount', 'woo-gift-cards-lite' ); ?></th>
-							</tr>
-								<?php
-
-								foreach ( $wps_gw_used_coupon_details as $key => $value ) {
-									?>
-								<tr>
-									<td>
-										<a target ="_blank" href="
-										<?php
-											echo esc_url( admin_url( 'post.php?post=' . absint( $value['order_id'] ) . '&action=edit' ) );
-										?>
-										">#<?php echo esc_html( $value['order_id'] ); ?></a>
-									</td>
-									<td> <?php echo wp_kses_post( wc_price( $value['used_amount'] ) ); ?></td>
-								</tr>
-									<?php
-								}
-							} else {
-								?>
-								<tr>
-									<td><?php esc_html_e( 'Gift Cards Not Used ', 'woo-gift-cards-lite' ); ?></td>
-								</tr>
-								<?php
-							}
-							?>
-						</table>
+				<div class="wps-uwgc-enhanced-modal">
+					<!-- Modal Header with Status -->
+					<div class="wps-modal-header">
+						<div class="wps-modal-title-section">
+							<h2><?php esc_html_e( 'Gift Card Details', 'woo-gift-cards-lite' ); ?></h2>
+							<div class="wps-gc-code-display">
+								<span class="wps-code-label"><?php esc_html_e( 'Code:', 'woo-gift-cards-lite' ); ?></span>
+								<code class="wps-gc-code"><?php echo esc_html( strtoupper( $coupon_code ) ); ?></code>
+								<button type="button" class="wps-copy-code-btn" onclick="wpsCopyGiftCardCode('<?php echo esc_js( $coupon_code ); ?>')">
+									<span class="dashicons dashicons-clipboard"></span>
+								</button>
+							</div>
+						</div>
+						<div class="wps-status-badge-large wps-status-<?php echo esc_attr( $status_class ); ?>">
+							<?php echo esc_html( $status_label ); ?>
+						</div>
 					</div>
 
-					<style type="text/css">
-						.wps_uwgc_report_preview {
+					<!-- Balance Overview Card -->
+					<div class="wps-balance-overview-card">
+						<div class="wps-balance-item">
+							<span class="wps-balance-label"><?php esc_html_e( 'Original Amount', 'woo-gift-cards-lite' ); ?></span>
+							<span class="wps-balance-value wps-original"><?php echo wp_kses_post( wc_price( $giftcard_amount ) ); ?></span>
+						</div>
+						<div class="wps-balance-divider">
+							<span class="dashicons dashicons-arrow-right-alt"></span>
+						</div>
+						<div class="wps-balance-item">
+							<span class="wps-balance-label"><?php esc_html_e( 'Used', 'woo-gift-cards-lite' ); ?></span>
+							<span class="wps-balance-value wps-used"><?php echo wp_kses_post( wc_price( $giftcard_amount - $remaining_amt ) ); ?></span>
+						</div>
+						<div class="wps-balance-divider">
+							<span class="dashicons dashicons-arrow-right-alt"></span>
+						</div>
+						<div class="wps-balance-item">
+							<span class="wps-balance-label"><?php esc_html_e( 'Remaining', 'woo-gift-cards-lite' ); ?></span>
+							<span class="wps-balance-value wps-remaining"><?php echo wp_kses_post( wc_price( $remaining_amt ) ); ?></span>
+						</div>
+					</div>
+
+					<!-- Usage Progress Bar -->
+					<div class="wps-usage-progress">
+						<div class="wps-progress-info">
+							<span><?php esc_html_e( 'Usage', 'woo-gift-cards-lite' ); ?></span>
+							<span class="wps-percentage"><?php echo esc_html( $usage_percentage ); ?>%</span>
+						</div>
+						<div class="wps-progress-bar">
+							<div class="wps-progress-fill" style="width: <?php echo esc_attr( $usage_percentage ); ?>%"></div>
+						</div>
+					</div>
+
+					<!-- Information Sections -->
+					<div class="wps-info-sections">
+						<!-- Purchase Information -->
+						<div class="wps-info-section">
+							<h3><span class="dashicons dashicons-cart"></span> <?php esc_html_e( 'Purchase Information', 'woo-gift-cards-lite' ); ?></h3>
+							<div class="wps-info-grid">
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'Purchased Date', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value"><?php echo esc_html( $order_date ); ?></span>
+								</div>
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'Order ID', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value">
+										<a href="<?php echo esc_url( admin_url( 'post.php?post=' . absint( $order_id ) . '&action=edit' ) ); ?>" target="_blank">
+											#<?php echo esc_html( $order_id ); ?>
+										</a>
+									</span>
+								</div>
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'Product', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value">
+										<a href="<?php echo esc_url( $pro_permalink ); ?>" target="_blank"><?php echo esc_html( $productname ); ?></a>
+									</span>
+								</div>
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'Times Used', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value"><strong><?php echo esc_html( $usage_count ); ?></strong></span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Gift Card Details -->
+						<div class="wps-info-section">
+							<h3><span class="dashicons dashicons-tickets-alt"></span> <?php esc_html_e( 'Gift Card Details', 'woo-gift-cards-lite' ); ?></h3>
+							<div class="wps-info-grid">
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'Recipient', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value">
+										<a href="mailto:<?php echo esc_attr( $to ); ?>"><?php echo esc_html( $to ); ?></a>
+									</span>
+								</div>
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'From', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value"><?php echo esc_html( $from ); ?></span>
+								</div>
+								<div class="wps-info-item">
+									<span class="wps-info-label"><?php esc_html_e( 'Scheduled Date', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value"><?php echo esc_html( ( '' !== $gift_date ) ? $gift_date : $order_date ); ?></span>
+								</div>
+								<div class="wps-info-item wps-full-width">
+									<span class="wps-info-label"><?php esc_html_e( 'Message', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value wps-message-box"><?php echo esc_html( $msg ? $msg : '-' ); ?></span>
+								</div>
+								<?php if ( isset( $variable_price_desc ) ) : ?>
+								<div class="wps-info-item wps-full-width">
+									<span class="wps-info-label"><?php esc_html_e( 'Variable Price Description', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-info-value"><?php echo esc_html( $variable_price_desc ); ?></span>
+								</div>
+								<?php endif; ?>
+							</div>
+						</div>
+
+						<!-- Expiry Information -->
+						<div class="wps-info-section">
+							<h3><span class="dashicons dashicons-clock"></span> <?php esc_html_e( 'Expiry Information', 'woo-gift-cards-lite' ); ?></h3>
+							<div class="wps-expiry-details">
+								<div class="wps-expiry-item">
+									<span class="wps-expiry-label"><?php esc_html_e( 'Expiry Date', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-expiry-value"><?php echo esc_html( $expiry_date_formatted ); ?></span>
+								</div>
+								<div class="wps-expiry-item">
+									<span class="wps-expiry-label"><?php esc_html_e( 'Status', 'woo-gift-cards-lite' ); ?></span>
+									<span class="wps-expiry-status wps-expiry-<?php echo esc_attr( $expiry_status_class ); ?>">
+										<?php echo esc_html( $days_to_expiry ); ?>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<?php
+					// Suborder Transactions
+					if ( isset( $suborders ) && is_array( $suborders ) && ! empty( $suborders ) ) :
+						?>
+						<div class="wps-transactions-section">
+							<h3><span class="dashicons dashicons-groups"></span> <?php esc_html_e( 'Group Contributions', 'woo-gift-cards-lite' ); ?></h3>
+							<div class="wps-contributions-list">
+								<?php foreach ( $suborders as $orde ) :
+									$order_sub_id = $orde->get_id();
+									$sub_order = wc_get_order( $order_sub_id );
+									$billing_email = $sub_order->get_billing_email();
+									$product_amount = $sub_order->get_subtotal();
+									?>
+									<div class="wps-contribution-item">
+										<div class="wps-contributor-icon">
+											<span class="dashicons dashicons-businessman"></span>
+										</div>
+										<div class="wps-contributor-details">
+											<span class="wps-contributor-email"><?php echo esc_html( $billing_email ); ?></span>
+											<span class="wps-contribution-amount"><?php echo wp_kses_post( wc_price( $product_amount ) ); ?></span>
+										</div>
+									</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					<?php endif; ?>
+
+					<!-- Redemption History -->
+					<div class="wps-transactions-section">
+						<h3><span class="dashicons dashicons-chart-line"></span> <?php esc_html_e( 'Redemption History', 'woo-gift-cards-lite' ); ?></h3>
+						<?php
+						$wps_gw_used_coupon_details = get_post_meta( $coupon_id, 'wps_uwgc_used_order_id', true );
+						if ( isset( $wps_gw_used_coupon_details ) && is_array( $wps_gw_used_coupon_details ) && ! empty( $wps_gw_used_coupon_details ) ) :
+							?>
+							<div class="wps-redemption-timeline">
+								<?php foreach ( $wps_gw_used_coupon_details as $key => $value ) :
+									$redemption_order = wc_get_order( $value['order_id'] );
+									$redemption_date = $redemption_order ? $redemption_order->get_date_created()->date_i18n( get_option( 'date_format' ) ) : '-';
+									?>
+									<div class="wps-timeline-item">
+										<div class="wps-timeline-marker"></div>
+										<div class="wps-timeline-content">
+											<div class="wps-timeline-header">
+												<span class="wps-timeline-order">
+													<a href="<?php echo esc_url( admin_url( 'post.php?post=' . absint( $value['order_id'] ) . '&action=edit' ) ); ?>" target="_blank">
+														<?php esc_html_e( 'Order', 'woo-gift-cards-lite' ); ?> #<?php echo esc_html( $value['order_id'] ); ?>
+													</a>
+												</span>
+												<span class="wps-timeline-amount"><?php echo wp_kses_post( wc_price( $value['used_amount'] ) ); ?></span>
+											</div>
+											<div class="wps-timeline-date">
+												<span class="dashicons dashicons-calendar-alt"></span>
+												<?php echo esc_html( $redemption_date ); ?>
+											</div>
+										</div>
+									</div>
+								<?php endforeach; ?>
+							</div>
+						<?php else : ?>
+							<div class="wps-no-transactions">
+								<span class="dashicons dashicons-info"></span>
+								<p><?php esc_html_e( 'This gift card has not been used yet.', 'woo-gift-cards-lite' ); ?></p>
+							</div>
+						<?php endif; ?>
+					</div>
+
+					<!-- Quick Actions -->
+					<div class="wps-modal-actions">
+						<button type="button" class="button button-primary wps-resend-gc-email" data-coupon-id="<?php echo esc_attr( $coupon_id ); ?>">
+							<span class="dashicons dashicons-email"></span>
+							<?php esc_html_e( 'Resend Email', 'woo-gift-cards-lite' ); ?>
+						</button>
+						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . absint( $coupon_id ) . '&action=edit' ) ); ?>" class="button" target="_blank">
+							<span class="dashicons dashicons-edit"></span>
+							<?php esc_html_e( 'Edit Gift Card', 'woo-gift-cards-lite' ); ?>
+						</a>
+						<button type="button" class="button wps-export-gc-details" onclick="window.print()">
+							<span class="dashicons dashicons-printer"></span>
+							<?php esc_html_e( 'Print Details', 'woo-gift-cards-lite' ); ?>
+						</button>
+					</div>
+				</div>
+
+				<!-- Enhanced Modal Styles -->
+				<style type="text/css">
+					.wps-uwgc-enhanced-modal {
 						font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-						}
-						.wps_uwgc_report_preview table {
-						width: 100%;
-						border-collapse: collapse;
-						border: 1px solid #efefef;
-						}
-						.wps_uwgc_report_preview h3 {
+						max-width: 800px;
+						margin: 0 auto;
+						padding: 30px;
+						background: #ffffff;
+					}
+
+					/* Modal Header */
+					.wps-modal-header {
+						display: flex;
+						justify-content: space-between;
+						align-items: flex-start;
+						margin-bottom: 30px;
+						padding-bottom: 20px;
+						border-bottom: 2px solid #f0f0f0;
+					}
+
+					.wps-modal-title-section h2 {
+						margin: 0 0 15px 0;
+						font-size: 28px;
+						color: #2c3e50;
+					}
+
+					.wps-gc-code-display {
+						display: flex;
+						align-items: center;
+						gap: 10px;
+						background: #f8f9fa;
+						padding: 10px 15px;
+						border-radius: 6px;
+					}
+
+					.wps-code-label {
+						font-size: 13px;
+						color: #7f8c8d;
+						font-weight: 600;
+					}
+
+					.wps-gc-code {
+						font-size: 18px;
+						font-weight: 700;
+						color: #3498db;
+						font-family: 'Courier New', monospace;
+						letter-spacing: 2px;
+					}
+
+					.wps-copy-code-btn {
+						background: transparent;
+						border: none;
+						cursor: pointer;
+						padding: 4px;
+						color: #7f8c8d;
+						transition: color 0.2s;
+					}
+
+					.wps-copy-code-btn:hover {
+						color: #2c3e50;
+					}
+
+					.wps-status-badge-large {
+						padding: 10px 20px;
+						border-radius: 20px;
+						font-weight: 700;
+						font-size: 14px;
+						text-transform: uppercase;
+						letter-spacing: 1px;
+					}
+
+					.wps-status-active {
+						background: #d5f4e6;
+						color: #27ae60;
+					}
+
+					.wps-status-expired {
+						background: #fadbd8;
+						color: #e74c3c;
+					}
+
+					.wps-status-partial {
+						background: #fff3cd;
+						color: #f39c12;
+					}
+
+					.wps-status-redeemed {
+						background: #d6eaf8;
+						color: #2980b9;
+					}
+
+					/* Balance Overview */
+					.wps-balance-overview-card {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+						padding: 25px;
+						border-radius: 12px;
+						margin-bottom: 25px;
+						color: #ffffff;
+					}
+
+					.wps-balance-item {
+						flex: 1;
 						text-align: center;
+					}
+
+					.wps-balance-label {
+						display: block;
+						font-size: 12px;
+						text-transform: uppercase;
+						letter-spacing: 1px;
+						opacity: 0.9;
+						margin-bottom: 8px;
+					}
+
+					.wps-balance-value {
+						display: block;
 						font-size: 24px;
-						margin: 0 0 20px;
-						}
-						.wps_uwgc_report_preview .wps_uwgc_transaction {
-						text-align: center;
-						border: 1px solid #efefef;
-						}
-						.wps_uwgc_report_preview .wps_uwgc_transaction td, .wps_uwgc_report_preview .wps_uwgc_transaction th {
-						border-bottom: 1px solid #efefef;
+						font-weight: 700;
+					}
+
+					.wps-balance-divider {
+						font-size: 24px;
+						opacity: 0.7;
+					}
+
+					/* Usage Progress */
+					.wps-usage-progress {
+						margin-bottom: 30px;
+					}
+
+					.wps-progress-info {
+						display: flex;
+						justify-content: space-between;
+						margin-bottom: 8px;
+						font-size: 13px;
+						font-weight: 600;
+						color: #2c3e50;
+					}
+
+					.wps-progress-bar {
+						height: 12px;
+						background: #ecf0f1;
+						border-radius: 6px;
+						overflow: hidden;
+					}
+
+					.wps-progress-fill {
+						height: 100%;
+						background: linear-gradient(90deg, #27ae60, #2ecc71);
+						transition: width 0.8s ease;
+						border-radius: 6px;
+					}
+
+					/* Info Sections */
+					.wps-info-sections {
+						display: grid;
+						gap: 20px;
+						margin-bottom: 30px;
+					}
+
+					.wps-info-section {
+						background: #f8f9fa;
+						border-radius: 8px;
+						padding: 20px;
+					}
+
+					.wps-info-section h3 {
+						margin: 0 0 15px 0;
+						font-size: 16px;
+						color: #2c3e50;
+						display: flex;
+						align-items: center;
+						gap: 8px;
+					}
+
+					.wps-info-section h3 .dashicons {
+						color: #3498db;
+					}
+
+					.wps-info-grid {
+						display: grid;
+						grid-template-columns: repeat(2, 1fr);
+						gap: 15px;
+					}
+
+					.wps-info-item {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+					}
+
+					.wps-info-item.wps-full-width {
+						grid-column: 1 / -1;
+					}
+
+					.wps-info-label {
+						font-size: 12px;
+						color: #7f8c8d;
+						font-weight: 600;
+						text-transform: uppercase;
+						letter-spacing: 0.5px;
+					}
+
+					.wps-info-value {
+						font-size: 14px;
+						color: #2c3e50;
+						font-weight: 500;
+					}
+
+					.wps-info-value a {
+						color: #3498db;
+						text-decoration: none;
+					}
+
+					.wps-info-value a:hover {
+						text-decoration: underline;
+					}
+
+					.wps-message-box {
+						background: #ffffff;
 						padding: 10px;
-						}
-						.wps_uwgc_report_preview table ~ h3 {
-						margin-top: 25px;
-						}
-						.wps_uwgc_report_preview .wps_uwgc_transaction {
+						border-radius: 4px;
+						border-left: 3px solid #3498db;
+					}
+
+					/* Expiry Details */
+					.wps-expiry-details {
+						display: flex;
+						gap: 30px;
+					}
+
+					.wps-expiry-item {
+						flex: 1;
+						display: flex;
+						flex-direction: column;
+						gap: 8px;
+					}
+
+					.wps-expiry-label {
+						font-size: 12px;
+						color: #7f8c8d;
+						font-weight: 600;
+						text-transform: uppercase;
+						letter-spacing: 0.5px;
+					}
+
+					.wps-expiry-value,
+					.wps-expiry-status {
+						font-size: 16px;
+						font-weight: 600;
+					}
+
+					.wps-expiry-active {
+						color: #27ae60;
+					}
+
+					.wps-expiry-expiring-soon {
+						color: #f39c12;
+					}
+
+					.wps-expiry-expired {
+						color: #e74c3c;
+					}
+
+					.wps-expiry-no-expiry {
+						color: #95a5a6;
+					}
+
+					/* Transactions Section */
+					.wps-transactions-section {
+						background: #ffffff;
+						border: 1px solid #e0e0e0;
+						border-radius: 8px;
+						padding: 20px;
+						margin-bottom: 20px;
+					}
+
+					.wps-transactions-section h3 {
+						margin: 0 0 20px 0;
+						font-size: 18px;
+						color: #2c3e50;
+						display: flex;
+						align-items: center;
+						gap: 8px;
+					}
+
+					/* Contributions */
+					.wps-contributions-list {
+						display: flex;
+						flex-direction: column;
+						gap: 12px;
+					}
+
+					.wps-contribution-item {
+						display: flex;
+						align-items: center;
+						gap: 15px;
+						padding: 12px;
+						background: #f8f9fa;
+						border-radius: 6px;
+					}
+
+					.wps-contributor-icon {
+						width: 40px;
+						height: 40px;
+						background: #3498db;
+						border-radius: 50%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						color: #ffffff;
+						font-size: 20px;
+					}
+
+					.wps-contributor-details {
+						flex: 1;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+					}
+
+					.wps-contributor-email {
+						font-size: 14px;
+						color: #2c3e50;
+					}
+
+					.wps-contribution-amount {
+						font-weight: 700;
+						color: #27ae60;
+					}
+
+					/* Redemption Timeline */
+					.wps-redemption-timeline {
+						position: relative;
+						padding-left: 30px;
+					}
+
+					.wps-redemption-timeline::before {
+						content: '';
+						position: absolute;
+						left: 8px;
+						top: 0;
+						bottom: 0;
+						width: 2px;
+						background: #e0e0e0;
+					}
+
+					.wps-timeline-item {
+						position: relative;
+						padding-bottom: 25px;
+					}
+
+					.wps-timeline-item:last-child {
+						padding-bottom: 0;
+					}
+
+					.wps-timeline-marker {
+						position: absolute;
+						left: -26px;
+						top: 4px;
+						width: 18px;
+						height: 18px;
+						background: #27ae60;
+						border: 3px solid #ffffff;
+						border-radius: 50%;
+						box-shadow: 0 0 0 2px #27ae60;
+					}
+
+					.wps-timeline-content {
+						background: #f8f9fa;
+						padding: 15px;
+						border-radius: 8px;
+						border-left: 3px solid #27ae60;
+					}
+
+					.wps-timeline-header {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						margin-bottom: 8px;
+					}
+
+					.wps-timeline-order a {
+						color: #3498db;
+						text-decoration: none;
+						font-weight: 600;
+					}
+
+					.wps-timeline-order a:hover {
+						text-decoration: underline;
+					}
+
+					.wps-timeline-amount {
+						font-weight: 700;
+						color: #27ae60;
+						font-size: 16px;
+					}
+
+					.wps-timeline-date {
+						font-size: 13px;
+						color: #7f8c8d;
+						display: flex;
+						align-items: center;
+						gap: 5px;
+					}
+
+					.wps-no-transactions {
 						text-align: center;
+						padding: 40px 20px;
+						color: #7f8c8d;
+					}
+
+					.wps-no-transactions .dashicons {
+						font-size: 48px;
+						width: 48px;
+						height: 48px;
+						opacity: 0.5;
+					}
+
+					.wps-no-transactions p {
+						margin: 10px 0 0 0;
+						font-size: 15px;
+					}
+
+					/* Modal Actions */
+					.wps-modal-actions {
+						display: flex;
+						gap: 10px;
+						justify-content: center;
+						padding-top: 20px;
+						border-top: 2px solid #f0f0f0;
+					}
+
+					.wps-modal-actions .button {
+						display: inline-flex;
+						align-items: center;
+						gap: 6px;
+					}
+
+					/* Responsive */
+					@media screen and (max-width: 768px) {
+						.wps-uwgc-enhanced-modal {
+							padding: 20px;
 						}
-						.wps_uwgc_report_preview .wps_uwgc_transaction th {
-						background-color: #efefef;
+
+						.wps-modal-header {
+							flex-direction: column;
+							gap: 15px;
 						}
-						.wps_uwgc_report_preview table td {
-							padding: 10px;
-							border-bottom: 1px solid #efefef;
+
+						.wps-balance-overview-card {
+							flex-direction: column;
+							gap: 15px;
 						}
-					</style>
+
+						.wps-balance-divider {
+							transform: rotate(90deg);
+						}
+
+						.wps-info-grid {
+							grid-template-columns: 1fr;
+						}
+
+						.wps-modal-actions {
+							flex-direction: column;
+						}
+					}
+
+					/* Print Styles */
+					@media print {
+						.wps-modal-actions,
+						.wps-copy-code-btn {
+							display: none !important;
+						}
+					}
+
+					/* Copy Code Animation */
+					@keyframes wps-copy-success {
+						0%, 100% { transform: scale(1); }
+						50% { transform: scale(1.2); }
+					}
+
+					/* JavaScript Functions */
+					<script>
+					function wpsCopyGiftCardCode(code) {
+						// Create temp input
+						var tempInput = document.createElement('input');
+						tempInput.value = code;
+						document.body.appendChild(tempInput);
+						tempInput.select();
+
+						try {
+							document.execCommand('copy');
+							// Show success feedback
+							var btn = event.target.closest('.wps-copy-code-btn');
+							var icon = btn.querySelector('.dashicons');
+							var originalClass = icon.className;
+
+							icon.className = 'dashicons dashicons-yes';
+							btn.style.color = '#27ae60';
+							btn.style.animation = 'wps-copy-success 0.3s ease';
+
+							setTimeout(function() {
+								icon.className = originalClass;
+								btn.style.color = '';
+								btn.style.animation = '';
+							}, 1500);
+						} catch (err) {
+							console.error('Failed to copy code:', err);
+						}
+
+						document.body.removeChild(tempInput);
+					}
+					</script>
+				</style>
 				<?php
 				$message = ob_get_clean();
 				$wps_admin_obj = new Woocommerce_Gift_Cards_Common_Function();

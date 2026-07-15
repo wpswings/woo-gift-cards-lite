@@ -248,11 +248,67 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		}
 
 		/**
+		 * Create database tables for advanced reporting and failed coupon tracking.
+		 *
+		 * @name create_database_tables
+		 * @author WP Swings <webmaster@wpswings.com>
+		 * @link https://www.wpswings.com/
+		 */
+		public function create_database_tables() {
+			global $wpdb;
+			$charset_collate = $wpdb->get_charset_collate();
+
+			// Table for failed gift card operations.
+			$table_name = $wpdb->prefix . 'wps_gift_card_failures';
+
+			$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+				id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+				failure_timestamp datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				failure_type varchar(50) NOT NULL,
+				severity varchar(20) NOT NULL DEFAULT 'medium',
+				status varchar(20) NOT NULL DEFAULT 'new',
+				order_id bigint(20) UNSIGNED NULL,
+				coupon_id bigint(20) UNSIGNED NULL,
+				coupon_code varchar(255) NULL,
+				customer_email varchar(255) NULL,
+				customer_name varchar(255) NULL,
+				error_message text NULL,
+				error_code varchar(100) NULL,
+				stack_trace longtext NULL,
+				context longtext NULL,
+				retry_count int(11) NOT NULL DEFAULT 0,
+				last_retry_timestamp datetime NULL,
+				max_retries int(11) NOT NULL DEFAULT 3,
+				assigned_to bigint(20) UNSIGNED NULL,
+				resolution_notes text NULL,
+				resolved_timestamp datetime NULL,
+				created_by bigint(20) UNSIGNED NULL,
+				updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				PRIMARY KEY  (id),
+				KEY failure_timestamp (failure_timestamp),
+				KEY failure_type (failure_type),
+				KEY severity (severity),
+				KEY status (status),
+				KEY order_id (order_id),
+				KEY customer_email (customer_email)
+			) $charset_collate;";
+
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+			dbDelta( $sql );
+
+			// Store the database version for future updates.
+			update_option( 'wps_wgm_db_version', '1.0.0' );
+		}
+
+		/**
 		 * This function is used to restore the overall functionality of plugin
 		 *
 		 * @return void
 		 */
 		public function on_activation() {
+			// Create database tables for advanced reporting.
+			$this->create_database_tables();
+
 			$wps_check_enable = false;
 			$giftcard_enable  = get_option( 'wps_wgm_general_setting_enable', false );
 			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {

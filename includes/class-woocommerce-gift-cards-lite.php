@@ -132,6 +132,11 @@ class Woocommerce_Gift_Cards_Lite {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woocommerce-gift-cards-lite-public.php';
 
+		/**
+		 * The class responsible for tracking failed gift card operations.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wps-gift-card-failure-tracker.php';
+
 		$this->loader = new Woocommerce_Gift_Cards_Lite_Loader();
 
 		/**
