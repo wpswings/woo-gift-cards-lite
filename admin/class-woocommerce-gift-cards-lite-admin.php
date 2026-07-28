@@ -2235,7 +2235,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 				<div class="wps-uwgc-enhanced-modal">
 					<!-- Modal Header with Status -->
-					<div class="wps-modal-header">
+					<div class="wps-modal-header" style="background: transparent; padding: 0;">
 						<div class="wps-modal-title-section">
 							<h2><?php esc_html_e( 'Gift Card Details', 'woo-gift-cards-lite' ); ?></h2>
 							<div class="wps-gc-code-display">
@@ -2244,10 +2244,10 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								<button type="button" class="wps-copy-code-btn" onclick="wpsCopyGiftCardCode('<?php echo esc_js( $coupon_code ); ?>')">
 									<span class="dashicons dashicons-clipboard"></span>
 								</button>
+								<span class="wps-status-badge-large wps-status-<?php echo esc_attr( $status_class ); ?>" style="margin-left: 15px;">
+									<?php echo esc_html( $status_label ); ?>
+								</span>
 							</div>
-						</div>
-						<div class="wps-status-badge-large wps-status-<?php echo esc_attr( $status_class ); ?>">
-							<?php echo esc_html( $status_label ); ?>
 						</div>
 					</div>
 
@@ -2887,6 +2887,40 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						display: inline-flex;
 						align-items: center;
 						gap: 6px;
+						padding: 8px 16px;
+						border-radius: 4px;
+						font-size: 14px;
+						font-weight: 500;
+						text-decoration: none;
+						transition: all 0.2s ease;
+						cursor: pointer;
+						border: 1px solid #ccd0d4;
+						background: #f6f7f7;
+						color: #2c3338;
+					}
+
+					.wps-modal-actions .button:hover {
+						background: #f0f0f1;
+						border-color: #8c8f94;
+						color: #1d2327;
+					}
+
+					.wps-modal-actions .button-primary {
+						background: #2271b1;
+						border-color: #2271b1;
+						color: #fff;
+					}
+
+					.wps-modal-actions .button-primary:hover {
+						background: #135e96;
+						border-color: #135e96;
+						color: #fff;
+					}
+
+					.wps-modal-actions .button .dashicons {
+						font-size: 18px;
+						width: 18px;
+						height: 18px;
 					}
 
 					/* Responsive */

@@ -230,9 +230,8 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				$html = '<span class="wps-source-badge"><span class="dashicons dashicons-' . esc_attr( $icon ) . '"></span> ' . esc_html( $source ) . '</span>';
 				return $html;
 			case 'action':
-				$text = __( 'View Details', 'woo-gift-cards-lite' );
 				$html = '<div class="wps-gc-actions">';
-				$html .= '<button type="button" class="button wps_uwgc_gift_report_view" data-coupon-id="' . absint( $item['coupon_id'] ) . '" data-order-id="' . absint( $item['order_id'] ) . '">' . esc_html( $text ) . '</button>';
+				$html .= '<button type="button" class="button-link wps_uwgc_gift_report_view wps-view-details-icon" data-coupon-id="' . absint( $item['coupon_id'] ) . '" data-order-id="' . absint( $item['order_id'] ) . '" title="' . esc_attr__( 'View Details', 'woo-gift-cards-lite' ) . '"><span class="dashicons dashicons-visibility"></span></button>';
 				$html .= '<div class="wps-quick-actions">';
 				$html .= '<button type="button" class="button-link wps-resend-email" data-coupon-id="' . absint( $item['coupon_id'] ) . '" title="' . esc_attr__( 'Resend Email', 'woo-gift-cards-lite' ) . '"><span class="dashicons dashicons-email"></span></button>';
 				$html .= '</div>';

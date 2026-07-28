@@ -34,13 +34,5 @@ $wps_wgm_delivery_settings = array(
 		'desc'          => esc_html__( 'Enable Downloadable feature', 'woo-gift-cards-lite' ),
 		'default_value' => 0,
 	),
-	array(
-		'title'    => esc_html__( 'Allow Free Shipping on Zero Amount', 'woo-gift-cards-lite' ),
-		'id'       => 'wps_wgm_delivery_auto_freeshipping_zero_total',
-		'type'     => 'checkbox',
-		'class'    => 'input-text',
-		'desc_tip' => esc_html__( 'When enabled, if a gift card coupon is applied at checkout and the order total becomes $0, free shipping will be automatically enabled on that gift card coupon. After payment is complete, the free shipping will be automatically disabled on the coupon. This prevents orders from failing when gift cards cover the full order amount but shipping remains. Note: The "Free Shipping" setting in General Settings must also be enabled, and a free shipping method must be configured in your shipping zones.', 'woo-gift-cards-lite' ),
-		'desc'     => esc_html__( 'Automatically enable free shipping when gift card makes total $0, then disable after payment complete', 'woo-gift-cards-lite' ),
-	),
 );
  $wps_wgm_delivery_settings = apply_filters( 'wps_wgm_delivery_settings', $wps_wgm_delivery_settings );
