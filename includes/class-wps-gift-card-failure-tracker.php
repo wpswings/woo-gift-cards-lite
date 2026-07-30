@@ -225,7 +225,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$result = $wpdb->query(
 				$wpdb->prepare(
-					"UPDATE " . esc_sql($table_name)
+					"UPDATE " . esc_sql($table_name) . "
 					SET retry_count = retry_count + 1,
 					    last_retry_timestamp = %s
 					WHERE id = %d",
@@ -267,7 +267,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failures = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT * FROM " . esc_sql($table_name)
+					"SELECT * FROM " . esc_sql($table_name) . "
 					WHERE status = %s
 					ORDER BY failure_timestamp DESC
 					LIMIT %d",
@@ -293,7 +293,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failures = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT * FROM " . esc_sql($table_name)
+					"SELECT * FROM " . esc_sql($table_name) . "
 					WHERE failure_type = %s
 					ORDER BY failure_timestamp DESC
 					LIMIT %d",
@@ -508,7 +508,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$deleted = $wpdb->query(
 				$wpdb->prepare(
-					"DELETE FROM " . esc_sql($table_name)
+					"DELETE FROM " . esc_sql($table_name) . "
 					WHERE status = 'resolved'
 					AND resolved_timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)",
 					$days
