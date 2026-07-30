@@ -582,7 +582,6 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				$purchase_date = get_the_date( 'F j, Y', $coupon_id );
 
 				$wps_uwgc_data[] = array(
-				$wps_uwgc_data_count++;
 					'coupon_id'        => $coupon_id,
 					'giftcard_code'    => $coupon_code,
 					'order_id'         => $order_id,
@@ -598,6 +597,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					'status_label'     => $status_label,
 					'status_class'     => $status_class,
 				);
+				$wps_uwgc_data_count++;
 
 				if ( count( $wps_uwgc_data ) >= $per_page ) {
 					break 2;
