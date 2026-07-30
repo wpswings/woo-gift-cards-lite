@@ -3819,15 +3819,15 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 										<?php esc_html_e( 'Coupon Code:', 'woo-gift-cards-lite' ); ?>
 									</td>
 									<td style="padding: 8px 0;">
-										<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-											<strong style="font-size: 18px; color: <?php echo esc_attr( $coupon_color ); ?>; background: #fff; padding: 5px 10px; border: 1px dashed <?php echo esc_attr( $coupon_color ); ?>; border-radius: 3px; display: inline-block;" class="wps-giftcard-code">
-												<?php echo esc_html( $gift_card['coupon_code'] ); ?>
-											</strong>
-											<button type="button" class="wps-copy-coupon-btn" data-coupon="<?php echo esc_attr( $gift_card['coupon_code'] ); ?>" style="background: <?php echo esc_attr( $button_color ); ?>; color: #fff; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; font-size: 14px; transition: background 0.3s ease;">
-												<?php esc_html_e( 'Copy Code', 'woo-gift-cards-lite' ); ?>
-											</button>
-										</div>
-									</td>
+                                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;padding:0 10px;">
+                                            <strong style="font-size: 18px; color: <?php echo esc_attr( $coupon_color ); ?>; background: #fff; padding: 5px 10px; border: 1px dashed <?php echo esc_attr( $coupon_color ); ?>; border-radius: 3px; display: inline-block;" class="wps-giftcard-code">
+                                                <?php echo esc_html( $gift_card['coupon_code'] ); ?>
+                                            </strong>
+                                            <button type="button" class="wps-copy-coupon-btn" data-coupon="<?php echo esc_attr( $gift_card['coupon_code'] ); ?>" style="background: <?php echo esc_attr( $button_color ); ?>; color: #fff; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; font-size: 14px; transition: background 0.3s ease; margin:0;">
+                                                <?php esc_html_e( 'Copy Code', 'woo-gift-cards-lite' ); ?>
+                                            </button>
+                                        </div>
+                                    </td>
 								</tr>
 								<tr>
 									<td style="padding: 8px 0; font-weight: bold;">
