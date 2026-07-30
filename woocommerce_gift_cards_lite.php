@@ -214,7 +214,7 @@ if ( $activated ) {
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.5', '<' ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			wp_die(
-				esc_html__( 'Ultimate Gift Cards For WooCommerce requires WooCommerce 6.5 or higher. You are running WooCommerce ', 'woo-gift-cards-lite' ) . WC_VERSION,
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires WooCommerce 6.5 or higher. You are running WooCommerce ', 'woo-gift-cards-lite' ) . esc_html( WC_VERSION ),
 				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
 				array( 'back_link' => true )
 			);

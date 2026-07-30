@@ -2300,9 +2300,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$days_to_expiry = __( 'Expired', 'woo-gift-cards-lite' );
 						$expiry_status_class = 'expired';
 					} elseif ( $days_diff <= 30 ) {
+						/* translators: %d: number of days until gift card expiry */
 						$days_to_expiry = sprintf( __( '%d days remaining', 'woo-gift-cards-lite' ), $days_diff );
 						$expiry_status_class = 'expiring-soon';
 					} else {
+						/* translators: %d: number of days until gift card expiry */
 						$days_to_expiry = sprintf( __( '%d days remaining', 'woo-gift-cards-lite' ), $days_diff );
 						$expiry_status_class = 'active';
 					}

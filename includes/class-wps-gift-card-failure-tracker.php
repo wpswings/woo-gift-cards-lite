@@ -164,7 +164,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failure = $wpdb->get_row(
 				$wpdb->prepare(
-					"SELECT * FROM {$table_name} WHERE id = %d",
+					"SELECT * FROM " . esc_sql($table_name) . " WHERE id = %d",
 					$failure_id
 				)
 			);
@@ -225,7 +225,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$result = $wpdb->query(
 				$wpdb->prepare(
-					"UPDATE {$table_name}
+					"UPDATE " . esc_sql($table_name)
 					SET retry_count = retry_count + 1,
 					    last_retry_timestamp = %s
 					WHERE id = %d",
@@ -267,7 +267,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failures = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT * FROM {$table_name}
+					"SELECT * FROM " . esc_sql($table_name)
 					WHERE status = %s
 					ORDER BY failure_timestamp DESC
 					LIMIT %d",
@@ -293,7 +293,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failures = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT * FROM {$table_name}
+					"SELECT * FROM " . esc_sql($table_name)
 					WHERE failure_type = %s
 					ORDER BY failure_timestamp DESC
 					LIMIT %d",
@@ -336,45 +336,45 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			// Get total failures.
 			$total = $wpdb->get_var(
-				"SELECT COUNT(*) FROM {$table_name} WHERE 1=1 {$date_filter}"
+				"SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE 1=1 " . $date_filter
 			);
 
 			// Get failures by type.
 			$by_type = $wpdb->get_results(
 				"SELECT failure_type, COUNT(*) as count
-				FROM {$table_name}
-				WHERE 1=1 {$date_filter}
+				FROM " . esc_sql($table_name) . "
+				WHERE 1=1 " . $date_filter . "
 				GROUP BY failure_type"
 			);
 
 			// Get failures by severity.
 			$by_severity = $wpdb->get_results(
 				"SELECT severity, COUNT(*) as count
-				FROM {$table_name}
-				WHERE 1=1 {$date_filter}
+				FROM " . esc_sql($table_name) . "
+				WHERE 1=1 " . $date_filter . "
 				GROUP BY severity"
 			);
 
 			// Get failures by status.
 			$by_status = $wpdb->get_results(
 				"SELECT status, COUNT(*) as count
-				FROM {$table_name}
-				WHERE 1=1 {$date_filter}
+				FROM " . esc_sql($table_name) . "
+				WHERE 1=1 " . $date_filter . "
 				GROUP BY status"
 			);
 
 			// Get critical failures.
 			$critical_count = $wpdb->get_var(
-				"SELECT COUNT(*) FROM {$table_name}
+				"SELECT COUNT(*) FROM " . esc_sql($table_name) . "
 				WHERE severity = 'critical'
-				AND status != 'resolved' {$date_filter}"
+				AND status != 'resolved' " . $date_filter
 			);
 
 			// Get pending recoveries.
 			$pending_recoveries = $wpdb->get_var(
-				"SELECT COUNT(*) FROM {$table_name}
+				"SELECT COUNT(*) FROM " . esc_sql($table_name) . "
 				WHERE status IN ('new', 'in_progress')
-				AND retry_count < max_retries {$date_filter}"
+				AND retry_count < max_retries " . $date_filter
 			);
 
 			return array(
@@ -508,7 +508,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$deleted = $wpdb->query(
 				$wpdb->prepare(
-					"DELETE FROM {$table_name}
+					"DELETE FROM " . esc_sql($table_name)
 					WHERE status = 'resolved'
 					AND resolved_timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)",
 					$days

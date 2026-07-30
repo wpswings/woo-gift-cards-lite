@@ -461,8 +461,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
 		$wps_uwgc_data    = array();
+		$wps_uwgc_data_count = 0;
 
-		while ( count( $wps_uwgc_data ) < $per_page ) {
+		while ( $wps_uwgc_data_count < $per_page ) {
 			$paged_sql = $sql . $wpdb->prepare( ' LIMIT %d OFFSET %d', $batch_size, $raw_offset );
 			$results   = $wpdb->get_results( $paged_sql );
 
@@ -581,6 +582,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				$purchase_date = get_the_date( 'F j, Y', $coupon_id );
 
 				$wps_uwgc_data[] = array(
+				$wps_uwgc_data_count++;
 					'coupon_id'        => $coupon_id,
 					'giftcard_code'    => $coupon_code,
 					'order_id'         => $order_id,
