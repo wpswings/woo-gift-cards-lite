@@ -3065,8 +3065,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						50% { transform: scale(1.2); }
 					}
 
-					/* JavaScript Functions */
-					<script>
+					</style>
+				<?php
+				$message = ob_get_clean();
+				$wps_admin_obj = new Woocommerce_Gift_Cards_Common_Function();
+				$allowed_tags = $wps_admin_obj->wps_allowed_html_tags();
+				echo wp_kses( $message, $allowed_tags );
+				?>
+				<script>
 					function wpsCopyGiftCardCode(code) {
 						// Create temp input
 						var tempInput = document.createElement('input');
@@ -3097,16 +3103,23 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						document.body.removeChild(tempInput);
 					}
 
-					// Resend gift card email handler
-					jQuery(document).ready(function($) {
-						$('.wps-resend-email, .wps-resend-gc-email').on('click', function(e) {
+				// Resend gift card email handler (Vanilla JS)
+				document.addEventListener('DOMContentLoaded', function() {
+					console.log('Script loaded, attaching event handlers');
+
+					var buttons = document.querySelectorAll('.wps-resend-email, .wps-resend-gc-email');
+					console.log('Found buttons:', buttons.length);
+
+					buttons.forEach(function(button) {
+						button.addEventListener('click', function(e) {
 							e.preventDefault();
 							e.stopPropagation();
 
-							var coupon_id = $(this).attr('data-coupon-id');
-							var $button = $(this);
+							console.log('Button clicked');
 
-							if ($button.hasClass('sending')) {
+							var coupon_id = this.getAttribute('data-coupon-id');
+
+							if (this.classList.contains('sending')) {
 								return;
 							}
 
@@ -3114,60 +3127,73 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								return;
 							}
 
-							$button.addClass('sending');
-							var originalIcon = $button.find('.dashicons').attr('class');
-							$button.find('.dashicons').attr('class', 'dashicons dashicons-update wps-spinning');
+							this.classList.add('sending');
+							var dashicon = this.querySelector('.dashicons');
+							var originalIcon = dashicon ? dashicon.className : '';
+							if (dashicon) {
+								dashicon.className = 'dashicons dashicons-update wps-spinning';
+							}
 
-							var data = {
-								action: 'wps_uwgc_resend_gift_card_email',
-								coupon_id: coupon_id,
-								wps_uwgc_nonce: '<?php echo esc_js( wp_create_nonce( "wps-uwgc-giftcard-report-nonce" ) ); ?>'
-							};
+							var formData = new FormData();
+							formData.append('action', 'wps_uwgc_resend_gift_card_email');
+							formData.append('coupon_id', coupon_id);
+							formData.append('wps_uwgc_nonce', '<?php echo esc_js( wp_create_nonce( "wps-uwgc-giftcard-report-nonce" ) ); ?>');
 
-							$.ajax({
-								url: '<?php echo esc_url( admin_url( "admin-ajax.php" ) ); ?>',
-								type: 'POST',
-								data: data,
-								success: function(response) {
-									$button.removeClass('sending');
+							var self = this;
 
-									if (response.success) {
-										// Show success
-										$button.find('.dashicons').attr('class', 'dashicons dashicons-yes');
-										$button.css('color', '#27ae60');
+							fetch('<?php echo esc_url( admin_url( "admin-ajax.php" ) ); ?>', {
+								method: 'POST',
+								body: formData
+							})
+							.then(function(response) {
+								return response.json();
+							})
+							.then(function(data) {
+								self.classList.remove('sending');
 
-										setTimeout(function() {
-											$button.find('.dashicons').attr('class', originalIcon);
-											$button.css('color', '');
-										}, 2000);
-									} else {
-										// Show error
-										$button.find('.dashicons').attr('class', 'dashicons dashicons-no');
-										$button.css('color', '#e74c3c');
-
-										setTimeout(function() {
-											$button.find('.dashicons').attr('class', originalIcon);
-											$button.css('color', '');
-										}, 2000);
-
-										alert(response.data.message || 'Failed to resend email.');
+								if (data.success) {
+									// Show success
+									if (dashicon) {
+										dashicon.className = 'dashicons dashicons-yes';
 									}
-								},
-								error: function() {
-									$button.removeClass('sending');
-									$button.find('.dashicons').attr('class', originalIcon);
-									alert('An error occurred. Please try again.');
+									self.style.color = '#27ae60';
+
+									setTimeout(function() {
+										if (dashicon) {
+											dashicon.className = originalIcon;
+										}
+										self.style.color = '';
+									}, 2000);
+								} else {
+									// Show error
+									if (dashicon) {
+										dashicon.className = 'dashicons dashicons-no';
+									}
+									self.style.color = '#e74c3c';
+
+									setTimeout(function() {
+										if (dashicon) {
+											dashicon.className = originalIcon;
+										}
+										self.style.color = '';
+									}, 2000);
+
+									alert(data.data.message || 'Failed to resend email.');
 								}
+							})
+							.catch(function(error) {
+								console.error('AJAX error:', error);
+								self.classList.remove('sending');
+								if (dashicon) {
+									dashicon.className = originalIcon;
+								}
+								alert('An error occurred. Please try again.');
 							});
 						});
 					});
+				});
 					</script>
-				</style>
 				<?php
-				$message = ob_get_clean();
-				$wps_admin_obj = new Woocommerce_Gift_Cards_Common_Function();
-				$allowed_tags = $wps_admin_obj->wps_allowed_html_tags();
-				echo wp_kses( $message, $allowed_tags );
 				wp_die();
 			}
 		}
