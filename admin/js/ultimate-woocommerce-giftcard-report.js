@@ -76,7 +76,7 @@ jQuery( document ).ready(
 		// Resend gift card email
 		jQuery( document ).on(
 			'click',
-			'.wps-resend-email',
+			'.wps-resend-email, .wps-resend-gc-email',
 			function(e){
 				e.preventDefault();
 				e.stopPropagation();

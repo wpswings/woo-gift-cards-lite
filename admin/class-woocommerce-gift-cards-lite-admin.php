@@ -292,7 +292,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'wps_uwgc_report_nonce' => wp_create_nonce( 'wps-uwgc-giftcard-report-nonce' ),
 				);
-				wp_enqueue_script( 'wps_uwgc_report_js', plugin_dir_url( __FILE__ ) . 'js/ultimate-woocommerce-giftcard-report.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'wps_uwgc_report_js', plugin_dir_url( __FILE__ ) . 'js/ultimate-woocommerce-giftcard-report.js', array( 'jquery' ), $this->version . '.' . filemtime( plugin_dir_path( __FILE__ ) . 'js/ultimate-woocommerce-giftcard-report.js' ), true );
 				wp_localize_script( 'wps_uwgc_report_js', 'ajax_object', $wps_uwgc_report_array );
 				wp_enqueue_script( 'thickbox' );
 				wp_enqueue_style( 'thickbox' );
@@ -2067,6 +2067,107 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
+	 * AJAX handler to resend gift card email.
+	 *
+	 * @since 1.0.0
+	 * @name wps_uwgc_resend_gift_card_email()
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_uwgc_resend_gift_card_email() {
+		check_ajax_referer( 'wps-uwgc-giftcard-report-nonce', 'wps_uwgc_nonce' );
+
+		$coupon_id = isset( $_POST['coupon_id'] ) ? absint( $_POST['coupon_id'] ) : 0;
+
+		error_log( 'wps_uwgc_resend_gift_card_email: Starting resend for coupon_id: ' . $coupon_id );
+
+		if ( ! $coupon_id ) {
+			error_log( 'wps_uwgc_resend_gift_card_email: Invalid coupon ID' );
+			wp_send_json_error( array( 'message' => __( 'Invalid coupon ID.', 'woo-gift-cards-lite' ) ) );
+		}
+
+		// Get gift card details
+		$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+		$to_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+		$coupon_amount = get_post_meta( $coupon_id, 'wps_wgm_coupon_amount', true );
+		$product_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_product_id', true );
+		$coupon_code = get_the_title( $coupon_id );
+
+		error_log( 'wps_uwgc_resend_gift_card_email: order_id=' . $order_id . ', to_email=' . $to_email . ', amount=' . $coupon_amount );
+
+		if ( ! $order_id || ! $to_email ) {
+			error_log( 'wps_uwgc_resend_gift_card_email: Missing order_id or to_email' );
+			wp_send_json_error( array( 'message' => __( 'Gift card data not found.', 'woo-gift-cards-lite' ) ) );
+		}
+
+		// Get order
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			error_log( 'wps_uwgc_resend_gift_card_email: Order not found for ID: ' . $order_id );
+			wp_send_json_error( array( 'message' => __( 'Order not found.', 'woo-gift-cards-lite' ) ) );
+		}
+
+		// Get expiry date and format it properly
+		$woo_ver = WC()->version;
+		$expirydate_format = '';
+
+		if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
+			$expiry_date = get_post_meta( $coupon_id, 'expiry_date', true );
+			if ( $expiry_date && ! empty( $expiry_date ) ) {
+				$expirydate_format = date_i18n( get_option( 'date_format' ), strtotime( $expiry_date ) );
+			}
+		} else {
+			$expiry_timestamp = get_post_meta( $coupon_id, 'date_expires', true );
+			if ( $expiry_timestamp && ! empty( $expiry_timestamp ) ) {
+				$expirydate_format = date_i18n( get_option( 'date_format' ), $expiry_timestamp );
+			}
+		}
+
+		// Get additional gift card meta from order
+		$from_email = $order->get_billing_email();
+		$gift_message = '';
+
+		// Try to get message from order meta
+		$order_items = $order->get_items();
+		foreach ( $order_items as $item_id => $item ) {
+			$item_product_id = $item->get_product_id();
+			if ( $item_product_id == $product_id ) {
+				$gift_message = wc_get_order_item_meta( $item_id, 'wps_wgm_message', true );
+				break;
+			}
+		}
+
+		error_log( 'wps_uwgc_resend_gift_card_email: Preparing email data with expiry: ' . $expirydate_format );
+
+		// Prepare email data
+		$wps_wgm_common_arr = array(
+			'to' => $to_email,
+			'from' => $from_email,
+			'order_id' => $order_id,
+			'product_id' => $product_id,
+			'gift_couponnumber' => $coupon_code,
+			'couponamont' => $coupon_amount,
+			'expirydate_format' => $expirydate_format,
+			'delivery_method' => 'Mail to recipient',
+			'gift_msg' => $gift_message,
+			'item_id' => '',
+			'variable_price_description' => '',
+		);
+
+		// Send email using common functionality
+		error_log( 'wps_uwgc_resend_gift_card_email: Calling wps_wgm_common_functionality' );
+		$result = $this->wps_common_fun->wps_wgm_common_functionality( $wps_wgm_common_arr, $order );
+
+		error_log( 'wps_uwgc_resend_gift_card_email: Email send result: ' . ( $result ? 'success' : 'failed' ) );
+
+		if ( $result ) {
+			wp_send_json_success( array( 'message' => __( 'Gift card email sent successfully!', 'woo-gift-cards-lite' ) ) );
+		} else {
+			wp_send_json_error( array( 'message' => __( 'Failed to send gift card email.', 'woo-gift-cards-lite' ) ) );
+		}
+	}
+
+	/**
 	 * Function is used to preview report deatils.
 	 *
 	 * @since 1.0.0
@@ -2876,7 +2977,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 					/* Modal Actions */
 					.wps-modal-actions {
-						display: flex;
+						
 						gap: 10px;
 						justify-content: center;
 						padding-top: 20px;
@@ -2887,7 +2988,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						display: inline-flex;
 						align-items: center;
 						gap: 6px;
-						padding: 8px 16px;
+						padding: 17px 22px 15px 2px;
 						border-radius: 4px;
 						font-size: 14px;
 						font-weight: 500;
@@ -2946,10 +3047,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						.wps-info-grid {
 							grid-template-columns: 1fr;
 						}
-
-						.wps-modal-actions {
-							flex-direction: column;
-						}
 					}
 
 					/* Print Styles */
@@ -2997,6 +3094,71 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 						document.body.removeChild(tempInput);
 					}
+
+					// Resend gift card email handler
+					jQuery(document).ready(function($) {
+						$('.wps-resend-email, .wps-resend-gc-email').on('click', function(e) {
+							e.preventDefault();
+							e.stopPropagation();
+
+							var coupon_id = $(this).attr('data-coupon-id');
+							var $button = $(this);
+
+							if ($button.hasClass('sending')) {
+								return;
+							}
+
+							if (!confirm('Are you sure you want to resend this gift card email?')) {
+								return;
+							}
+
+							$button.addClass('sending');
+							var originalIcon = $button.find('.dashicons').attr('class');
+							$button.find('.dashicons').attr('class', 'dashicons dashicons-update wps-spinning');
+
+							var data = {
+								action: 'wps_uwgc_resend_gift_card_email',
+								coupon_id: coupon_id,
+								wps_uwgc_nonce: '<?php echo esc_js( wp_create_nonce( "wps-uwgc-giftcard-report-nonce" ) ); ?>'
+							};
+
+							$.ajax({
+								url: '<?php echo esc_url( admin_url( "admin-ajax.php" ) ); ?>',
+								type: 'POST',
+								data: data,
+								success: function(response) {
+									$button.removeClass('sending');
+
+									if (response.success) {
+										// Show success
+										$button.find('.dashicons').attr('class', 'dashicons dashicons-yes');
+										$button.css('color', '#27ae60');
+
+										setTimeout(function() {
+											$button.find('.dashicons').attr('class', originalIcon);
+											$button.css('color', '');
+										}, 2000);
+									} else {
+										// Show error
+										$button.find('.dashicons').attr('class', 'dashicons dashicons-no');
+										$button.css('color', '#e74c3c');
+
+										setTimeout(function() {
+											$button.find('.dashicons').attr('class', originalIcon);
+											$button.css('color', '');
+										}, 2000);
+
+										alert(response.data.message || 'Failed to resend email.');
+									}
+								},
+								error: function() {
+									$button.removeClass('sending');
+									$button.find('.dashicons').attr('class', originalIcon);
+									alert('An error occurred. Please try again.');
+								}
+							});
+						});
+					});
 					</script>
 				</style>
 				<?php

@@ -238,6 +238,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_preview_report_details' );
 		$this->loader->add_action( 'wp_ajax_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
+		$this->loader->add_action( 'wp_ajax_wps_uwgc_resend_gift_card_email', $plugin_admin, 'wps_uwgc_resend_gift_card_email' );
 		$this->loader->add_action( 'wps_wgm_coupon_reporting_with_order', $plugin_admin, 'wps_wgm_coupon_reporting_with_order_id', 10, 4 );
 	
 		// Add Disable/Enable coupon bulk actions.
