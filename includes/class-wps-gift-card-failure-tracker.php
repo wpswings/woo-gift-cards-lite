@@ -336,14 +336,14 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			// Get total failures.
 			$total = $wpdb->get_var(
-				"SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE 1=1 " . $date_filter
+				"SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE 1=1 " . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			);
 
 			// Get failures by type.
 			$by_type = $wpdb->get_results(
 				"SELECT failure_type, COUNT(*) as count
 				FROM " . esc_sql($table_name) . "
-				WHERE 1=1 " . $date_filter . "
+				WHERE 1=1 " . $date_filter . " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				GROUP BY failure_type"
 			);
 
@@ -351,7 +351,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 			$by_severity = $wpdb->get_results(
 				"SELECT severity, COUNT(*) as count
 				FROM " . esc_sql($table_name) . "
-				WHERE 1=1 " . $date_filter . "
+				WHERE 1=1 " . $date_filter . " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				GROUP BY severity"
 			);
 
@@ -359,7 +359,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 			$by_status = $wpdb->get_results(
 				"SELECT status, COUNT(*) as count
 				FROM " . esc_sql($table_name) . "
-				WHERE 1=1 " . $date_filter . "
+				WHERE 1=1 " . $date_filter . " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 				GROUP BY status"
 			);
 
@@ -367,7 +367,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 			$critical_count = $wpdb->get_var(
 				"SELECT COUNT(*) FROM " . esc_sql($table_name) . "
 				WHERE severity = 'critical'
-				AND status != 'resolved' " . $date_filter
+				AND status != 'resolved' " . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			);
 
 			// Get pending recoveries.

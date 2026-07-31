@@ -181,7 +181,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 			wp_enqueue_style( 'woocommerce_admin_styles' );
 
-			// Enqueue advanced report CSS on gift card report page
+			// Enqueue advanced report CSS on gift card report page.
 			if ( isset( $_GET['page'] ) && $_GET['page'] === 'wc-reports' && isset( $_GET['tab'] ) && $_GET['tab'] === 'giftcard_report' ) {
 				wp_enqueue_style( $this->plugin_name . '-advanced-report', plugin_dir_url( __FILE__ ) . 'css/wps-uwgc-advanced-report.css', array(), $this->version, 'all' );
 			}
@@ -319,7 +319,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Including a File for displaying the required setting page for setup the plugin
+	 * Including a File for displaying the required setting page for setup the plugin.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_admin_setting()
@@ -371,7 +371,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Provide multiple Price variations for Gift Card Product
+	 * Provide multiple Price variations for Gift Card Product.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_get_pricing_type()
@@ -390,7 +390,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Add some required fields (data-tabs) for Gift Card product
+	 * Add some required fields (data-tabs) for Gift Card product.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_woocommerce_product_options_general_product_data()
@@ -645,7 +645,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Saves the all required details for each product
+	 * Saves the all required details for each product.
 	 *
 	 * @since 1.0.0
 	 * @param int $post_id post id.
@@ -789,7 +789,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Hides some of the tabs if the Product is Gift Card
+	 * Hides some of the tabs if the Product is Gift Card.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_woocommerce_product_data_tabs()
@@ -815,7 +815,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Add the Gift Card Coupon code as an item meta for each Gift Card Order
+	 * Add the Gift Card Coupon code as an item meta for each Gift Card Order.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_woocommerce_after_order_itemmeta()
@@ -901,7 +901,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * Create custom post name Giftcard for creating Giftcard Template
+	 * Create custom post name Giftcard for creating Giftcard Template.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_giftcard_custompost
@@ -953,7 +953,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	}
 
 	/**
-	 * This function is to add meta field like field for instruction how to use shortcode in email template
+	 * This function is to add meta field like field for instruction how to use shortcode in email template.
 	 *
 	 * @since 1.0.0
 	 * @name wps_wgm_edit_form_after_title
@@ -2086,7 +2086,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_send_json_error( array( 'message' => __( 'Invalid coupon ID.', 'woo-gift-cards-lite' ) ) );
 		}
 
-		// Get gift card details
+		// Get gift card details.
 		$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 		$to_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
 		$coupon_amount = get_post_meta( $coupon_id, 'wps_wgm_coupon_amount', true );
@@ -2100,14 +2100,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			wp_send_json_error( array( 'message' => __( 'Gift card data not found.', 'woo-gift-cards-lite' ) ) );
 		}
 
-		// Get order
+		// Get order.
 		$order = wc_get_order( $order_id );
 		if ( ! $order ) {
 			error_log( 'wps_uwgc_resend_gift_card_email: Order not found for ID: ' . $order_id );
 			wp_send_json_error( array( 'message' => __( 'Order not found.', 'woo-gift-cards-lite' ) ) );
 		}
 
-		// Get expiry date and format it properly
+		// Get expiry date and format it properly.
 		$woo_ver = WC()->version;
 		$expirydate_format = '';
 
@@ -2123,11 +2123,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			}
 		}
 
-		// Get additional gift card meta from order
+		// Get additional gift card meta from order.
 		$from_email = $order->get_billing_email();
 		$gift_message = '';
 
-		// Try to get message from order meta
+		// Try to get message from order meta.
 		$order_items = $order->get_items();
 		foreach ( $order_items as $item_id => $item ) {
 			$item_product_id = $item->get_product_id();
@@ -2139,7 +2139,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 		error_log( 'wps_uwgc_resend_gift_card_email: Preparing email data with expiry: ' . $expirydate_format );
 
-		// Prepare email data
+		// Prepare email data.
 		$wps_wgm_common_arr = array(
 			'to' => $to_email,
 			'from' => $from_email,
@@ -2154,7 +2154,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			'variable_price_description' => '',
 		);
 
-		// Send email using common functionality
+		// Send email using common functionality.
 		error_log( 'wps_uwgc_resend_gift_card_email: Calling wps_wgm_common_functionality' );
 		$result = $this->wps_common_fun->wps_wgm_common_functionality( $wps_wgm_common_arr, $order );
 
@@ -2281,14 +2281,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					/////////////////////////////////////////////////////////////////////////////////////////////////////
 				}
 
-				// Get additional coupon information
+				// Get additional coupon information.
 				$coupon_obj = new WC_Coupon( $coupon_id );
 				$coupon_code = $coupon_obj->get_code();
 				$usage_count = $coupon_obj->get_usage_count();
 				$expiry_date_obj = $coupon_obj->get_date_expires();
 				$expiry_date_formatted = $expiry_date_obj ? $expiry_date_obj->date_i18n( get_option( 'date_format' ) ) : __( 'No Expiry', 'woo-gift-cards-lite' );
 
-				// Calculate days to expiry
+				// Calculate days to expiry.
 				$days_to_expiry = __( 'No Expiry', 'woo-gift-cards-lite' );
 				$expiry_status_class = 'no-expiry';
 				if ( $expiry_date_obj ) {
@@ -2310,7 +2310,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					}
 				}
 
-				// Determine overall status
+				// Determine overall status.
 				$is_expired = ( $expiry_status_class === 'expired' );
 				$is_fully_redeemed = ( $usage_count > 0 && floatval( $remaining_amt ) == 0 );
 				$is_partially_used = ( $usage_count > 0 && floatval( $remaining_amt ) > 0 );
@@ -2329,7 +2329,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$status_class = 'active';
 				}
 
-				// Calculate usage percentage
+				// Calculate usage percentage.
 				$usage_percentage = 0;
 				if ( ! empty( $giftcard_amount ) && $giftcard_amount > 0 ) {
 					$usage_percentage = round( ( ( $giftcard_amount - $remaining_amt ) / $giftcard_amount ) * 100, 2 );
@@ -2468,7 +2468,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					</div>
 
 					<?php
-					// Suborder Transactions
+					// Suborder Transactions.
 					if ( isset( $suborders ) && is_array( $suborders ) && ! empty( $suborders ) ) :
 						?>
 						<div class="wps-transactions-section">
@@ -3074,7 +3074,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				?>
 				<script>
 					function wpsCopyGiftCardCode(code) {
-						// Create temp input
+						// Create temp input.
 						var tempInput = document.createElement('input');
 						tempInput.value = code;
 						document.body.appendChild(tempInput);
@@ -3082,7 +3082,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 						try {
 							document.execCommand('copy');
-							// Show success feedback
+							// Show success feedback.
 							var btn = event.target.closest('.wps-copy-code-btn');
 							var icon = btn.querySelector('.dashicons');
 							var originalClass = icon.className;
@@ -3103,7 +3103,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						document.body.removeChild(tempInput);
 					}
 
-				// Resend gift card email handler (Vanilla JS)
+				// Resend gift card email handler (Vanilla JS).
 				document.addEventListener('DOMContentLoaded', function() {
 					console.log('Script loaded, attaching event handlers');
 
@@ -3152,7 +3152,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								self.classList.remove('sending');
 
 								if (data.success) {
-									// Show success
+									// Show success.
 									if (dashicon) {
 										dashicon.className = 'dashicons dashicons-yes';
 									}
@@ -3165,7 +3165,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 										self.style.color = '';
 									}, 2000);
 								} else {
-									// Show error
+									// Show error.
 									if (dashicon) {
 										dashicon.className = 'dashicons dashicons-no';
 									}

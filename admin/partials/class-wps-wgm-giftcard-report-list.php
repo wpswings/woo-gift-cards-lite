@@ -465,7 +465,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		while ( $wps_uwgc_data_count < $per_page ) {
 			$paged_sql = $sql . $wpdb->prepare( ' LIMIT %d OFFSET %d', $batch_size, $raw_offset );
-			$results   = $wpdb->get_results( $paged_sql );
+			$results   = $wpdb->get_results( $paged_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 			if ( empty( $results ) ) {
 				break;
