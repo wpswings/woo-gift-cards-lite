@@ -2361,6 +2361,21 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
 
 		if ( $coupon->get_id() !== 0 ) {
+			// Verify current user is the intended recipient.
+			$current_user_id    = get_current_user_id();
+			$current_user       = get_user_by( 'id', $current_user_id );
+			$recipient_email    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+
+			// Check if current user's email matches the recipient email.
+			if ( ! $current_user || empty( $recipient_email ) || $current_user->user_email !== $recipient_email ) {
+				$response = array(
+					'status'  => 'failed',
+					'message' => __( 'You are not authorized to redeem this gift card. This gift card was sent to a different email address.', 'woo-gift-cards-lite' ),
+				);
+				echo wp_json_encode( $response );
+				wp_die();
+			}
+
 			if ( str_contains( $coupon->get_description(), 'GIFTCARD ORDER #' ) || str_contains( $coupon->get_description(), 'Imported Coupon' ) || str_contains( $coupon->get_description(), 'Imported Offline Coupon' ) ) {
 				if ( 'fixed_cart' == $coupon->get_discount_type() ) {
 					$coupon_amount         = $coupon->get_amount();
