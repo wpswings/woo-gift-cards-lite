@@ -81,7 +81,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php
 											$attribute_description = __( 'Select the Gift card product.', 'woo-gift-cards-lite' );
 											echo wp_kses_post( wc_help_tip( $attribute_description ) );
-										?><label
+										?>
+										<label
 										for="wps_wgm_offline_gift_template">
 										<select name="wps_wgm_offline_gift_template" id="wps_wgm_offline_gift_template"
 											class="input-text wps_wgm_new_woo_ver_style_select">

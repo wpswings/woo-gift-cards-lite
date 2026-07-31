@@ -51,7 +51,6 @@ class Woocommerce_Gift_Cards_Lite_Loader {
 
 		$this->actions = array();
 		$this->filters = array();
-
 	}
 
 	/**
@@ -106,7 +105,6 @@ class Woocommerce_Gift_Cards_Lite_Loader {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -123,7 +121,5 @@ class Woocommerce_Gift_Cards_Lite_Loader {
 		foreach ( $this->actions as $hook ) {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
-
 	}
-
 }

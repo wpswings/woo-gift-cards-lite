@@ -64,7 +64,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		$this->version     = $version;
 		require_once WPS_WGC_DIRPATH . 'includes/class-woocommerce-gift-cards-common-function.php';
 		$this->wps_common_fun = new Woocommerce_Gift_Cards_Common_Function();
-
 	}
 
 	/**
@@ -107,7 +106,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @return bool
 	 */
 	private function wps_wgm_should_enqueue_frontend_assets() {
-		$other_settings        = get_option( 'wps_wgm_other_settings', array() );
+		$other_settings         = get_option( 'wps_wgm_other_settings', array() );
 		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
 		global $post;
@@ -181,8 +180,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( '' === $giftcard_message_length ) {
 			$giftcard_message_length = 300;
 		}
-		$wps_wgm_gc_custom_page  = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
-
+		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
 		$wps_wgm = array(
 			'ajaxurl'        => admin_url( 'admin-ajax.php' ),
@@ -211,7 +209,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
 		global $post;
-		$post_id = isset( $post->ID ) ? $post->ID : '';
+		$post_id      = isset( $post->ID ) ? $post->ID : '';
 		$page_content = '';
 		if ( ! empty( $post_id ) ) {
 			$page         = get_post( $post->ID );
@@ -223,81 +221,81 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			if ( str_contains( $page_content, 'product_page id' ) ) {
 				$content = $post->post_content;
 				if ( isset( ( explode( '=', explode( ']', $content )[0] ) )[1] ) ) {
-					$array = ( explode( '=', explode( ']', $content )[0] ) )[1];
+					$array      = ( explode( '=', explode( ']', $content )[0] ) )[1];
 					$product_id = intval( explode( '"', $array )[1] );
 				} else {
-					$product_id    = $post->ID;
+					$product_id = $post->ID;
 				}
 			} else {
-				$product_id    = $post->ID;
+				$product_id = $post->ID;
 			}
 			$product_type       = WC_Product_Factory::get_product_type( $product_id );
 			$sell_as_a_giftcard = get_post_meta( $product_id, '_sell_as_a_giftcard' );
 			if ( 'wgm_gift_card' === $product_type || ( isset( $sell_as_a_giftcard[0] ) && 'yes' === $sell_as_a_giftcard[0] ) ) {
 					// for price based on country.
 					$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
-					if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-						if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
-							if ( isset( $wps_wgm_pricing['type'] ) ) {
-								$product_pricing_type = $wps_wgm_pricing['type'];
-								if ( 'wps_wgm_range_price' === $product_pricing_type ) {
-									$from_price              = $wps_wgm_pricing['from'];
-									$to_price                = $wps_wgm_pricing['to'];
-									$from_price              = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
-									$to_price                = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
-									$wps_wgm_pricing['from'] = $from_price;
-									$wps_wgm_pricing['to']   = $to_price;
-								}
-							}
-						}
-					} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+				if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+					if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 						if ( isset( $wps_wgm_pricing['type'] ) ) {
 							$product_pricing_type = $wps_wgm_pricing['type'];
 							if ( 'wps_wgm_range_price' === $product_pricing_type ) {
 								$from_price              = $wps_wgm_pricing['from'];
 								$to_price                = $wps_wgm_pricing['to'];
-								$from_price              = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
-								$to_price                = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+								$from_price              = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
+								$to_price                = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
 								$wps_wgm_pricing['from'] = $from_price;
 								$wps_wgm_pricing['to']   = $to_price;
 							}
 						}
-					} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-						$wps_wgm_pricing         = apply_filters( 'wps_wgm_pricing_wcml', $wps_wgm_pricing );
-						$is_customizable         = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
-						$genaral_settings        = get_option( 'wps_wgm_general_settings', array() );
-						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
-						$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
-					} else {
-						$is_customizable         = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
-						$genaral_settings        = get_option( 'wps_wgm_general_settings', array() );
-						$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
-						$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
 					}
-$wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
-					
-					$wps_wgm['pricing_type'] = $wps_wgm_pricing;
-					$wps_wgm['product_id']   = $product_id;
-					$wps_wgm['is_customizable'] = $is_customizable;
+				} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+					if ( isset( $wps_wgm_pricing['type'] ) ) {
+						$product_pricing_type = $wps_wgm_pricing['type'];
+						if ( 'wps_wgm_range_price' === $product_pricing_type ) {
+							$from_price              = $wps_wgm_pricing['from'];
+							$to_price                = $wps_wgm_pricing['to'];
+							$from_price              = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+							$to_price                = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+							$wps_wgm_pricing['from'] = $from_price;
+							$wps_wgm_pricing['to']   = $to_price;
+						}
+					}
+				} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
+					$wps_wgm_pricing         = apply_filters( 'wps_wgm_pricing_wcml', $wps_wgm_pricing );
+					$is_customizable         = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+					$genaral_settings        = get_option( 'wps_wgm_general_settings', array() );
+					$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
+					$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
+				} else {
+					$is_customizable         = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+					$genaral_settings        = get_option( 'wps_wgm_general_settings', array() );
+					$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
+					$is_imported_product     = get_post_meta( $product_id, 'is_imported', true );
+				}
+				$wps_wgm['ajaxurl'] = admin_url( 'admin-ajax.php' );
+
+					$wps_wgm['pricing_type']            = $wps_wgm_pricing;
+					$wps_wgm['product_id']              = $product_id;
+					$wps_wgm['is_customizable']         = $is_customizable;
 					$wps_wgm['enable_sent_multiple_gc'] = $enable_sent_multiple_gc;
-					$wps_wgm['is_imported'] = $is_imported_product;
-					$wps_wgm['decimal_separator'] = get_option( 'woocommerce_price_decimal_sep' );
+					$wps_wgm['is_imported']             = $is_imported_product;
+					$wps_wgm['decimal_separator']       = get_option( 'woocommerce_price_decimal_sep' );
 					wp_enqueue_script( 'thickbox' );
 					$wps_wgm['wps_wgm_nonce'] = wp_create_nonce( 'wps-wgc-verify-nonce' );
 					wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-public.js', array( 'jquery' ), $this->version, true );
 					wp_localize_script( $this->plugin_name, 'wps_wgm', $wps_wgm );
 					wp_enqueue_script( $this->plugin_name );
-				}
+			}
 		}
 
 		if ( str_contains( $page_content, 'wps_check_your_gift_card_balance' ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) {
 			// Get dashboard color from settings (pro feature) with fallback.
 			$general_settings = get_option( 'wps_wgm_general_settings', array() );
-			$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
-			$button_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
+			$dashboard_color  = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+			$button_color     = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
 
 			$wps_wgm_check_balance = array(
-				'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+				'ajaxurl'         => admin_url( 'admin-ajax.php' ),
 				'wps_nonce_check' => wp_create_nonce( 'wps-wgc-verify-nonce-check' ),
 				'empty_msg'       => esc_html__( 'Fields cannot be empty!', 'woo-gift-cards-lite' ), // PAR Compatibility.
 				'button_color'    => $button_color,
@@ -321,7 +319,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		global $wp_query, $post;
 
-		$other_settings = get_option( 'wps_wgm_other_settings', array() );
+		$other_settings         = get_option( 'wps_wgm_other_settings', array() );
 		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
 		if ( wps_uwgc_pro_active() && empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
@@ -390,8 +388,8 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							}
 
 							wp_nonce_field( 'wps_wgm_single_nonce', 'wps_wgm_single_nonce_field' );
-							$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
-							$is_group_product = get_post_meta( $product_id, 'wps_wgm_is_group_gift', true );
+							$genaral_settings        = get_option( 'wps_wgm_general_settings', array() );
+							$is_group_product        = get_post_meta( $product_id, 'wps_wgm_is_group_gift', true );
 							$enable_sent_multiple_gc = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_enable_sent_multiple_giftcard' );
 
 							$is_imported_product = get_post_meta( $product_id, 'is_imported', true );
@@ -426,7 +424,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 											<input type="text" class="input-text wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $wps_new_price . '" max="' . $to_price . '" min="' . $from_price . '">
 											</p>';
 									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-										$cart_html    .= apply_filters( 'wps_wgm_cart_html_wcml', $cart_html, $default_price, $to_price, $from_price );
+										$cart_html .= apply_filters( 'wps_wgm_cart_html_wcml', $cart_html, $default_price, $to_price, $from_price );
 									} else {
 										$wps_new_price = ( $default_price >= $from_price && $default_price <= $to_price ) ? $default_price : $from_price;
 										$cart_html    .= '<p class="wps_wgm_section selected_price_type">
@@ -440,7 +438,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 									if ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
 										$default_price = apply_filters( 'wps_wgm_price_conversion_wcml', $default_price );
 									}
-									$cart_html    .= '<input type="hidden" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $default_price . '">';
+									$cart_html .= '<input type="hidden" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" value="' . $default_price . '">';
 										// hooks for discount features.
 									do_action( 'wps_wgm_default_price_discount', $product, $product_pricing );
 								}
@@ -465,12 +463,10 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 														} else {
 															$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $prices ) . '</option>';
 														}
+													} elseif ( $price == $default_price ) {
+															$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
 													} else {
-														if ( $price == $default_price ) {
-															$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
-														} else {
-															$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
-														}
+														$cart_html .= '<option  value="' . $price . '" selected>' . wc_price( $price ) . '</option>';
 													}
 												} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 													$default_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
@@ -484,8 +480,8 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 													$cart_html = apply_filters( 'wps_wgm_cart_html_selected_wcml', $cart_html, $default_price, $price );
 												} else {
 													$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
-													$prices = floatval( str_replace( $decimal_separator, '.', $price ) );
-													$prices = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+													$prices            = floatval( str_replace( $decimal_separator, '.', $price ) );
+													$prices            = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
 													wc_get_price_including_tax(
 														$product,
 														array(
@@ -531,7 +527,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 									} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 										$default_price = $product_pricing['default_price'];
 										$default_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
-										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
+										$cart_html    .= '<p class="wps_wgm_section selected_price_type"">
 											<label class="wps_wgc_label">' . __( 'Enter Gift Card Price ', 'woo-gift-cards-lite' ) . '</label>	
 											<input type="text" class="wps_wgm_price" id="wps_wgm_price" name="wps_wgm_price" min="1" value = ' . $default_price . '>
 											<span class="wps_wgm_min_user_price">' . __( 'Minimum Price is : ', 'woo-gift-cards-lite' ) . $min_user_price . '</span></p>';
@@ -557,7 +553,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 												$wps_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_price );
 											}
 										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-										    $wps_price = apply_filters( 'wps_wgm_price_conversion_wcml', $wps_price );
+											$wps_price = apply_filters( 'wps_wgm_price_conversion_wcml', $wps_price );
 										}
 										$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
 										$wps_price         = floatval( str_replace( $decimal_separator, '.', $wps_price ) );
@@ -591,8 +587,8 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							if ( 'on' == $use_new_page_layout ) {
 								$wps_display_thumbnail = apply_filters( 'wps_wgm_display_thumbnail', $wps_additional_section, $product_id );
 								if ( '' !== $wps_display_thumbnail ) {
-									$cart_html    .= $wps_display_thumbnail['html'];
-									$choosed_temp  = $wps_display_thumbnail['choosen_temp_id'];
+									$cart_html   .= $wps_display_thumbnail['html'];
+									$choosed_temp = $wps_display_thumbnail['choosen_temp_id'];
 								}
 							}
 
@@ -613,12 +609,12 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 								$cart_html .= '</div>';
 
 							}
-							$mail_settings = get_option( 'wps_wgm_mail_settings', array() );
+							$mail_settings            = get_option( 'wps_wgm_mail_settings', array() );
 							$default_giftcard_message = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_default_message' );
-							$cart_html .= '<p class="wps_wgm_section wps_message">
+							$cart_html               .= '<p class="wps_wgm_section wps_message">
 							<label class="wps_wgc_label">' . __( 'Gift Message ', 'woo-gift-cards-lite' ) . '</label>	
 							<textarea name="wps_wgm_message" id="wps_wgm_message" class="wps_wgm_message">' . $default_giftcard_message . '</textarea>';
-							$giftcard_message_length = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_giftcard_message_length' );
+							$giftcard_message_length  = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_giftcard_message_length' );
 							if ( '' == $giftcard_message_length ) {
 								$giftcard_message_length = 300;
 							}
@@ -626,19 +622,18 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							$cart_html .= __( 'Characters: ( ', 'woo-gift-cards-lite' ) . '<span class="wps_box_char">0</span>/' . $giftcard_message_length . ')</span>
 							</p>';
 
-							
-							$cart_html .= apply_filters( 'wps_wgm_add_notiication_section', $wps_additional_section, $product_id );
-							$delivery_settings = get_option( 'wps_wgm_delivery_settings', true );
+							$cart_html                      .= apply_filters( 'wps_wgm_add_notiication_section', $wps_additional_section, $product_id );
+							$delivery_settings               = get_option( 'wps_wgm_delivery_settings', true );
 							$wps_wgm_delivery_setting_method = $this->wps_common_fun->wps_wgm_get_template_data( $delivery_settings, 'wps_wgm_send_giftcard' );
 							if ( ! wps_uwgc_pro_active() ) {
 								if ( 'customer_choose' == $wps_wgm_delivery_setting_method || 'shipping' == $wps_wgm_delivery_setting_method ) {
 									$wps_wgm_delivery_setting_method = 'Mail to recipient';
 								}
 							}
-								$cart_html .= '<div class="wps_wgm_section wps_delivery_method">';
+								$cart_html     .= '<div class="wps_wgm_section wps_delivery_method">';
 									$cart_html .= '<label class = "wps_wgc_label">' . __( 'Delivery Method', 'woo-gift-cards-lite' ) . '</label>';
 							if ( ( isset( $wps_wgm_delivery_setting_method ) && 'Mail to recipient' == $wps_wgm_delivery_setting_method ) || ( '' == $wps_wgm_delivery_setting_method ) ) {
-								$html = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc && 'yes' !== $is_group_product && 'yes' !== $is_imported_product ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
+								$html       = ( wps_uwgc_pro_active() && 'on' === $enable_sent_multiple_gc && 'yes' !== $is_group_product && 'yes' !== $is_imported_product ) ? '<span class= "wps_wgm_msg_info_multiple_email">' . __( 'Separate multiple addresses with a comma', 'woo-gift-cards-lite' ) . '</span>' : '';
 								$cart_html .= '<div class="wps_wgm_delivery_method ">
 											<input type="radio" name="wps_wgm_send_giftcard" value="Mail to recipient" class="wps_wgm_send_giftcard" checked="checked" id="wps_wgm_to_email_send" >
 											<span class="wps_wgm_method">' . __( 'Mail To Recipient', 'woo-gift-cards-lite' ) . '</span>
@@ -661,9 +656,9 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 											</div>
 										</div>';
 							}
-							$cart_html .= apply_filters( 'wps_wgm_add_delivery_method', $wps_additional_section, $product_id );
-							$cart_html .= '</div>';
-							$cart_html .= apply_filters( 'wps_wgm_add_section_after_delivery', $wps_additional_section, $product_id );
+							$cart_html      .= apply_filters( 'wps_wgm_add_delivery_method', $wps_additional_section, $product_id );
+							$cart_html      .= '</div>';
+							$cart_html      .= apply_filters( 'wps_wgm_add_section_after_delivery', $wps_additional_section, $product_id );
 							$wps_wgm_pricing = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 							if ( array_key_exists( 'template', $wps_wgm_pricing ) ) {
 								$templateid = $wps_wgm_pricing['template'];
@@ -682,20 +677,20 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 												$choosed_temp = $wps_get_lite_temp[ $wps_index ];
 											}
 										} else {
-											$args = array(
+											$args     = array(
 												'post_type' => 'giftcard',
 												'posts_per_page' => -1,
 											);
-											$loop = new WP_Query( $args );
+											$loop     = new WP_Query( $args );
 											$template = array();
 											foreach ( $loop->posts as $key => $value ) {
-												$template_id = $value->ID;
-												$template_title = $value->post_title;
+												$template_id              = $value->ID;
+												$template_title           = $value->post_title;
 												$template[ $template_id ] = $template_title;
 											}
 											if ( ! empty( $template ) ) {
 												$wps_get_lite_temp = array_diff( array_keys( $template ), $wps_get_pro_templates );
-												$wps_index = array_keys( $wps_get_lite_temp )[0];
+												$wps_index         = array_keys( $wps_get_lite_temp )[0];
 												if ( 0 !== count( $wps_get_lite_temp ) ) {
 													$choosed_temp = $wps_get_lite_temp[ $wps_index ];
 												}
@@ -756,110 +751,110 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			$product_type = WC_Product_Factory::get_product_type( $product_id );
 			if ( 'wgm_gift_card' === $product_type || ( isset( $_POST['wps_gift_this_product'] ) && 'on' === $_POST['wps_gift_this_product'] ) ) {
 					$wps_field_nonce = isset( $_POST['wps_wgm_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['wps_wgm_single_nonce_field'] ) ) ) : '';
-					if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
-						echo '';
-					} else {
+				if ( ! wp_verify_nonce( $wps_field_nonce, 'wps_wgm_single_nonce' ) ) {
+					echo '';
+				} else {
 
-						// for price based on country.
-						$_pricing_raw    = get_post_meta( $product_id, 'wps_wgm_pricing', true );
-						$product_pricing = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
-						if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-							if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
-								$product_pricing_type = $product_pricing['type'];
-								if ( isset( $_POST['wps_wgm_price'] ) && ! empty( $_POST['wps_wgm_price'] ) ) {
-									if ( 'wps_wgm_range_price' == $product_pricing_type || 'wps_wgm_user_price' == $product_pricing_type ) {
-										$exchange_rate = wcpbc_the_zone()->get_exchange_rate();
-										$wps_price = sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) );
-										$_POST['wps_wgm_price'] = floatval( $wps_price / $exchange_rate );
-									}
-								}
-							}
-						} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+					// for price based on country.
+					$_pricing_raw    = get_post_meta( $product_id, 'wps_wgm_pricing', true );
+					$product_pricing = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
+					if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+						if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
 							$product_pricing_type = $product_pricing['type'];
-							$is_customizable      = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 							if ( isset( $_POST['wps_wgm_price'] ) && ! empty( $_POST['wps_wgm_price'] ) ) {
 								if ( 'wps_wgm_range_price' == $product_pricing_type || 'wps_wgm_user_price' == $product_pricing_type ) {
-									$_POST['wps_wgm_price'] = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
-								} elseif ( 'yes' === $is_customizable && 'wps_wgm_selected_price' == $product_pricing_type ) {
-									$_POST['wps_wgm_price'] = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
+									$exchange_rate          = wcpbc_the_zone()->get_exchange_rate();
+									$wps_price              = sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) );
+									$_POST['wps_wgm_price'] = floatval( $wps_price / $exchange_rate );
 								}
 							}
-						} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-							$_POST['wps_wgm_price'] = apply_filters( 'wps_wgm_cart_price_wcml', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ), $product_id );
-							$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
 						}
-						if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
-							if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
+					} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+						$product_pricing_type = $product_pricing['type'];
+						$is_customizable      = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+						if ( isset( $_POST['wps_wgm_price'] ) && ! empty( $_POST['wps_wgm_price'] ) ) {
+							if ( 'wps_wgm_range_price' == $product_pricing_type || 'wps_wgm_user_price' == $product_pricing_type ) {
+								$_POST['wps_wgm_price'] = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
+							} elseif ( 'yes' === $is_customizable && 'wps_wgm_selected_price' == $product_pricing_type ) {
+								$_POST['wps_wgm_price'] = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( '', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
+							}
+						}
+					} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
+						$_POST['wps_wgm_price'] = apply_filters( 'wps_wgm_cart_price_wcml', sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ), $product_id );
+						$is_customizable        = get_post_meta( $product_id, 'woocommerce_customizable_giftware', true );
+					}
+					if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
+						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
 
-								if ( isset( $_POST['wps_wgm_to_email'] ) && ! empty( $_POST['wps_wgm_to_email'] ) ) {
+							if ( isset( $_POST['wps_wgm_to_email'] ) && ! empty( $_POST['wps_wgm_to_email'] ) ) {
 
-									$item_meta['wps_wgm_to_email'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_email'] ) );
-								}
-								if ( isset( $_POST['wps_wgm_to_email_name'] ) && ! empty( $_POST['wps_wgm_to_email_name'] ) ) {
+								$item_meta['wps_wgm_to_email'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_email'] ) );
+							}
+							if ( isset( $_POST['wps_wgm_to_email_name'] ) && ! empty( $_POST['wps_wgm_to_email_name'] ) ) {
 
-									$item_meta['wps_wgm_to_email'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_email_name'] ) );
-								}
-								if ( isset( $_POST['wps_wgm_from_name'] ) && ! empty( $_POST['wps_wgm_from_name'] ) ) {
+								$item_meta['wps_wgm_to_email'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_email_name'] ) );
+							}
+							if ( isset( $_POST['wps_wgm_from_name'] ) && ! empty( $_POST['wps_wgm_from_name'] ) ) {
 
-									$item_meta['wps_wgm_from_name'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_name'] ) );
-								}
-								if ( isset( $_POST['wps_wgm_message'] ) && ! empty( $_POST['wps_wgm_message'] ) ) {
-									$item_meta['wps_wgm_message'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_message'] ) );
-								}
-								if ( isset( $_POST['wps_wgm_variable_price_description'] ) && ! empty( $_POST['wps_wgm_variable_price_description'] ) ) {
-									$item_meta['wps_wgm_variable_price_description'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_variable_price_description'] ) );
-								}
-								if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
-									$item_meta['delivery_method'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_send_giftcard'] ) );
-								}
-								if ( isset( $_POST['wps_wgm_price'] ) ) {
+								$item_meta['wps_wgm_from_name'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_name'] ) );
+							}
+							if ( isset( $_POST['wps_wgm_message'] ) && ! empty( $_POST['wps_wgm_message'] ) ) {
+								$item_meta['wps_wgm_message'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_message'] ) );
+							}
+							if ( isset( $_POST['wps_wgm_variable_price_description'] ) && ! empty( $_POST['wps_wgm_variable_price_description'] ) ) {
+								$item_meta['wps_wgm_variable_price_description'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_variable_price_description'] ) );
+							}
+							if ( isset( $_POST['wps_wgm_send_giftcard'] ) && ! empty( $_POST['wps_wgm_send_giftcard'] ) ) {
+								$item_meta['delivery_method'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_send_giftcard'] ) );
+							}
+							if ( isset( $_POST['wps_wgm_price'] ) ) {
 
-									$wps_wgm_price = sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) );
+								$wps_wgm_price = sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) );
 
-									if ( isset( $product_pricing['type'] ) && 'wps_wgm_default_price' == $product_pricing['type'] ) {
-										if ( isset( $product_pricing['default_price'] ) && $product_pricing['default_price'] == $wps_wgm_price ) {
-											$item_meta['wps_wgm_price'] = $wps_wgm_price;
-										} elseif ( isset( $product_type ) && 'variable' == $product_type ) {
+								if ( isset( $product_pricing['type'] ) && 'wps_wgm_default_price' == $product_pricing['type'] ) {
+									if ( isset( $product_pricing['default_price'] ) && $product_pricing['default_price'] == $wps_wgm_price ) {
+										$item_meta['wps_wgm_price'] = $wps_wgm_price;
+									} elseif ( isset( $product_type ) && 'variable' == $product_type ) {
+										$item_meta['wps_wgm_price'] = $wps_wgm_price;
+									} else {
+										$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
+									}
+								} elseif ( isset( $product_pricing['type'] ) && 'wps_wgm_selected_price' == $product_pricing['type'] ) {
+
+									$price = $product_pricing['price'];
+									$price = explode( '|', $price );
+									if ( isset( $price ) && is_array( $price ) ) {
+										if ( in_array( $wps_wgm_price, $price ) ) {
 											$item_meta['wps_wgm_price'] = $wps_wgm_price;
 										} else {
 											$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
 										}
-									} else if ( isset( $product_pricing['type'] ) && 'wps_wgm_selected_price' == $product_pricing['type'] ) {
+									}
+								} elseif ( isset( $product_pricing['type'] ) && 'wps_wgm_range_price' == $product_pricing['type'] ) {
 
-										$price = $product_pricing['price'];
-										$price = explode( '|', $price );
-										if ( isset( $price ) && is_array( $price ) ) {
-											if ( in_array( $wps_wgm_price, $price ) ) {
-												$item_meta['wps_wgm_price'] = $wps_wgm_price;
-											} else {
-												$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
-											}
-										}
-									} else if ( isset( $product_pricing['type'] ) && 'wps_wgm_range_price' == $product_pricing['type'] ) {
-
-										if ( $wps_wgm_price > $product_pricing['to'] || $wps_wgm_price < $product_pricing['from'] ) {
-											$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
-										} else {
-											$item_meta['wps_wgm_price'] = $wps_wgm_price;
-										}
+									if ( $wps_wgm_price > $product_pricing['to'] || $wps_wgm_price < $product_pricing['from'] ) {
+										$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
 									} else {
 										$item_meta['wps_wgm_price'] = $wps_wgm_price;
 									}
+								} else {
+									$item_meta['wps_wgm_price'] = $wps_wgm_price;
 								}
-								if ( isset( $_POST['wps_wgm_selected_temp'] ) ) {
-									$item_meta['wps_wgm_selected_temp'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_temp'] ) );
-								}
-								$item_meta = apply_filters( 'wps_wgm_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
-								$the_cart_data ['product_meta'] = array( 'meta_data' => $item_meta );
 							}
+							if ( isset( $_POST['wps_wgm_selected_temp'] ) ) {
+								$item_meta['wps_wgm_selected_temp'] = sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_temp'] ) );
+							}
+							$item_meta                      = apply_filters( 'wps_wgm_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
+							$the_cart_data ['product_meta'] = array( 'meta_data' => $item_meta );
 						}
 					}
 				}
 			}
+		}
 		if ( get_option( 'wps_gccoupon_rechargeable_product_id' ) == $product_id ) {
-			$recharge_code = WC()->session->get( 'gc_recharge_code' );
+			$recharge_code                          = WC()->session->get( 'gc_recharge_code' );
 			$item_meta['recharge_coupon_key_field'] = $recharge_code;
-			$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
+			$the_cart_data['product_meta']          = array( 'meta_data' => $item_meta );
 		}
 		if ( get_option( 'contributor_product_id' ) == $product_id ) {
 			$recharge_code = WC()->session->get( 'gc_recharge_code' );
@@ -920,19 +915,19 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 					if ( 'wps_wgm_to_email' == $key ) {
 						$item_meta [] = array(
-							'name' => esc_html__( 'To', 'woo-gift-cards-lite' ),
+							'name'  => esc_html__( 'To', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_wgm_from_name' == $key ) {
 						$item_meta [] = array(
-							'name' => esc_html__( 'From', 'woo-gift-cards-lite' ),
+							'name'  => esc_html__( 'From', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_wgm_message' == $key ) {
 						$item_meta [] = array(
-							'name' => esc_html__( 'Gift Message', 'woo-gift-cards-lite' ),
+							'name'  => esc_html__( 'Gift Message', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
@@ -940,34 +935,34 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 						if ( 'Mail to recipient' == $val ) {
 							$val = __( 'Mail to recipient', 'woo-gift-cards-lite' );
 
-						} else if ( 'Downloadable' == $val ) {
+						} elseif ( 'Downloadable' == $val ) {
 							$val = __( 'Downloadable', 'woo-gift-cards-lite' );
-						} else if ( 'shipping' == $val ) {
+						} elseif ( 'shipping' == $val ) {
 							$val = __( 'shipping', 'woo-gift-cards-lite' );
 
 						} else {
 							$val = $val;
 						}
 						$item_meta [] = array(
-							'name' => esc_html__( 'Delivery Method', 'woo-gift-cards-lite' ),
+							'name'  => esc_html__( 'Delivery Method', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'recharge_coupon_key_field' == $key ) {
 						$item_meta[] = array(
-							'key' => __( 'Coupon code', 'woo-gift-cards-lite' ),
+							'key'   => __( 'Coupon code', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_main_order_id' == $key ) {
 						$item_meta[] = array(
-							'key' => __( 'Original order', 'woo-gift-cards-lite' ),
+							'key'   => __( 'Original order', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
 					if ( 'wps_main_prod_id' == $key ) {
 						$item_meta[] = array(
-							'key' => __( 'Original product', 'woo-gift-cards-lite' ),
+							'key'   => __( 'Original product', 'woo-gift-cards-lite' ),
 							'value' => stripslashes( $val ),
 						);
 					}
@@ -994,7 +989,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			if ( isset( $cart ) && ! empty( $cart ) ) {
 				foreach ( $cart->cart_contents as $key => $value ) {
 					$product_id = $value['product_id'];
-					$pro_quant = $value['quantity'];
+					$pro_quant  = $value['quantity'];
 					if ( isset( $value['product_meta']['meta_data'] ) ) {
 						if ( isset( $value['product_meta']['meta_data']['wps_wgm_price'] ) ) {
 							$gift_price = $value['product_meta']['meta_data']['wps_wgm_price'];
@@ -1013,7 +1008,6 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1036,194 +1030,194 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				if ( 'wgm_gift_card' == $product_type ) {
 						$_pricing_raw    = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 						$product_pricing = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
-						if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
-							if ( isset( $product_pricing['type'] ) ) {
-								$product_pricing_type = $product_pricing['type'];
-								$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
-								if ( 'wps_wgm_default_price' == $product_pricing_type ) {
-									$new_price = '';
-									$default_price = $product_pricing['default_price'];
-									if ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
-										$default_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
-										$price_html    = wps_mmcsfw_get_custom_currency_symbol( '' ) . $default_price;
-									} else {
-										$price_html = $price_html;
-									}
+					if ( isset( $product_pricing ) && ! empty( $product_pricing ) ) {
+						if ( isset( $product_pricing['type'] ) ) {
+							$product_pricing_type = $product_pricing['type'];
+							$decimal_separator    = get_option( 'woocommerce_price_decimal_sep' );
+							if ( 'wps_wgm_default_price' == $product_pricing_type ) {
+								$new_price     = '';
+								$default_price = $product_pricing['default_price'];
+								if ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+									$default_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $default_price );
+									$price_html    = wps_mmcsfw_get_custom_currency_symbol( '' ) . $default_price;
+								} else {
+									$price_html = $price_html;
 								}
-								if ( 'wps_wgm_range_price' == $product_pricing_type ) {
-									$price_html = '';
-									$from_price = $product_pricing['from'];
-									$from_price = floatval( str_replace( $decimal_separator, '.', $from_price ) );
-									$to_price = $product_pricing['to'];
-									$to_price = floatval( str_replace( $decimal_separator, '.', $to_price ) );
+							}
+							if ( 'wps_wgm_range_price' == $product_pricing_type ) {
+								$price_html = '';
+								$from_price = $product_pricing['from'];
+								$from_price = floatval( str_replace( $decimal_separator, '.', $from_price ) );
+								$to_price   = $product_pricing['to'];
+								$to_price   = floatval( str_replace( $decimal_separator, '.', $to_price ) );
 
-									// price based on country.
-									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
-											$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
-											$to_price = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
-										}
-										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
-									} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
-										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
-										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
-										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
-									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-										$price_html .= apply_filters( 'wps_wgm_price_html_wcml', $price_html, $from_price, $to_price );
-									} else {
-										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+								// price based on country.
+								if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+									if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+										$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
+										$to_price   = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
 									}
+									$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+								} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+									$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+									$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+									$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
+								} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
+									$price_html .= apply_filters( 'wps_wgm_price_html_wcml', $price_html, $from_price, $to_price );
+								} else {
+									$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
 								}
-								if ( 'wps_wgm_selected_price' == $product_pricing_type ) {
-									$selected_price = $product_pricing['price'];
-									if ( ! empty( $selected_price ) ) {
-										$selected_prices = explode( '|', $selected_price );
-										$selected_prices = str_replace( $decimal_separator, '.', $selected_prices );
-										if ( isset( $selected_prices ) && ! empty( $selected_prices ) ) {
-											$price_html = '';
-											$price_html .= '<ins><span class="woocommerce-Price-amount amount">';
-											$last_range = end( $selected_prices );
-											// price based on country.
-											if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-
-												if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
-													$last_range         = wcpbc_the_zone()->get_exchange_rate_price( $last_range );
-													$selected_prices[0] = wcpbc_the_zone()->get_exchange_rate_price( $selected_prices[0] );
-												}
-												$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-											} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
-												$last_range         = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $last_range );
-												$selected_prices[0] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $selected_prices[0] );
-												$price_html        .= wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $selected_prices[0] ) . '-' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-											} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-												$price_html .= apply_filters( 'wps_wgm_price_html_selected', $price_html, $last_range, $selected_prices[0] );
-											} else {
-												$selected_prices[0] = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
-												wc_get_price_including_tax(
-													$product,
-													array(
-														'qty'   => 1,
-														'price' => $selected_prices[0],
-													)
-												) :
-												wc_get_price_excluding_tax(
-													$product,
-													array(
-														'qty'   => 1,
-														'price' => $selected_prices[0],
-													)
-												);
-
-												$last_range = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
-												wc_get_price_including_tax(
-													$product,
-													array(
-														'qty'   => 1,
-														'price' => $last_range,
-													)
-												) :
-												wc_get_price_excluding_tax(
-													$product,
-													array(
-														'qty'   => 1,
-														'price' => $last_range,
-													)
-												);
-
-												$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
-											}
-											$price_html .= '</span></ins>';
-										}
-									}
-								}
-								if ( 'wps_wgm_user_price' === $product_pricing_type ) {
-									$price_html = apply_filters( 'wps_wgm_user_price_text', '' );
-								}
-								if ( 'wps_wgm_variable_price' === $product_pricing_type ) {
-									$wps_variation_price = $product_pricing['wps_wgm_variation_price'];
-									$decimal_separator   = get_option( 'woocommerce_price_decimal_sep' );
-									foreach ( $wps_variation_price as $key => $value ) {
-										$value                       = floatval( str_replace( $decimal_separator, '.', $value ) );
-										$wps_variation_price[ $key ] = $value;
-									}
-									if ( isset( $wps_variation_price ) && ! empty( $wps_variation_price ) && is_array( $wps_variation_price ) ) {
-										$start_price = min( $wps_variation_price );
-										$end_price   = ( max( $wps_variation_price ) == '' ) ? $start_price : max( $wps_variation_price );
+							}
+							if ( 'wps_wgm_selected_price' == $product_pricing_type ) {
+								$selected_price = $product_pricing['price'];
+								if ( ! empty( $selected_price ) ) {
+									$selected_prices = explode( '|', $selected_price );
+									$selected_prices = str_replace( $decimal_separator, '.', $selected_prices );
+									if ( isset( $selected_prices ) && ! empty( $selected_prices ) ) {
+										$price_html  = '';
+										$price_html .= '<ins><span class="woocommerce-Price-amount amount">';
+										$last_range  = end( $selected_prices );
+										// price based on country.
 										if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-											if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
-												$start_price = wcpbc_the_zone()->get_exchange_rate_price( $start_price );
-												$end_price   = wcpbc_the_zone()->get_exchange_rate_price( $end_price );
+
+											if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+												$last_range         = wcpbc_the_zone()->get_exchange_rate_price( $last_range );
+												$selected_prices[0] = wcpbc_the_zone()->get_exchange_rate_price( $selected_prices[0] );
 											}
+											$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+										} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+											$last_range         = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $last_range );
+											$selected_prices[0] = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $selected_prices[0] );
+											$price_html        .= wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $selected_prices[0] ) . '-' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-											$start_price = apply_filters( 'wps_wgm_price_conversion_wcml', $start_price );
-											$end_price   = apply_filters( 'wps_wgm_price_conversion_wcml', $end_price );
+											$price_html .= apply_filters( 'wps_wgm_price_html_selected', $price_html, $last_range, $selected_prices[0] );
+										} else {
+											$selected_prices[0] = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+											wc_get_price_including_tax(
+												$product,
+												array(
+													'qty' => 1,
+													'price' => $selected_prices[0],
+												)
+											) :
+											wc_get_price_excluding_tax(
+												$product,
+												array(
+													'qty' => 1,
+													'price' => $selected_prices[0],
+												)
+											);
+
+											$last_range = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+											wc_get_price_including_tax(
+												$product,
+												array(
+													'qty' => 1,
+													'price' => $last_range,
+												)
+											) :
+											wc_get_price_excluding_tax(
+												$product,
+												array(
+													'qty' => 1,
+													'price' => $last_range,
+												)
+											);
+
+											$price_html .= wc_price( $selected_prices[0] ) . '-' . wc_price( $last_range ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 										}
-										$start_price = floatval( str_replace( $decimal_separator, '.', $start_price ) );
-										$end_price   = floatval( str_replace( $decimal_separator, '.', $end_price ) );
-
-										$start_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
-										wc_get_price_including_tax(
-											$product,
-											array(
-												'qty'   => 1,
-												'price' => $start_price,
-											)
-										) :
-										wc_get_price_excluding_tax(
-											$product,
-											array(
-												'qty'   => 1,
-												'price' => $start_price,
-											)
-										);
-
-										$end_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
-										wc_get_price_including_tax(
-											$product,
-											array(
-												'qty'   => 1,
-												'price' => $end_price,
-											)
-										) :
-										wc_get_price_excluding_tax(
-											$product,
-											array(
-												'qty'   => 1,
-												'price' => $end_price,
-											)
-										);
-
-										$price_html  = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
-									}
-								}
-								if ( 'wps_wgm_selected_with_price_range' === $product_pricing_type ) {
-									$price_html = '';
-									$from_price = $product_pricing['from'];
-									$to_price = $product_pricing['to'];
-									// price based on country.
-									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
-											$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
-											$to_price = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
-										}
-										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
-									} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
-										$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
-										$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
-										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
-									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
-										$price_html .= apply_filters( 'wps_wgm_price_html_price_range', $price_html, $from_price, $to_price );
-									} else {
-										$decimal_separator   = get_option( 'woocommerce_price_decimal_sep' );
-										$from_price = floatval( str_replace( $decimal_separator, '.', $from_price ) );
-										$to_price   = floatval( str_replace( $decimal_separator, '.', $to_price ) );
-										$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+										$price_html .= '</span></ins>';
 									}
 								}
 							}
+							if ( 'wps_wgm_user_price' === $product_pricing_type ) {
+								$price_html = apply_filters( 'wps_wgm_user_price_text', '' );
+							}
+							if ( 'wps_wgm_variable_price' === $product_pricing_type ) {
+								$wps_variation_price = $product_pricing['wps_wgm_variation_price'];
+								$decimal_separator   = get_option( 'woocommerce_price_decimal_sep' );
+								foreach ( $wps_variation_price as $key => $value ) {
+									$value                       = floatval( str_replace( $decimal_separator, '.', $value ) );
+									$wps_variation_price[ $key ] = $value;
+								}
+								if ( isset( $wps_variation_price ) && ! empty( $wps_variation_price ) && is_array( $wps_variation_price ) ) {
+									$start_price = min( $wps_variation_price );
+									$end_price   = ( max( $wps_variation_price ) == '' ) ? $start_price : max( $wps_variation_price );
+									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+										if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
+											$start_price = wcpbc_the_zone()->get_exchange_rate_price( $start_price );
+											$end_price   = wcpbc_the_zone()->get_exchange_rate_price( $end_price );
+										}
+									} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
+										$start_price = apply_filters( 'wps_wgm_price_conversion_wcml', $start_price );
+										$end_price   = apply_filters( 'wps_wgm_price_conversion_wcml', $end_price );
+									}
+									$start_price = floatval( str_replace( $decimal_separator, '.', $start_price ) );
+									$end_price   = floatval( str_replace( $decimal_separator, '.', $end_price ) );
+
+									$start_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+									wc_get_price_including_tax(
+										$product,
+										array(
+											'qty'   => 1,
+											'price' => $start_price,
+										)
+									) :
+									wc_get_price_excluding_tax(
+										$product,
+										array(
+											'qty'   => 1,
+											'price' => $start_price,
+										)
+									);
+
+									$end_price = ( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) ?
+									wc_get_price_including_tax(
+										$product,
+										array(
+											'qty'   => 1,
+											'price' => $end_price,
+										)
+									) :
+									wc_get_price_excluding_tax(
+										$product,
+										array(
+											'qty'   => 1,
+											'price' => $end_price,
+										)
+									);
+
+									$price_html = '<span>' . wc_price( $start_price ) . ' - ' . wc_price( $end_price ) . '</span>';
+								}
+							}
+							if ( 'wps_wgm_selected_with_price_range' === $product_pricing_type ) {
+								$price_html = '';
+								$from_price = $product_pricing['from'];
+								$to_price   = $product_pricing['to'];
+								// price based on country.
+								if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
+									if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+										$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
+										$to_price   = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
+									}
+									$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+								} elseif ( ! is_admin() && function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+									$from_price  = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $from_price );
+									$to_price    = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $to_price );
+									$price_html .= '<ins><span class="woocommerce-Price-amount amount">' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $from_price ) . ' - ' . wps_mmcsfw_get_custom_currency_symbol( '' ) . ( $to_price ) . '</span></ins>';
+								} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
+									$price_html .= apply_filters( 'wps_wgm_price_html_price_range', $price_html, $from_price, $to_price );
+								} else {
+									$decimal_separator = get_option( 'woocommerce_price_decimal_sep' );
+									$from_price        = floatval( str_replace( $decimal_separator, '.', $from_price ) );
+									$to_price          = floatval( str_replace( $decimal_separator, '.', $to_price ) );
+									$price_html       .= '<ins><span class="woocommerce-Price-amount amount">' . wc_price( $from_price ) . ' - ' . wc_price( $to_price ) . '</span></ins>';
+								}
+							}
 						}
-						$price_html = apply_filters( 'wps_wgm_pricing_html', $price_html, $product, $product_pricing );
 					}
+						$price_html = apply_filters( 'wps_wgm_pricing_html', $price_html, $product, $product_pricing );
+				}
 			}
 		}
 		$product_id_to_hide = get_option( 'contributor_product_id' ); // Replace with your actual product ID.
@@ -1250,8 +1244,8 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	 */
 	public function wps_wgm_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
 
-		$order = new WC_Order( $order_id );
-		$items = $order->get_items();
+		$order                  = new WC_Order( $order_id );
+		$items                  = $order->get_items();
 		$coupon_amount_deducted = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_coupon_amount_deducted', true );
 		if ( 'deduct' !== $coupon_amount_deducted ) {
 			foreach ( $order->get_items( 'coupon' ) as $item_id => $item ) {
@@ -1264,7 +1258,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 			$product_id = $item['product_id'];
 
-			$prod_name  = $item['name'];
+			$prod_name = $item['name'];
 			if ( get_option( 'wps_gccoupon_rechargeable_product_id' ) == $product_id ) {
 				$this->wps_add_fund_to_existing_coupon( $order_id, $old_status, $new_status );
 			}
@@ -1277,14 +1271,14 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		}
 
 		$wps_wgm_mail_template_data = array();
-		$wps_wgc_enable = wps_wgm_giftcard_enable();
+		$wps_wgc_enable             = wps_wgm_giftcard_enable();
 		if ( $wps_wgc_enable ) {
 			if ( $old_status != $new_status ) {
 				if ( 'completed' == $new_status || 'processing' == $new_status ) {
-					$is_gift_card = false;
-					$datecheck = true;
+					$is_gift_card    = false;
+					$datecheck       = true;
 					$order_datecheck = true;
-					$order = wc_get_order( $order_id );
+					$order           = wc_get_order( $order_id );
 
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
@@ -1292,7 +1286,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 						$ord_product_id = $item->get_product_id();
 						$conti_prod_id  = get_option( 'contributor_product_id' );
 						if ( $ord_product_id == $conti_prod_id ) {
-							$alredaygenerated     = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
+							$alredaygenerated    = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
 							$alreadygenrated_old = wps_wgm_hpos_get_meta_data( $order_id, 'wps_gw_order_giftcard', true );
 							if ( 'send' !== $alredaygenerated || 'send' !== $alreadygenrated_old ) {
 								$this->wps_wgm_gc_send_payment_link_to_contributors( $order_id, $old_status, $new_status );
@@ -1313,62 +1307,62 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					if ( 'send' == $mailalreadysend || 'send' == $mailalreadysend_old ) {
 						return;
 					} else {
-						$general_setting = get_option( 'wps_wgm_general_settings', array() );
+						$general_setting        = get_option( 'wps_wgm_general_settings', array() );
 						$giftcard_selected_date = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_enable_selected_date' );
 						if ( 'on' == $giftcard_selected_date ) {
 							wps_wgm_hpos_update_meta_data( $order_id, 'wps_wgm_order_giftcard', 'notsend' );
 						}
 					}
 
-					$gift_msg = '';
-					$to = '';
-					$from = '';
-					$gift_order = false;
-					$selected_template = '';
-					$original_price = 0;
+					$gift_msg                   = '';
+					$to                         = '';
+					$from                       = '';
+					$gift_order                 = false;
+					$selected_template          = '';
+					$original_price             = 0;
 					$variable_price_description = 0;
-					$delivery_method = '';
-					$order = wc_get_order( $order_id );
+					$delivery_method            = '';
+					$order                      = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
-						$mailsend = false;
-						$to_name = '';
-						$woo_ver = WC()->version;
-						$gift_img_name = '';
-						$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
-						$product = $item->get_product();
-						$pro_id = $product->get_id();
-						$item_meta_data = $item->get_meta_data();
+						$mailsend        = false;
+						$to_name         = '';
+						$woo_ver         = WC()->version;
+						$gift_img_name   = '';
+						$item_quantity   = wc_get_order_item_meta( $item_id, '_qty', true );
+						$product         = $item->get_product();
+						$pro_id          = $product->get_id();
+						$item_meta_data  = $item->get_meta_data();
 						$gift_date_check = false;
-						$gift_date = '';
-						$original_price = 0;
+						$gift_date       = '';
+						$original_price  = 0;
 
 						foreach ( $item_meta_data as $key => $value ) {
 							if ( isset( $value->key ) && 'To' == $value->key && ! empty( $value->value ) ) {
 								$mailsend = true;
-								$to = $value->value;
+								$to       = $value->value;
 							}
 							if ( isset( $value->key ) && 'From' == $value->key && ! empty( $value->value ) ) {
 								$mailsend = true;
-								$from = $value->value;
+								$from     = $value->value;
 							}
 							if ( isset( $value->key ) && 'Message' == $value->key && ! empty( $value->value ) ) {
 								$mailsend = true;
 								$gift_msg = $value->value;
 							}
 							if ( isset( $value->key ) && 'Delivery Method' == $value->key && ! empty( $value->value ) ) {
-								$mailsend = true;
+								$mailsend        = true;
 								$delivery_method = $value->value;
 							}
 							if ( isset( $value->key ) && 'Original Price' == $value->key && ! empty( $value->value ) ) {
-								$mailsend = true;
+								$mailsend       = true;
 								$original_price = $value->value;
 							}
 							if ( isset( $value->key ) && 'Selected Template' == $value->key && ! empty( $value->value ) ) {
-								$mailsend = true;
+								$mailsend          = true;
 								$selected_template = $value->value;
 							}
 							if ( isset( $value->key ) && 'Variable Price Description' == $value->key && ! empty( $value->value ) ) {
-								$mailsend = true;
+								$mailsend                   = true;
 								$variable_price_description = $value->value;
 							}
 							if ( isset( $value->key ) && ! empty( $value->value ) ) {
@@ -1382,19 +1376,19 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
 
 								$group_gift_amt = intval( $order_subtotal );
-								$values = explode( ',', $value->value );
+								$values         = explode( ',', $value->value );
 
 								foreach ( $values  as $value->value ) {
-											$conti_prod_id = get_option( 'contributor_product_id' );
+											$conti_prod_id   = get_option( 'contributor_product_id' );
 											$conti_prod_link = get_permalink( $conti_prod_id );
 
-											$subject = 'Contribute your share';
-											$message = "Hello,\n\n";
+											$subject  = 'Contribute your share';
+											$message  = "Hello,\n\n";
 											$message .= "You are receiving this email to contribute for this  group gift product: : $prod_name.\n";
 
-											$message .= $conti_prod_link . '?order_id=' . $order_id . '&prod_id=' . $pro_id;
-											$copy_link = $conti_prod_link . '?order_id=' . $order_id . '&prod_id=' . $pro_id;
-											$whatsapp_url = 'https://api.whatsapp.com/send?';
+											$message      .= $conti_prod_link . '?order_id=' . $order_id . '&prod_id=' . $pro_id;
+											$copy_link     = $conti_prod_link . '?order_id=' . $order_id . '&prod_id=' . $pro_id;
+											$whatsapp_url  = 'https://api.whatsapp.com/send?';
 											$whatsapp_url .= 'text=' . urlencode( $copy_link );
 											wps_wgm_hpos_update_meta_data( $order_id, 'share#link', $whatsapp_url );
 											wps_wgm_hpos_update_meta_data( $order_id, 'copy#link', $copy_link );
@@ -1405,28 +1399,28 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							}
 						}
 						$wps_wgm_mail_template_data = array(
-							'to' => $to,
-							'from' => $from,
-							'gift_msg' => $gift_msg,
-							'delivery_method' => $delivery_method,
-							'original_price' => $original_price,
-							'selected_template' => $selected_template,
-							'mail_send' => $mailsend,
-							'product_id' => $pro_id,
-							'item_id'   => $item_id,
-							'item_quantity' => $item_quantity,
-							'datecheck' => $datecheck,
+							'to'                         => $to,
+							'from'                       => $from,
+							'gift_msg'                   => $gift_msg,
+							'delivery_method'            => $delivery_method,
+							'original_price'             => $original_price,
+							'selected_template'          => $selected_template,
+							'mail_send'                  => $mailsend,
+							'product_id'                 => $pro_id,
+							'item_id'                    => $item_id,
+							'item_quantity'              => $item_quantity,
+							'datecheck'                  => $datecheck,
 							'variable_price_description' => $variable_price_description,
 						);
 						wps_wgm_hpos_update_meta_data( $order_id, 'temp_item_id', $item_id );
 						$wps_wgm_mail_template_data = apply_filters( 'wps_wgm_mail_templates_data_set', $wps_wgm_mail_template_data, $order->get_items(), $order_id );
 
 						if ( isset( $wps_wgm_mail_template_data['datecheck'] ) && ! $wps_wgm_mail_template_data['datecheck'] ) {
-							$order_datecheck = false;	
+							$order_datecheck = false;
 							continue;
 						}
 						if ( isset( $wps_wgm_mail_template_data['mail_send'] ) && $wps_wgm_mail_template_data['mail_send'] ) {
-							$gift_order = true;
+							$gift_order     = true;
 							$inc_tax_status = get_option( 'woocommerce_prices_include_tax', false );
 							if ( 'yes' == $inc_tax_status ) {
 								$inc_tax_status = true;
@@ -1439,7 +1433,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							$wps_wgm_lite = apply_filters( 'wps_wgm_check_coupon_creation_mails', $wps_wgm_mail_template_data, $order_id, $item, $wps_wgm_lite );
 
 							if ( $wps_wgm_lite ) {
-								$general_setting = get_option( 'wps_wgm_general_settings', array() );
+								$general_setting        = get_option( 'wps_wgm_general_settings', array() );
 								$giftcard_coupon_length = $this->wps_common_fun->wps_wgm_get_template_data( $general_setting, 'wps_wgm_general_setting_giftcard_coupon_length' );
 								if ( '' == $giftcard_coupon_length ) {
 									$giftcard_coupon_length = 5;
@@ -1464,20 +1458,20 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 											$expiry_date = $local_expiry_day;
 										}
 
-										$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
-										$wps_wgm_common_arr['order_id'] = $order_id;
-										$wps_wgm_common_arr['product_id'] = $item['product_id'];
-										$wps_wgm_common_arr['to'] = $to;
-										$wps_wgm_common_arr['from'] = $from;
-										$wps_wgm_common_arr['gift_couponnumber'] = $gift_couponnumber;
-										$wps_wgm_common_arr['gift_msg'] = $gift_msg;
-										$wps_wgm_common_arr['expirydate_format'] = $expirydate_format;
-										$wps_wgm_common_arr['couponamont'] = $couponamont;
-										$wps_wgm_common_arr['selected_template'] = isset( $selected_template ) ? $selected_template : '';
-										$wps_wgm_common_arr['delivery_method'] = $delivery_method;
+										$expirydate_format                                = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
+										$wps_wgm_common_arr['order_id']                   = $order_id;
+										$wps_wgm_common_arr['product_id']                 = $item['product_id'];
+										$wps_wgm_common_arr['to']                         = $to;
+										$wps_wgm_common_arr['from']                       = $from;
+										$wps_wgm_common_arr['gift_couponnumber']          = $gift_couponnumber;
+										$wps_wgm_common_arr['gift_msg']                   = $gift_msg;
+										$wps_wgm_common_arr['expirydate_format']          = $expirydate_format;
+										$wps_wgm_common_arr['couponamont']                = $couponamont;
+										$wps_wgm_common_arr['selected_template']          = isset( $selected_template ) ? $selected_template : '';
+										$wps_wgm_common_arr['delivery_method']            = $delivery_method;
 										$wps_wgm_common_arr['variable_price_description'] = $variable_price_description;
-										$wps_wgm_common_arr['item_id'] = $item_id;
-										$wps_wgm_common_arr = apply_filters( 'wps_wgm_common_arr_data', $wps_wgm_common_arr, $item, $order );
+										$wps_wgm_common_arr['item_id']                    = $item_id;
+										$wps_wgm_common_arr                               = apply_filters( 'wps_wgm_common_arr_data', $wps_wgm_common_arr, $item, $order );
 
 										$wps_wgm_coupon_code = $this->wps_common_fun->wps_wgm_common_functionality( $wps_wgm_common_arr, $order );
 									}
@@ -1499,7 +1493,6 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				}
 			}
 		}
-
 	}
 	/**
 	 * Payment link to contributors.
@@ -1517,31 +1510,31 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			foreach ( $item_key->get_meta_data() as $item_id => $item ) {
 
 				if ( 'Main Product id' == $item->key ) {
-					$main_prod_id  = $item->value;
+					$main_prod_id = $item->value;
 				}
 				if ( 'Main order id' == $item->key ) {
-					$main_ord_id  = $item->value;
-					$m_key = 'suborder#' . $main_ord_id;
+					$main_ord_id = $item->value;
+					$m_key       = 'suborder#' . $main_ord_id;
 
 					wps_wgm_hpos_update_meta_data( $order_id, $m_key, $main_ord_id );
 					//
 					// Get the order object.
 					$current_ord = wc_get_order( $main_ord_id );
-					$order = wc_get_order();
+					$order       = wc_get_order();
 
 					$meta_key = 'suborder#' . $main_ord_id;
 					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 						// HPOS Enabled.
 						$orders = wc_get_orders(
 							array(
-								'limit'       => -1,
-								'status'      => array_keys( wc_get_order_statuses() ),
-								'meta_key'    => $meta_key, // Replace with your custom field key.
-								'type'        => wc_get_order_types(),
+								'limit'    => -1,
+								'status'   => array_keys( wc_get_order_statuses() ),
+								'meta_key' => $meta_key, // Replace with your custom field key.
+								'type'     => wc_get_order_types(),
 							)
 						);
 					} else {
-						$args = array(
+						$args   = array(
 							'post_type'      => 'shop_order',
 							'post_status'    => 'any',
 							'posts_per_page' => -1,
@@ -1553,7 +1546,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					$main_prod_amt = intval( $main_pord_ord->get_subtotal() );
 
 					$total_suborder_amout = 0;
-					 // Loop through the orders and display relevant data.
+					// Loop through the orders and display relevant data.
 
 					foreach ( $orders as $order ) {
 						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
@@ -1561,7 +1554,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 						} else {
 							$order_sub_id = $order->ID;
 						}
-						$ord = wc_get_order( $order_sub_id );
+						$ord            = wc_get_order( $order_sub_id );
 						$product_amount = $ord->get_subtotal();
 						if ( $product_amount ) {
 
@@ -1573,7 +1566,6 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1605,7 +1597,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 						$wps_enabled     = get_post_meta( $wps_coupon_id, '_wps_giftcard_enabled', true );
 
 						$wps_is_rechargeable = ( $wps_coupon_id > 0 )
-							&& ( ! $wps_expires_at || $wps_expires_at->getTimestamp() > current_time( 'timestamp', true ) )
+							&& ( ! $wps_expires_at || $wps_expires_at->getTimestamp() > time() )
 							&& ( 0 === $wps_usage_limit || $wps_usage_count < $wps_usage_limit )
 							&& ( 'no' !== $wps_enabled );
 
@@ -1635,8 +1627,8 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_hidding_coupon_field_on_cart( $enabled ) {
-		$bool = false;
-		$bool2 = false;
+		$bool        = false;
+		$bool2       = false;
 		$is_checkout = false;
 		if ( is_cart() || is_checkout() ) {
 			if ( ! empty( WC()->cart ) ) {
@@ -1802,7 +1794,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	public function wps_wgm_woocommerce_product_is_taxable( $taxable, $product ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 		if ( $wps_wgc_enable ) {
-			$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
+			$genaral_settings        = get_option( 'wps_wgm_general_settings', array() );
 			$giftcard_tax_cal_enable = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_tax_cal_enable' );
 			if ( ! isset( $giftcard_tax_cal_enable ) || empty( $giftcard_tax_cal_enable ) ) {
 				$giftcard_tax_cal_enable = 'off';
@@ -1853,20 +1845,20 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	public function wps_wgm_woocommerce_product_query( $query, $query_object ) {
 		$wps_wgc_enable = wps_wgm_giftcard_enable();
 		if ( $wps_wgc_enable ) {
-			$genaral_settings = get_option( 'wps_wgm_general_settings', array() );
+			$genaral_settings   = get_option( 'wps_wgm_general_settings', array() );
 			$giftcard_shop_page = $this->wps_common_fun->wps_wgm_get_template_data( $genaral_settings, 'wps_wgm_general_setting_shop_page_enable' );
 			if ( ! isset( $giftcard_shop_page ) || empty( $giftcard_shop_page ) ) {
 				$giftcard_shop_page = 'off';
 			}
 			if ( 'on' != $giftcard_shop_page ) {
 				if ( is_shop() ) {
-					$args = array(
-						'post_type' => 'product',
+					$args          = array(
+						'post_type'      => 'product',
 						'posts_per_page' => -1,
-						'meta_key' => 'wps_wgm_pricing',
+						'meta_key'       => 'wps_wgm_pricing',
 					);
 					$gift_products = array();
-					$loop = new WP_Query( $args );
+					$loop          = new WP_Query( $args );
 					if ( $loop->have_posts() ) :
 						while ( $loop->have_posts() ) :
 							$loop->the_post();
@@ -1900,8 +1892,8 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		if ( get_class( $item ) == 'WC_Order_Item_Coupon' ) {
 
 			$coupon_code = $item->get_code();
-			$the_coupon = new WC_Coupon( $coupon_code );
-			$coupon_id = $the_coupon->get_id();
+			$the_coupon  = new WC_Coupon( $coupon_code );
+			$coupon_id   = $the_coupon->get_id();
 			if ( isset( $coupon_id ) ) {
 				$rate = 1;
 				// price based on country.
@@ -1965,16 +1957,16 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {
 			if ( ( true ) && $wps_wgc_enable ) {
 				global $woocommerce;
-				$gift_bool = false;
-				$other_bool = false;
+				$gift_bool      = false;
+				$other_bool     = false;
 				$gift_bool_ship = false;
 				if ( $enable ) {
 					if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
 
 						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-	
-							$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+
+							$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+							$product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 							$product_type = $_product->get_type();
 							if ( isset( $cart_item['product_meta'] ) ) {
 								if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
@@ -1983,10 +1975,10 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 									} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
 										$gift_bool_ship = true;
 									}
-								} else if ( ! $cart_item['data']->is_virtual() ) {
+								} elseif ( ! $cart_item['data']->is_virtual() ) {
 									$other_bool = true;
 								}
-							} else if ( ! $cart_item['data']->is_virtual() ) {
+							} elseif ( ! $cart_item['data']->is_virtual() ) {
 								$other_bool = true;
 							}
 						}
@@ -1999,37 +1991,35 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					}
 				}
 			}
-		} else {
-			if ( ( is_cart() || is_checkout() ) && $wps_wgc_enable ) {
+		} elseif ( ( is_cart() || is_checkout() ) && $wps_wgc_enable ) {
 				global $woocommerce;
-				$gift_bool = false;
-				$other_bool = false;
+				$gift_bool      = false;
+				$other_bool     = false;
 				$gift_bool_ship = false;
-				if ( $enable ) {
-					if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
-						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-							$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-							$product_type = $_product->get_type();
-							if ( isset( $cart_item['product_meta'] ) ) {
-								if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
-									if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-										$gift_bool = true;
-									} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
-										$gift_bool_ship = true;
-									}
-								} else if ( ! $cart_item['data']->is_virtual() ) {
-									$other_bool = true;
+			if ( $enable ) {
+				if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+						$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+						$product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+						$product_type = $_product->get_type();
+						if ( isset( $cart_item['product_meta'] ) ) {
+							if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
+								if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+									$gift_bool = true;
+								} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+									$gift_bool_ship = true;
 								}
-							} else if ( ! $cart_item['data']->is_virtual() ) {
+							} elseif ( ! $cart_item['data']->is_virtual() ) {
 								$other_bool = true;
 							}
+						} elseif ( ! $cart_item['data']->is_virtual() ) {
+							$other_bool = true;
 						}
-						if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
-							$enable = false;
-						} else {
-							$enable = true;
-						}
+					}
+					if ( $gift_bool && ! $gift_bool_ship && ! $other_bool ) {
+						$enable = false;
+					} else {
+						$enable = true;
 					}
 				}
 			}
@@ -2048,14 +2038,14 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	public function wps_wgm_preview_thickbox_rqst() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
 		$_POST['wps_wgc_preview_email'] = 'wps_wgm_single_page_popup';
-		$_POST['tempId'] = isset( $_POST['tempId'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) ) : '';
-		$_POST = apply_filters( 'wps_wgm_upload_giftcard_image', $_POST );
-		$_POST['message'] = isset( $_POST['message'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['message'] ) ) ) : '';
-		$_POST['width'] = '630';
-		$_POST['height'] = '530';
-		$_POST['TB_iframe'] = true;
-		$query = http_build_query( wp_unslash( $_POST ) );
-		$ajax_url = home_url( "?$query" );
+		$_POST['tempId']                = isset( $_POST['tempId'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) ) : '';
+		$_POST                          = apply_filters( 'wps_wgm_upload_giftcard_image', $_POST );
+		$_POST['message']               = isset( $_POST['message'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['message'] ) ) ) : '';
+		$_POST['width']                 = '630';
+		$_POST['height']                = '530';
+		$_POST['TB_iframe']             = true;
+		$query                          = http_build_query( wp_unslash( $_POST ) );
+		$ajax_url                       = home_url( "?$query" );
 		echo esc_attr( $ajax_url );
 		wp_die();
 	}
@@ -2089,7 +2079,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$password .= 'x';
 			}
 			$giftcard_prefix = $general_setting['wps_wgm_general_setting_giftcard_prefix'];
-			$coupon = $giftcard_prefix . $password;
+			$coupon          = $giftcard_prefix . $password;
 
 			$local_expiry_day = get_post_meta( $product_id, 'wps_wgm_local_setting_giftcard_expiry', true );
 			if ( empty( $local_expiry_day ) || 0 == $local_expiry_day ) {
@@ -2104,7 +2094,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			}
 
 			$expirydate_format = $this->wps_common_fun->wps_wgm_check_expiry_date( $expiry_date );
-			$wps_temp_id = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
+			$wps_temp_id       = isset( $_GET['tempId'] ) ? sanitize_text_field( wp_unslash( $_GET['tempId'] ) ) : '';
 			if ( array_key_exists( 'template', $product_pricing ) ) {
 				$templateid = $product_pricing['template'];
 			} else {
@@ -2119,9 +2109,9 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			if ( isset( $_GET['delivery_method'] ) ) {
 				if ( 'Mail to recipient' == $_GET['delivery_method'] ) {
 					$h = __( 'Mail to recipient', 'woo-gift-cards-lite' );
-				} else if ( 'Downloadable' == $_GET['delivery_method'] ) {
+				} elseif ( 'Downloadable' == $_GET['delivery_method'] ) {
 					$h = __( 'Downloadable', 'woo-gift-cards-lite' );
-				} else if ( 'shipping' == $_GET['delivery_method'] ) {
+				} elseif ( 'shipping' == $_GET['delivery_method'] ) {
 					$h = __( 'shipping', 'woo-gift-cards-lite' );
 
 				} else {
@@ -2130,14 +2120,14 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				}
 			}
 
-			$args['to'] = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : '';
-			$args['from'] = isset( $_GET['from'] ) ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '';
-			$args['message'] = isset( $_GET['message'] ) ? sanitize_text_field( wp_unslash( $_GET['message'] ) ) : '';
-			$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $coupon );
-			$args['expirydate'] = $expirydate_format;
-			$args['delivery_method'] = isset( $_GET['delivery_method'] ) ? sanitize_text_field( wp_unslash( $h ) ) : '';
+			$args['to']                         = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : '';
+			$args['from']                       = isset( $_GET['from'] ) ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '';
+			$args['message']                    = isset( $_GET['message'] ) ? sanitize_text_field( wp_unslash( $_GET['message'] ) ) : '';
+			$args['coupon']                     = apply_filters( 'wps_wgm_qrcode_coupon', $coupon );
+			$args['expirydate']                 = $expirydate_format;
+			$args['delivery_method']            = isset( $_GET['delivery_method'] ) ? sanitize_text_field( wp_unslash( $h ) ) : '';
 			$args['variable_price_description'] = isset( $_GET['variable_price_desc'] ) ? sanitize_text_field( wp_unslash( $_GET['variable_price_desc'] ) ) : '';
-			$args = apply_filters( 'wps_wgm_add_preview_template_fields', $args );
+			$args                               = apply_filters( 'wps_wgm_add_preview_template_fields', $args );
 
 			if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {  // Added for price based on country.
 				if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
@@ -2151,7 +2141,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 					}
 					$args['amount'] = wc_price( $amt );
 				} else {
-					$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
+					$amt            = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
 					$args['amount'] = wc_price( $amt );
 				}
 			} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
@@ -2172,7 +2162,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			}
 			$args['templateid'] = isset( $wps_temp_id ) && ! empty( $wps_temp_id ) ? $wps_temp_id : $temp;
 			$args['product_id'] = $product_id;
-			$message = $this->wps_common_fun->wps_wgm_create_gift_template( $args );
+			$message            = $this->wps_common_fun->wps_wgm_create_gift_template( $args );
 			if ( wps_uwgc_pro_active() ) {
 					do_action( 'preview_email_template_for_pro', $message );
 			} else {
@@ -2183,7 +2173,6 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				// @codingStandardsIgnoreEnd.
 			}
 		}
-
 	}
 
 	/**
@@ -2374,35 +2363,35 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		if ( $coupon->get_id() !== 0 ) {
 			if ( str_contains( $coupon->get_description(), 'GIFTCARD ORDER #' ) || str_contains( $coupon->get_description(), 'Imported Coupon' ) || str_contains( $coupon->get_description(), 'Imported Offline Coupon' ) ) {
 				if ( 'fixed_cart' == $coupon->get_discount_type() ) {
-					$coupon_amount = $coupon->get_amount();
+					$coupon_amount         = $coupon->get_amount();
 					$expiry_date_timestamp = $coupon->get_date_expires();
-	
+
 					if ( empty( $expiry_date_timestamp ) ) {
 						$expirydiff = 1;
 					} else {
 						$expiry_date_timestamp = strtotime( $expiry_date_timestamp );
-						$timestamp = strtotime( gmdate( 'Y-m-d' ) );
-						$expirydiff = $expiry_date_timestamp - $timestamp;
+						$timestamp             = strtotime( gmdate( 'Y-m-d' ) );
+						$expirydiff            = $expiry_date_timestamp - $timestamp;
 					}
-	
+
 					if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
 						$coupon->set_amount( 0 );
 						$user_id = get_current_user_id();
 						$coupon->save();
-	
+
 						$walletamount  = get_user_meta( $user_id, 'wps_wallet', true );
 						$walletamount  = empty( $walletamount ) ? 0 : $walletamount;
 						$walletamount += $coupon_amount;
 						update_user_meta( $user_id, 'wps_wallet', $walletamount );
 						if ( '' !== $coupon_id && 0 !== $coupon_id ) {
-	
+
 							$coupon_usage_count = get_post_meta( $coupon_id, 'usage_count', true );
 							$coupon_usage_count = ++$coupon_usage_count;
 							update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
 						}
-										$wallet_user       = get_user_by( 'id', $user_id );
-						$send_email_enable = get_option( 'wps_wsfw_enable_email_notification_for_wallet_update', '' );
-	
+										$wallet_user = get_user_by( 'id', $user_id );
+						$send_email_enable           = get_option( 'wps_wsfw_enable_email_notification_for_wallet_update', '' );
+
 						if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
 							$user_name  = $wallet_user->first_name . ' ' . $wallet_user->last_name;
 							$mail_text  = sprintf( 'Hello %s,<br/>', $user_name );
@@ -2414,11 +2403,11 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							$headers   .= 'Content-Type: text/html;  charset=UTF-8' . "\r\n";
 							$headers   .= 'From: ' . $from . "\r\n" .
 								'Reply-To: ' . $to . "\r\n";
-	
+
 							$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
-	
+
 						}
-	
+
 						$transaction_type = __( 'Wallet credited through Gift Card Code : ', 'woo-gift-cards-lite' ) . $wps_giftcard_code;
 						$transaction_data = array(
 							'user_id'          => $user_id,
@@ -2427,9 +2416,9 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							'payment_method'   => 'Gift Card Redeem',
 							'transaction_type' => htmlentities( $transaction_type ),
 						);
-	
+
 						$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
-	
+
 						$response = array(
 							'status'  => 'success',
 							'message' => apply_filters( 'wps_wgm_price_conversion_wcml', $coupon_amount ),
@@ -2499,7 +2488,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				)
 			);
 
-			$response['result'] = true;
+			$response['result']    = true;
 			$response['new_price'] = wc_price( $wps_wgm_price );
 			echo wp_json_encode( $response );
 			wp_die();
@@ -2535,10 +2524,10 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		// Get dashboard color from settings.
 		$general_settings = get_option( 'wps_wgm_general_settings', array() );
-		$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
-		$primary_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
+		$dashboard_color  = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+		$primary_color    = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
 
-		$html = '<div class="wps-gift-card-balance-shortcode">';
+		$html  = '<div class="wps-gift-card-balance-shortcode">';
 		$html .= '<div class="wps-shortcode-balance-form">';
 		$html .= '<p>';
 		$html .= '<label for="wps_shortcode_gift_card_email">' . esc_html__( 'Email Address:', 'woo-gift-cards-lite' ) . '</label>';
@@ -2702,16 +2691,16 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	public function wps_uwgc_check_gift_balance_org() {
 
 		check_ajax_referer( 'wps-wgc-verify-nonce-check', 'wps_wgm_nonce_check' );
-		$response['result'] = false;
+		$response['result']  = false;
 		$response['message'] = __( 'Balance cannot be checked yet, Please Try again later!', 'woo-gift-cards-lite' );
-		$wps_check_email = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
-		$coupon = isset( $_POST['coupon'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon'] ) ) : '';
+		$wps_check_email     = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
+		$coupon              = isset( $_POST['coupon'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon'] ) ) : '';
 
-		// Get dashboard color from settings (pro feature) with fallback
+		// Get dashboard color from settings (pro feature) with fallback.
 		$general_settings = get_option( 'wps_wgm_general_settings', array() );
-		$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
-		$coupon_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
-		$button_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
+		$dashboard_color  = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+		$coupon_color     = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
+		$button_color     = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
 		if ( isset( $coupon ) && ! empty( $coupon ) && isset( $wps_check_email ) && ! empty( $wps_check_email ) ) {
 			$the_coupon = new WC_Coupon( $coupon );
 			if ( isset( $the_coupon ) && ! empty( $coupon ) ) {
@@ -2719,25 +2708,25 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				if ( isset( $coupon_id ) && ! empty( $coupon_id ) && 0 != $coupon_id ) {
 					$left_amount = $the_coupon->get_amount();
 					$coupon_type = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_unique', true );
-					$user_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+					$user_email  = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
 					if ( 'offline' === $coupon_type ) {
 						if ( isset( $user_email ) && ! empty( $user_email ) ) {
 							if ( $user_email == $wps_check_email ) {
-								$html = '<div class="amount_wrapper">';
-								$html .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-								$html .= '<div style="text-align: center; margin: 10px 0;">';
-								$html .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-								$html .= '</div>';
-								$html .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-								$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-								$html .= '</div>';
-								$html .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
-								$html .= '</div>';
-								$response['result'] = true;
-								$response['html'] = $html;
+								$html                = '<div class="amount_wrapper">';
+								$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
+								$html               .= '<div style="text-align: center; margin: 10px 0;">';
+								$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
+								$html               .= '</div>';
+								$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
+								$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+								$html               .= '</div>';
+								$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+								$html               .= '</div>';
+								$response['result']  = true;
+								$response['html']    = $html;
 								$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 							} else {
-								$response['result'] = false;
+								$response['result']  = false;
 								$response['message'] = __( 'Recipient Email should be correct!!', 'woo-gift-cards-lite' );
 							}
 						}
@@ -2745,91 +2734,90 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 						$order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
 						if ( empty( $order_id ) ) {
 							if ( in_array( $wps_check_email, $user_email ) ) {
-								$html = '<div class="amount_wrapper">';
-								$html .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-								$html .= '<div style="text-align: center; margin: 10px 0;">';
-								$html .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-								$html .= '</div>';
-								$html .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-								$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-								$html .= '</div>';
-								$html .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
-								$html .= '</div>';
-								$response['result'] = true;
-								$response['html'] = $html;
+								$html                = '<div class="amount_wrapper">';
+								$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
+								$html               .= '<div style="text-align: center; margin: 10px 0;">';
+								$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
+								$html               .= '</div>';
+								$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
+								$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+								$html               .= '</div>';
+								$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+								$html               .= '</div>';
+								$response['result']  = true;
+								$response['html']    = $html;
 								$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 							}
 						} elseif ( isset( $order_id ) && ! empty( $order_id ) ) {
-							$order = wc_get_order( $order_id );
-							$sender_email = $order->get_billing_email();
-							$user_id = $order->get_user_id();
-							$wps_user_name = get_userdata( $user_id );
+							$order           = wc_get_order( $order_id );
+							$sender_email    = $order->get_billing_email();
+							$user_id         = $order->get_user_id();
+							$wps_user_name   = get_userdata( $user_id );
 							$wps_sender_name = $wps_user_name->first_name . ' ' . $wps_user_name->last_name;
 							if ( ( isset( $user_email ) && ! empty( $user_email ) ) || ( isset( $sender_email ) && ! empty( $sender_email ) ) ) {
 								if ( $user_email == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">';
-									$html .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-									$html .= '<div style="text-align: center; margin: 10px 0;">';
-									$html .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-									$html .= '</div>';
-									$html .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-									$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-									$html .= '</div>';
-									$html .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
-									$html .= '</div>';
-									$response['result'] = true;
-									$response['html'] = $html;
+									$html                = '<div class="amount_wrapper">';
+									$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
+									$html               .= '<div style="text-align: center; margin: 10px 0;">';
+									$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
+									$html               .= '</div>';
+									$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
+									$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+									$html               .= '</div>';
+									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+									$html               .= '</div>';
+									$response['result']  = true;
+									$response['html']    = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $sender_email == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">';
-									$html .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-									$html .= '<div style="text-align: center; margin: 10px 0;">';
-									$html .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-									$html .= '</div>';
-									$html .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-									$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-									$html .= '</div>';
-									$html .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
-									$html .= '</div>';
-									$response['result'] = true;
-									$response['html'] = $html;
+									$html                = '<div class="amount_wrapper">';
+									$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
+									$html               .= '<div style="text-align: center; margin: 10px 0;">';
+									$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
+									$html               .= '</div>';
+									$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
+									$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+									$html               .= '</div>';
+									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+									$html               .= '</div>';
+									$response['result']  = true;
+									$response['html']    = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $wps_sender_name == $wps_check_email ) {
-									$html = '<div class="amount_wrapper">';
-									$html .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-									$html .= '<div style="text-align: center; margin: 10px 0;">';
-									$html .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-									$html .= '</div>';
-									$html .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-									$html .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-									$html .= '</div>';
-									$html .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
-									$html .= '</div>';
-									$response['result'] = true;
-									$response['html'] = $html;
+									$html                = '<div class="amount_wrapper">';
+									$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
+									$html               .= '<div style="text-align: center; margin: 10px 0;">';
+									$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
+									$html               .= '</div>';
+									$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
+									$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
+									$html               .= '</div>';
+									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+									$html               .= '</div>';
+									$response['result']  = true;
+									$response['html']    = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} else {
-									$response['result'] = false;
+									$response['result']  = false;
 									$response['message'] = __( 'Recipient Email or Sender Email|Name should be correct!!', 'woo-gift-cards-lite' );
 								}
 							}
 						}
 					} else {
-						$response['result'] = false;
+						$response['result']  = false;
 						$response['message'] = __( 'Balance cannot be checked for this coupon.', 'woo-gift-cards-lite' );
 					}
 				} else {
-					$response['result'] = false;
+					$response['result']  = false;
 					$response['message'] = __( 'Coupon is Invalid!', 'woo-gift-cards-lite' );
 				}
 			}
 		} else {
-			$response['result'] = false;
+			$response['result']  = false;
 			$response['message'] = __( 'Fields cannot be empty!', 'woo-gift-cards-lite' );
 		}
 		echo wp_json_encode( $response );
 		wp_die();
-
 	}
 
 	/**
@@ -2839,7 +2827,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		global $product, $wp_query;
 
-		$other_settings = get_option( 'wps_wgm_other_settings', array() );
+		$other_settings         = get_option( 'wps_wgm_other_settings', array() );
 		$wps_wgm_gc_custom_page = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_render_product_custom_page' );
 
 		if ( wps_uwgc_pro_active() && empty( $wps_wgm_gc_custom_page ) && ! $wp_query->is_main_query() ) {
@@ -2848,15 +2836,15 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		$use_new_page_layout = $this->wps_common_fun->wps_wgm_get_template_data( $other_settings, 'wps_wgm_new_gift_card_page_layout' );
 
-		$product_settings   = get_option( 'wps_wgm_product_settings', array() );
-		$disable_from_field = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_from_field' );
-		$disable_message_field = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_message_field' );
+		$product_settings       = get_option( 'wps_wgm_product_settings', array() );
+		$disable_from_field     = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_from_field' );
+		$disable_message_field  = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_message_field' );
 		$disable_to_email_field = $this->wps_common_fun->wps_wgm_get_template_data( $product_settings, 'wps_wgm_to_email_field' );
 
 		if ( 'on' == $use_new_page_layout ) {
 			$prod_id = wc_get_product( $product->get_id() );
 
-			$prod_type = $prod_id->get_type();
+			$prod_type  = $prod_id->get_type();
 			$prod_title = $prod_id->get_title();
 
 			$html = '';
@@ -2864,31 +2852,30 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			if ( 'wgm_gift_card' == $prod_type ) {
 
 				$price_preview_html = '<span id="wps_wgm_price_preview"></span>';
-				$currency_symbol = get_woocommerce_currency_symbol();
-				$currency_position = get_option( 'woocommerce_currency_pos', 'left' );
-	
+				$currency_symbol    = get_woocommerce_currency_symbol();
+				$currency_position  = get_option( 'woocommerce_currency_pos', 'left' );
+
 				if ( 'left' === $currency_position || 'left_space' === $currency_position ) {
 					$price_preview_html = ( 'left_space' === $currency_position ? $currency_symbol . ' ' : $currency_symbol ) . $price_preview_html;
 				} else {
 					$price_preview_html .= ( 'right_space' === $currency_position ? ' ' . $currency_symbol : $currency_symbol );
 				}
-	
+
 				$html .= '<div class="wps_wgm_wrapper_for_preview"> 
 						  <h2>' . $prod_title . '<span>' . $price_preview_html . '</span></h2>';
-						  if ( 'on' != $disable_from_field ) {
-							$html .= '<p >' . __( 'From', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_from_preview"> ' . __( 'xyz test', 'woo-gift-cards-lite' ) . '</span> </p>';
-						  }
-						  if ( 'on' != $disable_to_email_field ) {
-							$html .= '<p >' . __( 'To', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_to_preview">' . __( 'xyz@gmail.com', 'woo-gift-cards-lite' ) . '</span></p>';
-						  }
-						  if ( 'on' != $disable_message_field ) {
-							  $html .= '<p >' . __( 'Message', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_message_preview">' . __( 'Write your message gift card receiver', 'woo-gift-cards-lite' ) . '</span></p>';
-						  }
-					$html .='</div>';
+				if ( 'on' != $disable_from_field ) {
+					$html .= '<p >' . __( 'From', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_from_preview"> ' . __( 'xyz test', 'woo-gift-cards-lite' ) . '</span> </p>';
+				}
+				if ( 'on' != $disable_to_email_field ) {
+					$html .= '<p >' . __( 'To', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_to_preview">' . __( 'xyz@gmail.com', 'woo-gift-cards-lite' ) . '</span></p>';
+				}
+				if ( 'on' != $disable_message_field ) {
+					$html .= '<p >' . __( 'Message', 'woo-gift-cards-lite' ) . ' : <span class="wps_text_style" id="wps_message_preview">' . __( 'Write your message gift card receiver', 'woo-gift-cards-lite' ) . '</span></p>';
+				}
+					$html .= '</div>';
 			}
 			echo wp_kses_post( $html );
 		}
-
 	}
 
 	// PAR Compatibility.
@@ -3037,17 +3024,16 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 		update_user_meta( $user_id, 'points_details', $coupon_redeem_details );
 
-		$wps_wpr_notificatin_array      = get_option( 'wps_wpr_notificatin_array', true );
-        $wps_wpr_notificatin_enable     = isset( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) ? intval( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) : 0;
+		$wps_wpr_notificatin_array  = get_option( 'wps_wpr_notificatin_array', true );
+		$wps_wpr_notificatin_enable = isset( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) ? intval( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) : 0;
 
 		if ( 1 == $wps_wpr_notificatin_enable ) {
-			$user = get_user_by( 'id', $user_id );
+			$user    = get_user_by( 'id', $user_id );
 			$subject = 'Updated Points Notification';
 			$message = 'Your coupon has been successfully redeemed, ' . $calculated_points . ' points are successfully added to your account. Your Points are updated to ' . $updated_points;
-			
+
 			wc_mail( $user->user_email, $subject, $message );
 		}
-		
 	}
 
 	/**
@@ -3109,20 +3095,20 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			return;
 		}
 
-		$mail_settings    = get_option( 'wps_wgm_mail_settings', array() );
-		$enable_reminder  = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_enable_notify_sender' );
+		$mail_settings   = get_option( 'wps_wgm_mail_settings', array() );
+		$enable_reminder = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_enable_notify_sender' );
 
 		if ( 'on' !== $enable_reminder ) {
 			return;
 		}
-		
+
 		$coupon_id = $the_coupon->get_id();
-		$order = wc_get_order( $order_id );
+		$order     = wc_get_order( $order_id );
 		if ( ! $order ) {
 			return;
 		}
-	
-		$content = $the_coupon->get_description();
+
+		$content     = $the_coupon->get_description();
 		$is_giftcard = false;
 
 		if ( strpos( $content, 'GIFTCARD ORDER #' ) !== false ) {
@@ -3236,9 +3222,9 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	 */
 	public function wps_wgm_validate_daily_redemption_limit( $is_valid, $coupon ) {
 		$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
-		$limit = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_daily_redemption_limit' );
-		$limit = is_numeric( $limit ) ? absint( $limit ) : 0;
-		$limit = (int) apply_filters( 'wps_wgm_daily_redemption_limit', $limit, $coupon );
+		$limit            = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_daily_redemption_limit' );
+		$limit            = is_numeric( $limit ) ? absint( $limit ) : 0;
+		$limit            = (int) apply_filters( 'wps_wgm_daily_redemption_limit', $limit, $coupon );
 
 		if ( $limit <= 0 ) {
 			return $is_valid;
@@ -3248,7 +3234,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			return $is_valid;
 		}
 
-		$user_id = get_current_user_id();
+		$user_id       = get_current_user_id();
 		$billing_email = '';
 		if ( $user_id > 0 ) {
 			$user = get_userdata( $user_id );
@@ -3265,16 +3251,16 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		}
 
 		$posted_nonce_verified = false;
-		$checkout_nonce = filter_input( INPUT_POST, 'woocommerce-process-checkout-nonce', FILTER_UNSAFE_RAW );
+		$checkout_nonce        = filter_input( INPUT_POST, 'woocommerce-process-checkout-nonce', FILTER_UNSAFE_RAW );
 		if ( ! empty( $checkout_nonce ) ) {
-			$checkout_nonce = sanitize_text_field( $checkout_nonce );
+			$checkout_nonce        = sanitize_text_field( $checkout_nonce );
 			$posted_nonce_verified = wp_verify_nonce( $checkout_nonce, 'woocommerce-process_checkout' );
 		}
 
 		if ( ! $posted_nonce_verified ) {
 			$cart_nonce = filter_input( INPUT_POST, 'woocommerce-cart-nonce', FILTER_UNSAFE_RAW );
 			if ( ! empty( $cart_nonce ) ) {
-				$cart_nonce = sanitize_text_field( $cart_nonce );
+				$cart_nonce            = sanitize_text_field( $cart_nonce );
 				$posted_nonce_verified = wp_verify_nonce( $cart_nonce, 'woocommerce-cart' );
 			}
 		}
@@ -3297,7 +3283,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		}
 
 		if ( $posted_nonce_verified && empty( $billing_email ) ) {
-			$post_data = array();
+			$post_data     = array();
 			$post_data_raw = filter_input( INPUT_POST, 'post_data', FILTER_UNSAFE_RAW );
 			if ( ! empty( $post_data_raw ) ) {
 				$post_data_raw = sanitize_text_field( $post_data_raw );
@@ -3340,7 +3326,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			$query_args['customer_id'] = $user_id;
 		}
 
-		$orders = wc_get_orders( $query_args );
+		$orders           = wc_get_orders( $query_args );
 		$redemption_count = 0;
 
 		if ( ! empty( $orders ) ) {
@@ -3355,7 +3341,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				foreach ( $coupon_codes as $code ) {
 					$order_coupon = new WC_Coupon( $code );
 					if ( $this->wps_common_fun->wps_wgm_is_giftcard_coupon( $order_coupon ) ) {
-						$redemption_count++;
+						++$redemption_count;
 					}
 				}
 			}
@@ -3368,13 +3354,13 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				foreach ( $applied_coupons as $code ) {
 					$cart_coupon = new WC_Coupon( $code );
 					if ( $this->wps_common_fun->wps_wgm_is_giftcard_coupon( $cart_coupon ) ) {
-						$cart_count++;
+						++$cart_count;
 					}
 				}
 			}
 
 			if ( ! in_array( $coupon->get_code(), $applied_coupons, true ) ) {
-				$cart_count++;
+				++$cart_count;
 			}
 		} else {
 			$cart_count = 1;
@@ -3387,13 +3373,13 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		return $is_valid;
 	}
-	  /**
-	 * Check if product is a gift card.
-	 *
-	 * @param int $product_id Product ID.
-	 * @return bool Whether the product is a gift card.
-	 * @since 3.2.9
-	 */
+		/**
+		 * Check if product is a gift card.
+		 *
+		 * @param int $product_id Product ID.
+		 * @return bool Whether the product is a gift card.
+		 * @since 3.2.9
+		 */
 	private function wps_wgc_is_gift_card_product( $product_id ) {
 		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
@@ -3453,7 +3439,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Wishing you a fantastic birthday filled with joy and laughter!',
 					$name_prefix . 'Happy Birthday! May your special day be as wonderful as you are.',
-					$name_prefix . 'Celebrate big today! Sending you warmest birthday wishes.'
+					$name_prefix . 'Celebrate big today! Sending you warmest birthday wishes.',
 				);
 				break;
 
@@ -3462,7 +3448,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Merry Christmas! Wishing you peace, joy, and happiness this holiday season.',
 					$name_prefix . 'May your Christmas be filled with warmth, love, and cherished moments.',
-					$name_prefix . 'Sending you holiday cheer and best wishes for a Merry Christmas!'
+					$name_prefix . 'Sending you holiday cheer and best wishes for a Merry Christmas!',
 				);
 				break;
 
@@ -3470,7 +3456,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Happy Anniversary! Here\'s to many more years of happiness together.',
 					$name_prefix . 'Congratulations on your special day! Wishing you continued love and joy.',
-					$name_prefix . 'Celebrating your love today and always. Happy Anniversary!'
+					$name_prefix . 'Celebrating your love today and always. Happy Anniversary!',
 				);
 				break;
 
@@ -3478,7 +3464,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Congratulations on your wedding! Wishing you a lifetime of love and happiness.',
 					$name_prefix . 'Best wishes on your special day and for a wonderful life together!',
-					$name_prefix . 'May your marriage be filled with love, laughter, and endless joy.'
+					$name_prefix . 'May your marriage be filled with love, laughter, and endless joy.',
 				);
 				break;
 
@@ -3486,7 +3472,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Thank you for everything! Your kindness means the world to me.',
 					$name_prefix . 'I\'m so grateful for you. Thank you for being amazing!',
-					$name_prefix . 'A heartfelt thank you for your thoughtfulness and generosity.'
+					$name_prefix . 'A heartfelt thank you for your thoughtfulness and generosity.',
 				);
 				break;
 
@@ -3494,7 +3480,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Congratulations! You deserve all the success coming your way.',
 					$name_prefix . 'Well done! Your hard work and dedication have paid off.',
-					$name_prefix . 'So proud of you! Congratulations on this amazing achievement!'
+					$name_prefix . 'So proud of you! Congratulations on this amazing achievement!',
 				);
 				break;
 
@@ -3503,7 +3489,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Happy Valentine\'s Day! You make my heart smile every day.',
 					$name_prefix . 'Sending you all my love on this special day. Happy Valentine\'s!',
-					$name_prefix . 'You\'re my favorite person. Happy Valentine\'s Day, sweetheart!'
+					$name_prefix . 'You\'re my favorite person. Happy Valentine\'s Day, sweetheart!',
 				);
 				break;
 
@@ -3511,7 +3497,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Happy New Year! May this year bring you joy, success, and prosperity.',
 					$name_prefix . 'Wishing you a fantastic new year filled with wonderful opportunities!',
-					$name_prefix . 'Cheers to new beginnings! Happy New Year!'
+					$name_prefix . 'Cheers to new beginnings! Happy New Year!',
 				);
 				break;
 
@@ -3519,7 +3505,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Congratulations on your graduation! The future is bright!',
 					$name_prefix . 'You did it! Wishing you success in your next chapter.',
-					$name_prefix . 'So proud of your achievement! Congratulations, graduate!'
+					$name_prefix . 'So proud of your achievement! Congratulations, graduate!',
 				);
 				break;
 
@@ -3527,7 +3513,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$messages = array(
 					$name_prefix . 'Enjoy this special gift! Wishing you happiness and joy.',
 					$name_prefix . 'Thinking of you and sending warm wishes your way!',
-					$name_prefix . 'Hope this brings a smile to your face. You deserve it!'
+					$name_prefix . 'Hope this brings a smile to your face. You deserve it!',
 				);
 				break;
 		}
@@ -3545,11 +3531,11 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	public function wps_gc_ai_suggest_message() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_wgm_nonce_check' );
 
-		$occasion = isset( $_POST['occasion'] ) ? sanitize_text_field( wp_unslash( $_POST['occasion'] ) ) : 'special occasion';
+		$occasion       = isset( $_POST['occasion'] ) ? sanitize_text_field( wp_unslash( $_POST['occasion'] ) ) : 'special occasion';
 		$recipient_name = isset( $_POST['recipient_name'] ) ? sanitize_text_field( wp_unslash( $_POST['recipient_name'] ) ) : '';
-		$relationship = isset( $_POST['relationship'] ) ? sanitize_text_field( wp_unslash( $_POST['relationship'] ) ) : '';
-		$template_id = isset( $_POST['template_id'] ) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
-		$product_id = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
+		$relationship   = isset( $_POST['relationship'] ) ? sanitize_text_field( wp_unslash( $_POST['relationship'] ) ) : '';
+		$template_id    = isset( $_POST['template_id'] ) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
+		$product_id     = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
 
 		// Get template information to determine occasion.
 		$template_occasion = 'special occasion';
@@ -3587,13 +3573,15 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		// Get API key from settings.
 		$customizable_settings = get_option( 'wps_wgm_customizable_settings', array() );
-		$api_key = isset( $customizable_settings['wps_gc_claude_api_key'] ) ? $customizable_settings['wps_gc_claude_api_key'] : '';
+		$api_key               = isset( $customizable_settings['wps_gc_claude_api_key'] ) ? $customizable_settings['wps_gc_claude_api_key'] : '';
 
 		// Check if API key is set.
 		if ( empty( $api_key ) ) {
-			wp_send_json_error( array(
-				'message' => __( 'AI service is not configured. Please contact the administrator.', 'woo-gift-cards-lite' )
-			) );
+			wp_send_json_error(
+				array(
+					'message' => __( 'AI service is not configured. Please contact the administrator.', 'woo-gift-cards-lite' ),
+				)
+			);
 			return;
 		}
 
@@ -3605,45 +3593,54 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		if ( ! empty( $relationship ) ) {
 			$context .= " (recipient is my {$relationship})";
 		}
-		$context .= ". Return only a JSON array of strings like: [\"message 1\", \"message 2\", \"message 3\"]. No additional text.";
+		$context .= '. Return only a JSON array of strings like: ["message 1", "message 2", "message 3"]. No additional text.';
 
 		// Call Claude API.
-		$response = wp_remote_post( 'https://api.anthropic.com/v1/messages', array(
-			'headers' => array(
-				'x-api-key' => $api_key,
-				'anthropic-version' => '2023-06-01',
-				'content-type' => 'application/json',
-			),
-			'body' => wp_json_encode( array(
-				'model' => 'claude-3-5-sonnet-20241022',
-				'max_tokens' => 300,
-				'messages' => array(
+		$response = wp_remote_post(
+			'https://api.anthropic.com/v1/messages',
+			array(
+				'headers' => array(
+					'x-api-key'         => $api_key,
+					'anthropic-version' => '2023-06-01',
+					'content-type'      => 'application/json',
+				),
+				'body'    => wp_json_encode(
 					array(
-						'role' => 'user',
-						'content' => $context
+						'model'      => 'claude-3-5-sonnet-20241022',
+						'max_tokens' => 300,
+						'messages'   => array(
+							array(
+								'role'    => 'user',
+								'content' => $context,
+							),
+						),
 					)
-				)
-			) ),
-			'timeout' => 30,
-		) );
+				),
+				'timeout' => 30,
+			)
+		);
 
 		// Handle API errors - use fallback messages.
 		if ( is_wp_error( $response ) ) {
 			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
-			wp_send_json_success( array(
-				'suggestions' => $fallback_suggestions,
-				'fallback' => true
-			) );
+			wp_send_json_success(
+				array(
+					'suggestions' => $fallback_suggestions,
+					'fallback'    => true,
+				)
+			);
 			return;
 		}
 
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 !== $response_code ) {
 			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
-			wp_send_json_success( array(
-				'suggestions' => $fallback_suggestions,
-				'fallback' => true
-			) );
+			wp_send_json_success(
+				array(
+					'suggestions' => $fallback_suggestions,
+					'fallback'    => true,
+				)
+			);
 			return;
 		}
 
@@ -3651,10 +3648,12 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		if ( ! isset( $body['content'] ) || ! isset( $body['content'][0] ) || ! isset( $body['content'][0]['text'] ) ) {
 			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
-			wp_send_json_success( array(
-				'suggestions' => $fallback_suggestions,
-				'fallback' => true
-			) );
+			wp_send_json_success(
+				array(
+					'suggestions' => $fallback_suggestions,
+					'fallback'    => true,
+				)
+			);
 			return;
 		}
 
@@ -3667,14 +3666,14 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 		// If not valid JSON, try to extract array from markdown code blocks.
 		if ( ! is_array( $suggestions ) ) {
 			// Remove markdown code blocks.
-			$text = preg_replace( '/```json\s*/', '', $text );
-			$text = preg_replace( '/```\s*/', '', $text );
+			$text        = preg_replace( '/```json\s*/', '', $text );
+			$text        = preg_replace( '/```\s*/', '', $text );
 			$suggestions = json_decode( trim( $text ), true );
 		}
 
 		// Fallback: split by newlines if still not an array.
 		if ( ! is_array( $suggestions ) ) {
-			$lines = explode( "\n", $text );
+			$lines       = explode( "\n", $text );
 			$suggestions = array();
 			foreach ( $lines as $line ) {
 				$line = trim( $line );
@@ -3695,16 +3694,20 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 		if ( empty( $suggestions ) ) {
 			$fallback_suggestions = $this->wps_gc_get_fallback_messages( $occasion, $recipient_name );
-			wp_send_json_success( array(
-				'suggestions' => $fallback_suggestions,
-				'fallback' => true
-			) );
+			wp_send_json_success(
+				array(
+					'suggestions' => $fallback_suggestions,
+					'fallback'    => true,
+				)
+			);
 			return;
 		}
 
-		wp_send_json_success( array(
-			'suggestions' => $suggestions
-		) );
+		wp_send_json_success(
+			array(
+				'suggestions' => $suggestions,
+			)
+		);
 	}
 
 	/**
@@ -3728,22 +3731,22 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 			return;
 		}
 
-		// Get dashboard color from settings (pro feature) with fallback
+		// Get dashboard color from settings (pro feature) with fallback.
 		$general_settings = get_option( 'wps_wgm_general_settings', array() );
-		$dashboard_color = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
+		$dashboard_color  = $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' );
 
-		// Fallback colors if setting doesn't exist
+		// Fallback colors if setting doesn't exist.
 		$coupon_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#663399';
 		$button_color = ! empty( $dashboard_color ) ? esc_attr( $dashboard_color ) : '#17a2b8';
 		$button_hover = ! empty( $dashboard_color ) ? $this->adjust_brightness( $dashboard_color, -20 ) : '#138496';
 
 		$gift_cards_found = false;
-		$gift_card_data = array();
+		$gift_card_data   = array();
 
 		// Loop through order items to find gift card products.
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product_id = $item->get_product_id();
-			$product = $item->get_product();
+			$product    = $item->get_product();
 
 			if ( ! $product ) {
 				continue;
@@ -3756,9 +3759,9 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 				$gift_cards_found = true;
 
 				// Get gift card details from item meta.
-				$to_email = $item->get_meta( 'To', true );
-				$from_name = $item->get_meta( 'From', true );
-				$message = $item->get_meta( 'Message', true );
+				$to_email       = $item->get_meta( 'To', true );
+				$from_name      = $item->get_meta( 'From', true );
+				$message        = $item->get_meta( 'Message', true );
 				$original_price = $item->get_meta( 'Original Price', true );
 
 				// Get associated coupons for this order.
@@ -3779,23 +3782,23 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 
 				foreach ( $coupons as $coupon_post ) {
 					$coupon_code = $coupon_post->post_title;
-					$coupon_id = $coupon_post->ID;
+					$coupon_id   = $coupon_post->ID;
 
 					// Get coupon details.
-					$coupon = new WC_Coupon( $coupon_code );
-					$coupon_amount = $coupon->get_amount();
-					$coupon_expiry = $coupon->get_date_expires();
+					$coupon          = new WC_Coupon( $coupon_code );
+					$coupon_amount   = $coupon->get_amount();
+					$coupon_expiry   = $coupon->get_date_expires();
 					$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
 
 					// Store gift card data.
 					$gift_card_data[] = array(
-						'coupon_code'   => $coupon_code,
-						'amount'        => $coupon_amount,
-						'balance'       => $coupon_amount,
-						'expiry_date'   => $coupon_expiry ? $coupon_expiry->date( 'F j, Y' ) : __( 'No Expiry', 'woo-gift-cards-lite' ),
-						'recipient'     => $recipient_email ? $recipient_email : $to_email,
-						'from'          => $from_name,
-						'message'       => $message,
+						'coupon_code' => $coupon_code,
+						'amount'      => $coupon_amount,
+						'balance'     => $coupon_amount,
+						'expiry_date' => $coupon_expiry ? $coupon_expiry->date( 'F j, Y' ) : __( 'No Expiry', 'woo-gift-cards-lite' ),
+						'recipient'   => $recipient_email ? $recipient_email : $to_email,
+						'from'        => $from_name,
+						'message'     => $message,
 					);
 				}
 			}
@@ -3819,15 +3822,15 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 										<?php esc_html_e( 'Coupon Code:', 'woo-gift-cards-lite' ); ?>
 									</td>
 									<td style="padding: 8px 0;">
-                                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;padding:0 10px;">
-                                            <strong style="font-size: 18px; color: <?php echo esc_attr( $coupon_color ); ?>; background: #fff; padding: 5px 10px; border: 1px dashed <?php echo esc_attr( $coupon_color ); ?>; border-radius: 3px; display: inline-block;" class="wps-giftcard-code">
-                                                <?php echo esc_html( $gift_card['coupon_code'] ); ?>
-                                            </strong>
-                                            <button type="button" class="wps-copy-coupon-btn" data-coupon="<?php echo esc_attr( $gift_card['coupon_code'] ); ?>" style="background: <?php echo esc_attr( $button_color ); ?>; color: #fff; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; font-size: 14px; transition: background 0.3s ease; margin:0;">
-                                                <?php esc_html_e( 'Copy Code', 'woo-gift-cards-lite' ); ?>
-                                            </button>
-                                        </div>
-                                    </td>
+										<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;padding:0 10px;">
+											<strong style="font-size: 18px; color: <?php echo esc_attr( $coupon_color ); ?>; background: #fff; padding: 5px 10px; border: 1px dashed <?php echo esc_attr( $coupon_color ); ?>; border-radius: 3px; display: inline-block;" class="wps-giftcard-code">
+												<?php echo esc_html( $gift_card['coupon_code'] ); ?>
+											</strong>
+											<button type="button" class="wps-copy-coupon-btn" data-coupon="<?php echo esc_attr( $gift_card['coupon_code'] ); ?>" style="background: <?php echo esc_attr( $button_color ); ?>; color: #fff; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; font-size: 14px; transition: background 0.3s ease; margin:0;">
+												<?php esc_html_e( 'Copy Code', 'woo-gift-cards-lite' ); ?>
+											</button>
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<td style="padding: 8px 0; font-weight: bold;">
@@ -3926,7 +3929,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 							const couponCode = this.getAttribute('data-coupon');
 							const originalText = this.textContent;
 
-							// Modern clipboard API
+							// Modern clipboard API.
 							if (navigator.clipboard && navigator.clipboard.writeText) {
 								navigator.clipboard.writeText(couponCode).then(function() {
 									button.textContent = '<?php echo esc_js( __( 'Copied!', 'woo-gift-cards-lite' ) ); ?>';
@@ -3940,7 +3943,7 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 									console.error('Failed to copy:', err);
 								});
 							} else {
-								// Fallback for older browsers
+								// Fallback for older browsers.
 								const textArea = document.createElement('textarea');
 								textArea.value = couponCode;
 								textArea.style.position = 'fixed';
@@ -3981,23 +3984,22 @@ $wps_wgm['ajaxurl']      = admin_url( 'admin-ajax.php' );
 	 * @return string Adjusted hex color.
 	 */
 	private function adjust_brightness( $hex, $steps ) {
-		// Remove # if present
+		// Remove # if present.
 		$hex = str_replace( '#', '', $hex );
 
-		// Convert to RGB
+		// Convert to RGB.
 		$r = hexdec( substr( $hex, 0, 2 ) );
 		$g = hexdec( substr( $hex, 2, 2 ) );
 		$b = hexdec( substr( $hex, 4, 2 ) );
 
-		// Adjust brightness
+		// Adjust brightness.
 		$r = max( 0, min( 255, $r + $steps ) );
 		$g = max( 0, min( 255, $g + $steps ) );
 		$b = max( 0, min( 255, $b + $steps ) );
 
-		// Convert back to hex
+		// Convert back to hex.
 		return sprintf( '#%02x%02x%02x', $r, $g, $b );
 	}
-
 }
 
 

@@ -110,7 +110,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<!--=====================================
 			=            UPGRADE SECTION            =
 			======================================-->
-			 <div class="wps_wgm_upgrade">
+			<div class="wps_wgm_upgrade">
 				<div class="wps_wgm_upgrade__wrapper">
 					<div class="wps_wgm_upgrade_desc">
 						<p class="wps_wgm-body"><?php esc_html_e( 'Upgrade to the ', 'woo-gift-cards-lite' ); ?><strong><?php esc_html_e( 'PREMIUM VERSION ', 'woo-gift-cards-lite' ); ?></strong></p>

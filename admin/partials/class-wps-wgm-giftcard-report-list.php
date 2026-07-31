@@ -12,7 +12,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 ?>
-	<?php 
+	<?php
 	$wps_wgm_giftcard_report = new Wps_WGM_Giftcard_Report_List();
 	$wps_total_balance       = $wps_wgm_giftcard_report->wps_uwgc_total_balance();
 	?>
@@ -169,10 +169,10 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		switch ( $column_name ) {
 			case 'status':
 				$status_class = 'wps-status-' . sanitize_html_class( $item['status_class'] );
-				$html = '<span class="wps-gc-status-badge ' . $status_class . '">' . esc_html( $item['status_label'] ) . '</span>';
+				$html         = '<span class="wps-gc-status-badge ' . $status_class . '">' . esc_html( $item['status_label'] ) . '</span>';
 				return $html;
 			case 'giftcard_code':
-				$html = '<div class="wps-gc-code-wrapper">';
+				$html  = '<div class="wps-gc-code-wrapper">';
 				$html .= '<a href="' . esc_url( admin_url( 'post.php?post=' . absint( $item['coupon_id'] ) ) . '&action=edit' ) . '" class="wps-gc-code-link">' . esc_html( $item[ $column_name ] ) . '</a>';
 				$html .= '<button type="button" class="button-link wps-copy-code" data-code="' . esc_attr( $item[ $column_name ] ) . '" title="' . esc_attr__( 'Copy code', 'woo-gift-cards-lite' ) . '"><span class="dashicons dashicons-clipboard"></span></button>';
 				$html .= '</div>';
@@ -185,13 +185,13 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			case 'coupon_amount':
 				$amount_html = wp_kses_post( wc_price( $item[ $column_name ] ) );
 				if ( isset( $item['initial_amount'] ) && $item['initial_amount'] > $item[ $column_name ] ) {
-					$redeemed = $item['initial_amount'] - $item[ $column_name ];
+					$redeemed     = $item['initial_amount'] - $item[ $column_name ];
 					$amount_html .= '<br><small class="wps-redeemed-indicator">-' . wp_kses_post( wc_price( $redeemed ) ) . ' ' . esc_html__( 'used', 'woo-gift-cards-lite' ) . '</small>';
 				}
 				return $amount_html;
 			case 'redemption_count':
 				$count = absint( $item[ $column_name ] );
-				$html = '<span class="wps-redemption-count">' . $count . '</span>';
+				$html  = '<span class="wps-redemption-count">' . $count . '</span>';
 				if ( $count > 0 ) {
 					$html .= '<br><small>' . esc_html__( 'times', 'woo-gift-cards-lite' ) . '</small>';
 				}
@@ -206,7 +206,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				return $html;
 			case 'days_to_expiry':
 				$days = $item[ $column_name ];
-				if ( $days === 'No Expiry' ) {
+				if ( 'No Expiry' === $days ) {
 					return '<span class="wps-no-expiry">' . esc_html__( 'No Expiry', 'woo-gift-cards-lite' ) . '</span>';
 				} elseif ( $days < 0 ) {
 					return '<span class="wps-expired">' . esc_html__( 'Expired', 'woo-gift-cards-lite' ) . '</span>';
@@ -219,18 +219,18 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				$html = '<a href="mailto:' . esc_attr( $item[ $column_name ] ) . '">' . esc_html( $item[ $column_name ] ) . '</a>';
 				return $html;
 			case 'source_type':
-				$source = $item[ $column_name ];
+				$source       = $item[ $column_name ];
 				$source_icons = array(
-					'Online' => 'cart',
-					'Offline' => 'admin-tools',
-					'Imported' => 'download',
+					'Online'      => 'cart',
+					'Offline'     => 'admin-tools',
+					'Imported'    => 'download',
 					'Promotional' => 'megaphone',
 				);
-				$icon = isset( $source_icons[ $source ] ) ? $source_icons[ $source ] : 'tickets-alt';
-				$html = '<span class="wps-source-badge"><span class="dashicons dashicons-' . esc_attr( $icon ) . '"></span> ' . esc_html( $source ) . '</span>';
+				$icon         = isset( $source_icons[ $source ] ) ? $source_icons[ $source ] : 'tickets-alt';
+				$html         = '<span class="wps-source-badge"><span class="dashicons dashicons-' . esc_attr( $icon ) . '"></span> ' . esc_html( $source ) . '</span>';
 				return $html;
 			case 'action':
-				$html = '<div class="wps-gc-actions">';
+				$html  = '<div class="wps-gc-actions">';
 				$html .= '<button type="button" class="button-link wps_uwgc_gift_report_view wps-view-details-icon" data-coupon-id="' . absint( $item['coupon_id'] ) . '" data-order-id="' . absint( $item['order_id'] ) . '" title="' . esc_attr__( 'View Details', 'woo-gift-cards-lite' ) . '"><span class="dashicons dashicons-visibility"></span></button>';
 				$html .= '<div class="wps-quick-actions">';
 				$html .= '<button type="button" class="button-link wps-resend-email" data-coupon-id="' . absint( $item['coupon_id'] ) . '" title="' . esc_attr__( 'Resend Email', 'woo-gift-cards-lite' ) . '"><span class="dashicons dashicons-email"></span></button>';
@@ -252,19 +252,19 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb'              => '<input type="checkbox" />',
-			'status'          => __( 'Status', 'woo-gift-cards-lite' ),
-			'giftcard_code'   => __( 'Gift Card Code', 'woo-gift-cards-lite' ),
-			'order_id'        => __( 'Order Id', 'woo-gift-cards-lite' ),
-			'initial_amount'  => __( 'Initial Amount', 'woo-gift-cards-lite' ),
-			'coupon_amount'   => __( 'Current Balance', 'woo-gift-cards-lite' ),
+			'cb'               => '<input type="checkbox" />',
+			'status'           => __( 'Status', 'woo-gift-cards-lite' ),
+			'giftcard_code'    => __( 'Gift Card Code', 'woo-gift-cards-lite' ),
+			'order_id'         => __( 'Order Id', 'woo-gift-cards-lite' ),
+			'initial_amount'   => __( 'Initial Amount', 'woo-gift-cards-lite' ),
+			'coupon_amount'    => __( 'Current Balance', 'woo-gift-cards-lite' ),
 			'redemption_count' => __( 'Uses', 'woo-gift-cards-lite' ),
-			'purchase_date'   => __( 'Purchase Date', 'woo-gift-cards-lite' ),
-			'expiry_date'     => __( 'Expiry Date', 'woo-gift-cards-lite' ),
-			'days_to_expiry'  => __( 'Days to Expiry', 'woo-gift-cards-lite' ),
-			'buyer_email'     => __( 'Buyer Email', 'woo-gift-cards-lite' ),
-			'source_type'     => __( 'Source', 'woo-gift-cards-lite' ),
-			'action'          => __( 'Action', 'woo-gift-cards-lite' ),
+			'purchase_date'    => __( 'Purchase Date', 'woo-gift-cards-lite' ),
+			'expiry_date'      => __( 'Expiry Date', 'woo-gift-cards-lite' ),
+			'days_to_expiry'   => __( 'Days to Expiry', 'woo-gift-cards-lite' ),
+			'buyer_email'      => __( 'Buyer Email', 'woo-gift-cards-lite' ),
+			'source_type'      => __( 'Source', 'woo-gift-cards-lite' ),
+			'action'           => __( 'Action', 'woo-gift-cards-lite' ),
 		);
 		$columns = apply_filters( 'wps_wgm_add_analytics_coupons_column', $columns );
 		return $columns;
@@ -350,15 +350,15 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	public function prepare_items() {
 		global $wpdb;
 		$per_page = 10;
-		$columns = $this->get_columns();
-		$hidden = array();
+		$columns  = $this->get_columns();
+		$hidden   = array();
 		$sortable = $this->get_sortable_columns();
 
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->process_bulk_action();
-		$current_page = $this->get_pagenum();
+		$current_page       = $this->get_pagenum();
 		$this->example_data = $this->wps_uwgc_giftcard_report_data();
-		$data = $this->example_data;
+		$data               = $this->example_data;
 		usort( $data, array( $this, 'wps_uwgc_usort_reorder_report' ) );
 		$total_items = $this->wps_total_count;
 		$this->items = $data;
@@ -369,7 +369,6 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
-
 	}
 
 	/**
@@ -385,8 +384,8 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'order_id';
-		$order = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'dsc';
-		$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
+		$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'dsc';
+		$result  = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
 		return ( 'asc' === $order ) ? $result : -$result;
 	}
 
@@ -397,9 +396,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 */
 	public function extra_tablenav( $which ) {
 		if ( 'top' === $which ) {
-        	do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
+			do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
 		}
-    }
+	}
 
 	/**
 	 * Function is used to show giftcard coupons.
@@ -426,7 +425,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
 
 			$sql .= $wpdb->prepare(
-				" AND p.post_date BETWEEN %s AND %s",
+				' AND p.post_date BETWEEN %s AND %s',
 				$gc_date_1 . ' 00:00:00',
 				$gc_date_2 . ' 23:59:59'
 			);
@@ -434,7 +433,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
 			$search = '%' . $wpdb->esc_like( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) . '%';
-			$sql   .= $wpdb->prepare( " AND p.post_title LIKE %s", $search );
+			$sql   .= $wpdb->prepare( ' AND p.post_title LIKE %s', $search );
 		}
 
 		$sql .= "
@@ -459,8 +458,8 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		$batch_size   = $per_page;
 		$skipped      = 0;
 
-		$offline_giftcard = get_option( 'wps_wgm_offline_giftcard', false );
-		$wps_uwgc_data    = array();
+		$offline_giftcard    = get_option( 'wps_wgm_offline_giftcard', false );
+		$wps_uwgc_data       = array();
 		$wps_uwgc_data_count = 0;
 
 		while ( $wps_uwgc_data_count < $per_page ) {
@@ -513,7 +512,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				}
 
 				if ( $skipped < $valid_offset ) {
-					$skipped++;
+					++$skipped;
 					continue;
 				}
 
@@ -525,34 +524,34 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					$user_email = '';
 				}
 
-				// Get coupon details
-				$coupon_amount = (float) get_post_meta( $coupon_id, 'coupon_amount', true );
+				// Get coupon details.
+				$coupon_amount  = (float) get_post_meta( $coupon_id, 'coupon_amount', true );
 				$initial_amount = (float) get_post_meta( $coupon_id, 'wps_wgm_initial_amount', true );
 
-				// Use current amount as initial if not stored
+				// Use current amount as initial if not stored.
 				if ( empty( $initial_amount ) ) {
 					$initial_amount = $coupon_amount;
 				}
 
-				$usage_count = $coupon_obj->get_usage_count();
+				$usage_count     = $coupon_obj->get_usage_count();
 				$expiry_date_obj = $coupon_obj->get_date_expires();
-				$expiry_date = isset( $expiry_date_obj ) ? gmdate( 'F j, Y', strtotime( '-1 day', strtotime( $expiry_date_obj ) ) ) : esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
+				$expiry_date     = isset( $expiry_date_obj ) ? gmdate( 'F j, Y', strtotime( '-1 day', strtotime( $expiry_date_obj ) ) ) : esc_html__( 'No Expiry', 'woo-gift-cards-lite' );
 
-				// Calculate days to expiry
-				$days_to_expiry = 'No Expiry';
+				// Calculate days to expiry.
+				$days_to_expiry   = 'No Expiry';
 				$is_expiring_soon = false;
 				if ( $expiry_date_obj ) {
 					$expiry_timestamp = $expiry_date_obj->getTimestamp();
-					$current_time = current_time( 'timestamp' );
-					$days_diff = floor( ( $expiry_timestamp - $current_time ) / DAY_IN_SECONDS );
-					$days_to_expiry = $days_diff;
+					$current_time     = current_time( 'timestamp' );
+					$days_diff        = floor( ( $expiry_timestamp - $current_time ) / DAY_IN_SECONDS );
+					$days_to_expiry   = $days_diff;
 
 					if ( $days_diff > 0 && $days_diff <= 30 ) {
 						$is_expiring_soon = true;
 					}
 				}
 
-				// Determine status
+				// Determine status.
 				$is_valid = $this->wps_uwgc_validate_expiry( $coupon_obj );
 				if ( ! $is_valid ) {
 					$status_label = __( 'Expired', 'woo-gift-cards-lite' );
@@ -560,7 +559,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				} elseif ( $usage_count > 0 && $coupon_amount > 0 ) {
 					$status_label = __( 'Partially Used', 'woo-gift-cards-lite' );
 					$status_class = 'partial';
-				} elseif ( $usage_count > 0 && $coupon_amount == 0 ) {
+				} elseif ( $usage_count > 0 && 0 == $coupon_amount ) {
 					$status_label = __( 'Fully Redeemed', 'woo-gift-cards-lite' );
 					$status_class = 'redeemed';
 				} else {
@@ -568,7 +567,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					$status_class = 'active';
 				}
 
-				// Determine source type
+				// Determine source type.
 				$post_content = get_post_field( 'post_content', $coupon_id );
 				if ( strpos( $post_content, 'Imported Coupon' ) !== false ) {
 					$source_type = __( 'Imported', 'woo-gift-cards-lite' );
@@ -578,7 +577,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					$source_type = __( 'Online', 'woo-gift-cards-lite' );
 				}
 
-				// Purchase date
+				// Purchase date.
 				$purchase_date = get_the_date( 'F j, Y', $coupon_id );
 
 				$wps_uwgc_data[] = array(
@@ -597,7 +596,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					'status_label'     => $status_label,
 					'status_class'     => $status_class,
 				);
-				$wps_uwgc_data_count++;
+				++$wps_uwgc_data_count;
 
 				if ( count( $wps_uwgc_data ) >= $per_page ) {
 					break 2;
@@ -632,7 +631,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
 			$search_coupon = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-			$args2['s'] = $search_coupon;
+			$args2['s']    = $search_coupon;
 		}
 
 		$coupon_ids = get_posts( $args2 );
@@ -643,7 +642,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( ! empty( $coupon_ids ) ) {
 			foreach ( $coupon_ids as $coupon_id ) {
-				$content = get_post_field( 'post_content', $coupon_id );
+				$content     = get_post_field( 'post_content', $coupon_id );
 				$is_giftcard = strpos( $content, 'GIFTCARD ORDER #' ) !== false
 					|| ( strpos( $content, 'Imported Coupon' ) !== false
 						&& get_post_meta( $coupon_id, 'wps_wgm_imported_coupon', true ) === 'purchased' );
@@ -658,12 +657,12 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				}
 
 				$order_exists = false;
-				$order = wc_get_order( $order_id );
+				$order        = wc_get_order( $order_id );
 				if ( ! empty( $order ) ) {
 					$order_exists = true;
 				} elseif ( $offline_giftcard ) {
 					global $wpdb;
-					$cache_key = 'wps_wgm_offline_giftcard_' . intval( $order_id );
+					$cache_key   = 'wps_wgm_offline_giftcard_' . intval( $order_id );
 					$giftresults = wp_cache_get( $cache_key, 'wps_wgm' );
 
 					if ( false === $giftresults ) {
@@ -683,7 +682,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				}
 
 				if ( $order_exists ) {
-					$total_count++;
+					++$total_count;
 				}
 			}
 		}
@@ -698,31 +697,34 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 */
 	public function wps_uwgc_total_balance() {
 		global $wpdb;
-	
+
 		$cache_key = 'wps_uwgc_total_balance';
 		$cached    = wp_cache_get( $cache_key, 'wps_wgm' );
-	
+
 		if ( false !== $cached ) {
 			return $cached;
 		}
-	
+
 		$total_balance   = 0;
 		$expire_giftcard = 0;
 		$current_time    = current_time( 'timestamp' );
-	
-		$coupons = $wpdb->get_results( "
+
+		$coupons = $wpdb->get_results(
+			"
 			SELECT ID, post_content
 			FROM {$wpdb->posts}
 			WHERE post_type = 'shop_coupon'
 			  AND post_status = 'publish'
-		", ARRAY_A );
-	
+		",
+			ARRAY_A
+		);
+
 		if ( ! empty( $coupons ) ) {
 			foreach ( $coupons as $coupon ) {
 				$coupon_id   = (int) $coupon['ID'];
 				$content     = $coupon['post_content'];
 				$is_giftcard = false;
-	
+
 				if ( strpos( $content, 'GIFTCARD ORDER #' ) !== false ) {
 					$is_giftcard = true;
 				} elseif (
@@ -731,36 +733,36 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				) {
 					$is_giftcard = true;
 				}
-	
+
 				if ( ! $is_giftcard ) {
 					continue;
 				}
-	
+
 				$coupon_obj   = new WC_Coupon( $coupon_id );
 				$usage_limit  = (int) $coupon_obj->get_usage_limit();
 				$usage_count  = (int) $coupon_obj->get_usage_count();
 				$coupon_value = (float) get_post_meta( $coupon_id, 'coupon_amount', true );
-	
+
 				$is_valid = $this->wps_uwgc_validate_expiry( $coupon_obj );
 				if ( $is_valid && ( 0 === $usage_limit || $usage_count < $usage_limit ) ) {
 					$total_balance += $coupon_value;
 					continue;
 				}
-	
+
 				$expiry_timestamp = (int) get_post_meta( $coupon_id, 'date_expires', true );
 				if ( $expiry_timestamp > 0 && $expiry_timestamp < $current_time ) {
 					$expire_giftcard += $coupon_value;
 				}
 			}
 		}
-	
+
 		$result = array(
 			'total_balance'   => $total_balance,
 			'expire_giftcard' => $expire_giftcard,
 		);
 
 		wp_cache_set( $cache_key, $result, 'wps_wgm', HOUR_IN_SECONDS );
-	
+
 		return $result;
 	}
 
@@ -779,32 +781,35 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			return $cached;
 		}
 
-		// Initialize metrics
-		$total_issued = 0;
-		$total_value = 0;
-		$outstanding_balance = 0;
-		$redeemed_balance = 0;
-		$expired_balance = 0;
-		$expired_count = 0;
-		$active_count = 0;
-		$active_total_balance = 0;
+		// Initialize metrics.
+		$total_issued             = 0;
+		$total_value              = 0;
+		$outstanding_balance      = 0;
+		$redeemed_balance         = 0;
+		$expired_balance          = 0;
+		$expired_count            = 0;
+		$active_count             = 0;
+		$active_total_balance     = 0;
 		$partially_redeemed_count = 0;
 		$partially_redeemed_value = 0;
-		$used_cards_count = 0;
-		$min_value = 999999;
-		$max_value = 0;
-		$expiring_soon_count = 0;
-		$expiring_soon_value = 0;
-		$current_time = current_time( 'timestamp' );
-		$thirty_days_future = $current_time + (30 * DAY_IN_SECONDS);
+		$used_cards_count         = 0;
+		$min_value                = 999999;
+		$max_value                = 0;
+		$expiring_soon_count      = 0;
+		$expiring_soon_value      = 0;
+		$current_time             = current_time( 'timestamp' );
+		$thirty_days_future       = $current_time + ( 30 * DAY_IN_SECONDS );
 
-		// Get all gift card coupons
-		$coupons = $wpdb->get_results( "
+		// Get all gift card coupons.
+		$coupons = $wpdb->get_results(
+			"
 			SELECT ID, post_content, post_date
 			FROM {$wpdb->posts}
 			WHERE post_type = 'shop_coupon'
 			  AND post_status = 'publish'
-		", ARRAY_A );
+		",
+			ARRAY_A
+		);
 
 		if ( ! empty( $coupons ) ) {
 			foreach ( $coupons as $coupon ) {
@@ -812,7 +817,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				$content     = $coupon['post_content'];
 				$is_giftcard = false;
 
-				// Check if it's a gift card
+				// Check if it's a gift card.
 				if ( strpos( $content, 'GIFTCARD ORDER #' ) !== false ) {
 					$is_giftcard = true;
 				} elseif (
@@ -826,21 +831,21 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					continue;
 				}
 
-				$total_issued++;
-				$coupon_obj   = new WC_Coupon( $coupon_id );
-				$usage_limit  = (int) $coupon_obj->get_usage_limit();
-				$usage_count  = (int) $coupon_obj->get_usage_count();
-				$coupon_value = (float) get_post_meta( $coupon_id, 'coupon_amount', true );
+				++$total_issued;
+				$coupon_obj     = new WC_Coupon( $coupon_id );
+				$usage_limit    = (int) $coupon_obj->get_usage_limit();
+				$usage_count    = (int) $coupon_obj->get_usage_count();
+				$coupon_value   = (float) get_post_meta( $coupon_id, 'coupon_amount', true );
 				$initial_amount = (float) get_post_meta( $coupon_id, 'wps_wgm_initial_amount', true );
 
-				// Use current value as initial if not stored
+				// Use current value as initial if not stored.
 				if ( empty( $initial_amount ) ) {
 					$initial_amount = $coupon_value;
 				}
 
 				$total_value += $initial_amount;
 
-				// Min/Max tracking
+				// Min/Max tracking.
 				if ( $initial_amount > 0 ) {
 					if ( $initial_amount < $min_value ) {
 						$min_value = $initial_amount;
@@ -850,103 +855,103 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					}
 				}
 
-				$is_valid = $this->wps_uwgc_validate_expiry( $coupon_obj );
+				$is_valid         = $this->wps_uwgc_validate_expiry( $coupon_obj );
 				$expiry_timestamp = (int) get_post_meta( $coupon_id, 'date_expires', true );
 
-				// Expiring soon check
+				// Expiring soon check.
 				if ( $is_valid && $expiry_timestamp > 0 && $expiry_timestamp <= $thirty_days_future && $coupon_value > 0 ) {
-					$expiring_soon_count++;
+					++$expiring_soon_count;
 					$expiring_soon_value += $coupon_value;
 				}
 
-				// Active cards
+				// Active cards.
 				if ( $is_valid && ( 0 === $usage_limit || $usage_count < $usage_limit ) && $coupon_value > 0 ) {
 					$outstanding_balance += $coupon_value;
-					$active_count++;
+					++$active_count;
 					$active_total_balance += $coupon_value;
 				}
 
-				// Expired cards
+				// Expired cards.
 				if ( ! $is_valid && $expiry_timestamp > 0 && $expiry_timestamp < $current_time ) {
 					$expired_balance += $coupon_value;
-					$expired_count++;
+					++$expired_count;
 				}
 
-				// Partially redeemed cards
+				// Partially redeemed cards.
 				if ( $usage_count > 0 && $coupon_value > 0 && ( 0 === $usage_limit || $usage_count < $usage_limit ) ) {
-					$partially_redeemed_count++;
+					++$partially_redeemed_count;
 					$partially_redeemed_value += $coupon_value;
 				}
 
-				// Used cards count
+				// Used cards count.
 				if ( $usage_count > 0 ) {
-					$used_cards_count++;
+					++$used_cards_count;
 				}
 
-				// Calculate redeemed amount
+				// Calculate redeemed amount.
 				if ( $usage_count > 0 ) {
 					$redeemed_balance += ( $initial_amount - $coupon_value );
 				}
 			}
 		}
 
-		// Calculate percentages and averages
-		$avg_value = $total_issued > 0 ? ( $total_value / $total_issued ) : 0;
-		$redemption_rate = $total_issued > 0 ? round( ( $used_cards_count / $total_issued ) * 100, 2 ) : 0;
-		$avg_active_balance = $active_count > 0 ? ( $active_total_balance / $active_count ) : 0;
+		// Calculate percentages and averages.
+		$avg_value              = $total_issued > 0 ? ( $total_value / $total_issued ) : 0;
+		$redemption_rate        = $total_issued > 0 ? round( ( $used_cards_count / $total_issued ) * 100, 2 ) : 0;
+		$avg_active_balance     = $active_count > 0 ? ( $active_total_balance / $active_count ) : 0;
 		$outstanding_percentage = $total_value > 0 ? round( ( $outstanding_balance / $total_value ) * 100, 2 ) : 0;
-		$redeemed_rate = $total_value > 0 ? round( ( $redeemed_balance / $total_value ) * 100, 2 ) : 0;
-		$breakage_percentage = $total_value > 0 ? round( ( $expired_balance / $total_value ) * 100, 2 ) : 0;
+		$redeemed_rate          = $total_value > 0 ? round( ( $redeemed_balance / $total_value ) * 100, 2 ) : 0;
+		$breakage_percentage    = $total_value > 0 ? round( ( $expired_balance / $total_value ) * 100, 2 ) : 0;
 
-		// Get trend (comparing to previous period - simplified for now)
-		$trend = '+0';
+		// Get trend (comparing to previous period - simplified for now).
+		$trend       = '+0';
 		$trend_class = 'wps-trend-neutral';
 
-		// Fix min_value if no cards found
-		if ( $min_value == 999999 ) {
+		// Fix min_value if no cards found.
+		if ( 999999 == $min_value ) {
 			$min_value = 0;
 		}
 
 		$metrics = array(
-			'total_issued' => array(
-				'count' => $total_issued,
-				'trend' => $trend,
+			'total_issued'        => array(
+				'count'       => $total_issued,
+				'trend'       => $trend,
 				'trend_class' => $trend_class,
 			),
 			'outstanding_balance' => array(
-				'amount' => $outstanding_balance,
+				'amount'     => $outstanding_balance,
 				'percentage' => $outstanding_percentage,
 			),
-			'redeemed_balance' => array(
+			'redeemed_balance'    => array(
 				'amount' => $redeemed_balance,
-				'rate' => $redeemed_rate,
+				'rate'   => $redeemed_rate,
 			),
-			'expired_balance' => array(
+			'expired_balance'     => array(
 				'amount' => $expired_balance,
-				'count' => $expired_count,
+				'count'  => $expired_count,
 			),
-			'active_cards' => array(
-				'count' => $active_count,
+			'active_cards'        => array(
+				'count'       => $active_count,
 				'avg_balance' => $avg_active_balance,
 			),
-			'partially_redeemed' => array(
-				'count' => $partially_redeemed_count,
+			'partially_redeemed'  => array(
+				'count'           => $partially_redeemed_count,
 				'remaining_value' => $partially_redeemed_value,
 			),
-			'average_value' => array(
+			'average_value'       => array(
 				'amount' => $avg_value,
-				'min' => $min_value,
-				'max' => $max_value,
+				'min'    => $min_value,
+				'max'    => $max_value,
 			),
-			'redemption_rate' => array(
+			'redemption_rate'     => array(
 				'percentage' => $redemption_rate,
 			),
-			'expiring_soon' => array(
+			'expiring_soon'       => array(
 				'count' => $expiring_soon_count,
 				'value' => $expiring_soon_value,
 			),
-			'breakage_revenue' => array(
-				'amount' => $expired_balance,
+			'breakage_revenue'    => array(
+				'amount'     => $expired_balance,
 				'percentage' => $breakage_percentage,
 			),
 		);

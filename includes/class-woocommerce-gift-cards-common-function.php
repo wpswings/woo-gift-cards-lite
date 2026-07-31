@@ -36,21 +36,21 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$product_id = array_key_exists( 'product_id', $args ) ? $args['product_id'] : '';
 
 				$wps_wgm_recommanded_per_product = get_post_meta( $product_id, 'wps_wgm_recommanded_per_product', true );
-				$recommand_product = '';
+				$recommand_product               = '';
 				if ( isset( $wps_wgm_recommanded_per_product ) && ! empty( $wps_wgm_recommanded_per_product ) ) {
 
 					foreach ( $wps_wgm_recommanded_per_product as $key => $val ) {
-						$recommand_prod = wc_get_product( $val );
+						$recommand_prod     = wc_get_product( $val );
 						$recommand_product .= '<style>.ugcfw__product_table_img img {width: 125px;height: 125px;}.ugcfw__product_table_name h2 {text-align:center; padding: 0;margin: 0;font-size: 24px;line-height: 28px;text-transform: capitalize;}</style><table class="ugcfw__product_table"><tr class="ugcfw__product_table_row"><td class="ugcfw__product_table_img" style="vertical-align: top;padding-bottom:15px;width:125px;">' . wp_kses_post( $recommand_prod->get_image() ) . '</td><td class="ugcfw__product_table_name" style="padding: 0 0 15px 25px;width: 450px;text-align: center;"><h2 style="text-align:center;padding: 0;margin: 0;font-size: 24px!important;line-height: 28px;text-transform: capitalize;">' . esc_html( $recommand_prod->get_name() ) . '</h2><p class="ugcfw__product_table_price" style="padding: 10px 0;margin: 0;font-size: 20px;line-height: 28px;font-weight: bold;">' . esc_html( get_woocommerce_currency_symbol() ) . esc_html( $recommand_prod->get_price() ) . '</p><p class="ugcfw__product_table_link" style="margin: 0;padding: 0;line-height: 28px;color: #208fe9;text-align: center;"><a href=' . esc_url( $recommand_prod->get_permalink() ) . '>' . esc_html( $recommand_prod->get_name() ) . '</a></p></td></tr></table>';
 					}
 				}
-				$template = get_post( $templateid, ARRAY_A );
-				$templatehtml = isset( $template['post_content'] ) ? $template['post_content'] : '';
-				$giftcard_logo_html = '';
-				$giftcard_featured = '';
-				$giftcard_event_html = '';
+				$template              = get_post( $templateid, ARRAY_A );
+				$templatehtml          = isset( $template['post_content'] ) ? $template['post_content'] : '';
+				$giftcard_logo_html    = '';
+				$giftcard_featured     = '';
+				$giftcard_event_html   = '';
 				$wps_wgm_mail_settings = wps_wgm_get_plugin_option( 'wps_wgm_mail_settings' );
-				$giftcard_upload_logo = $this->wps_wgm_get_template_data( $wps_wgm_mail_settings, 'wps_wgm_mail_setting_upload_logo' );
+				$giftcard_upload_logo  = $this->wps_wgm_get_template_data( $wps_wgm_mail_settings, 'wps_wgm_mail_setting_upload_logo' );
 
 				$giftcard_logo_height = $this->wps_wgm_get_template_data( $wps_wgm_mail_settings, 'wps_wgm_mail_setting_upload_logo_dimension_height' );
 
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 				$featured_image = wp_get_attachment_url( get_post_thumbnail_id( $templateid ) );
 
-				$other_settings              = wps_wgm_get_plugin_option( 'wps_wgm_other_settings' );
+				$other_settings         = wps_wgm_get_plugin_option( 'wps_wgm_other_settings' );
 				$wps_wgm_select_library = $this->wps_wgm_get_template_data( $other_settings, 'wps_wgm_select_library' );
 
 				if ( isset( $background_image ) && ! empty( $background_image ) ) {
@@ -84,7 +84,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$giftcard_event_html = $background_image;
 					} else {
 						$giftcard_event_html = "<img src='$background_image' 
-						width='100%' />"; 
+						width='100%' />";
 					}
 				}
 				$giftcard_event_html = apply_filters( 'wps_wgm_default_events_html', $giftcard_event_html, $args );
@@ -131,7 +131,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 
 					if ( '' != $selected_date || ! empty( $selected_date ) ) {
-							$giftcard_selected_date  = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
+							$giftcard_selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_date' );
 
 						if ( isset( $giftcard_selected_date ) ) {
 							$selected_date = $selected_date;
@@ -139,11 +139,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 						if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
 							if ( 'd/m/Y' == $selected_date ) {
-								$date = $args['expirydate'];
-								$date = str_replace( '/', '-', $date );
-								$new_date = gmdate( 'Y-m-d', strtotime( $date ) );
-								$new_format = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $new_date ) ) );
-								$new_formatt = gmdate( 'd/m/Y', strtotime( $new_format ) );
+								$date               = $args['expirydate'];
+								$date               = str_replace( '/', '-', $date );
+								$new_date           = gmdate( 'Y-m-d', strtotime( $date ) );
+								$new_format         = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $new_date ) ) );
+								$new_formatt        = gmdate( 'd/m/Y', strtotime( $new_format ) );
 								$args['expirydate'] = $new_formatt;
 
 							} else {
@@ -156,7 +156,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$args['expirydate'] = gmdate( 'Y-m-d', strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					}
 				} else {
-					$selected_date = get_option('date_format');
+					$selected_date = get_option( 'date_format' );
 					if ( __( 'No Expiration', 'woo-gift-cards-lite' ) != $args['expirydate'] ) {
 						$args['expirydate'] = gmdate( $selected_date, strtotime( '-1 day', strtotime( $args['expirydate'] ) ) );
 					} else {
@@ -170,7 +170,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				// Background Image for Mothers Day && Arrow Image for Mothers Day.
 				if ( 'mpdf' == $wps_wgm_select_library || ! wps_uwgc_pro_active() ) {
 					$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
-					$arrow_img = WPS_WGC_URL . 'assets/images/arrow.png';
+					$arrow_img           = WPS_WGC_URL . 'assets/images/arrow.png';
 				} else {
 					$mothers_day_backimg = WPS_WGC_URL . 'assets/images/back.png';
 					$mothers_day_backimg = "<span class='back_bubble_img'><img src='$mothers_day_backimg'/></span>";
@@ -183,17 +183,17 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				if ( 'Mail to recipient' == $args['delivery_method'] ) {
 					$args['delivery_method'] = __( 'Mail to recipient', 'woo-gift-cards-lite' );
-				} else if ( 'Downloadable' == $args['delivery_method'] ) {
+				} elseif ( 'Downloadable' == $args['delivery_method'] ) {
 					$args['delivery_method'] = __( 'Downloadable', 'woo-gift-cards-lite' );
-				} else if ( 'shipping' == $args['delivery_method'] ) {
+				} elseif ( 'shipping' == $args['delivery_method'] ) {
 					$args['delivery_method'] = __( 'shipping', 'woo-gift-cards-lite' );
 				} else {
 					$args['delivery_method'] = $args['delivery_method'];
 				}
 
 				if ( isset( $args['order_id'] ) && ! empty( $args['order_id'] ) ) {
-					$order_id  = $args['order_id'];
-					$order = wc_get_order( $order_id );
+					$order_id = $args['order_id'];
+					$order    = wc_get_order( $order_id );
 				} else {
 					$order = '';
 				}
@@ -300,27 +300,27 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			if ( $wps_wgc_enable ) {
 				$alreadycreated = wps_wgm_hpos_get_meta_data( $order_id, 'wps_wgm_order_giftcard', true );
 				if ( 'send' != $alreadycreated ) {
-					$coupon_code = $gift_couponnumber; // Code.
-					$amount = $couponamont; // Amount.
-					$discount_type = apply_filters( 'wps_wgm_discount_type', 'fixed_cart' );
+					$coupon_code        = $gift_couponnumber; // Code.
+					$amount             = $couponamont; // Amount.
+					$discount_type      = apply_filters( 'wps_wgm_discount_type', 'fixed_cart' );
 					$coupon_description = "GIFTCARD ORDER #$order_id";
-					$coupon = array(
-						'post_title' => $coupon_code,
+					$coupon             = array(
+						'post_title'   => $coupon_code,
 						'post_content' => $coupon_description,
 						'post_excerpt' => $coupon_description,
-						'post_status' => 'publish',
-						'post_author' => get_current_user_id(),
-						'post_type'     => 'shop_coupon',
+						'post_status'  => 'publish',
+						'post_author'  => get_current_user_id(),
+						'post_type'    => 'shop_coupon',
 					);
-					$new_coupon_id = wp_insert_post( $coupon );
+					$new_coupon_id      = wp_insert_post( $coupon );
 					if ( $new_coupon_id ) {
 						$coupon_obj = new WC_Coupon( $new_coupon_id );
 						$coupon_obj->save();
 					}
 					$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 					$product_settings = wps_wgm_get_plugin_option( 'wps_wgm_product_settings' );
-					$individual_use = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_individual_use' );
-					$individual_use = ( 'on' == $individual_use ) ? 'yes' : 'no';
+					$individual_use   = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_individual_use' );
+					$individual_use   = ( 'on' == $individual_use ) ? 'yes' : 'no';
 
 					$usage_limit = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_use' );
 					$usage_limit = ( '' != $usage_limit ) ? $usage_limit : 0;
@@ -331,16 +331,16 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					} else {
 						$expiry_date = $local_expiry_day;
 					}
-					$expiry_date = ( '' != $expiry_date ) ? $expiry_date : 0;
-					$free_shipping = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' );
-					$free_shipping = ( 'on' == $free_shipping ) ? 'yes' : 'no';
-					$minimum_amount = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_minspend' );
-					$maximum_amount = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_maxspend' );
+					$expiry_date        = ( '' != $expiry_date ) ? $expiry_date : 0;
+					$free_shipping      = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_freeshipping' );
+					$free_shipping      = ( 'on' == $free_shipping ) ? 'yes' : 'no';
+					$minimum_amount     = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_minspend' );
+					$maximum_amount     = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_maxspend' );
 					$exclude_sale_items = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_giftcard_ex_sale' );
 					$exclude_sale_items = ( 'on' == $exclude_sale_items ) ? 'yes' : 'no';
-					$exclude_products = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_exclude_product' );
-					$exclude_products = ( is_array( $exclude_products ) && ! empty( $exclude_products ) ) ? implode( ',', $exclude_products ) : '';
-					$exclude_category = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_exclude_category' );
+					$exclude_products   = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_exclude_product' );
+					$exclude_products   = ( is_array( $exclude_products ) && ! empty( $exclude_products ) ) ? implode( ',', $exclude_products ) : '';
+					$exclude_category   = $this->wps_wgm_get_template_data( $product_settings, 'wps_wgm_product_setting_exclude_category' );
 					if ( ! isset( $exclude_category ) || empty( $exclude_category ) ) {
 						$exclude_category = ' ';
 					}
@@ -352,7 +352,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$todaydate = date_i18n( 'Y-m-d' );
 						if ( 0 < $expiry_date || 0 === $expiry_date ) {
 							$expirydate = date_i18n( 'Y-m-d', strtotime( "$todaydate +$expiry_date day" ) );
-					
+
 						} else {
 							$expirydate = '';
 						}
@@ -429,9 +429,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		public function wps_wgm_common_functionality( $wps_wgm_common_arr, $order ) {
 
 			if ( ! empty( $wps_wgm_common_arr ) ) {
-				$to = $wps_wgm_common_arr['to'];
-				$from = $wps_wgm_common_arr['from'];
-				$item_id = $wps_wgm_common_arr['item_id'];
+				$to         = $wps_wgm_common_arr['to'];
+				$from       = $wps_wgm_common_arr['from'];
+				$item_id    = $wps_wgm_common_arr['item_id'];
 				$product_id = $wps_wgm_common_arr['product_id'];
 
 				$product_id = apply_filters( 'wps_wgm_wpml_product_switcher', $product_id, $order->get_id() );
@@ -447,22 +447,22 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				} else {
 					$temp = $templateid;
 				}
-				$args['from'] = $from;
-				$args['order_id'] = $order->get_id();
-				$args['to'] = $to;
-				$args['message'] = stripcslashes( $wps_wgm_common_arr['gift_msg'] );
-				$args['coupon'] = apply_filters( 'wps_wgm_qrcode_coupon', $wps_wgm_common_arr['gift_couponnumber'] );
-				$args['expirydate'] = $wps_wgm_common_arr['expirydate_format'];
-				$args['delivery_method'] = $wps_wgm_common_arr['delivery_method'];
+				$args['from']                       = $from;
+				$args['order_id']                   = $order->get_id();
+				$args['to']                         = $to;
+				$args['message']                    = stripcslashes( $wps_wgm_common_arr['gift_msg'] );
+				$args['coupon']                     = apply_filters( 'wps_wgm_qrcode_coupon', $wps_wgm_common_arr['gift_couponnumber'] );
+				$args['expirydate']                 = $wps_wgm_common_arr['expirydate_format'];
+				$args['delivery_method']            = $wps_wgm_common_arr['delivery_method'];
 				$args['variable_price_description'] = $wps_wgm_common_arr['variable_price_description'];
 				// price based on country.
 				if ( class_exists( 'WCPBC_Pricing_Zones' ) ) {
 
 					$billing_country = $order->get_billing_country();
-					$wcpbc_the_zone = WCPBC_Pricing_Zones::get_zone_by_country( $billing_country );
+					$wcpbc_the_zone  = WCPBC_Pricing_Zones::get_zone_by_country( $billing_country );
 					if ( isset( $wcpbc_the_zone ) && null != $wcpbc_the_zone ) {
-						$cur = $wcpbc_the_zone->get_currency();
-						$amt = $wcpbc_the_zone->get_exchange_rate_price( $wps_wgm_common_arr['couponamont'] );
+						$cur            = $wcpbc_the_zone->get_currency();
+						$amt            = $wcpbc_the_zone->get_exchange_rate_price( $wps_wgm_common_arr['couponamont'] );
 						$args['amount'] = get_woocommerce_currency_symbol( $cur ) . $amt;
 					} else {
 						$args['amount'] = wc_price( $wps_wgm_common_arr['couponamont'] );
@@ -485,14 +485,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				$message = apply_filters( 'wps_wgm_customizable_email_template', $this->wps_wgm_create_gift_template( $args ), $args );
 
-				$order_id = $wps_wgm_common_arr['order_id'];
+				$order_id             = $wps_wgm_common_arr['order_id'];
 				$wps_wgm_pre_gift_num = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
 
 				if ( is_array( $wps_wgm_pre_gift_num ) && ! empty( $wps_wgm_pre_gift_num ) ) {
 					$wps_wgm_pre_gift_num[] = $wps_wgm_common_arr['gift_couponnumber'];
 					wps_wgm_hpos_update_meta_data( $order_id, "$order_id#$item_id", $wps_wgm_pre_gift_num );
 				} else {
-					$wps_wgm_code_arr = array();
+					$wps_wgm_code_arr   = array();
 					$wps_wgm_code_arr[] = $wps_wgm_common_arr['gift_couponnumber'];
 					wps_wgm_hpos_update_meta_data( $order_id, "$order_id#$item_id", $wps_wgm_code_arr );
 				}
@@ -501,9 +501,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				$wps_wgm_common_arr = apply_filters( 'wps_wgm_add_pdf_settings', $wps_wgm_common_arr, $message );
 
-				$attachments = isset( $wps_wgm_common_arr['attachments'] ) ? $wps_wgm_common_arr['attachments'] : array();
-				$to = isset( $wps_wgm_common_arr['to'] ) ? $wps_wgm_common_arr['to'] : $to;
-				$headers = isset( $wps_wgm_common_arr['header'] ) ? $wps_wgm_common_arr['header'] : $headers;
+				$attachments          = isset( $wps_wgm_common_arr['attachments'] ) ? $wps_wgm_common_arr['attachments'] : array();
+				$to                   = isset( $wps_wgm_common_arr['to'] ) ? $wps_wgm_common_arr['to'] : $to;
+				$headers              = isset( $wps_wgm_common_arr['header'] ) ? $wps_wgm_common_arr['header'] : $headers;
 				$disable_buyer_notice = isset( $wps_wgm_common_arr['disable_buyer_notice'] ) ? $wps_wgm_common_arr['disable_buyer_notice'] : 'off';
 
 				$get_mail_status = true;
@@ -530,14 +530,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 					if ( empty( $send_subject ) ) {
 
-						$send_subject = "$bloginfo:";
+						$send_subject  = "$bloginfo:";
 						$send_subject .= __( ' Hurry!  the gift card is Received', 'woo-gift-cards-lite' );
 					}
 
 					$send_subject = apply_filters( 'wps_wgm_wpml_send_subject', $send_subject, $order_id );
 
-					$buyer_email = $order->get_billing_email();
-					$buyer_email = ! empty( $buyer_email ) ? $buyer_email : '';
+					$buyer_email  = $order->get_billing_email();
+					$buyer_email  = ! empty( $buyer_email ) ? $buyer_email : '';
 					$send_subject = str_replace( '[SITENAME]', $bloginfo, $send_subject );
 					$send_subject = str_replace( '[FROM]', $from, $send_subject );
 					$send_subject = stripcslashes( $send_subject );
@@ -573,14 +573,14 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					if ( isset( $wps_wgm_common_arr['receive_subject'] ) && ! empty( $wps_wgm_common_arr['receive_subject'] ) ) {
 						$receive_subject = $wps_wgm_common_arr['receive_subject'];
 					} else {
-						$receive_subject = "$bloginfo:";
+						$receive_subject  = "$bloginfo:";
 						$receive_subject .= __( ' Gift Card is Sent Successfully', 'woo-gift-cards-lite' );
 					}
 
 					if ( isset( $wps_wgm_common_arr['receive_message'] ) && ! empty( $wps_wgm_common_arr['receive_message'] ) ) {
 						$receive_message = $wps_wgm_common_arr['receive_message'];
 					} else {
-						$receive_message = "$bloginfo:";
+						$receive_message  = "$bloginfo:";
 						$receive_message .= __( ' Gift Card is Sent Successfully to the Email Id: [TO]', 'woo-gift-cards-lite' );
 
 					}
@@ -619,8 +619,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 			}
 			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
-			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
-			$todaydate = date_i18n( 'Y-m-d' );
+			$selected_date    = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
+			$todaydate        = date_i18n( 'Y-m-d' );
 			if ( isset( $expiry_date ) && ! empty( $expiry_date ) ) {
 				if ( 0 < $expiry_date || 0 === $expiry_date ) {
 					if ( isset( $_GET['send_date'] ) && null != $_GET['send_date'] && '' != $_GET['send_date'] && 'undefined' != $_GET['send_date'] ) {
@@ -634,7 +634,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						}
 					}
 					if ( isset( $selected_date ) && null != $selected_date && '' != $selected_date && wps_uwgc_pro_active() ) {
-						$selected_date = apply_filters( 'wps_wgm_selected_date_format', $selected_date );
+						$selected_date     = apply_filters( 'wps_wgm_selected_date_format', $selected_date );
 						$expirydate_format = date_i18n( $selected_date, strtotime( "$todaydate +$expiry_date day" ) );
 					} else {
 						$expirydate_format = date_i18n( 'Y-m-d', strtotime( "$todaydate +$expiry_date day" ) );
@@ -660,8 +660,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 */
 		public function wps_wgm_calculate_coupon_discount( $wps_wgm_discount, $wps_wgm_discount_tax ) {
 			$price_in_ex_option = get_option( 'woocommerce_prices_include_tax' );
-			$tax_display_shop = get_option( 'woocommerce_tax_display_shop', 'excl' );
-			$tax_display_cart = get_option( 'woocommerce_tax_display_cart', 'excl' );
+			$tax_display_shop   = get_option( 'woocommerce_tax_display_shop', 'excl' );
+			$tax_display_cart   = get_option( 'woocommerce_tax_display_cart', 'excl' );
 
 			if ( isset( $tax_display_shop ) && isset( $tax_display_cart ) ) {
 				if ( 'excl' == $tax_display_cart && 'excl' == $tax_display_shop ) {
@@ -694,50 +694,50 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 */
 		public function wps_allowed_html_tags() {
 			$allowed_tags = array(
-				'a' => array(
+				'a'          => array(
 					'class' => array(),
 					'href'  => array(),
 					'rel'   => array(),
 					'title' => array(),
 					'id'    => array(),
 				),
-				'abbr' => array(
+				'abbr'       => array(
 					'title' => array(),
 				),
-				'b' => array(),
+				'b'          => array(),
 				'blockquote' => array(
-					'cite'  => array(),
+					'cite' => array(),
 				),
-				'cite' => array(
+				'cite'       => array(
 					'title' => array(),
 				),
-				'code' => array(),
-				'del' => array(
+				'code'       => array(),
+				'del'        => array(
 					'datetime' => array(),
-					'title' => array(),
+					'title'    => array(),
 				),
-				'dd' => array(),
-				'div' => array(
+				'dd'         => array(),
+				'div'        => array(
 					'class' => array(),
 					'title' => array(),
 					'style' => array(
 						'display',
 					),
 				),
-				'dl' => array(),
-				'dt' => array(),
-				'em' => array(),
-				'h1' => array(),
-				'h2' => array(),
-				'h3' => array(),
-				'h4' => array(),
-				'h5' => array(),
-				'h6' => array(),
-				'i'  => array(),
-				'br' => array(),
-				'img' => array(
+				'dl'         => array(),
+				'dt'         => array(),
+				'em'         => array(),
+				'h1'         => array(),
+				'h2'         => array(),
+				'h3'         => array(),
+				'h4'         => array(),
+				'h5'         => array(),
+				'h6'         => array(),
+				'i'          => array(),
+				'br'         => array(),
+				'img'        => array(
 					'alt'    => array(),
-					'id'    => array(),
+					'id'     => array(),
 					'class'  => array(),
 					'height' => array(),
 					'src'    => array(),
@@ -754,33 +754,33 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						'vspace'   => array(),
 					),
 				),
-				'li' => array(
+				'li'         => array(
 					'class' => array(),
 				),
-				'ol' => array(
+				'ol'         => array(
 					'class' => array(),
 				),
-				'p' => array(
+				'p'          => array(
 					'class' => array(),
 					'style' => array(),
 				),
-				'q' => array(
-					'cite' => array(),
+				'q'          => array(
+					'cite'  => array(),
 					'title' => array(),
 				),
-				'span' => array(
+				'span'       => array(
 					'class' => array(),
 					'title' => array(),
 					'style' => array(),
 					'img'   => array(),
 					'color' => array(),
 				),
-				'strike' => array(),
-				'strong' => array(),
-				'ul' => array(
+				'strike'     => array(),
+				'strong'     => array(),
+				'ul'         => array(
 					'class' => array(),
 				),
-				'table' => array(
+				'table'      => array(
 					'class'       => array(),
 					'style'       => array(),
 					'role'        => array(),
@@ -796,49 +796,48 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					'style' => array(),
 				),
 				'td'         => array(
-					'dir'         => array(),
-					'style'       => array(),
-					'align'       => array(),
-					'bgcolor'     => array(),
-					'width'       => array(),
-					'valign'      => array(),
-					'class'       => array(),
-					'span'       => array(),
+					'dir'     => array(),
+					'style'   => array(),
+					'align'   => array(),
+					'bgcolor' => array(),
+					'width'   => array(),
+					'valign'  => array(),
+					'class'   => array(),
+					'span'    => array(),
 				),
 				'th'         => array(),
 				'style'      => array(),
 				'center'     => array(
 					'style' => array(),
 				),
-				'select'      => array(
-					'id'         => array(),
-					'class'       => array(),
-					'name'       => array(),
+				'select'     => array(
+					'id'    => array(),
+					'class' => array(),
+					'name'  => array(),
 				),
-				'option'      => array(
-					'value'         => array(),
+				'option'     => array(
+					'value' => array(),
 				),
 				'label'      => array(
-					'class'      => array(),
-					'id'         => array(),
+					'class' => array(),
+					'id'    => array(),
 				),
 				'input'      => array(
-					'class'      => array(),
-					'id'         => array(),
-					'type'         => array(),
-					'name'         => array(),
-					'placeholder'  => array(),
-					'value'         => array(),
-					'checked'         => array(),
-					'selected'         => array(),
+					'class'       => array(),
+					'id'          => array(),
+					'type'        => array(),
+					'name'        => array(),
+					'placeholder' => array(),
+					'value'       => array(),
+					'checked'     => array(),
+					'selected'    => array(),
 				),
-				'textarea'      => array(
-					'class'      => array(),
-					'id'         => array(),
-					'name'         => array(),
-					'placeholder'         => array(),
+				'textarea'   => array(
+					'class'       => array(),
+					'id'          => array(),
+					'name'        => array(),
+					'placeholder' => array(),
 				),
-				
 
 			);
 			return apply_filters( 'wps_allowed_html_for_preview', $allowed_tags );
@@ -854,8 +853,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 */
 		public function wps_get_org_selected_template() {
 			$wps_wgm_select_email_format = get_option( 'wps_wgm_select_email_format', 'normal' );
-			$custom_email_template = get_option( 'wps_wgm_general_setting_select_template', 'off' );
-			$selected_template_name = '';
+			$custom_email_template       = get_option( 'wps_wgm_general_setting_select_template', 'off' );
+			$selected_template_name      = '';
 			if ( 'on' == $custom_email_template ) {
 				$selected_template_name = 'Custom Template';
 			} else {
@@ -872,19 +871,19 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				}
 			}
 			if ( isset( $selected_template_name ) && ! empty( $selected_template_name ) ) {
-				$args = array(
-					'post_type' => 'giftcard',
+				$args     = array(
+					'post_type'      => 'giftcard',
 					'posts_per_page' => -1,
 				);
-				$loop = new WP_Query( $args );
+				$loop     = new WP_Query( $args );
 				$template = array();
 				foreach ( $loop->posts as $key => $value ) {
-					$template_id = $value->ID;
-					$template_title = $value->post_title;
+					$template_id              = $value->ID;
+					$template_title           = $value->post_title;
 					$template[ $template_id ] = $template_title;
 				}
 				$selected_temp_id = array_search( $selected_template_name, $template );
-				$template_id = array( 0 => $selected_temp_id );
+				$template_id      = array( 0 => $selected_temp_id );
 				return $template_id;
 			}
 		}
@@ -930,9 +929,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @return string $gift_card_only.
 		 */
 		public function is_order_gift_card_only( $order_id ) {
-			$order = wc_get_order( $order_id );
+			$order          = wc_get_order( $order_id );
 			$gift_card_only = true;
-	
+
 			foreach ( $order->get_items() as $item_id => $item ) {
 				$product = $item->get_product();
 				if ( 'wgm_gift_card' !== $product->get_type() ) {
@@ -940,7 +939,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					break;
 				}
 			}
-	
+
 			return $gift_card_only;
 		}
 
@@ -964,8 +963,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			}
 
 			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
-			$max_percent = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_max_percent' );
-			$max_percent = is_numeric( $max_percent ) ? (float) $max_percent : 0;
+			$max_percent      = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_giftcard_max_percent' );
+			$max_percent      = is_numeric( $max_percent ) ? (float) $max_percent : 0;
 			if ( $max_percent <= 0 ) {
 				return $discount;
 			}
@@ -982,19 +981,19 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				return $discount;
 			}
 
-			$max_allowed = $base_total * ( $max_percent / 100 );
+			$max_allowed            = $base_total * ( $max_percent / 100 );
 			static $remaining_total = null;
-			static $cart_hash = null;
+			static $cart_hash       = null;
 			static $last_calc_count = null;
-			$calc_count = did_action( 'woocommerce_before_calculate_totals' );
+			$calc_count             = did_action( 'woocommerce_before_calculate_totals' );
 			if ( $last_calc_count !== $calc_count ) {
 				$last_calc_count = $calc_count;
 				$remaining_total = null;
-				$cart_hash = null;
+				$cart_hash       = null;
 			}
 			$current_hash = WC()->cart->get_cart_hash();
 			if ( $cart_hash !== $current_hash ) {
-				$cart_hash = $current_hash;
+				$cart_hash       = $current_hash;
 				$remaining_total = null;
 			}
 			if ( null === $remaining_total ) {
@@ -1081,10 +1080,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @return array
 		 */
 		public function wps_wgm_get_giftcard_coupon_totals( $coupons ) {
-			$total_amount = 0;
-			$total_discount = 0;
+			$total_amount     = 0;
+			$total_discount   = 0;
 			$discount_amounts = isset( WC()->cart ) ? WC()->cart->coupon_discount_amounts : array();
-			$woo_ver = WC()->version;
+			$woo_ver          = WC()->version;
 
 			foreach ( $coupons as $coupon ) {
 				if ( ! $this->wps_wgm_is_giftcard_coupon( $coupon ) ) {
@@ -1093,10 +1092,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 
 				if ( version_compare( $woo_ver, '3.0.0', '<' ) ) {
 					$total_amount += $coupon->coupon_amount;
-					$code = $coupon->code;
+					$code          = $coupon->code;
 				} else {
 					$total_amount += $coupon->get_amount();
-					$code = $coupon->get_code();
+					$code          = $coupon->get_code();
 				}
 
 				if ( isset( $discount_amounts[ $code ] ) ) {
@@ -1105,7 +1104,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 			}
 
 			return array(
-				'amount' => $total_amount,
+				'amount'   => $total_amount,
 				'discount' => $total_discount,
 			);
 		}

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="wps_wgm_table_wrapper wps_wgm_overview-wrapper">
 	<?php
-	$wgm_support_link = 'https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support';
+	$wgm_support_link   = 'https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support';
 	$wgm_overview_cards = array(
 		array(
 			'image'       => WPS_WGC_URL . 'assets/images/featur1.png',

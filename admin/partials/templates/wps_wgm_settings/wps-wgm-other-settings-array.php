@@ -10,47 +10,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once WPS_WGC_DIRPATH . 'admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php';
-$settings_obj = new Woocommerce_Giftcard_Admin_Settings();
- $wps_wgm_other_setting = array(
-	 array(
-		 'title' => esc_html__( 'Disable Apply Coupon Fields', 'woo-gift-cards-lite' ),
-		 'id' => 'wps_wgm_additional_apply_coupon_disable',
-		 'type' => 'checkbox',
-		 'class' => 'input-text',
-		 'desc_tip' => esc_html__( 'Check this if you want to disable Apply Coupon Fields if there only Gift Card Products are in Cart/Checkout Page', 'woo-gift-cards-lite' ),
-		 'desc' => esc_html__( 'Disable Apply Coupon Fields on Cart/Checkout page', 'woo-gift-cards-lite' ),
-	 ),
-	 array(
-		 'title' => esc_html__( 'Disable Preview Button', 'woo-gift-cards-lite' ),
-		 'id' => 'wps_wgm_additional_preview_disable',
-		 'type' => 'checkbox',
-		 'class' => 'input-text',
-		 'desc_tip' => esc_html__( 'Check this if you want to disable Preview Button At Front End', 'woo-gift-cards-lite' ),
-		 'desc' => esc_html__( 'Disable Preview Button At Front End', 'woo-gift-cards-lite' ),
-	 ),
-	 // new layout setting for org ///////////////////////////////.
-	 array(
-		 'title' => __( 'Enable New Layout', 'woo-gift-cards-lite' ),
-		 'id' => 'wps_wgm_new_gift_card_page_layout',
-		 'type' => 'checkbox',
-		 'class' => 'input-text',
-		 'desc_tip' => __( 'Check this if you want to enable the new structure of the gift card product page', 'woo-gift-cards-lite' ),
-		 'desc' => __( 'Enable this if you want to use New Product Page Layout', 'woo-gift-cards-lite' ),
-	 ),
- );
- // woocommerce smart coupon by storeapp integration.
- if ( class_exists( 'WC_Smart_Coupons' ) ) {
-	 $smart_coupons_options = array(
-		 array(
-			 'title'       => __( 'WooCommerce Smart Coupons Integration', 'woo-gift-cards-lite' ),
-			 'id'          => 'wps_wgm_transfer_smart_coupons',
-			 'type'        => 'button',
-			 'value'       => 'Transfer',
-			 'class'       => 'wps_ml-35',
-			 'desc_tip'    => __( 'Transfer "Store Credit / Gift Certificate" coupons to Gift Cards', 'woo-gift-cards-lite' ),
-			 'bottom_desc' => __( 'Note: this action cannot be undone.', 'woo-gift-cards-lite' ),
-		 ),
-	 );
-	 $wps_wgm_other_setting = array_merge( $wps_wgm_other_setting, $smart_coupons_options );
- }
- $wps_wgm_other_setting = apply_filters( 'wps_wgm_other_setting', $wps_wgm_other_setting );
+$settings_obj          = new Woocommerce_Giftcard_Admin_Settings();
+$wps_wgm_other_setting = array(
+	array(
+		'title'    => esc_html__( 'Disable Apply Coupon Fields', 'woo-gift-cards-lite' ),
+		'id'       => 'wps_wgm_additional_apply_coupon_disable',
+		'type'     => 'checkbox',
+		'class'    => 'input-text',
+		'desc_tip' => esc_html__( 'Check this if you want to disable Apply Coupon Fields if there only Gift Card Products are in Cart/Checkout Page', 'woo-gift-cards-lite' ),
+		'desc'     => esc_html__( 'Disable Apply Coupon Fields on Cart/Checkout page', 'woo-gift-cards-lite' ),
+	),
+	array(
+		'title'    => esc_html__( 'Disable Preview Button', 'woo-gift-cards-lite' ),
+		'id'       => 'wps_wgm_additional_preview_disable',
+		'type'     => 'checkbox',
+		'class'    => 'input-text',
+		'desc_tip' => esc_html__( 'Check this if you want to disable Preview Button At Front End', 'woo-gift-cards-lite' ),
+		'desc'     => esc_html__( 'Disable Preview Button At Front End', 'woo-gift-cards-lite' ),
+	),
+	// new layout setting for org ///////////////////////////////.
+	array(
+		'title'    => __( 'Enable New Layout', 'woo-gift-cards-lite' ),
+		'id'       => 'wps_wgm_new_gift_card_page_layout',
+		'type'     => 'checkbox',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'Check this if you want to enable the new structure of the gift card product page', 'woo-gift-cards-lite' ),
+		'desc'     => __( 'Enable this if you want to use New Product Page Layout', 'woo-gift-cards-lite' ),
+	),
+);
+// woocommerce smart coupon by storeapp integration.
+if ( class_exists( 'WC_Smart_Coupons' ) ) {
+	$smart_coupons_options = array(
+		array(
+			'title'       => __( 'WooCommerce Smart Coupons Integration', 'woo-gift-cards-lite' ),
+			'id'          => 'wps_wgm_transfer_smart_coupons',
+			'type'        => 'button',
+			'value'       => 'Transfer',
+			'class'       => 'wps_ml-35',
+			'desc_tip'    => __( 'Transfer "Store Credit / Gift Certificate" coupons to Gift Cards', 'woo-gift-cards-lite' ),
+			'bottom_desc' => __( 'Note: this action cannot be undone.', 'woo-gift-cards-lite' ),
+		),
+	);
+	$wps_wgm_other_setting = array_merge( $wps_wgm_other_setting, $smart_coupons_options );
+}
+$wps_wgm_other_setting = apply_filters( 'wps_wgm_other_setting', $wps_wgm_other_setting );

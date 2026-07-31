@@ -74,25 +74,25 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			// Prepare default values.
 			$defaults = array(
-				'failure_type'       => 'system',
-				'severity'           => 'medium',
-				'status'             => 'new',
-				'order_id'           => null,
-				'coupon_id'          => null,
-				'coupon_code'        => null,
-				'customer_email'     => null,
-				'customer_name'      => null,
-				'error_message'      => '',
-				'error_code'         => null,
-				'stack_trace'        => null,
-				'context'            => null,
-				'retry_count'        => 0,
+				'failure_type'         => 'system',
+				'severity'             => 'medium',
+				'status'               => 'new',
+				'order_id'             => null,
+				'coupon_id'            => null,
+				'coupon_code'          => null,
+				'customer_email'       => null,
+				'customer_name'        => null,
+				'error_message'        => '',
+				'error_code'           => null,
+				'stack_trace'          => null,
+				'context'              => null,
+				'retry_count'          => 0,
 				'last_retry_timestamp' => null,
-				'max_retries'        => 3,
-				'assigned_to'        => null,
-				'resolution_notes'   => null,
-				'resolved_timestamp' => null,
-				'created_by'         => get_current_user_id(),
+				'max_retries'          => 3,
+				'assigned_to'          => null,
+				'resolution_notes'     => null,
+				'resolved_timestamp'   => null,
+				'created_by'           => get_current_user_id(),
 			);
 
 			$data = wp_parse_args( $args, $defaults );
@@ -127,9 +127,25 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 					'created_by'           => absint( $data['created_by'] ),
 				),
 				array(
-					'%s', '%s', '%s', '%d', '%d', '%s', '%s', '%s',
-					'%s', '%s', '%s', '%s', '%d', '%s', '%d', '%d',
-					'%s', '%s', '%d',
+					'%s',
+					'%s',
+					'%s',
+					'%d',
+					'%d',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%d',
+					'%s',
+					'%d',
+					'%d',
+					'%s',
+					'%s',
+					'%d',
 				)
 			);
 
@@ -164,7 +180,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failure = $wpdb->get_row(
 				$wpdb->prepare(
-					"SELECT * FROM " . esc_sql($table_name) . " WHERE id = %d",
+					'SELECT * FROM ' . esc_sql( $table_name ) . ' WHERE id = %d',
 					$failure_id
 				)
 			);
@@ -225,10 +241,10 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$result = $wpdb->query(
 				$wpdb->prepare(
-					"UPDATE " . esc_sql($table_name) . "
+					'UPDATE ' . esc_sql( $table_name ) . '
 					SET retry_count = retry_count + 1,
 					    last_retry_timestamp = %s
-					WHERE id = %d",
+					WHERE id = %d',
 					current_time( 'mysql' ),
 					$failure_id
 				)
@@ -267,10 +283,10 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failures = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT * FROM " . esc_sql($table_name) . "
+					'SELECT * FROM ' . esc_sql( $table_name ) . '
 					WHERE status = %s
 					ORDER BY failure_timestamp DESC
-					LIMIT %d",
+					LIMIT %d',
 					$status,
 					$limit
 				)
@@ -293,10 +309,10 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$failures = $wpdb->get_results(
 				$wpdb->prepare(
-					"SELECT * FROM " . esc_sql($table_name) . "
+					'SELECT * FROM ' . esc_sql( $table_name ) . '
 					WHERE failure_type = %s
 					ORDER BY failure_timestamp DESC
-					LIMIT %d",
+					LIMIT %d',
 					$type,
 					$limit
 				)
@@ -320,13 +336,13 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 			$date_filter = '';
 			switch ( $period ) {
 				case '24h':
-					$date_filter = "AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 1 DAY)";
+					$date_filter = 'AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 1 DAY)';
 					break;
 				case '7d':
-					$date_filter = "AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+					$date_filter = 'AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 7 DAY)';
 					break;
 				case '30d':
-					$date_filter = "AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+					$date_filter = 'AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 30 DAY)';
 					break;
 				case 'all':
 				default:
@@ -336,43 +352,43 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			// Get total failures.
 			$total = $wpdb->get_var(
-				"SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE 1=1 " . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . ' WHERE 1=1 ' . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			);
 
 			// Get failures by type.
 			$by_type = $wpdb->get_results(
-				"SELECT failure_type, COUNT(*) as count
-				FROM " . esc_sql($table_name) . "
-				WHERE 1=1 " . $date_filter . " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				GROUP BY failure_type"
+				'SELECT failure_type, COUNT(*) as count
+				FROM ' . esc_sql( $table_name ) . '
+				WHERE 1=1 ' . $date_filter . ' // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				GROUP BY failure_type'
 			);
 
 			// Get failures by severity.
 			$by_severity = $wpdb->get_results(
-				"SELECT severity, COUNT(*) as count
-				FROM " . esc_sql($table_name) . "
-				WHERE 1=1 " . $date_filter . " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				GROUP BY severity"
+				'SELECT severity, COUNT(*) as count
+				FROM ' . esc_sql( $table_name ) . '
+				WHERE 1=1 ' . $date_filter . ' // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				GROUP BY severity'
 			);
 
 			// Get failures by status.
 			$by_status = $wpdb->get_results(
-				"SELECT status, COUNT(*) as count
-				FROM " . esc_sql($table_name) . "
-				WHERE 1=1 " . $date_filter . " // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				GROUP BY status"
+				'SELECT status, COUNT(*) as count
+				FROM ' . esc_sql( $table_name ) . '
+				WHERE 1=1 ' . $date_filter . ' // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				GROUP BY status'
 			);
 
 			// Get critical failures.
 			$critical_count = $wpdb->get_var(
-				"SELECT COUNT(*) FROM " . esc_sql($table_name) . "
+				'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . "
 				WHERE severity = 'critical'
 				AND status != 'resolved' " . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			);
 
 			// Get pending recoveries.
 			$pending_recoveries = $wpdb->get_var(
-				"SELECT COUNT(*) FROM " . esc_sql($table_name) . "
+				'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . "
 				WHERE status IN ('new', 'in_progress')
 				AND retry_count < max_retries " . $date_filter
 			);
@@ -402,7 +418,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 			}
 
 			$admin_email = get_option( 'admin_email' );
-			$subject = sprintf(
+			$subject     = sprintf(
 				'[%s] Gift Card Operation Failed - %s Severity',
 				get_bloginfo( 'name' ),
 				ucfirst( $data['severity'] )
@@ -508,7 +524,7 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$deleted = $wpdb->query(
 				$wpdb->prepare(
-					"DELETE FROM " . esc_sql($table_name) . "
+					'DELETE FROM ' . esc_sql( $table_name ) . "
 					WHERE status = 'resolved'
 					AND resolved_timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)",
 					$days

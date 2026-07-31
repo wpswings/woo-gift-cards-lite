@@ -34,4 +34,3 @@ $wps_wgm = array(
 wp_enqueue_script( 'wps-wallet-giftcard', plugin_dir_url( __FILE__ ) . '../js/wps_wgm_wallet_system_for_woocommerce.js', array( 'jquery' ), $this->version, true );
 wp_localize_script( 'wps-wallet-giftcard', 'wps_wgm', $wps_wgm );
 ?>
-

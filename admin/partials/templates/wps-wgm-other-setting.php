@@ -13,14 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * General Settings Template
  */
 require_once WPS_WGC_DIRPATH . 'admin/partials/templates/wps_wgm_settings/wps-wgm-other-settings-array.php';
-$flag = false;
+$flag        = false;
 $current_tab = 'wps_wgm_other_setting';
 if ( isset( $_POST['wps_wgm_save_other'] ) ) {
 	if ( isset( $_REQUEST['wps-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-wgc-nonce'] ) ), 'wps-wgc-nonce' ) ) {
 		unset( $_POST['wps_wgm_save_other'] );
 		if ( 'wps_wgm_other_setting' == $current_tab ) {
 			$other_settings_array = array();
-			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
+			$postdata             = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
 				foreach ( $postdata as $key => $value ) {
 					$other_settings_array[ $key ] = $value;

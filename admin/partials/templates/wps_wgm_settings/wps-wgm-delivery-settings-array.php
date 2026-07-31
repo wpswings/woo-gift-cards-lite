@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once WPS_WGC_DIRPATH . 'admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php';
-$settings_obj = new Woocommerce_Giftcard_Admin_Settings();
+$settings_obj              = new Woocommerce_Giftcard_Admin_Settings();
 $wps_wgm_delivery_settings = array(
 	array(
 		'title'         => esc_html__( 'Enable Email To Recipient', 'woo-gift-cards-lite' ),
@@ -35,4 +35,4 @@ $wps_wgm_delivery_settings = array(
 		'default_value' => 0,
 	),
 );
- $wps_wgm_delivery_settings = apply_filters( 'wps_wgm_delivery_settings', $wps_wgm_delivery_settings );
+$wps_wgm_delivery_settings = apply_filters( 'wps_wgm_delivery_settings', $wps_wgm_delivery_settings );
