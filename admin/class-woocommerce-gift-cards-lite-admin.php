@@ -2069,6 +2069,11 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	public function wps_uwgc_resend_gift_card_email() {
 		check_ajax_referer( 'wps-uwgc-giftcard-report-nonce', 'wps_uwgc_nonce' );
 
+		// Check user capabilities.
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-gift-cards-lite' ) ) );
+		}
+
 		$coupon_id = isset( $_POST['coupon_id'] ) ? absint( $_POST['coupon_id'] ) : 0;
 
 		error_log( 'wps_uwgc_resend_gift_card_email: Starting resend for coupon_id: ' . $coupon_id );

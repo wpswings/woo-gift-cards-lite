@@ -2955,6 +2955,20 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				$coupon_id = $coupon->get_id();
 				if ( ! empty( $coupon_id ) ) {
 
+					// Verify current user is the intended recipient.
+					$current_user       = get_user_by( 'id', $user_id );
+					$recipient_email    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+
+					// Check if current user's email matches the recipient email.
+					if ( ! $current_user || empty( $recipient_email ) || $current_user->user_email !== $recipient_email ) {
+						$response = array(
+							'result' => false,
+							'msg'    => __( 'You are not authorized to redeem this gift card. This gift card was sent to a different email address.', 'woo-gift-cards-lite' ),
+						);
+						wp_send_json( $response );
+						wp_die();
+					}
+
 					$coupon_amount = $coupon->get_amount();
 					if ( $coupon->is_valid() ) {
 						if ( $coupon_amount > 0 ) {
@@ -3393,7 +3407,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		 *
 		 * @param int $product_id Product ID.
 		 * @return bool Whether the product is a gift card.
-		 * @since 3.2.9
+		 * @since 3.2.10
 		 */
 	private function wps_wgc_is_gift_card_product( $product_id ) {
 		$product = wc_get_product( $product_id );
@@ -3411,7 +3425,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 *
 	 * @param array $packages Shipping packages.
 	 * @return array Modified packages with adjusted totals.
-	 * @since 3.2.9
+	 * @since 3.2.10
 	 */
 	public function wps_wgc_exclude_gc_from_free_shipping( $packages ) {
 		if ( ! WC()->cart || WC()->cart->is_empty() ) {
