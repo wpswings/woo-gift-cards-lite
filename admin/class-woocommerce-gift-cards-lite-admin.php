@@ -2048,10 +2048,17 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_gift_card_details() {
 		check_ajax_referer( 'wps-uwgc-giftcard-report-nonce', 'wps_uwgc_nonce' );
+
+		// Check user capabilities.
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-gift-cards-lite' ) ) );
+		}
+
 		$_POST['wps_uwgc_report_details'] = 'wps_uwgc_report_details';
 		$_POST['width']                   = '650';
 		$_POST['height']                  = '480';
 		$_POST['TB_iframe']               = true;
+		$_POST['wps_gc_report_nonce']     = wp_create_nonce( 'wps-gc-report-nonce' );
 		$query                            = http_build_query( $_POST );
 		$ajax_url                         = home_url( "?$query" );
 		echo wp_kses_post( $ajax_url );
@@ -2173,11 +2180,21 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_report_details() {
-		$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
-		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		// Check if this is a report details request.
+		if ( ! isset( $_GET['wps_uwgc_report_details'] ) || 'wps_uwgc_report_details' !== $_GET['wps_uwgc_report_details'] ) {
+			return;
 		}
+
+		// Verify nonce.
+		if ( ! isset( $_GET['wps_gc_report_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['wps_gc_report_nonce'] ) ), 'wps-gc-report-nonce' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'woo-gift-cards-lite' ) );
+		}
+
+		// Check user capabilities - only shop managers and administrators can view gift card details.
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have permission to view this page.', 'woo-gift-cards-lite' ) );
+		}
+
 		if ( isset( $_GET['wps_uwgc_report_details'] ) && 'wps_uwgc_report_details' == $_GET['wps_uwgc_report_details'] ) {
 			$order_id  = isset( $_GET['order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : '';
 			$coupon_id = isset( $_GET['coupon_id'] ) ? sanitize_text_field( wp_unslash( $_GET['coupon_id'] ) ) : '';
