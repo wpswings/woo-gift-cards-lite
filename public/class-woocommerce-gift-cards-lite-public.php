@@ -1424,7 +1424,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							} else {
 								$inc_tax_status = false;
 							}
-							$couponamont = $original_price;
+							// Security Fix CVE-2026-19436: Use actual amount paid per unit instead of pre-discount price
+							// Calculate the actual amount collected for this line item divided by quantity
+							$actual_total = $item->get_total();
+							$couponamont = ( $item_quantity > 0 ) ? ( $actual_total / $item_quantity ) : $original_price;
 
 							$wps_wgm_lite = true;
 							$wps_wgm_lite = apply_filters( 'wps_wgm_check_coupon_creation_mails', $wps_wgm_mail_template_data, $order_id, $item, $wps_wgm_lite );
@@ -1601,8 +1604,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							&& ( 'no' !== $wps_enabled );
 
 						if ( $wps_is_rechargeable ) {
-
-							$total = $order->get_subtotal() + $coupon->get_amount();
+							// Security Fix CVE-2026-19436: Use actual line item total instead of pre-discount subtotal
+							// Get the actual amount paid for this line item (post-discount)
+							$item_total = $value->get_total();
+							$total = $item_total + $coupon->get_amount();
 							$coupon->set_amount( $total );
 							// Save the changes.
 							$coupon->save();
@@ -2059,8 +2064,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_email_on_single_page() {
-		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
+		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
@@ -2746,13 +2752,25 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$coupon_amount = $coupon->get_amount();
 					if ( $coupon->is_valid() ) {
 						if ( $coupon_amount > 0 ) {
+							// Security Fix CVE-2026-19439: Verify ownership before allowing redemption
+							// Get the recipient email associated with this gift card
+							$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+							$current_user = wp_get_current_user();
+							$current_user_email = $current_user->user_email;
 
-							$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
-							$coupon->set_amount( 0 );
-							$coupon->save();
-							do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, 0 );
-							$response['result'] = true;
-							$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
+							// Check if current user is the intended recipient
+							// Fail closed: if no recipient is recorded, deny access
+							if ( empty( $recipient_email ) || $current_user_email !== $recipient_email ) {
+								$response['result'] = false;
+								$response['msg']    = esc_html__( 'You are not authorized to redeem this gift card.', 'woo-gift-cards-lite' );
+							} else {
+								$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
+								$coupon->set_amount( 0 );
+								$coupon->save();
+								do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, 0 );
+								$response['result'] = true;
+								$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
+							}
 						} else {
 
 							$response['result'] = false;

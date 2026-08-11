@@ -162,8 +162,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
+		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
@@ -334,8 +335,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_premium_features() {
-		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
+		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
@@ -820,8 +822,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_woocommerce_after_order_itemmeta( $item_id, $item, $_product ) {
-		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
+		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
@@ -1535,8 +1538,9 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_display_notification_bar() {
 
-		$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
+		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
+		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
@@ -2069,11 +2073,24 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_report_details() {
-		$secure_nonce      = wp_create_nonce( 'wps-gc-report-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-report-nonce' );
-		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		// Security Fix CVE-2026-19439: Proper authentication and authorization checks
+		// 1. Check if user is logged in
+		if ( ! is_user_logged_in() ) {
+			wp_die( esc_html__( 'Access denied. Please log in.', 'woo-gift-cards-lite' ), 403 );
 		}
+
+		// 2. Fix broken nonce check - read nonce from REQUEST instead of creating new one
+		$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-report-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce verification failed', 'woo-gift-cards-lite' ), 403 );
+		}
+
+		// 3. Check user capabilities
+		if ( ! current_user_can( 'manage_woocommerce' ) && ! current_user_can( 'edit_shop_orders' ) ) {
+			wp_die( esc_html__( 'You do not have permission to view this report.', 'woo-gift-cards-lite' ), 403 );
+		}
+
 		if ( isset( $_GET['wps_uwgc_report_details'] ) && 'wps_uwgc_report_details' == $_GET['wps_uwgc_report_details'] ) {
 			$order_id = isset( $_GET['order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : '';
 			$coupon_id = isset( $_GET['coupon_id'] ) ? sanitize_text_field( wp_unslash( $_GET['coupon_id'] ) ) : '';
