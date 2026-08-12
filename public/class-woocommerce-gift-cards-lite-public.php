@@ -1427,7 +1427,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							} else {
 								$inc_tax_status = false;
 							}
-							$couponamont = $original_price;
+							// Security Fix CVE-2026-19436: Use actual amount paid per unit, not pre-discount price.
+							// Calculate per-unit price from actual line total to prevent value inflation on discounted purchases.
+							$item_total            = $item->get_total(); // Actual amount paid after all discounts.
+							$item_quantity_check   = $item->get_quantity();
+							$actual_per_unit_price = $item_quantity_check > 0 ? ( $item_total / $item_quantity_check ) : 0;
+							$couponamont           = max( 0, $actual_per_unit_price ); // Ensure non-negative value.
 
 							$wps_wgm_lite = true;
 							$wps_wgm_lite = apply_filters( 'wps_wgm_check_coupon_creation_mails', $wps_wgm_mail_template_data, $order_id, $item, $wps_wgm_lite );
@@ -1603,7 +1608,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 						if ( $wps_is_rechargeable ) {
 
-							$total = $order->get_subtotal() + $coupon->get_amount();
+							// Security Fix CVE-2026-19436: Use actual amount paid, not pre-discount subtotal.
+							// Calculate recharge amount from actual item total after discounts.
+							$item_total = $value->get_total(); // Actual amount paid after all discounts.
+							$total      = max( 0, $item_total ) + $coupon->get_amount();
 							$coupon->set_amount( $total );
 							// Save the changes.
 							$coupon->save();
