@@ -1043,7 +1043,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), '', $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -1051,7 +1051,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$parent_post_id = 0;
 
 						// Check the type of file. We'll use this as the 'post_mime_type'.
-						$filetype = wp_check_filetype( basename( $filename ), null );
+						$filetype = wp_check_filetype( basename( $filename ) );
 						// Get the path to the upload directory.
 						$wp_upload_dir = wp_upload_dir();
 						// Prepare an array of post data for the attachment.
@@ -1107,7 +1107,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$filename = array( WPS_WGC_URL . 'assets/images/giftcard.jpg' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), '', $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -1115,7 +1115,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$parent_post_id = 0;
 
 						// Check the type of file. We'll use this as the 'post_mime_type'.
-						$filetype = wp_check_filetype( basename( $filename ), null );
+						$filetype = wp_check_filetype( basename( $filename ) );
 						// Get the path to the upload directory.
 						$wp_upload_dir = wp_upload_dir();
 						// Prepare an array of post data for the attachment.
@@ -1170,7 +1170,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$filename = array( WPS_WGC_URL . 'assets/images/custom_template.png' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), '', $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -1178,7 +1178,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$parent_post_id = 0;
 
 						// Check the type of file. We'll use this as the 'post_mime_type'.
-						$filetype = wp_check_filetype( basename( $filename ), null );
+						$filetype = wp_check_filetype( basename( $filename ) );
 						// Get the path to the upload directory.
 						$wp_upload_dir = wp_upload_dir();
 						// Prepare an array of post data for the attachment.
@@ -1233,7 +1233,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$filename = array( WPS_WGC_URL . 'assets/images/merry_christmas.png' );
 			if ( isset( $filename ) && is_array( $filename ) && ! empty( $filename ) ) {
 				foreach ( $filename as $key => $value ) {
-					$upload_file = wp_upload_bits( basename( $value ), null, $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
+					$upload_file = wp_upload_bits( basename( $value ), '', $this->wps_common_fun->wps_wgm_get_file_content( $value ) );
 					if ( ! $upload_file['error'] ) {
 						$filename = $upload_file['file'];
 						// The ID of the post this attachment is for.
@@ -1241,7 +1241,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						$parent_post_id = 0;
 
 						// Check the type of file. We'll use this as the 'post_mime_type'.
-						$filetype = wp_check_filetype( basename( $filename ), null );
+						$filetype = wp_check_filetype( basename( $filename ) );
 						// Get the path to the upload directory.
 						$wp_upload_dir = wp_upload_dir();
 						// Prepare an array of post data for the attachment.

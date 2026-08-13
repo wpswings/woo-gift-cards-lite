@@ -1,0 +1,164 @@
+name: Quality Gate
+
+on:
+  pull_request:
+    
+  push:
+    
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+  FORCE_COLOR: 1
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    name: Quality Gate - Code Standards & Compatibility
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli php-zip unzip curl
+
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+      - name: Install PHPCS + Standards
+        run: |
+          composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer global require \
+            squizlabs/php_codesniffer \
+            wp-coding-standards/wpcs \
+            woocommerce/woocommerce-sniffs \
+            phpcompatibility/php-compatibility \
+            phpcompatibility/phpcompatibility-wp \
+            phpcompatibility/phpcompatibility-paragonie \
+            phpcsstandards/phpcsutils \
+            phpcsstandards/phpcsextra
+
+      - name: Add Composer global bin to PATH
+        run: echo "$HOME/.composer/vendor/bin" >> $GITHUB_PATH
+
+      - name: Verify PHPCS installation
+        run: phpcs -i
+
+      - name: Run PHPCS (Code Standards)
+        id: phpcs
+        run: |
+          echo "Running PHPCS..."
+          phpcs --standard=phpcs.xml \
+                --report=full \
+                --report-file=phpcs-report.txt \
+                --report=checkstyle \
+                --report-file=phpcs-report.xml \
+                --warning-severity=0 \
+                --extensions=php,html .
+
+          PHPCS_EXIT_CODE=$?
+          echo "exit_code=$PHPCS_EXIT_CODE" >> $GITHUB_OUTPUT
+
+          if [ $PHPCS_EXIT_CODE -ne 0 ]; then
+            echo "❌ PHPCS found errors"
+            cat phpcs-report.txt
+            exit 1
+          else
+            echo "✅ PHPCS passed"
+          fi
+
+      - name: Run PHP Compatibility Check (PHP 7.4-8.3)
+        id: php_compat
+        run: |
+          echo "Checking PHP 7.4-8.3 compatibility..."
+          phpcs -p . \
+            --standard=PHPCompatibility \
+            --runtime-set testVersion 7.4-8.3 \
+            --extensions=php \
+            --ignore=*/vendor/*,*/node_modules/*,*/packages/* \
+            --warning-severity=0 \
+            --report=full \
+            --report-file=php-compat-report.txt
+
+          PHP_COMPAT_EXIT_CODE=$?
+          echo "exit_code=$PHP_COMPAT_EXIT_CODE" >> $GITHUB_OUTPUT
+
+          if [ $PHP_COMPAT_EXIT_CODE -ne 0 ]; then
+            echo "❌ PHP Compatibility check failed"
+            cat php-compat-report.txt
+            exit 1
+          else
+            echo "✅ PHP Compatibility check passed"
+          fi
+
+      - name: Check for Parse Errors
+        id: parse_check
+        run: |
+          echo "Checking for PHP parse errors..."
+          find . -name "*.php" \
+            -not -path "*/vendor/*" \
+            -not -path "*/node_modules/*" \
+            -not -path "*/packages/*" \
+            -exec php -l {} \; > parse-errors.txt 2>&1
+
+          if grep -q "Parse error" parse-errors.txt; then
+            echo "❌ Parse errors found:"
+            cat parse-errors.txt
+            exit 1
+          else
+            echo "✅ No parse errors found"
+          fi
+
+      - name: Upload Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gate-reports
+          path: |
+            phpcs-report.txt
+            phpcs-report.xml
+            php-compat-report.txt
+            parse-errors.txt
+
+      - name: Quality Gate Summary
+        if: always()
+        run: |
+          echo "## Quality Gate Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.phpcs.outputs.exit_code }}" == "0" ]; then
+            echo "✅ **PHPCS**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **PHPCS**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ steps.php_compat.outputs.exit_code }}" == "0" ]; then
+            echo "✅ **PHP Compatibility**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **PHP Compatibility**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ steps.parse_check.outcome }}" == "success" ]; then
+            echo "✅ **Parse Errors**: None" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Parse Errors**: Found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Comment on PR (if failed)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## ❌ Quality Gate Failed\n\n' +
+                    'The code quality checks have failed. Please fix the issues and push again.\n\n' +
+                    '### What to do:\n' +
+                    '1. Check the "Details" link above to see what failed\n' +
+                    '2. Download the reports from Artifacts\n' +
+                    '3. Fix the issues locally\n' +
+                    '4. Push the fixes\n\n' +
+                    '**This PR cannot be merged until all checks pass.**'
+            })

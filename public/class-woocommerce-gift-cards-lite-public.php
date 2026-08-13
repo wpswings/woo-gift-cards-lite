@@ -455,7 +455,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											foreach ( $selected_prices as $price ) {
 												if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 
-													if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+													if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 														$default_price = wcpbc_the_zone()->get_exchange_rate_price( $default_price );
 														$prices        = wcpbc_the_zone()->get_exchange_rate_price( $price );
 														if ( $prices === $default_price ) {
@@ -517,7 +517,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										// price based on country.
 									if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 										$default_price = $product_pricing['default_price'];
-										if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+										if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 											$default_price = wcpbc_the_zone()->get_exchange_rate_price( $default_price );
 										}
 										$cart_html .= '<p class="wps_wgm_section selected_price_type"">
@@ -549,7 +549,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									if ( isset( $variation_amount ) && is_array( $variation_amount ) && ! empty( $variation_amount ) ) {
 										$wps_price = ( '' != $variation_amount[0] ) ? $variation_amount[0] : 0;
 										if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-											if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+											if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 												$wps_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_price );
 											}
 										} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
@@ -759,7 +759,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$_pricing_raw    = get_post_meta( $product_id, 'wps_wgm_pricing', true );
 					$product_pricing = ! empty( $_pricing_raw ) ? $_pricing_raw : get_post_meta( $product_id, 'wps_wgm_pricing_details', true );
 					if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-						if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+						if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 							$product_pricing_type = $product_pricing['type'];
 							if ( isset( $_POST['wps_wgm_price'] ) && ! empty( $_POST['wps_wgm_price'] ) ) {
 								if ( 'wps_wgm_range_price' == $product_pricing_type || 'wps_wgm_user_price' == $product_pricing_type ) {
@@ -995,7 +995,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$gift_price = $value['product_meta']['meta_data']['wps_wgm_price'];
 
 							if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-								if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+								if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 									$gift_price = wcpbc_the_zone()->get_exchange_rate_price( $gift_price );
 								}
 							} elseif ( class_exists( 'WCML_Multi_Currency_Prices' ) && is_plugin_active( 'gc-addon/gc-addon.php' ) ) {
@@ -1053,7 +1053,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 								// price based on country.
 								if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-									if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+									if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 										$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
 										$to_price   = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
 									}
@@ -1080,7 +1080,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 										// price based on country.
 										if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 
-											if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+											if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 												$last_range         = wcpbc_the_zone()->get_exchange_rate_price( $last_range );
 												$selected_prices[0] = wcpbc_the_zone()->get_exchange_rate_price( $selected_prices[0] );
 											}
@@ -1196,7 +1196,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$to_price   = $product_pricing['to'];
 								// price based on country.
 								if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-									if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+									if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 										$from_price = wcpbc_the_zone()->get_exchange_rate_price( $from_price );
 										$to_price   = wcpbc_the_zone()->get_exchange_rate_price( $to_price );
 									}
@@ -1378,7 +1378,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$group_gift_amt = intval( $order_subtotal );
 								$values         = explode( ',', $value->value );
 
-								foreach ( $values  as $value->value ) {
+								foreach ( $values  as $single_value ) {
 											$conti_prod_id   = get_option( 'contributor_product_id' );
 											$conti_prod_link = get_permalink( $conti_prod_id );
 
@@ -1392,7 +1392,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$whatsapp_url .= 'text=' . urlencode( $copy_link );
 											wps_wgm_hpos_update_meta_data( $order_id, 'share#link', $whatsapp_url );
 											wps_wgm_hpos_update_meta_data( $order_id, 'copy#link', $copy_link );
-											wc_mail( $value->value, $subject, $message );
+											wc_mail( $single_value, $subject, $message );
 
 								}
 								wps_wgm_hpos_update_meta_data( $order_id, 'suborder#amttotal', $group_gift_amt );
@@ -1907,7 +1907,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				// price based on country.
 				if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
 
-					if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+					if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 
 						$rate = wcpbc_the_zone()->get_exchange_rate();
 					}
@@ -2012,9 +2012,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$product_type = $_product->get_type();
 						if ( isset( $cart_item['product_meta'] ) ) {
 							if ( 'wgm_gift_card' == $product_type || ( isset( $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) && 'on' === $cart_item['product_meta']['meta_data']['sell_as_a_gc'] ) ) {
-								if ( 'Mail to recipient' == $cart_item['product_meta']['meta_data']['delivery_method'] || 'Downloadable' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+								$delivery_method = $cart_item['product_meta']['meta_data']['delivery_method'] ?? '';
+								if ( 'Mail to recipient' == $delivery_method || 'Downloadable' == $delivery_method ) {
 									$gift_bool = true;
-								} elseif ( 'shipping' == $cart_item['product_meta']['meta_data']['delivery_method'] ) {
+								} elseif ( 'shipping' == $delivery_method ) {
 									$gift_bool_ship = true;
 								}
 							} elseif ( ! $cart_item['data']->is_virtual() ) {
@@ -2138,7 +2139,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$args                               = apply_filters( 'wps_wgm_add_preview_template_fields', $args );
 
 			if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {  // Added for price based on country.
-				if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+				if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 					if ( isset( $product_pricing_type ) && 'wps_wgm_range_price' == $product_pricing_type ) {
 						$amt = isset( $_GET['price'] ) ? sanitize_text_field( wp_unslash( $_GET['price'] ) ) : '';
 					} elseif ( isset( $product_pricing_type ) && 'wps_wgm_user_price' == $product_pricing_type ) {
@@ -2212,7 +2213,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			$html          = apply_filters( 'wps_wgm_updated_minicart_price', $product_price, $cart_item, $cart_item_key );
 			if ( ! wps_uwgc_pro_active() ) {
 				if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-					if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+					if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 						$html = wcpbc_the_zone()->get_exchange_rate_price( $html );
 					}
 				} elseif ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
@@ -2491,7 +2492,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( isset( $wps_wgm_price ) && ! empty( $wps_wgm_price ) ) {
 			// for price based on country.
 			if ( class_exists( 'WCPBC_Pricing_Zone' ) ) {
-				if ( wcpbc_the_zone() != null && wcpbc_the_zone() ) {
+				if ( wcpbc_the_zone() !== null && wcpbc_the_zone() ) {
 					$wps_wgm_price = wcpbc_the_zone()->get_exchange_rate_price( $wps_wgm_price );
 				}
 			}
