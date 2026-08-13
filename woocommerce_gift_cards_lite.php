@@ -81,7 +81,7 @@ if ( $activated ) {
 	* Check whether the WordPress version is greater than 4.9.6
 	*/
 	global $wp_version;
-	if ( $wp_version >= '4.9.6' ) {
+	if ( version_compare( $wp_version, '4.9.6', '>=' ) ) {
 		include_once WPS_WGC_DIRPATH . 'wps-wgc-lite-gdpr.php';
 	}
 	/**

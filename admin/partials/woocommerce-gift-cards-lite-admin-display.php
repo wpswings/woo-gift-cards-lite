@@ -169,7 +169,7 @@ $plugin_version_label = sprintf(
 
 $max_primary_tabs      = 8;
 $primary_setting_tabs  = array_slice( $visible_setting_tabs, 0, $max_primary_tabs, true );
-$overflow_setting_tabs = array_slice( $visible_setting_tabs, $max_primary_tabs, null, true );
+$overflow_setting_tabs = array_slice( $visible_setting_tabs, $max_primary_tabs );
 $is_overflow_active    = array_key_exists( $active_tab, $overflow_setting_tabs );
 
 $help_links = array(
