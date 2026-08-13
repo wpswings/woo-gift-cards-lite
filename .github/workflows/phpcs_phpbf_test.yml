@@ -2,9 +2,14 @@ name: PHPCS & PHPCBF
 
 on:
   push:
-    branches: [ v3.2.10 ]
+    branches: [ release/v3.2.10 ]
   pull_request:
-    branches: [ v3.2.10 ]
+    branches: [ release/v3.2.10 ]
+
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+  FORCE_COLOR: 1    
 
 jobs:
   phpcs:
