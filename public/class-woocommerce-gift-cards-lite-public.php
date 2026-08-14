@@ -9,6 +9,10 @@
  * @subpackage woo-gift-cards-lite/public
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The public-facing functionality of the plugin.
  *
