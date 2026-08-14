@@ -885,12 +885,6 @@ class Makewebbetter_Onboarding_Helper {
 	 * @link       https://www.wpswings.com/
 	 */
 	public function add_wps_additional_validation( $result = true ) {
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
 		if ( ! empty( $_GET['tab'] ) && 'general_setting' !== $_GET['tab'] ) {
 			$result = false;
 		}
