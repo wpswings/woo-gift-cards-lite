@@ -2,7 +2,7 @@ name: Auto Create Issue on Workflow Failure
 
 on:
   workflow_run:
-    workflows: ["PHPCS & PHPCBF", "Quality Gate", "Deploy"]
+    workflows: ["PHPCS & PHPCBF", "Quality Gate", "Deploy", "PHPUnit Tests"]
     types:
       - completed
 
