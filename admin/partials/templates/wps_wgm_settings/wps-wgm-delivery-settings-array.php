@@ -35,4 +35,4 @@ $wps_wgm_delivery_settings = array(
 		'default_value' => 0,
 	),
 );
- $wps_wgm_delivery_settings = apply_filters( 'wps_wgm_delivery_settings', $wps_wgm_delivery_settings );
+$wps_wgm_delivery_settings = apply_filters( 'wps_wgm_delivery_settings', $wps_wgm_delivery_settings );
