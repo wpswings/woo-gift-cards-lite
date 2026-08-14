@@ -1,0 +1,178 @@
+name: Auto Create Issue on Workflow Failure
+
+on:
+  workflow_run:
+    workflows: ["PHPCS & PHPCBF", "Quality Gate", "Deploy"]
+    types:
+      - completed
+
+permissions:
+  issues: write
+  contents: read
+  actions: read
+
+jobs:
+  create-issue-on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get workflow run details
+        id: get-details
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+
+            // Get job details
+            const jobs = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: run.id,
+            });
+
+            // Find failed jobs
+            const failedJobs = jobs.data.jobs.filter(job => job.conclusion === 'failure');
+            const failedJobNames = failedJobs.map(job => `- ${job.name}`).join('\n');
+
+            // Get failed steps
+            let failedSteps = '';
+            failedJobs.forEach(job => {
+              const failed = job.steps.filter(step => step.conclusion === 'failure');
+              if (failed.length > 0) {
+                failedSteps += `\n**${job.name}:**\n`;
+                failed.forEach(step => {
+                  failedSteps += `  - ❌ ${step.name}\n`;
+                });
+              }
+            });
+
+            core.setOutput('workflow_name', run.name);
+            core.setOutput('run_id', run.id);
+            core.setOutput('run_url', run.html_url);
+            core.setOutput('branch', run.head_branch);
+            core.setOutput('commit_sha', run.head_sha);
+            core.setOutput('commit_message', run.head_commit.message);
+            core.setOutput('failed_jobs', failedJobNames);
+            core.setOutput('failed_steps', failedSteps);
+            core.setOutput('triggered_by', run.triggering_actor.login);
+
+      - name: Check if issue already exists
+        id: check-issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const workflowName = "${{ steps.get-details.outputs.workflow_name }}";
+            const runId = "${{ steps.get-details.outputs.run_id }}";
+
+            // Search for existing open issues with the same workflow run
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'github-action-failure',
+              per_page: 100
+            });
+
+            const existingIssue = issues.data.find(issue =>
+              issue.title.includes(workflowName) &&
+              issue.body.includes(`Run ID: ${runId}`)
+            );
+
+            if (existingIssue) {
+              core.setOutput('exists', 'true');
+              core.setOutput('issue_number', existingIssue.number);
+            } else {
+              core.setOutput('exists', 'false');
+            }
+
+      - name: Create issue for workflow failure
+        if: steps.check-issue.outputs.exists == 'false'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const workflowName = "${{ steps.get-details.outputs.workflow_name }}";
+            const runId = "${{ steps.get-details.outputs.run_id }}";
+            const runUrl = "${{ steps.get-details.outputs.run_url }}";
+            const branch = "${{ steps.get-details.outputs.branch }}";
+            const commitSha = "${{ steps.get-details.outputs.commit_sha }}";
+            const commitMessage = `${{ steps.get-details.outputs.commit_message }}`;
+            const failedJobs = `${{ steps.get-details.outputs.failed_jobs }}`;
+            const failedSteps = `${{ steps.get-details.outputs.failed_steps }}`;
+            const triggeredBy = "${{ steps.get-details.outputs.triggered_by }}";
+
+            const issueTitle = `🚨 GitHub Action Failed: ${workflowName}`;
+
+            const issueBody = `## GitHub Action Failure Report
+
+### Workflow Details
+- **Workflow:** ${workflowName}
+- **Run ID:** ${runId}
+- **Branch:** \`${branch}\`
+- **Triggered by:** @${triggeredBy}
+- **Commit:** \`${commitSha.substring(0, 7)}\`
+
+### Commit Message
+\`\`\`
+${commitMessage}
+\`\`\`
+
+### Failed Jobs
+${failedJobs}
+
+### Failed Steps
+${failedSteps}
+
+### Actions Required
+1. 🔍 Review the [workflow run logs](${runUrl})
+2. 🔧 Fix the issues identified
+3. ✅ Re-run the workflow or push a fix
+4. ✅ Close this issue once resolved
+
+### Quick Links
+- [View Workflow Run](${runUrl})
+- [View Commit](https://github.com/${{ github.repository }}/commit/${commitSha})
+- [View Branch](https://github.com/${{ github.repository }}/tree/${branch})
+
+---
+*This issue was automatically created by the auto-issue-on-failure workflow.*
+*Created at: ${new Date().toISOString()}*
+`;
+
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: issueTitle,
+              body: issueBody,
+              labels: ['github-action-failure', 'automated', 'bug'],
+              assignees: [triggeredBy]
+            });
+
+            console.log(`Created issue #${issue.data.number}`);
+            core.setOutput('issue_number', issue.data.number);
+
+      - name: Add comment to existing issue
+        if: steps.check-issue.outputs.exists == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = "${{ steps.check-issue.outputs.issue_number }}";
+            const runUrl = "${{ steps.get-details.outputs.run_url }}";
+            const commitSha = "${{ steps.get-details.outputs.commit_sha }}";
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `## 🔄 Workflow Failed Again\n\n` +
+                    `The workflow failed on another run.\n\n` +
+                    `- **Commit:** \`${commitSha.substring(0, 7)}\`\n` +
+                    `- **Run:** [View logs](${runUrl})\n` +
+                    `- **Time:** ${new Date().toISOString()}\n\n` +
+                    `Please review and fix the recurring issue.`
+            });
+
+            console.log(`Added comment to existing issue #${issueNumber}`);
