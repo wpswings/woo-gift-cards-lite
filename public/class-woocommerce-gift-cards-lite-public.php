@@ -189,25 +189,23 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			'wps_gc_nonce'   => wp_create_nonce( 'wps-gc-verify-nonce' ),
 			'pricing_type'   => array(),
 			'product_id'     => 0,
-			/* translators: %s: seconds */
+			/* translators: %s: closing </b> tag ending the bolded field label */
 			'price_field'    => sprintf( __( 'Price: %sField is empty', 'woo-gift-cards-lite' ), '</b>' ),
-			/* translators: %s: seconds */
+			/* translators: %s: closing </b> tag ending the bolded field label */
 			'to_empty'       => sprintf( __( 'Recipient Email: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
-			/* translators: %s: seconds */
-			'to_empty_name'  => sprintf( __( 'To: Name Field is empty.', 'woo-gift-cards-lite' ), '</b>' ),
-			/* translators: %s: seconds */
-			'to_invalid'     => sprintf( __( 'Recipient Email: Invalid email format.', 'woo-gift-cards-lite' ), '</b>' ),
-			/* translators: %s: seconds */
+			'to_empty_name'  => __( 'To: Name Field is empty.', 'woo-gift-cards-lite' ),
+			'to_invalid'     => __( 'Recipient Email: Invalid email format.', 'woo-gift-cards-lite' ),
+			/* translators: %s: closing </b> tag ending the bolded field label */
 			'from_empty'     => sprintf( __( 'From: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
-			/* translators: %s: seconds */
+			/* translators: %s: closing </b> tag ending the bolded field label */
 			'msg_empty'      => sprintf( __( 'Message: %sField is empty.', 'woo-gift-cards-lite' ), '</b>' ),
-			/* translators: %s: seconds */
+			/* translators: %1$s: closing </b> tag ending the bolded field label, %2$s: maximum allowed message length */
 			'msg_length_err' => sprintf( __( 'Message: %1$sMessage length cannot exceed %2$s characters.', 'woo-gift-cards-lite' ), '</b>', $giftcard_message_length ),
 			'msg_length'     => $giftcard_message_length,
-			/* translators: %s: seconds */
+			/* translators: %s: closing </b> tag ending the bolded field label */
 			'price_range'    => sprintf( __( 'Price Range: %sPlease enter price within Range.', 'woo-gift-cards-lite' ), '</b>' ),
-			'min_user_price' => sprintf( __( 'Gift Card price should not be less than the minimum amount.', 'woo-gift-cards-lite' ), '</b>' ),
-			'recipient_name' => sprintf( __( ' recipient names should be entered seperated by comma', 'woo-gift-cards-lite' ), '</b>' ),
+			'min_user_price' => __( 'Gift Card price should not be less than the minimum amount.', 'woo-gift-cards-lite' ),
+			'recipient_name' => __( ' recipient names should be entered separated by comma', 'woo-gift-cards-lite' ),
 			'is_pro_active'  => wps_uwgc_pro_active(),
 		);
 		global $post;
