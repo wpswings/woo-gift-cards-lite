@@ -104,43 +104,31 @@ jobs:
             const failedSteps = `${{ steps.get-details.outputs.failed_steps }}`;
             const triggeredBy = "${{ steps.get-details.outputs.triggered_by }}";
 
-            const issueTitle = `🚨 GitHub Action Failed: ${workflowName}`;
+            const issueTitle = "🚨 GitHub Action Failed: " + workflowName;
 
-            const issueBody = `## GitHub Action Failure Report
-
-### Workflow Details
-- **Workflow:** ${workflowName}
-- **Run ID:** ${runId}
-- **Branch:** \`${branch}\`
-- **Triggered by:** @${triggeredBy}
-- **Commit:** \`${commitSha.substring(0, 7)}\`
-
-### Commit Message
-\`\`\`
-${commitMessage}
-\`\`\`
-
-### Failed Jobs
-${failedJobs}
-
-### Failed Steps
-${failedSteps}
-
-### Actions Required
-1. 🔍 Review the [workflow run logs](${runUrl})
-2. 🔧 Fix the issues identified
-3. ✅ Re-run the workflow or push a fix
-4. ✅ Close this issue once resolved
-
-### Quick Links
-- [View Workflow Run](${runUrl})
-- [View Commit](https://github.com/${{ github.repository }}/commit/${commitSha})
-- [View Branch](https://github.com/${{ github.repository }}/tree/${branch})
-
----
-*This issue was automatically created by the auto-issue-on-failure workflow.*
-*Created at: ${new Date().toISOString()}*
-`;
+            const issueBody = "## GitHub Action Failure Report\n\n" +
+              "### Workflow Details\n" +
+              "- **Workflow:** " + workflowName + "\n" +
+              "- **Run ID:** " + runId + "\n" +
+              "- **Branch:** `" + branch + "`\n" +
+              "- **Triggered by:** @" + triggeredBy + "\n" +
+              "- **Commit:** `" + commitSha.substring(0, 7) + "`\n\n" +
+              "### Commit Message\n" +
+              "```\n" + commitMessage + "\n```\n\n" +
+              "### Failed Jobs\n" + failedJobs + "\n\n" +
+              "### Failed Steps\n" + failedSteps + "\n\n" +
+              "### Actions Required\n" +
+              "1. 🔍 Review the [workflow run logs](" + runUrl + ")\n" +
+              "2. 🔧 Fix the issues identified\n" +
+              "3. ✅ Re-run the workflow or push a fix\n" +
+              "4. ✅ Close this issue once resolved\n\n" +
+              "### Quick Links\n" +
+              "- [View Workflow Run](" + runUrl + ")\n" +
+              "- [View Commit](https://github.com/${{ github.repository }}/commit/" + commitSha + ")\n" +
+              "- [View Branch](https://github.com/${{ github.repository }}/tree/" + branch + ")\n\n" +
+              "---\n" +
+              "*This issue was automatically created by the auto-issue-on-failure workflow.*\n" +
+              "*Created at: " + new Date().toISOString() + "*";
 
             const issue = await github.rest.issues.create({
               owner: context.repo.owner,
