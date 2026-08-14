@@ -485,6 +485,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		$expire_giftcard = 0;
 		$current_time    = current_time( 'timestamp' );
 	
+		// No variable input is interpolated into this query (post_type/post_status are fixed literals), so
+		// there is nothing for $wpdb->prepare() to escape.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$coupons = $wpdb->get_results( "
 			SELECT ID, post_content
 			FROM {$wpdb->posts}

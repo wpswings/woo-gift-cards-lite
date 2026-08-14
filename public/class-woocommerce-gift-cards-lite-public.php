@@ -1651,6 +1651,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		} elseif ( ! $bool && $bool2 && is_cart() ) {
 			$enabled = true;
 		} elseif ( $bool && $bool2 ) {
+			// A mixed cart (gift card + ordinary item) re-enables the coupon field. This used to be a
+			// value-inflation bypass for the "hide coupon field" setting; it no longer is, since issued
+			// gift card amounts are now derived from each line item's actual post-discount total rather
+			// than its pre-discount price.
 			$enabled = true;
 		} elseif ( $bool && is_checkout() && ! $bool2 ) {
 			$enabled = false;
@@ -2043,14 +2047,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 */
 	public function wps_wgm_preview_thickbox_rqst() {
 		check_ajax_referer( 'wps-wgc-verify-nonce', 'wps_nonce' );
-		$_POST['wps_wgc_preview_email'] = 'wps_wgm_single_page_popup';
-		$_POST['tempId'] = isset( $_POST['tempId'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) ) : '';
-		$_POST = apply_filters( 'wps_wgm_upload_giftcard_image', $_POST );
-		$_POST['message'] = isset( $_POST['message'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['message'] ) ) ) : '';
-		$_POST['width'] = '630';
-		$_POST['height'] = '530';
-		$_POST['TB_iframe'] = true;
-		$query = http_build_query( wp_unslash( $_POST ) );
+		$wps_query_args = $_POST;
+		$wps_query_args['wps_wgc_preview_email'] = 'wps_wgm_single_page_popup';
+		$wps_query_args['tempId'] = isset( $_POST['tempId'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['tempId'] ) ) ) : '';
+		$wps_query_args = apply_filters( 'wps_wgm_upload_giftcard_image', $wps_query_args );
+		$wps_query_args['message'] = isset( $_POST['message'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['message'] ) ) ) : '';
+		$wps_query_args['width'] = '630';
+		$wps_query_args['height'] = '530';
+		$wps_query_args['TB_iframe'] = true;
+		$query = http_build_query( wp_unslash( $wps_query_args ) );
 		$ajax_url = home_url( "?$query" );
 		echo esc_attr( $ajax_url );
 		wp_die();
@@ -2114,11 +2119,12 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			}
 
 			if ( isset( $_GET['delivery_method'] ) ) {
-				if ( 'Mail to recipient' == $_GET['delivery_method'] ) {
+				$wps_delivery_method = sanitize_text_field( wp_unslash( $_GET['delivery_method'] ) );
+				if ( 'Mail to recipient' == $wps_delivery_method ) {
 					$h = __( 'Mail to recipient', 'woo-gift-cards-lite' );
-				} else if ( 'Downloadable' == $_GET['delivery_method'] ) {
+				} else if ( 'Downloadable' == $wps_delivery_method ) {
 					$h = __( 'Downloadable', 'woo-gift-cards-lite' );
-				} else if ( 'shipping' == $_GET['delivery_method'] ) {
+				} else if ( 'shipping' == $wps_delivery_method ) {
 					$h = __( 'shipping', 'woo-gift-cards-lite' );
 
 				} else {
@@ -2370,7 +2376,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 		if ( $coupon->get_id() !== 0 ) {
 			if ( str_contains( $coupon->get_description(), 'GIFTCARD ORDER #' ) || str_contains( $coupon->get_description(), 'Imported Coupon' ) || str_contains( $coupon->get_description(), 'Imported Offline Coupon' ) ) {
-				if ( 'fixed_cart' == $coupon->get_discount_type() ) {
+				// Security fix: verify the current user is this gift card's recorded recipient before it can be
+				// consumed. Fails closed for logged-out callers and for cards with no recorded recipient.
+				$recipient_email    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+				$current_user_email = wp_get_current_user()->user_email;
+				if ( empty( $recipient_email ) || empty( $current_user_email ) || $current_user_email !== $recipient_email ) {
+					$response = array(
+						'status'  => 'failed',
+						'message' => __( 'You are not authorized to redeem this gift card.', 'woo-gift-cards-lite' ),
+					);
+				} elseif ( 'fixed_cart' == $coupon->get_discount_type() ) {
 					$coupon_amount = $coupon->get_amount();
 					$expiry_date_timestamp = $coupon->get_date_expires();
 	

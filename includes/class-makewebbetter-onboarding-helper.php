@@ -891,7 +891,8 @@ class Makewebbetter_Onboarding_Helper {
 		if ( ! $id_nonce_verified ) {
 				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 		}
-		if ( ! empty( $_GET['tab'] ) && 'general_setting' !== $_GET['tab'] ) {
+		$wps_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+		if ( '' !== $wps_tab && 'general_setting' !== $wps_tab ) {
 			$result = false;
 		}
 

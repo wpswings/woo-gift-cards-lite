@@ -2054,11 +2054,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	 */
 	public function wps_wgm_gift_card_details() {
 		check_ajax_referer( 'wps-uwgc-giftcard-report-nonce', 'wps_uwgc_nonce' );
-		$_POST['wps_uwgc_report_details'] = 'wps_uwgc_report_details';
-		$_POST['width'] = '650';
-		$_POST['height'] = '480';
-		$_POST['TB_iframe'] = true;
-		$query = http_build_query( $_POST );
+		$wps_query_args = $_POST;
+		$wps_query_args['wps_uwgc_report_details'] = 'wps_uwgc_report_details';
+		$wps_query_args['width'] = '650';
+		$wps_query_args['height'] = '480';
+		$wps_query_args['TB_iframe'] = true;
+		$query = http_build_query( $wps_query_args );
 		$ajax_url = home_url( "?$query" );
 		echo wp_kses_post( $ajax_url );
 		wp_die();
@@ -2096,6 +2097,12 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$coupon_id = isset( $_GET['coupon_id'] ) ? sanitize_text_field( wp_unslash( $_GET['coupon_id'] ) ) : '';
 
 			if ( '' !== $order_id && '' !== $coupon_id ) {
+				// Security hardening: confirm coupon_id actually belongs to order_id before rendering its data,
+				// rather than trusting the two independently-supplied request parameters to pair correctly.
+				$wps_owning_order_id = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+				if ( empty( $wps_owning_order_id ) || (int) $wps_owning_order_id !== (int) $order_id ) {
+					wp_die( esc_html__( 'Invalid gift card report request.', 'woo-gift-cards-lite' ), 400 );
+				}
 				$order_date = '';
 				$remaining_amt = '';
 				$to = '';
