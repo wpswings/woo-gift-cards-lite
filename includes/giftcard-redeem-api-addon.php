@@ -7,7 +7,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 // Redeem api work...
 
@@ -330,9 +330,11 @@ function wps_recharge_giftcard_offine( $request ) {
 							update_post_meta( $coupon_id, 'expiry_date', $coupon_expirys );
 							$coupon_expiry = $coupon_expirys;
 						}
-					} elseif ( $coupon_expirys > time() ) {
+					} else {
+						if ( $coupon_expirys > time() ) {
 							update_post_meta( $coupon_id, 'date_expires', $coupon_expirys );
 							$coupon_expiry = $coupon_expirys;
+						}
 					}
 
 					$response['code'] = 'success';
@@ -435,10 +437,10 @@ function wps_permission_check( $request ) {
 	$client_license_code      = get_option( 'wps_gw_lcns_key', '' );
 
 	if ( empty( $wps_wgm_gifting_api_keys ) || ! is_array( $wps_wgm_gifting_api_keys ) ) {
-		return new WP_Error( 'rest_forbidden', esc_html__( 'API keys are not set properly on your site.', 'woo-gift-cards-lite' ), array( 'status' => 403 ) );
-	}
+        return new WP_Error( 'rest_forbidden', esc_html__( 'API keys are not set properly on your site.', 'woo-gift-cards-lite' ), array( 'status' => 403 ) );
+    }
 	
-	if ( $consumer_key === $wps_wgm_gifting_api_keys['consumer_key'] && $consumer_secret === $wps_wgm_gifting_api_keys['consumer_secret'] ) {       
+	if ( $consumer_key === $wps_wgm_gifting_api_keys['consumer_key'] && $consumer_secret === $wps_wgm_gifting_api_keys['consumer_secret'] ) {		
 		return true;
 	}
 	return new WP_Error( 'rest_forbidden', esc_html__( 'Invalid API key details.', 'woo-gift-cards-lite' ), array( 'status' => 401 ) );

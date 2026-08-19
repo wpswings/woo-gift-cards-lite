@@ -15,10 +15,6 @@
 
     <!-- WordPress Coding Standards -->
     <rule ref="WordPress-Extra">
-        <!-- Oscillates with other sniffs (StrictComparisons, RequireExitDieParentheses, etc.) on
-             consecutive assignment blocks, causing phpcbf to loop indefinitely without writing any
-             fixes. Purely cosmetic (equals-sign column alignment), safe to disable outright. -->
-        <exclude name="Generic.Formatting.MultipleStatementAlignment" />
         <exclude name="Generic.Commenting.DocComment.SpacingAfter" />
         <exclude name="Generic.Files.LineEndings.InvalidEOLChar" />
         <exclude name="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" />
@@ -37,7 +33,7 @@
 
     <!-- WooCommerce Standard (correct name is just WooCommerce) -->
     <rule ref="WooCommerce">
-        <exclude name="WooCommerce.Commenting.CommentTags.AuthorTag" />
+        <exclude name="Core.Commenting.CommentTags.AuthorTag" />
         <exclude name="WordPress.PHP.DontExtract" />
         <exclude name="Generic.Arrays.DisallowShortArraySyntax" />
         <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />

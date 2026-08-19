@@ -139,4 +139,4 @@ $wps_wgm_general_setting = array(
 		'desc_tip' => esc_html__( 'How many times this coupon can be used before Gift card is void. keep value "0" for unlimited use.', 'woo-gift-cards-lite' ),
 	),
 );
-$wps_wgm_general_setting = apply_filters( 'wps_wgm_general_setting', $wps_wgm_general_setting );
+ $wps_wgm_general_setting = apply_filters( 'wps_wgm_general_setting', $wps_wgm_general_setting );

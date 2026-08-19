@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 /**
@@ -182,20 +182,20 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 						<div class="wps-wgm-expert-modal__field">
 							<span class="wps-wgm-expert-modal__legend"><?php esc_html_e( 'What services do you need help with?', 'woo-gift-cards-lite' ); ?></span>
 							<div class="wps-wgm-expert-modal__checkboxes">
-								<?php foreach ( $service_options as $service_key => $service_label ) { ?>
+								<?php foreach ( $service_options as $service_key => $service_label ) : ?>
 									<label class="wps-wgm-expert-modal__checkbox">
 										<input type="checkbox" name="what_services_do_you_need_help_with[]" value="<?php echo esc_attr( $service_key ); ?>">
 										<span><?php echo esc_html( $service_label ); ?></span>
 									</label>
-								<?php } ?>
+								<?php endforeach; ?>
 							</div>
 						</div>
 						<div class="wps-wgm-expert-modal__field">
 							<label for="wps_wgm_expert_budget"><?php esc_html_e( 'Budget', 'woo-gift-cards-lite' ); ?></label>
 							<select id="wps_wgm_expert_budget" name="budget">
-								<?php foreach ( $budget_options as $budget_value => $budget_label ) { ?>
+								<?php foreach ( $budget_options as $budget_value => $budget_label ) : ?>
 									<option value="<?php echo esc_attr( $budget_value ); ?>"<?php echo '' === $budget_value ? ' selected disabled' : ''; ?>><?php echo esc_html( $budget_label ); ?></option>
-								<?php } ?>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="wps-wgm-expert-modal__field">

@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
@@ -36,6 +36,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 		</table>
 	</div>
 <?php
+
 /**
  * Giftcard Coupon Report
  *
@@ -233,9 +234,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 */
 	public function extra_tablenav( $which ) {
 		if ( 'top' === $which ) {
-			do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
+        	do_action( 'wps_wgm_gc_report_extra_tablenav', $which );
 		}
-	}
+    }
 
 	/**
 	 * Function is used to show giftcard coupons.
@@ -262,7 +263,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
 
 			$sql .= $wpdb->prepare(
-				' AND p.post_date BETWEEN %s AND %s',
+				" AND p.post_date BETWEEN %s AND %s",
 				$gc_date_1 . ' 00:00:00',
 				$gc_date_2 . ' 23:59:59'
 			);
@@ -270,7 +271,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
 			$search = '%' . $wpdb->esc_like( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) . '%';
-			$sql   .= $wpdb->prepare( ' AND p.post_title LIKE %s', $search );
+			$sql   .= $wpdb->prepare( " AND p.post_title LIKE %s", $search );
 		}
 
 		$sql .= "
@@ -348,7 +349,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				}
 
 				if ( $skipped < $valid_offset ) {
-					++$skipped;
+					$skipped++;
 					continue;
 				}
 
@@ -457,7 +458,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 				}
 
 				if ( $order_exists ) {
-					++$total_count;
+					$total_count++;
 				}
 			}
 		}
@@ -539,7 +540,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		wp_cache_set( $cache_key, $result, 'wps_wgm', HOUR_IN_SECONDS );
 	
 		return $result;
-	}       
+	}		
 
 	/**
 	 * Function is used to check expiry date of coupon.
@@ -570,6 +571,7 @@ if ( ! $id_nonce_verified ) {
 	$wps_report_list->prepare_items();
 	$wps_report_list->search_box( __( 'Search Gift Cards', 'woo-gift-cards-lite' ), 'giftcard_code' );
 	$wps_report_list->display();
+
 	?>
 </form>
 <?php

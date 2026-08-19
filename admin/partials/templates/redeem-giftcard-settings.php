@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 require_once WPS_WGC_DIRPATH . 'admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php';
 $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
@@ -48,11 +48,13 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			$response = json_decode( $response );
 			if ( 'error' == $response->status ) {
 				$wps_wgm_error_message = $response->message;
-			} elseif ( isset( $response->status ) && 'success' == $response->status ) {
+			} else {
+				if ( isset( $response->status ) && 'success' == $response->status ) {
 					$wps_redeem_link['shop_url'] = $response->shop_url;
 					$wps_redeem_link['embed_url'] = $response->embed_url;
 					$wps_redeem_link['user_id'] = $response->user_id;
 					update_option( 'giftcard_offline_redeem_link', $wps_redeem_link );
+				}
 			}
 		}
 		update_option( 'giftcard_offline_redeem_settings', $curl_data );
@@ -85,10 +87,12 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			$response = json_decode( $response );
 			if ( 'error' == $response->status ) {
 				$wps_wgm_error_message = $response->message;
-			} elseif ( isset( $response->status ) && 'success' == $response->status ) {
+			} else {
+				if ( isset( $response->status ) && 'success' == $response->status ) {
 					delete_option( 'giftcard_offline_redeem_link' );
 					delete_option( 'giftcard_offline_redeem_settings' );
 					delete_option( 'wps_wgm_gifting_api_keys' );
+				}
 			}
 		}
 	}
@@ -131,10 +135,12 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 				$response = json_decode( $response );
 				if ( 'error' == $response->status ) {
 					$wps_wgm_error_message = $response->message;
-				} elseif ( isset( $response->status ) && 'success' == $response->status ) {
+				} else {
+					if ( isset( $response->status ) && 'success' == $response->status ) {
 						$offine_giftcard_redeem_settings['license'] = $client_license_code;
 						$offine_giftcard_redeem_settings['domain']  = $client_domain;
 						update_option( 'giftcard_offline_redeem_settings', $offine_giftcard_redeem_settings );
+					}
 				}
 			}
 		}

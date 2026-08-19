@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 /*
@@ -64,13 +64,13 @@ if ( $flag ) {
 ?>
 <?php $product_settings = get_option( 'wps_wgm_product_settings', array() ); ?>
 <div class="wps_wgm_table_wrapper">
-	<table class="form-table wps_wgm_product_setting">
-		<tbody>
-			<?php
-			$settings_obj->wps_wgm_generate_common_settings( $wps_wgm_product_settings, $product_settings );
+    <table class="form-table wps_wgm_product_setting">
+        <tbody>
+            <?php
+				$settings_obj->wps_wgm_generate_common_settings( $wps_wgm_product_settings, $product_settings );
 			?>
-		</tbody>
-	</table>
+        </tbody>
+    </table>
 </div>
 <?php
 $settings_obj->wps_wgm_save_button_html( 'wps_wgm_save_product' );
