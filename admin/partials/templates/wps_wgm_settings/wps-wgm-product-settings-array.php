@@ -1,12 +1,12 @@
 <?php
- /**
-  * Exit if accessed directly
-  *
-  * @package    woo-gift-cards-lite
-  */
+/**
+ * Exit if accessed directly
+ *
+ * @package    woo-gift-cards-lite
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	 exit();
+	exit();
 }
 
 require_once WPS_WGC_DIRPATH . 'admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php';
@@ -43,4 +43,4 @@ $wps_wgm_product_settings = array(
 		'options' => $settings_obj->wps_wgm_get_category(),
 	),
 );
- $wps_wgm_product_settings = apply_filters( 'wps_wgm_product_settings', $wps_wgm_product_settings );
+$wps_wgm_product_settings = apply_filters( 'wps_wgm_product_settings', $wps_wgm_product_settings );

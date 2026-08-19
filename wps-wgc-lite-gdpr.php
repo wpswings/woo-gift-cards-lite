@@ -147,10 +147,10 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 								);
 							}
 							if ( ! empty( $from ) ) {
-								  $data[] = array(
-									  'name'  => __( 'Buyer Name/Email', 'woo-gift-cards-lite' ),
-									  'value' => $from,
-								  );
+									$data[] = array(
+										'name'  => __( 'Buyer Name/Email', 'woo-gift-cards-lite' ),
+										'value' => $from,
+									);
 							}
 							if ( ! empty( $gift_msg ) ) {
 								$data[] = array(
