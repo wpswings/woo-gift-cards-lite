@@ -12,6 +12,10 @@
  * @subpackage woo-gift-cards-lite/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Define the internationalization functionality.
  *
