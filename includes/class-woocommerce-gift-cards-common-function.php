@@ -613,12 +613,6 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_check_expiry_date( $expiry_date ) {
-			// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-			$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-			$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-			if ( ! $id_nonce_verified ) {
-					wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-			}
 			$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 			$selected_date = $this->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_selected_format' );
 			$todaydate = date_i18n( 'Y-m-d' );

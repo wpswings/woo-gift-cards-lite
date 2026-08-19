@@ -550,12 +550,6 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 	 * Notification.
 	 */
 	function wps_banner_notification_plugin_html() {
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
@@ -598,13 +592,6 @@ if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
 	 * @since 3.0.0
 	 */
 	function wps_giftcard_notification_plugin_html() {
-
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
 
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {

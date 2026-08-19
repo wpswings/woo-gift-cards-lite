@@ -219,13 +219,6 @@ $wps_wgm_marketing_services = array(
 	),
 );
 
-// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-if ( ! $id_nonce_verified ) {
-	wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-}
-
 $dashboard_top_notice = array();
 if (
 	'POST' === strtoupper( isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '' ) &&

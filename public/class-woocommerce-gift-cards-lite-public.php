@@ -2067,12 +2067,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_preview_email_on_single_page() {
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
 		if ( isset( $_GET['wps_wgc_preview_email'] ) && 'wps_wgm_single_page_popup' == $_GET['wps_wgc_preview_email'] ) {
 
 			$product_id                     = isset( $_GET['product_id'] ) ? sanitize_text_field( wp_unslash( $_GET['product_id'] ) ) : '';
