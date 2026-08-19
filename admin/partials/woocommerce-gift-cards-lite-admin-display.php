@@ -12,7 +12,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
@@ -258,14 +258,14 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 
 			<hr class="wp-header-end" style="display:none;visibility:hidden;height:0;margin:0;border:0;" />
 
-			<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
+			<?php if ( ! empty( $dashboard_top_notice ) ) { ?>
 				<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
 					<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
 					<button type="button" class="notice-dismiss">
 						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
 					</button>
 				</div>
-			<?php endif; ?>
+			<?php } ?>
 
 			<div class="wps_wgm_dashboard_notice_stack">
 				<div class="wps_wgm_dashboard_notice wps_wgm_dashboard_notice_status">
@@ -290,7 +290,7 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 					<div class="wps_wgm_tabs_meta">
 						<span class="wps_wgm_tabs_version"><?php echo esc_html( $plugin_version_label ); ?></span>
 					</div>
-					<?php foreach ( $primary_setting_tabs as $key => $wps_tab ) : ?>
+					<?php foreach ( $primary_setting_tabs as $key => $wps_tab ) { ?>
 						<?php
 						$is_active = ( $active_tab === $key );
 						$is_locked = ( ! $is_pro_active && ! in_array( $key, $lite_visible_tabs, true ) );
@@ -311,14 +311,14 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 									href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=' . $key ) ); ?>"
 								>
 									<span class="wps_wgm_nav_tab_title"><?php echo esc_html( $wps_tab['title'] ); ?></span>
-									<?php if ( $is_locked ) : ?>
+									<?php if ( $is_locked ) { ?>
 									<span class="wps_wgm_nav_badge"><?php esc_html_e( 'Pro', 'woo-gift-cards-lite' ); ?></span>
-								<?php endif; ?>
+								<?php } ?>
 							</a>
 						</div>
-					<?php endforeach; ?>
+					<?php } ?>
 
-					<?php if ( ! empty( $overflow_setting_tabs ) ) : ?>
+					<?php if ( ! empty( $overflow_setting_tabs ) ) { ?>
 						<div class="wps_wgm_tabs wps_wgm_tabs_more">
 							<button
 								type="button"
@@ -329,21 +329,21 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 								<span class="wps_wgm_more_caret">▼</span>
 							</button>
 							<div class="wps_wgm_more_menu">
-									<?php foreach ( $overflow_setting_tabs as $key => $wps_tab ) : ?>
+									<?php foreach ( $overflow_setting_tabs as $key => $wps_tab ) { ?>
 										<?php $is_locked = ( ! $is_pro_active && ! in_array( $key, $lite_visible_tabs, true ) ); ?>
 										<a
 											class="wps_wgm_more_menu_link<?php echo esc_attr( $active_tab === $key ? ' is-active' : '' ); ?><?php echo esc_attr( $is_locked ? ' is-locked' : '' ); ?>"
 											href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=' . $key ) ); ?>"
 										>
 											<?php echo esc_html( $wps_tab['title'] ); ?>
-											<?php if ( $is_locked ) : ?>
+											<?php if ( $is_locked ) { ?>
 											<span class="wps_wgm_nav_badge"><?php esc_html_e( 'Pro', 'woo-gift-cards-lite' ); ?></span>
-										<?php endif; ?>
+										<?php } ?>
 									</a>
-								<?php endforeach; ?>
+								<?php } ?>
 							</div>
 						</div>
-					<?php endif; ?>
+					<?php } ?>
 				</div>
 
 				<div class="wps_wgm_content_template">
@@ -367,13 +367,13 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 											continue;
 										}
 
-									$include_tab = isset( $wps_file['file_path'] ) ? $wps_file['file_path'] : '';
-									if ( ! empty( $include_tab ) ) {
-										include_once $include_tab;
+										$include_tab = isset( $wps_file['file_path'] ) ? $wps_file['file_path'] : '';
+										if ( ! empty( $include_tab ) ) {
+											include_once $include_tab;
+										}
+										break;
 									}
-									break;
-								}
-								?>
+									?>
 							</div>
 
 							<aside class="wps_wgm_dashboard_sidebar">
@@ -393,7 +393,7 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 									</div>
 									<p><?php esc_html_e( "Expert solutions to boost your store's performance.", 'woo-gift-cards-lite' ); ?></p>
 									<div class="wps_wgm_service_rail">
-										<?php foreach ( $wps_wgm_marketing_services as $wps_wgm_marketing_service ) : ?>
+										<?php foreach ( $wps_wgm_marketing_services as $wps_wgm_marketing_service ) { ?>
 											<a class="wps_wgm_service_rail_item" href="<?php echo esc_url( $wps_wgm_services_link ); ?>" target="_blank" rel="noopener noreferrer">
 												<span class="wps_wgm_service_rail_icon wps_wgm_service_rail_icon_<?php echo esc_attr( $wps_wgm_marketing_service['icon'] ); ?>" aria-hidden="true"></span>
 												<span class="wps_wgm_service_rail_content">
@@ -402,7 +402,7 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 												</span>
 												<span class="wps_wgm_service_rail_arrow" aria-hidden="true">&rsaquo;</span>
 											</a>
-										<?php endforeach; ?>
+										<?php } ?>
 									</div>
 									<button type="button" class="wps_wgm_sidebar_services_button" data-wps-wgm-open-expert-modal><?php esc_html_e( 'Talk to an Expert', 'woo-gift-cards-lite' ); ?></button>
 									<div class="wps_wgm_service_rail_footer"><?php esc_html_e( 'Services by WP Swings', 'woo-gift-cards-lite' ); ?></div>

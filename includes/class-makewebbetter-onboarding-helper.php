@@ -10,7 +10,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 /**
@@ -523,7 +523,7 @@ class Makewebbetter_Onboarding_Helper {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			 wp_rand() => array(
+			wp_rand() => array(
 				'id' => 'deactivation-reason',
 				'label' => '',
 				'type' => 'radio',
@@ -617,16 +617,16 @@ class Makewebbetter_Onboarding_Helper {
 
 		$html = '';
 
-		if ( 'hidden' != $type ) : ?>
+		if ( 'hidden' != $type ) { ?>
 			<div class ="wps-customer-data-form-single-field">
 			<?php
-		endif;
+		}
 
 		switch ( $type ) {
 
 			case 'radio':
 				// If field requires multiple answers.
-				if ( ! empty( $options ) && is_array( $options ) ) :
+				if ( ! empty( $options ) && is_array( $options ) ) {
 					?>
 
 					<label class="on-boarding-label" for="<?php echo esc_attr( $id ); ?>"><?php echo esc_attr( $label ); ?></label>
@@ -634,36 +634,36 @@ class Makewebbetter_Onboarding_Helper {
 					<?php
 					$is_multiple = ! empty( $multiple ) && 'yes' != $multiple ? 'name = "' . $name . '"' : '';
 
-					foreach ( $options as $option_value => $option_label ) :
+					foreach ( $options as $option_value => $option_label ) {
 						?>
 						<div class="wps-<?php echo esc_html( $base_class ); ?>-radio-wrapper">
 							<input type="<?php echo esc_attr( $type ); ?>" class="on-boarding-<?php echo esc_attr( $type ); ?>-field <?php echo esc_attr( $class ); ?>" value="<?php echo esc_attr( $option_value ); ?>" id="<?php echo esc_attr( $option_value ); ?>" <?php echo esc_html( $required ); ?> <?php echo esc_attr( $is_multiple ); ?>>
 							<label class="on-boarding-field-label" for="<?php echo esc_html( $option_value ); ?>"><?php echo esc_html( $option_label ); ?></label>
 						</div>
-					<?php endforeach; ?>
+					<?php } ?>
 
 					<?php
-				 endif;
+				}
 
 				break;
 
 			case 'checkbox':
 				// If field requires multiple answers.
-				if ( ! empty( $options ) && is_array( $options ) ) :
+				if ( ! empty( $options ) && is_array( $options ) ) {
 					?>
 
 					<label class="on-boarding-label" for="<?php echo esc_attr( $id ); ?>'"><?php echo esc_attr( $label ); ?></label>
 					
-					<?php foreach ( $options as $option_id => $option_label ) : ?>
+					<?php foreach ( $options as $option_id => $option_label ) { ?>
 						
-						   <div class="wps-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
+							<div class="wps-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
 						<input type="<?php echo esc_html( $type ); ?>" class="on-boarding-<?php echo esc_html( $type ); ?>-field <?php echo esc_html( $class ); ?>" value="<?php echo esc_html( $value ); ?>" id="<?php echo esc_html( $option_id ); ?>">
 						<label class="on-boarding-field-label" for="<?php echo esc_html( $option_id ); ?>"><?php echo esc_html( $option_label ); ?></label>
 						</div>
 
-					<?php endforeach; ?>
+					<?php } ?>
 					<?php
-				endif;
+				}
 
 				break;
 
@@ -679,15 +679,15 @@ class Makewebbetter_Onboarding_Helper {
 					<label class="on-boarding-label"  for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?></label>
 					<select class="on-boarding-select-field <?php echo esc_html( $select2 ); ?> <?php echo esc_html( $class ); ?>" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $name ); ?>[]" <?php echo esc_html( $required ); ?> <?php echo esc_html( $is_multiple ); ?>>
 
-						<?php if ( 'select' == $type ) : ?>	
+						<?php if ( 'select' == $type ) { ?>	
 					
-						<?php endif; ?>
+						<?php } ?>
 
-						<?php foreach ( $options as $option_value => $option_label ) : ?>	
+						<?php foreach ( $options as $option_value => $option_label ) { ?>	
 						
 							<option class="on-boarding-options" value="<?php echo esc_attr( $option_value ); ?>"><?php echo esc_html( $option_label ); ?></option>
 
-						<?php endforeach; ?>
+						<?php } ?>
 					</select>
 
 					<?php
@@ -725,11 +725,11 @@ class Makewebbetter_Onboarding_Helper {
 				<?php
 		}
 
-		if ( 'hidden' != $type ) :
+		if ( 'hidden' != $type ) {
 			?>
 			</div>
 			<?php
-		endif;
+		}
 	}
 
 
@@ -885,7 +885,14 @@ class Makewebbetter_Onboarding_Helper {
 	 * @link       https://www.wpswings.com/
 	 */
 	public function add_wps_additional_validation( $result = true ) {
-		if ( ! empty( $_GET['tab'] ) && 'general_setting' !== $_GET['tab'] ) {
+		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
+		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+		}
+		$wps_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+		if ( '' !== $wps_tab && 'general_setting' !== $wps_tab ) {
 			$result = false;
 		}
 

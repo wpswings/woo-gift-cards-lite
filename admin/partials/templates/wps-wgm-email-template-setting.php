@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 $flag        = false;
@@ -58,7 +58,7 @@ if ( $flag ) {
 	<table class="form-table wps_wgm_general_setting">	
 		<tbody>
 			<?php
-				$settings_obj->wps_wgm_generate_common_settings( $wps_wgm_mail_template_settings['middle'], $mail_settings );
+			$settings_obj->wps_wgm_generate_common_settings( $wps_wgm_mail_template_settings['middle'], $mail_settings );
 			?>
 		</tbody>
 	</table>

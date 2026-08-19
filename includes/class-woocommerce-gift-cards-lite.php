@@ -13,7 +13,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 /**
@@ -243,7 +243,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_custom_coupon_bulk_action_notices' );
 		
 		// to show Disable/Enable column.
-		$this->loader->add_filter( 'manage_edit-shop_coupon_columns',  $plugin_admin, 'add_enable_disable_column' );
+		$this->loader->add_filter( 'manage_edit-shop_coupon_columns', $plugin_admin, 'add_enable_disable_column' );
 		$this->loader->add_action( 'manage_shop_coupon_posts_custom_column', $plugin_admin, 'populate_enable_disable_column', 10, 2 );
 
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'wps_wgm_add_gift_card_dashboard_widget' );
@@ -316,7 +316,7 @@ class Woocommerce_Gift_Cards_Lite {
 		// for the new layout.
 		$this->loader->add_action( 'woocommerce_product_thumbnails', $plugin_public, 'wps_wgm_preview_below_thumbnail', 10, 1 );
 
-		$this->loader->add_action( 'woocommerce_add_to_cart', $plugin_public, 'wps_nonce_not_verify_add_to_cart',10,2 );
+		$this->loader->add_action( 'woocommerce_add_to_cart', $plugin_public, 'wps_nonce_not_verify_add_to_cart', 10, 2 );
 
 		// PAR compatibility.
 		if ( $this->wps_wgm_is_par_active() && $this->wps_wgm_is_par_enable() ) {

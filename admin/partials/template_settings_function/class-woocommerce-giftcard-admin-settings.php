@@ -64,12 +64,10 @@ class Woocommerce_Giftcard_Admin_Settings {
 	public function wps_wgm_generate_radiobuttons_html( $value, $general_settings ) {
 		if ( ! empty( $general_settings[ $value['name'] ] ) ) {
 			$enable_wps_wgm = ( isset( $general_settings[ $value['name'] ] ) && ( $general_settings[ $value['name'] ] == $value['value'] ) ) ? 1 : 0;
-		} else {
-			if ( array_key_exists( 'default_value', $value ) && 1 == $value['default_value'] ) {
+		} elseif ( array_key_exists( 'default_value', $value ) && 1 == $value['default_value'] ) {
 				$enable_wps_wgm = 1;
-			} else {
-				$enable_wps_wgm = 0;
-			}
+		} else {
+			$enable_wps_wgm = 0;
 		}
 		?>
 		<label for="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">
@@ -102,12 +100,12 @@ class Woocommerce_Giftcard_Admin_Settings {
 			if ( array_key_exists( 'custom_attribute', $value ) ) {
 
 				foreach ( $value['custom_attribute'] as $attribute_name => $attribute_val ) {// @codingStandardsIgnoreLine
-					 echo wp_kses_post( $attribute_name . '=' . $attribute_val );  //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped.
+					echo wp_kses_post( $attribute_name . '=' . $attribute_val );  //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped.
 
 				}
 			}
 			?>
-			 value="<?php echo esc_attr( $wps_wgm_value ); ?>" name="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>" id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>"
+			value="<?php echo esc_attr( $wps_wgm_value ); ?>" name="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>" id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>"
 			class="<?php echo esc_attr( array_key_exists( 'class', $value ) ? $value['class'] : '' ); ?>"><?php echo esc_attr( array_key_exists( 'desc', $value ) ? $value['desc'] : '' ); ?>
 		</label>
 		<?php
@@ -213,7 +211,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 				}
 			}
 			?>
-			  name="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>" id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>"
+				name="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>" id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>"
 			class="<?php echo esc_attr( array_key_exists( 'class', $value ) ? $value['class'] : '' ); ?>"><?php echo esc_attr( array_key_exists( 'desc', $value ) ? $value['desc'] : '' ); ?><?php echo esc_attr( $wps_wgm_value ); ?>
 		</textarea>
 	</label>
@@ -550,7 +548,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 						} elseif ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
 							$this->wps_wgm_generate_single_select_drop_down_with_key_value_pair_org( $value, $saved_settings );
 						} elseif ( 'button' == $value['type'] ) {
- 							$this->wps_wgm_generate_button_html_global( $value, $saved_settings );
+							$this->wps_wgm_generate_button_html_global( $value, $saved_settings );
 						}
 						do_action( 'wps_wgm_admin_setting_fields_html', $value, $saved_settings );
 						?>
