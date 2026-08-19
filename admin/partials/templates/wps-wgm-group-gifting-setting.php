@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">

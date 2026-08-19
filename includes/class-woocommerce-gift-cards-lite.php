@@ -13,7 +13,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 /**
@@ -76,7 +76,7 @@ class Woocommerce_Gift_Cards_Lite {
 		if ( defined( 'WPS_WGC_VERSION' ) ) {
 			$this->version = WPS_WGC_VERSION;
 		} else {
-			$this->version = '3.2.10';
+			$this->version = '3.2.7';
 		}
 		$this->plugin_name = 'woo-gift-cards-lite';
 
@@ -84,6 +84,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+
 	}
 
 	/**
@@ -107,34 +108,29 @@ class Woocommerce_Gift_Cards_Lite {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-woocommerce-gift-cards-lite-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-gift-cards-lite-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-woocommerce-gift-cards-lite-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-gift-cards-lite-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-woocommerce-gift-cards-lite-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woocommerce-gift-cards-lite-admin.php';
 
 		/**
 		 * The class responsible for handling the admin Talk to an Expert form.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-woocommerce-gift-cards-lite-talk-to-expert-form.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-gift-cards-lite-talk-to-expert-form.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'public/class-woocommerce-gift-cards-lite-public.php';
-
-		/**
-		 * The class responsible for tracking failed gift card operations.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-gift-card-failure-tracker.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woocommerce-gift-cards-lite-public.php';
 
 		$this->loader = new Woocommerce_Gift_Cards_Lite_Loader();
 
@@ -142,7 +138,7 @@ class Woocommerce_Gift_Cards_Lite {
 		 * The class responsible for defining all actions that occur in the onboarding the site data
 		 * in the admin side of the site.
 		 */
-		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( __DIR__ ) . 'includes/class-makewebbetter-onboarding-helper.php';
+		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
 			$this->onboard = new Makewebbetter_Onboarding_Helper();
 	}
 
@@ -159,6 +155,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$plugin_i18n = new Woocommerce_Gift_Cards_Lite_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+
 	}
 
 	/**
@@ -213,7 +210,7 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_wgm_import_template_org', 5, 2 );
 
 		// Hide specific product from product listing page in WooCommerce backend.
-		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'wps_wgm_hide_specific_product_from_backend' );
+		$this->loader->add_action('pre_get_posts', $plugin_admin, 'wps_wgm_hide_specific_product_from_backend');
 
 		// PAR compatibility.
 		if ( $this->wps_wgm_is_par_active() && $this->wps_wgm_is_par_enable() ) {
@@ -233,23 +230,23 @@ class Woocommerce_Gift_Cards_Lite {
 		// Reporting.
 		$this->loader->add_action( 'wp_before_admin_bar_render', $plugin_admin, 'wps_wgm_admin_toolbar' );
 		$this->loader->add_action( 'woocommerce_admin_reports', $plugin_admin, 'wps_wgm_report' );
-		$this->loader->add_action( 'init', $plugin_admin, 'wps_wgm_preview_report_details' );
+		// Security Fix CVE-2026-19439: Move to admin_init to prevent front-end access
+		// This prevents unauthenticated users from accessing sensitive gift card data
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'wps_wgm_preview_report_details' );
 		$this->loader->add_action( 'wp_ajax_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_gift_card_details', $plugin_admin, 'wps_wgm_gift_card_details' );
-		$this->loader->add_action( 'wp_ajax_wps_uwgc_resend_gift_card_email', $plugin_admin, 'wps_uwgc_resend_gift_card_email' );
 		$this->loader->add_action( 'wps_wgm_coupon_reporting_with_order', $plugin_admin, 'wps_wgm_coupon_reporting_with_order_id', 10, 4 );
-
+	
 		// Add Disable/Enable coupon bulk actions.
 		$this->loader->add_filter( 'bulk_actions-edit-shop_coupon', $plugin_admin, 'wps_add_custom_coupon_bulk_actions' );
 		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_coupon', $plugin_admin, 'wps_handle_custom_coupon_bulk_actions', 10, 3 );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_custom_coupon_bulk_action_notices' );
-
+		
 		// to show Disable/Enable column.
 		$this->loader->add_filter( 'manage_edit-shop_coupon_columns', $plugin_admin, 'add_enable_disable_column' );
 		$this->loader->add_action( 'manage_shop_coupon_posts_custom_column', $plugin_admin, 'populate_enable_disable_column', 10, 2 );
 
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'wps_wgm_add_gift_card_dashboard_widget' );
-		$this->loader->add_action( 'wp_ajax_wps_wgm_lookup_gift_card', $plugin_admin, 'wps_wgm_lookup_gift_card' );
 
 		$this->loader->add_action( 'wp_ajax_wps_migrate_smart_coupons_to_giftcards', $plugin_admin, 'wps_wgm_migrate_smart_coupons_to_giftcards' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_migrate_smart_coupons_to_giftcards', $plugin_admin, 'wps_wgm_migrate_smart_coupons_to_giftcards' );
@@ -286,9 +283,6 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'init', $plugin_public, 'wps_uwgc_add_short_code_giftcard_balance_org' );
 		$this->loader->add_action( 'wp_ajax_wps_uwgc_check_gift_balance_org', $plugin_public, 'wps_uwgc_check_gift_balance_org' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_uwgc_check_gift_balance_org', $plugin_public, 'wps_uwgc_check_gift_balance_org' );
-		// AI-powered message suggestions.
-		$this->loader->add_action( 'wp_ajax_wps_gc_ai_suggest', $plugin_public, 'wps_gc_ai_suggest_message' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_gc_ai_suggest', $plugin_public, 'wps_gc_ai_suggest_message' );
 				$other_setting = get_option( 'wps_wgm_other_settings', array() );
 		if ( is_array( $other_setting ) && ! empty( $other_setting ) && array_key_exists( 'wps_wgm_additional_apply_coupon_disable', $other_setting ) ) {
 			$wps_wgm_apply_coupon_disable = $other_setting['wps_wgm_additional_apply_coupon_disable'];
@@ -299,8 +293,6 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_filter( 'woocommerce_order_item_get_formatted_meta_data', $plugin_public, 'wps_wgm_woocommerce_hide_order_metafields', 10, 1 );
 		$this->loader->add_filter( 'wc_price_based_country_product_types_overriden', $plugin_public, 'wps_wgm_price_based_country_giftcard' );
 		$this->loader->add_filter( 'woocommerce_hold_stock_for_checkout', $plugin_public, 'wps_wgm_apply_already_created_giftcard_coupons' );
-		// Exclude gift cards from free shipping calculation.
-		$this->loader->add_filter( 'woocommerce_cart_shipping_packages', $plugin_public, 'wps_wgc_exclude_gc_from_free_shipping', 10, 1 );
 		// Compatibility with Flatsome theme minicart price issue.
 		$this->loader->add_filter( 'woocommerce_cart_item_price', $plugin_public, 'wps_mini_cart_product_price', 10, 3 );
 		// Compatibilty with WPS Currency Switcher.
@@ -325,13 +317,6 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'woocommerce_product_thumbnails', $plugin_public, 'wps_wgm_preview_below_thumbnail', 10, 1 );
 
 		$this->loader->add_action( 'woocommerce_add_to_cart', $plugin_public, 'wps_nonce_not_verify_add_to_cart', 10, 2 );
-
-		// Display gift card details on Thank You page.
-		$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'wps_wgm_display_gift_cards_on_thankyou_page', 10, 1 );
-
-		// Display gift card details on My Account order details page.
-		$this->loader->add_action( 'woocommerce_view_order', $plugin_public, 'wps_wgm_display_gift_cards_on_thankyou_page', 10, 1 );
-		$this->loader->add_action( 'woocommerce_order_details_after_order_table', $plugin_public, 'wps_wgm_display_gift_cards_on_thankyou_page', 10, 1 );
 
 		// PAR compatibility.
 		if ( $this->wps_wgm_is_par_active() && $this->wps_wgm_is_par_enable() ) {
@@ -425,4 +410,5 @@ class Woocommerce_Gift_Cards_Lite {
 		}
 		return $flag;
 	}
+
 }

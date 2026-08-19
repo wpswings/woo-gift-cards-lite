@@ -33,7 +33,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	die();
 }
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
@@ -50,10 +50,8 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$activated = true;
 	}
-} else {
-	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+} elseif ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 		$activated = true;
-	}
 }
 
 add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
@@ -631,7 +629,6 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
 					if ( ! empty( $banner_image ) && ! empty( $banner_url ) ) {
-
 						?>
 							<div class="wps-offer-notice notice notice-warning is-dismissible">
 								<div class="notice-container">
@@ -676,7 +673,6 @@ if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
 				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
 					if ( '' !== $banner_image && '' !== $banner_url ) {
-
 						?>
 								<div class="wps-offer-notice notice notice-warning is-dismissible">
 									<div class="notice-container">

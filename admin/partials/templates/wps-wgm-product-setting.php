@@ -6,20 +6,20 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 /*
  * Product Settings Template
  */
-$flag        = false;
+$flag = false;
 $current_tab = 'wps_wgm_product_setting';
 if ( isset( $_POST['wps_wgm_save_product'] ) ) {
 	unset( $_POST['wps_wgm_save_product'] );
 	if ( isset( $_REQUEST['wps-wgc-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-wgc-nonce'] ) ), 'wps-wgc-nonce' ) ) {
 		if ( 'wps_wgm_product_setting' == $current_tab ) {
 			$product_settings_array = array();
-			$postdata               = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
+			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
 			if ( isset( $postdata ) && is_array( $postdata ) && ! empty( $postdata ) ) {
 				if ( isset( $postdata['wps_wgm_from_field'] ) && 'on' === $postdata['wps_wgm_from_field'] ) {
 					$postdata['wps_wgm_remove_validation_from'] = 'on';
@@ -28,7 +28,7 @@ if ( isset( $_POST['wps_wgm_save_product'] ) ) {
 					$postdata['wps_wgm_remove_validation_msg'] = 'on';
 				}
 				if ( isset( $postdata['wps_wgm_to_email_field'] ) && 'on' === $postdata['wps_wgm_to_email_field'] ) {
-					$postdata['wps_wgm_remove_validation_to']      = 'on';
+					$postdata['wps_wgm_remove_validation_to'] = 'on';
 					$postdata['wps_wgm_remove_validation_to_name'] = 'on';
 				}
 				foreach ( $postdata as $key => $value ) {
@@ -67,7 +67,7 @@ if ( $flag ) {
 	<table class="form-table wps_wgm_product_setting">
 		<tbody>
 			<?php
-				$settings_obj->wps_wgm_generate_common_settings( $wps_wgm_product_settings, $product_settings );
+			$settings_obj->wps_wgm_generate_common_settings( $wps_wgm_product_settings, $product_settings );
 			?>
 		</tbody>
 	</table>

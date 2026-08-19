@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 /*
@@ -40,9 +40,9 @@ if ( $flag ) {
 ?>
 <?php $delivery_settings = get_option( 'wps_wgm_delivery_settings', true ); ?>
 <?php
-if ( ! is_array( $delivery_settings ) ) :
+if ( ! is_array( $delivery_settings ) ) {
 	$delivery_settings = array();
-endif;
+}
 ?>
 <div class="wps_wgm_table_wrapper">	
 	<div class="wps_table">

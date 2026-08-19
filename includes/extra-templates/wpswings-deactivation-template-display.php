@@ -10,7 +10,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 global $pagenow;
@@ -19,7 +19,7 @@ if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 }
 
 $form_fields = apply_filters( 'wps_deactivation_form_fields', array() );
-if ( ! empty( $form_fields ) ) : ?>
+if ( ! empty( $form_fields ) ) { ?>
 	<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader">
 		<img src="<?php echo esc_url( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
@@ -34,9 +34,9 @@ if ( ! empty( $form_fields ) ) : ?>
 			<h3 class="wps-on-boarding-heading"></h3>
 			<p class="wps-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'woo-gift-cards-lite' ); ?></p>
 			<form action="#" method="post" class="wps-on-boarding-form wps-deactivation-feedback-form">
-				<?php foreach ( $form_fields as $key => $field_attr ) : ?>
+				<?php foreach ( $form_fields as $key => $field_attr ) { ?>
 					<?php $this->render_field_html( $field_attr, 'deactivating' ); ?>
-				<?php endforeach; ?>
+				<?php } ?>
 				<div class="wps-on-boarding-form-btn__wrapper">
 					<div class="wps-on-boarding-form-submit wps-on-boarding-form-verify ">
 					<input type="submit" class="wps-on-boarding-submit wps-on-boarding-verify " value="SUBMIT AND DEACTIVATE">
@@ -49,4 +49,4 @@ if ( ! empty( $form_fields ) ) : ?>
 		</div>
 	</div>
 	</div>
-<?php endif; ?>
+<?php } ?>

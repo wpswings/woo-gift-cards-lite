@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 ?>
@@ -25,7 +25,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</form>
 </div>
 <?php
-
 $wps_wgm = array(
 	'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 	'wps_wgm_nonce' => wp_create_nonce( 'wps-wgc-verify-nonce' ),

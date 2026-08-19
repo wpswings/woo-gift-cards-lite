@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit();
 }
 
 ?>
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="wps-wgm-overview__grid">
-			<?php foreach ( $wgm_overview_cards as $wgm_overview_card ) : ?>
+			<?php foreach ( $wgm_overview_cards as $wgm_overview_card ) { ?>
 				<div class="wps-wgm-overview-card">
 					<div class="wps-wgm-overview-card__media">
 						<img src="<?php echo esc_url( $wgm_overview_card['image'] ); ?>" alt="<?php echo esc_attr( $wgm_overview_card['image_alt'] ); ?>">
@@ -69,7 +69,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<h3><?php echo esc_html( $wgm_overview_card['title'] ); ?></h3>
 					<p><?php echo esc_html( $wgm_overview_card['description'] ); ?></p>
 				</div>
-			<?php endforeach; ?>
+			<?php } ?>
 		</div>
 
 		<div class="wps-wgm-overview__cta">
@@ -85,8 +85,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php
 	if ( ! is_plugin_active( 'giftware/giftware.php' ) ) {
-
-
 		?>
 
 
