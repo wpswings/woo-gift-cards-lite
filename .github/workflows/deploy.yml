@@ -2,12 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ release/v3.2.10 ]
-
-
-env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
-  FORCE_COLOR: 1
+  
 
 jobs:
   deploy:

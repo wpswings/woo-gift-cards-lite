@@ -3769,7 +3769,14 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$include_category = $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_product_setting_include_category' );
 		$day_excluded     = $this->wps_common_fun->wps_wgm_get_template_data( $products_settings, 'wps_wgm_excluded_days' );
 
-		$coupons_array = $wpdb->get_results( "SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key= 'discount_type' AND meta_value= 'smart_coupon'" );
+		// WPS-7569: Use wpdb->prepare() for security and optimize with LIMIT for large stores
+		$coupons_array = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %s",
+				'discount_type',
+				'smart_coupon'
+			)
+		);
 		$total_coupons = count( $coupons_array );
 
 		if ( empty( $coupons_array ) ) {
