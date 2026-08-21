@@ -1373,9 +1373,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
 
 								$group_gift_amt = intval( $order_subtotal );
-								$values = explode( ',', $value->value );
+								$contributor_emails = explode( ',', $value->value );
 
-								foreach ( $values  as $value->value ) {
+								foreach ( $contributor_emails as $contributor_email ) {
+											$contributor_email = trim( $contributor_email );
+											if ( empty( $contributor_email ) ) {
+												continue;
+											}
 											$conti_prod_id = get_option( 'contributor_product_id' );
 											$conti_prod_link = get_permalink( $conti_prod_id );
 
@@ -1389,7 +1393,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$whatsapp_url .= 'text=' . urlencode( $copy_link );
 											wps_wgm_hpos_update_meta_data( $order_id, 'share#link', $whatsapp_url );
 											wps_wgm_hpos_update_meta_data( $order_id, 'copy#link', $copy_link );
-											wc_mail( $value->value, $subject, $message );
+											wc_mail( $contributor_email, $subject, $message );
 
 								}
 								wps_wgm_hpos_update_meta_data( $order_id, 'suborder#amttotal', $group_gift_amt );
