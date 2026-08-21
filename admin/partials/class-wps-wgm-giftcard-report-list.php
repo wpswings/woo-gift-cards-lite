@@ -139,13 +139,11 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * Process bulk actions.
 	 */
 	public function process_bulk_action() {
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
 		if ( 'bulk-delete' === $this->current_action() ) {
+			$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
+			if ( ! wp_verify_nonce( $nonce, 'wps-gc-report-bulk-delete' ) ) {
+				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
+			}
 			if ( isset( $_POST['wps_coupon_ids'] ) && ! empty( $_POST['wps_coupon_ids'] ) ) {
 				$coupon_ids = map_deep( wp_unslash( $_POST['wps_coupon_ids'] ), 'sanitize_text_field' );
 				global $wpdb;
@@ -214,12 +212,6 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	 * @param  array $cloumnb Column B.
 	 */
 	public function wps_uwgc_usort_reorder_report( $cloumna, $cloumnb ) {
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-report-nonce' );
-		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'order_id';
 		$order = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'dsc';
 		$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
@@ -556,15 +548,10 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 	}
 }
 
-// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-report-nonce' );
-if ( ! $id_nonce_verified ) {
-	wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-}
 ?>
 <form method="post">
 	<input type="hidden" name="page" value="<?php echo esc_attr( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' ); ?>">
+	<?php wp_nonce_field( 'wps-gc-report-bulk-delete', 'wps_nonce' ); ?>
 	<?php
 	$wps_report_list = new Wps_WGM_Giftcard_Report_List();
 	$wps_report_list->prepare_items();
