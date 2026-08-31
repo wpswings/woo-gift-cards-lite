@@ -2758,13 +2758,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( isset( $user_email ) && ! empty( $user_email ) ) {
 							if ( $user_email == $wps_check_email ) {
 								$html                = '<div class="amount_wrapper">';
-								$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-								$html               .= '<div style="text-align: center; margin: 10px 0;">';
-								$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-								$html               .= '</div>';
-								$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-								$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-								$html               .= '</div>';
 								$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
 								$html               .= '</div>';
 								$response['result']  = true;
@@ -2780,13 +2773,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						if ( empty( $order_id ) ) {
 							if ( in_array( $wps_check_email, $user_email ) ) {
 								$html                = '<div class="amount_wrapper">';
-								$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-								$html               .= '<div style="text-align: center; margin: 10px 0;">';
-								$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-								$html               .= '</div>';
-								$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-								$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-								$html               .= '</div>';
 								$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
 								$html               .= '</div>';
 								$response['result']  = true;
@@ -2802,13 +2788,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							if ( ( isset( $user_email ) && ! empty( $user_email ) ) || ( isset( $sender_email ) && ! empty( $sender_email ) ) ) {
 								if ( $user_email == $wps_check_email ) {
 									$html                = '<div class="amount_wrapper">';
-									$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-									$html               .= '<div style="text-align: center; margin: 10px 0;">';
-									$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-									$html               .= '</div>';
-									$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-									$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-									$html               .= '</div>';
 									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
 									$html               .= '</div>';
 									$response['result']  = true;
@@ -2816,27 +2795,13 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $sender_email == $wps_check_email ) {
 									$html                = '<div class="amount_wrapper">';
-									$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-									$html               .= '<div style="text-align: center; margin: 10px 0;">';
-									$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-									$html               .= '</div>';
-									$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-									$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-									$html               .= '</div>';
-									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+									 $html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
 									$html               .= '</div>';
 									$response['result']  = true;
 									$response['html']    = $html;
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $wps_sender_name == $wps_check_email ) {
 									$html                = '<div class="amount_wrapper">';
-									$html               .= '<div style="margin-bottom: 8px;"><strong style="color: #666; font-size: 14px;">' . __( 'Coupon Code:', 'woo-gift-cards-lite' ) . '</strong></div>';
-									$html               .= '<div style="text-align: center; margin: 10px 0;">';
-									$html               .= '<span class="wps-balance-coupon-code" style="font-size: 20px; color: ' . $coupon_color . '; background: #fff; padding: 12px 20px; border: 2px dashed ' . $coupon_color . '; border-radius: 5px; display: inline-block; font-weight: 600; letter-spacing: 1px;">' . esc_html( $coupon ) . '</span>';
-									$html               .= '</div>';
-									$html               .= '<div style="text-align: center; margin: 10px 0 15px 0;">';
-									$html               .= '<button type="button" class="wps-copy-balance-btn" data-coupon="' . esc_attr( $coupon ) . '" style="background: ' . $button_color . '; color: #fff; border: none; padding: 10px 24px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600;">' . __( 'Copy Code', 'woo-gift-cards-lite' ) . '</button>';
-									$html               .= '</div>';
 									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
 									$html               .= '</div>';
 									$response['result']  = true;
