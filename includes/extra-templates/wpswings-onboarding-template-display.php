@@ -10,7 +10,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 $screen   = get_current_screen();
@@ -20,7 +20,7 @@ if ( ! $is_valid ) {
 }
 
 $form_fields = apply_filters( 'wps_on_boarding_form_fields', array() );
-if ( ! empty( $form_fields ) ) { ?>
+if ( ! empty( $form_fields ) ) : ?>
 	<div style="display: none;" class="loading-style-bg" id="wps_wgm_loader">
 		<img src="<?php echo esc_url( WPS_WGC_URL . 'assets/images/loading.gif' ); ?>">
 	</div>
@@ -35,9 +35,9 @@ if ( ! empty( $form_fields ) ) { ?>
 				<h3 class="wps-on-boarding-heading"><?php esc_html_e( 'Welcome to WP Swings', 'woo-gift-cards-lite' ); ?></h3>
 				<p class="wps-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'woo-gift-cards-lite' ); ?></p>
 				<form action="#" method="post" class="wps-on-boarding-form">
-					<?php foreach ( $form_fields as $key => $field_attr ) { ?>
+					<?php foreach ( $form_fields as $key => $field_attr ) : ?>
 						<?php $this->render_field_html( $field_attr ); ?>
-					<?php } ?>
+					<?php endforeach; ?>
 					<div class="wps-on-boarding-form-btn__wrapper">
 						<div class="wps-on-boarding-form-submit wps-on-boarding-form-verify ">
 						<input type="submit" class="wps-on-boarding-submit wps-on-boarding-verify " value="Send Us">
@@ -50,4 +50,4 @@ if ( ! empty( $form_fields ) ) { ?>
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php endif; ?>

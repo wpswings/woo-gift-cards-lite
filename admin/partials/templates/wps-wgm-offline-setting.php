@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">
@@ -78,10 +78,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<label for="wps_wgm_offline_gift_template">Gift card</label>
 								</th>
 								<td class="forminp forminp-text">
-									<?php
-									$attribute_description = __( 'Select the Gift card product.', 'woo-gift-cards-lite' );
+										<?php
+											$attribute_description = __( 'Select the Gift card product.', 'woo-gift-cards-lite' );
 											echo wp_kses_post( wc_help_tip( $attribute_description ) );
-									?>
+										?>
 										<label
 										for="wps_wgm_offline_gift_template">
 										<select name="wps_wgm_offline_gift_template" id="wps_wgm_offline_gift_template"

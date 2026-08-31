@@ -380,6 +380,24 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					update_post_meta( $new_coupon_id, 'wps_wgm_giftcard_coupon_unique', 'online' );
 					update_post_meta( $new_coupon_id, 'wps_wgm_giftcard_coupon_product_id', $product_id );
 					update_post_meta( $new_coupon_id, 'wps_wgm_giftcard_coupon_mail_to', $to );
+
+					// Security Fix #45219: Bind gift card to recipient using a unique token.
+					// This prevents attackers from hijacking cards by changing their account email.
+					//
+					// Strategy: Store both user ID (if account exists) AND a cryptographic binding token
+					// that's tied to the recipient email at issue time. The token allows us to validate
+					// recipients who don't have accounts yet without relying on mutable email addresses.
+					$recipient_user = get_user_by( 'email', $to );
+					if ( $recipient_user ) {
+						update_post_meta( $new_coupon_id, 'wps_wgm_giftcard_coupon_recipient_user_id', $recipient_user->ID );
+					}
+
+					// Generate a cryptographically random binding token at issue time.
+					// This token is unguessable and unique per card, preventing unauthorized redemption
+					// even if an attacker creates an account with the recipient's email address.
+					$recipient_binding_token = bin2hex( random_bytes( 32 ) );
+					update_post_meta( $new_coupon_id, 'wps_wgm_giftcard_recipient_binding_token', $recipient_binding_token );
+
 					// This key is used for updating coupon amount.
 					update_post_meta( $new_coupon_id, 'wps_wgm_coupon_amount', $amount );
 

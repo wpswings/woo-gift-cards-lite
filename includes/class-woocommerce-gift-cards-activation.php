@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 	/**
@@ -343,6 +343,68 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 					$this->delete_additional_data();
 				}
 			}
+		}
+
+		/**
+		 * Migrate existing gift cards to use the secure binding token system.
+		 * This fixes CVE-2026-75861 for cards that were created before this security patch.
+		 *
+		 * @name migrate_gift_cards_to_binding_tokens
+		 * @author WP Swings <webmaster@wpswings.com>
+		 * @link https://www.wpswings.com/
+		 */
+		public static function migrate_gift_cards_to_binding_tokens() {
+			// Check if migration has already run.
+			$migration_version = get_option( 'wps_wgm_security_migration_version', '0' );
+			if ( version_compare( $migration_version, '3.2.12', '>=' ) ) {
+				return; // Migration already completed.
+			}
+
+			// Query all gift card coupons that don't have a binding token yet.
+			$args = array(
+				'post_type'      => 'shop_coupon',
+				'posts_per_page' => 100,
+				'post_status'    => 'publish',
+				'meta_query'     => array(
+					'relation' => 'AND',
+					array(
+						'key'     => 'wps_wgm_giftcard_coupon_mail_to',
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => 'wps_wgm_giftcard_recipient_binding_token',
+						'compare' => 'NOT EXISTS',
+					),
+				),
+			);
+
+			$query          = new WP_Query( $args );
+			$migrated_count = 0;
+
+			if ( $query->have_posts() ) {
+				while ( $query->have_posts() ) {
+					$query->the_post();
+					$coupon_id       = get_the_ID();
+					$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+
+					if ( ! empty( $recipient_email ) ) {
+						// Generate a cryptographically random binding token for this existing card.
+						// This token is unguessable and unique per card.
+						$recipient_binding_token = bin2hex( random_bytes( 32 ) );
+						update_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', $recipient_binding_token );
+						++$migrated_count;
+					}
+				}
+				wp_reset_postdata();
+			}
+
+			// Mark migration as complete for this batch.
+			if ( $query->found_posts < 100 ) {
+				// All cards have been migrated.
+				update_option( 'wps_wgm_security_migration_version', '3.2.12' );
+			}
+
+			return $migrated_count;
 		}
 	}
 }

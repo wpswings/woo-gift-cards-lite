@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable Woocommerce Customizable Gift Card', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable Woocommerce Customizable Gift Card', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_customizable_enable">
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to allow only show default template images.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to allow only show default template images.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_default_enable">
@@ -56,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to allow upload all template images.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to allow upload all template images.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_upload_enable">
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Allow Uploaded images and retain default images', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Allow Uploaded images and retain default images', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_default_and_upload_enable">
@@ -112,7 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Upload the image which is used as default image on your Email Template.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Upload the image which is used as default image on your Email Template.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_customize_default_giftcard">
@@ -132,7 +132,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Click this box to create new Customizable Gift Card.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Click this box to create new Customizable Gift Card.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<input type="button" name=""
@@ -148,7 +148,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'You can also choose the color for your background.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'You can also choose the color for your background.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<div class="wp-picker-container"><button type="button" class="button wp-color-result"
@@ -214,7 +214,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'You can also choose the color for your middle section.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'You can also choose the color for your middle section.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<div class="wp-picker-container"><button type="button" class="button wp-color-result"
@@ -280,7 +280,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'You can also choose the color for your disclaimer section.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'You can also choose the color for your disclaimer section.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<div class="wp-picker-container"><button type="button" class="button wp-color-result"

@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable QRCode. QRCode will be displayed instead of coupon Code', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable QRCode. QRCode will be displayed instead of coupon Code', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_qrcode_setting_enable">
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to display Coupon Code below Qrcode.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to display Coupon Code below Qrcode.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_qrcode_display_enable">
@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'ECC (Error Correction Capability) level. This compensates for dirt, damage or fuzziness of the barcode.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'ECC (Error Correction Capability) level. This compensates for dirt, damage or fuzziness of the barcode.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<select name="wps_wgm_qrcode_ecc_level"
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'It is the Size of QR Code', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'It is the Size of QR Code', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_qrcode_size">
@@ -88,7 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'It is the Margin of QR Code', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'It is the Margin of QR Code', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_qrcode_margin">
@@ -104,7 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable Barcode. A QR code will be displayed instead of a coupon code.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable Barcode. A QR code will be displayed instead of a coupon code.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_barcode_enable">
@@ -120,7 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to display Coupon Code below Barcode.', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to display Coupon Code below Barcode.', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_barcode_display_enable">
@@ -136,7 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'It is the Code Type of Barcode', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'It is the Code Type of Barcode', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<select name="wps_wgm_barcode_codetype"
@@ -158,7 +158,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'It is the Size of Barcode', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'It is the Size of Barcode', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_barcode_size">

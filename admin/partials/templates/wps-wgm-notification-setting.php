@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable pdf link sharing', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable pdf link sharing', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_share_pdf_link">
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable WhatsApp sharing', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable WhatsApp sharing', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_share_on_whatsapp">
@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Write the message you want to send to the user', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Write the message you want to send to the user', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<span class="description"></span>
@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable SMS Notification', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable SMS Notification', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_enable_sms_notification">
