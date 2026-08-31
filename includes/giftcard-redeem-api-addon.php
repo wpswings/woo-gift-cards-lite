@@ -7,7 +7,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 // Redeem api work...
 
@@ -19,8 +19,8 @@ add_action(
 			'/redeem-giftcard',
 			array(
 
-				'methods'  => 'POST',
-				'callback' => 'wps_redeem_giftcard_offline',
+				'methods'             => 'POST',
+				'callback'            => 'wps_redeem_giftcard_offline',
 				'permission_callback' => 'wps_permission_check',
 
 			)
@@ -30,8 +30,8 @@ add_action(
 			'/get-giftcard',
 			array(
 
-				'methods'  => 'POST',
-				'callback' => 'wps_get_giftcard_details',
+				'methods'             => 'POST',
+				'callback'            => 'wps_get_giftcard_details',
 				'permission_callback' => 'wps_permission_check',
 
 			)
@@ -41,8 +41,8 @@ add_action(
 			'/recharge-giftcard',
 			array(
 
-				'methods'  => 'POST',
-				'callback' => 'wps_recharge_giftcard_offine',
+				'methods'             => 'POST',
+				'callback'            => 'wps_recharge_giftcard_offine',
 				'permission_callback' => 'wps_permission_check',
 
 			)
@@ -69,10 +69,10 @@ function wps_get_giftcard_details( $request ) {
 		$coupon_code = $request_params['coupon_code'];
 		$coupon_code = strtolower( $coupon_code );
 
-		$coupon_details = new WC_Coupon( $coupon_code );
-		$response['code'] = 'success';
+		$coupon_details      = new WC_Coupon( $coupon_code );
+		$response['code']    = 'success';
 		$response['message'] = 'There is Giftcard Details ';
-		$coupon_id = $coupon_details->get_id();
+		$coupon_id           = $coupon_details->get_id();
 		if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 
 			$woo_ver = WC()->version;
@@ -84,24 +84,24 @@ function wps_get_giftcard_details( $request ) {
 				$coupon_expiry = get_post_meta( $coupon_id, 'date_expires', true );
 			}
 
-			$response['code'] = 'success';
+			$response['code']    = 'success';
 			$response['message'] = 'There is Giftcard Details ';
 
 			$data = array(
-				'status' => 200,
+				'status'           => 200,
 				'remaining_amount' => $coupon_details->get_amount(),
-				'discount_type' => $coupon_details->get_discount_type(),
-				'usage_count' => $coupon_details->get_usage_count(),
-				'usage_limit' => $coupon_details->get_usage_limit(),
-				'description' => $coupon_details->get_description(),
-				'coupon_expiry' => $coupon_expiry,
+				'discount_type'    => $coupon_details->get_discount_type(),
+				'usage_count'      => $coupon_details->get_usage_count(),
+				'usage_limit'      => $coupon_details->get_usage_limit(),
+				'description'      => $coupon_details->get_description(),
+				'coupon_expiry'    => $coupon_expiry,
 
 			);
 			$response['data'] = $data;
-			$response = new WP_REST_Response( $response );
+			$response         = new WP_REST_Response( $response );
 		} else {
 
-			$response['code'] = 'error';
+			$response['code']    = 'error';
 			$response['message'] = 'Coupon is not valid  Giftcard Coupon';
 
 			$data = array(
@@ -109,7 +109,7 @@ function wps_get_giftcard_details( $request ) {
 
 			);
 			$response['data'] = $data;
-			$response = new WP_REST_Response( $response );
+			$response         = new WP_REST_Response( $response );
 
 		}
 		return $response;
@@ -135,14 +135,27 @@ function wps_redeem_giftcard_offline( $request ) {
 
 		$request_params = $request->get_params();
 
-		$coupon_code = $request_params['coupon_code'];
+		$coupon_code   = $request_params['coupon_code'];
 		$redeem_amount = $request_params['redeem_amount'];
-		$coupon_code = strtolower( $coupon_code );
+		$coupon_code   = strtolower( $coupon_code );
 
 		$the_coupon = new WC_Coupon( $coupon_code );
-		$coupon_id = $the_coupon->get_id();
+		$coupon_id  = $the_coupon->get_id();
 		if ( '' !== $coupon_id && 0 !== $coupon_id ) {
-			$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
+			// Security Fix CVE-2026-75861: Verify the binding token before allowing redemption.
+			$recipient_binding_token = get_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', true );
+			if ( ! empty( $recipient_binding_token ) ) {
+				$provided_token = isset( $request_params['wps_gc_token'] ) ? sanitize_text_field( $request_params['wps_gc_token'] ) : '';
+				if ( empty( $provided_token ) || ! hash_equals( $recipient_binding_token, $provided_token ) ) {
+					return new WP_Error(
+						'unauthorized',
+						__( 'You are not authorized to redeem this gift card. Invalid or missing binding token.', 'woo-gift-cards-lite' ),
+						array( 'status' => 403 )
+					);
+				}
+			}
+
+			$coupon_amount      = get_post_meta( $coupon_id, 'coupon_amount', true );
 			$coupon_usage_count = get_post_meta( $coupon_id, 'usage_count', true );
 			$coupon_usage_limit = get_post_meta( $coupon_id, 'usage_limit', true );
 
@@ -171,7 +184,7 @@ function wps_redeem_giftcard_offline( $request ) {
 
 					if ( ! in_array( $current_day, $excluded_days ) ) {
 
-						if ( isset( $redeem_amount ) && ! empty ( $redeem_amount ) && '0' != $redeem_amount && '0' < $redeem_amount ) {
+						if ( isset( $redeem_amount ) && ! empty( $redeem_amount ) && '0' != $redeem_amount && '0' < $redeem_amount ) {
 
 							if ( $coupon_amount >= $redeem_amount ) {
 
@@ -181,17 +194,17 @@ function wps_redeem_giftcard_offline( $request ) {
 								$coupon_usage_count = ++$coupon_usage_count;
 								update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
 
-								$response['code'] = 'success';
+								$response['code']    = 'success';
 								$response['message'] = 'Coupon is successfully Redeemed';
 
-								$data = array(
-									'status' => 200,
+								$data             = array(
+									'status'           => 200,
 									'remaining_amount' => $remaining_amount,
-									'discount_type' => $the_coupon->get_discount_type(),
-									'usage_count' => $coupon_usage_count,
-									'usage_limit' => $the_coupon->get_usage_limit(),
-									'description' => $the_coupon->get_description(),
-									'coupon_expiry' => $coupon_expiry,
+									'discount_type'    => $the_coupon->get_discount_type(),
+									'usage_count'      => $coupon_usage_count,
+									'usage_limit'      => $the_coupon->get_usage_limit(),
+									'description'      => $the_coupon->get_description(),
+									'coupon_expiry'    => $coupon_expiry,
 								);
 								$response['data'] = $data;
 
@@ -199,7 +212,7 @@ function wps_redeem_giftcard_offline( $request ) {
 
 							} else {
 
-								$response['code'] = 'error';
+								$response['code']    = 'error';
 								$response['message'] = 'Redeem amount is greater than Coupon amount';
 
 								$data = array(
@@ -207,10 +220,10 @@ function wps_redeem_giftcard_offline( $request ) {
 
 								);
 								$response['data'] = $data;
-								$response = new WP_REST_Response( $response );
+								$response         = new WP_REST_Response( $response );
 							}
 						} else {
-							$response['code'] = 'error';
+							$response['code']    = 'error';
 							$response['message'] = 'Redeem amount should be greater than 0';
 
 							$data = array(
@@ -218,21 +231,21 @@ function wps_redeem_giftcard_offline( $request ) {
 
 							);
 							$response['data'] = $data;
-							$response = new WP_REST_Response( $response );
+							$response         = new WP_REST_Response( $response );
 						}
 					} else {
-						$response['code'] = 'error';
+						$response['code']    = 'error';
 						$response['message'] = 'Redeem is not allowed on this day';
-						$data = array(
+						$data                = array(
 							'status' => 404,
 
 						);
 						$response['data'] = $data;
-						$response = new WP_REST_Response( $response );
+						$response         = new WP_REST_Response( $response );
 					}
 				} else {
 
-					$response['code'] = 'error';
+					$response['code']    = 'error';
 					$response['message'] = 'Coupon is expired';
 
 					$data = array(
@@ -240,12 +253,12 @@ function wps_redeem_giftcard_offline( $request ) {
 
 					);
 					$response['data'] = $data;
-					$response = new WP_REST_Response( $response );
+					$response         = new WP_REST_Response( $response );
 
 				}
 			} else {
 
-				$response['code'] = 'error';
+				$response['code']    = 'error';
 				$response['message'] = 'Coupon is already used';
 
 				$data = array(
@@ -253,11 +266,11 @@ function wps_redeem_giftcard_offline( $request ) {
 
 				);
 				$response['data'] = $data;
-				$response = new WP_REST_Response( $response );
+				$response         = new WP_REST_Response( $response );
 
 			}
 		} else {
-			$response['code'] = 'error';
+			$response['code']    = 'error';
 			$response['message'] = 'Coupon is not valid Giftcard Coupon';
 
 			$data = array(
@@ -265,7 +278,7 @@ function wps_redeem_giftcard_offline( $request ) {
 
 			);
 			$response['data'] = $data;
-			$response = new WP_REST_Response( $response );
+			$response         = new WP_REST_Response( $response );
 
 		}
 		return $response;
@@ -284,25 +297,25 @@ function wps_redeem_giftcard_offline( $request ) {
  * @link https://www.wpswings.com/
  */
 function wps_recharge_giftcard_offine( $request ) {
-	
+
 	$check_license_pro = wps_wgm_check_license_pro( $request );
 	if ( true === $check_license_pro ) {
 		global $woocommerce;
-		$request_params = $request->get_params();
-		$coupon_code = $request_params['coupon_code'];
+		$request_params  = $request->get_params();
+		$coupon_code     = $request_params['coupon_code'];
 		$recharge_amount = $request_params['recharge_amount'];
-		$coupon_expirys = ( '' !== $request_params['coupon_expiry'] ) ? $request_params['coupon_expiry'] : null;
-		$usage_limit = ( '' !== $request_params['usage_limit'] ) ? $request_params['usage_limit'] : 0;
-		$coupon_code = strtolower( $coupon_code );
+		$coupon_expirys  = ( '' !== $request_params['coupon_expiry'] ) ? $request_params['coupon_expiry'] : null;
+		$usage_limit     = ( '' !== $request_params['usage_limit'] ) ? $request_params['usage_limit'] : 0;
+		$coupon_code     = strtolower( $coupon_code );
 
 		$the_coupon = new WC_Coupon( $coupon_code );
-		$coupon_id = $the_coupon->get_id();
+		$coupon_id  = $the_coupon->get_id();
 
 		if ( '' !== $coupon_id && 0 !== $coupon_id ) {
 			$coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
 
 			$coupon_expiry = '';
-			$woo_ver = WC()->version;
+			$woo_ver       = WC()->version;
 
 			if ( version_compare( $woo_ver, '3.6.0', '<' ) ) {
 
@@ -316,7 +329,7 @@ function wps_recharge_giftcard_offine( $request ) {
 
 			if ( '' == $coupon_expiry || $coupon_expiry > current_time( 'timestamp' ) ) {
 
-				if ( isset( $recharge_amount ) && ! empty ( $recharge_amount ) && '0' != $recharge_amount && '0' < $recharge_amount ) {
+				if ( isset( $recharge_amount ) && ! empty( $recharge_amount ) && '0' != $recharge_amount && '0' < $recharge_amount ) {
 
 					$updated_amount = $coupon_amount + $recharge_amount;
 
@@ -335,22 +348,22 @@ function wps_recharge_giftcard_offine( $request ) {
 							$coupon_expiry = $coupon_expirys;
 					}
 
-					$response['code'] = 'success';
+					$response['code']    = 'success';
 					$response['message'] = 'Coupon is successfully Recharged';
 
-					$data = array(
-						'status' => 200,
+					$data             = array(
+						'status'           => 200,
 						'remaining_amount' => $updated_amount,
-						'discount_type' => $the_coupon->get_discount_type(),
-						'usage_count' => 0,
-						'usage_limit' => $usage_limit,
-						'description' => $the_coupon->get_description(),
-						'coupon_expiry' => $coupon_expiry,
+						'discount_type'    => $the_coupon->get_discount_type(),
+						'usage_count'      => 0,
+						'usage_limit'      => $usage_limit,
+						'description'      => $the_coupon->get_description(),
+						'coupon_expiry'    => $coupon_expiry,
 					);
 					$response['data'] = $data;
-					$response = new WP_REST_Response( $response );
+					$response         = new WP_REST_Response( $response );
 				} else {
-					$response['code'] = 'error';
+					$response['code']    = 'error';
 					$response['message'] = 'Recharge amount should be greater than 0';
 
 					$data = array(
@@ -358,11 +371,11 @@ function wps_recharge_giftcard_offine( $request ) {
 
 					);
 					$response['data'] = $data;
-					$response = new WP_REST_Response( $response );
+					$response         = new WP_REST_Response( $response );
 				}
 			} else {
 
-				$response['code'] = 'error';
+				$response['code']    = 'error';
 				$response['message'] = 'Coupon is expired';
 
 				$data = array(
@@ -370,10 +383,10 @@ function wps_recharge_giftcard_offine( $request ) {
 
 				);
 				$response['data'] = $data;
-				$response = new WP_REST_Response( $response );
+				$response         = new WP_REST_Response( $response );
 			}
 		} else {
-			$response['code'] = 'error';
+			$response['code']    = 'error';
 			$response['message'] = 'Coupon is not valid  Giftcard Coupon';
 
 			$data = array(
@@ -381,7 +394,7 @@ function wps_recharge_giftcard_offine( $request ) {
 
 			);
 			$response['data'] = $data;
-			$response = new WP_REST_Response( $response );
+			$response         = new WP_REST_Response( $response );
 		}
 		return $response;
 	} else {
@@ -437,8 +450,8 @@ function wps_permission_check( $request ) {
 	if ( empty( $wps_wgm_gifting_api_keys ) || ! is_array( $wps_wgm_gifting_api_keys ) ) {
 		return new WP_Error( 'rest_forbidden', esc_html__( 'API keys are not set properly on your site.', 'woo-gift-cards-lite' ), array( 'status' => 403 ) );
 	}
-	
-	if ( $consumer_key === $wps_wgm_gifting_api_keys['consumer_key'] && $consumer_secret === $wps_wgm_gifting_api_keys['consumer_secret'] ) {       
+
+	if ( $consumer_key === $wps_wgm_gifting_api_keys['consumer_key'] && $consumer_secret === $wps_wgm_gifting_api_keys['consumer_secret'] ) {
 		return true;
 	}
 	return new WP_Error( 'rest_forbidden', esc_html__( 'Invalid API key details.', 'woo-gift-cards-lite' ), array( 'status' => 401 ) );

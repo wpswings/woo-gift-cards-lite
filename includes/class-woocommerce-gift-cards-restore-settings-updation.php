@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 if ( ! class_exists( 'Woocommerce_Gift_Cards_Restore_Settings_Updation' ) ) {
