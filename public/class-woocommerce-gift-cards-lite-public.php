@@ -1322,6 +1322,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$original_price             = 0;
 					$variable_price_description = 0;
 					$delivery_method            = '';
+					$contributor_emails         = '';
 					$order                      = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$mailsend        = false;
@@ -1375,8 +1376,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
 
-								$group_gift_amt = intval( $order_subtotal );
-								$values         = explode( ',', $value->value );
+								$group_gift_amt     = intval( $order_subtotal );
+								$contributor_emails = $value->value;
+								$values             = explode( ',', $value->value );
 
 								foreach ( $values  as $value->value ) {
 											$conti_prod_id   = get_option( 'contributor_product_id' );
@@ -1410,6 +1412,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'item_id'                    => $item_id,
 							'item_quantity'              => $item_quantity,
 							'datecheck'                  => $datecheck,
+							'contributor_emails'         => $contributor_emails,
 							'variable_price_description' => $variable_price_description,
 						);
 						wps_wgm_hpos_update_meta_data( $order_id, 'temp_item_id', $item_id );
@@ -2371,11 +2374,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 		if ( $coupon->get_id() !== 0 ) {
 			// Security Fix #45219: Verify current user is the intended recipient.
 			// This prevents attackers from hijacking cards by changing their account email.
-			$current_user_id          = get_current_user_id();
-			$current_user             = get_user_by( 'id', $current_user_id );
-			$recipient_user_id        = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_recipient_user_id', true );
-			$recipient_email          = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
-			$recipient_binding_token  = get_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', true );
+			$current_user_id         = get_current_user_id();
+			$current_user            = get_user_by( 'id', $current_user_id );
+			$recipient_user_id       = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_recipient_user_id', true );
+			$recipient_email         = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+			$recipient_binding_token = get_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', true );
 
 			// Validate recipient authorization using the most secure method available.
 			// Priority: binding token > user ID > email (legacy only for old cards).
@@ -2795,7 +2798,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									$response['message'] = __( 'Data Match Successfully!!', 'woo-gift-cards-lite' );
 								} elseif ( $sender_email == $wps_check_email ) {
 									$html                = '<div class="amount_wrapper">';
-									 $html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
+									$html               .= '<div><strong style="color: #666; font-size: 14px;">' . __( 'Balance:', 'woo-gift-cards-lite' ) . '</strong> <span style="font-size: 16px; font-weight: 600;">' . wc_price( $left_amount ) . '</span></div>';
 									$html               .= '</div>';
 									$response['result']  = true;
 									$response['html']    = $html;
@@ -2952,10 +2955,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					// Security Fix #45219: Verify current user is the intended recipient.
 					// This prevents attackers from hijacking cards by changing their account email.
-					$current_user             = get_user_by( 'id', $user_id );
-					$recipient_user_id        = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_recipient_user_id', true );
-					$recipient_email          = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
-					$recipient_binding_token  = get_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', true );
+					$current_user            = get_user_by( 'id', $user_id );
+					$recipient_user_id       = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_recipient_user_id', true );
+					$recipient_email         = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+					$recipient_binding_token = get_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', true );
 
 					// Validate recipient authorization using the most secure method available.
 					// Priority: binding token > user ID > email (legacy only for old cards).

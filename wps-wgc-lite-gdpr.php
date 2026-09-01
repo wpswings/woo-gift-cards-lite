@@ -79,7 +79,7 @@ add_filter( 'wp_privacy_personal_data_exporters', 'wps_wgm_plugin_register_expor
  */
 function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 	$export_items = array();
-	$user = get_user_by( 'email', $email_address );
+	$user         = get_user_by( 'email', $email_address );
 	if ( $user && $user->ID ) {
 
 		$item_id = "wps-wgm-recipient-details-{$user->ID}";
@@ -98,10 +98,10 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 			// HPOS Enabled.
 			$customer_orders = wc_get_orders(
 				array(
-					'customer'    => $user->ID,
-					'status'      => array_keys( wc_get_order_statuses() ),
-					'type'        => wc_get_order_types(),
-					'limit'       => -1,    // To retrieve all customer orders.
+					'customer' => $user->ID,
+					'status'   => array_keys( wc_get_order_statuses() ),
+					'type'     => wc_get_order_types(),
+					'limit'    => -1,    // To retrieve all customer orders.
 				)
 			);
 		} else {
@@ -122,11 +122,11 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$item_meta_data = $item->get_meta_data();
-						$to = '';
-						$to_name = '';
-						$from = '';
-						$gift_msg = '';
-						$gift_img_name = '';
+						$to             = '';
+						$to_name        = '';
+						$from           = '';
+						$gift_msg       = '';
+						$gift_img_name  = '';
 						if ( ! empty( $item_meta_data ) ) {
 							foreach ( $item_meta_data as $key => $value ) {
 								if ( isset( $value->key ) && 'To' == $value->key && ! empty( $value->value ) ) {
@@ -147,10 +147,10 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 								);
 							}
 							if ( ! empty( $from ) ) {
-								  $data[] = array(
-									  'name'  => __( 'Buyer Name/Email', 'woo-gift-cards-lite' ),
-									  'value' => $from,
-								  );
+									$data[] = array(
+										'name'  => __( 'Buyer Name/Email', 'woo-gift-cards-lite' ),
+										'value' => $from,
+									);
 							}
 							if ( ! empty( $gift_msg ) ) {
 								$data[] = array(
@@ -194,7 +194,7 @@ function wps_wgm_plugin_user_data_exporter( $email_address, $page = 1 ) {
 function wps_wgm_plugin_register_erasers( $erasers = array() ) {
 	$erasers[] = array(
 		'eraser_friendly_name' => __( 'Recipient Details', 'woo-gift-cards-lite' ),
-		'callback'               => 'wps_wgm_plugin_user_data_eraser',
+		'callback'             => 'wps_wgm_plugin_user_data_eraser',
 	);
 	return $erasers;
 }
@@ -221,8 +221,8 @@ function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 			'done'           => true,
 		);
 	}
-	$user = get_user_by( 'email', $email_address );
-	$messages = array();
+	$user           = get_user_by( 'email', $email_address );
+	$messages       = array();
 	$items_removed  = false;
 	$items_retained = false;
 	if ( $user && $user->ID ) {
@@ -232,10 +232,10 @@ function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 			// HPOS Enabled.
 			$customer_orders = wc_get_orders(
 				array(
-					'customer'    => $user->ID,
-					'status'      => array_keys( wc_get_order_statuses() ),
-					'type'        => wc_get_order_types(),
-					'limit'       => -1,    // To retrieve all customer orders.
+					'customer' => $user->ID,
+					'status'   => array_keys( wc_get_order_statuses() ),
+					'type'     => wc_get_order_types(),
+					'limit'    => -1,    // To retrieve all customer orders.
 				)
 			);
 		} else {
@@ -256,41 +256,41 @@ function wps_wgm_plugin_user_data_eraser( $email_address, $page = 1 ) {
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$item_meta_data = $item->get_meta_data();
-						$to = '';
-						$from = '';
-						$gift_msg = '';
+						$to             = '';
+						$from           = '';
+						$gift_msg       = '';
 						if ( ! empty( $item_meta_data ) ) {
 							foreach ( $item_meta_data as $key => $value ) {
 								if ( isset( $value->key ) && 'To' == $value->key && ! empty( $value->value ) ) {
 									$status = woocommerce_delete_order_item_meta( $item_id, $value->key, $value->value, true );
 									if ( $status ) {
-										$items_removed  = true;
+										$items_removed = true;
 									} else {
-										$messages[] = __( 'Removed key "TO"', 'woo-gift-cards-lite' );
+										$messages[]     = __( 'Removed key "TO"', 'woo-gift-cards-lite' );
 										$items_retained = true;
 									}
 								}
 								if ( isset( $value->key ) && 'From' == $value->key && ! empty( $value->value ) ) {
 									$status = woocommerce_delete_order_item_meta( $item_id, $value->key, $value->value, true );
 									if ( $status ) {
-										$items_removed  = true;
+										$items_removed = true;
 									} else {
-										$messages[] = __( 'Removed key "From"', 'woo-gift-cards-lite' );
+										$messages[]     = __( 'Removed key "From"', 'woo-gift-cards-lite' );
 										$items_retained = true;
 									}
 								}
 								if ( isset( $value->key ) && 'Message' == $value->key && ! empty( $value->value ) ) {
 									$status = woocommerce_delete_order_item_meta( $item_id, $value->key, $value->value, true );
 									if ( $status ) {
-										$items_removed  = true;
+										$items_removed = true;
 									} else {
-										$messages[] = __( 'Removed key "Message"', 'woo-gift-cards-lite' );
+										$messages[]     = __( 'Removed key "Message"', 'woo-gift-cards-lite' );
 										$items_retained = true;
 									}
 								}
 							}
 						} else {
-							$items_removed  = true;
+							$items_removed = true;
 						}
 					}
 				}

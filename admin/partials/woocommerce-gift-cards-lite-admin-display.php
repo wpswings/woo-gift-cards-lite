@@ -19,7 +19,7 @@ if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
 }
 
-do_action('gift_card_admin_page_before_lead_engine');
+do_action( 'gift_card_admin_page_before_lead_engine' );
 $is_pro_active = wps_uwgc_pro_active();
 
 $wps_wgm_setting_tab = array(
