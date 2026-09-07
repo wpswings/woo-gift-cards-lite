@@ -2061,7 +2061,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$_POST['width']                   = '650';
 		$_POST['height']                  = '480';
 		$_POST['TB_iframe']               = true;
-		$_POST['wps_gc_report_nonce']     = wp_create_nonce( 'wps-gc-report-nonce' );
 		$query                            = http_build_query( $_POST );
 		$ajax_url                         = home_url( "?$query" );
 		echo wp_kses_post( $ajax_url );
@@ -2189,7 +2188,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		}
 
 		// Verify nonce.
-		if ( ! isset( $_GET['wps_gc_report_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['wps_gc_report_nonce'] ) ), 'wps-gc-report-nonce' ) ) {
+		if ( ! isset( $_GET['wps_uwgc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['wps_uwgc_nonce'] ) ), 'wps-uwgc-giftcard-report-nonce' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'woo-gift-cards-lite' ) );
 		}
 

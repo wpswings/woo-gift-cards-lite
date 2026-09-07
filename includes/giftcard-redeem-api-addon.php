@@ -142,19 +142,6 @@ function wps_redeem_giftcard_offline( $request ) {
 		$the_coupon = new WC_Coupon( $coupon_code );
 		$coupon_id  = $the_coupon->get_id();
 		if ( '' !== $coupon_id && 0 !== $coupon_id ) {
-			// Security Fix CVE-2026-75861: Verify the binding token before allowing redemption.
-			$recipient_binding_token = get_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', true );
-			if ( ! empty( $recipient_binding_token ) ) {
-				$provided_token = isset( $request_params['wps_gc_token'] ) ? sanitize_text_field( $request_params['wps_gc_token'] ) : '';
-				if ( empty( $provided_token ) || ! hash_equals( $recipient_binding_token, $provided_token ) ) {
-					return new WP_Error(
-						'unauthorized',
-						__( 'You are not authorized to redeem this gift card. Invalid or missing binding token.', 'woo-gift-cards-lite' ),
-						array( 'status' => 403 )
-					);
-				}
-			}
-
 			$coupon_amount      = get_post_meta( $coupon_id, 'coupon_amount', true );
 			$coupon_usage_count = get_post_meta( $coupon_id, 'usage_count', true );
 			$coupon_usage_limit = get_post_meta( $coupon_id, 'usage_limit', true );
