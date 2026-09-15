@@ -1322,7 +1322,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$original_price             = 0;
 					$variable_price_description = 0;
 					$delivery_method            = '';
-					$contributor_emails         = '';
 					$order                      = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$mailsend        = false;
@@ -1376,9 +1375,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 								$order_subtotal = $order->get_subtotal(); // Subtotal including taxes and discounts.
 
-								$group_gift_amt     = intval( $order_subtotal );
-								$contributor_emails = $value->value;
-								$values             = explode( ',', $value->value );
+								$group_gift_amt = intval( $order_subtotal );
+								$values         = explode( ',', $value->value );
 
 								foreach ( $values  as $value->value ) {
 											$conti_prod_id   = get_option( 'contributor_product_id' );
@@ -1412,7 +1410,6 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							'item_id'                    => $item_id,
 							'item_quantity'              => $item_quantity,
 							'datecheck'                  => $datecheck,
-							'contributor_emails'         => $contributor_emails,
 							'variable_price_description' => $variable_price_description,
 						);
 						wps_wgm_hpos_update_meta_data( $order_id, 'temp_item_id', $item_id );
@@ -1430,12 +1427,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							} else {
 								$inc_tax_status = false;
 							}
-							// Security Fix CVE-2026-19436: Use actual amount paid per unit, not pre-discount price.
-							// Calculate per-unit price from actual line total to prevent value inflation on discounted purchases.
-							$item_total            = $item->get_total(); // Actual amount paid after all discounts.
-							$item_quantity_check   = $item->get_quantity();
-							$actual_per_unit_price = $item_quantity_check > 0 ? ( $item_total / $item_quantity_check ) : 0;
-							$couponamont           = max( 0, $actual_per_unit_price ); // Ensure non-negative value.
+							$couponamont = $original_price;
 
 							$wps_wgm_lite = true;
 							$wps_wgm_lite = apply_filters( 'wps_wgm_check_coupon_creation_mails', $wps_wgm_mail_template_data, $order_id, $item, $wps_wgm_lite );
