@@ -322,6 +322,14 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 == Changelog ==
 
+= 3.2.12 - Released on 15 September 2026 =
+* Fix: Tax issue resolved.
+
+= 3.2.11 - Released on 7 September 2026 =
+* Fix: CVE-2026-19436, the gift card value inflation
+* Fix: CVE-2026-19439, the report details disclosure
+* Fix: CVE-2026-75861, the unauthorized redemption
+
 = 3.2.10 - Released on 1 September 2026 =
 * New: Compatibility with the latest WC ( 11.0.1 ) and WP ( 7.1 )
 * Enhancement: DB Query Optimisation
@@ -691,9 +699,5 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.10 - Released on 1 September 2026 =
-* New: Compatibility with the latest WC ( 11.0.1 ) and WP ( 7.1 )
-* Enhancement: DB Query Optimisation
-* Enhancement: PHP 8.3 Compatibility Audits & Fixes
-* Enhancement: Full HPOS Compatibility 
-* Enhancement: WooCommerce Blocks — Full Cart & Checkout Compatibility
+= 3.2.12 - Released on 15 September 2026 =
+* Fix: Tax issue resolved.
