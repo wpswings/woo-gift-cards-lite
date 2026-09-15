@@ -6,7 +6,7 @@ Requires at least: 6.7
 Tested up to: 7.1
 WC requires at least: 6.5
 WC tested up to: 11.0.1
-Stable tag:  3.2.11
+Stable tag:  3.2.12
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -321,14 +321,13 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
-
 = 3.2.12 - Released on 15 September 2026 =
-* Fix: Tax issue resolved.
+* Fix: Tax issue resolved 
 
 = 3.2.11 - Released on 7 September 2026 =
-* Fix: CVE-2026-19436, the gift card value inflation
-* Fix: CVE-2026-19439, the report details disclosure
-* Fix: CVE-2026-75861, the unauthorized redemption
+*  Vulnerabilities Fixes - CVE-2026-19436, the gift card value inflation
+*  Vulnerabilities Fixes - CVE-2026-19439, the report details disclosure
+*  Vulnerabilities Fixes - CVE-2026-75861, the unauthorized redemption
 
 = 3.2.10 - Released on 1 September 2026 =
 * New: Compatibility with the latest WC ( 11.0.1 ) and WP ( 7.1 )
@@ -700,4 +699,4 @@ New: Email Template for Mother's Day
 == Upgrade Notice ==
 
 = 3.2.12 - Released on 15 September 2026 =
-* Fix: Tax issue resolved.
+* Fix: Tax issue resolved 
