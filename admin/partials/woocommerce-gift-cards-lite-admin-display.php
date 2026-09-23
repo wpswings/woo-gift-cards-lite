@@ -12,13 +12,14 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
 }
 
+do_action( 'gift_card_admin_page_before_lead_engine' );
 $is_pro_active = wps_uwgc_pro_active();
 
 $wps_wgm_setting_tab = array(
@@ -49,7 +50,7 @@ $wps_wgm_setting_tab = array(
 );
 
 if ( ! $is_pro_active ) {
-	$wps_wgm_setting_tab['offline_setting'] = array(
+	$wps_wgm_setting_tab['offline_setting']       = array(
 		'title'     => esc_html__( 'Offline Giftcards', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-offline-setting.php',
 	);
@@ -61,27 +62,27 @@ if ( ! $is_pro_active ) {
 		'title'     => esc_html__( 'Group Gifting', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-group-gifting-setting.php',
 	);
-	$wps_wgm_setting_tab['discount_setting'] = array(
+	$wps_wgm_setting_tab['discount_setting']      = array(
 		'title'     => esc_html__( 'Discount', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-discount-setting.php',
 	);
-	$wps_wgm_setting_tab['thankyou_setting'] = array(
+	$wps_wgm_setting_tab['thankyou_setting']      = array(
 		'title'     => esc_html__( 'Thankyou order', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-thankyou-setting.php',
 	);
-	$wps_wgm_setting_tab['qrcode_setting'] = array(
+	$wps_wgm_setting_tab['qrcode_setting']        = array(
 		'title'     => esc_html__( 'Qrcode / Barcode', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-qrcode-setting.php',
 	);
-	$wps_wgm_setting_tab['customizable_setting'] = array(
+	$wps_wgm_setting_tab['customizable_setting']  = array(
 		'title'     => esc_html__( 'Customizable Giftcard', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-customizable-setting.php',
 	);
-	$wps_wgm_setting_tab['notification_setting'] = array(
+	$wps_wgm_setting_tab['notification_setting']  = array(
 		'title'     => esc_html__( 'Notification', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-notification-setting.php',
 	);
-	$wps_wgm_setting_tab['rest_api_setting'] = array(
+	$wps_wgm_setting_tab['rest_api_setting']      = array(
 		'title'     => esc_html__( 'REST API', 'woo-gift-cards-lite' ),
 		'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/wps-wgm-rest-api-setting.php',
 	);
@@ -103,7 +104,7 @@ if ( ! $is_pro_active ) {
 	</div>
 </div>
 <?php
-$wps_wgm_setting_tab = apply_filters( 'wps_wgm_add_gift_card_setting_tab_before', $wps_wgm_setting_tab );
+$wps_wgm_setting_tab               = apply_filters( 'wps_wgm_add_gift_card_setting_tab_before', $wps_wgm_setting_tab );
 $wps_wgm_setting_tab['redeem_tab'] = array(
 	'title'     => esc_html__( 'Gift Card Redeem', 'woo-gift-cards-lite' ),
 	'file_path' => WPS_WGC_DIRPATH . 'admin/partials/templates/redeem-giftcard-settings.php',
@@ -131,12 +132,12 @@ $lite_visible_tabs = array(
 
 $visible_setting_tabs = $wps_wgm_setting_tab;
 
-$default_tab = 'overview_setting';
-$requested_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : $default_tab;
-$active_tab = array_key_exists( $requested_tab, $visible_setting_tabs ) ? $requested_tab : $default_tab;
-$active_tab_data = isset( $visible_setting_tabs[ $active_tab ] ) ? $visible_setting_tabs[ $active_tab ] : array();
-$active_tab_title = isset( $active_tab_data['title'] ) ? $active_tab_data['title'] : esc_html__( 'Gift Card Settings', 'woo-gift-cards-lite' );
-$tab_descriptions = array(
+$default_tab            = 'overview_setting';
+$requested_tab          = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : $default_tab;
+$active_tab             = array_key_exists( $requested_tab, $visible_setting_tabs ) ? $requested_tab : $default_tab;
+$active_tab_data        = isset( $visible_setting_tabs[ $active_tab ] ) ? $visible_setting_tabs[ $active_tab ] : array();
+$active_tab_title       = isset( $active_tab_data['title'] ) ? $active_tab_data['title'] : esc_html__( 'Gift Card Settings', 'woo-gift-cards-lite' );
+$tab_descriptions       = array(
 	'overview_setting'      => esc_html__( 'Review plugin activity, shortcuts, and essential setup details for your store.', 'woo-gift-cards-lite' ),
 	'general_setting'       => esc_html__( 'Control the base plugin behavior, delivery rules, and request availability windows.', 'woo-gift-cards-lite' ),
 	'product_setting'       => esc_html__( 'Manage gift card product rules, field visibility, pricing, and purchase configuration.', 'woo-gift-cards-lite' ),
@@ -156,7 +157,7 @@ $tab_descriptions = array(
 	'premium_plugin'        => esc_html__( 'Explore premium-only modules available for advanced gift card workflows.', 'woo-gift-cards-lite' ),
 );
 $active_tab_description = isset( $tab_descriptions[ $active_tab ] ) ? $tab_descriptions[ $active_tab ] : esc_html__( 'Configure and manage all gift card options from this section.', 'woo-gift-cards-lite' );
-$plugin_display_version = defined( 'WPS_WGC_VERSION' ) ? WPS_WGC_VERSION : '3.2.7';
+$plugin_display_version = defined( 'WPS_WGC_VERSION' ) ? WPS_WGC_VERSION : '3.2.11';
 if ( $is_pro_active && defined( 'WPS_UWGC_PLUGIN_VERSION' ) ) {
 	$plugin_display_version = WPS_UWGC_PLUGIN_VERSION;
 }
@@ -167,10 +168,10 @@ $plugin_version_label = sprintf(
 	$is_pro_active ? esc_html__( 'Pro', 'woo-gift-cards-lite' ) : esc_html__( 'Lite', 'woo-gift-cards-lite' )
 );
 
-$max_primary_tabs = 8;
-$primary_setting_tabs = array_slice( $visible_setting_tabs, 0, $max_primary_tabs, true );
+$max_primary_tabs      = 8;
+$primary_setting_tabs  = array_slice( $visible_setting_tabs, 0, $max_primary_tabs, true );
 $overflow_setting_tabs = array_slice( $visible_setting_tabs, $max_primary_tabs, null, true );
-$is_overflow_active = array_key_exists( $active_tab, $overflow_setting_tabs );
+$is_overflow_active    = array_key_exists( $active_tab, $overflow_setting_tabs );
 
 $help_links = array(
 	array(
@@ -195,7 +196,7 @@ $help_links = array(
 	),
 );
 
-$wps_wgm_services_link = Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::wps_wgm_get_services_landing_url();
+$wps_wgm_services_link      = Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form::wps_wgm_get_services_landing_url();
 $wps_wgm_marketing_services = array(
 	array(
 		'icon'        => 'seo',
@@ -219,9 +220,8 @@ $wps_wgm_marketing_services = array(
 	),
 );
 
-// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
+$secure_nonce      = wp_create_nonce( 'wps-gc-auth-nonce' );
+$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-gc-auth-nonce' );
 if ( ! $id_nonce_verified ) {
 	wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
 }
@@ -265,14 +265,14 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 
 			<hr class="wp-header-end" style="display:none;visibility:hidden;height:0;margin:0;border:0;" />
 
-			<?php if ( ! empty( $dashboard_top_notice ) ) { ?>
+			<?php if ( ! empty( $dashboard_top_notice ) ) : ?>
 				<div class="wps_wgm_dashboard_page_notice wps_wgm_dashboard_page_notice_<?php echo esc_attr( $dashboard_top_notice['type'] ); ?>">
 					<p><?php echo esc_html( $dashboard_top_notice['message'] ); ?></p>
 					<button type="button" class="notice-dismiss">
 						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss notice.', 'woo-gift-cards-lite' ); ?></span>
 					</button>
 				</div>
-			<?php } ?>
+			<?php endif; ?>
 
 			<div class="wps_wgm_dashboard_notice_stack">
 				<div class="wps_wgm_dashboard_notice wps_wgm_dashboard_notice_status">
@@ -297,10 +297,10 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 					<div class="wps_wgm_tabs_meta">
 						<span class="wps_wgm_tabs_version"><?php echo esc_html( $plugin_version_label ); ?></span>
 					</div>
-					<?php foreach ( $primary_setting_tabs as $key => $wps_tab ) { ?>
+					<?php foreach ( $primary_setting_tabs as $key => $wps_tab ) : ?>
 						<?php
-						$is_active = ( $active_tab === $key );
-						$is_locked = ( ! $is_pro_active && ! in_array( $key, $lite_visible_tabs, true ) );
+						$is_active   = ( $active_tab === $key );
+						$is_locked   = ( ! $is_pro_active && ! in_array( $key, $lite_visible_tabs, true ) );
 						$tab_classes = array( 'wps_wgm_nav_tab', 'nav-tab' );
 
 						if ( $is_active ) {
@@ -318,14 +318,14 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 									href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=' . $key ) ); ?>"
 								>
 									<span class="wps_wgm_nav_tab_title"><?php echo esc_html( $wps_tab['title'] ); ?></span>
-									<?php if ( $is_locked ) { ?>
+									<?php if ( $is_locked ) : ?>
 									<span class="wps_wgm_nav_badge"><?php esc_html_e( 'Pro', 'woo-gift-cards-lite' ); ?></span>
-								<?php } ?>
+								<?php endif; ?>
 							</a>
 						</div>
-					<?php } ?>
+					<?php endforeach; ?>
 
-					<?php if ( ! empty( $overflow_setting_tabs ) ) { ?>
+					<?php if ( ! empty( $overflow_setting_tabs ) ) : ?>
 						<div class="wps_wgm_tabs wps_wgm_tabs_more">
 							<button
 								type="button"
@@ -336,21 +336,21 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 								<span class="wps_wgm_more_caret">▼</span>
 							</button>
 							<div class="wps_wgm_more_menu">
-									<?php foreach ( $overflow_setting_tabs as $key => $wps_tab ) { ?>
+									<?php foreach ( $overflow_setting_tabs as $key => $wps_tab ) : ?>
 										<?php $is_locked = ( ! $is_pro_active && ! in_array( $key, $lite_visible_tabs, true ) ); ?>
 										<a
 											class="wps_wgm_more_menu_link<?php echo esc_attr( $active_tab === $key ? ' is-active' : '' ); ?><?php echo esc_attr( $is_locked ? ' is-locked' : '' ); ?>"
 											href="<?php echo esc_url( admin_url( 'edit.php?post_type=giftcard&page=wps-wgc-setting-lite&tab=' . $key ) ); ?>"
 										>
 											<?php echo esc_html( $wps_tab['title'] ); ?>
-											<?php if ( $is_locked ) { ?>
+											<?php if ( $is_locked ) : ?>
 											<span class="wps_wgm_nav_badge"><?php esc_html_e( 'Pro', 'woo-gift-cards-lite' ); ?></span>
-										<?php } ?>
+										<?php endif; ?>
 									</a>
-								<?php } ?>
+								<?php endforeach; ?>
 							</div>
 						</div>
-					<?php } ?>
+					<?php endif; ?>
 				</div>
 
 				<div class="wps_wgm_content_template">
@@ -400,7 +400,7 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 									</div>
 									<p><?php esc_html_e( "Expert solutions to boost your store's performance.", 'woo-gift-cards-lite' ); ?></p>
 									<div class="wps_wgm_service_rail">
-										<?php foreach ( $wps_wgm_marketing_services as $wps_wgm_marketing_service ) { ?>
+										<?php foreach ( $wps_wgm_marketing_services as $wps_wgm_marketing_service ) : ?>
 											<a class="wps_wgm_service_rail_item" href="<?php echo esc_url( $wps_wgm_services_link ); ?>" target="_blank" rel="noopener noreferrer">
 												<span class="wps_wgm_service_rail_icon wps_wgm_service_rail_icon_<?php echo esc_attr( $wps_wgm_marketing_service['icon'] ); ?>" aria-hidden="true"></span>
 												<span class="wps_wgm_service_rail_content">
@@ -409,7 +409,7 @@ $dashboard_top_notice = apply_filters( 'wps_uwgc_dashboard_top_notice', $dashboa
 												</span>
 												<span class="wps_wgm_service_rail_arrow" aria-hidden="true">&rsaquo;</span>
 											</a>
-										<?php } ?>
+										<?php endforeach; ?>
 									</div>
 									<button type="button" class="wps_wgm_sidebar_services_button" data-wps-wgm-open-expert-modal><?php esc_html_e( 'Talk to an Expert', 'woo-gift-cards-lite' ); ?></button>
 									<div class="wps_wgm_service_rail_footer"><?php esc_html_e( 'Services by WP Swings', 'woo-gift-cards-lite' ); ?></div>

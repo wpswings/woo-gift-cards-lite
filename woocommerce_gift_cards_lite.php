@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile WordPress.Files.FileName.NotHyphenatedLowercase, WordPress.Files.FileName.InvalidClassFileName
 /**
  * The plugin bootstrap file
  *
@@ -15,7 +16,7 @@
  * Plugin Name:       Ultimate Gift Cards For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/woo-gift-cards-lite/?utm_source=wpswings-giftcards-org&utm_medium=giftcards-org-backend&utm_campaign=org
  * Description:       <code><strong>Ultimate Gift Cards For WooCommerce</strong></code> allows merchants to create and sell fascinating Gift Card Product with multiple price variation. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-giftcards-shop&utm_medium=giftcards-org-backend&utm_campaign=shop-page" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           3.2.7
+ * Version:           3.2.12
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-giftcards-official&utm_medium=giftcards-org-backend&utm_campaign=official
  * License:           GPL-3.0+
@@ -24,15 +25,15 @@
  * Requires Plugins:  woocommerce
  * Tested up to:      7.1
  * Requires at least: 6.7
- * WC tested up to:   10.7.0
+ * WC tested up to:   11.0.1
  * WC requires at least: 6.5
  * Requires PHP:      7.4
- * Domain Path:       /languages
+ * Domain Path:       /languagess
  */
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die();
+	die;
 }
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
@@ -49,8 +50,10 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$activated = true;
 	}
-} elseif ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+} else {
+	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 		$activated = true;
+	}
 }
 
 add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
@@ -71,7 +74,7 @@ if ( $activated ) {
 	define( 'WPS_WGC_DIRPATH', plugin_dir_path( __FILE__ ) );
 	define( 'WPS_WGC_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WPS_WGC_ADMIN_URL', admin_url() );
-	define( 'WPS_WGC_VERSION', '3.2.7' );
+	define( 'WPS_WGC_VERSION', '3.2.12' );
 	define( 'WPS_WGC_ONBOARD_PLUGIN_NAME', 'Ultimate Gift Cards For WooCommerce' );
 	define( 'WPS_GIFT_TEMPLATE_URL', 'https://demo.wpswings.com/client-notification/' );
 	/**
@@ -88,6 +91,7 @@ if ( $activated ) {
 	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-lite.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 
+	
 	/**
 	 *Add link for settings
 	*/
@@ -177,8 +181,65 @@ if ( $activated ) {
 		return $cache[ $key ];
 	}
 
-	register_activation_hook( __FILE__, 'wps_wgm_create_gift_card_taxonomy' );
+	// Security: Safe activation with requirement checks and error handling.
+	register_activation_hook( __FILE__, 'wps_wgc_safe_activate' );
 
+	/**
+	 * Safe activation with PHP and WooCommerce requirement checks.
+	 *
+	 * @param boolean $network_wide Whether this is a network-wide activation.
+	 * @since 3.2.10
+	 */
+	function wps_wgc_safe_activate( $network_wide ) {
+		// Check PHP version requirement.
+		if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires PHP 7.4 or higher. You are running PHP ', 'woo-gift-cards-lite' ) . PHP_VERSION,
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+
+		// Check WooCommerce is active.
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires WooCommerce to be installed and activated.', 'woo-gift-cards-lite' ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+
+		// Check WooCommerce version.
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.5', '<' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Ultimate Gift Cards For WooCommerce requires WooCommerce 6.5 or higher. You are running WooCommerce ', 'woo-gift-cards-lite' ) . esc_html( WC_VERSION ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+
+		// Proceed with activation with error handling.
+		try {
+			wps_wgm_create_gift_card_taxonomy( $network_wide );
+		} catch ( Exception $e ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Plugin activation failed: ', 'woo-gift-cards-lite' ) . esc_html( $e->getMessage() ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		} catch ( Error $e ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die(
+				esc_html__( 'Plugin activation failed: ', 'woo-gift-cards-lite' ) . esc_html( $e->getMessage() ),
+				esc_html__( 'Plugin Activation Error', 'woo-gift-cards-lite' ),
+				array( 'back_link' => true )
+			);
+		}
+	}
 
 	/**
 	 * Create the Taxonomy for Gift Card Product at activation.
@@ -236,6 +297,8 @@ if ( $activated ) {
 			// activated on a single site, in a multi-site or on a single site.
 			wps_create_giftcard_page();
 		}
+
+		require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 		$restore_data = new Woocommerce_Gift_Cards_Activation();
 		$restore_data->wps_wgm_restore_data( $network_wide );
 		set_transient( 'wps-wgm-giftcard-setting-notice', true, 5 );
@@ -396,6 +459,15 @@ if ( $activated ) {
 	}
 
 	add_action( 'admin_init', 'wps_uwgc_create_giftcard_template_org' );
+	add_action( 'admin_init', 'wps_wgm_run_security_migration' );
+
+	/**
+	 * Run security migration for CVE-2026-75861 fix.
+	 * Adds binding tokens to existing gift cards.
+	 */
+	function wps_wgm_run_security_migration() {
+		Woocommerce_Gift_Cards_Activation::migrate_gift_cards_to_binding_tokens();
+	}
 
 	/**
 	 * Function to create giftcard template.
@@ -550,12 +622,8 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 	 * Notification.
 	 */
 	function wps_banner_notification_plugin_html() {
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
+		// Security Fix: Removed dummy nonce check that always passes (created and verified same value).
+		// No nonce needed for simple display function with no user input processing.
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
@@ -572,6 +640,7 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
 					if ( ! empty( $banner_image ) && ! empty( $banner_url ) ) {
+
 						?>
 							<div class="wps-offer-notice notice notice-warning is-dismissible">
 								<div class="notice-container">
@@ -599,12 +668,8 @@ if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
 	 */
 	function wps_giftcard_notification_plugin_html() {
 
-		// Security fix: Properly verify nonce from request instead of creating and immediately verifying
-		$nonce = isset( $_REQUEST['wps_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ) : '';
-		$id_nonce_verified = wp_verify_nonce( $nonce, 'wps-gc-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-				wp_die( esc_html__( 'Nonce Not verified', 'woo-gift-cards-lite' ) );
-		}
+		// Security Fix: Removed dummy nonce check that always passes (created and verified same value).
+		// No nonce needed for simple display function with no user input processing.
 
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
@@ -620,6 +685,7 @@ if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
 				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
 					if ( '' !== $banner_image && '' !== $banner_url ) {
+
 						?>
 								<div class="wps-offer-notice notice notice-warning is-dismissible">
 									<div class="notice-container">

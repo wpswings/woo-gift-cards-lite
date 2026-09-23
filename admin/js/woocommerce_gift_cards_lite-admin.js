@@ -10,7 +10,14 @@
 
 	jQuery( document ).ready(
 		function(){
-
+var nonStickyTabs = [ 'delivery_method', 'other_setting'];
+			 //featch current tab from url
+			 var urlParams = new URLSearchParams(window.location.search);
+			 var currentTab = urlParams.get('tab');
+                 if (nonStickyTabs.includes(currentTab)) {
+                jQuery(jQuery('#wps_wgm_save_delivery').parent()).prop('class','wps_data')
+				jQuery(jQuery('#wps_wgm_save_other').parent()).prop('class','wps_data')
+             }
 			var maxPercentField = $( '#wps_wgm_general_setting_giftcard_max_percent, input[name="wps_wgm_general_setting_giftcard_max_percent"]' );
 			if ( maxPercentField.length ) {
 				// Allow 0 to represent "no limit" without failing HTML5 min validation.

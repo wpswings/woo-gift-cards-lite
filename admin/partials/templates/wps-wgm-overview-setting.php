@@ -6,14 +6,14 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 ?>
 
 <div class="wps_wgm_table_wrapper wps_wgm_overview-wrapper">
 	<?php
-	$wgm_support_link = 'https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support';
+	$wgm_support_link   = 'https://wpswings.com/submit-query/?utm_source=wpswings-giftcards-support&utm_medium=giftcards-org-backend&utm_campaign=support';
 	$wgm_overview_cards = array(
 		array(
 			'image'       => WPS_WGC_URL . 'assets/images/featur1.png',
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="wps-wgm-overview__grid">
-			<?php foreach ( $wgm_overview_cards as $wgm_overview_card ) { ?>
+			<?php foreach ( $wgm_overview_cards as $wgm_overview_card ) : ?>
 				<div class="wps-wgm-overview-card">
 					<div class="wps-wgm-overview-card__media">
 						<img src="<?php echo esc_url( $wgm_overview_card['image'] ); ?>" alt="<?php echo esc_attr( $wgm_overview_card['image_alt'] ); ?>">
@@ -69,7 +69,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<h3><?php echo esc_html( $wgm_overview_card['title'] ); ?></h3>
 					<p><?php echo esc_html( $wgm_overview_card['description'] ); ?></p>
 				</div>
-			<?php } ?>
+			<?php endforeach; ?>
 		</div>
 
 		<div class="wps-wgm-overview__cta">
@@ -85,6 +85,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php
 	if ( ! is_plugin_active( 'giftware/giftware.php' ) ) {
+
+
 		?>
 
 

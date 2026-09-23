@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 	/**
@@ -37,7 +37,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 					restore_current_blog();
 				}
 			} else {
-				$wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
+				$wps_gw_new_gift_card_page_layout       = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
 				$wps_gw_new_gift_card_page_layout_first = get_option( 'wps_gw_new_gift_card_page_layout_yes', '' );
 				if ( empty( $wps_gw_new_gift_card_page_layout_first ) ) {
 					$wps_wgm_other_settings = array(
@@ -64,21 +64,21 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 			$wps_general_settings = get_option( 'wps_wgm_general_settings', array() );
 			$general_setting_flag = false;
 			if ( empty( $wps_general_settings ) ) {
-				$giftcard_enable = get_option( 'wps_wgm_general_setting_enable', false );
-				$giftcard_tax_cal_enable = get_option( 'wps_wgm_general_setting_tax_cal_enable', false );
-				$giftcard_shop_page = get_option( 'wps_wgm_general_setting_shop_page_enable', false );
-				$giftcard_individual_use = get_option( 'wps_wgm_general_setting_giftcard_individual_use', false );
-				$giftcard_freeshipping = get_option( 'wps_wgm_general_setting_giftcard_freeshipping', false );
-				$giftcard_coupon_length = get_option( 'wps_wgm_general_setting_giftcard_coupon_length', false );
-				$giftcard_prefix = get_option( 'wps_wgm_general_setting_giftcard_prefix', false );
+				$giftcard_enable          = get_option( 'wps_wgm_general_setting_enable', false );
+				$giftcard_tax_cal_enable  = get_option( 'wps_wgm_general_setting_tax_cal_enable', false );
+				$giftcard_shop_page       = get_option( 'wps_wgm_general_setting_shop_page_enable', false );
+				$giftcard_individual_use  = get_option( 'wps_wgm_general_setting_giftcard_individual_use', false );
+				$giftcard_freeshipping    = get_option( 'wps_wgm_general_setting_giftcard_freeshipping', false );
+				$giftcard_coupon_length   = get_option( 'wps_wgm_general_setting_giftcard_coupon_length', false );
+				$giftcard_prefix          = get_option( 'wps_wgm_general_setting_giftcard_prefix', false );
 				$giftcard_prefix_sanitize = preg_replace( '/\\\\/', '', $giftcard_prefix );
 				$giftcard_prefix_sanitize = sanitize_text_field( $giftcard_prefix_sanitize );
-				$giftcard_expiry = get_option( 'wps_wgm_general_setting_giftcard_expiry', 0 );
-				$giftcard_minspend = get_option( 'wps_wgm_general_setting_giftcard_minspend', false );
-				$giftcard_maxspend = get_option( 'wps_wgm_general_setting_giftcard_maxspend', false );
-				$giftcard_use = get_option( 'wps_wgm_general_setting_giftcard_use', 0 );
+				$giftcard_expiry          = get_option( 'wps_wgm_general_setting_giftcard_expiry', 0 );
+				$giftcard_minspend        = get_option( 'wps_wgm_general_setting_giftcard_minspend', false );
+				$giftcard_maxspend        = get_option( 'wps_wgm_general_setting_giftcard_maxspend', false );
+				$giftcard_use             = get_option( 'wps_wgm_general_setting_giftcard_use', 0 );
 				$wps_wgm_general_settings = array(
-					'wps_wgm_general_setting_enable' => $giftcard_enable,
+					'wps_wgm_general_setting_enable'       => $giftcard_enable,
 					'wps_wgm_general_setting_tax_cal_enable' => $giftcard_tax_cal_enable,
 					'wps_wgm_general_setting_shop_page_enable' => $giftcard_shop_page,
 					'wps_wgm_general_setting_giftcard_individual_use' => $giftcard_individual_use,
@@ -123,10 +123,10 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 			$product_setting_flag = false;
 			$wps_product_settings = get_option( 'wps_wgm_product_settings', array() );
 			if ( empty( $wps_product_settings ) ) {
-				$giftcard_exclude_product = get_option( 'wps_wgm_product_setting_exclude_product', array() );
+				$giftcard_exclude_product  = get_option( 'wps_wgm_product_setting_exclude_product', array() );
 				$giftcard_exclude_category = get_option( 'wps_wgm_product_setting_exclude_category', array() );
-				$giftcard_ex_sale = get_option( 'wps_wgm_product_setting_giftcard_ex_sale', false );
-				$wps_wgm_product_settings = array(
+				$giftcard_ex_sale          = get_option( 'wps_wgm_product_setting_giftcard_ex_sale', false );
+				$wps_wgm_product_settings  = array(
 					'wps_wgm_product_setting_giftcard_ex_sale' => $giftcard_ex_sale,
 					'wps_wgm_product_setting_exclude_product' => $giftcard_exclude_product,
 					'wps_wgm_product_setting_exclude_category' => $giftcard_exclude_category,
@@ -157,9 +157,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 			$wps_mail_settings = get_option( 'wps_wgm_mail_settings', array() );
 			if ( empty( $wps_mail_settings ) ) {
 				$wps_wgm_other_setting_upload_logo = get_option( 'wps_wgm_other_setting_upload_logo', false );
-				$giftcard_giftcard_subject = get_option( 'wps_wgm_other_setting_giftcard_subject', false );
-				$giftcard_giftcard_subject = stripcslashes( $giftcard_giftcard_subject );
-				$wps_wgm_mail_settings = array(
+				$giftcard_giftcard_subject         = get_option( 'wps_wgm_other_setting_giftcard_subject', false );
+				$giftcard_giftcard_subject         = stripcslashes( $giftcard_giftcard_subject );
+				$wps_wgm_mail_settings             = array(
 					'wps_wgm_mail_setting_upload_logo' => $wps_wgm_other_setting_upload_logo,
 					'wps_wgm_mail_setting_giftcard_subject' => $giftcard_giftcard_subject,
 				);
@@ -217,9 +217,9 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 			$wps_other_settings = get_option( 'wps_wgm_other_settings', array() );
 			if ( empty( $wps_other_settings ) ) {
 
-				$wps_wgm_apply_coupon_disable = get_option( 'wps_wgm_additional_apply_coupon_disable', false );
+				$wps_wgm_apply_coupon_disable     = get_option( 'wps_wgm_additional_apply_coupon_disable', false );
 				$wps_gw_new_gift_card_page_layout = get_option( 'wps_gw_new_gift_card_page_layout', 'on' );
-				$wps_wgm_other_settings = array(
+				$wps_wgm_other_settings           = array(
 					'wps_wgm_additional_apply_coupon_disable' => $wps_wgm_apply_coupon_disable,
 					'wps_wgm_new_gift_card_page_layout' => $wps_gw_new_gift_card_page_layout,
 				);
@@ -248,11 +248,67 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 		}
 
 		/**
+		 * Create database tables for advanced reporting and failed coupon tracking.
+		 *
+		 * @name create_database_tables
+		 * @author WP Swings <webmaster@wpswings.com>
+		 * @link https://www.wpswings.com/
+		 */
+		public function create_database_tables() {
+			global $wpdb;
+			$charset_collate = $wpdb->get_charset_collate();
+
+			// Table for failed gift card operations.
+			$table_name = $wpdb->prefix . 'wps_gift_card_failures';
+
+			$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+				id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+				failure_timestamp datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				failure_type varchar(50) NOT NULL,
+				severity varchar(20) NOT NULL DEFAULT 'medium',
+				status varchar(20) NOT NULL DEFAULT 'new',
+				order_id bigint(20) UNSIGNED NULL,
+				coupon_id bigint(20) UNSIGNED NULL,
+				coupon_code varchar(255) NULL,
+				customer_email varchar(255) NULL,
+				customer_name varchar(255) NULL,
+				error_message text NULL,
+				error_code varchar(100) NULL,
+				stack_trace longtext NULL,
+				context longtext NULL,
+				retry_count int(11) NOT NULL DEFAULT 0,
+				last_retry_timestamp datetime NULL,
+				max_retries int(11) NOT NULL DEFAULT 3,
+				assigned_to bigint(20) UNSIGNED NULL,
+				resolution_notes text NULL,
+				resolved_timestamp datetime NULL,
+				created_by bigint(20) UNSIGNED NULL,
+				updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				PRIMARY KEY  (id),
+				KEY failure_timestamp (failure_timestamp),
+				KEY failure_type (failure_type),
+				KEY severity (severity),
+				KEY status (status),
+				KEY order_id (order_id),
+				KEY customer_email (customer_email)
+			) $charset_collate;";
+
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+			dbDelta( $sql );
+
+			// Store the database version for future updates.
+			update_option( 'wps_wgm_db_version', '1.0.0' );
+		}
+
+		/**
 		 * This function is used to restore the overall functionality of plugin
 		 *
 		 * @return void
 		 */
 		public function on_activation() {
+			// Create database tables for advanced reporting.
+			$this->create_database_tables();
+
 			$wps_check_enable = false;
 			$giftcard_enable  = get_option( 'wps_wgm_general_setting_enable', false );
 			if ( isset( $giftcard_enable ) && 'on' == $giftcard_enable ) {
@@ -289,5 +345,66 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Activation' ) ) {
 			}
 		}
 
+		/**
+		 * Migrate existing gift cards to use the secure binding token system.
+		 * This fixes CVE-2026-75861 for cards that were created before this security patch.
+		 *
+		 * @name migrate_gift_cards_to_binding_tokens
+		 * @author WP Swings <webmaster@wpswings.com>
+		 * @link https://www.wpswings.com/
+		 */
+		public static function migrate_gift_cards_to_binding_tokens() {
+			// Check if migration has already run.
+			$migration_version = get_option( 'wps_wgm_security_migration_version', '0' );
+			if ( version_compare( $migration_version, '3.2.12', '>=' ) ) {
+				return; // Migration already completed.
+			}
+
+			// Query all gift card coupons that don't have a binding token yet.
+			$args = array(
+				'post_type'      => 'shop_coupon',
+				'posts_per_page' => 100,
+				'post_status'    => 'publish',
+				'meta_query'     => array(
+					'relation' => 'AND',
+					array(
+						'key'     => 'wps_wgm_giftcard_coupon_mail_to',
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => 'wps_wgm_giftcard_recipient_binding_token',
+						'compare' => 'NOT EXISTS',
+					),
+				),
+			);
+
+			$query          = new WP_Query( $args );
+			$migrated_count = 0;
+
+			if ( $query->have_posts() ) {
+				while ( $query->have_posts() ) {
+					$query->the_post();
+					$coupon_id       = get_the_ID();
+					$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+
+					if ( ! empty( $recipient_email ) ) {
+						// Generate a cryptographically random binding token for this existing card.
+						// This token is unguessable and unique per card.
+						$recipient_binding_token = bin2hex( random_bytes( 32 ) );
+						update_post_meta( $coupon_id, 'wps_wgm_giftcard_recipient_binding_token', $recipient_binding_token );
+						++$migrated_count;
+					}
+				}
+				wp_reset_postdata();
+			}
+
+			// Mark migration as complete for this batch.
+			if ( $query->found_posts < 100 ) {
+				// All cards have been migrated.
+				update_option( 'wps_wgm_security_migration_version', '3.2.12' );
+			}
+
+			return $migrated_count;
+		}
 	}
 }

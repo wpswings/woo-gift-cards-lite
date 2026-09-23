@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_thankyouorder_enable">
@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Select the status when the ThankYou Gift Coupon would be send', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Select the status when the ThankYou Gift Coupon would be send', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<select name="wps_wgm_thankyouorder_time"
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Enter the number of orders, after that, you want to give a thank you Gift Card to your customers', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Enter the number of orders, after that, you want to give a thank you Gift Card to your customers', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_thankyouorder_number">
@@ -97,13 +97,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __(
+								$attribute_description = __(
 									'Enter number of days for Coupon Expiry,  Keep value "1" for one-day expiry 
                         after generating coupon, Keep value "0" for no expiry.',
 									'woo-gift-cards-lite'
 								);
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
-							?>
+								?>
 							<label for="wps_wgm_thnku_giftcard_expiry">
 								<input type="number" min="0" value="0" name="wps_wgm_thnku_giftcard_expiry"
 									id="wps_wgm_thnku_giftcard_expiry"
@@ -117,7 +117,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Choose the ThankYou Gift Coupon Type for Customers', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Choose the ThankYou Gift Coupon Type for Customers', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<select name="wps_wgm_thankyouorder_type"
@@ -137,7 +137,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							<label for="wps_wgm_general_text_points" class="wps_wgm_label">
 							<?php
-							$attribute_description = __( 'This message will print inside the Thankyou Gift coupon Template', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'This message will print inside the Thankyou Gift coupon Template', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<span class="description"></span>

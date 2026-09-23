@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 
 /**
@@ -58,7 +58,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 	 */
 	public static function wps_wgm_get_service_options() {
 		return array(
-			'seo_services'                      => esc_html__( 'SEO services', 'woo-gift-cards-lite' ),
+			'seo_services'                     => esc_html__( 'SEO services', 'woo-gift-cards-lite' ),
 			'google_ads_setup_and_ga4_setup'   => esc_html__( 'Google Ads Setup and GA4 setup', 'woo-gift-cards-lite' ),
 			'speed_optimization'               => esc_html__( 'Speed Optimization', 'woo-gift-cards-lite' ),
 			'woocommerce_development_services' => esc_html__( 'WooCommerce Development Services', 'woo-gift-cards-lite' ),
@@ -182,20 +182,20 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 						<div class="wps-wgm-expert-modal__field">
 							<span class="wps-wgm-expert-modal__legend"><?php esc_html_e( 'What services do you need help with?', 'woo-gift-cards-lite' ); ?></span>
 							<div class="wps-wgm-expert-modal__checkboxes">
-								<?php foreach ( $service_options as $service_key => $service_label ) { ?>
+								<?php foreach ( $service_options as $service_key => $service_label ) : ?>
 									<label class="wps-wgm-expert-modal__checkbox">
 										<input type="checkbox" name="what_services_do_you_need_help_with[]" value="<?php echo esc_attr( $service_key ); ?>">
 										<span><?php echo esc_html( $service_label ); ?></span>
 									</label>
-								<?php } ?>
+								<?php endforeach; ?>
 							</div>
 						</div>
 						<div class="wps-wgm-expert-modal__field">
 							<label for="wps_wgm_expert_budget"><?php esc_html_e( 'Budget', 'woo-gift-cards-lite' ); ?></label>
 							<select id="wps_wgm_expert_budget" name="budget">
-								<?php foreach ( $budget_options as $budget_value => $budget_label ) { ?>
+								<?php foreach ( $budget_options as $budget_value => $budget_label ) : ?>
 									<option value="<?php echo esc_attr( $budget_value ); ?>"<?php echo '' === $budget_value ? ' selected disabled' : ''; ?>><?php echo esc_html( $budget_label ); ?></option>
-								<?php } ?>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="wps-wgm-expert-modal__field">
@@ -321,7 +321,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 
 			$submitted_services = array_filter(
 				array_map( 'sanitize_text_field', $raw_services ),
-				static function( $service ) {
+				static function ( $service ) {
 					return '' !== $service;
 				}
 			);
@@ -335,14 +335,14 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 		}
 
 		return array(
-			'firstname'                          => isset( $form_data['firstname'] ) ? sanitize_text_field( wp_unslash( $form_data['firstname'] ) ) : '',
-			'lastname'                           => isset( $form_data['lastname'] ) ? sanitize_text_field( wp_unslash( $form_data['lastname'] ) ) : '',
-			'email'                              => isset( $form_data['email'] ) ? sanitize_email( wp_unslash( $form_data['email'] ) ) : '',
-			'phone'                              => isset( $form_data['phone'] ) ? sanitize_text_field( wp_unslash( $form_data['phone'] ) ) : '',
+			'firstname'                           => isset( $form_data['firstname'] ) ? sanitize_text_field( wp_unslash( $form_data['firstname'] ) ) : '',
+			'lastname'                            => isset( $form_data['lastname'] ) ? sanitize_text_field( wp_unslash( $form_data['lastname'] ) ) : '',
+			'email'                               => isset( $form_data['email'] ) ? sanitize_email( wp_unslash( $form_data['email'] ) ) : '',
+			'phone'                               => isset( $form_data['phone'] ) ? sanitize_text_field( wp_unslash( $form_data['phone'] ) ) : '',
 			'what_services_do_you_need_help_with' => $valid_services,
-			'budget'                             => $budget,
-			'message'                            => isset( $form_data['message'] ) ? sanitize_textarea_field( wp_unslash( $form_data['message'] ) ) : '',
-			'annualrevenue'                      => self::wps_wgm_get_annual_revenue_last_12_months(),
+			'budget'                              => $budget,
+			'message'                             => isset( $form_data['message'] ) ? sanitize_textarea_field( wp_unslash( $form_data['message'] ) ) : '',
+			'annualrevenue'                       => self::wps_wgm_get_annual_revenue_last_12_months(),
 		);
 	}
 
@@ -424,7 +424,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 				array_values(
 					array_filter(
 						array_map( 'strval', $field_value ),
-						static function( $value ) {
+						static function ( $value ) {
 							return '' !== $value;
 						}
 					)
@@ -642,7 +642,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 
 		return (float) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
-				"SELECT COALESCE(SUM(total_sales), 0) FROM {$table_name} WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid >= %s AND status IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				'SELECT COALESCE(SUM(total_sales), 0) FROM ' . esc_sql( $table_name ) . ' WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid >= %s AND status IN (' . $placeholders . ')', // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$args
 			)
 		);
@@ -658,7 +658,7 @@ class Woocommerce_Gift_Cards_Lite_Talk_To_Expert_Form {
 			return 0.0;
 		}
 
-		$cutoff_timestamp = strtotime( '-12 months', current_time( 'timestamp', true ) );
+		$cutoff_timestamp = strtotime( '-12 months', time() );
 		$orders           = wc_get_orders(
 			array(
 				'limit'   => -1,

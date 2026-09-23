@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 ?>
 <div class="wps_wgm_content_template_pro_tag">
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Check this box to enable Discount for Gift card Products', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Check this box to enable Discount for Gift card Products', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<label for="wps_wgm_discount_enable">
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$attribute_description = __( 'Choose the Discount Type for Gift Card Products', 'woo-gift-cards-lite' );
+								$attribute_description = __( 'Choose the Discount Type for Gift Card Products', 'woo-gift-cards-lite' );
 								echo wp_kses_post( wc_help_tip( $attribute_description ) );
 							?>
 							<select name="wps_wgm_discount_type"

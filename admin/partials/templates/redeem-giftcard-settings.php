@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit();
+	exit;
 }
 require_once WPS_WGC_DIRPATH . 'admin/partials/template_settings_function/class-woocommerce-giftcard-admin-settings.php';
 $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
@@ -17,23 +17,23 @@ $settings_obj = new Woocommerce_Giftcard_Admin_Settings();
 if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 	if ( isset( $_REQUEST['wps-redeem-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-redeem-nonce'] ) ), 'wps-redeem-nonce' ) ) {
 		global $woocommerce;
-		$client_name = isset( $_POST['wcgm_offine_redeem_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_name'] ) ) : '';
-		$client_email = isset( $_POST['wcgm_offine_redeem_email'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_email'] ) ) : '';
-		$enable = isset( $_POST['wcgm_offine_redeem_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_enable'] ) ) : '';
+		$client_name         = isset( $_POST['wcgm_offine_redeem_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_name'] ) ) : '';
+		$client_email        = isset( $_POST['wcgm_offine_redeem_email'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_email'] ) ) : '';
+		$enable              = isset( $_POST['wcgm_offine_redeem_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['wcgm_offine_redeem_enable'] ) ) : '';
 		$client_license_code = get_option( 'wps_gw_lcns_key', '' );
-		$client_domain = home_url();
-		$currency = get_option( 'woocommerce_currency' );
-		$client_currency = get_woocommerce_currency_symbol();
-		$curl_data = array(
+		$client_domain       = home_url();
+		$currency            = get_option( 'woocommerce_currency' );
+		$client_currency     = get_woocommerce_currency_symbol();
+		$curl_data           = array(
 			'user_name' => $client_name,
-			'email' => $client_email,
-			'license' => $client_license_code,
-			'domain' => $client_domain,
-			'currency' => $client_currency,
+			'email'     => $client_email,
+			'license'   => $client_license_code,
+			'domain'    => $client_domain,
+			'currency'  => $client_currency,
 		);
-		$redeem_data = get_option( 'giftcard_offline_redeem_link', true );
-		$url = 'https://gifting.wpswings.com/api/generate';
-		$response = wp_remote_post(
+		$redeem_data         = get_option( 'giftcard_offline_redeem_link', true );
+		$url                 = 'https://gifting.wpswings.com/api/generate';
+		$response            = wp_remote_post(
 			$url,
 			array(
 				'method'     => 'POST',
@@ -49,34 +49,34 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			if ( 'error' == $response->status ) {
 				$wps_wgm_error_message = $response->message;
 			} elseif ( isset( $response->status ) && 'success' == $response->status ) {
-					$wps_redeem_link['shop_url'] = $response->shop_url;
+					$wps_redeem_link['shop_url']  = $response->shop_url;
 					$wps_redeem_link['embed_url'] = $response->embed_url;
-					$wps_redeem_link['user_id'] = $response->user_id;
+					$wps_redeem_link['user_id']   = $response->user_id;
 					update_option( 'giftcard_offline_redeem_link', $wps_redeem_link );
 			}
 		}
 		update_option( 'giftcard_offline_redeem_settings', $curl_data );
 	}
-} else if ( isset( $_POST['remove_giftcard_redeem_details'] ) ) {
+} elseif ( isset( $_POST['remove_giftcard_redeem_details'] ) ) {
 	if ( isset( $_REQUEST['wps-remove-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-remove-nonce'] ) ), 'wps-remove-nonce' ) ) {
 		global $woocommerce;
 		$offine_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
-		$userid = $offine_giftcard_redeem_details['user_id'];
-		$client_domain = home_url();
-		$url = 'https://gifting.wpswings.com/api/generate/remove';
+		$userid                         = $offine_giftcard_redeem_details['user_id'];
+		$client_domain                  = home_url();
+		$url                            = 'https://gifting.wpswings.com/api/generate/remove';
 
 		$curl_data = array(
 			'user_id' => $userid,
-			'domain' => $client_domain,
+			'domain'  => $client_domain,
 		);
 
 		$response = wp_remote_post(
 			$url,
 			array(
-				'timeout' => 50,
+				'timeout'    => 50,
 				'user-agent' => '',
-				'sslverify' => false,
-				'body' => $curl_data,
+				'sslverify'  => false,
+				'body'       => $curl_data,
 			)
 		);
 
@@ -92,15 +92,15 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			}
 		}
 	}
-} else if ( isset( $_POST['update_giftcard_redeem_details'] ) ) {
+} elseif ( isset( $_POST['update_giftcard_redeem_details'] ) ) {
 
 	if ( isset( $_REQUEST['wps-update-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps-update-nonce'] ) ), 'wps-update-nonce' ) ) {
-		$offine_giftcard_redeem_details = get_option( 'giftcard_offline_redeem_link' );
+		$offine_giftcard_redeem_details  = get_option( 'giftcard_offline_redeem_link' );
 		$offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings' );
-		$userid = $offine_giftcard_redeem_details['user_id'];
-		$client_domain = home_url();
-		$url = 'https://gifting.wpswings.com/api/generate/update';
-		$client_license_code = get_option( 'wps_gw_lcns_key', '' );
+		$userid                          = $offine_giftcard_redeem_details['user_id'];
+		$client_domain                   = home_url();
+		$url                             = 'https://gifting.wpswings.com/api/generate/update';
+		$client_license_code             = get_option( 'wps_gw_lcns_key', '' );
 		if ( ( isset( $offine_giftcard_redeem_settings['license'] ) && '' === $offine_giftcard_redeem_settings['license'] ) && ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) ) {
 			$request_type = 'both';
 		} elseif ( isset( $offine_giftcard_redeem_settings['domain'] ) && home_url() !== $offine_giftcard_redeem_settings['domain'] ) {
@@ -111,19 +111,19 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 
 		if ( '' !== $client_license_code ) {
 			$curl_data = array(
-				'user_id' => $userid,
-				'domain' => $client_domain,
-				'license' => $client_license_code,
+				'user_id'      => $userid,
+				'domain'       => $client_domain,
+				'license'      => $client_license_code,
 				'request_type' => $request_type,
 			);
 
 			$response = wp_remote_post(
 				$url,
 				array(
-					'timeout' => 50,
+					'timeout'    => 50,
 					'user-agent' => '',
-					'sslverify' => false,
-					'body' => $curl_data,
+					'sslverify'  => false,
+					'body'       => $curl_data,
 				)
 			);
 			if ( is_array( $response ) && ! empty( $response ) ) {
@@ -140,9 +140,9 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 		}
 	}
 }
-$client_license_code = get_option( 'wps_gw_lcns_key', '' );
-$wps_current_user = wp_get_current_user();
-$offine_giftcard_redeem_link = get_option( 'giftcard_offline_redeem_link', true );
+$client_license_code             = get_option( 'wps_gw_lcns_key', '' );
+$wps_current_user                = wp_get_current_user();
+$offine_giftcard_redeem_link     = get_option( 'giftcard_offline_redeem_link', true );
 $offine_giftcard_redeem_settings = get_option( 'giftcard_offline_redeem_settings', true );
 if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 	?>
@@ -210,7 +210,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$allowed_tags = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
+								$allowed_tags          = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
 								$attribute_description = __( 'Please open the link to redeem the gift card', 'woo-gift-cards-lite' );
 								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
@@ -238,7 +238,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 							</th>
 							<td class="forminp forminp-text">
 								<?php
-								$allowed_tags = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
+								$allowed_tags          = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
 								$attribute_description = __( 'Enter this code to add the redeem page in your site', 'woo-gift-cards-lite' );
 								echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 								?>
@@ -333,7 +333,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$allowed_tags = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
+							$allowed_tags          = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
 							$attribute_description = __( 'Enter the email for account creation', 'woo-gift-cards-lite' );
 							echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 							?>
@@ -348,7 +348,7 @@ if ( isset( $wps_wgm_error_message ) && null !== $wps_wgm_error_message ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							$allowed_tags = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
+							$allowed_tags          = $settings_obj->wps_wgm_allowed_html_for_tool_tip();
 							$attribute_description = __( 'Enter the name for account creation', 'woo-gift-cards-lite' );
 							echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 							?>

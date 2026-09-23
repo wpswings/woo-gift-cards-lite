@@ -132,15 +132,15 @@ class Woocommerce_Giftcard_Admin_Settings {
 			?>
 			<label for="<?php echo esc_attr( $value_id ); ?>">
 				<?php
-				$content = stripcslashes( $wps_wgm_content );
+				$content   = stripcslashes( $wps_wgm_content );
 				$editor_id = $value_id;
-				$settings = array(
+				$settings  = array(
 					'media_buttons'    => false,
 					'drag_drop_upload' => true,
 					'dfw'              => true,
 					'teeny'            => true,
 					'editor_height'    => 200,
-					'editor_class'       => 'wps_wgm_new_woo_ver_style_textarea',
+					'editor_class'     => 'wps_wgm_new_woo_ver_style_textarea',
 					'textarea_name'    => esc_attr( $value_id ),
 				);
 				wp_editor( $content, $editor_id, $settings );
@@ -332,8 +332,8 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wgm_get_category() {
-		$args = array( 'taxonomy' => 'product_cat' );
-		$categories = get_terms( $args );
+		$args          = array( 'taxonomy' => 'product_cat' );
+		$categories    = get_terms( $args );
 		$category_data = $this->wps_wgm_show_category( $categories );
 		return $category_data;
 	}
@@ -352,7 +352,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 			$category = array();
 			foreach ( $categories as $cat ) {
 				$category[] = array(
-					'id' => $cat->term_id,
+					'id'   => $cat->term_id,
 					'name' => $cat->name,
 				);
 			}
@@ -400,10 +400,10 @@ class Woocommerce_Giftcard_Admin_Settings {
 		if ( is_array( $wps_wgm_exclude_product ) && isset( $wps_wgm_exclude_product[ $id ] ) && ! empty( $wps_wgm_exclude_product[ $id ] ) && is_array( $wps_wgm_exclude_product[ $id ] ) ) {
 			$wps_wgm_get_product = array();
 			foreach ( $wps_wgm_exclude_product[ $id ] as $pro_id ) {
-				$product      = wc_get_product( $pro_id );
+				$product = wc_get_product( $pro_id );
 				if ( ! empty( $product ) ) {
 					$wps_wgm_get_product[] = array(
-						'id' => $pro_id,
+						'id'   => $pro_id,
 						'name' => $product->get_formatted_name(),
 					);
 				}
@@ -694,7 +694,7 @@ class Woocommerce_Giftcard_Admin_Settings {
 				foreach ( $setting_html_array as $htmlkey => $htmlvalue ) {
 					if ( is_array( $setting_html_array ) && in_array( $posted_key, $htmlvalue ) ) {
 						if ( 'text' == $htmlvalue['type'] || 'textarea' == $htmlvalue['type'] ) {
-							$posted_values = preg_replace( '/\\\\/', '', $posted_values );
+							$posted_values              = preg_replace( '/\\\\/', '', $posted_values );
 							$posted_data[ $posted_key ] = sanitize_text_field( $posted_values );
 						}
 					}
@@ -714,14 +714,14 @@ class Woocommerce_Giftcard_Admin_Settings {
 	 */
 	public function wps_wgm_allowed_html_for_tool_tip() {
 		$allowed_tags = array(
-			'span' => array(
-				'class' => array(),
-				'title' => array(),
-				'style' => array(),
+			'span'  => array(
+				'class'    => array(),
+				'title'    => array(),
+				'style'    => array(),
 				'data-tip' => array(),
 			),
-			'min' => array(),
-			'max' => array(),
+			'min'   => array(),
+			'max'   => array(),
 			'class' => array(),
 			'style' => array(),
 			'<br>'  => array(),

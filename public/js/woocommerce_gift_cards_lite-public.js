@@ -651,5 +651,7 @@ jQuery(document).ready(function () {
 		jQuery(product_preview).insertAfter('.theme-flatsome.single-product .woocommerce-product-gallery');
 		jQuery(product_preview).appendTo('.theme-oceanwp.single-product .woocommerce-product-gallery');
 	}, 100)
+    
+
 
 });

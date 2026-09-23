@@ -4969,6 +4969,9 @@ body.wps-wgm-expert-modal-open {
 input.wps_wgm_mail_setting_upload_logo.button,
 input.wps_wgm_mail_setting_background_logo.button {
     margin: 10px;
+    border-radius: 55px;
+    margin-top: -5px;
+    border-color: grey;
 }
 
 #wps_wgm_setting_wrapper #wps_wgm_mail_setting_upload_image,
