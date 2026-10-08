@@ -507,8 +507,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$wps_wgm_pre_gift_num = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
 
 				if ( is_array( $wps_wgm_pre_gift_num ) && ! empty( $wps_wgm_pre_gift_num ) ) {
-					$wps_wgm_pre_gift_num[] = $wps_wgm_common_arr['gift_couponnumber'];
-					wps_wgm_hpos_update_meta_data( $order_id, "$order_id#$item_id", $wps_wgm_pre_gift_num );
+					// Resending an existing card must not record its code twice.
+					if ( ! in_array( $wps_wgm_common_arr['gift_couponnumber'], $wps_wgm_pre_gift_num, true ) ) {
+						$wps_wgm_pre_gift_num[] = $wps_wgm_common_arr['gift_couponnumber'];
+						wps_wgm_hpos_update_meta_data( $order_id, "$order_id#$item_id", $wps_wgm_pre_gift_num );
+					}
 				} else {
 					$wps_wgm_code_arr   = array();
 					$wps_wgm_code_arr[] = $wps_wgm_common_arr['gift_couponnumber'];
@@ -1125,6 +1128,112 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				'amount'   => $total_amount,
 				'discount' => $total_discount,
 			);
+		}
+
+		/**
+		 * Find the order line item that generated a gift card coupon.
+		 *
+		 * Gift card codes are stored on the order under the "$order_id#$item_id" key
+		 * when the email is first sent, which lets us map a code back to its item.
+		 *
+		 * @param WC_Order $order       Order that purchased the gift card.
+		 * @param string   $coupon_code Gift card code.
+		 * @param int      $product_id  Gift card product ID, used as a fallback match.
+		 * @return WC_Order_Item_Product|null
+		 */
+		public function wps_wgm_get_giftcard_order_item( $order, $coupon_code, $product_id = 0 ) {
+			$order_id      = $order->get_id();
+			$fallback_item = null;
+			foreach ( $order->get_items() as $item_id => $item ) {
+				$codes = wps_wgm_hpos_get_meta_data( $order_id, "$order_id#$item_id", true );
+				if ( is_array( $codes ) && in_array( strtolower( $coupon_code ), array_map( 'strtolower', $codes ), true ) ) {
+					return $item;
+				}
+				if ( null === $fallback_item && $product_id && (int) $item->get_product_id() === (int) $product_id ) {
+					$fallback_item = $item;
+				}
+			}
+			return $fallback_item;
+		}
+
+		/**
+		 * Resend a gift card email to its original recipient.
+		 *
+		 * The email always goes to the address stored on the coupon at issue time,
+		 * never to a caller supplied address.
+		 *
+		 * @param int   $coupon_id Gift card coupon ID.
+		 * @param array $overrides Optional values merged into the mail arguments.
+		 * @return true|WP_Error
+		 */
+		public function wps_wgm_resend_giftcard_email( $coupon_id, $overrides = array() ) {
+			$order_id      = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
+			$to_email      = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+			$coupon_amount = get_post_meta( $coupon_id, 'wps_wgm_coupon_amount', true );
+			$product_id    = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_product_id', true );
+			$coupon_code   = get_the_title( $coupon_id );
+
+			if ( ! $order_id || ! $to_email ) {
+				return new WP_Error( 'wps_wgm_missing_data', __( 'Gift card data not found.', 'woo-gift-cards-lite' ) );
+			}
+
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				return new WP_Error( 'wps_wgm_missing_order', __( 'Order not found.', 'woo-gift-cards-lite' ) );
+			}
+
+			$expirydate_format = '';
+			if ( version_compare( WC()->version, '3.6.0', '<' ) ) {
+				$expiry_date = get_post_meta( $coupon_id, 'expiry_date', true );
+				if ( ! empty( $expiry_date ) ) {
+					$expirydate_format = date_i18n( get_option( 'date_format' ), strtotime( $expiry_date ) );
+				}
+			} else {
+				$expiry_timestamp = get_post_meta( $coupon_id, 'date_expires', true );
+				if ( ! empty( $expiry_timestamp ) ) {
+					$expirydate_format = date_i18n( get_option( 'date_format' ), $expiry_timestamp );
+				}
+			}
+
+			$gift_message               = '';
+			$delivery_method            = 'Mail to recipient';
+			$selected_template          = '';
+			$variable_price_description = '';
+			$item                       = $this->wps_wgm_get_giftcard_order_item( $order, $coupon_code, $product_id );
+			if ( $item ) {
+				$gift_message               = $item->get_meta( 'Message', true );
+				$selected_template          = $item->get_meta( 'Selected Template', true );
+				$variable_price_description = $item->get_meta( 'Variable Price Description', true );
+				if ( '' === $gift_message ) {
+					$gift_message = $item->get_meta( 'wps_wgm_message', true );
+				}
+				if ( '' !== $item->get_meta( 'Delivery Method', true ) ) {
+					$delivery_method = $item->get_meta( 'Delivery Method', true );
+				}
+			}
+
+			$wps_wgm_common_arr = array_merge(
+				array(
+					'to'                         => $to_email,
+					'from'                       => $order->get_billing_email(),
+					'order_id'                   => $order_id,
+					'product_id'                 => $product_id,
+					'gift_couponnumber'          => $coupon_code,
+					'couponamont'                => $coupon_amount,
+					'expirydate_format'          => $expirydate_format,
+					'delivery_method'            => $delivery_method,
+					'gift_msg'                   => (string) $gift_message,
+					'item_id'                    => '',
+					'selected_template'          => $selected_template,
+					'variable_price_description' => $variable_price_description,
+				),
+				$overrides
+			);
+
+			if ( ! $this->wps_wgm_common_functionality( $wps_wgm_common_arr, $order ) ) {
+				return new WP_Error( 'wps_wgm_send_failed', __( 'Failed to send gift card email.', 'woo-gift-cards-lite' ) );
+			}
+			return true;
 		}
 	}
 }
