@@ -137,6 +137,11 @@ class Woocommerce_Gift_Cards_Lite {
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-wps-wgm-my-gift-cards.php';
 
 		/**
+		 * The class responsible for gift card expiry reminder emails.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wgm-expiry-reminder.php';
+
+		/**
 		 * The class responsible for tracking failed gift card operations.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-gift-card-failure-tracker.php';
@@ -357,6 +362,13 @@ class Woocommerce_Gift_Cards_Lite {
 		$this->loader->add_action( 'woocommerce_account_' . $my_gift_cards->get_endpoint() . '_endpoint', $my_gift_cards, 'wps_wgm_render_endpoint' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $my_gift_cards, 'wps_wgm_enqueue_assets' );
 		$this->loader->add_action( 'wp_ajax_wps_wgm_my_account_resend_giftcard', $my_gift_cards, 'wps_wgm_ajax_resend' );
+
+		// Gift card expiry reminder emails. Priority 20 runs after Giftware, which older releases used to supply this.
+		$expiry_reminder = new Wps_Wgm_Expiry_Reminder();
+		$this->loader->add_action( 'init', $expiry_reminder, 'wps_wgm_schedule_event' );
+		$this->loader->add_action( Wps_Wgm_Expiry_Reminder::CRON_HOOK, $expiry_reminder, 'wps_wgm_send_reminders', 20 );
+		$this->loader->add_filter( 'wps_wgm_mail_template_settings', $expiry_reminder, 'wps_wgm_add_settings', 20 );
+		$this->loader->add_action( 'wps_wgm_addtional_mail_settings', $expiry_reminder, 'wps_wgm_render_settings', 20, 2 );
 	}
 
 	/**
