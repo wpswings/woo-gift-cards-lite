@@ -59,12 +59,14 @@ class Wps_Wgm_My_Gift_Cards {
 	}
 
 	/**
-	 * Whether the tab should be shown.
+	 * Whether the tab should be shown. Off until the admin enables it under General settings.
 	 *
 	 * @return bool
 	 */
 	public function is_enabled() {
-		return wps_wgm_giftcard_enable() && apply_filters( 'wps_wgm_my_gift_cards_enabled', true );
+		$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
+		$enabled          = 'on' === $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_general_setting_enable_my_account_tab' );
+		return wps_wgm_giftcard_enable() && apply_filters( 'wps_wgm_my_gift_cards_enabled', $enabled );
 	}
 
 	/**

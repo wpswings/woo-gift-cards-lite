@@ -21,6 +21,14 @@ $wps_wgm_general_setting = array(
 		'desc'     => esc_html__( 'Enable WooCommerce Gift Card', 'woo-gift-cards-lite' ),
 	),
 	array(
+		'title'    => esc_html__( 'My Gift Cards Tab', 'woo-gift-cards-lite' ),
+		'id'       => 'wps_wgm_general_setting_enable_my_account_tab',
+		'type'     => 'checkbox',
+		'class'    => 'input-text',
+		'desc_tip' => esc_html__( 'Check this box to add a "My Gift Cards" tab to the My Account page, where customers can see the gift cards they bought and received, their balance, expiry, usage history, and resend the gift card email.', 'woo-gift-cards-lite' ),
+		'desc'     => esc_html__( 'Show gift cards on the My Account page', 'woo-gift-cards-lite' ),
+	),
+	array(
 		'title'    => esc_html__( 'Enable Tax', 'woo-gift-cards-lite' ),
 		'id'       => 'wps_wgm_general_setting_tax_cal_enable',
 		'type'     => 'checkbox',
