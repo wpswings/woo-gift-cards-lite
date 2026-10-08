@@ -132,6 +132,11 @@ class Woocommerce_Gift_Cards_Lite {
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-woocommerce-gift-cards-lite-public.php';
 
 		/**
+		 * The class responsible for the "My Gift Cards" tab on the My Account page.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-wps-wgm-my-gift-cards.php';
+
+		/**
 		 * The class responsible for tracking failed gift card operations.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-gift-card-failure-tracker.php';
@@ -342,6 +347,16 @@ class Woocommerce_Gift_Cards_Lite {
 		}
 
 		$this->loader->add_action( 'wps_wgm_send_mail_to_sender', $plugin_public, 'wps_wgm_send_mail_to_sender_on_reciever', 10, 3 );
+
+		// My Account > My Gift Cards tab.
+		$my_gift_cards = new Wps_Wgm_My_Gift_Cards();
+		$this->loader->add_filter( 'woocommerce_get_query_vars', $my_gift_cards, 'wps_wgm_add_query_var' );
+		$this->loader->add_action( 'init', $my_gift_cards, 'wps_wgm_maybe_flush_rewrite_rules', 99 );
+		$this->loader->add_filter( 'woocommerce_account_menu_items', $my_gift_cards, 'wps_wgm_add_menu_item' );
+		$this->loader->add_filter( 'woocommerce_endpoint_' . $my_gift_cards->get_endpoint() . '_title', $my_gift_cards, 'wps_wgm_endpoint_title' );
+		$this->loader->add_action( 'woocommerce_account_' . $my_gift_cards->get_endpoint() . '_endpoint', $my_gift_cards, 'wps_wgm_render_endpoint' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $my_gift_cards, 'wps_wgm_enqueue_assets' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_my_account_resend_giftcard', $my_gift_cards, 'wps_wgm_ajax_resend' );
 	}
 
 	/**

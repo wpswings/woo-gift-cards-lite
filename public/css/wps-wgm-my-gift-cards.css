@@ -1,0 +1,66 @@
+/* My Account > My Gift Cards */
+.wps-wgm-mgc-section {
+	margin-bottom: 2em;
+}
+.wps-wgm-mgc-code {
+	font-size: 1em;
+	letter-spacing: 0.05em;
+	word-break: break-all;
+}
+.wps-wgm-mgc-copy {
+	margin-left: 0.5em;
+	padding: 0.1em 0.6em;
+	font-size: 0.8em;
+	cursor: pointer;
+}
+.wps-wgm-mgc-badge {
+	display: inline-block;
+	padding: 0.15em 0.6em;
+	border-radius: 3px;
+	font-size: 0.85em;
+	background: #f0f0f1;
+	color: #50575e;
+}
+.wps-wgm-mgc-status-active .wps-wgm-mgc-badge {
+	background: #edfaef;
+	color: #00701a;
+}
+.wps-wgm-mgc-status-expired .wps-wgm-mgc-badge,
+.wps-wgm-mgc-status-disabled .wps-wgm-mgc-badge {
+	background: #fcf0f1;
+	color: #b32d2e;
+}
+.wps-wgm-mgc-actions {
+	text-align: right;
+}
+.wps-wgm-mgc-notice {
+	display: block;
+	margin-top: 0.4em;
+	font-size: 0.85em;
+}
+.wps-wgm-mgc-notice.is-success {
+	color: #00701a;
+}
+.wps-wgm-mgc-notice.is-error {
+	color: #b32d2e;
+}
+.wps-wgm-mgc-table .wps-wgm-mgc-history-row td {
+	padding-top: 0;
+	border-top: 0;
+}
+.wps-wgm-mgc-history summary {
+	cursor: pointer;
+	font-size: 0.9em;
+}
+.wps-wgm-mgc-history ul {
+	margin: 0.5em 0 0 1.25em;
+	font-size: 0.9em;
+}
+@media (max-width: 768px) {
+	.wps-wgm-mgc-actions {
+		text-align: left;
+	}
+	.wps-wgm-mgc-table .wps-wgm-mgc-history-row td::before {
+		display: none;
+	}
+}
