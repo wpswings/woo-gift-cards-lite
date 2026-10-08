@@ -159,21 +159,47 @@ class Wps_Wgm_My_Gift_Cards {
 		$user_id = get_current_user_id();
 		$cards   = $this->wps_wgm_get_user_gift_cards( $user_id );
 
+		// Usable cards first, newest first within each group.
+		usort(
+			$cards,
+			function ( $a, $b ) {
+				$a_active = 'active' === $a['status'];
+				$b_active = 'active' === $b['status'];
+				return $a_active === $b_active ? $b['id'] - $a['id'] : ( $a_active ? -1 : 1 );
+			}
+		);
+
 		$received  = array();
 		$purchased = array();
+		$summary   = array(
+			'balance'  => 0,
+			'active'   => 0,
+			'expiring' => 0,
+		);
 		foreach ( $cards as $card ) {
 			if ( $card['is_recipient'] ) {
 				$received[] = $card;
+				if ( 'active' === $card['status'] ) {
+					$summary['balance'] += $card['balance'];
+					++$summary['active'];
+					$summary['expiring'] += $card['expiring_soon'] ? 1 : 0;
+				}
 			} else {
 				$purchased[] = $card;
 			}
 		}
+
+		$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
+		$accent           = sanitize_hex_color( $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' ) );
+		$accent           = sanitize_hex_color( apply_filters( 'wps_wgm_my_gift_cards_accent_color', $accent ? $accent : '#5b3cc4' ) );
 
 		wc_get_template(
 			'myaccount/wps-wgm-my-gift-cards.php',
 			array(
 				'received'  => $received,
 				'purchased' => $purchased,
+				'summary'   => $summary,
+				'accent'    => $accent ? $accent : '#5b3cc4',
 			),
 			'woo-gift-cards-lite/',
 			WPS_WGC_DIRPATH . 'public/partials/'
@@ -299,9 +325,12 @@ class Wps_Wgm_My_Gift_Cards {
 			$from = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
 		}
 
-		$mail_to = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+		$mail_to   = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
+		$days_left = $expires ? (int) ceil( ( $expires->getTimestamp() - time() ) / DAY_IN_SECONDS ) : null;
 
 		return array(
+			'days_left'     => $days_left,
+			'expiring_soon' => 'active' === $status && null !== $days_left && $days_left <= apply_filters( 'wps_wgm_my_gift_cards_expiring_days', 30 ),
 			'id'           => $coupon_id,
 			'code'         => $coupon->get_code(),
 			'balance'      => $balance,

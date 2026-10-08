@@ -11,14 +11,36 @@
 		return;
 	}
 
+	// The Clipboard API only exists on HTTPS pages, so fall back to execCommand elsewhere.
+	function copyText( text ) {
+		if ( navigator.clipboard && window.isSecureContext ) {
+			return navigator.clipboard.writeText( text );
+		}
+		return new Promise( function ( resolve, reject ) {
+			var field = document.createElement( 'textarea' );
+			field.value = text;
+			field.setAttribute( 'readonly', '' );
+			field.style.position = 'fixed';
+			field.style.opacity  = '0';
+			document.body.appendChild( field );
+			field.select();
+			var ok = document.execCommand( 'copy' );
+			document.body.removeChild( field );
+			( ok ? resolve : reject )();
+		} );
+	}
+
 	document.addEventListener( 'click', function ( event ) {
 		var copy = event.target.closest( '.wps-wgm-mgc-copy' );
-		if ( copy && navigator.clipboard ) {
-			var label = copy.textContent;
-			navigator.clipboard.writeText( copy.getAttribute( 'data-code' ) ).then( function () {
-				copy.textContent = settings.copied;
+		if ( copy ) {
+			var copyLabel = copy.querySelector( '.wps-wgm-mgc-copy-label' );
+			var original  = copyLabel.textContent;
+			copyText( copy.getAttribute( 'data-code' ) ).then( function () {
+				copyLabel.textContent = settings.copied;
+				copy.classList.add( 'is-copied' );
 				setTimeout( function () {
-					copy.textContent = label;
+					copyLabel.textContent = original;
+					copy.classList.remove( 'is-copied' );
 				}, 1500 );
 			} );
 			return;
@@ -30,14 +52,15 @@
 		}
 
 		var notice      = button.parentNode.querySelector( '.wps-wgm-mgc-notice' );
-		var buttonLabel = button.textContent;
+		var label       = button.querySelector( '.wps-wgm-mgc-resend-label' );
+		var buttonLabel = label.textContent;
 		var data        = new FormData();
 		data.append( 'action', 'wps_wgm_my_account_resend_giftcard' );
 		data.append( 'nonce', settings.nonce );
 		data.append( 'coupon_id', button.getAttribute( 'data-coupon-id' ) );
 
 		button.disabled    = true;
-		button.textContent = settings.sending;
+		label.textContent  = settings.sending;
 		notice.textContent = '';
 
 		fetch( settings.ajaxurl, { method: 'POST', credentials: 'same-origin', body: data } )
@@ -53,8 +76,8 @@
 				notice.className   = 'wps-wgm-mgc-notice is-error';
 			} )
 			.then( function () {
-				button.disabled    = false;
-				button.textContent = buttonLabel;
+				button.disabled   = false;
+				label.textContent = buttonLabel;
 			} );
 	} );
 })();
