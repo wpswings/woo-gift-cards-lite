@@ -280,6 +280,28 @@ class Wps_Wgm_My_Gift_Cards {
 	}
 
 	/**
+	 * Status of a gift card: active, used, expired or disabled.
+	 *
+	 * @param WC_Coupon $coupon Gift card coupon.
+	 * @return string
+	 */
+	public static function wps_wgm_get_card_status( $coupon ) {
+		$expires = $coupon->get_date_expires();
+		$limit   = $coupon->get_usage_limit();
+
+		if ( 'no' === get_post_meta( $coupon->get_id(), '_wps_giftcard_enabled', true ) ) {
+			return 'disabled';
+		}
+		if ( $expires && $expires->getTimestamp() < time() ) {
+			return 'expired';
+		}
+		if ( (float) $coupon->get_amount() <= 0 || ( $limit && $coupon->get_usage_count() >= $limit ) ) {
+			return 'used';
+		}
+		return 'active';
+	}
+
+	/**
 	 * Build the display data for one gift card, as seen by the given user.
 	 *
 	 * @param int $coupon_id Coupon ID.
@@ -304,17 +326,7 @@ class Wps_Wgm_My_Gift_Cards {
 		$original = get_post_meta( $coupon_id, 'wps_wgm_coupon_amount', true );
 		$original = '' !== $original ? (float) $original : $balance;
 		$expires  = $coupon->get_date_expires();
-		$limit    = $coupon->get_usage_limit();
-
-		if ( 'no' === get_post_meta( $coupon_id, '_wps_giftcard_enabled', true ) ) {
-			$status = 'disabled';
-		} elseif ( $expires && $expires->getTimestamp() < time() ) {
-			$status = 'expired';
-		} elseif ( $balance <= 0 || ( $limit && $coupon->get_usage_count() >= $limit ) ) {
-			$status = 'used';
-		} else {
-			$status = 'active';
-		}
+		$status   = self::wps_wgm_get_card_status( $coupon );
 
 		$from = '';
 		$item = $this->wps_common_fun->wps_wgm_get_giftcard_order_item( $order, $coupon->get_code(), get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_product_id', true ) );
@@ -352,11 +364,12 @@ class Wps_Wgm_My_Gift_Cards {
 	 * Coupon line items live in the woocommerce_order_items table for both HPOS and
 	 * legacy post storage, so one query covers every card.
 	 *
-	 * @param string[] $codes   Gift card codes.
-	 * @param int      $user_id Viewing user ID; order links are only shown for their own orders.
+	 * @param string[] $codes      Gift card codes.
+	 * @param int      $user_id    Viewing user ID; order links are only shown for their own orders.
+	 * @param bool     $all_orders Show every order number, for store staff.
 	 * @return array Usage rows keyed by lowercase code.
 	 */
-	public function wps_wgm_get_usage_history( $codes, $user_id ) {
+	public function wps_wgm_get_usage_history( $codes, $user_id, $all_orders = false ) {
 		global $wpdb;
 
 		$codes = array_values( array_unique( array_filter( array_map( 'wc_format_coupon_code', $codes ) ) ) );
@@ -391,7 +404,7 @@ class Wps_Wgm_My_Gift_Cards {
 				$amount += (float) $item->get_discount_tax();
 			}
 
-			$own_order = (int) $order->get_customer_id() === (int) $user_id;
+			$own_order = $all_orders || (int) $order->get_customer_id() === (int) $user_id;
 
 			$history[ strtolower( $row->order_item_name ) ][] = array(
 				'date'         => $order->get_date_created(),
