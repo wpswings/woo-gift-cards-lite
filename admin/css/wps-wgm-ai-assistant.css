@@ -1,0 +1,248 @@
+/* Gift Cards > AI Assistant */
+.wps-wgm-ai {
+	--wps-ai-accent: #5b3cc4;
+	--wps-ai-line: #dcdcde;
+	--wps-ai-soft: #f6f7f7;
+	--wps-ai-muted: #646970;
+	margin-top: 20px;
+}
+.wps-wgm-ai-layout {
+	display: grid;
+	grid-template-columns: 300px minmax(0, 1fr);
+	gap: 20px;
+	align-items: start;
+}
+
+/* Sidebar */
+.wps-wgm-ai-side {
+	padding: 20px;
+	border: 1px solid var(--wps-ai-line);
+	border-radius: 12px;
+	background: #fff;
+}
+.wps-wgm-ai-side h2 {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 8px;
+	font-size: 16px;
+}
+.wps-wgm-ai-side h3 {
+	margin: 20px 0 8px;
+	color: var(--wps-ai-muted);
+	font-size: 11px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+.wps-wgm-ai-side p {
+	margin: 0;
+	color: var(--wps-ai-muted);
+}
+.wps-wgm-ai-tag {
+	padding: 1px 8px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--wps-ai-accent) 12%, #fff);
+	color: var(--wps-ai-accent);
+	font-size: 11px;
+	font-weight: 600;
+}
+.wps-wgm-ai-abilities {
+	margin: 0;
+}
+.wps-wgm-ai-abilities li {
+	position: relative;
+	margin: 0 0 6px;
+	padding-left: 18px;
+}
+.wps-wgm-ai-abilities li::before {
+	content: "";
+	position: absolute;
+	left: 2px;
+	top: 0.55em;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--wps-ai-accent);
+}
+.wps-wgm-ai-side .wps-wgm-ai-privacy {
+	margin-top: 20px;
+	padding-top: 14px;
+	border-top: 1px solid var(--wps-ai-line);
+	font-size: 12px;
+}
+
+/* Chat */
+.wps-wgm-ai-chat {
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 140px);
+	min-height: 480px;
+	border: 1px solid var(--wps-ai-line);
+	border-radius: 12px;
+	background: #fff;
+	overflow: hidden;
+}
+.wps-wgm-ai-chat-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 18px;
+	border-bottom: 1px solid var(--wps-ai-line);
+	font-weight: 600;
+}
+.wps-wgm-ai-messages {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 18px;
+	overflow-y: auto;
+	background: var(--wps-ai-soft);
+}
+.wps-wgm-ai-welcome {
+	margin: auto;
+	max-width: 520px;
+	text-align: center;
+	color: var(--wps-ai-muted);
+}
+.wps-wgm-ai-examples {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+.wps-wgm-ai-example {
+	padding: 7px 12px;
+	border: 1px solid var(--wps-ai-line);
+	border-radius: 999px;
+	background: #fff;
+	color: #1d2327;
+	font: inherit;
+	cursor: pointer;
+}
+.wps-wgm-ai-example:hover {
+	border-color: var(--wps-ai-accent);
+	color: var(--wps-ai-accent);
+}
+.wps-wgm-ai-msg {
+	display: flex;
+}
+.wps-wgm-ai-msg.is-user {
+	justify-content: flex-end;
+}
+.wps-wgm-ai-bubble {
+	max-width: min(720px, 85%);
+	padding: 10px 14px;
+	border-radius: 14px;
+	background: #fff;
+	border: 1px solid var(--wps-ai-line);
+	line-height: 1.55;
+	overflow-wrap: anywhere;
+}
+.wps-wgm-ai-msg.is-user .wps-wgm-ai-bubble {
+	border-color: transparent;
+	background: var(--wps-ai-accent);
+	color: #fff;
+}
+.wps-wgm-ai-msg.is-thinking .wps-wgm-ai-bubble {
+	color: var(--wps-ai-muted);
+	font-style: italic;
+}
+.wps-wgm-ai-msg.is-error .wps-wgm-ai-bubble {
+	border-color: #f0b5b0;
+	background: #fcf0f1;
+}
+.wps-wgm-ai-bubble p {
+	margin: 0 0 6px;
+}
+.wps-wgm-ai-bubble p:last-child {
+	margin-bottom: 0;
+}
+.wps-wgm-ai-bubble ul {
+	margin: 4px 0 6px 18px;
+	list-style: disc;
+}
+.wps-wgm-ai-bubble code {
+	padding: 1px 5px;
+	border-radius: 4px;
+	background: var(--wps-ai-soft);
+}
+.wps-wgm-ai-msg.is-user .wps-wgm-ai-bubble code {
+	background: rgba(255, 255, 255, 0.2);
+}
+.wps-wgm-ai-table {
+	margin: 6px 0;
+	overflow-x: auto;
+}
+.wps-wgm-ai-table table {
+	border-collapse: collapse;
+	font-size: 13px;
+}
+.wps-wgm-ai-table th,
+.wps-wgm-ai-table td {
+	padding: 5px 10px;
+	border-bottom: 1px solid var(--wps-ai-line);
+	text-align: left;
+	white-space: nowrap;
+}
+.wps-wgm-ai-table th {
+	background: var(--wps-ai-soft);
+}
+
+/* Change awaiting confirmation */
+.wps-wgm-ai-msg.is-change .wps-wgm-ai-bubble {
+	border: 1px solid #f0c33c;
+	background: #fcf9e8;
+}
+.wps-wgm-ai-change-label {
+	display: block;
+	margin-bottom: 4px;
+	color: #8a6100;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+.wps-wgm-ai-change-actions {
+	display: flex;
+	gap: 8px;
+	margin-top: 8px;
+}
+.wps-wgm-ai-change-result {
+	font-weight: 600;
+}
+.wps-wgm-ai-change-result.is-ok {
+	color: #00702a;
+}
+.wps-wgm-ai-change-result.is-error {
+	color: #b32d2e;
+}
+
+/* Composer */
+.wps-wgm-ai-form {
+	display: flex;
+	align-items: flex-end;
+	gap: 10px;
+	padding: 12px 14px;
+	border-top: 1px solid var(--wps-ai-line);
+}
+.wps-wgm-ai-form textarea {
+	flex: 1;
+	min-height: 38px;
+	max-height: 160px;
+	padding: 8px 12px;
+	border-radius: 8px;
+	resize: none;
+}
+.wps-wgm-ai-form .button {
+	min-height: 38px;
+}
+
+@media (max-width: 960px) {
+	.wps-wgm-ai-layout {
+		grid-template-columns: 1fr;
+	}
+	.wps-wgm-ai-chat {
+		height: 70vh;
+	}
+}
