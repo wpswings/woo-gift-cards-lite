@@ -832,13 +832,26 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									}
 								} elseif ( isset( $product_pricing['type'] ) && 'wps_wgm_range_price' == $product_pricing['type'] ) {
 
-									if ( $wps_wgm_price > $product_pricing['to'] || $wps_wgm_price < $product_pricing['from'] ) {
+									if ( ! is_numeric( $wps_wgm_price ) || $wps_wgm_price > $product_pricing['to'] || $wps_wgm_price < $product_pricing['from'] ) {
 										$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
 									} else {
 										$item_meta['wps_wgm_price'] = $wps_wgm_price;
 									}
+								} elseif ( isset( $product_pricing['type'] ) && 'wps_wgm_user_price' == $product_pricing['type'] ) {
+									// Validate the user defined price server-side: numeric, > 0 and not below the configured minimum.
+									$min_user_price = isset( $product_pricing['min_user_price'] ) && is_numeric( $product_pricing['min_user_price'] ) ? floatval( $product_pricing['min_user_price'] ) : 0;
+									if ( ! is_numeric( $wps_wgm_price ) || floatval( $wps_wgm_price ) <= 0 || floatval( $wps_wgm_price ) < $min_user_price ) {
+										// WC_Cart::add_to_cart() catches this and shows it as an error notice.
+										throw new Exception( esc_html__( 'Gift Card price should not be less than the minimum amount.', 'woo-gift-cards-lite' ) );
+									}
+									$item_meta['wps_wgm_price'] = $wps_wgm_price;
 								} else {
 									$item_meta['wps_wgm_price'] = $wps_wgm_price;
+								}
+
+								// Never allow a non-numeric, zero or negative gift card amount into the cart.
+								if ( ! is_numeric( $item_meta['wps_wgm_price'] ) || floatval( $item_meta['wps_wgm_price'] ) <= 0 ) {
+									throw new Exception( esc_html__( 'Invalid gift card amount.', 'woo-gift-cards-lite' ) );
 								}
 							}
 							if ( isset( $_POST['wps_wgm_selected_temp'] ) ) {
@@ -1002,6 +1015,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								$gift_price = apply_filters( 'wps_wgm_price_conversion_wcml', $gift_price );
 							}
 							$gift_price = apply_filters( 'wps_wgm_before_calculate_totals', $gift_price, $value );
+							// A gift card line must never carry a negative price.
+							$gift_price = is_numeric( $gift_price ) ? max( 0, floatval( $gift_price ) ) : 0;
 							$value['data']->set_price( $gift_price );
 						}
 					}
