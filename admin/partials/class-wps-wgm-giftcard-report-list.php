@@ -358,7 +358,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		$this->process_bulk_action();
 		$current_page       = $this->get_pagenum();
 		$this->example_data = $this->wps_uwgc_giftcard_report_data();
-		$data               = $this->example_data;
+		$data               = is_array( $this->example_data ) ? $this->example_data : array();
 		usort( $data, array( $this, 'wps_uwgc_usort_reorder_report' ) );
 		$total_items = $this->wps_total_count;
 		$this->items = $data;
@@ -418,8 +418,8 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 
 		if ( ! empty( $_POST['wps_gc_date_filter_1'] ) && ! empty( $_POST['wps_gc_date_filter_2'] ) ) {
 			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
-			if ( ! wp_verify_nonce( $nonce ) ) {
-				return false;
+			if ( ! wp_verify_nonce( $nonce, 'wps_wgm_report_filter' ) ) {
+				return array();
 			}
 			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
@@ -612,10 +612,10 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			'fields'         => 'ids',
 		);
 
-		if ( isset( $_POST['wps_gc_date_filter_1'], $_POST['wps_gc_date_filter_2'] ) ) {
+		if ( ! empty( $_POST['wps_gc_date_filter_1'] ) && ! empty( $_POST['wps_gc_date_filter_2'] ) ) {
 			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
-			if ( ! wp_verify_nonce( $nonce ) ) {
-				return false;
+			if ( ! wp_verify_nonce( $nonce, 'wps_wgm_report_filter' ) ) {
+				return array();
 			}
 			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
 			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
