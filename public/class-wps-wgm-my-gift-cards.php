@@ -145,7 +145,14 @@ class Wps_Wgm_My_Gift_Cards {
 				'confirm'  => __( 'Resend this gift card email to the recipient?', 'woo-gift-cards-lite' ),
 				'sending'  => __( 'Sending…', 'woo-gift-cards-lite' ),
 				'error'    => __( 'Could not resend the email. Please try again later.', 'woo-gift-cards-lite' ),
+				'expired'  => __( 'Your session has expired. Please reload the page and try again.', 'woo-gift-cards-lite' ),
 				'copied'   => __( 'Copied!', 'woo-gift-cards-lite' ),
+				/* translators: 1: first card shown, 2: last card shown, 3: total matching cards. */
+				'results'  => __( 'Showing %1$s–%2$s of %3$s gift cards', 'woo-gift-cards-lite' ),
+				'previous' => __( 'Previous', 'woo-gift-cards-lite' ),
+				'next'     => __( 'Next', 'woo-gift-cards-lite' ),
+				/* translators: %s: page number. */
+				'page'     => __( 'Page %s', 'woo-gift-cards-lite' ),
 			)
 		);
 	}
@@ -176,7 +183,20 @@ class Wps_Wgm_My_Gift_Cards {
 			'active'   => 0,
 			'expiring' => 0,
 		);
-		foreach ( $cards as $card ) {
+		$counts    = array(
+			'all'      => count( $cards ),
+			'received' => 0,
+			'sent'     => 0,
+			'active'   => 0,
+			'expired'  => 0,
+			'used'     => 0,
+		);
+		foreach ( $cards as &$card ) {
+			$card['type'] = $card['is_recipient'] ? 'received' : 'sent';
+			++$counts[ $card['type'] ];
+			if ( isset( $counts[ $card['status'] ] ) ) {
+				++$counts[ $card['status'] ];
+			}
 			if ( $card['is_recipient'] ) {
 				$received[] = $card;
 				if ( 'active' === $card['status'] ) {
@@ -188,6 +208,7 @@ class Wps_Wgm_My_Gift_Cards {
 				$purchased[] = $card;
 			}
 		}
+		unset( $card );
 
 		$general_settings = wps_wgm_get_plugin_option( 'wps_wgm_general_settings' );
 		$accent           = sanitize_hex_color( $this->wps_common_fun->wps_wgm_get_template_data( $general_settings, 'wps_wgm_giftcard_dashboard_color' ) );
@@ -196,9 +217,12 @@ class Wps_Wgm_My_Gift_Cards {
 		wc_get_template(
 			'myaccount/wps-wgm-my-gift-cards.php',
 			array(
+				'cards'     => $cards,
 				'received'  => $received,
 				'purchased' => $purchased,
 				'summary'   => $summary,
+				'counts'    => $counts,
+				'per_page'  => max( 1, absint( apply_filters( 'wps_wgm_my_gift_cards_per_page', 6 ) ) ),
 				'accent'    => $accent ? $accent : '#5b3cc4',
 			),
 			'woo-gift-cards-lite/',
@@ -347,6 +371,7 @@ class Wps_Wgm_My_Gift_Cards {
 			'code'         => $coupon->get_code(),
 			'balance'      => $balance,
 			'original'     => $original,
+			'issued'       => $coupon->get_date_created(),
 			'expires'      => $expires,
 			'status'       => $status,
 			'is_buyer'     => $is_buyer,
