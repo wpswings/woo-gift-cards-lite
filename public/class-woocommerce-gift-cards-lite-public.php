@@ -2405,7 +2405,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				// Legacy: validate by email (ONLY for old cards created before any fix).
 				// This path is vulnerable but maintained for backwards compatibility.
 				$is_authorized = ( $current_user && $current_user->user_email === $recipient_email );
-			}
+			}else {
+                // No recipient information available; treat as authorized.
+                $is_authorized = true; // Allow redemption if no recipient info is set (legacy behavior).
+            }
 
 			if ( ! $is_authorized ) {
 				$response = array(
