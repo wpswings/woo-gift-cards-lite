@@ -402,10 +402,9 @@ class Wps_Wgm_My_Gift_Cards {
 			return array();
 		}
 
-		$placeholders = implode( ', ', array_fill( 0, count( $codes ), '%s' ) );
-		$rows         = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$wpdb->prepare(
-				"SELECT order_item_id, order_item_name, order_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'coupon' AND order_item_name IN ( $placeholders ) ORDER BY order_id DESC", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT order_item_id, order_item_name, order_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'coupon' AND order_item_name IN ( " . implode( ', ', array_fill( 0, count( $codes ), '%s' ) ) . ' ) ORDER BY order_id DESC',
 				$codes
 			)
 		);

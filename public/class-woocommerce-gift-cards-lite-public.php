@@ -740,6 +740,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * @param   array $product_id  product Id.
 	 * @param   array $variation_id  variation_id.
 	 * @return  $the_cart_data
+	 * @throws Exception When the gift card amount is invalid or the nonce fails.
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
@@ -2405,10 +2406,10 @@ class Woocommerce_Gift_Cards_Lite_Public {
 				// Legacy: validate by email (ONLY for old cards created before any fix).
 				// This path is vulnerable but maintained for backwards compatibility.
 				$is_authorized = ( $current_user && $current_user->user_email === $recipient_email );
-			}else {
-                // No recipient information available; treat as authorized.
-                $is_authorized = true; // Allow redemption if no recipient info is set (legacy behavior).
-            }
+			} else {
+				// No recipient information available; treat as authorized.
+				$is_authorized = true; // Allow redemption if no recipient info is set (legacy behavior).
+			}
 
 			if ( ! $is_authorized ) {
 				$response = array(
