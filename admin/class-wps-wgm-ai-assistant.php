@@ -93,9 +93,9 @@ class Wps_Wgm_Ai_Assistant {
 		return current_user_can( $this->capability() );
 	}
 
-	/* ---------------------------------------------------------------------
-	 * Admin page
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// Admin page
+	// ---------------------------------------------------------------------
 
 	/**
 	 * Add the Gift Cards > AI Assistant submenu.
@@ -219,9 +219,9 @@ class Wps_Wgm_Ai_Assistant {
 		<?php
 	}
 
-	/* ---------------------------------------------------------------------
-	 * Abilities
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// Abilities
+	// ---------------------------------------------------------------------
 
 	/**
 	 * Register the ability category.
@@ -391,9 +391,9 @@ class Wps_Wgm_Ai_Assistant {
 		return apply_filters( 'wps_wgm_ai_assistant_abilities', $names );
 	}
 
-	/* ---------------------------------------------------------------------
-	 * Gift card data helpers
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// Gift card data helpers
+	// ---------------------------------------------------------------------
 
 	/**
 	 * Plain text money, e.g. "₹25.00", for the model.
@@ -452,15 +452,34 @@ class Wps_Wgm_Ai_Assistant {
 	 *
 	 * The gift card condition mirrors Woocommerce_Gift_Cards_Common_Function::wps_wgm_is_giftcard_coupon().
 	 *
-	 * @param string $extra_where Extra SQL condition (already prepared).
-	 * @param string $order_limit ORDER BY / LIMIT clause (already prepared).
+	 * @param array $args {
+	 *     Optional filters.
+	 *
+	 *     @type string $email        Only cards sent to this recipient email.
+	 *     @type int    $expires_from Only active cards with a balance expiring at or after this timestamp.
+	 *     @type int    $expires_to   Upper expiry timestamp, used with $expires_from.
+	 *     @type bool   $by_expiry    Order by expiry date ascending instead of newest first.
+	 *     @type int    $limit        Maximum rows (0 = no limit).
+	 * }
 	 * @return array
 	 */
-	private function query_gift_cards( $extra_where = '', $order_limit = '' ) {
+	private function query_gift_cards( $args = array() ) {
 		global $wpdb;
-		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery
-		return $wpdb->get_results(
-			"SELECT p.ID, p.post_title AS code,
+		$args = wp_parse_args(
+			$args,
+			array(
+				'email'        => '',
+				'expires_from' => 0,
+				'expires_to'   => 0,
+				'by_expiry'    => false,
+				'limit'        => 0,
+			)
+		);
+		$limit = (int) $args['limit'] > 0 ? (int) $args['limit'] : PHP_INT_MAX;
+
+		return $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT p.ID, p.post_title AS code,
 				CAST( COALESCE( bal.meta_value, 0 ) AS DECIMAL( 18, 4 ) ) AS balance,
 				CAST( COALESCE( NULLIF( orig.meta_value, '' ), bal.meta_value, 0 ) AS DECIMAL( 18, 4 ) ) AS original,
 				CAST( NULLIF( exp.meta_value, '' ) AS UNSIGNED ) AS expires,
@@ -476,17 +495,29 @@ class Wps_Wgm_Ai_Assistant {
 			LEFT JOIN {$wpdb->postmeta} gco ON gco.post_id = p.ID AND gco.meta_key = 'wps_wgm_giftcard_coupon'
 			LEFT JOIN {$wpdb->postmeta} unq ON unq.post_id = p.ID AND unq.meta_key = 'wps_wgm_giftcard_coupon_unique'
 			WHERE p.post_type = 'shop_coupon' AND p.post_status = 'publish'
-				AND ( p.post_content LIKE '%GIFTCARD ORDER #%' OR p.post_content LIKE '%Imported Coupon%' OR p.post_content LIKE '%ThankYou ORDER #%'
+				AND ( p.post_content LIKE %s OR p.post_content LIKE %s OR p.post_content LIKE %s
 					OR COALESCE( gco.meta_value, '' ) <> '' OR COALESCE( unq.meta_value, '' ) <> '' OR imp.meta_value = 'purchased' )
-				$extra_where
-			$order_limit"
+				AND ( %s = '' OR mail.meta_value = %s )
+				AND ( %d = 0 OR ( CAST( NULLIF( exp.meta_value, '' ) AS UNSIGNED ) BETWEEN %d AND %d AND CAST( COALESCE( bal.meta_value, 0 ) AS DECIMAL( 18, 4 ) ) > 0 AND ( en.meta_value IS NULL OR en.meta_value <> 'no' ) ) )
+				ORDER BY CASE WHEN %d = 1 THEN CAST( NULLIF( exp.meta_value, '' ) AS UNSIGNED ) ELSE 0 END ASC, p.ID DESC
+				LIMIT %d",
+				'%GIFTCARD ORDER #%',
+				'%Imported Coupon%',
+				'%ThankYou ORDER #%',
+				(string) $args['email'],
+				(string) $args['email'],
+				(int) $args['expires_from'],
+				(int) $args['expires_from'],
+				(int) $args['expires_to'],
+				$args['by_expiry'] ? 1 : 0,
+				$limit
+			)
 		);
-		// phpcs:enable
 	}
 
-	/* ---------------------------------------------------------------------
-	 * Read abilities
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// Read abilities
+	// ---------------------------------------------------------------------
 
 	/**
 	 * Ability: find one gift card.
@@ -566,8 +597,13 @@ class Wps_Wgm_Ai_Assistant {
 			}
 		}
 		if ( $email ) {
-			global $wpdb;
-			foreach ( $this->query_gift_cards( $wpdb->prepare( 'AND mail.meta_value = %s', $email ), 'ORDER BY p.ID DESC LIMIT 50' ) as $raw ) {
+			$sent = $this->query_gift_cards(
+				array(
+					'email' => $email,
+					'limit' => 50,
+				)
+			);
+			foreach ( $sent as $raw ) {
 				$code = strtoupper( $raw->code );
 				if ( ! isset( $rows[ $code ] ) ) {
 					$row             = $this->card_row( new WC_Coupon( $raw->ID ) );
@@ -661,18 +697,17 @@ class Wps_Wgm_Ai_Assistant {
 	 * @return array
 	 */
 	public function execute_list_expiring_gift_cards( $input ) {
-		global $wpdb;
 		$days  = isset( $input['days'] ) ? min( 365, max( 1, (int) $input['days'] ) ) : 30;
 		$limit = isset( $input['limit'] ) ? min( 50, max( 1, (int) $input['limit'] ) ) : 20;
 		$now   = time();
 
 		$rows = $this->query_gift_cards(
-			$wpdb->prepare(
-				"AND CAST( NULLIF( exp.meta_value, '' ) AS UNSIGNED ) BETWEEN %d AND %d AND CAST( COALESCE( bal.meta_value, 0 ) AS DECIMAL( 18, 4 ) ) > 0 AND ( en.meta_value IS NULL OR en.meta_value <> 'no' )",
-				$now,
-				$now + $days * DAY_IN_SECONDS
-			),
-			$wpdb->prepare( 'ORDER BY expires ASC LIMIT %d', $limit )
+			array(
+				'expires_from' => $now,
+				'expires_to'   => $now + $days * DAY_IN_SECONDS,
+				'by_expiry'    => true,
+				'limit'        => $limit,
+			)
 		);
 
 		$cards = array();
@@ -692,9 +727,9 @@ class Wps_Wgm_Ai_Assistant {
 		);
 	}
 
-	/* ---------------------------------------------------------------------
-	 * Change abilities: these only queue the change for confirmation.
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// Change abilities: these only queue the change for confirmation.
+	// ---------------------------------------------------------------------
 
 	/**
 	 * Store a change for the current user to confirm.
@@ -872,9 +907,9 @@ class Wps_Wgm_Ai_Assistant {
 		return $message;
 	}
 
-	/* ---------------------------------------------------------------------
-	 * Conversation storage
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// Conversation storage
+	// ---------------------------------------------------------------------
 
 	/**
 	 * Stored conversation for a user, as AI Client message arrays.
@@ -940,17 +975,16 @@ class Wps_Wgm_Ai_Assistant {
 		return $out;
 	}
 
-	/* ---------------------------------------------------------------------
-	 * AJAX
-	 * ------------------------------------------------------------------ */
+	// ---------------------------------------------------------------------
+	// AJAX
+	// ---------------------------------------------------------------------
 
 	/**
-	 * Common AJAX checks.
+	 * Common AJAX permission checks (the nonce is checked by each handler).
 	 *
 	 * @return void
 	 */
 	private function verify_request() {
-		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 		if ( ! self::is_available() || ! $this->wps_wgm_can_use() ) {
 			wp_send_json_error( array( 'message' => __( 'You are not allowed to use the gift card assistant.', 'woo-gift-cards-lite' ) ), 403 );
 		}
@@ -1029,10 +1063,11 @@ class Wps_Wgm_Ai_Assistant {
 	 * @return void
 	 */
 	public function wps_wgm_ajax_chat() {
+		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 		$this->verify_request();
 
 		$user_id = get_current_user_id();
-		$text    = isset( $_POST['message'] ) ? trim( sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified in verify_request().
+		$text    = isset( $_POST['message'] ) ? trim( sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) ) : '';
 		if ( '' === $text ) {
 			wp_send_json_error( array( 'message' => __( 'Please type a message.', 'woo-gift-cards-lite' ) ) );
 		}
@@ -1117,12 +1152,11 @@ class Wps_Wgm_Ai_Assistant {
 	 * @return void
 	 */
 	public function wps_wgm_ajax_decide() {
+		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 		$this->verify_request();
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- verified in verify_request().
 		$id      = isset( $_POST['id'] ) ? sanitize_key( wp_unslash( $_POST['id'] ) ) : '';
-		$confirm = isset( $_POST['decision'] ) && 'confirm' === $_POST['decision'];
-		// phpcs:enable
+		$confirm = isset( $_POST['decision'] ) && 'confirm' === sanitize_key( wp_unslash( $_POST['decision'] ) );
 		$user_id = get_current_user_id();
 		$change  = $id ? get_transient( self::ACTION_KEY . $id ) : false;
 
@@ -1160,6 +1194,7 @@ class Wps_Wgm_Ai_Assistant {
 	 * @return void
 	 */
 	public function wps_wgm_ajax_reset() {
+		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 		$this->verify_request();
 		$user_id = get_current_user_id();
 		delete_transient( self::HISTORY_KEY . $user_id );

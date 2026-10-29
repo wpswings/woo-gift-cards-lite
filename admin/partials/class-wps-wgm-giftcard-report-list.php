@@ -409,49 +409,21 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		$per_page     = 10;
 		$offset       = ( $current_page - 1 ) * $per_page;
 
-		$sql = "
-		SELECT p.ID, p.post_title
-		FROM {$wpdb->posts} p
-		WHERE p.post_type = 'shop_coupon'
-		AND p.post_status = 'publish'
-		";
-
+		$date_from = '';
+		$date_to   = '';
 		if ( ! empty( $_POST['wps_gc_date_filter_1'] ) && ! empty( $_POST['wps_gc_date_filter_2'] ) ) {
 			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
 			if ( ! wp_verify_nonce( $nonce, 'wps_wgm_report_filter' ) ) {
 				return array();
 			}
-			$gc_date_1 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) );
-			$gc_date_2 = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) );
-
-			$sql .= $wpdb->prepare(
-				' AND p.post_date BETWEEN %s AND %s',
-				$gc_date_1 . ' 00:00:00',
-				$gc_date_2 . ' 23:59:59'
-			);
+			$date_from = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_1'] ) ) . ' 00:00:00';
+			$date_to   = sanitize_text_field( wp_unslash( $_POST['wps_gc_date_filter_2'] ) ) . ' 23:59:59';
 		}
 
+		$search = '';
 		if ( ! empty( $_REQUEST['s'] ) ) {
 			$search = '%' . $wpdb->esc_like( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) . '%';
-			$sql   .= $wpdb->prepare( ' AND p.post_title LIKE %s', $search );
 		}
-
-		$sql .= "
-			AND (
-				p.post_content LIKE '%GIFTCARD ORDER #%'
-				OR (
-					p.post_content LIKE '%Imported Coupon%'
-					AND EXISTS (
-						SELECT 1 FROM {$wpdb->postmeta} pm
-						WHERE pm.post_id = p.ID
-						AND pm.meta_key = 'wps_wgm_imported_coupon'
-						AND pm.meta_value = 'purchased'
-					)
-				)
-			)
-		";
-
-		$sql .= ' ORDER BY p.ID DESC';
 
 		$valid_offset = $offset;
 		$raw_offset   = 0;
@@ -463,8 +435,39 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		$wps_uwgc_data_count = 0;
 
 		while ( $wps_uwgc_data_count < $per_page ) {
-			$paged_sql = $sql . $wpdb->prepare( ' LIMIT %d OFFSET %d', $batch_size, $raw_offset );
-			$results   = $wpdb->get_results( $paged_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$results = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT p.ID, p.post_title
+					FROM {$wpdb->posts} p
+					WHERE p.post_type = 'shop_coupon'
+					AND p.post_status = 'publish'
+					AND ( %s = '' OR p.post_date BETWEEN %s AND %s )
+					AND ( %s = '' OR p.post_title LIKE %s )
+					AND (
+						p.post_content LIKE %s
+						OR (
+							p.post_content LIKE %s
+							AND EXISTS (
+								SELECT 1 FROM {$wpdb->postmeta} pm
+								WHERE pm.post_id = p.ID
+								AND pm.meta_key = 'wps_wgm_imported_coupon'
+								AND pm.meta_value = 'purchased'
+							)
+						)
+					)
+					ORDER BY p.ID DESC
+					LIMIT %d OFFSET %d",
+					$date_from,
+					$date_from,
+					$date_to,
+					$search,
+					$search,
+					'%GIFTCARD ORDER #%',
+					'%Imported Coupon%',
+					$batch_size,
+					$raw_offset
+				)
+			);
 
 			if ( empty( $results ) ) {
 				break;

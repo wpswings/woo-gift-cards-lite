@@ -332,65 +332,90 @@ if ( ! class_exists( 'WPS_Gift_Card_Failure_Tracker' ) ) {
 
 			$table_name = $wpdb->prefix . 'wps_gift_card_failures';
 
-			// Determine date filter.
-			$date_filter = '';
+			// Determine the look-back window in days (0 = no date restriction).
 			switch ( $period ) {
 				case '24h':
-					$date_filter = 'AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 1 DAY)';
+					$days = 1;
 					break;
 				case '7d':
-					$date_filter = 'AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 7 DAY)';
+					$days = 7;
 					break;
 				case '30d':
-					$date_filter = 'AND failure_timestamp >= DATE_SUB(NOW(), INTERVAL 30 DAY)';
+					$days = 30;
 					break;
 				case 'all':
 				default:
-					$date_filter = '';
+					$days = 0;
 					break;
 			}
 
 			// Get total failures.
 			$total = $wpdb->get_var(
-				'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . ' WHERE 1=1 ' . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$wpdb->prepare(
+					'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . ' WHERE ( %d = 0 OR failure_timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY) )',
+					$days,
+					$days
+				)
 			);
 
 			// Get failures by type.
 			$by_type = $wpdb->get_results(
-				'SELECT failure_type, COUNT(*) as count
-				FROM ' . esc_sql( $table_name ) . '
-				WHERE 1=1 ' . $date_filter . ' // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				GROUP BY failure_type'
+				$wpdb->prepare(
+					'SELECT failure_type, COUNT(*) as count
+					FROM ' . esc_sql( $table_name ) . '
+					WHERE ( %d = 0 OR failure_timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY) )
+					GROUP BY failure_type',
+					$days,
+					$days
+				)
 			);
 
 			// Get failures by severity.
 			$by_severity = $wpdb->get_results(
-				'SELECT severity, COUNT(*) as count
-				FROM ' . esc_sql( $table_name ) . '
-				WHERE 1=1 ' . $date_filter . ' // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				GROUP BY severity'
+				$wpdb->prepare(
+					'SELECT severity, COUNT(*) as count
+					FROM ' . esc_sql( $table_name ) . '
+					WHERE ( %d = 0 OR failure_timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY) )
+					GROUP BY severity',
+					$days,
+					$days
+				)
 			);
 
 			// Get failures by status.
 			$by_status = $wpdb->get_results(
-				'SELECT status, COUNT(*) as count
-				FROM ' . esc_sql( $table_name ) . '
-				WHERE 1=1 ' . $date_filter . ' // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-				GROUP BY status'
+				$wpdb->prepare(
+					'SELECT status, COUNT(*) as count
+					FROM ' . esc_sql( $table_name ) . '
+					WHERE ( %d = 0 OR failure_timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY) )
+					GROUP BY status',
+					$days,
+					$days
+				)
 			);
 
 			// Get critical failures.
 			$critical_count = $wpdb->get_var(
-				'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . "
-				WHERE severity = 'critical'
-				AND status != 'resolved' " . $date_filter // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$wpdb->prepare(
+					'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . "
+					WHERE severity = 'critical'
+					AND status != 'resolved'
+					AND ( %d = 0 OR failure_timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY) )",
+					$days,
+					$days
+				)
 			);
 
 			// Get pending recoveries.
 			$pending_recoveries = $wpdb->get_var(
-				'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . "
-				WHERE status IN ('new', 'in_progress')
-				AND retry_count < max_retries " . $date_filter
+				$wpdb->prepare(
+					'SELECT COUNT(*) FROM ' . esc_sql( $table_name ) . "
+					WHERE status IN ('new', 'in_progress')
+					AND retry_count < max_retries
+					AND ( %d = 0 OR failure_timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY) )",
+					$days,
+					$days
+				)
 			);
 
 			return array(

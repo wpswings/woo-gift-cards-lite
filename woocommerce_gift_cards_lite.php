@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile WordPress.Files.FileName.NotHyphenatedLowercase, WordPress.Files.FileName.InvalidClassFileName
 /**
  * The plugin bootstrap file
  *
@@ -31,6 +30,9 @@
  * Domain Path:       /languagess
  */
 
+// The plugin bootstrap file name must stay unchanged, renaming it would deactivate the plugin on existing sites.
+// phpcs:disable WordPress.Files.FileName
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -50,10 +52,8 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$activated = true;
 	}
-} else {
-	if ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
-		$activated = true;
-	}
+} elseif ( file_exists( WP_PLUGIN_DIR . '/' . $wps_woo_plugin ) && in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+	$activated = true;
 }
 
 add_action( 'before_woocommerce_init', 'wps_wgm_declare_hpos_compatibility' );
@@ -91,7 +91,7 @@ if ( $activated ) {
 	require plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-lite.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-woocommerce-gift-cards-activation.php';
 
-	
+
 	/**
 	 *Add link for settings
 	*/
@@ -302,7 +302,6 @@ if ( $activated ) {
 		$restore_data = new Woocommerce_Gift_Cards_Activation();
 		$restore_data->wps_wgm_restore_data( $network_wide );
 		set_transient( 'wps-wgm-giftcard-setting-notice', true, 5 );
-
 	}
 
 	// on plugin load.
@@ -342,7 +341,6 @@ if ( $activated ) {
 					$this->product_type = 'wgm_gift_card';
 					parent::__construct( $product );
 				}
-
 			}
 		}
 	}
@@ -664,7 +662,7 @@ add_action( 'admin_notices', 'wps_giftcard_notification_plugin_html' );
 if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
 	/**
 	 * Notification html.
-	 * 
+	 *
 	 * @since 3.0.0
 	 */
 	function wps_giftcard_notification_plugin_html() {
@@ -700,6 +698,5 @@ if ( ! function_exists( 'wps_giftcard_notification_plugin_html' ) ) {
 				}
 			}
 		}
-
 	}
 }
