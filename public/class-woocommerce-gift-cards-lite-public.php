@@ -2432,6 +2432,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$expirydiff            = $expiry_date_timestamp - $timestamp;
 					}
 
+					// Atomically claim the coupon balance so concurrent requests cannot redeem it twice.
+					if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
+						$coupon_amount = $this->wps_wgm_claim_coupon_amount( $coupon_id );
+					}
+
 					if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
 						$coupon->set_amount( 0 );
 						$user_id = get_current_user_id();
@@ -2945,6 +2950,39 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	}
 
 	/**
+	 * Atomically set a coupon's amount to zero and return the amount it held.
+	 *
+	 * Uses a conditional UPDATE so that, among concurrent requests, only the one
+	 * whose update actually changes the row receives the balance.
+	 *
+	 * @param int $coupon_id coupon_id.
+	 * @return float Claimed amount, or 0 if the coupon was already emptied.
+	 */
+	public function wps_wgm_claim_coupon_amount( $coupon_id ) {
+		global $wpdb;
+
+		$coupon_id = absint( $coupon_id );
+		if ( empty( $coupon_id ) ) {
+			return 0;
+		}
+
+		// Read directly from the database to bypass any stale object cache.
+		$raw_amount = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = 'coupon_amount' LIMIT 1", $coupon_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		if ( null === $raw_amount || ! is_numeric( $raw_amount ) || 0 >= (float) $raw_amount ) {
+			return 0;
+		}
+
+		$updated = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = '0' WHERE post_id = %d AND meta_key = 'coupon_amount' AND meta_value = %s", $coupon_id, $raw_amount ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		clean_post_cache( $coupon_id );
+
+		if ( empty( $updated ) ) {
+			return 0;
+		}
+
+		return (float) $raw_amount;
+	}
+
+	/**
 	 * This function is used to redeem coupon amount.
 	 *
 	 * @return void
@@ -3001,11 +3039,15 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					$coupon_amount = $coupon->get_amount();
 					if ( $coupon->is_valid() ) {
+						// Atomically claim the coupon balance before crediting points.
+						if ( $coupon_amount > 0 ) {
+							$coupon_amount = $this->wps_wgm_claim_coupon_amount( $coupon_id );
+						}
 						if ( $coupon_amount > 0 ) {
 
-							$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
 							$coupon->set_amount( 0 );
 							$coupon->save();
+							$this->wps_wgm_updating_par_points( $user_id, $coupon_amount, $coupon );
 							do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, 0 );
 							$response['result'] = true;
 							$response['msg']    = esc_html__( 'Coupon redeem successfully...', 'woo-gift-cards-lite' );
