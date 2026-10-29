@@ -248,10 +248,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				);
 				$url     = plugins_url();
 				wp_enqueue_script( 'wps_lite_select2', $url . '/woocommerce/assets/js/select2/select2.min.js', array( 'jquery' ), $this->version, true );
-				wp_register_script( $this->plugin_name . 'clipboard', plugin_dir_url( __FILE__ ) . 'js/clipboard.min.js', array(), $this->version, true );
-
-				wp_enqueue_script( $this->plugin_name . 'clipboard' );
-				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'wps_lite_select2', 'wc-enhanced-select', 'wp-color-picker' ), $this->version, true );
+				wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woocommerce_gift_cards_lite-admin.js', array( 'jquery', 'wps_lite_select2', 'wc-enhanced-select', 'wp-color-picker', 'clipboard' ), $this->version, true );
 
 				wp_localize_script( $this->plugin_name, 'wps_wgc', $wps_wgc );
 

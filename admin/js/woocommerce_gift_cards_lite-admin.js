@@ -474,8 +474,8 @@ var nonStickyTabs = [ 'delivery_method', 'other_setting'];
 				}
 			);
 
-			var clipboard1 = new Clipboard( '.wps_link_copy' );
-			var clipboard2 = new Clipboard( '.wps_embeded_copy' );
+			var clipboard1 = new ClipboardJS( '.wps_link_copy' );
+			var clipboard2 = new ClipboardJS( '.wps_embeded_copy' );
 			$( document ).on(
 				'click',
 				'.wps_redeem_copy',

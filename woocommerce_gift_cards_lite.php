@@ -23,7 +23,7 @@
  * Text Domain:       woo-gift-cards-lite
  * Requires Plugins:  woocommerce
  * Tested up to:      7.1
- * Requires at least: 6.7
+ * Requires at least: 6.9
  * WC tested up to:   11.2.1
  * WC requires at least: 6.5
  * Requires PHP:      7.4
