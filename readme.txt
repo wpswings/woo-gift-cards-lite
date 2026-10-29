@@ -327,6 +327,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 * New: Expiry reminder email sent to the recipient a set number of days before the card expires, including the remaining balance.
 * New: AI Assistant: answers plugin queries and guides setup.
 * New: Compatibility with the latest WC ( 11.2.1 ) and WP ( 7.1 )
+* Fix: Gift Card Double-Redeem issue fix
 
 = 3.2.12 - Released on 15 September 2026 =
 * Fix: Tax issue resolved 
@@ -710,3 +711,4 @@ New: Email Template for Mother's Day
 * New: Expiry reminder email sent to the recipient a set number of days before the card expires, including the remaining balance.
 * New: AI Assistant: answers plugin queries and guides setup.
 * New: Compatibility with the latest WC ( 11.2.1 ) and WP ( 7.1 )
+* Fix: Gift Card Double-Redeem issue fix
