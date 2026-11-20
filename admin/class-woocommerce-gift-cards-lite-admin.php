@@ -676,7 +676,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 					$wps_wgm_pricing  = array();
 					$selected_pricing = isset( $_POST['wps_wgm_pricing'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_pricing'] ) ) : false;
 					if ( $selected_pricing ) {
-						$default_price = isset( $_POST['wps_wgm_default'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_default'] ) ) : 0;
+						$default_price = isset( $_POST['wps_wgm_default'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_default'] ) ) ) : 0;
 						update_post_meta( $product_id, '_regular_price', $default_price );
 						update_post_meta( $product_id, '_price', $default_price );
 						$wps_wgm_pricing['default_price'] = $default_price;
@@ -720,8 +720,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 						}
 						switch ( $selected_pricing ) {
 							case 'wps_wgm_range_price':
-								$from                    = isset( $_POST['wps_wgm_from_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_price'] ) ) : 0;
-								$to                      = isset( $_POST['wps_wgm_to_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_price'] ) ) : 0;
+								$from                    = isset( $_POST['wps_wgm_from_price'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_price'] ) ) ) : 0;
+								$to                      = isset( $_POST['wps_wgm_to_price'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_price'] ) ) ) : 0;
 								$wps_wgm_pricing['type'] = $selected_pricing;
 								$wps_wgm_pricing['from'] = $from;
 								$wps_wgm_pricing['to']   = $to;
@@ -734,7 +734,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 
 							case 'wps_wgm_user_price':
 								$wps_wgm_pricing['type']           = $selected_pricing;
-								$wps_wgm_pricing['min_user_price'] = isset( $_POST['wps_wgm_min_user_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_min_user_price'] ) ) : 0;
+								$wps_wgm_pricing['min_user_price'] = isset( $_POST['wps_wgm_min_user_price'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_min_user_price'] ) ) ) : 0;
 								break;
 
 							case 'wps_wgm_variable_price':
@@ -743,8 +743,8 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 								break;
 
 							case 'wps_wgm_selected_with_price_range':
-								$from                     = isset( $_POST['wps_wgm_from_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_price'] ) ) : 0;
-								$to                       = isset( $_POST['wps_wgm_to_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_price'] ) ) : 0;
+								$from                     = isset( $_POST['wps_wgm_from_price'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_from_price'] ) ) ) : 0;
+								$to                       = isset( $_POST['wps_wgm_to_price'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_to_price'] ) ) ) : 0;
 								$price                    = isset( $_POST['wps_wgm_selected_price'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_selected_price'] ) ) : 0;
 								$wps_wgm_pricing['type']  = $selected_pricing;
 								$wps_wgm_pricing['from']  = $from;
@@ -3207,7 +3207,7 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 			$url,
 			array(
 				'timeout'    => 50,
-				'user-agent' => '',
+				'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(),
 				'sslverify'  => false,
 				'body'       => $curl_data,
 			)

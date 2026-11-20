@@ -38,7 +38,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			array(
 				'method'     => 'POST',
 				'timeout'    => 50,
-				'user-agent' => '',
+				'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(),
 				'sslverify'  => false,
 				'body'       => $curl_data,
 			)
@@ -74,7 +74,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 			$url,
 			array(
 				'timeout'    => 50,
-				'user-agent' => '',
+				'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(),
 				'sslverify'  => false,
 				'body'       => $curl_data,
 			)
@@ -121,7 +121,7 @@ if ( isset( $_POST['wcgm_generate_offine_redeem_url'] ) ) {
 				$url,
 				array(
 					'timeout'    => 50,
-					'user-agent' => '',
+					'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(),
 					'sslverify'  => false,
 					'body'       => $curl_data,
 				)
