@@ -132,6 +132,21 @@ class Woocommerce_Gift_Cards_Lite {
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-woocommerce-gift-cards-lite-public.php';
 
 		/**
+		 * The class responsible for the "My Gift Cards" tab on the My Account page.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-wps-wgm-my-gift-cards.php';
+
+		/**
+		 * The class responsible for gift card expiry reminder emails.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wgm-expiry-reminder.php';
+
+		/**
+		 * The class responsible for the Gift Card AI Assistant (WordPress 7.0+ AI Client).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wgm-ai-assistant.php';
+
+		/**
 		 * The class responsible for tracking failed gift card operations.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-gift-card-failure-tracker.php';
@@ -342,6 +357,35 @@ class Woocommerce_Gift_Cards_Lite {
 		}
 
 		$this->loader->add_action( 'wps_wgm_send_mail_to_sender', $plugin_public, 'wps_wgm_send_mail_to_sender_on_reciever', 10, 3 );
+
+		// My Account > My Gift Cards tab.
+		$my_gift_cards = new Wps_Wgm_My_Gift_Cards();
+		$this->loader->add_filter( 'woocommerce_get_query_vars', $my_gift_cards, 'wps_wgm_add_query_var' );
+		$this->loader->add_action( 'init', $my_gift_cards, 'wps_wgm_maybe_flush_rewrite_rules', 99 );
+		$this->loader->add_filter( 'woocommerce_account_menu_items', $my_gift_cards, 'wps_wgm_add_menu_item' );
+		$this->loader->add_filter( 'woocommerce_endpoint_' . $my_gift_cards->get_endpoint() . '_title', $my_gift_cards, 'wps_wgm_endpoint_title' );
+		$this->loader->add_action( 'woocommerce_account_' . $my_gift_cards->get_endpoint() . '_endpoint', $my_gift_cards, 'wps_wgm_render_endpoint' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $my_gift_cards, 'wps_wgm_enqueue_assets' );
+		$this->loader->add_action( 'wp_ajax_wps_wgm_my_account_resend_giftcard', $my_gift_cards, 'wps_wgm_ajax_resend' );
+
+		// Gift card expiry reminder emails. Priority 20 runs after Giftware, which older releases used to supply this.
+		$expiry_reminder = new Wps_Wgm_Expiry_Reminder();
+		$this->loader->add_action( 'init', $expiry_reminder, 'wps_wgm_schedule_event' );
+		$this->loader->add_action( Wps_Wgm_Expiry_Reminder::CRON_HOOK, $expiry_reminder, 'wps_wgm_send_reminders', 20 );
+		$this->loader->add_filter( 'wps_wgm_mail_template_settings', $expiry_reminder, 'wps_wgm_add_settings', 20 );
+		$this->loader->add_action( 'wps_wgm_addtional_mail_settings', $expiry_reminder, 'wps_wgm_render_settings', 20, 2 );
+
+		// Gift Card AI Assistant. Only does anything on WordPress 7.0+ with AI support.
+		if ( function_exists( 'wp_register_ability' ) ) {
+			$ai_assistant = new Wps_Wgm_Ai_Assistant();
+			$this->loader->add_action( 'admin_menu', $ai_assistant, 'wps_wgm_add_menu', 20 );
+			$this->loader->add_action( 'admin_enqueue_scripts', $ai_assistant, 'wps_wgm_enqueue_assets' );
+			$this->loader->add_action( 'wp_abilities_api_categories_init', $ai_assistant, 'wps_wgm_register_category' );
+			$this->loader->add_action( 'wp_abilities_api_init', $ai_assistant, 'wps_wgm_register_abilities' );
+			$this->loader->add_action( 'wp_ajax_wps_wgm_ai_chat', $ai_assistant, 'wps_wgm_ajax_chat' );
+			$this->loader->add_action( 'wp_ajax_wps_wgm_ai_decide', $ai_assistant, 'wps_wgm_ajax_decide' );
+			$this->loader->add_action( 'wp_ajax_wps_wgm_ai_reset', $ai_assistant, 'wps_wgm_ajax_reset' );
+		}
 	}
 
 	/**
