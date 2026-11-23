@@ -135,6 +135,7 @@ $wps_wgm_sorts   = array(
 			$wps_wgm_party   = $wps_wgm_is_sent ? $wps_wgm_card['mail_to'] : $wps_wgm_card['from'];
 			$wps_wgm_percent = $wps_wgm_card['original'] > 0 ? max( 0, min( 100, round( $wps_wgm_card['balance'] / $wps_wgm_card['original'] * 100 ) ) ) : 0;
 			$wps_wgm_uses    = count( $wps_wgm_card['history'] );
+			$wps_wgm_entries = isset( $wps_wgm_card['transactions'] ) ? $wps_wgm_card['transactions'] : $wps_wgm_card['history'];
 			$wps_wgm_search  = array( $wps_wgm_card['code'], $wps_wgm_card['from'], $wps_wgm_card['mail_to'] );
 			if ( $wps_wgm_card['order'] ) {
 				$wps_wgm_search[] = '#' . $wps_wgm_card['order']->get_order_number();
@@ -284,17 +285,21 @@ $wps_wgm_sorts   = array(
 					</dl>
 
 					<h4 class="wps-wgm-mgc-detail-heading"><?php esc_html_e( 'Usage history', 'woo-gift-cards-lite' ); ?></h4>
-					<?php if ( $wps_wgm_uses ) : ?>
+					<?php if ( $wps_wgm_entries ) : ?>
 						<ol class="wps-wgm-mgc-timeline">
-							<?php foreach ( $wps_wgm_card['history'] as $wps_wgm_use ) : ?>
+							<?php foreach ( $wps_wgm_entries as $wps_wgm_use ) : ?>
+								<?php $wps_wgm_is_credit = isset( $wps_wgm_use['sign'] ) && '+' === $wps_wgm_use['sign']; ?>
 								<li>
 									<span class="wps-wgm-mgc-timeline-date">
 										<?php echo esc_html( $wps_wgm_use['date'] ? wc_format_datetime( $wps_wgm_use['date'] ) : '' ); ?>
+										<?php if ( ! empty( $wps_wgm_use['label'] ) ) : ?>
+											&middot; <?php echo esc_html( $wps_wgm_use['label'] ); ?>
+										<?php endif; ?>
 										<?php if ( $wps_wgm_use['order_url'] ) : ?>
 											&middot; <a href="<?php echo esc_url( $wps_wgm_use['order_url'] ); ?>">#<?php echo esc_html( $wps_wgm_use['order_number'] ); ?></a>
 										<?php endif; ?>
 									</span>
-									<span class="wps-wgm-mgc-timeline-amount">&minus;<?php echo wp_kses_post( wc_price( $wps_wgm_use['amount'], array( 'currency' => $wps_wgm_use['currency'] ) ) ); ?></span>
+									<span class="wps-wgm-mgc-timeline-amount"><?php echo $wps_wgm_is_credit ? '+' : '&minus;'; ?><?php echo wp_kses_post( wc_price( $wps_wgm_use['amount'], array( 'currency' => $wps_wgm_use['currency'] ) ) ); ?></span>
 								</li>
 							<?php endforeach; ?>
 						</ol>

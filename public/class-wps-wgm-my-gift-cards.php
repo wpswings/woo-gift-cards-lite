@@ -293,10 +293,12 @@ class Wps_Wgm_My_Gift_Cards {
 			}
 		}
 
-		$history = $this->wps_wgm_get_usage_history( wp_list_pluck( $cards, 'code' ), $user_id );
+		$history      = $this->wps_wgm_get_usage_history( wp_list_pluck( $cards, 'code' ), $user_id );
+		$transactions = $this->wps_wgm_get_transaction_history( wp_list_pluck( $cards, 'code' ), $user_id, $history );
 		foreach ( $cards as &$card ) {
-			$key             = strtolower( $card['code'] );
-			$card['history'] = isset( $history[ $key ] ) ? $history[ $key ] : array();
+			$key                  = strtolower( $card['code'] );
+			$card['history']      = isset( $history[ $key ] ) ? $history[ $key ] : array();
+			$card['transactions'] = isset( $transactions[ $key ] ) ? $transactions[ $key ] : array();
 		}
 		unset( $card );
 
@@ -440,6 +442,95 @@ class Wps_Wgm_My_Gift_Cards {
 		}
 
 		return $history;
+	}
+
+	/**
+	 * Balance history for the My Account timeline, from the transaction log.
+	 *
+	 * Uses from before the log existed come from the orders (wps_wgm_get_usage_history());
+	 * everything after comes from the log, so restores, recharges, admin edits and expiry
+	 * show too. With no log rows the result equals the order-based history.
+	 *
+	 * @param string[] $codes   Gift card codes.
+	 * @param int      $user_id Viewing user ID; order links are only shown for their own orders.
+	 * @param array    $history Order-based history keyed by lowercase code.
+	 * @return array Entries keyed by lowercase code, newest first. Each has date, amount (positive),
+	 *               sign ('+' or '-'), label, currency, order_number and order_url.
+	 */
+	public function wps_wgm_get_transaction_history( $codes, $user_id, $history ) {
+		$result = array();
+		$codes  = array_values( array_unique( array_filter( array_map( 'wc_format_coupon_code', $codes ) ) ) );
+		if ( empty( $codes ) ) {
+			return $result;
+		}
+
+		$has_log = class_exists( 'Wps_Wgm_Transactions' ) && Wps_Wgm_Transactions::is_ready();
+		$first   = $has_log ? Wps_Wgm_Transactions::first_dates( $codes ) : array();
+		$label   = $has_log ? Wps_Wgm_Transactions::label( 'redeemed' ) : __( 'Redeemed', 'woo-gift-cards-lite' );
+
+		// Order-based uses from before the card's first log row.
+		foreach ( $history as $key => $uses ) {
+			$cutoff = isset( $first[ $key ] ) ? strtotime( $first[ $key ] . ' UTC' ) : null;
+			foreach ( $uses as $use ) {
+				if ( null !== $cutoff && $use['date'] && $use['date']->getTimestamp() >= $cutoff ) {
+					continue;
+				}
+				$use['sign']      = '-';
+				$use['label']     = $label;
+				$result[ $key ][] = $use;
+			}
+		}
+
+		if ( $has_log && ! empty( $first ) ) {
+			$rows   = Wps_Wgm_Transactions::query(
+				array(
+					'codes'         => $codes,
+					'exclude_types' => array( 'opening_balance', 'issued' ),
+					'per_page'      => 0,
+				)
+			);
+			$orders = array();
+			foreach ( $rows as $row ) {
+				if ( 0 === (int) round( (float) $row->amount_change * 10000 ) ) {
+					continue;
+				}
+				$order_number = '';
+				$order_url    = '';
+				if ( $row->order_id ) {
+					if ( ! array_key_exists( $row->order_id, $orders ) ) {
+						$orders[ $row->order_id ] = wc_get_order( $row->order_id );
+					}
+					$order = $orders[ $row->order_id ];
+					if ( $order && (int) $order->get_customer_id() === (int) $user_id ) {
+						$order_number = $order->get_order_number();
+						$order_url    = $order->get_view_order_url();
+					}
+				}
+				$result[ strtolower( $row->coupon_code ) ][] = array(
+					'date'         => Wps_Wgm_Transactions::row_date( $row ),
+					'amount'       => abs( (float) $row->amount_change ),
+					'sign'         => (float) $row->amount_change > 0 ? '+' : '-',
+					'label'        => Wps_Wgm_Transactions::label( $row->type ),
+					'currency'     => $row->currency,
+					'order_number' => $order_number,
+					'order_url'    => $order_url,
+				);
+			}
+		}
+
+		foreach ( $result as &$entries ) {
+			usort(
+				$entries,
+				function ( $a, $b ) {
+					$a_time = $a['date'] ? $a['date']->getTimestamp() : 0;
+					$b_time = $b['date'] ? $b['date']->getTimestamp() : 0;
+					return $b_time - $a_time;
+				}
+			);
+		}
+		unset( $entries );
+
+		return $result;
 	}
 
 	/**
