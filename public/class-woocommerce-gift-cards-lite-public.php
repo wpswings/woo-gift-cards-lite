@@ -1632,8 +1632,26 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							$item_total = $value->get_total(); // Actual amount paid after all discounts.
 							$total      = max( 0, $item_total ) + $coupon->get_amount();
 							$coupon->set_amount( $total );
-							// Save the changes.
-							$coupon->save();
+							// Transaction log: label the top-up as a recharge.
+							$wps_wgm_tx_context = class_exists( 'Wps_Wgm_Transactions' );
+							if ( $wps_wgm_tx_context ) {
+								Wps_Wgm_Transactions::set_context(
+									'recharge',
+									array(
+										'coupon_id' => $wps_coupon_id,
+										'order_id'  => $order_id,
+										'source'    => 'checkout',
+									)
+								);
+							}
+							try {
+								// Save the changes.
+								$coupon->save();
+							} finally {
+								if ( $wps_wgm_tx_context ) {
+									Wps_Wgm_Transactions::clear_context();
+								}
+							}
 						} else {
 							/* translators: %s: coupon_code */
 							echo esc_html( sprintf( __( 'Coupon %s is not available.', 'woo-gift-cards-lite' ), $coupon_code ) );
@@ -1932,38 +1950,56 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					}
 				}
 				$giftcardcoupon = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true );
-				if ( ! empty( $giftcardcoupon ) ) {
-
-					if ( apply_filters( 'wps_wgm_subscription_renewal_order_coupon', false, $order_id, $the_coupon ) ) {
-						return;
-					}
-					$wps_wgm_discount     = $item->get_discount();
-					$wps_wgm_discount_tax = $item->get_discount_tax();
-					$amount               = get_post_meta( $coupon_id, 'coupon_amount', true );
-					$decimal_separator    = get_option( 'woocommerce_price_decimal_sep' );
-					$amount               = floatval( str_replace( $decimal_separator, '.', $amount ) );
-
-					$total_discount = $this->wps_common_fun->wps_wgm_calculate_coupon_discount( $wps_wgm_discount, $wps_wgm_discount_tax );
-					$total_discount = $total_discount / $rate;
-
-					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
-						$from_currency  = wps_wgm_hpos_get_meta_data( $order_id, '_order_currency', true );
-						$total_discount = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
-					}
-
-					if ( $amount < $total_discount ) {
-						$remaining_amount = 0;
-					} else {
-						$remaining_amount = $amount - $total_discount;
-						$remaining_amount = round( $remaining_amount, 2 );
-					}
-					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
-					do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, $remaining_amount );
-					do_action( 'wps_wgm_send_mail_to_sender', $coupon_code, $the_coupon, $order_id );
-				} else {
-					do_action( 'wps_wgm_offline_giftcard_coupon', $coupon_id, $item );
+				// Transaction log: label the deduction below (and Pro's offline-card deduction) as a redemption.
+				$wps_wgm_tx_context = class_exists( 'Wps_Wgm_Transactions' );
+				if ( $wps_wgm_tx_context ) {
+					Wps_Wgm_Transactions::set_context(
+						'redeemed',
+						array(
+							'coupon_id' => $coupon_id,
+							'order_id'  => $order_id,
+							'source'    => 'checkout',
+						)
+					);
 				}
-				do_action( 'wps_wgm_coupon_reporting_with_order', $coupon_id, $item, $total_discount, $remaining_amount );
+				try {
+					if ( ! empty( $giftcardcoupon ) ) {
+
+						if ( apply_filters( 'wps_wgm_subscription_renewal_order_coupon', false, $order_id, $the_coupon ) ) {
+							return;
+						}
+						$wps_wgm_discount     = $item->get_discount();
+						$wps_wgm_discount_tax = $item->get_discount_tax();
+						$amount               = get_post_meta( $coupon_id, 'coupon_amount', true );
+						$decimal_separator    = get_option( 'woocommerce_price_decimal_sep' );
+						$amount               = floatval( str_replace( $decimal_separator, '.', $amount ) );
+
+						$total_discount = $this->wps_common_fun->wps_wgm_calculate_coupon_discount( $wps_wgm_discount, $wps_wgm_discount_tax );
+						$total_discount = $total_discount / $rate;
+
+						if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_to_base_currency' ) ) {
+							$from_currency  = wps_wgm_hpos_get_meta_data( $order_id, '_order_currency', true );
+							$total_discount = wps_mmcsfw_admin_fetch_currency_rates_to_base_currency( $from_currency, $total_discount );
+						}
+
+						if ( $amount < $total_discount ) {
+							$remaining_amount = 0;
+						} else {
+							$remaining_amount = $amount - $total_discount;
+							$remaining_amount = round( $remaining_amount, 2 );
+						}
+						update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+						do_action( 'wps_wgm_send_mail_remaining_amount', $coupon_id, $remaining_amount );
+						do_action( 'wps_wgm_send_mail_to_sender', $coupon_code, $the_coupon, $order_id );
+					} else {
+						do_action( 'wps_wgm_offline_giftcard_coupon', $coupon_id, $item );
+					}
+					do_action( 'wps_wgm_coupon_reporting_with_order', $coupon_id, $item, $total_discount, $remaining_amount );
+				} finally {
+					if ( $wps_wgm_tx_context ) {
+						Wps_Wgm_Transactions::clear_context();
+					}
+				}
 			}
 		}
 	}
@@ -2312,7 +2348,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					$remaining_amount = $amount + $total_discount;
 					$remaining_amount = round( $remaining_amount, 2 );
-					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+					$this->wps_wgm_update_amount_with_context(
+						$coupon_id,
+						$remaining_amount,
+						'cancelled_restore',
+						array(
+							'order_id' => $order_id,
+							'source'   => 'order',
+							'note'     => sprintf( 'Order %s', $new_status ),
+						)
+					);
 					$coupon_used = 'no';
 					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
 
@@ -2334,7 +2379,16 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$remaining_amount = $amount - $total_discount;
 						$remaining_amount = round( $remaining_amount, 2 );
 					}
-					update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+					$this->wps_wgm_update_amount_with_context(
+						$coupon_id,
+						$remaining_amount,
+						'redeemed',
+						array(
+							'order_id' => $order_id,
+							'source'   => 'order',
+							'note'     => sprintf( 'Order reinstated as %s', $new_status ),
+						)
+					);
 					$coupon_used = 'yes';
 					wps_wgm_hpos_update_meta_data( $order_id, 'coupon_used', $coupon_used );
 				}
@@ -2443,7 +2497,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 
 					// Atomically claim the coupon balance so concurrent requests cannot redeem it twice.
 					if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
-						$coupon_amount = $this->wps_wgm_claim_coupon_amount( $coupon_id );
+						$coupon_amount = $this->wps_wgm_claim_coupon_amount( $coupon_id, 'wallet' );
 					}
 
 					if ( ! empty( $coupon_amount ) && 0 < $expirydiff ) {
@@ -2964,10 +3018,11 @@ class Woocommerce_Gift_Cards_Lite_Public {
 	 * Uses a conditional UPDATE so that, among concurrent requests, only the one
 	 * whose update actually changes the row receives the balance.
 	 *
-	 * @param int $coupon_id coupon_id.
+	 * @param int    $coupon_id coupon_id.
+	 * @param string $source    Where the balance goes (wallet, points), for the transaction log.
 	 * @return float Claimed amount, or 0 if the coupon was already emptied.
 	 */
-	public function wps_wgm_claim_coupon_amount( $coupon_id ) {
+	public function wps_wgm_claim_coupon_amount( $coupon_id, $source = 'unknown' ) {
 		global $wpdb;
 
 		$coupon_id = absint( $coupon_id );
@@ -2988,7 +3043,38 @@ class Woocommerce_Gift_Cards_Lite_Public {
 			return 0;
 		}
 
+		// Transaction log: this write bypasses the meta API, so log it here.
+		if ( class_exists( 'Wps_Wgm_Transactions' ) ) {
+			Wps_Wgm_Transactions::log(
+				array(
+					'coupon_id'      => $coupon_id,
+					'type'           => 'redeemed',
+					'balance_before' => (float) $raw_amount,
+					'balance_after'  => 0,
+					'source'         => $source,
+				)
+			);
+		}
+
 		return (float) $raw_amount;
+	}
+
+	/**
+	 * Update a gift card balance with a transaction-log label. Behaves exactly like
+	 * update_post_meta() on coupon_amount; the label only names the change in the log.
+	 *
+	 * @param int    $coupon_id Coupon ID.
+	 * @param mixed  $amount    New balance.
+	 * @param string $type      Transaction type.
+	 * @param array  $args      Label: order_id, source, note.
+	 * @return void
+	 */
+	public function wps_wgm_update_amount_with_context( $coupon_id, $amount, $type, $args = array() ) {
+		if ( function_exists( 'wps_wgm_update_coupon_amount_with_context' ) ) {
+			wps_wgm_update_coupon_amount_with_context( $coupon_id, $amount, $type, '', $args );
+		} else {
+			update_post_meta( $coupon_id, 'coupon_amount', $amount );
+		}
 	}
 
 	/**
@@ -3050,7 +3136,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					if ( $coupon->is_valid() ) {
 						// Atomically claim the coupon balance before crediting points.
 						if ( $coupon_amount > 0 ) {
-							$coupon_amount = $this->wps_wgm_claim_coupon_amount( $coupon_id );
+							$coupon_amount = $this->wps_wgm_claim_coupon_amount( $coupon_id, 'points' );
 						}
 						if ( $coupon_amount > 0 ) {
 

@@ -427,6 +427,11 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 					$item_id = wps_wgm_hpos_get_meta_data( $order_id, 'temp_item_id', true );
 					do_action( 'wps_wgm_set_coupon_meta_for_product_as_a_gift', $order_id, $item_id, $new_coupon_id, $product_id );
 
+					// Transaction log: the card is issued with its full value.
+					if ( $new_coupon_id && class_exists( 'Wps_Wgm_Transactions' ) ) {
+						Wps_Wgm_Transactions::log_issued( $new_coupon_id, array( 'order_id' => $order_id ) );
+					}
+
 					return true;
 				} else {
 					return false;

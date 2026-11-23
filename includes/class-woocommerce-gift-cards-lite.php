@@ -151,6 +151,16 @@ class Woocommerce_Gift_Cards_Lite {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-gift-card-failure-tracker.php';
 
+		/**
+		 * The class responsible for the gift card transaction log (balance audit trail).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wgm-transactions.php';
+		Wps_Wgm_Transactions::init();
+		if ( is_admin() ) {
+			require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wgm-transactions-admin.php';
+			Wps_Wgm_Transactions_Admin::init();
+		}
+
 		$this->loader = new Woocommerce_Gift_Cards_Lite_Loader();
 
 		/**

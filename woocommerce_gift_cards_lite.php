@@ -418,6 +418,9 @@ if ( $activated ) {
 	function wps_uwgc_remove_cron_for_notification_update() {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 		wp_clear_scheduled_hook( 'wps_daily_giftcard_reminder_event' );
+		if ( class_exists( 'Wps_Wgm_Transactions' ) ) {
+			Wps_Wgm_Transactions::clear_events();
+		}
 		$timestamp = wp_next_scheduled( 'wps_reset_gifting_request' );
 		if ( $timestamp ) {
 			wp_unschedule_event( $timestamp, 'wps_reset_gifting_request' );

@@ -177,7 +177,11 @@ function wps_redeem_giftcard_offline( $request ) {
 
 								$remaining_amount = $coupon_amount - $redeem_amount;
 
-								update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+								if ( function_exists( 'wps_wgm_update_coupon_amount_with_context' ) ) {
+									wps_wgm_update_coupon_amount_with_context( $coupon_id, $remaining_amount, 'redeemed', 'rest' );
+								} else {
+									update_post_meta( $coupon_id, 'coupon_amount', $remaining_amount );
+								}
 								$coupon_usage_count = ++$coupon_usage_count;
 								update_post_meta( $coupon_id, 'usage_count', $coupon_usage_count );
 
@@ -320,7 +324,11 @@ function wps_recharge_giftcard_offine( $request ) {
 
 					$updated_amount = $coupon_amount + $recharge_amount;
 
-					update_post_meta( $coupon_id, 'coupon_amount', $updated_amount );
+					if ( function_exists( 'wps_wgm_update_coupon_amount_with_context' ) ) {
+						wps_wgm_update_coupon_amount_with_context( $coupon_id, $updated_amount, 'recharge', 'rest' );
+					} else {
+						update_post_meta( $coupon_id, 'coupon_amount', $updated_amount );
+					}
 
 					update_post_meta( $coupon_id, 'usage_limit', $usage_limit );
 					update_post_meta( $coupon_id, 'usage_count', 0 );
