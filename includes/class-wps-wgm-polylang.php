@@ -40,6 +40,56 @@ class Wps_Wgm_Polylang {
 	private static $lang_stack = array();
 
 	/**
+	 * Register hooks. Safe to call more than once.
+	 *
+	 * @return void
+	 */
+	public static function init() {
+		static $done = false;
+		if ( $done ) {
+			return;
+		}
+		$done = true;
+
+		// Classic checkout: the order object is saved right after this hook.
+		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'save_order_lang' ), 10, 1 );
+		// Block (Store API) checkout.
+		add_action( 'woocommerce_store_api_checkout_update_order_meta', array( __CLASS__, 'save_order_lang_and_persist' ), 10, 1 );
+	}
+
+	/**
+	 * Store the checkout language on the order. Classic checkout saves the order itself.
+	 *
+	 * @param WC_Order $order Order being created.
+	 * @return bool Whether a language was set.
+	 */
+	public static function save_order_lang( $order ) {
+		if ( ! $order instanceof WC_Order || ! self::is_active() ) {
+			return false;
+		}
+
+		$lang = self::get_current_lang();
+		if ( ! self::is_valid_lang( $lang ) ) {
+			return false;
+		}
+
+		$order->update_meta_data( self::ORDER_LANG_META, $lang );
+		return true;
+	}
+
+	/**
+	 * Store the checkout language on a block checkout order and save it.
+	 *
+	 * @param WC_Order $order Order being placed.
+	 * @return void
+	 */
+	public static function save_order_lang_and_persist( $order ) {
+		if ( self::save_order_lang( $order ) ) {
+			$order->save_meta_data();
+		}
+	}
+
+	/**
 	 * Whether Polylang and Polylang for WooCommerce are both active.
 	 *
 	 * @return bool
