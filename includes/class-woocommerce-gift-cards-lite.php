@@ -161,11 +161,6 @@ class Woocommerce_Gift_Cards_Lite {
 			Wps_Wgm_Transactions_Admin::init();
 		}
 
-		/**
-		 * Polylang for WooCommerce compatibility helper.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wgm-polylang.php';
-
 		$this->loader = new Woocommerce_Gift_Cards_Lite_Loader();
 
 		/**
