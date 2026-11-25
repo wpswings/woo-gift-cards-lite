@@ -63,6 +63,40 @@ class Wps_Wgm_Polylang {
 		// Gift card products: carry gift card settings and the product type over to translations.
 		add_filter( 'pll_copy_post_metas', array( __CLASS__, 'copy_product_metas' ), 10, 3 );
 		add_filter( 'pll_copy_taxonomies', array( __CLASS__, 'copy_product_type' ), 10, 3 );
+
+		// Gift card designs (giftcard post type) can be translated.
+		add_filter( 'pll_get_post_types', array( __CLASS__, 'add_template_post_type' ), 10, 2 );
+	}
+
+	/**
+	 * Make the gift card design post type translatable in Polylang.
+	 *
+	 * @param array $post_types Post types Polylang translates.
+	 * @param bool  $is_settings Whether Polylang is building its settings list.
+	 * @return array
+	 */
+	public static function add_template_post_type( $post_types, $is_settings ) {
+		unset( $is_settings );
+		$post_types['giftcard'] = 'giftcard';
+		return $post_types;
+	}
+
+	/**
+	 * ID of a gift card design in the given (default: current) language.
+	 *
+	 * Designs are stored by their original ID in product meta and settings; this
+	 * swaps in the translated design at render time. Returns the ID unchanged when
+	 * there is no translation, or when it is not a valid ID.
+	 *
+	 * @param mixed  $template_id Design post ID.
+	 * @param string $lang        Language slug.
+	 * @return mixed
+	 */
+	public static function get_translated_template_id( $template_id, $lang = '' ) {
+		if ( ! is_numeric( $template_id ) || (int) $template_id <= 0 || ! self::is_active() ) {
+			return $template_id;
+		}
+		return self::get_translated_id( (int) $template_id, $lang );
 	}
 
 	/**

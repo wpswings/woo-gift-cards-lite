@@ -44,6 +44,8 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 						$recommand_product .= '<style>.ugcfw__product_table_img img {width: 125px;height: 125px;}.ugcfw__product_table_name h2 {text-align:center; padding: 0;margin: 0;font-size: 24px;line-height: 28px;text-transform: capitalize;}</style><table class="ugcfw__product_table"><tr class="ugcfw__product_table_row"><td class="ugcfw__product_table_img" style="vertical-align: top;padding-bottom:15px;width:125px;">' . wp_kses_post( $recommand_prod->get_image() ) . '</td><td class="ugcfw__product_table_name" style="padding: 0 0 15px 25px;width: 450px;text-align: center;"><h2 style="text-align:center;padding: 0;margin: 0;font-size: 24px!important;line-height: 28px;text-transform: capitalize;">' . esc_html( $recommand_prod->get_name() ) . '</h2><p class="ugcfw__product_table_price" style="padding: 10px 0;margin: 0;font-size: 20px;line-height: 28px;font-weight: bold;">' . esc_html( get_woocommerce_currency_symbol() ) . esc_html( $recommand_prod->get_price() ) . '</p><p class="ugcfw__product_table_link" style="margin: 0;padding: 0;line-height: 28px;color: #208fe9;text-align: center;"><a href=' . esc_url( $recommand_prod->get_permalink() ) . '>' . esc_html( $recommand_prod->get_name() ) . '</a></p></td></tr></table>';
 					}
 				}
+				// Use the design translated into the current language (Polylang); emails run in the order's language.
+				$templateid            = Wps_Wgm_Polylang::get_translated_template_id( $templateid );
 				$template              = get_post( $templateid, ARRAY_A );
 				$templatehtml          = isset( $template['post_content'] ) ? $template['post_content'] : '';
 				$giftcard_logo_html    = '';
@@ -919,6 +921,7 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 				$args     = array(
 					'post_type'      => 'giftcard',
 					'posts_per_page' => -1,
+					'lang'           => '', // Polylang: search all languages; the design is translated at render.
 				);
 				$loop     = new WP_Query( $args );
 				$template = array();
