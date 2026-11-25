@@ -59,6 +59,72 @@ class Wps_Wgm_Polylang {
 		// Settings strings: list them in Languages > Translations, and translate them when read.
 		add_action( 'init', array( __CLASS__, 'register_setting_strings' ), 20 );
 		add_action( 'init', array( __CLASS__, 'add_setting_filters' ), 20 );
+
+		// Gift card products: carry gift card settings and the product type over to translations.
+		add_filter( 'pll_copy_post_metas', array( __CLASS__, 'copy_product_metas' ), 10, 3 );
+		add_filter( 'pll_copy_taxonomies', array( __CLASS__, 'copy_product_type' ), 10, 3 );
+	}
+
+	/**
+	 * Gift card product meta keys that every translation of a product shares.
+	 *
+	 * Pro adds its own keys through the filter.
+	 *
+	 * @return string[]
+	 */
+	public static function get_product_meta_keys() {
+		$keys = array(
+			'wps_wgm_pricing',
+			'wps_wgm_pricing_details',
+		);
+
+		/**
+		 * Filter the gift card product meta keys Polylang copies to, and keeps in sync
+		 * across, a product's translations.
+		 *
+		 * @since 3.3.0
+		 * @param string[] $keys Meta keys.
+		 */
+		return array_values( array_unique( (array) apply_filters( 'wps_wgm_polylang_product_meta_keys', $keys ) ) );
+	}
+
+	/**
+	 * Add gift card meta to the keys Polylang copies when a product is translated
+	 * (and syncs, when meta synchronization is on).
+	 *
+	 * Keys the source product does not have are skipped by Polylang, so this is
+	 * safe for products that are not gift cards.
+	 *
+	 * @param string[] $metas Meta keys Polylang will copy.
+	 * @param bool     $sync  True when synchronizing, false when creating a translation.
+	 * @param int      $from  Source post ID.
+	 * @return string[]
+	 */
+	public static function copy_product_metas( $metas, $sync, $from ) {
+		if ( 'product' !== get_post_type( $from ) ) {
+			return $metas;
+		}
+		return array_values( array_unique( array_merge( (array) $metas, self::get_product_meta_keys() ) ) );
+	}
+
+	/**
+	 * Make sure the product type (e.g. Gift Card) is copied to product translations.
+	 * Polylang for WooCommerce normally does this; this keeps it working if it does not.
+	 *
+	 * @param string[] $taxonomies Taxonomies Polylang will copy.
+	 * @param bool     $sync       True when synchronizing, false when creating a translation.
+	 * @param int      $from       Source post ID.
+	 * @return string[]
+	 */
+	public static function copy_product_type( $taxonomies, $sync, $from ) {
+		if ( 'product' !== get_post_type( $from ) ) {
+			return $taxonomies;
+		}
+		$taxonomies = (array) $taxonomies;
+		if ( ! in_array( 'product_type', $taxonomies, true ) ) {
+			$taxonomies[] = 'product_type';
+		}
+		return $taxonomies;
 	}
 
 	/**
