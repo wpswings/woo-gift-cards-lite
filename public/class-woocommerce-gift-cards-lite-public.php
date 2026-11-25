@@ -680,6 +680,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 											$args     = array(
 												'post_type' => 'giftcard',
 												'posts_per_page' => -1,
+												'lang'      => '', // Polylang: all languages; the design is translated at render.
 											);
 											$loop     = new WP_Query( $args );
 											$template = array();
