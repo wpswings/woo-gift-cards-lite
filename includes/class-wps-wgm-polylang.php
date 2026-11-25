@@ -66,6 +66,95 @@ class Wps_Wgm_Polylang {
 
 		// Gift card designs (giftcard post type) can be translated.
 		add_filter( 'pll_get_post_types', array( __CLASS__, 'add_template_post_type' ), 10, 2 );
+
+		// Gift card coupons: product/category restrictions apply to every language version.
+		// WooCommerce runs these only in 'view' context, so saved values are never changed.
+		add_filter( 'woocommerce_coupon_get_product_ids', array( __CLASS__, 'expand_coupon_product_ids' ), 10, 2 );
+		add_filter( 'woocommerce_coupon_get_excluded_product_ids', array( __CLASS__, 'expand_coupon_product_ids' ), 10, 2 );
+		add_filter( 'woocommerce_coupon_get_product_categories', array( __CLASS__, 'expand_coupon_term_ids' ), 10, 2 );
+		add_filter( 'woocommerce_coupon_get_excluded_product_categories', array( __CLASS__, 'expand_coupon_term_ids' ), 10, 2 );
+	}
+
+	/**
+	 * Whether a coupon is a gift card, remembered per request.
+	 *
+	 * @param WC_Coupon $coupon Coupon.
+	 * @return bool
+	 */
+	private static function is_gift_card_coupon( $coupon ) {
+		static $cache = array();
+
+		$coupon_id = $coupon instanceof WC_Coupon ? (int) $coupon->get_id() : 0;
+		if ( ! $coupon_id || ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
+			return false;
+		}
+		if ( ! isset( $cache[ $coupon_id ] ) ) {
+			static $common = null;
+			if ( null === $common ) {
+				$common = new Woocommerce_Gift_Cards_Common_Function();
+			}
+			$cache[ $coupon_id ] = (bool) $common->wps_wgm_is_giftcard_coupon( $coupon );
+		}
+		return $cache[ $coupon_id ];
+	}
+
+	/**
+	 * Add every translation of a gift card coupon's restricted (or excluded) products.
+	 *
+	 * @param int[]     $ids    Product IDs.
+	 * @param WC_Coupon $coupon Coupon.
+	 * @return int[]
+	 */
+	public static function expand_coupon_product_ids( $ids, $coupon ) {
+		if ( empty( $ids ) || ! is_array( $ids ) || ! self::is_active() || ! self::is_gift_card_coupon( $coupon ) ) {
+			return $ids;
+		}
+
+		$all = array();
+		foreach ( $ids as $id ) {
+			$all = array_merge( $all, self::get_all_translation_ids( $id ) );
+		}
+		return array_values( array_unique( array_map( 'absint', $all ) ) );
+	}
+
+	/**
+	 * Add every translation of a gift card coupon's restricted (or excluded) product categories.
+	 *
+	 * @param int[]     $ids    Product category term IDs.
+	 * @param WC_Coupon $coupon Coupon.
+	 * @return int[]
+	 */
+	public static function expand_coupon_term_ids( $ids, $coupon ) {
+		if ( empty( $ids ) || ! is_array( $ids ) || ! self::is_active() || ! self::is_gift_card_coupon( $coupon ) ) {
+			return $ids;
+		}
+
+		$all = array();
+		foreach ( $ids as $id ) {
+			$all = array_merge( $all, self::get_all_term_translation_ids( $id ) );
+		}
+		return array_values( array_unique( array_map( 'absint', $all ) ) );
+	}
+
+	/**
+	 * IDs of a term and all its translations.
+	 *
+	 * @param int $term_id Term ID.
+	 * @return int[] Always contains $term_id itself.
+	 */
+	public static function get_all_term_translation_ids( $term_id ) {
+		$term_id = absint( $term_id );
+		if ( ! $term_id ) {
+			return array();
+		}
+		if ( ! self::is_active() || ! function_exists( 'pll_get_term_translations' ) ) {
+			return array( $term_id );
+		}
+
+		$ids   = array_map( 'absint', array_values( (array) pll_get_term_translations( $term_id ) ) );
+		$ids[] = $term_id;
+
+		return array_values( array_unique( array_filter( $ids ) ) );
 	}
 
 	/**
