@@ -175,10 +175,15 @@ if ( $activated ) {
 	 */
 	function wps_wgm_get_plugin_option( $key, $default = array() ) {
 		static $cache = array();
-		if ( ! array_key_exists( $key, $cache ) ) {
-			$cache[ $key ] = get_option( $key, $default );
+		// Settings strings can be translated (Polylang), so cache each language separately.
+		$cache_key = $key;
+		if ( class_exists( 'Wps_Wgm_Polylang' ) && Wps_Wgm_Polylang::is_active() ) {
+			$cache_key .= '|' . Wps_Wgm_Polylang::get_current_lang() . '|' . ( Wps_Wgm_Polylang::is_switched() ? 1 : 0 );
 		}
-		return $cache[ $key ];
+		if ( ! array_key_exists( $cache_key, $cache ) ) {
+			$cache[ $cache_key ] = get_option( $key, $default );
+		}
+		return $cache[ $cache_key ];
 	}
 
 	// Security: Safe activation with requirement checks and error handling.

@@ -55,6 +55,130 @@ class Wps_Wgm_Polylang {
 		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'save_order_lang' ), 10, 1 );
 		// Block (Store API) checkout.
 		add_action( 'woocommerce_store_api_checkout_update_order_meta', array( __CLASS__, 'save_order_lang_and_persist' ), 10, 1 );
+
+		// Settings strings: list them in Languages > Translations, and translate them when read.
+		add_action( 'init', array( __CLASS__, 'register_setting_strings' ), 20 );
+		add_action( 'init', array( __CLASS__, 'add_setting_filters' ), 20 );
+	}
+
+	/**
+	 * Customer-facing settings strings that can be translated.
+	 *
+	 * Format: option name => array( setting key => multiline? ). Pro adds its own
+	 * keys through the filter.
+	 *
+	 * @return array
+	 */
+	public static function get_translatable_settings() {
+		$settings = array(
+			'wps_wgm_mail_settings' => array(
+				'wps_wgm_mail_setting_giftcard_subject' => false,
+				'wps_wgm_mail_setting_default_message'  => true,
+				'wps_wgm_mail_setting_disclaimer'       => true,
+				'wps_wgm_reminder_mail_subject'         => false,
+				'wps_wgm_reminder_mail_body'            => true,
+			),
+		);
+
+		/**
+		 * Filter the settings strings that Polylang can translate.
+		 *
+		 * @since 3.3.0
+		 * @param array $settings Option name => array( setting key => multiline? ).
+		 */
+		return (array) apply_filters( 'wps_wgm_polylang_translatable_settings', $settings );
+	}
+
+	/**
+	 * Register the saved settings strings with Polylang so merchants can translate them.
+	 * Polylang only needs this in the admin; it does not store the list.
+	 *
+	 * @return void
+	 */
+	public static function register_setting_strings() {
+		if ( ! is_admin() || ! self::is_active() || ! function_exists( 'pll_register_string' ) ) {
+			return;
+		}
+
+		foreach ( self::get_translatable_settings() as $option_name => $keys ) {
+			$values = get_option( $option_name, array() );
+			if ( ! is_array( $values ) ) {
+				continue;
+			}
+			foreach ( (array) $keys as $key => $multiline ) {
+				if ( isset( $values[ $key ] ) && is_string( $values[ $key ] ) && '' !== trim( $values[ $key ] ) ) {
+					pll_register_string( $key, $values[ $key ], 'Gift Cards', (bool) $multiline );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Hook the translation filter onto every option that has translatable keys.
+	 *
+	 * @return void
+	 */
+	public static function add_setting_filters() {
+		if ( ! self::is_active() ) {
+			return;
+		}
+		foreach ( array_keys( self::get_translatable_settings() ) as $option_name ) {
+			add_filter( 'option_' . $option_name, array( __CLASS__, 'translate_setting_option' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Replace translatable settings strings with their translation in the current language.
+	 *
+	 * Translates on the front end, and in the admin only while an email is being built
+	 * (inside switch_lang()). Settings screens always see the original text, so saving
+	 * them can never overwrite it with a translation.
+	 *
+	 * @param mixed  $value       Option value.
+	 * @param string $option_name Option name.
+	 * @return mixed
+	 */
+	public static function translate_setting_option( $value, $option_name ) {
+		if ( ! is_array( $value ) || ! self::should_translate_settings() ) {
+			return $value;
+		}
+
+		$lang     = self::get_current_lang();
+		$settings = self::get_translatable_settings();
+		if ( ! self::is_valid_lang( $lang ) || empty( $settings[ $option_name ] ) ) {
+			return $value;
+		}
+
+		foreach ( array_keys( (array) $settings[ $option_name ] ) as $key ) {
+			if ( isset( $value[ $key ] ) && is_string( $value[ $key ] ) && '' !== $value[ $key ] ) {
+				$value[ $key ] = pll_translate_string( $value[ $key ], $lang );
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Whether settings strings should be translated in this request.
+	 *
+	 * @return bool
+	 */
+	private static function should_translate_settings() {
+		return self::is_switched() || ! is_admin();
+	}
+
+	/**
+	 * Whether switch_lang() has switched the language and not been restored yet.
+	 *
+	 * @return bool
+	 */
+	public static function is_switched() {
+		foreach ( self::$lang_stack as $entry ) {
+			if ( ! empty( $entry['switched'] ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
