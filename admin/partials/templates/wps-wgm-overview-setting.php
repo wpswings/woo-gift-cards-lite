@@ -185,7 +185,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</td>
 					</tr>
 					<tr>
-						<td><span style="font-weight: 400;"><?php esc_html_e( 'WPML Multilingual Support', 'woo-gift-cards-lite' ); ?></span></td>
+						<td><span style="font-weight: 400;"><?php esc_html_e( 'WPML & Polylang Multilingual Support', 'woo-gift-cards-lite' ); ?></span></td>
 						<td>
 							<div class="fas fa-check"></div>
 						</td>
