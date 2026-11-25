@@ -3326,6 +3326,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 					$recipient_email = get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon_mail_to', true );
 
 					if ( $sender_email && is_email( $sender_email ) ) {
+						// Write to the sender in the language they bought the card in (Polylang).
+						Wps_Wgm_Polylang::switch_lang( Wps_Wgm_Polylang::get_order_lang( $order_generated ) );
+
 						$site_name = get_bloginfo( 'name' );
 						// translators: %s: Site name.
 						$subject = sprintf( __( 'Your gift card has been used – %s', 'woo-gift-cards-lite' ), $site_name );
@@ -3334,6 +3337,8 @@ class Woocommerce_Gift_Cards_Lite_Public {
 						$message = sprintf( __( 'Hello, your gift card (code: %1$s) sent to %2$s was recently used on %3$s.', 'woo-gift-cards-lite' ), $coupon_code, $recipient_email, $site_name );
 
 						wc_mail( $sender_email, $subject, $message );
+
+						Wps_Wgm_Polylang::restore_lang();
 					}
 				}
 			}

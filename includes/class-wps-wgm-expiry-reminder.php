@@ -297,13 +297,7 @@ class Wps_Wgm_Expiry_Reminder {
 		$subject_template = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_reminder_mail_subject' );
 		$body_template    = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_reminder_mail_body' );
 		$disclaimer       = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_disclaimer' );
-		if ( '' === $subject_template ) {
-			$subject_template = __( "Don't Miss Out – Your [SITENAME] Gift Card Is About to Expire", 'woo-gift-cards-lite' );
-		}
-		if ( '' === $body_template ) {
-			$body_template = self::wps_wgm_default_body();
-		}
-		$site_name = get_bloginfo( 'name' );
+		$site_name        = get_bloginfo( 'name' );
 
 		foreach ( $coupons as $coupon ) {
 			$coupon_id = $coupon->ID;
@@ -325,6 +319,12 @@ class Wps_Wgm_Expiry_Reminder {
 				continue;
 			}
 
+			// Remind in the language the card was bought in (Polylang). Falls back to the site default.
+			Wps_Wgm_Polylang::switch_lang( Wps_Wgm_Polylang::get_order_lang( absint( get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true ) ) ) );
+
+			$card_subject = '' !== $subject_template ? $subject_template : __( "Don't Miss Out – Your [SITENAME] Gift Card Is About to Expire", 'woo-gift-cards-lite' );
+			$card_body    = '' !== $body_template ? $body_template : self::wps_wgm_default_body();
+
 			$replacements = array(
 				'[SITENAME]'     => $site_name,
 				'[SITEURL]'      => home_url(),
@@ -333,13 +333,17 @@ class Wps_Wgm_Expiry_Reminder {
 				'[EXPIRYDATE]'   => date_i18n( get_option( 'date_format' ), $expires ),
 				'[DISCLAIMER]'   => $disclaimer,
 			);
-			$message = str_replace( array_keys( $replacements ), array_values( $replacements ), $body_template );
-			$subject = str_replace( '[SITENAME]', $site_name, $subject_template );
+			$message = str_replace( array_keys( $replacements ), array_values( $replacements ), $card_body );
+			$subject = str_replace( '[SITENAME]', $site_name, $card_subject );
 
 			$message = apply_filters( 'wps_wgm_expiry_reminder_message', $message, $coupon_id );
 			$subject = apply_filters( 'wps_wgm_expiry_reminder_subject', $subject, $coupon_id );
 
-			if ( wc_mail( $recipient, $subject, $message ) !== false ) {
+			$sent_ok = wc_mail( $recipient, $subject, $message ) !== false;
+
+			Wps_Wgm_Polylang::restore_lang();
+
+			if ( $sent_ok ) {
 				update_post_meta( $coupon_id, self::SENT_META, $expires );
 			}
 		}
