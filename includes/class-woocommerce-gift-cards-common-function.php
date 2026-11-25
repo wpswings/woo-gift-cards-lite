@@ -450,6 +450,25 @@ if ( ! class_exists( 'Woocommerce_Gift_Cards_Common_Function' ) ) {
 		 * @link https://www.wpswings.com/
 		 */
 		public function wps_wgm_common_functionality( $wps_wgm_common_arr, $order ) {
+			// Build and send the email in the language the customer ordered in (Polylang).
+			Wps_Wgm_Polylang::switch_lang( Wps_Wgm_Polylang::get_order_lang( $order ) );
+			try {
+				return $this->wps_wgm_send_giftcard_mail( $wps_wgm_common_arr, $order );
+			} finally {
+				Wps_Wgm_Polylang::restore_lang();
+			}
+		}
+
+		/**
+		 * Builds and sends the gift card email. Called by wps_wgm_common_functionality()
+		 * after it has switched to the order's language.
+		 *
+		 * @since 3.3.0
+		 * @param array  $wps_wgm_common_arr email template data.
+		 * @param object $order order.
+		 * @return bool
+		 */
+		private function wps_wgm_send_giftcard_mail( $wps_wgm_common_arr, $order ) {
 
 			if ( ! empty( $wps_wgm_common_arr ) ) {
 				$to         = $wps_wgm_common_arr['to'];
