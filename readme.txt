@@ -186,7 +186,7 @@ Your customers don’t just want to buy gift vouchers they want creative ways to
 
 **9)** Compatibility with [**Points and Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) and [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-giftcards-product&utm_medium=referral&utm_campaign=par-pro) to Convert your coupon amount into points
 
-**10)** WPML & Polylang Multilingual Support: The WooCommerce plugin gift card supports WPML and Polylang for WooCommerce, which means it can work in your local language. With Polylang, gift card products, card designs and email settings can be translated, gift card emails go out in the language the customer ordered in, and gift card codes work on every language version of your store. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
+**10)** WPML & Polylang Multilingual Support: The WooCommerce plugin gift card supports WPML and Polylang, which means it can work in your local language. With Polylang, gift card products, card designs and email settings can be translated, gift card emails go out in the language the customer ordered in, and gift card codes work on every language version of your store. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
 **11)** The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
 
@@ -305,7 +305,7 @@ Yes. In the Product Settings of the plugin, you can exclude the categories to re
 Yes. You can modify the Gift card email template from the "Gift Card" menu where all the templates are listed. Click on "Edit" to edit a particular gift card template. Now the editing page of the template will open. You can make the changes and update the template.
 
 = Does the WooCommerce Gift card plugin support multiple languages? = 
-Yes, the plugin supports multiple languages and is compatible with WPML and Polylang for WooCommerce. You can also use the Loco Translate plugin to translate the strings into another language.
+Yes, the plugin supports multiple languages and is compatible with WPML and Polylang. You can also use the Loco Translate plugin to translate the strings into another language.
 
 = Does the WordPress Gift card plugin support Price Based on Country for WooCommerce plugin? = 
 Yes. The Gift cards plugin is compatible with the Price with Price Based on Country for WooCommerce plugin which enables customers to place an order in their own currency.
@@ -324,7 +324,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 = 3.3.0 - Released on 02 Jan 2027 =
 * New: Gift card transaction log: every balance change is recorded with the balance before and after, order, user and source, viewable under Gift Cards → Transactions with filters and CSV export.
-* New: Polylang for WooCommerce compatibility: gift card products, card designs and email settings can be translated, gift card emails are sent in the customer's order language, and gift card codes work on every language version of the store.
+* New: Polylang compatibility (Polylang for WooCommerce not required): gift card products, card designs and email settings can be translated, gift card emails are sent in the customer's order language, and gift card codes work on every language version of the store.
 
 = 3.2.13 - Released on 29 Oct 2026 =
 * New: My Account → "My Gift Cards" tab listing cards bought and received, with remaining balance, expiry date, usage history, and a resend-email button.

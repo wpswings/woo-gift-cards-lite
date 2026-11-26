@@ -294,10 +294,7 @@ class Wps_Wgm_Expiry_Reminder {
 			)
 		);
 
-		$subject_template = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_reminder_mail_subject' );
-		$body_template    = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_reminder_mail_body' );
-		$disclaimer       = $this->wps_common_fun->wps_wgm_get_template_data( $mail_settings, 'wps_wgm_mail_setting_disclaimer' );
-		$site_name        = get_bloginfo( 'name' );
+		$site_name = get_bloginfo( 'name' );
 
 		foreach ( $coupons as $coupon ) {
 			$coupon_id = $coupon->ID;
@@ -321,6 +318,12 @@ class Wps_Wgm_Expiry_Reminder {
 
 			// Remind in the language the card was bought in (Polylang). Falls back to the site default.
 			Wps_Wgm_Polylang::switch_lang( Wps_Wgm_Polylang::get_order_lang( absint( get_post_meta( $coupon_id, 'wps_wgm_giftcard_coupon', true ) ) ) );
+
+			// Read the templates after switching so their translated strings are used.
+			$card_settings    = get_option( 'wps_wgm_mail_settings', array() );
+			$subject_template = $this->wps_common_fun->wps_wgm_get_template_data( $card_settings, 'wps_wgm_reminder_mail_subject' );
+			$body_template    = $this->wps_common_fun->wps_wgm_get_template_data( $card_settings, 'wps_wgm_reminder_mail_body' );
+			$disclaimer       = $this->wps_common_fun->wps_wgm_get_template_data( $card_settings, 'wps_wgm_mail_setting_disclaimer' );
 
 			$card_subject = '' !== $subject_template ? $subject_template : __( "Don't Miss Out – Your [SITENAME] Gift Card Is About to Expire", 'woo-gift-cards-lite' );
 			$card_body    = '' !== $body_template ? $body_template : self::wps_wgm_default_body();
