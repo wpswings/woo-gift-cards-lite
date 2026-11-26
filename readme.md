@@ -112,7 +112,7 @@ Display gift card WooCommerce products on the shop and card page
 * Compatibility with [**Subscriptions for WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-giftcards-product&utm_medium=giftcards-github-page&utm_campaign=subs-pro) to Leverage the benefits of Recurring Revenue with a subscription program.
 
 * WPML & Polylang Multilingual Support
-The WooCommerce plugin gift card supports WPML and Polylang for WooCommerce, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
+The WooCommerce plugin gift card supports WPML and Polylang, which means it can work in your local language. Furthermore, you can also use the Loco Translate plugin to translate the strings into another language.
 
 * The Gift Card for WooCommerce plugin is compatible with WordPress Multisite.
 

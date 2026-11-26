@@ -162,7 +162,7 @@ class Woocommerce_Gift_Cards_Lite {
 		}
 
 		/**
-		 * Polylang for WooCommerce compatibility helper.
+		 * Polylang compatibility helper.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wgm-polylang.php';
 		Wps_Wgm_Polylang::init();

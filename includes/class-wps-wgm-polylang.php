@@ -1,11 +1,12 @@
 <?php
 /**
- * Polylang for WooCommerce compatibility helper.
+ * Polylang compatibility helper.
  *
  * One place for every Polylang call the gift card plugins make. Org and Pro
- * call these static methods instead of the pll_* API directly. When Polylang
- * or Polylang for WooCommerce is not active, every method falls back to a
- * no-op so callers need no checks of their own.
+ * call these static methods instead of the pll_* API directly. Works with
+ * Polylang (free or Pro) on its own; Polylang for WooCommerce is not needed.
+ * When Polylang is not active, every method falls back to a no-op so callers
+ * need no checks of their own.
  *
  * @link       https://wpswings.com/
  * @since      3.3.0
@@ -19,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Thin wrapper around the Polylang / Polylang for WooCommerce API.
+ * Thin wrapper around the Polylang API.
  *
  * @package    woo-gift-cards-lite
  * @subpackage woo-gift-cards-lite/includes
@@ -227,12 +228,41 @@ class Wps_Wgm_Polylang {
 		if ( 'product' !== get_post_type( $from ) ) {
 			return $metas;
 		}
-		return array_values( array_unique( array_merge( (array) $metas, self::get_product_meta_keys() ) ) );
+		$keys = self::get_product_meta_keys();
+
+		// Without Polylang for WooCommerce nothing copies WooCommerce's own product
+		// data, so a translated gift card would have no price and could not be bought.
+		if ( ! self::is_pllwc_active() && has_term( 'wgm_gift_card', 'product_type', $from ) ) {
+			$keys = array_merge( $keys, self::get_wc_core_meta_keys() );
+		}
+		return array_values( array_unique( array_merge( (array) $metas, $keys ) ) );
 	}
 
 	/**
-	 * Make sure the product type (e.g. Gift Card) is copied to product translations.
-	 * Polylang for WooCommerce normally does this; this keeps it working if it does not.
+	 * WooCommerce product data a gift card translation needs to be purchasable.
+	 *
+	 * @return string[]
+	 */
+	private static function get_wc_core_meta_keys() {
+		return array(
+			'_price',
+			'_regular_price',
+			'_sale_price',
+			'_virtual',
+			'_downloadable',
+			'_tax_status',
+			'_tax_class',
+			'_sold_individually',
+			'_manage_stock',
+			'_stock',
+			'_stock_status',
+			'_backorders',
+		);
+	}
+
+	/**
+	 * Make sure the product type (e.g. Gift Card) is copied to product translations,
+	 * so a translated gift card product is still a gift card.
 	 *
 	 * @param string[] $taxonomies Taxonomies Polylang will copy.
 	 * @param bool     $sync       True when synchronizing, false when creating a translation.
@@ -381,8 +411,8 @@ class Wps_Wgm_Polylang {
 			return false;
 		}
 
-		$lang = self::get_current_lang();
-		if ( ! self::is_valid_lang( $lang ) ) {
+		$lang = self::get_checkout_lang();
+		if ( '' === $lang ) {
 			return false;
 		}
 
@@ -403,14 +433,48 @@ class Wps_Wgm_Polylang {
 	}
 
 	/**
-	 * Whether Polylang and Polylang for WooCommerce are both active.
+	 * Language the customer is checking out in.
+	 *
+	 * Block checkout posts to the Store API (a REST request), where Polylang may not
+	 * know the shopper's language, so the language cookie Polylang sets on every
+	 * front-end page is checked first there. Classic checkout uses the request
+	 * language and falls back to the cookie.
+	 *
+	 * @return string Language slug, or '' when unknown.
+	 */
+	private static function get_checkout_lang() {
+		$cookie_name  = defined( 'PLL_COOKIE' ) && PLL_COOKIE ? PLL_COOKIE : '';
+		$cookie_lang  = ( '' !== $cookie_name && isset( $_COOKIE[ $cookie_name ] ) ) ? sanitize_key( wp_unslash( $_COOKIE[ $cookie_name ] ) ) : '';
+		$request_lang = self::get_current_lang();
+
+		$is_rest    = defined( 'REST_REQUEST' ) && REST_REQUEST;
+		$candidates = $is_rest ? array( $cookie_lang, $request_lang ) : array( $request_lang, $cookie_lang );
+		foreach ( $candidates as $lang ) {
+			if ( self::is_valid_lang( $lang ) ) {
+				return $lang;
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Whether Polylang (free or Pro) is active and has at least one language.
+	 *
+	 * Polylang only loads its pll_* API once a language exists.
 	 *
 	 * @return bool
 	 */
 	public static function is_active() {
-		return function_exists( 'pll_current_language' )
-			&& function_exists( 'PLL' )
-			&& ( defined( 'PLLWC_VERSION' ) || function_exists( 'PLLWC' ) );
+		return function_exists( 'pll_current_language' ) && function_exists( 'PLL' );
+	}
+
+	/**
+	 * Whether the optional Polylang for WooCommerce add-on is active.
+	 *
+	 * @return bool
+	 */
+	private static function is_pllwc_active() {
+		return defined( 'PLLWC_VERSION' ) || function_exists( 'PLLWC' );
 	}
 
 	/**
@@ -455,8 +519,8 @@ class Wps_Wgm_Polylang {
 	/**
 	 * Language the customer placed the order in.
 	 *
-	 * Checks our own order meta first, then Polylang for WooCommerce, then the
-	 * site default.
+	 * Checks our own order meta first, then Polylang for WooCommerce (if it is
+	 * installed), then the site default.
 	 *
 	 * @param WC_Order|int $order Order object or ID.
 	 * @return string Language slug, or '' when inactive.
@@ -476,7 +540,7 @@ class Wps_Wgm_Polylang {
 			return $lang;
 		}
 
-		// Polylang for WooCommerce keeps the order language in its own data store (HPOS safe).
+		// Polylang for WooCommerce, when installed, keeps the order language in its own data store (HPOS safe).
 		if ( class_exists( 'PLLWC_Data_Store' ) && method_exists( 'PLLWC_Data_Store', 'load' ) ) {
 			try {
 				$store = PLLWC_Data_Store::load( 'order_language' );
