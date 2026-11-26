@@ -323,6 +323,7 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 == Changelog ==
 
 = 3.3.0 - Released on 02 Jan 2027 =
+* New: Gift card transaction log: every balance change is recorded with the balance before and after, order, user and source, viewable under Gift Cards → Transactions with filters and CSV export.
 * New: Polylang for WooCommerce compatibility: gift card products, card designs and email settings can be translated, gift card emails are sent in the customer's order language, and gift card codes work on every language version of the store.
 
 = 3.2.13 - Released on 29 Oct 2026 =
