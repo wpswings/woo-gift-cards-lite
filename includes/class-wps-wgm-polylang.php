@@ -640,6 +640,7 @@ class Wps_Wgm_Polylang {
 
 		PLL()->curlang   = $language;
 		$locale_switched = switch_to_locale( $language->locale );
+		self::load_strings( $language );
 
 		self::$lang_stack[] = array(
 			'switched' => true,
@@ -666,6 +667,23 @@ class Wps_Wgm_Polylang {
 		}
 		if ( ! empty( $entry['locale'] ) ) {
 			restore_previous_locale();
+		}
+		self::load_strings( $entry['language'] );
+	}
+
+	/**
+	 * Load Polylang's string translations for a language.
+	 *
+	 * Polylang reloads them when the locale changes, but switch_to_locale() does
+	 * nothing when the WordPress language pack for that locale is not installed,
+	 * so settings strings would stay in the previous language.
+	 *
+	 * @param PLL_Language|null $language Language to load, or null for the current locale.
+	 * @return void
+	 */
+	private static function load_strings( $language ) {
+		if ( function_exists( 'PLL' ) && method_exists( PLL(), 'load_strings_translations' ) ) {
+			PLL()->load_strings_translations( $language ? $language->slug : '' );
 		}
 	}
 }
