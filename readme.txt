@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: gift, gift card, gift certificates, woocommerce gift cards, gift vouchers
 Requires at least: 6.9
-Tested up to: 7.1
+Tested up to: 7.2
 WC requires at least: 6.5
-WC tested up to: 11.2.1
-Stable tag:  3.2.13
+WC tested up to: 11.3.1
+Stable tag:  3.2.14
 Requires PHP: 7.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -321,6 +321,10 @@ Please visit [**WP Swings Gift cards Knowledge Base**](https://support.wpswings.
 
 
 == Changelog ==
+
+= 3.2.14 - Released on 27 Nov 2026 =
+* Fix: Remove plugin banner offer strip from wp dashboard page
+* New: Compatibility with the latest WC ( 11.3.1 ) and WP ( 7.2 ) 
 
 = 3.2.13 - Released on 29 Oct 2026 =
 * New: My Account → "My Gift Cards" tab listing cards bought and received, with remaining balance, expiry date, usage history, and a resend-email button.
@@ -706,9 +710,6 @@ New: Email Template for Mother's Day
 
 == Upgrade Notice ==
 
-= 3.2.13 - Released on 29 Oct 2026 =
-* New: My Account → "My Gift Cards" tab listing cards bought and received, with remaining balance, expiry date, usage history, and a resend-email button.
-* New: Expiry reminder email sent to the recipient a set number of days before the card expires, including the remaining balance.
-* New: AI Assistant: answers plugin queries and guides setup.
-* New: Compatibility with the latest WC ( 11.2.1 ) and WP ( 7.1 )
-* Fix: Gift Card Double-Redeem issue fix
+= 3.2.14 - Released on 27 Nov 2026 =
+* Fix: Remove plugin banner offer strip from wp dashboard page
+* New: Compatibility with the latest WC ( 11.3.1 ) and WP ( 7.2 ) 
