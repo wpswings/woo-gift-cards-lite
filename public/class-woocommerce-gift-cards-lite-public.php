@@ -810,10 +810,18 @@ class Woocommerce_Gift_Cards_Lite_Public {
 							}
 							if ( isset( $_POST['wps_wgm_price'] ) ) {
 
-								$wps_wgm_price = sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) );
+								// Normalize locale decimal separators (e.g. "104,70" -> "104.70") so stores using "," as decimal separator work.
+								$wps_wgm_price = wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wgm_price'] ) ) );
+								if ( is_array( $product_pricing ) ) {
+									foreach ( array( 'default_price', 'from', 'to', 'min_user_price' ) as $wps_price_key ) {
+										if ( isset( $product_pricing[ $wps_price_key ] ) && '' !== $product_pricing[ $wps_price_key ] ) {
+											$product_pricing[ $wps_price_key ] = wc_format_decimal( $product_pricing[ $wps_price_key ] );
+										}
+									}
+								}
 
 								if ( isset( $product_pricing['type'] ) && 'wps_wgm_default_price' == $product_pricing['type'] ) {
-									if ( isset( $product_pricing['default_price'] ) && $product_pricing['default_price'] == $wps_wgm_price ) {
+									if ( isset( $product_pricing['default_price'] ) && (float) $product_pricing['default_price'] === (float) $wps_wgm_price ) {
 										$item_meta['wps_wgm_price'] = $wps_wgm_price;
 									} elseif ( isset( $product_type ) && 'variable' == $product_type ) {
 										$item_meta['wps_wgm_price'] = $wps_wgm_price;
@@ -823,9 +831,9 @@ class Woocommerce_Gift_Cards_Lite_Public {
 								} elseif ( isset( $product_pricing['type'] ) && 'wps_wgm_selected_price' == $product_pricing['type'] ) {
 
 									$price = $product_pricing['price'];
-									$price = explode( '|', $price );
+									$price = array_map( 'wc_format_decimal', array_map( 'trim', explode( '|', $price ) ) );
 									if ( isset( $price ) && is_array( $price ) ) {
-										if ( in_array( $wps_wgm_price, $price ) ) {
+										if ( in_array( (float) $wps_wgm_price, array_map( 'floatval', $price ), true ) ) {
 											$item_meta['wps_wgm_price'] = $wps_wgm_price;
 										} else {
 											$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
@@ -833,7 +841,7 @@ class Woocommerce_Gift_Cards_Lite_Public {
 									}
 								} elseif ( isset( $product_pricing['type'] ) && 'wps_wgm_range_price' == $product_pricing['type'] ) {
 
-									if ( ! is_numeric( $wps_wgm_price ) || $wps_wgm_price > $product_pricing['to'] || $wps_wgm_price < $product_pricing['from'] ) {
+									if ( ! is_numeric( $wps_wgm_price ) || (float) $wps_wgm_price > (float) $product_pricing['to'] || (float) $wps_wgm_price < (float) $product_pricing['from'] ) {
 										$item_meta['wps_wgm_price'] = $product_pricing['default_price'];
 									} else {
 										$item_meta['wps_wgm_price'] = $wps_wgm_price;

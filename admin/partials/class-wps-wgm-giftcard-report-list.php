@@ -409,8 +409,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 		$per_page     = 10;
 		$offset       = ( $current_page - 1 ) * $per_page;
 
-		$date_from = '';
-		$date_to   = '';
+		// Full valid range by default. Comparing post_date against '' makes MySQL 8 throw "Incorrect DATETIME value" and return no rows.
+		$date_from = '1000-01-01 00:00:00';
+		$date_to   = '9999-12-31 23:59:59';
 		if ( ! empty( $_POST['wps_gc_date_filter_1'] ) && ! empty( $_POST['wps_gc_date_filter_2'] ) ) {
 			$nonce = isset( $_POST['wps_wgm_report_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wgm_report_nonce'] ) ) : '';
 			if ( ! wp_verify_nonce( $nonce, 'wps_wgm_report_filter' ) ) {
@@ -441,7 +442,7 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					FROM {$wpdb->posts} p
 					WHERE p.post_type = 'shop_coupon'
 					AND p.post_status = 'publish'
-					AND ( %s = '' OR p.post_date BETWEEN %s AND %s )
+					AND p.post_date BETWEEN %s AND %s
 					AND ( %s = '' OR p.post_title LIKE %s )
 					AND (
 						p.post_content LIKE %s
@@ -457,7 +458,6 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 					)
 					ORDER BY p.ID DESC
 					LIMIT %d OFFSET %d",
-					$date_from,
 					$date_from,
 					$date_to,
 					$search,
@@ -476,9 +476,9 @@ class Wps_WGM_Giftcard_Report_List extends WP_List_Table {
 			$raw_offset += $batch_size;
 
 			foreach ( $results as $row ) {
-				$coupon_code = strtolower( $row->post_title );
-				$coupon_obj  = new WC_Coupon( $coupon_code );
+				$coupon_obj  = new WC_Coupon( (int) $row->ID );
 				$coupon_id   = $coupon_obj->get_id();
+				$coupon_code = $row->post_title;
 
 				if ( empty( $coupon_id ) ) {
 					continue;
