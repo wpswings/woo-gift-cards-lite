@@ -628,7 +628,7 @@ if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 			$pagescreen = $screen->id;
 		}
 
-		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+		$target_screens = array( 'plugins', 'wp-swings_page_home' );
 
 		if ( in_array( $pagescreen, $target_screens, true ) ) {
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );

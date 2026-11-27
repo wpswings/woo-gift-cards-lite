@@ -138,13 +138,17 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 	/**
 	 * Check notice screens.
 	 *
+	 * Must cover every screen where the offer banner is rendered, so its dismiss button works there.
+	 *
 	 * @return bool
 	 */
 	private function wps_wgm_is_notice_admin_screen() {
 		$screen     = get_current_screen();
 		$pagescreen = isset( $screen->id ) ? $screen->id : '';
+		$page       = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$post_type  = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		return in_array( $pagescreen, array( 'plugins', 'giftcard_page_wps-wgc-setting-lite' ), true );
+		return in_array( $pagescreen, array( 'plugins', 'wp-swings_page_home', 'giftcard_page_wps-wgc-setting-lite' ), true ) || 'wps-wgc-setting-lite' === $page || 'giftcard' === $post_type;
 	}
 
 	/**
@@ -205,6 +209,19 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 		$screen     = get_current_screen();
 		$pagescreen = isset( $screen->id ) ? $screen->id : '';
 
+		// Notice/banner dismiss script: enqueued before the asset-screen check because
+		// the banner also renders on screens outside it (e.g. WP Swings home).
+		if ( $this->wps_wgm_is_notice_admin_screen() ) {
+			$wps_wgm_notice = array(
+				'ajaxurl'              => admin_url( 'admin-ajax.php' ),
+				'wps_wgm_nonce'        => wp_create_nonce( 'wps-wgm-verify-notice-nonce' ),
+				'is_pro_plugin_active' => wps_uwgc_pro_active(),
+			);
+			wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
+			wp_localize_script( $this->plugin_name . 'admin-notice', 'wps_wgm_notice', $wps_wgm_notice );
+			wp_enqueue_script( $this->plugin_name . 'admin-notice' );
+		}
+
 		if ( ! $this->wps_wgm_is_admin_asset_screen( true ) ) {
 			return;
 		}
@@ -213,16 +230,6 @@ class Woocommerce_Gift_Cards_Lite_Admin {
 				wp_enqueue_script( 'pro_tag_remove_class', plugin_dir_url( __FILE__ ) . '/js/wps_wgm_gift_card_pro_admin.js', array( 'jquery' ), $this->version, true );
 			}
 
-			if ( $this->wps_wgm_is_notice_admin_screen() ) {
-				$wps_wgm_notice = array(
-					'ajaxurl'              => admin_url( 'admin-ajax.php' ),
-					'wps_wgm_nonce'        => wp_create_nonce( 'wps-wgm-verify-notice-nonce' ),
-					'is_pro_plugin_active' => wps_uwgc_pro_active(),
-				);
-				wp_register_script( $this->plugin_name . 'admin-notice', plugin_dir_url( __FILE__ ) . 'js/wps-wgm-gift-card-notices.js', array( 'jquery' ), $this->version, false );
-				wp_localize_script( $this->plugin_name . 'admin-notice', 'wps_wgm_notice', $wps_wgm_notice );
-				wp_enqueue_script( $this->plugin_name . 'admin-notice' );
-			}
 			if ( 'plugins' === $pagescreen ) {
 				return;
 			}
